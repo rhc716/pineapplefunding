@@ -1,0 +1,165 @@
+@CHARSET "UTF-8";
+
+div{
+	margin:0px 0px 0px 0px;
+	display:block;
+}
+ 
+button{
+	border:0px;
+}
+/* 공통적으로 쓸 것 */
+.btnpine{
+	background-color:#5e5e5e;
+	color:white;
+} 
+/* 공통적으로 쓸 것 */
+.logoandsearch{
+	text-align : center;
+}
+
+.navbar {
+	background-color:#009442;
+	text-align : center;
+}
+.navbar_pine{
+	float:left;
+	color:#f0cb15;
+	font-size:25px;
+}
+
+.navbar ul{
+	height:50px;
+	line-height : 50px;	
+	margin:0px;
+	padding:0px 20px 0px 20px;
+}
+
+.navbar ul:hover{
+	height:50px;
+	line-height : 50px;	
+	margin:0px;
+	padding:0px 20px 0px 20px;
+	color:yellow;
+}
+.navbar a{
+	color:white;
+	text-decoration:none;
+	padding:0px 20px 0px 20px;
+}
+
+.navbar a:hover{
+	height:50px;
+	line-height : 50px;	
+	margin:0px;
+	padding:0px 20px 0px 20px;
+	color:yellow;
+	text-decoration:none;
+}
+
+
+.navbar_menuleft{
+	float:left;
+	color:white;
+	font-size:20px;
+}
+
+.navbar_menuright{
+	float:right;
+	color:white;
+	font-size:20px;
+}
+.footer{
+	height:50px;
+	line-height:50px;
+	background-color:#5f5f5f;
+	color:white;
+}
+
+/* 메인 로그인 부분 */
+.login_up {
+	width:232px;
+	height:47px;
+	padding-left: 16px;
+	padding-top : 14px;
+}
+
+.login_form{
+	display: block;
+}
+
+.login_insert{
+	float: left;
+	width:139px;
+	height:47px;
+	margin-right:6px;
+}
+.login_id{
+	width:138px;
+	height:20px;
+	margin-bottom:3px;
+	border: 1px solid #bebebe;
+}
+.login_pw{
+	width:138px;
+	height:20px;
+	border: 1px solid #bebebe;
+}
+
+.login_btnsec{
+	margin-top: 3px;
+	float: left;
+	width:70px;
+	height:42px;
+}
+.login_save{
+	width:70px;
+	height:14px;
+	font-size: 11px;
+}
+.login_bt{
+	width:70px;
+	height:22px;
+	margin-top:6px;
+	padding:0;
+	color: #fff;
+	background-color:#009442;
+}
+.login_down {
+	float:left;
+	font-size: 11px;
+	margin: 11px 0 0 0;
+	padding-left:16px;
+	width:232px;
+	height:36px;
+}
+.login_down_one{
+	float: left;
+	width:60px;
+	height:36px;
+	line-height: 36px;
+}
+.login_down_one input{
+	margin:0px;
+}
+.login_down_two{
+	text-align: center;
+	float: left;
+	width:60px;
+	height:36px;
+	line-height: 36px;
+}
+.login_down_two a{
+	text-align: center;
+	width:60px;
+	height:36px;
+	color:#555555;
+	
+}
+.login_down_three{
+	float: left;
+	width:60px;
+	height:36px;
+	line-height: 36px;
+}
+
