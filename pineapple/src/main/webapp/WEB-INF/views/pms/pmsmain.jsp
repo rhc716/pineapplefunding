@@ -22,6 +22,9 @@
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
 
+<!-- css rhc -->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
+
 
 </head>
 <body>
@@ -34,20 +37,20 @@
 			<i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;<input type="text">&nbsp;
 			<button type="button" class="btn btnpine">검색</button>
 		</div>
-		<div class="col-md-3"></div>
+		<div class="col-md-3">
+			<button type="button"  class="btn btnpine loginorlogoutbtn">로그인 or 로그아웃</button>
+		</div>
 	</div>
 <!-- 상단메뉴 -->
 	<c:import url="/resources/module/topmenu.jsp"/>
 <!-- 본문 -->
 <div class="row">
 	<div class="col-md-3">
+		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-9">
 	</div>
-	<div class="col-md-3">
-		<c:import url="/resources/module/login_main.jsp"/>
-	</div>
-	 
+	
 </div>
 <!-- 풋터 -->
 	<c:import url="/resources/module/footer.jsp"/>
