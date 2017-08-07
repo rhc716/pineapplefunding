@@ -47,7 +47,7 @@
 	<div class="col-md-3">
 		<c:import url="/resources/module/login_main.jsp"/>
 	</div>
-	
+	 
 </div>
 <!-- 풋터 -->
 	<c:import url="/resources/module/footer.jsp"/>
