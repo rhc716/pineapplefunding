@@ -27,10 +27,6 @@
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
-		<url-pattern>*.pms</url-pattern>
-		<url-pattern>*.funding</url-pattern>
-		<url-pattern>*.invest</url-pattern>
-		<url-pattern>*.user</url-pattern>
 	</servlet-mapping>
 	
 </web-app>
