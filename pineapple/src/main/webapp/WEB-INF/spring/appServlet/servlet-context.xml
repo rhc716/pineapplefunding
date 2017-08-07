@@ -3,9 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -25,7 +27,22 @@
 	<!-- 객체를 스프링이 만들어줌 new연산자 없이, com.jjdev.mvc아래에 있는 클래스들은 객체를 만들어주겠다.
 	약속된 어노테이션을 붙여주면. -->
 	<context:component-scan base-package="com.pineapple.funding" />
+	<context:component-scan base-package="com.pineapple.funding.funding" />
+	<context:component-scan base-package="com.pineapple.funding.invest" />
+	<context:component-scan base-package="com.pineapple.funding.user" />
 	
+	<!-- 인터셉터로 url 요청이 왔을때 전or후에 거쳐야 할 과정을 추가 해줌 // ex) 로그인 여부 검사 -->
+	<mvc:interceptors>
+		<!-- 모든 url 요청에 대해 거쳐가는 인터셉터 -->
+		<mvc:interceptor>		
+			<mvc:mapping path="/*"/>	
+			<bean class="com.pineapple.funding.CommonInterceptor"></bean>
+		</mvc:interceptor>
+		
+		<!-- 인터셉터 추가 가능 -->
+	</mvc:interceptors>
+		
+		
 	<!-- 커넥션 풀 설정 -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
@@ -41,15 +58,17 @@
         <!-- mybatis 세션생성후 쿼리를 실행시킬때 사용할 쿼리위치(메퍼)설정 -->
         <property name="mapperLocations">
             <list>
-            <!-- 맵퍼 추가 -->
+            	<value>classpath:com/pineapple/funding/funding/FundingMapper.xml</value>
+                <value>classpath:com/pineapple/funding/invest/InvestMapper.xml</value>
+                <value>classpath:com/pineapple/funding/user/UserMapper.xml</value>
+                <value>classpath:com/pineapple/funding/funding/PmsMapper.xml</value>
             </list>
         </property>
     </bean>
+    
     <!-- mybatis설정 2. SqlSessionTemplate-->
     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg index="0" ref="sqlSessionFactory"/>
     </bean>
 
-    
-	
 </beans>

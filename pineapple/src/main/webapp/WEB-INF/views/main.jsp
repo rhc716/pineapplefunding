@@ -22,6 +22,7 @@
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
 
+
 </head>
 <body>
 <div class="container">
@@ -41,7 +42,7 @@
 <div class="row">
 	<div class="col-md-3">
 	</div>
-	<div class="col-md-6">	 	
+	<div class="col-md-6">		 	
 	</div>
 	<div class="col-md-3">
 		<c:import url="/resources/module/login_main.jsp"/>
