@@ -7,9 +7,4 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class UserController {
-	@RequestMapping(value = "/request.user", method=RequestMethod.GET)
-	public String request(){
-		System.out.println("request.user »£√‚µ ");
-		return "main";
-	}
 }
