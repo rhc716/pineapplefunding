@@ -9,9 +9,10 @@
 <body>
 <!-- 상단메뉴 -->
 <div class="row navbar">
-	<ul class="navbar_pine">PineApple</ul>
-	<ul class="navbar_menuleft"><a href="boardAdd">타임라인</a></ul>
+	<ul class="navbar_pine"><a href="/">PineApple</a></ul>
+	<ul class="navbar_menuleft"><a href="">타임라인</a></ul>
 	<ul class="navbar_menuleft">투자하기</ul>
+	<ul class="navbar_menuleft"><a href="/pmsmain.pms">프로젝트관리</a></ul>
 	<ul class="navbar_menuright">이용안내</ul>
 	<ul class="navbar_menuright">회원가입</ul>
 </div>
