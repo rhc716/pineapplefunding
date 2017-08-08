@@ -1,19 +1,22 @@
 @CHARSET "UTF-8";
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
 
 /* 메인페이지 제외한 곳 // 로그인or 로그아웃 버튼 */
 .loginorlogoutbtn{
 	margin-top:20px;
 	float:right;
-	padding:0px;	
+	padding:0px;
+	font-family: 'Jeju Gothic', serif;	
 }
 
 div{
 	margin:0px 0px 0px 0px;
 	display:block;
 }
- 
+  
 button{
 	border:0px;
+	font-family: 'Jeju Gothic', serif;
 }
 /* 공통적으로 쓸 것 */
 .btnpine{
@@ -28,6 +31,7 @@ button{
 .navbar {
 	background-color:#009442;
 	text-align : center;
+	font-family: 'Jeju Gothic', serif;
 }
 .navbar_pine{
 	float:left;
@@ -82,6 +86,7 @@ button{
 	background-color:#5f5f5f;
 	color:white;
 	margin-top: 20px;
+	font-family: 'Jeju Gothic', serif;
 }
 
 /* 메인 로그인 부분 */
@@ -170,4 +175,139 @@ button{
 	height:36px;
 	line-height: 36px;
 }
+
+/* 프로젝트 관리 페이지 왼쪽 메뉴 */
+
+	.amazonmenu ul{
+	font: normal 12px Verdana;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+
+}
+
+.amazonmenu ul li{
+	position: static; /* menu li items should have position set to static */
+}
+
+.amazonmenu > ul{
+	background: white;
+	border: 1px solid gray;
+	border-radius: 5px;
+	width: 200px; /* width of main menu */
+	height: 400px; /* height of main menu */
+	position: relative;
+}
+
+.amazonmenu > ul li a{
+	color: black;
+	display: block;
+	overflow: auto;
+	padding: 10px 0;
+	position: relative;
+	text-decoration: none;
+	text-indent: 10px;
+}
+
+.amazonmenu > ul li.hassub > a::after{ /* Arrow to indicate this item has sub menu (LI elements with sub menus have a ".hassub" class). */
+	border: 5px solid transparent;
+	border-left-color: gray; /* Default color of arrow */
+	content: '';
+	height: 0;
+	position: absolute;
+	right: 5px;
+	top: 35%;
+	width: 0;
+}
+
+.amazonmenu > ul li.hassub.selected > a::after{ /* Style of arrow when corresponding sub menu is open (LI element has a "selected" class during this state */
+	border-left-color: red;
+}
+
+.amazonmenu ul li a:hover, .amazonmenu ul li.hassub.selected > a{ /* style of hover and selected menu item links */
+	background: lightblue;
+	color: navy;
+}
+
+.amazonmenu ul li > div, .amazonmenu ul li > ul{ /* Sub menus (Could be a DIV or UL wrapper) style */
+	background: white;
+	border: 1px solid gray;
+	border-radius: 0 8px 8px 0;
+	box-shadow: 2px 2px 2px gray;
+	display: none;
+	font-weight: normal;
+	width: 300px;
+	height: 400px; /* height of sub menu */
+	left: 100%;
+	padding: 10px;
+	position: absolute;
+	top: 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	z-index: 1000;
+}
+
+
+@media screen and (max-width: 480px){ /* When screen size is 480px */
+	.amazonmenu ul li > div, .amazonmenu ul li > ul{
+		left: 30px; /* Stack the sub menus so they take up less space */
+	}
+
+	.amazonmenu > ul li.hassub.selected::after{ /* Add "veil" to parent menus */
+		background: #eee;
+		content: '';
+		height: 100%;
+		left: 0;
+		opacity: .8;
+		pointer-events: none;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 1;
+	}
+}
+
+
+
+
+
+.vertical-menu {
+    width: 200px; /* Set a width if you like */
+}
+
+ul {
+	padding:0px 0px 0px 0px;
+}
+
+.vertical-menu ul li {
+	list-style:none;
+}
+
+.vertical-menu a {
+    background-color: #eee; /* Grey background color */
+    color: black; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove underline from links */
+    font-family: 'Jeju Gothic', serif;
+
+}
+
+.vertical-menu a:hover {
+    background-color: #ccc; /* Dark grey background on mouse-over */
+}
+
+
+.vertical-menu a.active {
+    background-color: #01022c; /* Add a green color to the "active/current" link */
+    color: #39e3c2;
+    font-family: 'Jeju Gothic', serif;
+
+} 
+
+/* 프로젝트 관리 페이지 왼쪽 메뉴 */
 
