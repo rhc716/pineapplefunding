@@ -7,6 +7,7 @@ public class User {
 	private String pw;
 	private int levelCode;
 	private String uDelTime;
+	
 	public String getUserId() {
 		return userId;
 	}

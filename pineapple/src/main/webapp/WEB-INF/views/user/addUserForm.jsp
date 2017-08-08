@@ -29,7 +29,9 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lbr.css" />
 
 <script>
+
 // 가입정보 유효성검사
+/*
 $(document).ready(function(){
 	 $('#btn').click(function(){
 		if($('#use_id').val()==2){ // submit 유효성 검사후 수동으로 해줌. 
@@ -51,10 +53,11 @@ $(document).ready(function(){
 		}
 	 });
  });
+ */
  //취소버튼 누르면 메인으로
  $(document).ready(function(){
 	 $('#btn_cancel').click(function(){
-		location.href = '../index.jsp';
+		location.href = '/';
 	 });
 });
 
@@ -169,34 +172,38 @@ $(document).ready(function(){
 	<div class="row">
 		<div class="col-xs-3"></div>
 		<div class="col-xs-6 form_page">
-			<form id="form" action="./user_insert_pro.jsp" name="userinput" method="post" style="border:1px solid #ccc">
+			<form id="form" action="/addUserForm" name="userinput" method="post" style="border:1px solid #ccc">
 				<div class="container_insert">
-			    <label>아이디</label>
-			    <p id="explain"> (아이디는 5~20자의 영문 소문자, 숫자만 사용 가능합니다)</p>
-			    <input type="text" id="id" type="text" name="user_id" class="input_insert" placeholder="Enter id" maxlength="20">
-				<span id="idch"> <input type="hidden" value="0" id="use_id" name="use_id"/></span>
-				<br>
-			    <label>비밀번호</label>
-			    <p id="explain"> (비밀번호는 6~20자의 영,숫자,특수문자가 모두 포함되어야 합니다)</p>
-			    <input id="pw" type="password" name="user_pw" class="input_insert" placeholder="Enter Password">
-			    <span id="pwch"> </span>
+			    <label for="levelCode">권한</label>
 			    <br>
+			    &nbsp&nbsp관리자&nbsp&nbsp<input id="levelCode" type="radio" class="input_insert" name="levelCode" value=1>
+			    &nbsp&nbsp기업회원&nbsp&nbsp<input id="levelCode" type="radio" class="input_insert" name="levelCode" value=2>
+			    &nbsp&nbsp투자자&nbsp&nbsp<input id="levelCode" type="radio" class="input_insert" name="levelCode" value=3>
+			    <br><br>
+			    <label for="userId">이메일 아이디</label>
+			    <p id="explain"> (정확한 이메일 아이디를 입력해주시기 바랍니다.)</p>
+			    <input id="userId" type="text" class="input_insert" type="text" name="userId" placeholder="Enter email id" maxlength="20">
+				<span id="idch"> <input type="hidden" value="0" id="use_id" name="use_id"/></span>
+				<br><br>
+			    <label for="pw">비밀번호</label>
+			    <p id="explain"> (비밀번호는 6~20자의 영,숫자,특수문자가 모두 포함되어야 합니다)</p>
+			    <input id="pw" type="password" name="pw" class="input_insert" placeholder="Enter Password">
+			    <span id="pwch"> </span>
+			    <br><br>
 			    <label><b>비밀번호확인</b></label>
 			    <input id="pw2" type="password" name="pw2" class="input_insert" placeholder="Repeat Password" >
 			    <span id="pwch2"> <input type="hidden" value="0" id="use_pw2" name="use_pw2"/></span>
-			    <br>
-			    <label>닉네임</label>
+			    <br><br>
+			    <label for="name">이름</label>
+			    <input id="name" type="text" name="name" class="input_insert" placeholder="Enter name" maxlength="40">
+			    <br><br>
+			    <label for="nickname">닉네임</label>
 			    <p id="explain"> (닉네임은 6~20자의 영,숫자,한글을 사용 가능합니다)</p>
-			    <input id="nick" type="text" name="user_nickname" class="input_insert" placeholder="Enter nickname" maxlength="20">
+			    <input id="nickname" type="text" name="nickname" class="input_insert" placeholder="Enter nickname" maxlength="20">
 			    <span id="nickch"> <input type="hidden" value="0" id="use_nick" name="use_nick"/></span>
-			    <label>이메일</label>
-			    <input id="email" type="text" name="user_email" class="input_insert" placeholder="Enter email" maxlength="40">
-			    <label>핸드폰</label>
-			    <input type="text" name="user_phone" class="input_insert" placeholder="-제와 숫자만" maxlength="11">
-			
 			    <div class="clearfix">
 			       <input id="btn_cancel" type="button" class="button_insert cancelbtn" value="취소">
-			       <input id="btn" type="button" class="button_insert signupbtn" value="가입">
+			       <input id="submitBtn" type="submit" class="button_insert signupbtn" value="가입">
 			    </div>
 			  </div>
 			</form>

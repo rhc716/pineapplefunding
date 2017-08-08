@@ -10,6 +10,7 @@ public class UserService {
 	private UserDao dao;
 	
 	public int addUser(User user) {
-		return dao.insertBoard(user);
+		System.out.println("service addUser 호출");
+		return dao.insertUser(user);
 	}
 }

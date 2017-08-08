@@ -1,6 +1,5 @@
 package com.pineapple.funding.user;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +12,7 @@ public class UserController {
 	
 	//회원가입 요청
 	@RequestMapping(value="/addUserForm", method = RequestMethod.POST)
-    public String userAdd(User user) {//커맨드 객체
+    public String userAdd(User user) { //커맨드 객체
         System.out.println("UserController user : "+user);
         service.addUser(user);
         return "redirect:/"; // 글입력후 "/"로 리다이렉트(재요청)
