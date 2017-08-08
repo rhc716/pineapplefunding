@@ -1,5 +1,12 @@
 @CHARSET "UTF-8";
 
+/* 메인페이지 제외한 곳 // 로그인or 로그아웃 버튼 */
+.loginorlogoutbtn{
+	margin-top:20px;
+	float:right;
+	padding:0px;	
+}
+
 div{
 	margin:0px 0px 0px 0px;
 	display:block;
