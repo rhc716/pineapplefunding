@@ -29,18 +29,8 @@
 </head>
 <body>
 <div class="container">
-<!--로고 및 검색 -->
-	<div class="row">
-		<div class="col-md-3"></div>
-		<div class="col-md-6 logoandsearch">
-			<img src="${pageContext.request.contextPath}/resources/img/logo.jpg">
-			<i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;<input type="text">&nbsp;
-			<button type="button" class="btn btnpine">검색</button>
-		</div>
-		<div class="col-md-3">
-			<button type="button"  class="btn btnpine loginorlogoutbtn">로그인 or 로그아웃</button>
-		</div>
-	</div>
+<!--최상단 로고 및 로그인 or 로그아웃버튼 -->
+	<c:import url="/resources/module/toploginandlogo.jsp"/>
 <!-- 상단메뉴 -->
 	<c:import url="/resources/module/topmenu.jsp"/>
 <!-- 본문 -->
@@ -50,10 +40,7 @@
 	</div>
 	<div class="col-md-6">
 	</div>
-	<div class="col-md-2">
-		<div class="btn-group btn-group-justified">
-		    <a href="/fundingopen.pms" class="btn btn-primary">신규펀딩 등록</a>
-	    </div><br>
+	<div class="col-md-3">
 	    <div class="btn-group btn-group-justified">
 		    <a href="/fundingdetail.pms" class="btn btn-primary">펀딩 상세정보 입력</a>
 		</div>

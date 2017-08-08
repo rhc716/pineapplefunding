@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 
 <script src="${pageContext.request.contextPath}/resources/js/leftmenu.js">
+
 </script>
 <body>
 
@@ -17,7 +18,7 @@
 	<ul>
 		<li><a href="">펀딩관리</a>
 			<ul>
-		  		<li><a href="">펀딩개설</a>
+		  		<li><a href="/fundingopen.pms">펀딩개설</a>
 		  		<li><a href="">펀딩조회</a>
 			</ul>
 		</li>
