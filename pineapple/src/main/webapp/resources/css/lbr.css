@@ -1,1 +1,63 @@
 @CHARSET "UTF-8";
+
+/*회원 가입폼*/	
+.pro_bar{
+	margin-top: 20px;
+	text-align: center;
+}
+
+.form_page {
+	margin-top: 100px;
+	width: 520px;
+	
+}
+/* Full-width input fields */
+.input_insert[type=text], .input_insert[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+.button_insert {
+    background-color: #95c11f;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+    padding: 14px 20px;
+    background-color: #36a9e1;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancelbtn,.signupbtn {
+    float: left;
+    width: 50%;
+}
+
+/* Add padding to container elements */
+.container_insert {
+    padding: 16px;
+}
+#explain{
+	font-size:12px;
+	color : #828282;
+}
+
+/* Clear floats */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+	
+/*회원 가입폼 끝*/	

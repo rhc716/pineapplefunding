@@ -28,6 +28,7 @@
 
 </head>
 <body>
+
 <div class="container">
 <!--로고 및 검색 -->
 	<div class="row">
@@ -48,17 +49,9 @@
 	<div class="col-md-3">
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-9">
+		<c:import url="/resources/module/pmsmodule/fundinginsert.jsp"/>
 	</div>
-	<div class="col-md-2">
-		<div class="btn-group btn-group-justified">
-		    <a href="/fundingopen.pms" class="btn btn-primary">신규펀딩 등록</a>
-	    </div><br>
-	    <div class="btn-group btn-group-justified">
-		    <a href="/fundingdetail.pms" class="btn btn-primary">펀딩 상세정보 입력</a>
-		</div>
-	</div>
-	
 	
 </div>
 <!-- 풋터 -->

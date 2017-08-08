@@ -20,9 +20,8 @@
 				</div>
 		</form>
 			<div class="login_down">
-				<div class="login_down_one">넣을것 넣기</div>
-				<div class="login_down_two">넣을것 넣기</div>
-				<div class="login_down_three">넣을것 넣기</div>
+				<div><a class="login_down_one" href="${pageContext.request.contextPath}/addUserForm">회원가입</a></div>
+				<div class="login_down_two">ID/PW찾기</div>
 			</div>
  
 <!--
