@@ -20,21 +20,30 @@
 </head>
 <body>
 	
-	<div class="col-md-8">
-		기업가치:<br>
-		<input type="text" class="form-control" id="comValue"><br>
-		오픈스토리:<br>
-		<textarea class="form-control" rows="30" id="openstory"></textarea><br>
+		<div class="col-md-6">
+			<div class="border">
+				펀딩명:
+				<select id="fdType">
+					<option value="msFdCode">1번펀딩</option>
+					<option value="msFdCode">2번펀딩</option>
+				</select><br><br>
+				마일스톤 단계:
+				<input type="text" class="form-control" id="milestoneStep"><br>
+				마일스톤 이름:
+				<input type="text" class="form-control" id="milestoneName"><br>
+				마일스톤 요약:<br>
+				<textarea class="form-control" rows="5" id="milestoneSummary"></textarea>
+			</div>
+		</div>
+		<div class="col-md-3">
+		</div>
+		
+		<div class="col-md-3">
+		</div>
+		<div class="col-md-9">	
+			<button>입력완료</button>
+		</div>	
 	
-	</div>
-	<div class="col-md-4">
-	</div>
-	
-	<div class="col-md-3">
-	</div>
-	<div class="col-md-9">	
-		<button>입력완료</button>
-	</div>
 	
 </body>
 </html>
