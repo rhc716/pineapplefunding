@@ -9,8 +9,17 @@
 
 
 /* 프로젝트 관리 페이지 왼쪽 메뉴 */
+.closed{
+	
+display: none;
+}
+
 .vertical-menu {
     width: 200px; /* Set a width if you like */
+}
+
+.vertical-menu ul li {
+	list-style:none; 
 }
 
 .vertical-menu a {
@@ -26,7 +35,7 @@
 }
 
 .vertical-menu a.active {
-    background-color: #4CAF50; /* Add a green color to the "active/current" link */
+    background-color: #01022c; /* Add a green color to the "active/current" link */
     color: white;
 } 
 
