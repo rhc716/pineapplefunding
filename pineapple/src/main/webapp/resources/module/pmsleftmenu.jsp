@@ -24,13 +24,13 @@
 		</li>
 		<li><a href="">마일스톤관리</a>
 			<ul>
-				<li><a href="">마일스톤생성</a></li>
+				<li><a href="/milestoneinsert.pms">마일스톤생성</a></li>
 				<li><a href="">마일스톤조회</a></li>
 			</ul>
 		</li>
 		<li><a href="">WBS관리</a>
 			<ul>
-				<li><a href="">WBS예상작성</a></li>
+				<li><a href="/wbsplan.pms">WBS예상작성</a></li>
 				<li><a href="">WBS예상조회</a></li>
 				<li><a href="">WBS실제작성</a></li>
 				<li><a href="">WBS실제조회</a></li>

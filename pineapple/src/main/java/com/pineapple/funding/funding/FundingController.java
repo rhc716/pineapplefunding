@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class FundingController {
-	
+	//
 	@RequestMapping(value = "/pmsmain.pms", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		return "./pms/pmsmain";
@@ -23,6 +23,15 @@ public class FundingController {
 	@RequestMapping(value = "/fundingdetail.pms", method = RequestMethod.GET)
 	public String fundingdetail(Locale locale, Model model) {
 		return "./pms/funding/fundingdetail";
+	}
+	
+	@RequestMapping(value = "/milestoneinsert.pms", method = RequestMethod.GET)
+	public String milestoneinsert(Locale locale, Model model) {
+		return "./pms/funding/msinsertform";
+	}
+	@RequestMapping(value = "/wbsplan.pms", method = RequestMethod.GET)
+	public String wbsplan(Locale locale, Model model) {
+		return "./pms/funding/wbsplan";
 	}
 	
 	
