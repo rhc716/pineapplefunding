@@ -12,13 +12,13 @@
 			VALUES (#{userId}, #{nickname}, #{name}, #{pw}, #{levelCode});
 	</insert>
 	
-	<select id="selectUser" parameterType="String" resultType="com.pineapple.funding.user.User">
+	<select id="selectUserById" parameterType="String" resultType="com.pineapple.funding.user.User">
 		SELECT userId, nickname, name, pw, levelCode, uDelTime
 		FROM user 
 		WHERE userId='#{userId}'
 	</select>
 	
-	<update id="updateUser" parameterType="User">
+	<update id="updateUserById" parameterType="User">
 		UPDATE user
 		SET
 			userId='#{User.userId}',
@@ -35,7 +35,7 @@
 		FROM user
 	</select>
 	
-	<delete id="deleteUser" parameterType="String">
+	<delete id="deleteUserById" parameterType="String">
 		DELETE
 		FROM user 
 		WHERE userId='#{userId}'
@@ -43,7 +43,7 @@
 	
 	-->
 	
-	<!-- 회원상세정보 입력/수정/조회/삭제 -->
+	<!-- 회원상세정보 입력/수정/조회 -->
 	<!--
 	<insert id="insertUserDetail">
 		INSERT INTO userdetail
@@ -51,7 +51,7 @@
 		VALUES  ('#{userId}', '#{phoneFront3}', '#{phoneRest8}', '#{postalCode}', '#{address}', #{nameCheck})
 	</insert>
 	
-	<update id="updateUserDetail" parameterType="String">
+	<update id="updateUserDetailById" parameterType="String">
 		UPDATE userdetail
  		SET
  			userDetailId='#{userId}',
@@ -63,7 +63,7 @@
  		WHERE userDetailId='#{userId}'
 	</update>
 	
-	<select id="selectUserDetail" parameterType="String" resultType="com.pineapple.funding.user.UserDetail">
+	<select id="selectUserDetailById" parameterType="String" resultType="com.pineapple.funding.user.UserDetail">
 		SELECT userDetailId, phoneFront3, phoneRest8, postalCode, address, nameCheck
 		FROM userdetail 
 		WHERE userDetailId='#{userId}'
@@ -71,7 +71,26 @@
 	 
 	   -->
 	 
-	<!-- 계좌정보 입력/수정/조회/삭제 -->
 	
+	<!-- 계좌정보 입력/조회/삭제 -->
 	
+	<!-- 
+	<insert id="insertAccount">
+		INSERT INTO account
+			(accountCode, accountId, secCompany, accountNumber, accountNickname)
+		VALUES (NULL, '#{accountId}', '#{secCompany}', '#{accountNumber}', '#{accountNickname}')
+	</insert>
+	
+	<select id="selectAccountById" parameterType="String" resultType="com.pineapple.funding.user.Account">
+		SELECT accountCode, accountId, secCompany, accountNumber, accountNickname
+ 		FROM account WHERE accountId='#{accountId}'
+	</select>
+	
+	<delete id="deleteAccountByAccountCode">
+		DELETE 
+		FROM account 
+		WHERE accountCode=#{accountCode}
+	</delete>
+	-->
+	   
 </mapper>
