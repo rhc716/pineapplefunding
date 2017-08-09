@@ -39,25 +39,23 @@
 	<div class="col-md-3">
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
-	<div class="col-md-9">
-		<div class="col-md-8">
-			기업가치:<br>
-			<input type="text" class="form-control" id="comValue"><br>
-			오픈스토리:<br>
-			<textarea class="form-control" rows="30" id="openstory"></textarea><br>
-		</div>
-		<div class="col-md-4">
-	</div>
-	
-	<div class="col-md-3">
-	</div>
 	<div class="col-md-9">	
-		<button>입력완료</button>
-		</div>
+		<div class="col-md-1"></div>
+			<div class="col-md-7">
+				<form action="" method="post">
+					기업가치<br>
+					<input type="text" class="form-control" id="comValue"><br>
+					오픈스토리<br>
+					<textarea class="form-control" rows="30" id="openstory"></textarea><br>
+					<button type="submit">입력완료</button>
+				</form>
+			</div>
+		<div class="col-md-1"></div>
 	</div>
-	
 </div>
 <!-- 풋터 -->
+</div>
+<div>
 	<c:import url="/resources/module/footer.jsp"/>
 </div>
 </body>

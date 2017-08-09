@@ -31,17 +31,7 @@
 
 <div class="container">
 <!--로고 및 검색 -->
-	<div class="row">
-		<div class="col-md-3"></div>
-		<div class="col-md-6 logoandsearch">
-			<img src="${pageContext.request.contextPath}/resources/img/logo.jpg">
-			<i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;<input type="text">&nbsp;
-			<button type="button" class="btn btnpine">검색</button>
-		</div>
-		<div class="col-md-3">
-			<button type="button"  class="btn btnpine loginorlogoutbtn">로그인 or 로그아웃</button>
-		</div>
-	</div>
+	<c:import url="/resources/module/toploginandlogo.jsp"/>
 <!-- 상단메뉴 -->
 	<c:import url="/resources/module/topmenu.jsp"/>
 <!-- 본문 -->
@@ -50,119 +40,31 @@
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-md-9">
-		<div class="row">
-	<div class="col-md-2">
-	</div>
-	<div class="col-md-8">
-		<div class="wbsplanform">
-			<label for="wbsplan">WBS예상계획</label><br>
-			<div class="row">
-				<div class="col-md-6">
-					WBS순서:
-					<input type="text" class="form-control" id="milestoneStep">
+			<div class="col-md-1"></div>
+				<div class="col-md-7">
+					<form action="" method="post">
+						<label for="wbsplan">WBS예상계획</label><br>
+						WBS순서:
+						<input type="text" class="form-control" id="milestoneStep">
+						작업명:
+						<input type="text" class="form-control" id="milestoneName">
+						선행작업
+						<input type="text" class="form-control" id="milestoneName">
+						작업기간
+						<input type="text" class="form-control" id="milestoneName">
+						시작일
+						<input type="date" id="milestoneName">
+						종료일
+						<input type="date" id="milestoneName">	
+						<button type="submit">입력완료</button>
+					</form>
 				</div>
-				<div class="col-md-6">
-					작업명:
-					<input type="text" class="form-control" id="milestoneName">
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6">
-					선행작업
-					<input type="text" class="form-control" id="milestoneName">
-				</div>
-				<div class="col-md-6">
-					작업기간
-					<input type="text" class="form-control" id="milestoneName">
-				</div>	
-			</div><br>
-			시작일
-			<input type="date" id="milestoneName">
-			종료일
-			<input type="date" id="milestoneName">
-		</div>
-	</div>
-	<div class="col-md-2">
+			<div class="col-md-1"></div>
 	</div>
 </div>
-<br><br>
-<div class="row">
-	<div class="col-md-2">
-	</div>
-	
-		<div class="col-md-4">
-			<div class="wbsplanform">
-				<label for="wbsplanhuman">WBS인원예상지출</label><br><br>
-				인원수:<br>
-				<input type="text"><br>
-				총비용:<br>
-				<input type="text" id="milestoneName"><br>
-				비고:<br>
-				<input type="text" id="milestoneName"><br>
-			</div><br>
-	
-			<div class="wbsplanform">
-				<label for="wbsplanhuman">WBS예상장비지출</label><br>
-				장비명:<br>
-				<input type="text"><br>
-				수:<br>
-				<input type="text" id="milestoneName"><br>
-				단가:<br>
-				<input type="text" id="milestoneName"><br>
-				총비용:<br>
-				<input type="text" id="milestoneName">
-			</div><br>
-			<div class="wbsplanform">
-				<label for="wbsplanhuman">WBS예상기타지출</label><br>
-				비용명:<br>
-				<input type="text"><br>
-				가격:<br>
-				<input type="text" id="milestoneName"><br>
-				비고:<br>
-				<input type="text" id="milestoneName"><br>
-			</div>
-		</div>
-	<div class="col-md-4">
-		<div class="wbsplanform">
-			<label for="wbsplanhuman">WBS시설예상지출</label><br><br>
-			시설명:<br>
-			<input type="text"><br>
-			비용:<br>
-			<input type="text" id="milestoneName"><br>
-			비고:<br>
-			<input type="text" id="milestoneName"><br>
-		</div><br>
-
-		<div class="wbsplanform">
-			<label for="wbsplanhuman">WBS예상외주지출</label><br>
-			업체명:<br>
-			<input type="text"><br>
-			비용:<br>
-			<input type="text" id="milestoneName"><br>
-			비고:<br>
-			<input type="text" id="milestoneName">
-		</div><br>
-		
-		<div class="wbsplanform">
-			<label for="wbsplanhuman">WBS예상수익</label><br>
-			수익상황:<br>
-			<input type="text"><br>
-			수익:<br>
-			<input type="text" id="milestoneName">
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col-md-8">
-	</div>
-	<div class="col-md-4">
-		<button>입력완료</button>
-	</div>
-</div>
-	</div>
-	
 </div>
 <!-- 풋터 -->
+<div>
 	<c:import url="/resources/module/footer.jsp"/>
 </div>
 </body>

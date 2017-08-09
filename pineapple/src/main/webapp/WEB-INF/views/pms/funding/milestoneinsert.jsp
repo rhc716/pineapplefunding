@@ -39,32 +39,26 @@
 	<div class="col-md-3">
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
-	<div class="col-md-9">
-		<div class="col-md-6">
-			<div class="border">
-				펀딩명:
-				<select id="fdType">
-					<option value="msFdCode">1번펀딩</option>
-					<option value="msFdCode">2번펀딩</option>
-				</select><br><br>
-				마일스톤 단계:
-				<input type="text" class="form-control" id="milestoneStep"><br>
-				마일스톤 이름:
-				<input type="text" class="form-control" id="milestoneName"><br>
-				마일스톤 요약:<br>
-				<textarea class="form-control" rows="5" id="milestoneSummary"></textarea>
+	<div class="col-md-9">	
+		<div class="col-md-1"></div>
+			<div class="col-md-7">
+				<form action="" method="post">
+					펀딩명:
+					<select id="fdType">
+						<option value="msFdCode">1번펀딩</option>
+						<option value="msFdCode">2번펀딩</option>
+					</select><br><br>
+					마일스톤 단계:
+					<input type="text" class="form-control" id="milestoneStep"><br>
+					마일스톤 이름:
+					<input type="text" class="form-control" id="milestoneName"><br>
+					마일스톤 요약:<br>
+					<textarea class="form-control" rows="5" id="milestoneSummary"></textarea>
+					<button type="submit">입력완료</button>
+				</form>
 			</div>
-		</div>
-		<div class="col-md-3">
-		</div>
-		
-		<div class="col-md-3">
-		</div>
-		<div class="col-md-9">	
-			<button>입력완료</button>
-		</div>	
+		<div class="col-md-1"></div>
 	</div>
-	
 </div>
 <!-- 풋터 -->
 	<c:import url="/resources/module/footer.jsp"/>
