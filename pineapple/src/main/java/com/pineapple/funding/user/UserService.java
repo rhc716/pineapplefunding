@@ -9,6 +9,12 @@ public class UserService {
 	@Autowired
 	private UserDao dao;
 	
+	//회원가입시 닉네임 중복체크 기능을 위한 dao 메서드 호출
+		public User getUserByNickname(String nickname){
+			System.out.println("service getUserByNickname 호출 : "+dao.selectUserByNickname(nickname).getNickname());
+			return dao.selectUserByNickname(nickname);
+		}
+	
 	//회원가입시 아이디 중복체크 기능을 위한 dao 메서드 호출
 	public User getUser(String userId){
 		System.out.println("service getUser 호출 : "+dao.selectUserById(userId).getUserId());

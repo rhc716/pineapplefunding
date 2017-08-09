@@ -9,6 +9,15 @@ public class UserDao {
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
 	
+	
+	
+	//회원가입 닉네임 중복체크 ajax를 위한 닉네임 데이터 호출
+	public User selectUserByNickname(String nickname){
+		System.out.println("UserDao selectUserByNickname : "+nickname);
+		return sqlSessionTemplate.selectOne("com.pineapple.funding.user.UserMapper.selectUserByNickname", nickname);	
+	}
+	
+	
 	//회원가입 이메일아이디 중복체크 ajax를 위한 회원아이디 데이터 호출
 	public User selectUserById(String userId){
 		System.out.println("UserDao selectUserById : "+userId);
