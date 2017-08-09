@@ -24,8 +24,25 @@
 
 <!-- css rhc -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
-
-
+<script>
+/* 펀딩 리스트 불러올 ajax */
+$(document).ready(function(){
+	var getfundinglist = $.ajax({
+		type : "get",
+		url : "selectmyfundinglist.pms",
+		/* 아이디 세션에서 받아서 가져옴 */
+		data : { userId : "id01@maver.com" }
+	});
+	// 성공시
+	getfundinglist.done(function(msg){
+		console.log(msg);
+	});
+	// 실패시
+	getfundinglist.fail(function(){
+		alert('ajax통신실패');
+	});
+});
+</script>
 </head>
 <body>
 
@@ -39,28 +56,17 @@
 	<div class="col-md-3">
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
-	<div class="col-md-9">	
-		<div class="col-md-1"></div>
-			<div class="col-md-7">
-				<form action="" method="post">
-					펀딩명:
-					<select id="fdType">
-						<option value="msFdCode">1번펀딩</option>
-						<option value="msFdCode">2번펀딩</option>
-					</select><br><br>
-					마일스톤 단계:
-					<input type="text" class="form-control" id="milestoneStep"><br>
-					마일스톤 이름:
-					<input type="text" class="form-control" id="milestoneName"><br>
-					마일스톤 요약:<br>
-					<textarea class="form-control" rows="5" id="milestoneSummary"></textarea>
-					<button type="submit">입력완료</button>
-				</form>
-			</div>
-		<div class="col-md-1"></div>
+	<div class="col-md-9">
+			<div class="col-md-1"></div>
+				<div class="col-md-7" id="myfundinglist">
+					<!-- 펀딩 리스트 뿌려질 곳 -->
+				</div>
+			<div class="col-md-1"></div>
 	</div>
 </div>
+</div>
 <!-- 풋터 -->
+<div>
 	<c:import url="/resources/module/footer.jsp"/>
 </div>
 </body>

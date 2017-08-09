@@ -44,9 +44,9 @@
 			<div class="col-md-7">
 				<form action="" method="post">
 					기업가치<br>
-					<input type="text" class="form-control" id="comValue"><br>
+					<input type="text" class="form-control" name="comValue"><br>
 					오픈스토리<br>
-					<textarea class="form-control" rows="30" id="openstory"></textarea><br>
+					<textarea class="form-control" rows="30" name="openstory"></textarea><br>
 					<button type="submit">입력완료</button>
 				</form>
 			</div>

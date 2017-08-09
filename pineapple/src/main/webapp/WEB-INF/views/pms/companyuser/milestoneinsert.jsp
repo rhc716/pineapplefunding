@@ -39,32 +39,28 @@
 	<div class="col-md-3">
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
-	<div class="col-md-9">
-			<div class="col-md-1"></div>
-				<div class="col-md-7">
-					<form action="" method="post">
-						<label for="wbsplan">WBS예상계획</label><br>
-						WBS순서:
-						<input type="text" class="form-control" id="milestoneStep">
-						작업명:
-						<input type="text" class="form-control" id="milestoneName">
-						선행작업
-						<input type="text" class="form-control" id="milestoneName">
-						작업기간
-						<input type="text" class="form-control" id="milestoneName">
-						시작일
-						<input type="date" id="milestoneName">
-						종료일
-						<input type="date" id="milestoneName">	
-						<button type="submit">입력완료</button>
-					</form>
-				</div>
-			<div class="col-md-1"></div>
+	<div class="col-md-9">	
+		<div class="col-md-1"></div>
+			<div class="col-md-7">
+				<form action="" method="post">
+					펀딩명:
+					<select name="fdType">
+						<option value="msFdCode">1번펀딩</option>
+						<option value="msFdCode">2번펀딩</option>
+					</select><br><br>
+					마일스톤 단계:
+					<input type="text" class="form-control" name="milestoneStep"><br>
+					마일스톤 이름:
+					<input type="text" class="form-control" name="milestoneName"><br>
+					마일스톤 요약:<br>
+					<textarea class="form-control" rows="5" name="milestoneSummary"></textarea>
+					<button type="submit">입력완료</button>
+				</form>
+			</div>
+		<div class="col-md-1"></div>
 	</div>
 </div>
-</div>
 <!-- 풋터 -->
-<div>
 	<c:import url="/resources/module/footer.jsp"/>
 </div>
 </body>
