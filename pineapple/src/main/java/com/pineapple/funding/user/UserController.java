@@ -16,15 +16,10 @@ public class UserController {
     private UserService service;
 	
 	//회원가입시 아이디 중복체크 ajax 요청 처리
-	@RequestMapping(value="/checkid.user", method = RequestMethod.POST)
-	public @ResponseBody String checkId(Locale locale, Model model, @RequestParam("userId") String userId){
+	@RequestMapping(value="/checkId.user", method = RequestMethod.POST)
+	public @ResponseBody User checkId(Locale locale, Model model, @RequestParam("userId") String userId){
 		System.out.println("UserController checkid : "+userId);
-		if(service.getUser(userId) != userId){
-			return userId;
-		}else{
-			return "아이디중복";
-		}
-		
+		return service.getUser(userId);
 	}
 	
 	//회원가입 요청

@@ -80,14 +80,21 @@ $(document).ready(function(){
         if(temp==0){
         	$.ajax({ // ajax실행부분
                 type: "post",
-                url : "/checkid.user",
+                url : "checkId.user",
                 data : {userId : in_id},
-                success : function(ic){ $('#idch').html(ic); },
+                success : function(ic){ 
+                			$('#idch').css("color", "#FF0000")
+                			$('#idch').text('이미 존재하는 이메일입니다.');
+                			$('#userId').val('');
+                			$('#userId').focus();
+                	},
                 //만약 해당 페이지에 값을 성공적으로 보냈다면 페이지를 ic 라는 매개변수로 받아 id = 'idch' 구역에 ic를 출력하겠다. 
-                error : function error(){ alert('시스템 문제발생');}
+                error : function error(){ 
+                		$('#idch').html(in_id +"는 사용 가능한 이메일입니다.");
+                	}
         	});
         } else {
-        	$("#idch").css("color", "#FF0000");
+        	$('#idch').css("color", "#FF0000");
 			$('#idch').text('유효한 이메일을 입력해주시기 바랍니다.');
         	$('#userId').val('');
 			$('#userId').focus();

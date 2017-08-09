@@ -22,13 +22,13 @@
 	<update id="updateUserById" parameterType="User">
 		UPDATE user
 		SET
-			userId='#{User.userId}',
-			nickname='#{User.nickname}',
-			name='#{User.name}',
-			pw='#{User.pw}',
-			levelCode='#{User.levelCode}',
+			userId=#{userId},
+			nickname=#{nickname},
+			name=#{name},
+			pw=#{pw},
+			levelCode=#{levelCode},
 			uDelTime=NOW()
-		WHERE userId='#{userId}'
+		WHERE userId=#{userId}
 	</update>
 	
 	<select id="selectAllUser">

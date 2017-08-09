@@ -9,6 +9,7 @@ public class User {
 	private String uDelTime;
 	
 	public String getUserId() {
+		System.out.println("getUserId 호출");
 		return userId;
 	}
 	public void setUserId(String userId) {
