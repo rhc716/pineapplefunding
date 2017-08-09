@@ -19,7 +19,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
+	 
 		<div class="col-md-6">
 			<div class="border">
 				펀딩명:

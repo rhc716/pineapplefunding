@@ -19,7 +19,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
+	 
 	<div class="col-md-8">
 		기업가치:<br>
 		<input type="text" class="form-control" id="comValue"><br>
