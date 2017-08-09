@@ -20,7 +20,7 @@
 				</div>
 		</form>
 			<div class="login_down">
-				<div><a class="login_down_one" href="${pageContext.request.contextPath}/addUserForm.user">회원가입</a></div>
+				<div><a class="login_down_one" href="${pageContext.request.contextPath}/userinsert.user">회원가입</a></div>
 				<div class="login_down_two">ID/PW찾기</div>
 			</div>
  

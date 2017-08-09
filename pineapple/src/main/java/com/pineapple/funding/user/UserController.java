@@ -1,6 +1,8 @@
 package com.pineapple.funding.user;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,8 +16,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UserController {
 	@Autowired
     private UserService service;
+	//회원가입시 비밀번호 일치 체크 ajax 요청 처리
+	@RequestMapping(value="/checkPw.user", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> checkPw(Locale locale,
+						  Model model,
+						  @RequestParam("pw1") String pw1,
+						  @RequestParam("pw2") String pw2
+			){
+				
+				System.out.println("UserController pw1 : "+pw1);
+				System.out.println("UserController pw2 : "+pw2);
+				Map<String, Object> map= new HashMap<String, Object>();
+				map.put("pw1", pw1);
+				map.put("pw2", pw2);
+			return map;
+	}
 	
-	//회원가입시 아이디 중복체크 ajax 요청 처리
+	//회원가입시 아이디 중복 체크 ajax 요청 처리
 	@RequestMapping(value="/checkId.user", method = RequestMethod.POST)
 	public @ResponseBody User checkId(Locale locale, Model model, @RequestParam("userId") String userId){
 		System.out.println("UserController checkid : "+userId);
@@ -23,7 +40,7 @@ public class UserController {
 	}
 	
 	//회원가입 요청
-	@RequestMapping(value="/addUserForm.user", method = RequestMethod.POST)
+	@RequestMapping(value="/userinsert.user", method = RequestMethod.POST)
     public String userAdd(User user) { //커맨드 객체
         System.out.println("UserController user : "+user);
         service.addUser(user);
@@ -31,9 +48,9 @@ public class UserController {
     }
     
 	//회원가입 페이지 요청
-	@RequestMapping(value="/addUserForm.user", method = RequestMethod.GET)
+	@RequestMapping(value="/userinsert.user", method = RequestMethod.GET)
     public String userAdd() {
         System.out.println("addUserForm 폼 요청");
-        return "user/addUserForm";
+        return "user/userinsert";
     }
 }

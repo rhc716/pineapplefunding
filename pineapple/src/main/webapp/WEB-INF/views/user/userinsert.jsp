@@ -33,24 +33,24 @@
 // 가입정보 유효성검사
 
 $(document).ready(function(){
-	 $('#btn').click(function(){
-		if($('#userId').val()==2){ // submit 유효성 검사후 수동으로 해줌. 
-			if($('#pw').val()==1){
-				if($('#nickname').val()==1){
-					if($('#name').val().length < 1){
-						alert('이름을 입력해주세요');
-					} else {
-						$('#form').submit();
-					}
-			    } else {
-			        alert('닉네임 중복체크를 해주세요');
-			    }
+	 $('#submitBtn').click(function(){
+			if($('#userId').val()==2){ // submit 유효성 검사후 수동으로 해줌. 
+				if($('#pw').val()==1){
+					if($('#nickname').val()==1){
+						if($('#name').val().length < 1){
+							alert('이름을 입력해주세요');
+						} else {
+							$('#form').submit();
+						}
+				    } else {
+				        alert('닉네임 중복체크를 해주세요');
+				    }
+				} else {
+				    alert('비밀번호 중복체크를 해주세요');
+				}
 			} else {
-			    alert('비밀번호 중복체크를 해주세요');
+				alert('아이디 중복체크를 해주세요');
 			}
-		} else {
-			alert('아이디 중복체크를 해주세요');
-		}
 	 });
  });
  
@@ -61,6 +61,23 @@ $(document).ready(function(){
 	 });
 });
 
+ //권한선택 유효성 검사
+ /*
+ $(document).ready(function() {
+	 $('#levelCode').blur(function(){
+		 var temp = 0;
+		 var level = $('#levelCode').val();
+		 if(level == null){
+			 //유효하지 않을때
+			 temp = 1;
+		 }else{
+			 //유효할때
+			 temp = 0;
+		 }
+	 });
+ });
+ */
+ 
  //이메일아이디 (영문,숫자만) 검사와 중복확인
  $(document).ready(function() {
 	$('#userId').blur(function() {
@@ -76,20 +93,20 @@ $(document).ready(function(){
 		}
 		    	
 // 아이디 검사 통과시 중복확인용 ajax실행
-		
         if(temp==0){
         	$.ajax({ // ajax실행부분
                 type: "post",
                 url : "checkId.user",
                 data : {userId : in_id},
                 success : function(ic){ 
-                			$('#idch').css("color", "#FF0000")
+                			$('#idch').css("color", "#FF0000");
                 			$('#idch').text('이미 존재하는 이메일입니다.');
                 			$('#userId').val('');
                 			$('#userId').focus();
                 	},
                 //만약 해당 페이지에 값을 성공적으로 보냈다면 페이지를 ic 라는 매개변수로 받아 id = 'idch' 구역에 ic를 출력하겠다. 
-                error : function error(){ 
+                error : function error(){
+                		$('#idch').css("color", "#008000");
                 		$('#idch').html(in_id +"는 사용 가능한 이메일입니다.");
                 	}
         	});
@@ -130,19 +147,30 @@ $(document).ready(function(){
 		} else {
 			temp = 1; //비번이 유효할때
 		}
-		/*
+		
 		if(temp == 1){
 			$.ajax({ // ajax실행부분
 	            type : "post",
-	            url : "./checkpw.jsp",
+	            url : "checkPw.user",
 	            data : {pw1 : $('#pw').val(), pw2 : $('#pw2').val()},
-	            success : function(pc){ $('#pwch2').html(pc); },
+	            success : function(pc){
+	            	if(pc.pw1 == pc.pw2){
+	            		$('#pwch2').css('color', '#008000');
+	            		$('#pwch2').text('비밀번호가 일치합니다');
+	            	}else{
+	            		$('#pwch2').css('color', '#FF0000');
+	            		$('#pwch2').text('비밀번호가 불일치합니다');
+	            		$('#pwch2').val('');
+	        			$('#pwch2').focus();
+	            	}
+	            	
+	            },
 	            error : function error(){ alert('시스템 문제발생');}
 	        });
 		}else{
 			alert("비밀번호는 6~20자의 영,숫자,특수문자가 모두 포함되어야 합니다");
 		}
-		*/
+		
    });
 });
 
@@ -179,11 +207,10 @@ $(document).ready(function(){
 	<div class="row">
 		<div class="col-xs-3"></div>
 		<div class="col-xs-6 form_page">
-			<form id="form" action="/addUserForm.user" name="userinput" method="post" style="border:1px solid #ccc">
+			<form id="form" action="userinsert.user" name="userinput" method="post" style="border:1px solid #ccc">
 				<div class="container_insert">
 			    <label for="levelCode">권한</label>
 			    <br>
-			    &nbsp&nbsp관리자&nbsp&nbsp<input id="levelCode" type="radio" class="input_insert" name="levelCode" value=1>
 			    &nbsp&nbsp기업회원&nbsp&nbsp<input id="levelCode" type="radio" class="input_insert" name="levelCode" value=2>
 			    &nbsp&nbsp투자자&nbsp&nbsp<input id="levelCode" type="radio" class="input_insert" name="levelCode" value=3>
 			    <br><br>
