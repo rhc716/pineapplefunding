@@ -25,6 +25,7 @@
 <!-- css rhc -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
 
+
 </head>
 <body>
 <div class="container">
@@ -37,12 +38,14 @@
 	<div class="col-md-3">
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
-	<div class="col-md-9">
-	<!-- 모듈 페이지 불러올 곳 -->
-		<div class="btn-group btn-group-justified">
+	<div class="col-md-6">
+	</div>
+	<div class="col-md-3">
+	    <div class="btn-group btn-group-justified">
 		    <a href="/fundingdetail.pms" class="btn btn-primary">펀딩 상세정보 입력</a>
 		</div>
 	</div>
+	
 	
 </div>
 <!-- 풋터 -->

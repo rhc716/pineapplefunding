@@ -31,14 +31,14 @@
 <script>
 
 // 가입정보 유효성검사
-/*
+
 $(document).ready(function(){
 	 $('#btn').click(function(){
-		if($('#use_id').val()==2){ // submit 유효성 검사후 수동으로 해줌. 
-			if($('#use_pw').val()==1){
-				if($('#use_nick').val()==1){
-					if($('#email').val().length < 1){
-						alert('이메일을 입력해주세요');
+		if($('#userId').val()==2){ // submit 유효성 검사후 수동으로 해줌. 
+			if($('#pw').val()==1){
+				if($('#nickname').val()==1){
+					if($('#name').val().length < 1){
+						alert('이름을 입력해주세요');
 					} else {
 						$('#form').submit();
 					}
@@ -46,14 +46,14 @@ $(document).ready(function(){
 			        alert('닉네임 중복체크를 해주세요');
 			    }
 			} else {
-			    alert('비밀번호가 체크를 해주세요');
+			    alert('비밀번호 중복체크를 해주세요');
 			}
 		} else {
 			alert('아이디 중복체크를 해주세요');
 		}
 	 });
  });
- */
+ 
  //취소버튼 누르면 메인으로
  $(document).ready(function(){
 	 $('#btn_cancel').click(function(){
@@ -61,12 +61,12 @@ $(document).ready(function(){
 	 });
 });
 
- //아이디 (영문,숫자만) 검사와 중복확인
+ //이메일아이디 (영문,숫자만) 검사와 중복확인
  $(document).ready(function() {
-	$('#id').blur(function() {
+	$('#userId').blur(function() {
         var temp = 0;
-		var in_id = $('#id').val();
-		var check = /^(?=.*[a-z])(?=.*[0-9])/i;
+		var in_id = $('#userId').val();
+		var check = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		if(!check.test(in_id)) {
 			//유효하지 않을때
 			temp = 1;
@@ -76,23 +76,23 @@ $(document).ready(function(){
 		}
 		    	
 // 아이디 검사 통과시 중복확인용 ajax실행
-		/*
+		
         if(temp==0){
         	$.ajax({ // ajax실행부분
                 type: "post",
-                url : "./checkid.jj",
-                data : {id : in_id, insert_type : $('#insert_type').val() },
+                url : "/checkid.user",
+                data : {userId : in_id},
                 success : function(ic){ $('#idch').html(ic); },
                 //만약 해당 페이지에 값을 성공적으로 보냈다면 페이지를 ic 라는 매개변수로 받아 id = 'idch' 구역에 ic를 출력하겠다. 
                 error : function error(){ alert('시스템 문제발생');}
         	});
         } else {
         	$("#idch").css("color", "#FF0000");
-			$('#idch').text('아이디는 5~20자의 영문 소문자, 숫자만 사용 가능합니다.');
-        	$('#id').val('');
-			$('#id').focus();
+			$('#idch').text('유효한 이메일을 입력해주시기 바랍니다.');
+        	$('#userId').val('');
+			$('#userId').focus();
         }
-        */
+        
     });
 });
  
@@ -172,7 +172,7 @@ $(document).ready(function(){
 	<div class="row">
 		<div class="col-xs-3"></div>
 		<div class="col-xs-6 form_page">
-			<form id="form" action="/addUserForm" name="userinput" method="post" style="border:1px solid #ccc">
+			<form id="form" action="/addUserForm.user" name="userinput" method="post" style="border:1px solid #ccc">
 				<div class="container_insert">
 			    <label for="levelCode">권한</label>
 			    <br>
@@ -183,7 +183,7 @@ $(document).ready(function(){
 			    <label for="userId">이메일 아이디</label>
 			    <p id="explain"> (정확한 이메일 아이디를 입력해주시기 바랍니다.)</p>
 			    <input id="userId" type="text" class="input_insert" type="text" name="userId" placeholder="Enter email id" maxlength="20">
-				<span id="idch"> <input type="hidden" value="0" id="use_id" name="use_id"/></span>
+				<span id="idch"> <input type="hidden" value="0" id="userId" name="userId"/></span>
 				<br><br>
 			    <label for="pw">비밀번호</label>
 			    <p id="explain"> (비밀번호는 6~20자의 영,숫자,특수문자가 모두 포함되어야 합니다)</p>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -10,13 +11,14 @@
 			VALUES (#{userId}, #{nickname}, #{name}, #{pw}, #{levelCode});
 	</insert>
 	
-	<!-- 
+	 
 	<select id="selectUserById" parameterType="String" resultType="com.pineapple.funding.user.User">
 		SELECT userId, nickname, name, pw, levelCode, uDelTime
 		FROM user 
-		WHERE userId='#{userId}'
+		WHERE userId=#{userId}
 	</select>
 	
+	<!--
 	<update id="updateUserById" parameterType="User">
 		UPDATE user
 		SET
