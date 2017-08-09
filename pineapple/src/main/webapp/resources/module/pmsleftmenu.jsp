@@ -18,7 +18,7 @@
 	<ul>
 		<li><a href="">펀딩관리</a>
 			<ul>
-		  		<li><a href="/fundingopen.pms">펀딩개설</a>
+		  		<li><a href="/fundinginsert.pms">펀딩개설</a>
 		  		<li><a href="">펀딩조회</a>
 			</ul>
 		</li>
@@ -30,7 +30,7 @@
 		</li>
 		<li><a href="">WBS관리</a>
 			<ul>
-				<li><a href="/wbsplan.pms">WBS예상작성</a></li>
+				<li><a href="/wbsplaninsert.pms">WBS예상작성</a></li>
 				<li><a href="">WBS예상조회</a></li>
 				<li><a href="">WBS실제작성</a></li>
 				<li><a href="">WBS실제조회</a></li>

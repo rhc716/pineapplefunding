@@ -30,7 +30,7 @@
 <body>
 
 <div class="container">
-<!--최상단 로고 및 로그인 or 로그아웃버튼 -->
+<!--로고 및 검색 -->
 	<c:import url="/resources/module/toploginandlogo.jsp"/>
 <!-- 상단메뉴 -->
 	<c:import url="/resources/module/topmenu.jsp"/>
@@ -39,10 +39,26 @@
 	<div class="col-md-3">
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
-	<div class="col-md-9">
-		<c:import url="/resources/module/pmsmodule/fundingdetailinsert.jsp"/>
+	<div class="col-md-9">	
+		<div class="col-md-1"></div>
+			<div class="col-md-7">
+				<form action="" method="post">
+					펀딩명:
+					<select id="fdType">
+						<option value="msFdCode">1번펀딩</option>
+						<option value="msFdCode">2번펀딩</option>
+					</select><br><br>
+					마일스톤 단계:
+					<input type="text" class="form-control" id="milestoneStep"><br>
+					마일스톤 이름:
+					<input type="text" class="form-control" id="milestoneName"><br>
+					마일스톤 요약:<br>
+					<textarea class="form-control" rows="5" id="milestoneSummary"></textarea>
+					<button type="submit">입력완료</button>
+				</form>
+			</div>
+		<div class="col-md-1"></div>
 	</div>
-	
 </div>
 <!-- 풋터 -->
 	<c:import url="/resources/module/footer.jsp"/>
