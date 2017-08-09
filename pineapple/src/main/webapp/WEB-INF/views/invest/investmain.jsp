@@ -26,7 +26,7 @@
 				}
 	.fdlist-box{height: 396px;
 				width: 303px;
-				margin: auto;
+				margin: 0px 5px;
 				padding: 0px;}
 	.fdlist-title{padding: 12px 10px 2px;
 				  font-size: 17px;
@@ -58,15 +58,17 @@
 <!-- 본문 -->
 <!-- 펀딩 리스트 -->
 <div class="row fdlist-main">
-	<div class="col-xs-4 well fdlist-box">
+ 	<div class="col-xs-4 well fdlist-box">
 		<a href="/investfunding.invest">
 			<img src="${pageContext.request.contextPath}/resources/img/invest/fundingone.jpg"width="303px" height="171px" >
 		</a>
 		<h4 class="fdlist-title">
-			셀프웨딩족을 위한 웨딩O2O 어플
+			<c:forEach var="list" items="${fundingList}">
+			<div>${list.fdTitle}</div>
+			</c:forEach>
 		</h4>
 		<h6 class="fdlist-context">
- 			웨딩플래너 없이 혼자서 쉽게 따져보고 결혼을 준비한다면?! 투명한 웨딩시장을 위해 만든 어플! 웨딩메이트입니다
+			웨딩플래너 없이 혼자서 쉽게 따져보고 결혼을 준비한다면?! 투명한 웨딩시장을 위해 만든 어플! 웨딩메이트입니다
 		</h6>
 		<div class="fdlist-comname">
 			회사명
@@ -76,40 +78,9 @@
 		</div>
 	</div>
 	<div class="col-xs-4 well fdlist-box">
-		<a href="#" style="text-align: center;">
-			<img src="#"width="303px" height="171px" >
-		</a>
-		<h4 class="fdlist-title">
-			셀프웨딩족을 위한 웨딩O2O 어플
-		</h4>
-		<h6 class="fdlist-context">
- 			웨딩플래너 없이 혼자서 쉽게 따져보고 결혼을 준비한다면?! 투명한 웨딩시장을 위해 만든 어플! 웨딩메이트입니다
-		</h6>
-		<div class="fdlist-comname">
-			회사명
-		</div>
-		<div class="fdlist-data">
-			펀딩성공률
-		</div>
 	</div>
 	<div class="col-xs-4 well fdlist-box">
-		<a href="#" style="text-align: center;">
-			<img src="#"width="303px" height="171px" >
-		</a>
-		<h4 class="fdlist-title">
-			셀프웨딩족을 위한 웨딩O2O 어플
-		</h4>
-		<h6 class="fdlist-context">
- 			웨딩플래너 없이 혼자서 쉽게 따져보고 결혼을 준비한다면?! 투명한 웨딩시장을 위해 만든 어플! 웨딩메이트입니다
-		</h6>
-		<div class="fdlist-comname">
-			회사명
-		</div>
-		<div class="fdlist-data">
-			펀딩성공률
-		</div>
 	</div>
-	 
 </div>
 <!-- 풋터 -->
 	<c:import url="/resources/module/footer.jsp"/>
