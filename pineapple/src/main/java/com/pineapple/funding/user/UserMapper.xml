@@ -18,6 +18,12 @@
 		WHERE userId=#{userId}
 	</select>
 	
+	<select id="selectUserByNickname" parameterType="String" resultType="com.pineapple.funding.user.User">
+		SELECT userId, nickname, name, pw, levelCode, uDelTime
+		FROM user 
+		WHERE nickname=#{nickname}
+	</select>
+	
 	<!--
 	<update id="updateUserById" parameterType="User">
 		UPDATE user

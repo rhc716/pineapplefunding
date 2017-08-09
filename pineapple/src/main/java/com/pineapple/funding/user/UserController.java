@@ -16,6 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UserController {
 	@Autowired
     private UserService service;
+	
+	//회원가입시 닉네임 중복 체크 ajax 요청 처리
+	@RequestMapping(value="/checknick.user", method = RequestMethod.POST)
+	public @ResponseBody User checkNick(Locale locale, Model model, @RequestParam("nickname") String nickname){
+		System.out.println("UserController checkid : "+nickname);
+		return service.getUserByNickname(nickname);
+	}
+	
 	//회원가입시 비밀번호 일치 체크 ajax 요청 처리
 	@RequestMapping(value="/checkPw.user", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> checkPw(Locale locale,
