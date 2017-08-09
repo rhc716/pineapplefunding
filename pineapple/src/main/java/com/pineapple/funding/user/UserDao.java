@@ -9,6 +9,8 @@ public class UserDao {
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
 	
+	
+	
 	//회원가입 닉네임 중복체크 ajax를 위한 닉네임 데이터 호출
 	public User selectUserByNickname(String nickname){
 		System.out.println("UserDao selectUserByNickname : "+nickname);

@@ -34,16 +34,16 @@
 
 $(document).ready(function(){
 	 $('#submitBtn').click(function(){
-			if($('#inputSuccess2').val()==){ // submit 유효성 검사후 수동으로 해줌. 
-				if($('#pw').val()==1){
-					if($('#nickname').val()==1){
-						if($('#name').val().length < 1){
-							alert('이름을 입력해주세요');
+			if($('#inputSuccess2').val()!=''){ // submit 유효성 검사후 수동으로 해줌. 
+				if($('#pw2').val()!=''){
+					if($('#name').val()!=''){
+						if($('#nickname').val()==''){
+							alert('닉네임 중복체크를 해주세요');
 						} else {
 							$('#form').submit();
 						}
 				    } else {
-				        alert('닉네임 중복체크를 해주세요');
+				        alert('이름을 입력해주세요');
 				    }
 				} else {
 				    alert('비밀번호 중복체크를 해주세요');
@@ -113,7 +113,7 @@ $(document).ready(function(){
                 		$('#emailSuccess').show();
                 		document.getElementById("inputSuccess2").readOnly = true;
                 		$("#inputSuccess2").val(in_id);
-                		$("#inputSuccess2").val()=
+                		
                 	}
         	});
         } else {
@@ -182,7 +182,7 @@ $(document).ready(function(){
 
 //닉네임(2~20자,한,영,숫자,특문) 검사와 중복 확인
  $(document).ready(function(){
-	$('#nick').blur(function(){
+	$('#nickname').blur(function(){
 		var temp = 0;
 		var in_nick = $('#nick').val();
 		var re = /^[0-9a-zA-Z가-힣]{2,20}$/;
@@ -197,9 +197,15 @@ $(document).ready(function(){
                 url : "checknick.user",
                 data : {nickname : in_nick},
                 success : function(nc){ 
-                	$('#nickch').html(nc);
+                	$('#nickch').css("color", "#FF0000");
+        			$('#nickch').text('이미 존재하는 닉네임입니다');
+        			$('#nickname').val('');
+        			$('#nickname').focus();
                 	},
-                error : function error(){ alert('시스템 문제발생');}
+                error : function error(){ 
+                	$('#nickch').css("color", "#008000");
+        			$('#nickch').text('닉네임을 사용할 수 있습니다');
+               	}
             });
         }else{
         	alert("닉네임은 6~20자의 영,숫자,한글을 사용 가능합니다");
@@ -217,7 +223,7 @@ $(document).ready(function(){
 			<form id="form" action="userinsert.user" name="userinput" method="post" style="border:1px solid #ccc">
 				<div class="container_insert">
 				    <label for="levelCode">권한</label>
-				    <br>
+				    <p id="explain">(권한을 선택해주시기 바랍니다)</p>
 				    &nbsp&nbsp기업회원&nbsp&nbsp<input id="levelCode" type="radio" class="checkbox-inline" name="levelCode" value=2>
 				    &nbsp&nbsp투자자&nbsp&nbsp<input id="levelCode" type="radio" class="checkbox-inline" name="levelCode" value=3>
 				    <span id="levelHelp" class="sr-only"></span>
@@ -230,7 +236,7 @@ $(document).ready(function(){
 					</div>
 					<div id="emailCheck" class="form-group">
 					    <label class="control-label" for="exampleInputEmail1">이메일 아이디</label>
-					    <p id="explain"> (정확한 이메일 아이디를 입력해주시기 바랍니다.)</p>
+					    <p id="explain"> (정확한 이메일 아이디를 입력해주시기 바랍니다)</p>
 					    <input id="userId" type="text" class="form-control" type="text" name="userId" placeholder="Enter email id">
 				  		<span id="idch"><input type="hidden" value="0" id="userIdValue0" name="userIdValue0"/></span>
 					<br>
