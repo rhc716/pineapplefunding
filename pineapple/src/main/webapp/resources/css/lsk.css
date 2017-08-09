@@ -1,1 +1,8 @@
 @CHARSET "UTF-8";
+
+
+.wbsplan_border {
+  padding: 8px;
+  wbsplan_border: 1px solid gray;
+  text-align: center;
+}
