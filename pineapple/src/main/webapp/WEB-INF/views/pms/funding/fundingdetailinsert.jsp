@@ -30,18 +30,8 @@
 <body>
 
 <div class="container">
-<!--로고 및 검색 -->
-	<div class="row">
-		<div class="col-md-3"></div>
-		<div class="col-md-6 logoandsearch">
-			<img src="${pageContext.request.contextPath}/resources/img/logo.jpg">
-			<i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;<input type="text">&nbsp;
-			<button type="button" class="btn btnpine">검색</button>
-		</div>
-		<div class="col-md-3">
-			<button type="button"  class="btn btnpine loginorlogoutbtn">로그인 or 로그아웃</button>
-		</div>
-	</div>
+<!--최상단 로고 및 로그인 or 로그아웃버튼 -->
+	<c:import url="/resources/module/toploginandlogo.jsp"/>
 <!-- 상단메뉴 -->
 	<c:import url="/resources/module/topmenu.jsp"/>
 <!-- 본문 -->
@@ -50,7 +40,20 @@
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-md-9">
-		<c:import url="/resources/module/pmsmodule/wbsplaninsert.jsp"/>
+		<div class="col-md-8">
+			기업가치:<br>
+			<input type="text" class="form-control" id="comValue"><br>
+			오픈스토리:<br>
+			<textarea class="form-control" rows="30" id="openstory"></textarea><br>
+		</div>
+		<div class="col-md-4">
+	</div>
+	
+	<div class="col-md-3">
+	</div>
+	<div class="col-md-9">	
+		<button>입력완료</button>
+		</div>
 	</div>
 	
 </div>

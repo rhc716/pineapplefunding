@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -16,21 +19,42 @@
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
-<style>
-[class*="border"] {
-  padding: 8px;
-  border: 1px solid gray;
-  text-align: center;
-}
-</style>
-<title>Insert title here</title>
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
+
+<!-- css rhc -->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
+
+
 </head>
 <body>
+
+<div class="container">
+<!--로고 및 검색 -->
+	<div class="row">
+		<div class="col-md-3"></div>
+		<div class="col-md-6 logoandsearch">
+			<img src="${pageContext.request.contextPath}/resources/img/logo.jpg">
+			<i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;<input type="text">&nbsp;
+			<button type="button" class="btn btnpine">검색</button>
+		</div>
+		<div class="col-md-3">
+			<button type="button"  class="btn btnpine loginorlogoutbtn">로그인 or 로그아웃</button>
+		</div>
+	</div>
+<!-- 상단메뉴 -->
+	<c:import url="/resources/module/topmenu.jsp"/>
+<!-- 본문 -->
 <div class="row">
+	<div class="col-md-3">
+		<c:import url="/resources/module/pmsleftmenu.jsp"/>
+	</div>
+	<div class="col-md-9">
+		<div class="row">
 	<div class="col-md-2">
 	</div>
 	<div class="col-md-8">
-		<div class="border">
+		<div class="wbsplanform">
 			<label for="wbsplan">WBS예상계획</label><br>
 			<div class="row">
 				<div class="col-md-6">
@@ -67,7 +91,7 @@
 	</div>
 	
 		<div class="col-md-4">
-			<div class="border">
+			<div class="wbsplanform">
 				<label for="wbsplanhuman">WBS인원예상지출</label><br><br>
 				인원수:<br>
 				<input type="text"><br>
@@ -77,7 +101,7 @@
 				<input type="text" id="milestoneName"><br>
 			</div><br>
 	
-			<div class="border">
+			<div class="wbsplanform">
 				<label for="wbsplanhuman">WBS예상장비지출</label><br>
 				장비명:<br>
 				<input type="text"><br>
@@ -88,7 +112,7 @@
 				총비용:<br>
 				<input type="text" id="milestoneName">
 			</div><br>
-			<div class="border">
+			<div class="wbsplanform">
 				<label for="wbsplanhuman">WBS예상기타지출</label><br>
 				비용명:<br>
 				<input type="text"><br>
@@ -99,7 +123,7 @@
 			</div>
 		</div>
 	<div class="col-md-4">
-		<div class="border">
+		<div class="wbsplanform">
 			<label for="wbsplanhuman">WBS시설예상지출</label><br><br>
 			시설명:<br>
 			<input type="text"><br>
@@ -109,7 +133,7 @@
 			<input type="text" id="milestoneName"><br>
 		</div><br>
 
-		<div class="border">
+		<div class="wbsplanform">
 			<label for="wbsplanhuman">WBS예상외주지출</label><br>
 			업체명:<br>
 			<input type="text"><br>
@@ -119,7 +143,7 @@
 			<input type="text" id="milestoneName">
 		</div><br>
 		
-		<div class="border">
+		<div class="wbsplanform">
 			<label for="wbsplanhuman">WBS예상수익</label><br>
 			수익상황:<br>
 			<input type="text"><br>
@@ -135,8 +159,11 @@
 		<button>입력완료</button>
 	</div>
 </div>
-
+	</div>
 	
-	
+</div>
+<!-- 풋터 -->
+	<c:import url="/resources/module/footer.jsp"/>
+</div>
 </body>
 </html>
