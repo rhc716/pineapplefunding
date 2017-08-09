@@ -13,7 +13,7 @@ public class FundingController {
 	@RequestMapping(value = "/pmsmain.pms", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		return "./pms/pmsmain";
-	}
+	} 
 	
 	@RequestMapping(value = "/fundingopen.pms", method = RequestMethod.GET)
 	public String fundingopen(Locale locale, Model model) {
