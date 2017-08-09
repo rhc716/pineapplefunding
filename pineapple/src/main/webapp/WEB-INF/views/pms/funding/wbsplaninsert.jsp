@@ -45,17 +45,17 @@
 					<form action="" method="post">
 						<label for="wbsplan">WBS예상계획</label><br>
 						WBS순서:
-						<input type="text" class="form-control" id="milestoneStep">
+						<input type="text" class="form-control" name="milestoneStep">
 						작업명:
-						<input type="text" class="form-control" id="milestoneName">
+						<input type="text" class="form-control" name="milestoneName">
 						선행작업
-						<input type="text" class="form-control" id="milestoneName">
+						<input type="text" class="form-control" name="milestoneName">
 						작업기간
-						<input type="text" class="form-control" id="milestoneName">
+						<input type="text" class="form-control" name="milestoneName">
 						시작일
-						<input type="date" id="milestoneName">
+						<input type="date" name="milestoneName">
 						종료일
-						<input type="date" id="milestoneName">	
+						<input type="date" name="milestoneName">	
 						<button type="submit">입력완료</button>
 					</form>
 				</div>

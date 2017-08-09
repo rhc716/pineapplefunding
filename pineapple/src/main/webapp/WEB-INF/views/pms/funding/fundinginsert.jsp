@@ -25,7 +25,6 @@
 <!-- css rhc -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
 
-
 </head>
 <body>
 
@@ -42,26 +41,39 @@
 	<div class="col-md-9">
 		<div class="col-md-1"></div>
 			<div class="col-md-7">
-				<form action="" method="post">
+				<form action="/wbsplanetcinsert.pms" method="post">
 					펀딩형태
-					<select id="fdType">
-						<option value="채권형">채권형</option>
-						<option value="주식형">주식형</option>
+					<select name="fdType">
+						<option value="채권">채권</option>
+						<option value="주식">주식</option>
 					</select><br><br>
+					회사명
+					<select name="fdComCode">
+						<!-- ajax요청으로 회사명과 회사코드를 각각 넣어줌  -->
+						<option value="1">xx회사</option>
+					</select><br><br>			
 					펀딩명
-					<input type="text" class="form-control" id="fdTitle"><br>
+					<input type="text" class="form-control" name="fdTitle"><br>
 					최소투자금액
-					<input type="text" class="form-control" id="minInvestMoney"><br>
+					<input type="text" class="form-control" name="minInvestMoney"><br>
 					판매주식수
-					<input type="text" class="form-control" id="numberOfShares"><br>
+					<input type="text" class="form-control" name="numberOfShares"><br>
 					주당발행가
-					<input type="text" class="form-control" id="issuePrice"><br>	
+					<input type="text" class="form-control" name="issuePrice"><br>	
 					오픈일
-					<input type="text" class="form-control" id="openDate"><br>
+					<input type="text" class="form-control" name="openDate"><br>
 					마감일
-					<input type="text" class="form-control" id="closeDate"><br>
+					<input type="text" class="form-control" name="closeDate"><br>
 					최소보장이율
-					<input type="text" class="form-control" id="numberOfShares"><br>
+					<input type="text" class="form-control" name="numberOfShares"><br>
+					프로젝트 시작일
+					<input type="text" class="form-control" name="projectStartDate"><br>
+					프로젝트 마감일
+					<input type="text" class="form-control" name="projectEndDate"><br>
+					<!-- 펀딩 포스터 이미지 업로드
+					<input type="file" class="form-control" name="imageUpload"><br> -->
+						<!-- 히든값으로 펀딩개설자 name를 세션에서받아서 넣어줌 -->
+					<input type="hidden" class="form-control" name="fdPublisher" value="id01@maver.com">
 					<button type="submit">입력완료</button>
 				</form>
 			</div>

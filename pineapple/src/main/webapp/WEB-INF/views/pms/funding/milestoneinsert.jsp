@@ -44,16 +44,16 @@
 			<div class="col-md-7">
 				<form action="" method="post">
 					펀딩명:
-					<select id="fdType">
+					<select name="fdType">
 						<option value="msFdCode">1번펀딩</option>
 						<option value="msFdCode">2번펀딩</option>
 					</select><br><br>
 					마일스톤 단계:
-					<input type="text" class="form-control" id="milestoneStep"><br>
+					<input type="text" class="form-control" name="milestoneStep"><br>
 					마일스톤 이름:
-					<input type="text" class="form-control" id="milestoneName"><br>
+					<input type="text" class="form-control" name="milestoneName"><br>
 					마일스톤 요약:<br>
-					<textarea class="form-control" rows="5" id="milestoneSummary"></textarea>
+					<textarea class="form-control" rows="5" name="milestoneSummary"></textarea>
 					<button type="submit">입력완료</button>
 				</form>
 			</div>

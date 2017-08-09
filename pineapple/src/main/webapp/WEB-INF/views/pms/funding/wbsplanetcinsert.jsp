@@ -45,46 +45,46 @@
 					<form action="" method="post">
 						<label for="wbsplanhuman">WBS인원예상지출</label><br><br>
 						인원수:<br>
-						<input type="text" id=""><br>
+						<input type="text" name=""><br>
 						총비용:<br>
-						<input type="text" id="milestoneName"><br>
+						<input type="text" name="milestoneName"><br>
 						비고:<br>
-						<input type="text" id="milestoneName"><br>
+						<input type="text" name="milestoneName"><br>
 						<label for="wbsplanhuman">WBS예상장비지출</label><br>
 						장비명:<br>
 						<input type="text"><br>
 						수:<br>
-						<input type="text" id="milestoneName"><br>
+						<input type="text" name="milestoneName"><br>
 						단가:<br>
-						<input type="text" id="milestoneName"><br>
+						<input type="text" name="milestoneName"><br>
 						총비용:<br>
-						<input type="text" id="milestoneName">
+						<input type="text" name="milestoneName">
 						<label for="wbsplanhuman">WBS예상기타지출</label><br>
 						비용명:<br>
 						<input type="text"><br>
 						가격:<br>
-						<input type="text" id="milestoneName"><br>
+						<input type="text" name="milestoneName"><br>
 						비고:<br>
-						<input type="text" id="milestoneName"><br>
+						<input type="text" name="milestoneName"><br>
 						<label for="wbsplanhuman">WBS시설예상지출</label><br><br>
 						시설명:<br>
 						<input type="text"><br>
 						비용:<br>
-						<input type="text" id="milestoneName"><br>
+						<input type="text" name="milestoneName"><br>
 						비고:<br>
-						<input type="text" id="milestoneName"><br>
+						<input type="text" name="milestoneName"><br>
 						<label for="wbsplanhuman">WBS예상외주지출</label><br>
 						업체명:<br>
 						<input type="text"><br>
 						비용:<br>
-						<input type="text" id="milestoneName"><br>
+						<input type="text" name="milestoneName"><br>
 						비고:<br>
-						<input type="text" id="milestoneName">
+						<input type="text" name="milestoneName">
 						<label for="wbsplanhuman">WBS예상수익</label><br>
 						수익상황:<br>
 						<input type="text"><br>
 						수익:<br>
-						<input type="text" id="milestoneName">
+						<input type="text" name="milestoneName">
 						<button type="submit">입력완료</button>
 					</form>
 				</div>
