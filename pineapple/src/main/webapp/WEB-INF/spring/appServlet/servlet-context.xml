@@ -59,7 +59,7 @@
             	<value>classpath:com/pineapple/funding/service/FundingMapper.xml</value>
                 <value>classpath:com/pineapple/invest/service/InvestMapper.xml</value>
                 <value>classpath:com/pineapple/user/service/UserMapper.xml</value>
-                <value>classpath:com/pineapple/funding/service/PmsMapper.xml</value>
+                <value>classpath:com/pineapple/pms/service/PmsMapper.xml</value>
             </list>
         </property>
     </bean>
