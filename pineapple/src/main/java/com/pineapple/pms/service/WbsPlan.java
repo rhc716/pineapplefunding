@@ -13,6 +13,7 @@ public class WbsPlan {
 	private String wbsPlanWriteDate;
 	private String wbsPlanManager;
 	private int wbsPlanComCode;
+	
 	public int getWbsPlanCode() {
 		return wbsPlanCode;
 	}
