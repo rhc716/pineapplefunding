@@ -12,8 +12,8 @@ public class MypageDao implements MypageDaoInterface {
 
 	@Override
 	public User getUser(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("MypageDao getUser : "+userId);
+		return sqlSessionTemplate.selectOne("", userId);
 	}
 
 	@Override
