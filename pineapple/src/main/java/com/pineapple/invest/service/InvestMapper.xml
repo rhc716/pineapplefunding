@@ -2,12 +2,12 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.pineapple.funding.invest.InvestMapper">
-	<select id="investFundingSelect" parameterType="java.util.Map" resultType="com.pineapple.funding.funding.Funding">
+<mapper namespace="com.pineapple.invest.service.InvestMapper">
+	<select id="investFundingSelect" parameterType="java.util.Map" resultType="com.pineapple.funding.service.Funding">
 		SELECT fdCode,fdTitle
  		FROM funding
 	</select>
-	<select id="getInvestFundingList" parameterType="java.util.Map" resultType="com.pineapple.funding.invest.InvestAndFd">
+	<select id="getInvestFundingList" parameterType="java.util.Map" resultType="com.pineapple.invest.service.InvestAndFd"> 
 		SELECT f.fdCode as 'fdCode',
 				f.fdTitle as 'fdTitle',
 				c.purchaseShares as 'purchaseShares'

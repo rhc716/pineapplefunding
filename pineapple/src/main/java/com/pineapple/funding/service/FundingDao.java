@@ -11,6 +11,6 @@ public class FundingDao {
 	
 	public void insertFunding(Funding funding){
 		System.out.println("FundingDao의 insertFunding호출 성공");
-		sqlSessionTemplate.insert("com.pineapple.funding.funding.FundingMapper.insertFunding", funding);
+		sqlSessionTemplate.insert("com.pineapple.funding.service.FundingMapper.insertFunding", funding);
 	}
 } 

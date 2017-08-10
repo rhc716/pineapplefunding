@@ -3,22 +3,22 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.pineapple.funding.user.UserMapper">
+<mapper namespace="com.pineapple.user.service.UserMapper">
 	
 	<!-- 회원공통정보 입력/수정/조회/삭제 -->
-	<insert id="insertUser" parameterType="com.pineapple.funding.user.User">
+	<insert id="insertUser" parameterType="com.pineapple.user.service.User">
 		INSERT INTO user(userId, nickname, name, pw, levelCode)
 			VALUES (#{userId}, #{nickname}, #{name}, #{pw}, #{levelCode});
 	</insert>
 	
 	 
-	<select id="selectUserById" parameterType="String" resultType="com.pineapple.funding.user.User">
+	<select id="selectUserById" parameterType="String" resultType="com.pineapple.user.service.User">
 		SELECT userId, nickname, name, pw, levelCode, uDelTime
 		FROM user 
 		WHERE userId=#{userId}
 	</select>
 	
-	<select id="selectUserByNickname" parameterType="String" resultType="com.pineapple.funding.user.User">
+	<select id="selectUserByNickname" parameterType="String" resultType="com.pineapple.user.service.User">
 		SELECT nickname
 		FROM user 
 		WHERE nickname=#{nickname}
@@ -69,7 +69,7 @@
  		WHERE userDetailId='#{userId}'
 	</update>
 	
-	<select id="selectUserDetailById" parameterType="String" resultType="com.pineapple.funding.user.UserDetail">
+	<select id="selectUserDetailById" parameterType="String" resultType="com.pineapple.user.service.UserDetail">
 		SELECT userDetailId, phoneFront3, phoneRest8, postalCode, address, nameCheck
 		FROM userdetail 
 		WHERE userDetailId='#{userId}'
@@ -87,7 +87,7 @@
 		VALUES (NULL, '#{accountId}', '#{secCompany}', '#{accountNumber}', '#{accountNickname}')
 	</insert>
 	
-	<select id="selectAccountById" parameterType="String" resultType="com.pineapple.funding.user.Account">
+	<select id="selectAccountById" parameterType="String" resultType="com.pineapple.user.service.Account">
 		SELECT accountCode, accountId, secCompany, accountNumber, accountNickname
  		FROM account WHERE accountId='#{accountId}'
 	</select>

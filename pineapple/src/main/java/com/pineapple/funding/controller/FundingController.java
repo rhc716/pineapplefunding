@@ -17,7 +17,7 @@ import com.pineapple.funding.service.FundingService;
 
 
 @Controller
-public class FundingController {
+public class FundingController { 
 	// 컨트롤러 ~ 서비스쪽까지 네이밍규칙 add, modify, remove, get
 	// 입력, 수정인지 단순 페이지요청인지는 Get, Post로 구분함
 	@Autowired
@@ -66,6 +66,7 @@ public class FundingController {
 			System.out.println("FundingController의 myfundinglistpage호출 성공");
 			return "pms/companyuser/myfundinglist";
 	}
+		
 	////////////////////////////////////////////////위에는///페이지요청//////////////////////////////////////////////////////
 		
 	// 펀딩개설요청 ( 기업회원 경영자 )

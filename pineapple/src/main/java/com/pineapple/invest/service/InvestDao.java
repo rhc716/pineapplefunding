@@ -18,11 +18,11 @@ public class InvestDao {
 	public List<Funding> investFundingSelect(){
 		System.out.println("InvestDao-----investFundingSelect");
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		return sqlSessionTemplate.selectList("com.pineapple.funding.invest.InvestMapper.investFundingSelect",map);
+		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.investFundingSelect",map);
 	}
 	public List<InvestAndFd> investAndFundingListSelect(){
 		System.out.println("InvestDao-----investAndFundingListSelect");
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		return sqlSessionTemplate.selectList("com.prineapple.funding.invest.InvestMapper.getInvestFundingList",map);
+		return sqlSessionTemplate.selectList("com.prineapple.invest.service.InvestMapper.getInvestFundingList",map);
 	}
 }
