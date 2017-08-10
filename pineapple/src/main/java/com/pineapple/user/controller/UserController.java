@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pineapple.user.service.User;
-import com.pineapple.user.service.UserService;
+import com.pineapple.user.service.UserServiceInterface;
 
 @Controller
 public class UserController {
 	@Autowired
-    private UserService service;
+    private UserServiceInterface service;
 	
 	//회원가입시 닉네임 중복 체크 ajax 요청 처리
 	@RequestMapping(value="/checkNick.user", method = RequestMethod.POST)

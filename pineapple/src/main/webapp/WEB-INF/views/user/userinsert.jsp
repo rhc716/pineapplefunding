@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,9 +21,6 @@
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
 
-<!-- css rhc -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
-
 <!-- css lbr -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lbr.css" />
 
@@ -33,12 +30,12 @@
 
 $(document).ready(function(){
 	 $('#submitBtn').click(function(){
-		 if($('#levelCode').val())!=''){
-			if($('#inputSuccess2').val()!=''){ // submit 유효성 검사후 수동으로 해줌. 
-				if($('#pw2').val()!=''){
-					if($('#name').val()!=''){
-						if($('#nickname').val()!=''){
-							if($('#userAgreeCheck')==''){
+		 if($('#levelCode').attr('checked', 'checked')==true){
+			if($('#inputSuccess2').val() != ''){ // submit 유효성 검사후 수동으로 해줌. 
+				if($('#pw2').val() != ''){
+					if($('#name').val() != ''){
+						if($('#nickname').val() != ''){
+							if($('#userAgreeCheck') == ''){
 								alert('사이트 약관에 동의 해주세요');
 							} else {
 								$('#form').submit();
@@ -69,25 +66,15 @@ $(document).ready(function(){
 });
 
  //권한선택 유효성 검사
-/* 
+
  $(document).ready(function() {
-	 $('#levelCode').mouseover(function(){
-		 var temp = 0;
-		 var in_level = $('#levelCode').val();
-		 var check = /^(IS NOT NULL);
-		 if(!check.test(in_level)){
-				//유효하지 않을때
-				 temp = 1;
-				 $('#levelHelp').text('권한을 선택해주시기 바랍니다');
-		 } else {
-			 //유효할때
-			 temp = 0;
-			 $('#levelHelp').hide();
-		 }
-	 });
-		 
+	 $('#levelCode').click(function() {
+		   if($('#levelCode').attr('checked', 'checked')==false) { 
+			   $('#levelCode').attr('checked', 'checked')=true;
+			   }
+		});
  });
-*/ 
+
  //이메일아이디 (영문,숫자만) 검사와 중복확인
  $(document).ready(function() { 
 	$('#userId').blur(function() {
@@ -190,11 +177,15 @@ $(document).ready(function(){
 //닉네임(2~20자,한,영,숫자,특문) 검사와 중복 확인
  $(document).ready(function(){
 	$('#nickname').blur(function(){
+		var temp = 0;
 		var in_nick = $('#nickname').val();
-		//var re = /^[0-9a-zA-Z가-힣]{2,20}$/;
+		var re = /^[0-9a-zA-Z가-힣]{2,20}$/;
+       	if(!re.test(in_nick)) {
+    		temp = 1;
+        }
 		
 // 닉네임 검사 통과시 중복확인용 ajax실행
-       
+        if(temp==0){
        	$.ajax({ // ajax실행부분
                type: "post",
                url : "checkNick.user",
@@ -210,15 +201,17 @@ $(document).ready(function(){
        			$('#nickch').text('닉네임을 사용할 수 있습니다');
               	}
            });
-        }else{
-        	alert("닉네임은 6~20자의 영,숫자,한글을 사용 가능합니다");
         }
-        
     });
 });
 </script>
 </head>
 <body class="container">
+<!--로그인 버튼 -->
+	<c:import url="/resources/module/toploginandlogo.jsp"/>
+<!-- 상단메뉴 -->
+	<c:import url="/resources/module/topmenu.jsp"/>
+<!-- 본문 -->
 	<span class="topnamebar" ><h2>회원가입</h2></span>
 	<div class="row">
 		<div class="col-xs-3"></div>
@@ -282,5 +275,8 @@ $(document).ready(function(){
 		</div>
 		<div class="col-xs-3"></div>
 	</div>
+	
+<!-- 풋터 -->
+<c:import url="/resources/module/footer.jsp"/>
 </body>
 </html>

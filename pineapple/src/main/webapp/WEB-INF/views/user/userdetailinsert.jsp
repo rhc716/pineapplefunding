@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>관리자 MyPage</title>
+<title>Insert title here</title>
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -30,26 +30,8 @@
 	<c:import url="/resources/module/topmenu.jsp"/>
 <!-- 본문 -->
 
-<!-- 펀딩 Tab var -->
-	<div class="container"> 
-		<ul id="myTab" class="nav nav-tabs" role="tablist"> 
-			<li role="presentation" class="active">
-				<a data-target="#openstory" id="openstory-tab" role="tab" data-toggle="tab" aria-controls="openstory" aria-expanded="true">오픈스토리</a>
-			</li> 
-			<li role="presentation" class="">
-				<a data-target="#fundingqna" role="tab" id="fundingqna-tab" data-toggle="tab" aria-controls="fundingqna" aria-expanded="false">펀딩Q&A</a>
-			</li> 
-		</ul>
-		<div id="myTabContent" class="tab-content">
-			<div role="tabpanel" class="tab-pane fade active in" id="openstory" aria-labelledby="openstory-tab">
-				<p>오픈스토리입니다.</p>
-			</div> 
-			<div role="tabpanel" class="tab-pane fade" id="fundingqna" aria-labelledby="fundingqna-tab"> 
-				<p>펀딩Q&A</p> 
-			</div> 
 
-		</div> 
-	</div>
+
 <!-- 풋터 -->
 <c:import url="/resources/module/footer.jsp"/>
 </body>
