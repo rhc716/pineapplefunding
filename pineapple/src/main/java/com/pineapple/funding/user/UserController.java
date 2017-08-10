@@ -18,7 +18,7 @@ public class UserController {
     private UserService service;
 	
 	//회원가입시 닉네임 중복 체크 ajax 요청 처리
-	@RequestMapping(value="/checknick.user", method = RequestMethod.POST)
+	@RequestMapping(value="/checkNick.user", method = RequestMethod.POST)
 	public @ResponseBody User checkNick(Locale locale, Model model, @RequestParam("nickname") String nickname){
 		System.out.println("UserController checknick : "+service.getUserByNickname(nickname).getNickname());
 		return service.getUserByNickname(nickname);

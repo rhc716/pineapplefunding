@@ -24,7 +24,6 @@
 <!-- css rhc -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
 
-
 <!-- css lbr -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lbr.css" />
 
@@ -34,13 +33,18 @@
 
 $(document).ready(function(){
 	 $('#submitBtn').click(function(){
+		 if($('#levelCode').val())!=''){
 			if($('#inputSuccess2').val()!=''){ // submit 유효성 검사후 수동으로 해줌. 
 				if($('#pw2').val()!=''){
 					if($('#name').val()!=''){
-						if($('#nickname').val()==''){
-							alert('닉네임 중복체크를 해주세요');
+						if($('#nickname').val()!=''){
+							if($('#userAgreeCheck')==''){
+								alert('사이트 약관에 동의 해주세요');
+							} else {
+								$('#form').submit();
+							}
 						} else {
-							$('#form').submit();
+							alert('닉네임 중복체크를 해주세요');
 						}
 				    } else {
 				        alert('이름을 입력해주세요');
@@ -51,6 +55,9 @@ $(document).ready(function(){
 			} else {
 				alert('아이디 중복체크를 해주세요');
 			}
+	 	} else {
+	 		alert('권한을 선택해주세요')
+	 	}
 	 });
  });
  
@@ -183,30 +190,26 @@ $(document).ready(function(){
 //닉네임(2~20자,한,영,숫자,특문) 검사와 중복 확인
  $(document).ready(function(){
 	$('#nickname').blur(function(){
-		var temp = 0;
-		var in_nick = $('#nick').val();
-		var re = /^[0-9a-zA-Z가-힣]{2,20}$/;
-	    
-       	if(!re.test(in_nick)) {
-    		temp = 1;
-        }
+		var in_nick = $('#nickname').val();
+		//var re = /^[0-9a-zA-Z가-힣]{2,20}$/;
+		
 // 닉네임 검사 통과시 중복확인용 ajax실행
-        if(temp==0){
-        	$.ajax({ // ajax실행부분
-                type: "post",
-                url : "checknick.user",
-                data : {nickname : in_nick},
-                success : function(nc){ 
-                	$('#nickch').css("color", "#FF0000");
-        			$('#nickch').text('이미 존재하는 닉네임입니다');
-        			$('#nickname').val('');
-        			$('#nickname').focus();
-                	},
-                error : function error(){ 
-                	$('#nickch').css("color", "#008000");
-        			$('#nickch').text('닉네임을 사용할 수 있습니다');
-               	}
-            });
+       
+       	$.ajax({ // ajax실행부분
+               type: "post",
+               url : "checkNick.user",
+               data : {nickname : in_nick},
+               success : function(nc){ 
+               	$('#nickch').css("color", "#FF0000");
+       			$('#nickch').text('이미 존재하는 닉네임입니다');
+       			$('#nickname').val('');
+       			$('#nickname').focus();
+               	},
+               error : function error(){ 
+               	$('#nickch').css("color", "#008000");
+       			$('#nickch').text('닉네임을 사용할 수 있습니다');
+              	}
+           });
         }else{
         	alert("닉네임은 6~20자의 영,숫자,한글을 사용 가능합니다");
         }
@@ -222,7 +225,7 @@ $(document).ready(function(){
 		<div class="col-xs-6 form_page">
 			<form id="form" action="userinsert.user" name="userinput" method="post" style="border:1px solid #ccc">
 				<div class="container_insert">
-				    <label for="levelCode">권한</label>
+				    <label for="levelCodeChoice">권한</label>
 				    <p id="explain">(권한을 선택해주시기 바랍니다)</p>
 				    &nbsp&nbsp기업회원&nbsp&nbsp<input id="levelCode" type="radio" class="checkbox-inline" name="levelCode" value=2>
 				    &nbsp&nbsp투자자&nbsp&nbsp<input id="levelCode" type="radio" class="checkbox-inline" name="levelCode" value=3>
@@ -264,9 +267,9 @@ $(document).ready(function(){
 					    <span id="nickch"> <input type="hidden" value="0" id="use_nick" name="use_nick"/></span>
 					</div>
 					<br>
-					<div id="userAgreeCheck" class="checkbox">
-					    <label>
-					    	<input type="checkbox">사이트 약관 동의
+					<div id="userAgree" class="checkbox">
+					    <label for="userAgree">
+					    	<input id="userAgreeCheck" name="userAgreeCheck" type="checkbox">사이트 약관 동의
 					    </label>
 					</div>
 					<br>
