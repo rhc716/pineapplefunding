@@ -1,11 +1,12 @@
 package com.pineapple.invest.service;
 
-import java.util.List;
-
 public class InvestAndFd {
 	private int fdCode;
 	private String fdTitle;
-	private List<Investment> investment;
+	private int numberOfShares;
+	private String comName;
+	private int total;
+
 	public int getFdCode() {
 		return fdCode;
 	}
@@ -18,16 +19,28 @@ public class InvestAndFd {
 	public void setFdTitle(String fdTitle) {
 		this.fdTitle = fdTitle;
 	}
-	public List<Investment> getInvestment() {
-		return investment;
+	public int getNumberOfShares() {
+		return numberOfShares;
 	}
-	public void setInvestment(List<Investment> investment) {
-		this.investment = investment;
+	public void setNumberOfShares(int numberOfShares) {
+		this.numberOfShares = numberOfShares;
+	}
+	public String getComName() {
+		return comName;
+	}
+	public void setComName(String comName) {
+		this.comName = comName;
+	}
+	public int getTotal() {
+		return total;
+	}
+	public void setTotal(int total) {
+		this.total = total;
 	}
 	@Override
 	public String toString() {
-		return "InvestAndFd [fdCode=" + fdCode + ", fdTitle=" + fdTitle + ", investment=" + investment + "]";
+		return "InvestAndFd [fdCode=" + fdCode + ", fdTitle=" + fdTitle + ", numberOfShares=" + numberOfShares
+				+ ", comName=" + comName + ", total=" + total + "]";
 	}
-
 	
 }

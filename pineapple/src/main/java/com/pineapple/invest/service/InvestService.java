@@ -8,16 +8,18 @@ import org.springframework.stereotype.Service;
 import com.pineapple.funding.service.Funding;
 
 @Service
-public class InvestService {
+public class InvestService implements InvestServiceInterface {
 	@Autowired
-	private InvestDao investdao;
+	private InvestDaoInterface investdaointerface;
 	
-	public List<Funding> getInvestFunding(){
+	//전체 펀딩 리스트 조회하기
+	/* (non-Javadoc)
+	 * @see com.pineapple.invest.service.InvestServiceInterface#getInvestFunding()
+	 */
+	@Override
+	public List<InvestAndFd> getInvestFunding(){
 		System.out.println("------------------InvestService-----------------getinvestFunding()");
-		return investdao.investFundingSelect();
-	}
-	public List<InvestAndFd> getInvestFundingList(){
-		System.out.println("------------investService getinvsetFundingList--------");
-		return investdao.investAndFundingListSelect();
+		List<InvestAndFd> fdfd =  investdaointerface.investFundingSelect();
+		return fdfd;
 	}
 }

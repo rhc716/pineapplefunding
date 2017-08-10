@@ -3,14 +3,18 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.pineapple.invest.service.InvestMapper">
-	<select id="investFundingSelect" parameterType="java.util.Map" resultType="com.pineapple.funding.service.Funding">
-		SELECT fdCode,fdTitle
- 		FROM funding
-	</select>
-	<select id="getInvestFundingList" parameterType="java.util.Map" resultType="com.pineapple.invest.service.InvestAndFd"> 
-		SELECT f.fdCode as 'fdCode',
-				f.fdTitle as 'fdTitle',
-				c.purchaseShares as 'purchaseShares'
-		FROM funding f INNER JOIN investment c;
+	<select id="investFundingSelect" parameterType="java.util.Map" resultType="com.pineapple.invest.service.InvestAndFd">
+		SELECT  f.fdCode,
+				f.fdTitle,
+				f.numberOfShares,
+				c.comName,
+				IFNULL(sum(i.purchaseShares),0) as total 
+		FROM funding f 
+		LEFT JOIN company c 
+		ON f.fdComCode = c.comCode 
+		LEFT JOIN investment i 
+		ON f.fdCode = i.investFdCode 
+		GROUP BY i.investFdCode 
+		ORDER BY f.openDate ASC;
 	</select>
 </mapper>

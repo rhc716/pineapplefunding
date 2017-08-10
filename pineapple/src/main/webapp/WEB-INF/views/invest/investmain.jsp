@@ -21,32 +21,9 @@
 
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
-<style type="text/css">
-	.fdlist-main{
-				}
-	.fdlist-box{height: 396px;
-				width: 303px;
-				margin: 0px 5px;
-				padding: 0px;}
-	.fdlist-title{padding: 12px 10px 2px;
-				  font-size: 17px;
-				  font-weight: bold}
-	.fdlist-context{font-size : 11px;
-					line-height: 17px;
-    				height: 68px;
-					margin-top: 7px;
-   					margin-left: 10px;
-  					margin-bottom: 0px;}
-	.fdlist-comname{font-size: 13px;
-					color: #252525;
-					font-weight: bold;
-   					text-align: left;
-   					padding: 11px 10px 9px;}
-	.fdlist-data{width: 303px;
-   				 height: 88px;
-   				 border-top: 1px solid #d7d7d7;}
-	
-</style>
+
+<!-- 개인.css -->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/ehj.css" />
 
 </head>
 <body>
@@ -58,29 +35,28 @@
 <!-- 본문 -->
 <!-- 펀딩 리스트 -->
 <div class="row fdlist-main">
+	<c:forEach var="list" items="${fundingList}">
  	<div class="col-xs-4 well fdlist-box">
-		<a href="/investfunding.invest">
+		<a href="/investfunding.invest?">
 			<img src="${pageContext.request.contextPath}/resources/img/invest/fundingone.jpg"width="303px" height="171px" >
 		</a>
+		<div>
 		<h4 class="fdlist-title">
-			<c:forEach var="list" items="${fundingList}">
 			<div>${list.fdTitle}</div>
-			</c:forEach>
 		</h4>
-		<h6 class="fdlist-context">
-			웨딩플래너 없이 혼자서 쉽게 따져보고 결혼을 준비한다면?! 투명한 웨딩시장을 위해 만든 어플! 웨딩메이트입니다
-		</h6>
+		</div>
 		<div class="fdlist-comname">
-			회사명
+			${list.comName}
 		</div>
 		<div class="fdlist-data">
-			펀딩성공률
+			구입한 주식합 = ${list.total}
+			판매하는 주식 = ${list.numberOfShares}
+			(그래프 API 이용)
+			<div id="chart_div" style="width: 100%"></div>
 		</div>
+
 	</div>
-	<div class="col-xs-4 well fdlist-box">
-	</div>
-	<div class="col-xs-4 well fdlist-box">
-	</div>
+	</c:forEach>
 </div>
 <!-- 풋터 -->
 	<c:import url="/resources/module/footer.jsp"/>

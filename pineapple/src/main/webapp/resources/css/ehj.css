@@ -1,1 +1,26 @@
 @CHARSET "UTF-8";
+/* invest main 투자하기 main */
+	.fdlist-main{
+				}
+	.fdlist-box{height: 328px;
+				width: 303px;
+				margin: 0px 5px;
+				padding: 0px;}
+	.fdlist-title{padding: 12px 10px 2px;
+				  font-size: 17px;
+				  font-weight: bold}
+	.fdlist-context{font-size : 11px;
+					line-height: 17px;
+    				height: 68px;
+					margin-top: 7px;
+   					margin-left: 10px;
+  					margin-bottom: 0px;}
+	.fdlist-comname{font-size: 13px;
+					color: #252525;
+					font-weight: bold;
+   					text-align: left;
+   					padding: 11px 10px 9px;}
+	.fdlist-data{width: 303px;
+   				 height: 88px;
+   				 border-top: 1px solid #d7d7d7;}
+ /* invest main 투자하기 main */
