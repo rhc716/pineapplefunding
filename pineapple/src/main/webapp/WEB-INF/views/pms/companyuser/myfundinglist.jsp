@@ -36,6 +36,8 @@ $(document).ready(function(){
 	// 성공시
 	getfundinglist.done(function(msg){
 		console.log(msg);
+		var sysdate = new Date(msg[0].fdDate).toLocaleDateString();
+		console.log(sysdate); 
 	});
 	// 실패시
 	getfundinglist.fail(function(){
@@ -64,10 +66,11 @@ $(document).ready(function(){
 			<div class="col-md-1"></div>
 	</div>
 </div>
-</div>
+
 <!-- 풋터 -->
 <div>
 	<c:import url="/resources/module/footer.jsp"/>
+</div>
 </div>
 </body>
 </html>
