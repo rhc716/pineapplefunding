@@ -45,46 +45,46 @@
 					<form action="" method="post">
 						<label for="wbsplanhuman">WBS인원예상지출</label><br><br>
 						인원수:<br>
-						<input type="text" name=""><br>
+						<input type="text" name="wphNoPeople"><br>
 						총비용:<br>
-						<input type="text" name="milestoneName"><br>
+						<input type="text" name="wphCost"><br>
 						비고:<br>
-						<input type="text" name="milestoneName"><br>
-						<label for="wbsplanhuman">WBS예상장비지출</label><br>
+						<input type="text" name="wphRemarks"><br>
+						<label for="wbsplanmaterial">WBS예상장비지출</label><br>
 						장비명:<br>
-						<input type="text"><br>
+						<input type="text" name="wpmName"><br>
 						수:<br>
-						<input type="text" name="milestoneName"><br>
+						<input type="text" name="wpmNo"><br>
 						단가:<br>
-						<input type="text" name="milestoneName"><br>
-						총비용:<br>
-						<input type="text" name="milestoneName">
-						<label for="wbsplanhuman">WBS예상기타지출</label><br>
+						<input type="text" name="wpmCostPerNo"><br>
+						비고:<br>
+						<input type="text" name="wpmRemarks">
+						<label for="wpePurpose">WBS예상기타지출</label><br>
 						비용명:<br>
-						<input type="text"><br>
+						<input type="text" name="wpePurpose"><br>
 						가격:<br>
-						<input type="text" name="milestoneName"><br>
+						<input type="text" name="wpeCost"><br>
 						비고:<br>
-						<input type="text" name="milestoneName"><br>
-						<label for="wbsplanhuman">WBS시설예상지출</label><br><br>
+						<input type="text" name="wpeRemarks"><br>
+						<label for="wbsplanfacility">WBS시설예상지출</label><br><br>
 						시설명:<br>
-						<input type="text"><br>
+						<input type="text" name="wpfName"><br>
 						비용:<br>
-						<input type="text" name="milestoneName"><br>
+						<input type="text" name="wpfCost"><br>
 						비고:<br>
-						<input type="text" name="milestoneName"><br>
-						<label for="wbsplanhuman">WBS예상외주지출</label><br>
+						<input type="text" name="wpfRemarks"><br>
+						<label for="wbsplanout">WBS예상외주지출</label><br>
 						업체명:<br>
-						<input type="text"><br>
+						<input type="text" name="wpoOutComName"><br>
 						비용:<br>
-						<input type="text" name="milestoneName"><br>
+						<input type="text" name="wpoCost"><br>
 						비고:<br>
-						<input type="text" name="milestoneName">
-						<label for="wbsplanhuman">WBS예상수익</label><br>
+						<input type="text" name="wpoRemarks">
+						<label for="wbsplanincome">WBS예상수익</label><br>
 						수익상황:<br>
-						<input type="text"><br>
+						<input type="text" name="wpiReason"><br>
 						수익:<br>
-						<input type="text" name="milestoneName">
+						<input type="text" name="wpiIncome">
 						<button type="submit">입력완료</button>
 					</form>
 				</div>

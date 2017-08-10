@@ -42,20 +42,20 @@
 	<div class="col-md-9">
 			<div class="col-md-1"></div>
 				<div class="col-md-7">
-					<form action="" method="post">
+					<form action="/wbsplaninsert.pms" method="post">
 						<label for="wbsplan">WBS예상계획</label><br>
 						WBS순서:
-						<input type="text" class="form-control" name="milestoneStep">
+						<input type="text" class="form-control" name="wbsPlanOrder">
 						작업명:
-						<input type="text" class="form-control" name="milestoneName">
-						선행작업
-						<input type="text" class="form-control" name="milestoneName">
-						작업기간
-						<input type="text" class="form-control" name="milestoneName">
-						시작일
-						<input type="date" name="milestoneName">
-						종료일
-						<input type="date" name="milestoneName">	
+						<input type="text" class="form-control" name="wbsPlanName">
+						선행작업:
+						<input type="text" class="form-control" name="wbsPlanDependency">
+						작업기간:
+						<input type="text" class="form-control" name="wbsPlanDuration">
+						시작일:<br>
+						<input type="date" name="wbsPlanStartDate"><br>
+						담당자ID:
+						<input type="text" class="form-control" name="wbsPlanManager">
 						<button type="submit">입력완료</button>
 					</form>
 				</div>

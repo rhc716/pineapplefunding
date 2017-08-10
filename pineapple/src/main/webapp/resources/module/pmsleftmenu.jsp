@@ -31,7 +31,7 @@
 		<li><a href="">WBS관리</a>
 			<ul>
 				<li><a href="/wbsplaninsert.pms">WBS예상작성</a></li>
-				<li><a href="">WBS예상조회</a></li>
+				<li><a href="/wbsplanlist.pms">WBS예상조회</a></li>
 				<li><a href="">WBS실제작성</a></li>
 				<li><a href="">WBS실제조회</a></li>
 				<li><a href="">WBS승인</a></li>
