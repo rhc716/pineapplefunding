@@ -12,12 +12,23 @@
 	  		 posterImgExtension, posterImgWidth, posterImgHeight, posterImgSize,
 			 fdPublisher, adminApproval, fdApprovalDate, fdApprovalId, fdDate)
 			
-			VALUES (NULL, #{fdComCode}, #{fdTitle}, #{minInvestMoney}, #{numberOfShares},
-			 		#{issuePrice}, #{openDate}, #{closeDate}, #{minInterestRate}, #{fdType},
-	  				'개설요청',#{projectStartDate}, #{projectEndDate}, #{posterImgName},
-	 				#{posterImgExtension}, #{posterImgWidth}, #{posterImgHeight}, #{posterImgSize},
-					#{fdPublisher}, 0, NULL, NULL, NOW())
+		VALUES (NULL, #{fdComCode}, #{fdTitle}, #{minInvestMoney}, #{numberOfShares},
+		 		#{issuePrice}, #{openDate}, #{closeDate}, #{minInterestRate}, #{fdType},
+  				'개설요청',#{projectStartDate}, #{projectEndDate}, #{posterImgName},
+ 				#{posterImgExtension}, #{posterImgWidth}, #{posterImgHeight}, #{posterImgSize},
+				#{fdPublisher}, 0, NULL, NULL, NOW())
 	</insert>
+	
+	<!-- (기업회원) 내가 소속된 회사의 펀딩 리스트 가져오기 -->
+	<select id="selectMyFundinglist" resultType="java.util.HashMap" parameterType="String">
+		SELECT *
+		FROM funding
+		WHERE fdComCode = ANY 
+		(SELECT e.emComCode 
+		FROM user u INNER JOIN employee e 
+		ON u.userId = e.emUserId
+		WHERE u.userId = #{userId})
+	</select>
 </mapper>
 
  

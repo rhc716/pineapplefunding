@@ -1,6 +1,6 @@
 package com.pineapple.funding.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.pineapple.funding.service.Funding;
 import com.pineapple.funding.service.FundingService;
 
@@ -48,8 +49,8 @@ public class FundingController {
 		return "pms/companyuser/milestoneinsert";
 	}
 
-	////////////////////////////////////////////////위에는///페이지요청//////////////////////////////////////////////////////
-		
+////////////////////////////////////////////////위에는///페이지요청//////////////////////////////////////////////////////
+	
 	// 펀딩개설요청 ( 기업회원 경영자 )
 	@RequestMapping(value = "/wbsplanetcinsert.pms", method = RequestMethod.POST)
 	public String addFunding(Funding funding, Model model, Locale locale) {
@@ -61,11 +62,11 @@ public class FundingController {
 	
 	// 내가 소속된 회사 펀딩 리스트 불러오기 ( 기업회원 )
 	@RequestMapping(value = "/selectmyfundinglist.pms", method = RequestMethod.GET)
-	public @ResponseBody ArrayList<Funding> getMyFundingList(Model model, Locale locale, @RequestParam("userId") String userId) {
+	public @ResponseBody List<Funding> getMyFundingList(Model model, Locale locale, @RequestParam("userId") String userId) {
 		System.out.println("FundingController의 getMyFundingList호출 성공");
 		System.out.println("userId : " + userId);
+		System.out.println("컨트롤러에서 받은 리턴값 : " + service.getMyFundinglist(userId));
 		
-		
-		return null;
+		return service.getMyFundinglist(userId);
 	}
 }
