@@ -47,26 +47,7 @@ public class FundingController {
 		System.out.println("FundingController의 addMilestone호출 성공");
 		return "pms/companyuser/milestoneinsert";
 	}
-	// wbsplan입력 페이지 요청
-	@RequestMapping(value = "/wbsplaninsert.pms", method = RequestMethod.GET)
-	public String addWbsplan(Locale locale, Model model) {
-		System.out.println("FundingController의 addWbsplan호출 성공");
-		return "pms/companyuser/wbsplaninsert";
-	}
-	// wbsplan기타 등등 입력 페이지 요청
-	@RequestMapping(value = "/wbsplanetcinsert.pms", method = RequestMethod.GET)
-	public String addPlanEtc(Locale locale, Model model) {
-		System.out.println("FundingController의 addPlanEtc호출 성공");
-		return "pms/companyuser/wbsplanetcinsert";
-	}
-	
-	// wbsplan기타 등등 입력 페이지 요청
-		@RequestMapping(value = "/myfundinglistpage.pms", method = RequestMethod.GET)
-		public String myfundinglistpage(Locale locale, Model model) {
-			System.out.println("FundingController의 myfundinglistpage호출 성공");
-			return "pms/companyuser/myfundinglist";
-	}
-		
+
 	////////////////////////////////////////////////위에는///페이지요청//////////////////////////////////////////////////////
 		
 	// 펀딩개설요청 ( 기업회원 경영자 )
