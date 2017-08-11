@@ -92,10 +92,11 @@
 			<div class="col-md-1"></div>
 		</div>
 	</div>
-</div>
+
 <!-- 풋터 -->
 <div>
 	<c:import url="/resources/module/footer.jsp"/>
+</div>
 </div>
 </body>
 </html>

@@ -57,7 +57,7 @@ public class FundingController {
 		System.out.println("FundingController의 addFunding호출 성공");
 		System.out.println("funding : " + funding);
 		service.addFunding(funding);
-		return "redirect:/pineapple/pmsmain.pms";
+		return "redirect:/pmsmain.pms";
 	}
 	
 	// 내가 소속된 회사 펀딩 리스트 불러오기 ( 기업회원 )

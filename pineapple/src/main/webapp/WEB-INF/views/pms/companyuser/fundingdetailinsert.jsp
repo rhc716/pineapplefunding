@@ -55,9 +55,9 @@
 	</div>
 </div>
 <!-- 풋터 -->
-</div>
 <div>
 	<c:import url="/resources/module/footer.jsp"/>
+</div>
 </div>
 </body>
 </html>
