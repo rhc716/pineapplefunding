@@ -12,8 +12,8 @@
 		VALUES (NULL, 0, 0, #{wbsPlanOrder}, 0, #{wbsPlanName}, #{wbsPlanDependency},
 				#{wbsPlanStartDate}, #{wbsPlanDuration}, NOW(), #{wbsPlanManager}, 0);
 	</insert>
-	<select id="selectWbsPlan" parameterType="String" resultType="com.pineapple.pms.service.WbsPlan">
-		SELECT * FROM wbsplan 
-		WHERE wbsPlanComCode = 1;
+	<!-- wbsplan 리스트 요청쿼리 -->
+	<select id="selectWbsPlan" resultType="com.pineapple.pms.service.WbsPlan">
+		SELECT * FROM wbsplan;
 	</select>
 </mapper>
