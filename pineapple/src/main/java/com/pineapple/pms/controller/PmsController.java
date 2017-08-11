@@ -34,20 +34,22 @@ public class PmsController {
 		System.out.println("PmsController의 addPlanEtc호출 성공");
 		return "pms/companyuser/wbsplanetcinsert";
 	}
+	
 	//wbsplan 리스트 불러오기
 	@RequestMapping(value = "/wbsplanlist.pms", method = RequestMethod.GET)
 	public String addPlanhuman(Locale locale, Model model) {
 		System.out.println("PmsController의 addPlanhuman호출 성공");
-		return "pms/companyuser/wbsplanlist";
+		return "pms/companyuser/wbsplandetail";
 	}
 	
-	// wbsplan기타 등등 입력 페이지 요청
-		@RequestMapping(value = "/myfundinglistpage.pms", method = RequestMethod.GET)
-		public String myfundinglistpage(Locale locale, Model model) {
-			System.out.println("FundingController의 myfundinglistpage호출 성공");
-			return "pms/companyuser/myfundinglist";
+	
+	// wbsplanhuman 입력 페이지 요청
+	@RequestMapping(value = "/wbsplaninserthuman.pms", method = RequestMethod.GET)
+	public String test(Locale locale, Model model) {
+		System.out.println("PmsController의 wbsplaninserthuman호출 성공");
+		return "pms/companyuser/wbsplaninserthuman";
 	}
-		
+	
 		
 ////////////////////////////////////////////////위에는///페이지요청//////////////////////////////////////////////////////
 		
