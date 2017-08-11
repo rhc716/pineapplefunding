@@ -65,7 +65,7 @@ $(document).ready(function(){
  //취소버튼 누르면 메인으로
  $(document).ready(function(){
 	 $('#btn_cancel').click(function(){
-		location.href = '/';
+		location.href = '/pineapple';
 	 });
 });
 
@@ -97,7 +97,7 @@ $(document).ready(function(){
         if(temp==0){
         	$.ajax({ // ajax실행부분
                 type: "post",
-                url : "checkId.user",
+                url : "/pineapple/checkId.user",
                 data : {userId : in_id},
                 success : function(ic){ 
                 			$('#idch').css("color", "#FF0000");
@@ -155,7 +155,7 @@ $(document).ready(function(){
 		if(temp == 1){
 			$.ajax({ // ajax실행부분
 	            type : "post",
-	            url : "checkPw.user",
+	            url : "/pineapple/checkPw.user",
 	            data : {pw1 : $('#pw').val(), pw2 : $('#pw2').val()},
 	            success : function(pc){
 	            	if(pc.pw1 == pc.pw2){
@@ -192,7 +192,7 @@ $(document).ready(function(){
         if(temp==0){
        	$.ajax({ // ajax실행부분
                type: "post",
-               url : "checkNick.user",
+               url : "/pineapple/checkNick.user",
                data : {nickname : in_nick},
                success : function(nc){ 
                	$('#nickch').css("color", "#FF0000");
@@ -220,7 +220,7 @@ $(document).ready(function(){
 	<div class="row">
 		<div class="col-xs-3"></div>
 		<div class="col-xs-6 form_page">
-			<form id="form" action="userinsert.user" name="userinput" method="post" style="border:1px solid #ccc">
+			<form id="form" action="/pineapple/userinsert.user" name="userinput" method="post" style="border:1px solid #ccc">
 				<div class="container_insert">
 				    <label for="levelCodeChoice">권한</label>
 				    <p id="explain">(권한을 선택해주시기 바랍니다)</p>

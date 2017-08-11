@@ -57,7 +57,7 @@ public class PmsController {
 			System.out.println("PmsController의 addWbsplan호출 성공");
 			System.out.println("WbsPlan : " + wbsplan);
 			service.addWbsplan(wbsplan);
-			return "redirect:/pmsmain.pms";
+			return "redirect:/pineapple/pmsmain.pms";
 		}
 		
 		// 내가 속한 회사의 WbsPlan 리스트 확인

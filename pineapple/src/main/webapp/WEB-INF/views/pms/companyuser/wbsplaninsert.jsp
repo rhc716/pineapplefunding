@@ -44,7 +44,7 @@
 	<div class="col-md-9">
 			<div class="col-md-1"></div>
 				<div class="col-md-7">
-					<form action="/wbsplaninsert.pms" method="post">
+					<form action="/pineapple/wbsplaninsert.pms" method="post">
 						<label for="wbsplan">WBS예상계획</label><br>
 						WBS순서:
 						<input type="text" class="form-control" name="wbsPlanOrder">

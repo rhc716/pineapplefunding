@@ -42,7 +42,7 @@
 	<div class="col-md-9">
 		<div class="col-md-1"></div>
 			<div class="col-md-7">
-				<form action="/wbsplanetcinsert.pms" method="post">
+				<form action="/pineapple/wbsplanetcinsert.pms" method="post">
 					펀딩형태
 					<select name="fdType">
 						<option value="채권">채권</option>

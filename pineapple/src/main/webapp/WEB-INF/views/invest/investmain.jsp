@@ -38,7 +38,7 @@
 <div class="row fdlist-main">
 	<c:forEach var="list" items="${fundingList}">
  	<div class="col-xs-4 well fdlist-box">
-		<a href="/investfunding.invest?">
+		<a href="/pineapple/investfunding.invest?">
 			<img src="${pageContext.request.contextPath}/resources/img/invest/fundingone.jpg"width="303px" height="171px" >
 		</a>
 		<div>

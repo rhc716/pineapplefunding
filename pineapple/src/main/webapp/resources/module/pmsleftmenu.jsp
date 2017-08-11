@@ -18,20 +18,20 @@
 	<ul>
 		<li><a href="">펀딩관리</a>
 			<ul>
-		  		<li><a href="/fundinginsert.pms">펀딩개설</a>
-		  		<li><a href="/myfundinglistpage.pms">펀딩조회</a>
+		  		<li><a href="/pineapple/fundinginsert.pms">펀딩개설</a>
+		  		<li><a href="/pineapple/myfundinglistpage.pms">펀딩조회</a>
 			</ul>
 		</li>
 		<li><a href="">마일스톤관리</a>
 			<ul>
-				<li><a href="/milestoneinsert.pms">마일스톤생성</a></li>
+				<li><a href="/pineapple/milestoneinsert.pms">마일스톤생성</a></li>
 				<li><a href="">마일스톤조회</a></li>
 			</ul>
 		</li>
 		<li><a href="">WBS관리</a>
 			<ul>
-				<li><a href="/wbsplaninsert.pms">WBS예상작성</a></li>
-				<li><a href="/wbsplanlist.pms">WBS예상조회</a></li>
+				<li><a href="/pineapple/wbsplaninsert.pms">WBS예상작성</a></li>
+				<li><a href="/pineapple/wbsplanlist.pms">WBS예상조회</a></li>
 				<li><a href="">WBS실제작성</a></li>
 				<li><a href="">WBS실제조회</a></li>
 				<li><a href="">WBS승인</a></li>

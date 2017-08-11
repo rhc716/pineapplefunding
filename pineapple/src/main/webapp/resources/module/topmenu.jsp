@@ -9,12 +9,12 @@
 <body>
 <!-- 상단메뉴 -->
 <div class="row navbar">
-	<ul class="navbar_pine"><a href="/">PineApple</a></ul>
+	<ul class="navbar_pine"><a href="/pineapple">PineApple</a></ul>
 	<ul class="navbar_menuleft"><a href="">타임라인</a></ul>
-	<ul class="navbar_menuleft"><a href="/investmain.invest">투자하기</a></ul>
-	<ul class="navbar_menuleft"><a href="/pmsmain.pms">프로젝트관리</a></ul>
+	<ul class="navbar_menuleft"><a href="/pineapple/investmain.invest">투자하기</a></ul>
+	<ul class="navbar_menuleft"><a href="/pineapple/pmsmain.pms">프로젝트관리</a></ul>
 	<ul class="navbar_menuright">이용안내</ul>
-	<ul class="navbar_menuright"><a href="/userinsert">회원가입</a></ul>
+	<ul class="navbar_menuright"><a href="/pineapple/userinsert">회원가입</a></ul>
 </div>
 </body>
 </html>
