@@ -40,14 +40,16 @@
 	</div>
 	<div class="col-md-9">
 		<c:forEach var="list" items="${wbsplanlist}">
-		 	<a href="/pineapple/wbsplandetail.pms?">
-		 	<div class="col-xs-4 well">
-				<div>
-					wbs순서 = ${list.wbsPlanOrder}
-					wbs이름 = ${list.wbsPlanName}
-				</div>
-			</div>
-			</a>
+		 	<form action="/pineapple/wbsplandetail.pms" method="post"> 
+			 	<div class="col-xs-4 well">
+					<div>
+						<input type="hidden" name="wbsPlanCode" value="${list.wbsPlanCode}"/>
+						wbs순서 = ${list.wbsPlanOrder}
+						wbs이름 = ${list.wbsPlanName}<br>
+						<input type="submit" value="상세정보"/> 
+					</div>
+				</div>	
+			</form>
 		</c:forEach>
 	</div>
 </div>

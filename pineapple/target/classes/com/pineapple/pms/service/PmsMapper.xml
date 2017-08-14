@@ -16,4 +16,7 @@
 	<select id="selectWbsPlan" resultType="com.pineapple.pms.service.WbsPlan">
 		SELECT * FROM wbsplan;
 	</select>
+		<select id="selectdetail" parameterType="String" resultType="com.pineapple.pms.service.WbsPlan">
+		SELECT * FROM wbsplan where wbsplancode = #{wbsplancode};
+	</select>
 </mapper>

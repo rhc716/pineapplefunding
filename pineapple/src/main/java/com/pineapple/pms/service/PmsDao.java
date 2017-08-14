@@ -24,5 +24,10 @@ public class PmsDao {
 		System.out.println("PmsDao의 WbsPlanSelect호출 성공");
 		return sqlSessionTemplate.selectList("com.pineapple.pms.service.PmsMapper.selectWbsPlan");
 	}
+	
+	public WbsPlan getMyWbsPlanDetail(String wbsplancode){
+		System.out.println("PmsDao의 selectWbsPlandetail호출 성공");
+		return sqlSessionTemplate.selectOne("com.pineapple.pms.service.PmsMapper.selectdetail",wbsplancode);
+	}
 
 }

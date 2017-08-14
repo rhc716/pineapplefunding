@@ -24,5 +24,11 @@ public class PmsService{
 		List<WbsPlan> wbsplanlist = pmsdao.WbsPlanSelect();
 		return wbsplanlist;
 	}
+	
+	public  WbsPlan getMyWbsPlanDetail(String wbsplancode) {
+		System.out.println("PmsService의 getMyWbsPlanList호출 성공");
+		WbsPlan wbsplandetail = pmsdao.getMyWbsPlanDetail(wbsplancode);
+		return wbsplandetail;
+	}
  
 }
