@@ -43,4 +43,6 @@ public class InvestAndFd {
 				+ ", comName=" + comName + ", total=" + total + "]";
 	}
 	
+
+	
 }

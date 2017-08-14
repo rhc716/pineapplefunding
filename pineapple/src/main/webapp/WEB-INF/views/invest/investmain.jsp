@@ -35,10 +35,10 @@
 	<c:import url="/resources/module/topmenu.jsp"/>
 <!-- 본문 -->
 <!-- 펀딩 리스트 -->
-<div class="row fdlist-main">
+<div class="row fdlist-main container text-center">
 	<c:forEach var="list" items="${fundingList}">
  	<div class="col-xs-4 well fdlist-box">
-		<a href="/pineapple/investfunding.invest?">
+		<a href="/pineapple/investfunding.invest?fdCode=${list.fdCode}">
 			<img src="${pageContext.request.contextPath}/resources/img/invest/fundingone.jpg"width="303px" height="171px" >
 		</a>
 		<div>

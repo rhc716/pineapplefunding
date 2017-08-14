@@ -1,10 +1,128 @@
 @CHARSET "UTF-8";
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+/* PADDING and MARGIN CSS */
+	.pd-t-0{padding-top: 0px}
+	.pd-l-0{padding-left:  0px}
+	.pd-r-0{padding-right:  0px}
+	.pd-b-0{padding-bottom:  0px}
+	.pd-a-0{padding: 0px}
+	
+	.pd-t-10{padding-top: 10px}
+	.pd-l-10{padding-left:  10px}
+	.pd-r-10{padding-right:  10px}
+	.pd-b-10{padding-bottom:  10px}
+	.pd-a-10{padding: 10px}
+	.pd-lr-10{padding: 0px 10px}
+	
+	.pd-t-15{padding-top: 15px}
+	.pd-l-15{padding-left:  15px}
+	.pd-r-15{padding-right:  15px}
+	.pd-b-15{padding-bottom:  15px}
+	.pd-a-15{padding: 15px}
+	.pd-lr-10{padding: 0px 15px}
+	
+	.pd-t-20{padding-top: 20px}
+	.pd-l-20{padding-left:  20px}
+	.pd-r-20{padding-right:  20px}
+	.pd-b-20{padding-bottom:  20px}
+	.pd-a-20{padding: 20px}
+	.pd-lr-10{padding: 0px 20px}
+	
+	.ma-t-0{margin-top: 0px}
+	.ma-l-0{margin-left: 0px}
+	.ma-r-0{margin-right: 0px}
+	.ma-b-0{margin-bottom: 0px}
+	.ma-a-0{margin: 0px}
+	
+	.ma-t-10{margin-top: 1px}
+	.ma-l-10{margin-left: 10px}
+	.ma-r-10{margin-right: 10px}
+	.ma-b-10{margin-bottom: 10px}
+	.ma-a-10{margin: 10px}
+	.ma-lr-10{margin: 0px 10px}
+	
+	.ma-t-15{margin-top: 15px}
+	.ma-l-15{margin-left: 15px}
+	.ma-r-15{margin-right: 15px}
+	.ma-b-15{margin-bottom: 15px}
+	.ma-a-15{margin: 15px}
+	.ma-lr-10{margin: 0px 15px}
+	
+	.ma-t-20{margin-top: 20px}
+	.ma-l-20{margin-left: 20px}
+	.ma-r-20{margin-right: 20px}
+	.ma-b-20{margin-bottom: 20px}
+	.ma-a-20{margin: 20px}
+	.ma-lr-10{margin: 0px 20px}
+/* PADDING and MARGIN CSS */
+
+/* BORDER CSS */
+	.bor-defult{border: 1px solid;}
+/* BORDER CSS */
+
+/* TEXT-CENTER CSS */
+	/* LEFT and RIGHT CENTER CSS */
+	.text-lr-center{text-align: center;}
+	/* LEFT and RIGHT CENTER CSS */
+/* TEXT-CENTER CSS */
+
+/* FONT CSS */
+	.font-j{font-family: 'Jeju Gothic', serif;}
+/* FONT CSS */
+
+/* CLASS and TAG CSS */
+	/* 펀딩 동영상 부분 */
+		.funding-vedio{line-height: 329px;
+					   text-align: center;
+					   border: 1px solid;}
+	/* 펀딩 동영상 부분 */
+	/* 펀딩Data 동영상 옆 */
+		/* 모집,투자자,달성률 */
+			.fundingdata1{padding-top: 10px;}
+			div.fundingdata1 div{font-size: 20px;}
+			div.fundingdata1 h4{margin: 0px;}
+			.fundingdata .topdata{padding-top: 10;
+								  border: 1px solid;
+								  height: 80px;}
+		/* 모집,투자자,달성률 */
+		/* 차트바 */
+			.chart-bar{height: 70px;
+					   border: 1px solid;}
+		/* 차트바 */
+		/* 펀딩좋아요,마감일자 */
+			div.fundingdata2 div{padding: 10px;
+								 text-align: center;
+								 border: 1px solid;
+								 height: 45px}
+		/* 펀딩좋아요,마감일자 */
+		/* 투자하기,투자방법안내 btn */
+			.investbtn-all{padding: 0px;
+						   height: 130px;
+						   border: 1px solid;}
+			.investbtn-invest{padding: 0px;
+					   height: 80px;
+					   font-size: 30px;
+					   border: 1px solid;}
+			.investbtn-investguide{padding: 0px;
+								   height: 50px;
+								   font-size: 20px;
+								   border: 1px solid;}
+		/* 투자하기,투자방법안내 btn */
+		/* 펀딩형태,판매주식수,주당발행가,최소신청금액 */
+			.funding-investdata{line-height: 32px;
+								height: 130px;
+								border: 1px solid;}
+		/* 펀딩형태,판매주식수,최소신청금액 */
+	/* 펀딩Data 동영상 옆 */
+/* CLASS and TAG CSS */
+
 /* invest main 투자하기 main */
 	.fdlist-main{
 				}
 	.fdlist-box{height: 328px;
 				width: 303px;
-				margin: 0px 5px;
+				margin: 0 auto;
 				padding: 0px;}
 	.fdlist-title{padding: 12px 10px 2px;
 				  font-size: 17px;

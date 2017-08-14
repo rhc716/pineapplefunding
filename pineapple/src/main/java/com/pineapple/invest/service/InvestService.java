@@ -19,7 +19,14 @@ public class InvestService implements InvestServiceInterface {
 	@Override
 	public List<InvestAndFd> getInvestFunding(){
 		System.out.println("------------------InvestService-----------------getinvestFunding()");
-		List<InvestAndFd> fdfd =  investdaointerface.investFundingSelect();
-		return fdfd;
+		List<InvestAndFd> fdlist =  investdaointerface.investFundingSelect();
+		return fdlist;
+	}
+	//투자하기에서 하나의 펀딩 정보 열람
+	@Override
+	public InvestAndFdLikeAndFd getInvestFundingone(int fdCode) {
+		System.out.println("------------------InvestService-----------------getInvestFundingone()");
+		InvestAndFdLikeAndFd fdonedata = investdaointerface.investFundingDataSelect(fdCode);
+		return fdonedata;
 	}
 }

@@ -3,18 +3,37 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.pineapple.invest.service.InvestMapper">
+	<!-- 투자하기 main 에서 사용하는 모집중인 펀딩 리스트 조회 쿼리 -->
 	<select id="investFundingSelect" parameterType="java.util.Map" resultType="com.pineapple.invest.service.InvestAndFd">
 		SELECT  f.fdCode,
 				f.fdTitle,
 				f.numberOfShares,
 				c.comName,
-				IFNULL(sum(i.purchaseShares),0) as total 
+				IFNULL(sum(i.purchaseShares),0) as total
 		FROM funding f 
 		LEFT JOIN company c 
 		ON f.fdComCode = c.comCode 
 		LEFT JOIN investment i 
 		ON f.fdCode = i.investFdCode 
-		GROUP BY i.investFdCode 
+		WHERE f.fdStatus = '모집중' 
+		GROUP BY f.fdCode 
 		ORDER BY f.openDate ASC;
+	</select>
+	<!-- 투자하기 main 에서 사용하는 모집중인 펀딩 리스트 조회 쿼리 -->
+	<select id="investFundingDataSelect" parameterType="INT" resultType="com.pineapple.invest.service.InvestAndFdLikeAndFd">
+	SELECT f.fdCode,
+		 f.numberOfShares, 
+		 f.issuePrice,
+		 f.closeDate,
+		 f.fdTitle,
+		 f.fdType,
+		 f.minInvestMoney,
+		 (SELECT COUNT(sfl.fdCode)FROM fundinglike sfl WHERE sfl.fdCode= #{fdCode}) as liketotal,
+		 IFNULL(SUM(i.purchaseShares),0) as investtotal,
+		 COUNT(i.investId) as investcount
+	FROM funding f 
+	LEFT JOIN investment i
+	ON f.fdCode = i.investFdCode
+	WHERE f.fdCode = #{fdCode};
 	</select>
 </mapper>
