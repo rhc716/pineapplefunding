@@ -2,11 +2,13 @@
 @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
 
 /* 메인페이지 제외한 곳 // 로그인or 로그아웃 버튼 */
+body{
+	font-family: 'Jeju Gothic', serif;	
+}
 .loginorlogoutbtn{
 	margin-top:20px;
 	float:right;
 	padding:0px;
-	font-family: 'Jeju Gothic', serif;	
 }
 div{
 	display:block;
@@ -14,7 +16,6 @@ div{
   
 button{
 	border:0px;
-	font-family: 'Jeju Gothic', serif;
 }
 /* 공통적으로 쓸 것 */
 .btnpine{
@@ -29,7 +30,6 @@ button{
 .navbar { 
 	background-color:#009442;
 	text-align : center;
-	font-family: 'Jeju Gothic', serif;
 }
 .navbar_pine{
 	float:left;
@@ -84,7 +84,6 @@ button{
 	background-color:#5f5f5f;
 	color:white;
 	margin-top: 20px;
-	font-family: 'Jeju Gothic', serif;
 }
 
 /* 메인 로그인 부분 */
@@ -291,8 +290,6 @@ ul {
     display: block; /* Make the links appear below each other */
     padding: 12px; /* Add some padding */
     text-decoration: none; /* Remove underline from links */
-    font-family: 'Jeju Gothic', serif;
-
 }
 
 .vertical-menu a:hover {
@@ -303,7 +300,6 @@ ul {
 .vertical-menu a.active {
     background-color: #01022c; /* Add a green color to the "active/current" link */
     color: #39e3c2;
-    font-family: 'Jeju Gothic', serif;
 
 } 
 
