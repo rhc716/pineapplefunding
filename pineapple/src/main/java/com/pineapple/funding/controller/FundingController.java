@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.pineapple.funding.service.Funding;
 import com.pineapple.funding.service.FundingService;
 
@@ -48,6 +47,13 @@ public class FundingController {
 		System.out.println("FundingController의 addMilestone호출 성공");
 		return "pms/companyuser/milestoneinsert";
 	}
+	
+	// 펀딩조회하기 페이지 요청
+	@RequestMapping(value = "/myfundinglistpage.pms", method = RequestMethod.GET)
+	public String myfundinglistpage(Locale locale, Model model) {
+		System.out.println("FundingController의 myfundinglistpage호출 성공");
+		return "pms/companyuser/myfundinglist";
+	}
 
 ////////////////////////////////////////////////위에는///페이지요청//////////////////////////////////////////////////////
 	
@@ -66,7 +72,18 @@ public class FundingController {
 		System.out.println("FundingController의 getMyFundingList호출 성공");
 		System.out.println("userId : " + userId);
 		System.out.println("컨트롤러에서 받은 리턴값 : " + service.getMyFundinglist(userId));
-		
 		return service.getMyFundinglist(userId);
 	}
+	
+	// 펀딩삭제 ( 기업회원 경영자 )
+	@RequestMapping(value = "/deletefunding.pms", method = RequestMethod.GET)
+	public @ResponseBody int removeFunding(Model model, Locale locale, @RequestParam("delfdCode") int delfdCode) {
+		System.out.println("FundingController의 removeFunding호출 성공");
+		System.out.println("delfdCode : " + delfdCode);
+		int result = service.removeFunding(delfdCode);
+		System.out.println("result : " + result);
+		return result;
+		
+	}
+	
 }

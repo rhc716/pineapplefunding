@@ -1,7 +1,22 @@
 @CHARSET "UTF-8";
 
 /* 수정중 */
-
-
+.fundinglistbox {
+	  background-color: #f7f7f9; /* White */
+      color: #555555;
+      text-align: center;
+      height : 230px;
+	  width : 230px;
+	  float : left;
+	  
+}
+.fundinglistboxtop{
+	width : 200px;
+	height : 180px;
+}
+.fundinglistboxbottom{
+	width : 200px;
+	height : 30px;
+}	  
 
 /* 수정중 */

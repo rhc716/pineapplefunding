@@ -19,9 +19,17 @@ public class FundingDao implements FundingDaoInterface {
 	}
 	
 	// 내가 소속된 회사 펀딩 리스트 불러오기 ( 기업회원 )
+	@Override
 	public List<Funding> selectMyFundinglist(String userId){
 		System.out.println("FundingDao의 selectMyFundinglist호출 성공");
 		System.out.println("selectMyFundinglist 결과 : " + sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectMyFundinglist", userId));
 		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectMyFundinglist", userId);
+	}
+	// 펀딩삭제 (경영자)
+	@Override
+	public int deleteFunding(int delfdCode) {
+		System.out.println("FundingDao의 deleteFunding호출 성공");
+		
+		return sqlSessionTemplate.delete("com.pineapple.funding.service.FundingMapper.deleteFunding", delfdCode);
 	}
 } 

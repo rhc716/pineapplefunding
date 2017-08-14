@@ -19,9 +19,17 @@ public class FundingService implements FundingServiceInterface {
 	}
 	
 	// 내가 소속된 회사 펀딩 리스트 불러오기 ( 기업회원 )
+	@Override
 	public List<Funding> getMyFundinglist(String userId){
 		System.out.println("FundingService의 getMyFundinglist호출 성공");
 		return fundingdao.selectMyFundinglist(userId);
+	}
+	// 펀딩삭제 (경영자)
+	@Override
+	public int removeFunding(int delfdCode) {
+		System.out.println("FundingService의 deleteFunding호출 성공");
+		int result = fundingdao.deleteFunding(delfdCode);
+		return result;
 	}
 }
  
