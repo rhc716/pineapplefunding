@@ -1,5 +1,7 @@
 package com.pineapple.user.service;
 
+import java.util.List;
+
 public class User {
 	private String userId;
 	private String nickname;
@@ -7,6 +9,7 @@ public class User {
 	private String pw;
 	private int levelCode;
 	private String uDelTime;
+	private List<Account> account;
 	
 	public String getUserId() {
 		System.out.println("getUserId 호출");
@@ -45,11 +48,17 @@ public class User {
 	public void setuDelTime(String uDelTime) {
 		this.uDelTime = uDelTime;
 	}
-	
+	public List<Account> getAccount() {
+		return account;
+	}
+	public void setAccount(List<Account> account) {
+		this.account = account;
+	}
 	@Override
 	public String toString() {
-		return "UserVo [userId=" + userId + ", nickname=" + nickname + ", name=" + name + ", pw=" + pw + ", levelCode="
-				+ levelCode + ", uDelTime=" + uDelTime + "]";
+		return "User [userId=" + userId + ", nickname=" + nickname + ", name=" + name + ", pw=" + pw + ", levelCode="
+				+ levelCode + ", uDelTime=" + uDelTime + ", account=" + account + "]";
 	}
+	
 	
 }

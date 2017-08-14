@@ -8,15 +8,32 @@
 <!-- 투자자 회원정보 및 계좌정보 조회 -->
 	<select id="getAllInvestorInfo"
 			parameterType="String"
-			resultMap="AllInvestorInfo">
-		select * from user u
-		left join userdetail ud on u.userId = ud.userDetailId
-		left join investment i on u.userId = i.investId
-		left join dividendpay dp on i.investCode = dp.divPayInvestCode
-		where u.levelCode = 3
+			resultMap="getAllInvestorInfo">
+		SELECT u.userId, u.nickname, u.name, u.levelCode, u.uDelTime, ac.accountId, ac.secCompany, ac.accountNumber, ac.accountNickname
+		FROM user u
+		left join account ac
+		on u.userId = ac.accountId
+		where u.userId=#{userId}
 	</select>
 	
-<!-- resultMap 참고 -->
+	<resultMap type="com.pineapple.user.service.User"
+			   id="getAllInvestorInfo">
+		<result property="userId" column="userId"/>
+		<result property="nickname" column="nickname"/>
+		<result property="name" column="name"/>
+		<result property="levelCode" column="levelCode"/>
+		<result property="uDelTime" column="uDelTime"/>
+		<collection property="account"
+					ofType="com.pineapple.user.service.Account">
+			<!-- <id property="accountCode" column="accountCode"/> -->
+			<result property="accountId" column="accountId"/>
+			<result property="secCompany" column="secCompany"/>
+			<result property="accountNumber" column="accountNumber"/>
+			<result property="accountNickname" column="accountNickname"/>
+		</collection>
+	</resultMap>
+	
+<!-- resultMap 참고 
 	<resultMap type="naver.jjdev.board.service.Member"
 			   id="member">
 		<result property="memberNo" column="member_no"/>
@@ -39,6 +56,6 @@
 		</collection>
 		
 	</resultMap>
-
+-->
 
 </mapper>

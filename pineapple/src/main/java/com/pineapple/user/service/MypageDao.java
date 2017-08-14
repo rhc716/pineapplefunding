@@ -9,17 +9,15 @@ public class MypageDao implements MypageDaoInterface {
 	
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
-
+	
+	//투자자 마이페이지 첫화면 구성을 위한 투자자 기본 정보와 계좌 정보 조회 메서드
 	@Override
-	public User getUser(String userId) {
-		System.out.println("MypageDao getUser : "+userId);
-		return sqlSessionTemplate.selectOne("", userId);
-	}
-
-	@Override
-	public Account getAccount(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public User getInvestorBasic(String userId) {
+		System.out.println("MypageDao getInvestorBasic 메서드 호출"+userId);
+		User user = new User();
+		user.setUserId(userId);
+		System.out.println("MypageDao getInvestorBasic 메서드 호출 결과"+sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.getAllInvestorInfo", userId));
+		return sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.getAllInvestorInfo", userId);
 	}
 
 }

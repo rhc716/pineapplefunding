@@ -52,7 +52,37 @@
 		</ul>
 		<div id="myTabContent" class="tab-content">
 			<div role="tabpanel" class="tab-pane fade active in" id="investorinfo" aria-labelledby="investorinfo-tab">
-				<p>내정보</p>
+				<div class="row">
+					<div class="col-md-3">
+						<p>내정보</p>
+					</div>
+					<div class="col-md-9">
+						<div>
+							투자자 아이디 : ${user.userId}<br>
+							투자자 닉네임 : ${user.nickname}<br>
+							투자자 권한 : ${user.levelCode}<br>
+						</div>
+						<br><br>
+						<p>내계좌정보</p>
+						<c:forEach var="useraccount" items="${user.account}">
+							<table borde>
+								<thead>
+									<td>증권사</td>
+									<td>계좌번호</td>
+									<td>계좌이름</td>
+								</thead>
+								<tbody>
+									<tr>
+										<td> ${useraccount.secCompany} </td>
+										<td> ${useraccount.accountNumber} </td>
+										<td> ${useraccount.accountNickname} </td>
+									</tr>
+								</tbody>
+							</table>
+						</c:forEach>
+					</div>
+				</div>			
+				
 			</div> 
 			<div role="tabpanel" class="tab-pane fade" id="timeline" aria-labelledby="timeline-tab"> 
 				<p>타임라인</p> 
