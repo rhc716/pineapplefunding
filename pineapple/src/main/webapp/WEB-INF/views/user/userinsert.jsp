@@ -34,12 +34,12 @@
 
 $(document).ready(function(){
 	 $('#submitBtn').click(function(){
-		 if($('#levelCode').attr('checked', 'checked')==true){
+		 if ($("input[name='levelCode']:checked").val()!=null) {
 			if($('#inputSuccess2').val() != ''){ // submit 유효성 검사후 수동으로 해줌. 
 				if($('#pw2').val() != ''){
 					if($('#name').val() != ''){
 						if($('#nickname').val() != ''){
-							if($('#userAgreeCheck') == ''){
+							if(!$('#userAgreeCheck').is(":checked")){
 								alert('사이트 약관에 동의 해주세요');
 							} else {
 								$('#form').submit();
@@ -56,9 +56,9 @@ $(document).ready(function(){
 			} else {
 				alert('아이디 중복체크를 해주세요');
 			}
-	 	} else {
-	 		alert('권한을 선택해주세요')
-	 	}
+		 } else {
+			 alert('권한을 선택 해주세요');
+		 }
 	 });
  });
  
@@ -70,15 +70,21 @@ $(document).ready(function(){
 });
 
  //권한선택 유효성 검사
-
- $(document).ready(function() {
-	 $('#levelCode').click(function() {
-		   if($('#levelCode').attr('checked', 'checked')==false) { 
-			   $('#levelCode').attr('checked', 'checked')=true;
-			   }
-		});
- });
-
+ /*
+ $(document).ready(function(){
+  $('#submitBtn').click(function() {
+    if (!$("input[name='levelCode']:checked").val()) {
+       alert('권한을 선택해주세요');
+        return false;
+    }
+    else {
+      alert('권한 선택 완료');
+    }
+  });
+});
+ */
+ 
+ 
  //이메일아이디 (영문,숫자만) 검사와 중복확인
  $(document).ready(function() { 
 	$('#userId').blur(function() {
