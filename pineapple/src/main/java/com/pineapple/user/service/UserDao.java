@@ -9,6 +9,13 @@ public class UserDao implements UserDaoInterface {
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
 
+	//보완필요. 변수 2개로 조회
+	@Override
+	public User selectUserByIdPw(String userId, String pw) {
+		System.out.println("UserDao selectUserByIdPw : "+userId+" "+pw);
+		return sqlSessionTemplate.selectOne("com.pineapple.user.service.UserMapper.selectUserByIdPw", userId);
+	}
+	
 	//회원가입 닉네임 중복체크 ajax를 위한 닉네임 데이터 호출
 	/* (non-Javadoc)
 	 * @see com.pineapple.user.service.UserDaoInterface#selectUserByNickname(java.lang.String)
@@ -39,4 +46,6 @@ public class UserDao implements UserDaoInterface {
     	System.out.println("UserDao insertUser : "+row);
         return row;
     }
+
+	
 }

@@ -82,7 +82,6 @@
 										<td> ${useraccount.accountNickname} </td>
 									</tr>
 								</tbody>
-							
 						</c:forEach>
 						</table>
 					</div>

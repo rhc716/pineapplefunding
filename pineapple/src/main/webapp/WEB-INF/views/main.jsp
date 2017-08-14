@@ -22,13 +22,16 @@
 
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
-
-
- 
-  
-  
-  
-
+<script type="text/javascript">
+$(document).ready(function(){
+	var SID = ${id};
+	if(SID==''){
+		$('#loginForm').show();
+	} else {
+		$('#loginForm').hide();
+	}
+});
+</script>
 </head>
 <body>
 <div class="container">
@@ -94,7 +97,7 @@
 	<div class="col-md-3">
 		<c:import url="/resources/module/login_main.jsp"/>
 	</div>
-	 
+	
 </div>
 <!-- 풋터 -->
 	<c:import url="/resources/module/footer.jsp"/>

@@ -31,7 +31,6 @@
 <script>
 
 // 가입정보 유효성검사
-
 $(document).ready(function(){
 	 $('#submitBtn').click(function(){
 		 if ($("input[name='levelCode']:checked").val()!=null) {
