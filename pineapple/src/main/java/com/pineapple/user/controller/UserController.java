@@ -22,7 +22,7 @@ import com.pineapple.user.service.UserAndLevel;
 import com.pineapple.user.service.UserServiceInterface;
 
 @Controller
-@SessionAttributes({"id", "nickname", "level"})
+@SessionAttributes({"id", "nickname", "level", "msg"})
 //id, nickname, level키로 저장된 attribute는 세션객체에 저장 됨
 public class UserController {
 	@Autowired
@@ -39,7 +39,14 @@ public class UserController {
 		System.out.println("session 종료 처리");
 		return "redirect:/";
 	}
-
+	
+	//로그인 페이지 요청
+	@RequestMapping(value="/login.user", method=RequestMethod.GET)
+	public String login(){
+		System.out.println("UserController login 페이지 요청 처리");
+		return "redirect:/";
+	}
+	
 	//로그인 요청 처리
 	@RequestMapping(value="/login.user", method=RequestMethod.POST)
 	public String login(Model model, 

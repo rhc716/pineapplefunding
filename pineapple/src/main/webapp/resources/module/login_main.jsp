@@ -25,9 +25,8 @@
 <!-- 세션값 있을 경우 로그인 성공 후 화면, 세션값 없을 경우 로그인 화면 -->
 	<c:choose>
 		<c:when test="${not empty sessionScope.userLogin }">
-			<p>파인애플 펀딩 로그인 성공</p><br>
 			${msg}<br>
-			${id}님 ${level}권한으로 로그인<br>
+			${id}님 ${level} 권한으로 로그인<br>
 			<a href="#">메시지</a>&nbsp&nbsp&nbsp
 			<form action="/pineapple/logout.user" method="post">
 				<button id="logoutBtn"type="submit" class="login_bt btnpine btn-primary">로그아웃</button>
