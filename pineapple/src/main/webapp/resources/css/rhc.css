@@ -6,9 +6,10 @@
       color: #555555;
       text-align: center;
       height : 230px;
-	  width : 230px;
+	  width : 226px;
 	  float : left;
-	  
+	  border: 1px solid #01022c;
+	  margin: 2px 2px;
 }
 .fundinglistboxtop{
 	width : 200px;

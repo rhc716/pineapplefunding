@@ -37,11 +37,23 @@ $(document).ready(function(){
 	// 성공시
 	getfundinglist.done(function(msg){
 		console.log(msg);
-		//var sysdate = new Date(msg[i].fdDate).toLocaleDateString();
-		//console.log(sysdate); 
+		
+		/* 날짜를 yyyy-mm-dd 형태로 바꿔주는 함수 */
+		function formatDate(date) {
+		    var d = new Date(date),
+		        month = '' + (d.getMonth() + 1),
+		        day = '' + d.getDate(),
+		        year = d.getFullYear();
+
+		    if (month.length < 2) month = '0' + month;
+		    if (day.length < 2) day = '0' + day;
+
+		    return [year, month, day].join('-');
+		}
+		
+		//alert(formatDate(msg[0].fdDate));
 		var msgleng = msg.length;
 		for(var i = 0; i<msgleng; i++){
-			var sysdate = new Date(msg[i].fdDate).toLocaleDateString();
 			if(msg[i].fdStatus == "개설요청"){ // 개설요청중 -> 수정, 삭제 버튼이 나오게 함
 				$('#myfundinglist').append(
 						/* 펀딩리스트 폼, 모달 버튼  */
@@ -50,10 +62,8 @@ $(document).ready(function(){
 						+'<div class="fundinglistboxtop">'
 						+'<h3>펀딩명 : '+msg[i].fdTitle+'</h3><br>'
 						+'<b>펀딩상태 : '+msg[i].fdStatus+'</b><br>펀딩개설자 : '+msg[i].fdPublisher
-						+'개설요청일 : '+sysdate+'</div>'
+						+'개설요청일 : '+formatDate(msg[i].fdDate)+'</div>'
 						+'<div class="fundinglistboxbottom">'
-						+'<button class="btn btn-sm btn-success fundingdetailbtn" type="button">'
-						+'펀딩상세 </button> '
 						+'<button type="button" class="btn btn-sm btn-primary"'
 						+' data-toggle="modal" data-target="#myModal'+i+'">'
 						+'수정'
@@ -71,7 +81,7 @@ $(document).ready(function(){
 				    	+'</div>'
 				    	+'<div class="modal-body">'
 				    	/* 모달내용들어갈곳 (펀딩수정) */
-				    	+'<form>'
+				    	+'<form action="/pineapple/modifyfunding.pms?fdCode='+msg[i].fdCode+'" method="post">'
 				    	+'펀딩형태'
 						+'<select name="fdType">'
 						+'<option value="채권">채권</option>'
@@ -86,15 +96,15 @@ $(document).ready(function(){
 						+'주당발행가'
 						+'<input type="text" class="form-control" name="issuePrice" value="'+msg[i].issuePrice+'"><br>'	
 						+'오픈일'
-						+'<input type="text" class="form-control" name="openDate" value="'+new Date(msg[i].openDate).toLocaleDateString()+'"><br>'
+						+'<input type="text" class="form-control" name="openDate" value="'+formatDate(msg[i].openDate)+'"><br>'
 						+'마감일'
-						+'<input type="text" class="form-control" name="closeDate" value="'+new Date(msg[i].closeDate).toLocaleDateString()+'"><br>'
+						+'<input type="text" class="form-control" name="closeDate" value="'+formatDate(msg[i].closeDate)+'"><br>'
 						+'최소보장이율'
 						+'<input type="text" class="form-control" name="numberOfShares" value="'+msg[i].numberOfShares+'"><br>'
 						+'프로젝트 시작일'
-						+'<input type="text" class="form-control" name="projectStartDate" value="'+new Date(msg[i].projectStartDate).toLocaleDateString()+'"><br>'
+						+'<input type="text" class="form-control" name="projectStartDate" value="'+formatDate(msg[i].projectStartDate)+'"><br>'
 						+'프로젝트 마감일'
-						+'<input type="text" class="form-control" name="projectEndDate" value="'+new Date(msg[i].projectEndDate).toLocaleDateString()+'"><br>'
+						+'<input type="text" class="form-control" name="projectEndDate" value="'+formatDate(msg[i].projectEndDate)+'"><br>'
 						+'<!-- 펀딩 포스터 이미지 업로드'
 						+'<input type="file" class="form-control" name="imageUpload"><br> -->'
 						+'<button type="submit" class="btn btn-success">수정완료</button>'
@@ -104,20 +114,15 @@ $(document).ready(function(){
 				    	+'<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>'
 				    	+'</div></div></div></div></div>'
 				);
-			} else { // 모집중 혹은 그 이상 -> 펀딩상세 버튼만 만듦
+			} else { // 모집중 혹은 그 이상 -> 버튼없음
 				$('#myfundinglist').append(
-						/* 펀딩리스트 폼, 모달 버튼  */
 						'<div class="container-fluid fundinglistbox">'
-						+'<input type="hidden" value="'+msg[i].fdCode+'">'
 						+'<div class="fundinglistboxtop">'
 						+'<h3>펀딩명 : '+msg[i].fdTitle+'</h3><br>'
 						+'<b>펀딩상태 : '+msg[i].fdStatus+'</b><br>펀딩개설자 : '+msg[i].fdPublisher
-						+'개설요청일 : '+sysdate+'</div>'
+						+'개설요청일 : '+formatDate(msg[i].fdDate)+'</div>'
 						+'<div class="fundinglistboxbottom">'
-						// 삭제요청 -> 클래스 fundingdetailbtn 인 버튼 클릭시
-						// 상위dom의 fundinglistbox의 input type hidden의 fdCode로 ajax 통신
-						+'<button class="btn btn-sm btn-success fundingdetailbtn" type="button">'
-						+'펀딩상세</button></div></div>'
+						+'</div></div>'
 				);
 			}
 		}
@@ -149,31 +154,8 @@ $(document).ready(function(){
 			else {
 			    //아니오
 			}
-		
 		});
 		
-		//펀딩상세 클릭시 ajax
-		$('.deleterequestbtn').click(function(){
-				// 상세자료를 입력해줄 펀딩코드를 찾아서 whatfd에 넣어줌
-				var whatfd = $(this).parent().parent().find('input').val();
-				console.log(whatdelete);
-				var fundingdelete = $.ajax({
-					type : "get",
-					url : "/pineapple/deletefunding.pms",
-					/* 상세 입력 해줄 펀딩코드를 전송 */
-					data : { delfdCode : whatfd }
-				});
-				//ajax 통신 성공시
-				fundingdelete.done(function(){
-					
-				});
-				//ajax 통신 실패시
-				fundingdelete.fail(function(){
-					alert('ajax통신 실패');
-				});
-		});
-	
-	
 	});
 	// 실패시
 	getfundinglist.fail(function(){
@@ -181,8 +163,6 @@ $(document).ready(function(){
 	});
 	
 });
-
-
 </script>
 </head>
 <body>
@@ -206,7 +186,6 @@ $(document).ready(function(){
 <!-- 펀딩 리스트 뿌려질 곳 -->
 				</div>
 	</div>
-	
 			<div class="col-md-1">
 			</div>
 

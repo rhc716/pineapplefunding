@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pineapple.funding.service.Funding;
+import com.pineapple.funding.service.FundingAndFdDetail;
+import com.pineapple.funding.service.FundingDetail;
 import com.pineapple.funding.service.FundingService;
 
 
@@ -36,7 +38,7 @@ public class FundingController {
 		return "pms/companyuser/fundinginsert";
 	}
 	// 펀딩상세정보입력 페이지 요청
-	@RequestMapping(value = "/fundingdetail.pms", method = RequestMethod.GET)
+	@RequestMapping(value = "/addfundingdetail.pms", method = RequestMethod.GET)
 	public String addFundingDetail(Locale locale, Model model) {
 		System.out.println("FundingController의 addFundingDetail호출 성공");
 		return "pms/companyuser/fundingdetailinsert";
@@ -55,6 +57,12 @@ public class FundingController {
 		return "pms/companyuser/myfundinglist";
 	}
 
+	// 펀딩상세 리스트 페이지 요청
+	@RequestMapping(value = "/myfundingdetaillist.pms", method = RequestMethod.GET)
+	public String myfundingdetaillist(Locale locale, Model model) {
+		System.out.println("FundingController의 myfundingdetaillist호출 성공");
+		return "pms/companyuser/myfundingdetaillist";
+	}
 ////////////////////////////////////////////////위에는///페이지요청//////////////////////////////////////////////////////
 	
 	// 펀딩개설요청 ( 기업회원 경영자 )
@@ -84,6 +92,34 @@ public class FundingController {
 		System.out.println("result : " + result);
 		return result;
 		
+	}
+	
+	// 펀딩수정 ( 기업회원 경영자 )
+	@RequestMapping(value = "/modifyfunding.pms", method = RequestMethod.POST)
+	public String modifyfunding(Model model, Locale locale, Funding funding, @RequestParam("fdCode") int fdCode) {
+		System.out.println("FundingController의 modifyfunding호출 성공");
+		System.out.println("fdCode : " + fdCode);
+		System.out.println("funding : " + funding);
+		service.modifyFunding(funding, fdCode);
+		return "pms/companyuser/myfundinglist";
+	}
+	
+	// 내가 소속된 회사 펀딩, 펀딩상세 정보 담은 리스트 불러오기 ( 기업회원 )
+	@RequestMapping(value = "/selectmyfundingdetaillist.pms", method = RequestMethod.GET)
+	public @ResponseBody List<FundingAndFdDetail> getMyFundingDetailList(Model model, Locale locale, @RequestParam("userId") String userId) {
+		System.out.println("FundingController의 getMyFundingDetailList호출 성공");
+		System.out.println("userId : " + userId);
+		System.out.println("컨트롤러에서 받은 리턴값 : " + service.getMyFundingDetailList(userId));
+		return service.getMyFundingDetailList(userId);
+	}
+	
+	//펀딩상세수정 ( 기업회원 경영자 )
+	@RequestMapping(value = "/modifyfundingdetail.pms", method = RequestMethod.POST)
+	public String modifyfundingdetail(Model model, Locale locale, FundingDetail fundingdetail) {
+		System.out.println("FundingController의 modifyfundingdetail호출 성공");
+		System.out.println("fundingdetail : " + fundingdetail);
+		service.modifyFundingDetail(fundingdetail);
+		return "pms/companyuser/myfundingdetaillist";
 	}
 	
 }

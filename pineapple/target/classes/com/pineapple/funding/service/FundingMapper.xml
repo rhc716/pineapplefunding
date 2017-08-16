@@ -20,7 +20,7 @@
 	</insert>
 	
 	<!-- (기업회원) 내가 소속된 회사의 펀딩 리스트 가져오기 -->
-	<select id="selectMyFundinglist" resultType="java.util.HashMap" parameterType="String">
+	<select id="selectMyFundingList" resultType="java.util.HashMap" parameterType="String">
 		SELECT *
 		FROM funding
 		WHERE fdComCode = ANY 
@@ -36,6 +36,48 @@
 		DELETE FROM funding 
 		WHERE fdCode= #{delfdCode}
 	</delete>
+
+	<!-- (기업회원) 펀딩수정 -->
+	<update id="updateFunding" parameterType="java.util.HashMap">
+		UPDATE funding
+		SET
+			fdTitle=#{funding.fdTitle},
+			minInvestMoney=#{funding.minInvestMoney},
+			numberOfShares=#{funding.numberOfShares},
+			issuePrice=#{funding.issuePrice},
+			openDate=#{funding.openDate},
+			closeDate=#{funding.closeDate},
+			minInterestRate=#{funding.minInterestRate},
+			fdType=#{funding.fdType},
+			projectStartDate=#{funding.projectStartDate},
+			projectEndDate=#{funding.projectEndDate}
+		WHERE fdCode=#{fdCode}
+	</update>
+	
+	<!-- (기업회원) 내가 소속된 회사의 펀딩, 펀딩 상세를 담은 리스트 가져오기 -->
+	<select id="selectFundingDetailList" resultType="java.util.HashMap" parameterType="String">
+		SELECT *
+		FROM 	(
+				SELECT *
+				FROM funding
+				WHERE fdComCode = ANY 
+				(SELECT e.emComCode 
+				FROM user u INNER JOIN employee e 
+				ON u.userId = e.emUserId
+				WHERE u.userId = #{userId})
+				
+				) j LEFT JOIN fundingdetail d
+		ON j.fdCode = d.fdDetailCode
+	</select>
+	
+	<!-- (기업회원) 펀딩상세정보 수정 -->
+	<update id="updateFundingDetail" parameterType="com.pineapple.funding.service.FundingDetail">
+		UPDATE fundingdetail
+		SET
+			openstory=#{openstory},
+			comValue=#{comValue}
+		WHERE fdDetailCode=#{fdDetailCode}
+	</update>
 </mapper>
 
  

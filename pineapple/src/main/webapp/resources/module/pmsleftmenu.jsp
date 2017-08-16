@@ -20,6 +20,7 @@
 			<ul>
 		  		<li><a href="/pineapple/fundinginsert.pms">펀딩개설</a>
 		  		<li><a href="/pineapple/myfundinglistpage.pms">펀딩조회</a>
+		  		<li><a href="/pineapple/myfundingdetaillist.pms">펀딩상세관리</a>
 			</ul>
 		</li>
 		<li><a href="">마일스톤관리</a>
