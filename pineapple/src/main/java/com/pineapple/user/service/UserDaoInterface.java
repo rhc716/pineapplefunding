@@ -3,7 +3,7 @@ package com.pineapple.user.service;
 public interface UserDaoInterface {
 	
 	//로그인 요청 처리를 위한 권한명을 포함한 회원 정보 호출
-	UserAndLevel selectUserByIdWithLevelname(String userId);
+	UserAndLevelAndEmployeeAndCompanyAndRank selectUserByIdWithLevelnameRankname(String userId);
 	
 	//회원가입 닉네임 중복체크 ajax를 위한 닉네임 데이터 호출
 	User selectUserByNickname(String nickname);

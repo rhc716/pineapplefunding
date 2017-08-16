@@ -11,9 +11,9 @@ public class UserDao implements UserDaoInterface {
 	
 	//로그인 요청 처리를 위한 회원 정보 호출
 	@Override
-	public UserAndLevel selectUserByIdWithLevelname(String userId) {
-		System.out.println("UserDao selectUserByIdWithLevelname : "+userId);
-		return sqlSessionTemplate.selectOne("com.pineapple.user.service.UserMapper.getUserWithLevelname", userId);
+	public UserAndLevelAndEmployeeAndCompanyAndRank selectUserByIdWithLevelnameRankname(String userId) {
+		System.out.println("UserDao selectUserByIdWithLevelnameRankname : "+userId);
+		return sqlSessionTemplate.selectOne("com.pineapple.user.service.UserMapper.getUserWithLevelnameComnameRankname", userId);
 	}
 	
 	//회원가입 닉네임 중복체크 ajax를 위한 닉네임 데이터 호출

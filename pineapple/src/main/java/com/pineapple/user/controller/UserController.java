@@ -19,14 +19,21 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.pineapple.user.service.User;
 import com.pineapple.user.service.UserAndLevel;
+import com.pineapple.user.service.UserAndLevelAndEmployeeAndCompanyAndRank;
 import com.pineapple.user.service.UserServiceInterface;
 
 @Controller
-@SessionAttributes({"id", "nickname", "level", "msg"})
+@SessionAttributes({"id", "nickname", "level", "msg", "rank"})
 //id, nickname, level키로 저장된 attribute는 세션객체에 저장 됨
 public class UserController {
 	@Autowired
     private UserServiceInterface service;
+	
+	//회원상세정보입력 페이지 요청
+	
+	
+	//회원상세정보입력 처리
+	
 	
 	//로그아웃 요청 처리
 	@RequestMapping(value="/logout.user", method=RequestMethod.POST)
@@ -55,7 +62,7 @@ public class UserController {
 							  @RequestParam("pw") String pw
 							 ){
 		System.out.println("UserController login 요청 처리");
-		UserAndLevel loginUser = service.gettUserByIdWithLevelname(id);
+		UserAndLevelAndEmployeeAndCompanyAndRank loginUser = service.gettUserByIdLevelnameRankname(id);
 		//아이디와 비밀번호 일치여부 확인
 		if(loginUser != null){
 			if(id.equals(loginUser.getUserId())){
@@ -66,7 +73,19 @@ public class UserController {
 					session.setAttribute("userLogin", loginUser);
 					model.addAttribute("id", loginUser.getUserId());
 					model.addAttribute("nickname", loginUser.getNickname());
-					model.addAttribute("level", loginUser.getUserLevel().getUserLevelName());
+					model.addAttribute("level", loginUser.getUserlevel().getUserLevelName());
+					if(loginUser.getRankcode()!=null){
+						if(loginUser.getRankcode().getRankName().equals("경영진")){
+							System.out.println(id+"님의 권한명 기업회원, 직급명 경영진 세션 설정 완료");
+							model.addAttribute("rank", loginUser.getRankcode().getRankName());
+						} else {
+							System.out.println(id+"님의 권한명 기업회원, 직급명 일반사원 세션 설정 완료");
+							model.addAttribute("rank", loginUser.getRankcode().getRankName());
+						}
+					} else {
+						System.out.println(id+"님의 기업회원 여부 체크; 기업회원 아님");
+						model.addAttribute("rank", "");
+					}
 				} else {
 					System.out.println("login 비밀번호 불일치");
 					model.addAttribute("msg", "비밀번호가 일치하지 않습니다");

@@ -16,7 +16,7 @@
 			<ul class="navbar_menuleft"><a href="/pineapple/investmain.invest">투자하기</a></ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/pmsmain.pms">프로젝트관리</a></ul>
 			<ul class="navbar_menuright">이용안내</ul>
-			<ul class="navbar_menuright"><a href="/pineapple/investormypage.user?userId=${id}">Mypage</a></ul>
+			<ul class="navbar_menuright"><a href="/pineapple/mypage.user?level=${level}">Mypage</a></ul>
 		</div>
 	</c:when>
 	<c:otherwise>

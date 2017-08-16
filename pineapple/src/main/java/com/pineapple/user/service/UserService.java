@@ -9,11 +9,11 @@ public class UserService implements UserServiceInterface {
 	@Autowired
 	private UserDaoInterface dao;
 	
-	//로그인 요청 처리를 위한 권한명을 포함한 회원 정보 호출
+	//로그인 요청 처리를 위한 권한명,직급명을 포함한 회원 정보 호출
 	@Override
-	public UserAndLevel gettUserByIdWithLevelname(String userId) {
-		System.out.println("service gettUserByIdWithLevelname 호출 : "+dao.selectUserByIdWithLevelname(userId).getUserId());
-		return dao.selectUserByIdWithLevelname(userId);
+	public UserAndLevelAndEmployeeAndCompanyAndRank gettUserByIdLevelnameRankname(String userId) {
+		System.out.println("service gettUserByIdLevelnameRankname 호출 : "+dao.selectUserByIdWithLevelnameRankname(userId).getUserId());
+		return dao.selectUserByIdWithLevelnameRankname(userId);
 	}
 
 	//회원가입시 닉네임 중복체크 기능을 위한 dao 메서드 호출
