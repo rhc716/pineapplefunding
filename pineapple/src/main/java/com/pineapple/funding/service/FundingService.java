@@ -11,11 +11,14 @@ public class FundingService implements FundingServiceInterface {
 	@Autowired
 	private FundingDaoInterface fundingdao;
 	
-	// 펀딩 개설 요청 메서드
+	// 펀딩 개설 요청 메서드 // 펀딩상세 같이 만들어지는 트랜젝션
 	@Override
 	public void addFunding(Funding funding){
 		System.out.println("FundingService의 addFunding호출 성공");
 		fundingdao.insertFunding(funding);
+		//오토인크리먼트된 펀딩코드를 가져와서 펀딩상세코드로 넣어서 펀딩상세를 insert해줌
+		int pk = funding.getFdCode();
+		fundingdao.insertFundingDetail(pk);
 	}
 	
 	// 내가 소속된 회사 펀딩 리스트 불러오기 ( 기업회원 )
@@ -24,11 +27,12 @@ public class FundingService implements FundingServiceInterface {
 		System.out.println("FundingService의 getMyFundinglist호출 성공");
 		return fundingdao.selectMyFundinglist(userId);
 	}
-	// 펀딩삭제 (경영자)
+	// 펀딩삭제 (경영자) // 펀딩상세 같이 지워지는 트랜젝션
 	@Override
 	public int removeFunding(int delfdCode) {
 		System.out.println("FundingService의 deleteFunding호출 성공");
 		int result = fundingdao.deleteFunding(delfdCode);
+		fundingdao.deleteFundingDetail(delfdCode);
 		return result;
 	}
 	// 펀딩수정 (경영자)

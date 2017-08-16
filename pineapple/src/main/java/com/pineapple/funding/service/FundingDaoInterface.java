@@ -10,4 +10,6 @@ public interface FundingDaoInterface {
 	void updateFunding(Funding funding, int fdCode);
 	List<FundingAndFdDetail> selectFundingDetailList(String userId);
 	void updateFundingDetail(FundingDetail fundingdetail);
+	void insertFundingDetail(int pk);
+	void deleteFundingDetail(int delfdCode);
 }

@@ -17,6 +17,11 @@
   				'개설요청',#{projectStartDate}, #{projectEndDate}, #{posterImgName},
  				#{posterImgExtension}, #{posterImgWidth}, #{posterImgHeight}, #{posterImgSize},
 				#{fdPublisher}, 0, NULL, NULL, NOW())
+		
+		<!-- insert 후 parameterType에 보드객체에 autoincrement된 보드넘버를 넣어주세요 -->
+        <selectKey keyProperty="fdCode" resultType="int" order="AFTER"> <!-- pk가 아닐땐, 키컬럼도 넣어 설정할 수 있음 -->
+            select last_insert_id() as fdCode
+        </selectKey>
 	</insert>
 	
 	<!-- (기업회원) 내가 소속된 회사의 펀딩 리스트 가져오기 -->
@@ -78,6 +83,19 @@
 			comValue=#{comValue}
 		WHERE fdDetailCode=#{fdDetailCode}
 	</update>
+	
+	<!-- 펀딩상세 입력 트렌젝션처리 -->
+	<insert id="insertFundingDetail" parameterType="int">
+		INSERT INTO fundingdetail
+			(fdDetailCode)
+		VALUES (#{pk})
+	</insert>
+	
+	<!-- 펀딩상세 삭제 트렌젝션처리 -->
+	<delete id="deleteFundingDetail" parameterType="int">
+		DELETE FROM fundingdetail 
+		WHERE fdDetailCode=#{delfdCode}
+	</delete>
 </mapper>
 
  

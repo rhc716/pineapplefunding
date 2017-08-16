@@ -26,6 +26,11 @@
 <!-- css rhc -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
 
+<!-- include summernote css/js-->
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.7/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.7/summernote.js"></script>
+<!-- include summernote-ko-KR -->
+<script src="${pageContext.request.contextPath}/resources/summernote/summernote-ko-KR.js"></script>
 <script>
 $(document).ready(function(){
 	var getfundinglist = $.ajax({
@@ -79,9 +84,9 @@ $(document).ready(function(){
 				    	+'<div class="modal-body">'
 				    	/* 모달내용들어갈곳 (펀딩수정) */
 				    	+'<form action="/pineapple/modifyfundingdetail.pms" method="post">'		    
-						+'<input type="hidden" value="'+msg[i].fdDetailCode+'" name="fdDetailCode">'
+				    	+'<input type="hidden" value="'+msg[i].fdDetailCode+'" name="fdDetailCode">'
 				    	+'오픈스토리'
-						+'<input type="text" class="form-control" name="openstory" value="'+msg[i].openstory+'"><br>'
+						+'<textarea id="summernote" name="openstory" class="form-control">'+msg[i].openstory+'</textarea><br>'
 						+'기업가치'
 						+'<input type="text" class="form-control" name="comValue" value="'+msg[i].comValue+'"><br>'				
 						+'<button type="submit" class="btn btn-success">수정완료</button>'
@@ -92,6 +97,14 @@ $(document).ready(function(){
 				    	+'</div></div></div></div></div>'
 				);
 			}
+			
+			$('#myfundinglist').append(
+					'<script>'
+					+'$(document).ready(function() {'
+					      +'$(\'#summernote\').summernote();'
+					+'});'
+					+'<\/script>'
+			);		
 		});
 });
 </script>
