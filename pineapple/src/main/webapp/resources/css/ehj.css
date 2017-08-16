@@ -88,6 +88,7 @@
 		/* 모집,투자자,달성률 */
 		/* 차트바 */
 			.chart-bar{height: 70px;
+					   line-height: 35px;
 					   border: 1px solid;}
 		/* 차트바 */
 		/* 펀딩좋아요,마감일자 */

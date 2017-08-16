@@ -80,5 +80,4 @@ public class InvestAndFdLikeAndFd {
 				+ ", investcount=" + investcount + "]";
 	}
 
-
 }

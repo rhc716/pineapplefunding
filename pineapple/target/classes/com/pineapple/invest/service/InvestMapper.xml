@@ -21,19 +21,65 @@
 	</select>
 	<!-- 투자하기 main 에서 사용하는 모집중인 펀딩 리스트 조회 쿼리 -->
 	<select id="investFundingDataSelect" parameterType="INT" resultType="com.pineapple.invest.service.InvestAndFdLikeAndFd">
-	SELECT f.fdCode,
-		 f.numberOfShares, 
-		 f.issuePrice,
-		 f.closeDate,
-		 f.fdTitle,
-		 f.fdType,
-		 f.minInvestMoney,
-		 (SELECT COUNT(sfl.fdCode)FROM fundinglike sfl WHERE sfl.fdCode= #{fdCode}) as liketotal,
-		 IFNULL(SUM(i.purchaseShares),0) as investtotal,
-		 COUNT(i.investId) as investcount
-	FROM funding f 
-	LEFT JOIN investment i
-	ON f.fdCode = i.investFdCode
-	WHERE f.fdCode = #{fdCode};
+		SELECT f.fdCode,
+			 f.numberOfShares, 
+			 f.issuePrice,
+			 f.closeDate,
+			 f.fdTitle,
+			 f.fdType,
+			 f.minInvestMoney,
+			 (SELECT COUNT(sfl.fdCode)FROM fundinglike sfl WHERE sfl.fdCode= #{fdCode}) as liketotal,
+			 IFNULL(SUM(i.purchaseShares),0) as investtotal,
+			 COUNT(i.investId) as investcount,
+			 IFNULL(fd.openstory,'정보없음') as openstory,
+			 IFNULL(fd.comValue,'정보없음') as comValue
+		FROM funding f 
+		LEFT JOIN investment i 
+		ON f.fdCode = i.investFdCode 
+		LEFT JOIN fundingdetail fd
+		ON f.fdCode = fd.fdDetailCode
+		WHERE f.fdCode = #{fdCode};
+	</select>
+	<!-- 하나의 펀딩의 Detail 정보(openstory,comValue) -->
+	<select id="investFundingDetailSelect" parameterType="INT" resultType="com.pineapple.funding.service.FundingDetail">
+		SELECT fd.fdDetailCode,
+			   fd.openstory,
+			   fd.comValue 
+		FROM fundingdetail fd 
+		WHERE fd.fdDetailCode = #{fdCode};
+	</select>
+ 	<resultMap type="com.pineapple.invest.service.FundingQna"
+			   id="getFundingQna">
+		<result property="qnaCode" column="qnaCode"/>
+		<result property="qnaFdId" column="qnaFdId"/>
+		<result property="qnaFdCode" column="qnaFdCode"/>
+		<result property="qnaFdTitle" column="qnaFdTitle"/>
+		<result property="qnaFdContent" column="qnaFdContent"/>
+		<result property="qnaFdTime" column="qnaFdTime"/>
+		<collection property="fundingQnaReply"
+					ofType="com.pineapple.invest.service.FundingQnaReply">
+			<id property="qnaReCode" column="qnaReCode"/>
+			<result property="reQnaCode" column="reQnaCode"/>
+			<result property="qnaReId" column="qnaReId"/>
+			<result property="qnaReContent" column="qnaReContent"/>
+			<result property="qnaReTime" column="qnaReTime"/>
+		</collection>
+	</resultMap>
+ 	<select id="investFundingQna" parameterType="java.util.Map" resultType="com.pineapple.invest.service.FundingQna">
+		SELECT fq.qnaCode,
+			   fq.qnaFdId,
+			   fq.qnaFdCode,
+			   fq.qnaFdTitle,
+			   fq.qnaFdContent,
+			   fq.qnaFdTime,
+			   fqr.qnaReCode,
+			   fqr.reQnaCode,
+			   fqr.qnaReId,
+			   fqr.qnaReContent,
+			   fqr.qnaReTime 
+		FROM fundingqna fq 
+		LEFT JOIN fundingqnareply fqr 
+		ON fq.qnaCode = fqr.reQnaCode 
+		WHERE fq.qnaFdCode = #{fdCode};
 	</select>
 </mapper>

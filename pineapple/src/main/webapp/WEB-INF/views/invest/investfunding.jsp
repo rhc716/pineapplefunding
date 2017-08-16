@@ -89,7 +89,7 @@
 			<div class="fundingdata1">
 				<div class="col-xs-4 topdata">
 					<h4>목표금액</h4>
-					<div>${Data.numberOfShares*Data.issuePrice}원</div>
+					<div>${Data.numberOfShares*Data.issuePrice}</div>
 				</div>
 				<div class="col-xs-4 topdata">
 					<h4>투자자</h4>
@@ -101,7 +101,14 @@
 				</div>
 			</div>
 			<div class="col-xs-12 chart-bar">
-				차트
+				<div>
+					모집 금액 : ${Data.investtotal*Data.issuePrice}
+				</div>
+				<div class="progress bor-defult">
+  					<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ${(Data.investtotal/Data.numberOfShares)*100}%; min-width: 3em; max-width: 100%;">
+    					${(Data.investtotal/Data.numberOfShares)*100}%
+  				</div>
+			</div>
 			</div>
 			<div class="fundingdata2">
 				<div class="col-xs-6">
@@ -130,47 +137,36 @@
 		</div>
 	</div>
 	</div>
+	<!-- 다른페이지에서 요청하는식으로 변경예정 -->
 	<!-- MODAL -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content font-j"> 
-	      <div class="modal-header text-lr-center">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h1 class="modal-title" id="myModalLabel">투자 예약하기</h1>
-	      </div>
-	      <div class="modal-body">
-	      <div class="form-group">
-	      	<form action="">
-				<div style="font-size: 30px">구입 주식수 : <input type="text" name="purchaseShares"></div>
-			</form>
-	      </div>
-	      <div class="modal-footer">
-	      	<button type="button" class="btn btn-default" data-dismiss="modal">투자예약하기</button>
-	        <button type="button" class="btn btn-default" data-dismiss="modal">투자그만두기</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	</div>
+ 	  <div class="modal-dialog">
+ 	    <div class="modal-content font-j"> 
+ 	      <div class="modal-header text-lr-center">
+ 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+ 	        <h1 class="modal-title" id="myModalLabel">투자 예약하기</h1>
+ 	      </div>
+ 	      <div class="modal-body">
+ 	      <div class="form-group">
+ 	      	<form action="">
+ 				<div style="font-size: 30px">구입 주식수 : <input type="text" name="purchaseShares"></div>
+ 			</form>
+ 	      </div>
+ 	      <div class="modal-footer">
+ 	      	<button type="button" class="btn btn-default" data-dismiss="modal">투자예약하기</button>
+ 	        <button type="button" class="btn btn-default" data-dismiss="modal">투자그만두기</button>
+ 	      </div>
+ 	    </div>
+ 	  </div>
+ 	</div>
+ 	</div>
+	<!-- 다른페이지에서 요청하는식으로 변경예정 -->
+	
 	<!-- 펀딩 Tab -->
-	<div> 
-		<ul id="myTab" class="nav nav-tabs" role="tablist"> 
-			<li role="presentation" class="active">
-				<a class="font-j" data-target="#openstory" id="openstory-tab" role="tab" data-toggle="tab" aria-controls="openstory" aria-expanded="true">오픈스토리</a>
-			</li> 
-			<li role="presentation" class="">
-				<a class="font-j" data-target="#fundingqna" role="tab" id="fundingqna-tab" data-toggle="tab" aria-controls="fundingqna" aria-expanded="false">펀딩Q&A</a>
-			</li> 
-		</ul>
-		<div id="myTabContent" class="tab-content">
-			<div role="tabpanel" class="tab-pane fade active in" id="openstory" aria-labelledby="openstory-tab">
-				<p>오픈스토리입니다.</p>
-			</div> 
-			<div role="tabpanel" class="tab-pane fade" id="fundingqna" aria-labelledby="fundingqna-tab"> 
-				<p>펀딩Q&A</p> 
-			</div> 
-
-		</div> 
+	<div class="row">
+	<c:import url="/resources/module/fundingtabmenu.jsp">
+		<c:param name="fdCode" value="${Data.fdCode}"></c:param>
+	</c:import>
 	</div>
 <!-- 풋터 -->
 	<c:import url="/resources/module/footer.jsp"/>

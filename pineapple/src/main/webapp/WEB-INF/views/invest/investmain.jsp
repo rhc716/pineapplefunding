@@ -49,13 +49,16 @@
 		<div class="fdlist-comname">
 			${list.comName}
 		</div>
-		<div class="fdlist-data">
+		<div class="fdlist-data pd-a-10">
 			구입한 주식합 = ${list.total}
 			판매하는 주식 = ${list.numberOfShares}
-			(그래프 API 이용)
-			<div id="chart_div" style="width: 100%"></div>
+			<div class="progress bor-defult">
+  				<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ${(list.total/list.numberOfShares)*100}%; min-width: 3em; max-width: 100%;">
+    				${(list.total/list.numberOfShares)*100}%
+  				</div>
 		</div>
 
+	</div>
 	</div>
 	</c:forEach>
 </div>
