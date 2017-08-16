@@ -24,12 +24,6 @@
 		WHERE nickname=#{nickname}
 	</select>
 	
-	<select id="selectUserByIdPw" parameterType="hashmap" resultType="com.pineapple.user.service.User">
-		SELECT userId, nickname, name, pw, levelCode
-		FROM user 
-		WHERE userId=#{userId} and pw=#{pw}
-	</select>
-	
 	<!--
 	<update id="updateUserById" parameterType="User">
 		UPDATE user

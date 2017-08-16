@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.pineapple.user.service.User;
 import com.pineapple.user.service.UserServiceInterface;
@@ -23,20 +27,51 @@ public class UserController {
 	@Autowired
     private UserServiceInterface service;
 	
-	//로그인 요청 ajax처리
-	@RequestMapping(value="/login.user", method = RequestMethod.POST)
-	public @ResponseBody User login(Locale locale, 
-									Model model, 
-									@RequestParam("id") String id,
-									@RequestParam("pw") String pw
-									){
-		System.out.println("UserController login 메서드 호출");
-		User user = service.getUser(id);
-		model.addAttribute("user", user);
-		model.addAttribute("id", user.getUserId());
-		model.addAttribute("nickname", user.getNickname());
-		model.addAttribute("level", user.getLevelCode());
-		return user;
+	//로그아웃 요청 처리
+	@RequestMapping(value="/logout.user", method=RequestMethod.POST)
+	public String logout(HttpSession session, SessionStatus status){
+		System.out.println("logout 요청 처리");
+		//session 종료 처리
+		status.setComplete();
+		session.setAttribute("userLogin", null);
+		session.invalidate();
+		System.out.println("session 종료 처리");
+		return "redirect:/";
+	}
+
+	//로그인 요청 처리
+	@RequestMapping(value="/login.user", method=RequestMethod.POST)
+	public String login(Model model, 
+							  HttpSession session,
+							  @RequestParam("id") String id,
+							  @RequestParam("pw") String pw
+							 ){
+		System.out.println("UserController login 요청 처리");
+		User loginUser = service.getUser(id);
+		//아이디와 비밀번호 일치여부 확인
+		if(loginUser != null){
+			if(id.equals(loginUser.getUserId())){
+				if(pw.equals(loginUser.getPw())){
+					System.out.println("login 아이디, 비밀번호 일치");
+					//아이디, 비밀번호 일치할 경우 세션값 설정, @SessionAttributes를 통해 세션 객체에 담을 변수와 값 설정
+					model.addAttribute("msg", "파인애플 펀딩 로그인 성공");
+					session.setAttribute("userLogin", loginUser);
+					model.addAttribute("id", loginUser.getUserId());
+					model.addAttribute("nickname", loginUser.getNickname());
+					model.addAttribute("level", loginUser.getLevelCode());
+				} else {
+					System.out.println("login 비밀번호 불일치");
+					model.addAttribute("msg", "비밀번호가 일치하지 않습니다");
+				}
+			} else {
+				System.out.println("login 아이디 불일치");
+				model.addAttribute("msg", "아이디가 일치하지 않습니다");
+			}
+		} else {
+			System.out.println("유효하지 않은 아이디 또는 비밀번호 입력");
+			model.addAttribute("msg", "유효하지 않은 아이디 또는 비밀번호가 입력되었습니다");
+		}
+		return "redirect:/";
 	}
 	
 	//회원가입시 닉네임 중복 체크 ajax 요청 처리

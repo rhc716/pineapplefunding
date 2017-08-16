@@ -24,17 +24,13 @@
 
 <!-- css lbr -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lbr.css" />
-
-
-
-
 <script>
 
 // 가입정보 유효성검사
 $(document).ready(function(){
-	 $('#submitBtn').click(function(){
+	 $('#submitBtn').click(function(){	// submit 버튼을 누르면 유효성 검사후 수동으로 submit 해줌.
 		 if ($("input[name='levelCode']:checked").val()!=null) {
-			if($('#inputSuccess2').val() != ''){ // submit 유효성 검사후 수동으로 해줌. 
+			if($('#inputSuccess2').val() != ''){  
 				if($('#pw2').val() != ''){
 					if($('#name').val() != ''){
 						if($('#nickname').val() != ''){

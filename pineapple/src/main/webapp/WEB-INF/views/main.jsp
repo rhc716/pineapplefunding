@@ -22,16 +22,6 @@
 
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
-<script type="text/javascript">
-$(document).ready(function(){
-	var SID = ${id};
-	if(SID==''){
-		$('#loginForm').show();
-	} else {
-		$('#loginForm').hide();
-	}
-});
-</script>
 </head>
 <body>
 <div class="container">
@@ -94,6 +84,7 @@ $(document).ready(function(){
 		</div>
 		
 	<!-- 본문 우측 부분 -->
+	<!-- 로그인 모듈 -->
 	<div class="col-md-3">
 		<c:import url="/resources/module/login_main.jsp"/>
 	</div>

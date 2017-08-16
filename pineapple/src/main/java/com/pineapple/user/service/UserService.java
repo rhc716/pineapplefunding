@@ -9,13 +9,6 @@ public class UserService implements UserServiceInterface {
 	@Autowired
 	private UserDaoInterface dao;
 	
-	//로그인 요청 처리를 위한 dao 호출
-	@Override
-	public User getUserByIdPw(String userId, String pw) {
-		System.out.println("service getUserByIdPw 호출 : "+dao.selectUserByIdPw(userId, pw));
-		return dao.selectUserByIdPw(userId, pw);
-	}
-	
 	//회원가입시 닉네임 중복체크 기능을 위한 dao 메서드 호출
 		/* (non-Javadoc)
 		 * @see com.pineapple.user.service.UserServiceInterface#getUserByNickname(java.lang.String)
@@ -26,13 +19,13 @@ public class UserService implements UserServiceInterface {
 			return dao.selectUserByNickname(nickname);
 		}
 	
-	//회원가입시 아이디 중복체크 기능을 위한 dao 메서드 호출
+	//회원가입시 아이디 중복체크 기능,로그인 요청 처리를 위한 dao 메서드 호출
 	/* (non-Javadoc)
 	 * @see com.pineapple.user.service.UserServiceInterface#getUser(java.lang.String)
 	 */
 	@Override
 	public User getUser(String userId){
-		System.out.println("service getUser 호출 : "+dao.selectUserById(userId).getUserId());
+		System.out.println("service getUser 호출");
 		return dao.selectUserById(userId);
 	}
 	
