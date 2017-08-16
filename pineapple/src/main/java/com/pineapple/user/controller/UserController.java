@@ -18,6 +18,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pineapple.user.service.User;
+import com.pineapple.user.service.UserAndLevel;
 import com.pineapple.user.service.UserServiceInterface;
 
 @Controller
@@ -47,7 +48,7 @@ public class UserController {
 							  @RequestParam("pw") String pw
 							 ){
 		System.out.println("UserController login 요청 처리");
-		User loginUser = service.getUser(id);
+		UserAndLevel loginUser = service.gettUserByIdWithLevelname(id);
 		//아이디와 비밀번호 일치여부 확인
 		if(loginUser != null){
 			if(id.equals(loginUser.getUserId())){
@@ -58,7 +59,7 @@ public class UserController {
 					session.setAttribute("userLogin", loginUser);
 					model.addAttribute("id", loginUser.getUserId());
 					model.addAttribute("nickname", loginUser.getNickname());
-					model.addAttribute("level", loginUser.getLevelCode());
+					model.addAttribute("level", loginUser.getUserLevel().getUserLevelName());
 				} else {
 					System.out.println("login 비밀번호 불일치");
 					model.addAttribute("msg", "비밀번호가 일치하지 않습니다");
