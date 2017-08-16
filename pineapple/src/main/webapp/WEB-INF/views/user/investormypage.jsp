@@ -59,9 +59,9 @@
 					<div class="col-md-10">
 						<br>
 						<div>
-							투자자 아이디 : ${user.userId}<br>
-							투자자 닉네임 : ${user.nickname}<br>
-							투자자 권한 : ${user.levelCode}<br>
+							투자자 아이디 : ${id}<br>
+							투자자 닉네임 : ${nickname}<br>
+							투자자 권한 : ${level}<br>
 						</div>
 						<br><br>
 						<p>내계좌정보</p>
@@ -74,7 +74,6 @@
 									</tr>
 								</thead>
 						<c:forEach var="useraccount" items="${user.account}">
-							
 								<tbody>
 									<tr>
 										<td> ${useraccount.secCompany} </td>

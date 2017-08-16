@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UserServiceInterface {
 	
 	//로그인 요청 처리를 위한 권한명을 포함한 회원 정보 호출
-	UserAndLevel gettUserByIdWithLevelname(String userId);
+	UserAndLevelAndEmployeeAndCompanyAndRank gettUserByIdLevelnameRankname(String userId);
 	
 	//회원가입시 닉네임 중복체크 기능을 위한 dao 메서드 호출
 	User getUserByNickname(String nickname);

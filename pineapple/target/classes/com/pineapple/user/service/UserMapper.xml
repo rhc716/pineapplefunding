@@ -22,28 +22,51 @@
 		FROM user 
 		WHERE nickname=#{nickname}
 	</select>
-	<!-- 권한명과 회원정보조회 -->
-	<select id="getUserWithLevelname"
+	<!-- 권한명, 직급명, 사원과 회원정보조회 -->
+	<select id="getUserWithLevelnameComnameRankname"
 			parameterType="String"
-			resultMap="getUserWithLevelname">
-		SELECT u.userId, u.nickname, u.name, u.pw, u.levelCode, u.uDelTime, ul.userLevelName
+			resultMap="getUserWithLevelnameComnameRankname">
+		SELECT u.userId, u.nickname, u.name, u.pw, u.levelCode, u.uDelTime, e.emComName, com.comOpenUserId
+		, ul.userLevelName, rk.rankName
 		FROM user u
 		left join userlevel ul
 		on u.levelCode = ul.userLevelCode
+		left join employee e
+		on u.userId = e.emUserId
+		left join company com
+		on e.emComName = com.comName
+		left join rankcode rk
+		on e.emRankCode = rk.rankCode
 		where u.userId=#{userId}
 	</select>
-	<resultMap type="com.pineapple.user.service.UserAndLevel"
-			   id="getUserWithLevelname">
+	<resultMap type="com.pineapple.user.service.UserAndLevelAndEmployeeAndCompanyAndRank"
+			   id="getUserWithLevelnameComnameRankname">
 		<result property="userId" column="userId"/>
 		<result property="nickname" column="nickname"/>
 		<result property="name" column="name"/>
 		<result property="pw" column="pw"/>
 		<result property="levelCode" column="levelCode"/>
 		<result property="uDelTime" column="uDelTime"/>
-		<collection property="userLevel"
+		<collection property="employee"
+					ofType="com.pineapple.user.service.Employee">
+			<result property="emUserId" column="emUserId"/>
+			<result property="emComName" column="emComName"/>
+			<result property="emRankCode" column="emRankCode"/>
+		</collection>
+		<collection property="company"
+					ofType="com.pineapple.user.service.Company">
+			<result property="comName" column="comName"/>
+			<result property="comOpenUserId" column="comOpenUserId"/>
+		</collection>
+		<collection property="userlevel"
 					ofType="com.pineapple.user.service.UserLevel">
 			<result property="userLevelCode" column="userLevelCode"/>
 			<result property="userLevelName" column="userLevelName"/>
+		</collection>
+		<collection property="rankcode"
+					ofType="com.pineapple.user.service.RankCode">
+			<result property="rankCode" column="rankCode"/>
+			<result property="rankName" column="rankName"/>
 		</collection>
 	</resultMap>
 	
