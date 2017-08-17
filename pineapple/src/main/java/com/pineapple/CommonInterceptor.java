@@ -17,7 +17,6 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 		// 로그인 필요없는 페이지는 따로 분기해줌...
 		// return 값이 true면 컨트롤러로 진행이 넘어감
 		
-		System.out.println("---------------------------------------");
 		return true;
 	}
 	

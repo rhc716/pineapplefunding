@@ -11,8 +11,8 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.pineapple.funding">
-		<level value="info" />
+	<logger name="com.pineapple">
+		<level value="debug" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
@@ -32,9 +32,12 @@
 		<level value="info" />
 	</logger>
 
+	
+	<!-- debug 레벨부터 상위 모든 레벨의 로그를 찍겠다는 의미이다-->
+	<!-- 배포시에는 로그를 상위 에러 정도에 놓으면 된다. -->
 	<!-- Root Logger -->
 	<root>
-		<priority value="warn" />
+		<priority value="debug" />
 		<appender-ref ref="console" />
 	</root>
 	

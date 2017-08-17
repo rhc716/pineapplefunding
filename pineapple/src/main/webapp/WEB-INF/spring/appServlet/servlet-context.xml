@@ -38,6 +38,11 @@
 		</mvc:interceptor>
 		
 		<!-- 인터셉터 추가 가능 -->
+		<mvc:interceptor>		
+			<mvc:mapping path="/*"/>	
+			<bean class="com.pineapple.CommonLoggerInterceptor"></bean>
+		</mvc:interceptor>
+		
 	</mvc:interceptors>
 		
 		
