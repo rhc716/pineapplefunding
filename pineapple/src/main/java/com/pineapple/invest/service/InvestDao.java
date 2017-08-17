@@ -43,6 +43,12 @@ public class InvestDao implements InvestDaoInterface {
 		log.debug("InvestDao-----investFundingQnaSelect");
 		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.getFundingQna",fdCode);
 	}
+	//하나의 펀딩 Q&A 댓글 SELECT
+	@Override
+	public List<FundingQnaReply> investFundingQnaReplySelect(int qnaReCode) {
+		log.debug("InvestDao-----investFundingQnaReplySelect");
+		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.getFundingQnaReply",qnaReCode);
+	}
 }
 
 

@@ -43,12 +43,14 @@
 		<result property="qnaFdContent" column="qnaFdContent"/>
 		<result property="qnaFdTime" column="qnaFdTime"/>
 	</resultMap>
-	<resultMap type="" id="">
-		<result/>
-		<result/>
-		<result/>
-		<result/>
-		<result/>
+	<!-- FundingQnaReply -->
+	<resultMap type="com.pineapple.invest.service.FundingQnaReply"
+			   id="getFundingQnaReply">
+		<result property="qnaReCode" column="qnaReCode"/>
+		<result property="reQnaCode" column="reQnaCode"/>
+		<result property="qnaReId" column="qnaReId"/>
+		<result property="qnaReContent" column="qnaReContent"/>
+		<result property="qnaReTime" column="qnaReTime"/>
 	</resultMap>
 	<!-- 투자하기 main 에서 사용하는 모집중인 펀딩 리스트 조회 쿼리 -->
 	<select id="getInvestAndFd" parameterType="java.util.Map" resultType="com.pineapple.invest.service.InvestAndFd">
@@ -106,5 +108,15 @@
 		FROM fundingqna fq 
 		WHERE fq.qnaFdCode = #{fdCode}
 		ORDER BY fq.qnaFdTime DESC;
+	</select>
+	<!-- 하나의 펀딩 Q&A에 대한 댓글조회 -->
+	<select id="getFundingQnaReply" parameterType="INT" resultType="com.pineapple.invest.service.FundingQnaReply">
+		SELECT fqr.qnaReCode,
+			   fqr.reQnaCode,
+			   fqr.qnaReId,
+			   fqr.qnaReContent,
+			   fqr.qnaReTime 
+		FROM fundingqnareply fqr 
+		WHERE fqr.reQnaCode = #{qnaCode}
 	</select>
 </mapper>

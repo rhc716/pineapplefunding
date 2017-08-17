@@ -44,4 +44,11 @@ public class InvestService implements InvestServiceInterface {
 		List<FundingQna> fdlistqna = investdaointerface.investFundingQnaSelect(fdCode);
 		return fdlistqna;
 	}
+	//투자하기에서 펀딩클릭수 펀딩Q&A에 대한 답글 조회
+	@Override
+	public List<FundingQnaReply> getInvestFundingQnaReply(int qnaReCode) {
+		log.debug("------------------InvestService-----------------getInvestFundingQnaReply()");
+		List<FundingQnaReply> fdlistqnareply = investdaointerface.investFundingQnaReplySelect(qnaReCode);
+		return fdlistqnareply;
+	}
 }

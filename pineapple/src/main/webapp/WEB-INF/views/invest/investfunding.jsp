@@ -34,6 +34,7 @@
 			url : "/pineapple/investfundingdetail.invest",
 			data : {fdCode : ${param.fdCode}}
 		});
+		//펀딩Q&A클릭시
 		$('#fundingqna-tab').click(function(param){
 			$('#fundingqnalist').empty();
 			var getfundingqna = $.ajax({
@@ -76,7 +77,25 @@
 		getfundingdata.fail(function(){
 			alert('첫번째 ajax통신실패');
 		});
-		
+/* 		//답글보기 클릭시
+ 		$('.replymain').click(function(param){
+			$('.replycontent').empty();
+			var qnaReCode = $()
+			var getfundingqna = $.ajax({
+				type : "get",
+				url : "#",
+				data : {fdCode : ${param.fdCode}}
+			});
+			getfundingqna.done(function(msg){
+				console.log(msg)
+				for(var i = 0 ;i < msg.length ; i++ ){
+				$('#fundingqnalist').append(
+				}
+			});
+			getfundingqna.fail(function(){
+				alert('두번째 ajax통신실패');
+			});
+		});  */
 		//TAB 메뉴
 		$('a[data-toggle="tab"]').on('hidden.bs.tab', function(e){
 		}); 

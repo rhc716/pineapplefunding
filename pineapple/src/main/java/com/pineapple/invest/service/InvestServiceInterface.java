@@ -13,4 +13,6 @@ public interface InvestServiceInterface {
 	FundingDetail getInvestFundingDetail(int fdCode);
 	//하나의 펀딩 Q&A 불러오는 Service
 	List<FundingQna> getInvestFundingQna(int fdCode);
+	//하나의 펀딩 Q&A 댓글 불러오는 Service
+	List<FundingQnaReply> getInvestFundingQnaReply(int qnaReCode);
 }

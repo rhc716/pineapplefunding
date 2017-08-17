@@ -13,4 +13,7 @@ public interface InvestDaoInterface {
 	FundingDetail investFundingDetailSelect(int fdCode);
 	//하나의 펀딩의 Q&A 불러오는 Dao
 	List<FundingQna> investFundingQnaSelect(int fdCode);
+	//하나의 펀딩 Q&A의 댓글 불러오는 Dao
+	List<FundingQnaReply> investFundingQnaReplySelect(int qnaReCode);
+	
 }
