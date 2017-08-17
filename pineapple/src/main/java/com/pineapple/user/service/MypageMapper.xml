@@ -33,6 +33,25 @@
 		</collection>
 	</resultMap>
 	
+	<!-- 회원상세정보조회 -->
+	<select id="selectUserDetailById" parameterType="String" resultType="com.pineapple.user.service.UserDetail">
+		SELECT userDetailId, phoneFront3, phoneRest8, postalCode, address, nameCheck
+		FROM userdetail 
+		WHERE userDetailId=#{userDetailId}
+	</select>
+	<!-- 회원상세정보수정 -->
+	<update id="updateUserDetailById" parameterType="com.pineapple.user.service.UserDetail">
+		UPDATE userdetail
+ 		SET
+ 			userDetailId=#{userDetailId},
+  			phoneFront3=#{phoneFront3},
+  			phoneRest8=#{phoneRest8},
+  			postalCode=#{postalCode},
+  			address=#{address},
+  			nameCheck=#{nameCheck}
+ 		WHERE userDetailId=#{userDetailId}
+	</update>
+	
 <!-- resultMap 참고 
 	<resultMap type="naver.jjdev.board.service.Member"
 			   id="member">

@@ -3,8 +3,55 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.pineapple.invest.service.InvestMapper">
+	 <!-- InvestAndFd -->
+	 <resultMap type="com.pineapple.invest.service.InvestAndFd"
+	 			id="getInvestAndFd">
+	 	<result property="fdCode" column="fdCode"/>
+	 	<result property="fdTitle" column="fdTitle"/>
+	 	<result property="numberOfShares" column="numberOfShares"/>
+	 	<result property="comName" column="comName"/>
+	 	<result property="total" column="total"/>
+	 </resultMap>
+	 <!-- InvestAndFdLikeAndFd -->
+	 <resultMap type="com.pineapple.invest.service.InvestAndFdLikeAndFd"
+	 			id="getInvestAndFdLikeAndFd">
+		<result property="fdCode" column="fdCode"/>
+		<result property="numberOfShares" column="numberOfShares"/>
+		<result property="issuePrice" column="issuePrice"/>
+		<result property="closeDate" column="closeDate"/>
+		<result property="fdTitle" column="fdTitle"/>
+		<result property="fdType" column="fdType"/>
+		<result property="minInvestMoney" column="minInvestMoney"/>
+		<result property="liketotal" column="liketotal"/>
+		<result property="investtotal" column="investtotal"/>
+		<result property="investcount" column="investcount"/>
+	</resultMap>
+	<!-- FundingDetail -->
+	<resultMap type="com.pineapple.funding.service.Funding"
+			   id="getFundingDetail">
+		<result property="fdDetailCode" column="fdDetailCode"/>
+		<result property="openstory" column="openstory"/>
+		<result property="comValue" column="comValue"/>
+	</resultMap>
+	 <!-- FundingQna -->
+	 <resultMap type="com.pineapple.invest.service.FundingQna"
+			   	id="getFundingQna">
+		<result property="qnaCode" column="qnaCode"/>
+		<result property="qnaFdId" column="qnaFdId"/>
+		<result property="qnaFdCode" column="qnaFdCode"/>
+		<result property="qnaFdTitle" column="qnaFdTitle"/>
+		<result property="qnaFdContent" column="qnaFdContent"/>
+		<result property="qnaFdTime" column="qnaFdTime"/>
+	</resultMap>
+	<resultMap type="" id="">
+		<result/>
+		<result/>
+		<result/>
+		<result/>
+		<result/>
+	</resultMap>
 	<!-- 투자하기 main 에서 사용하는 모집중인 펀딩 리스트 조회 쿼리 -->
-	<select id="investFundingSelect" parameterType="java.util.Map" resultType="com.pineapple.invest.service.InvestAndFd">
+	<select id="getInvestAndFd" parameterType="java.util.Map" resultType="com.pineapple.invest.service.InvestAndFd">
 		SELECT  f.fdCode,
 				f.fdTitle,
 				f.numberOfShares,
@@ -20,7 +67,7 @@
 		ORDER BY f.openDate ASC;
 	</select>
 	<!-- 투자하기 main 에서 사용하는 모집중인 펀딩 리스트 조회 쿼리 -->
-	<select id="investFundingDataSelect" parameterType="INT" resultType="com.pineapple.invest.service.InvestAndFdLikeAndFd">
+	<select id="getInvestAndFdLikeAndFd" parameterType="INT" resultType="com.pineapple.invest.service.InvestAndFdLikeAndFd">
 		SELECT f.fdCode,
 			 f.numberOfShares, 
 			 f.issuePrice,
@@ -41,45 +88,23 @@
 		WHERE f.fdCode = #{fdCode};
 	</select>
 	<!-- 하나의 펀딩의 Detail 정보(openstory,comValue) -->
-	<select id="investFundingDetailSelect" parameterType="INT" resultType="com.pineapple.funding.service.FundingDetail">
+	<select id="getFundingDetail" parameterType="INT" resultType="com.pineapple.funding.service.FundingDetail">
 		SELECT fd.fdDetailCode,
 			   fd.openstory,
 			   fd.comValue 
 		FROM fundingdetail fd 
 		WHERE fd.fdDetailCode = #{fdCode};
 	</select>
- 	<resultMap type="com.pineapple.invest.service.FundingQna"
-			   id="getFundingQna">
-		<result property="qnaCode" column="qnaCode"/>
-		<result property="qnaFdId" column="qnaFdId"/>
-		<result property="qnaFdCode" column="qnaFdCode"/>
-		<result property="qnaFdTitle" column="qnaFdTitle"/>
-		<result property="qnaFdContent" column="qnaFdContent"/>
-		<result property="qnaFdTime" column="qnaFdTime"/>
-		<collection property="fundingQnaReply"
-					ofType="com.pineapple.invest.service.FundingQnaReply">
-			<id property="qnaReCode" column="qnaReCode"/>
-			<result property="reQnaCode" column="reQnaCode"/>
-			<result property="qnaReId" column="qnaReId"/>
-			<result property="qnaReContent" column="qnaReContent"/>
-			<result property="qnaReTime" column="qnaReTime"/>
-		</collection>
-	</resultMap>
- 	<select id="investFundingQna" parameterType="java.util.Map" resultType="com.pineapple.invest.service.FundingQna">
+	<!-- 하나의 펀딩의 Q&A정보 -->
+ 	<select id="getFundingQna" parameterType="INT" resultType="com.pineapple.invest.service.FundingQna">
 		SELECT fq.qnaCode,
 			   fq.qnaFdId,
 			   fq.qnaFdCode,
 			   fq.qnaFdTitle,
 			   fq.qnaFdContent,
-			   fq.qnaFdTime,
-			   fqr.qnaReCode,
-			   fqr.reQnaCode,
-			   fqr.qnaReId,
-			   fqr.qnaReContent,
-			   fqr.qnaReTime 
+			   fq.qnaFdTime
 		FROM fundingqna fq 
-		LEFT JOIN fundingqnareply fqr 
-		ON fq.qnaCode = fqr.reQnaCode 
-		WHERE fq.qnaFdCode = #{fdCode};
+		WHERE fq.qnaFdCode = #{fdCode}
+		ORDER BY fq.qnaFdTime DESC;
 	</select>
 </mapper>

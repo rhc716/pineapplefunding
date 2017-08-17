@@ -44,11 +44,9 @@ public class UserDetail {
 	public void setNameCheck(int nameCheck) {
 		this.nameCheck = nameCheck;
 	}
-	
 	@Override
 	public String toString() {
-		return "UserDetailVo [userDetailId=" + userDetailId + ", phoneFront3=" + phoneFront3 + ", phoneRest8="
+		return "UserDetail [userDetailId=" + userDetailId + ", phoneFront3=" + phoneFront3 + ", phoneRest8="
 				+ phoneRest8 + ", postalCode=" + postalCode + ", address=" + address + ", nameCheck=" + nameCheck + "]";
 	}
-	
 }

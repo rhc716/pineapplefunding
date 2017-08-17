@@ -25,7 +25,7 @@
 <!-- 세션값 있을 경우 로그인 성공 후 화면, 세션값 없을 경우 로그인 화면 -->
 	<c:choose>
 		<c:when test="${not empty sessionScope.userLogin }">
-			${msg}<br>
+			로그인 성공<br>
 			${id}님 ${level} 권한으로 로그인<br>
 			<a href="#">메시지</a>&nbsp&nbsp&nbsp
 			<form action="/pineapple/logout.user" method="post">

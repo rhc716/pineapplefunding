@@ -8,6 +8,19 @@ public class UserService implements UserServiceInterface {
 
 	@Autowired
 	private UserDaoInterface dao;
+	//회원상세정보조회를 위한 메서드 호출
+	@Override
+	public UserDetail getUserDetail(String userDetailId) {
+		System.out.println("service getUserDetail 호출 : "+userDetailId);
+		return dao.selectUserDetail(userDetailId);
+	}
+	
+	//회원상세정보입력 처리를 위한 메서드 호출
+	@Override
+	public int addUserDetail(UserDetail userdetail) {
+		System.out.println("service addUserDetail 호출 : "+userdetail);
+		return dao.insertUserDetail(userdetail);
+	}
 	
 	//로그인 요청 처리를 위한 권한명,직급명을 포함한 회원 정보 호출
 	@Override
@@ -47,4 +60,5 @@ public class UserService implements UserServiceInterface {
 	}
 
 	
+
 }

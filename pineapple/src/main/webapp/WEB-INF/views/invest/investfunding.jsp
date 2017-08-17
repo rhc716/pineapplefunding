@@ -27,10 +27,60 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/ehj.css" />
 
 <script> 
-	// 펀딩 Tab
+	//펀딩 Tab Content
 	$(document).ready(function() { 
+		var getfundingdata = $.ajax({
+			type : "get",
+			url : "/pineapple/investfundingdetail.invest",
+			data : {fdCode : ${param.fdCode}}
+		});
+		$('#fundingqna-tab').click(function(param){
+			$('#fundingqnalist').empty();
+			var getfundingqna = $.ajax({
+				type : "get",
+				url : "/pineapple/investfundingqna.invest",
+				data : {fdCode : ${param.fdCode}}
+			});
+			getfundingqna.done(function(msg){
+				console.log(msg)
+				for(var i = 0 ;i < msg.length ; i++ ){
+				$('#fundingqnalist').append(
+							"<div class=\"col-xs-12 funding-qna\">"+
+							"<div class=\"col-xs-12 funding-qnaid\">"+msg[i].qnaFdId+""+
+							"<span>&nbsp;&nbsp;"+msg[i].qnaFdTime+"</span></div>"+
+							"<div class=\"col-xs-12 funding-title\">Q&A제목 : "+msg[i].qnaFdTitle+"</div>"+
+							"<div class=\"col-xs-12 funding-content\">Q&A내용 : "+msg[i].qnaFdContent+"</div>"+
+							"<a class=\"col-xs-12 replymain\" data-toggle=\"collapse\" href=\"#collapseExample"+[i]+"\" aria-expanded=\"false\" aria-controls=\"collapseExample"+[i]+"\">"+
+				  			"답글보기"+
+				  			"</a>"+
+				  			"<div class=\"collapse\" id=\"collapseExample"+[i]+"\">"+
+				  		  	"<div class=\"replycontent\">"+
+				  		    "<span class=\"glyphicon glyphicon-menu-right\"></span>..."+
+				  		  	"</div>"+
+				  			"</div>"+
+							"</div>"
+							);
+				}
+			});
+			getfundingqna.fail(function(){
+				alert('두번째 ajax통신실패');
+			});
+		});
+		// 성공시
+		getfundingdata.done(function(msg){
+			console.log(msg)
+			$('#openstoryContent').html(msg.openstory);
+			$('#comValueContent').text(msg.comValue);
+		});
+		// 실패시
+		getfundingdata.fail(function(){
+			alert('첫번째 ajax통신실패');
+		});
+		
+		//TAB 메뉴
 		$('a[data-toggle="tab"]').on('hidden.bs.tab', function(e){
 		}); 
+		//MODAL
 		var check = "";
 		$('#investbtn').click(function () {
 		      $('#myModal').modal('show',function(){
@@ -82,10 +132,10 @@
 	</div>
 	<div class="col-xs-12 pd-a-20 bor-defult ma-b-20 font-j"> 
 		<c:set var="Data" value="${fundingData}" />
-		<div class="col-xs-7 funding-vedio">
-			<img src="${pageContext.request.contextPath}/resources/img/invest/fundingone.jpg">
+		<div class="col-xs-7 funding-vedio pd-a-0">
+			<iframe width="620" height="349" src="https://www.youtube.com/embed/JGwWNGJdvx8" frameborder="0" allowfullscreen style="padding-right: 20px"></iframe>
 		</div>
-		<div class="col-xs-5 pd-a-0 bor-defult text-lr-center">
+		<div class="col-xs-5 bor-defult text-lr-center" style="padding: 0px;">
 			<div class="fundingdata1">
 				<div class="col-xs-4 topdata">
 					<h4>목표금액</h4>
@@ -112,22 +162,22 @@
 			</div>
 			<div class="fundingdata2">
 				<div class="col-xs-6">
-					좋아요 : ${Data.liketotal}
+					<span class="glyphicon glyphicon-thumbs-up"></span> : ${Data.liketotal}
 				</div>
 				<div class="col-xs-6">
 					${Data.closeDate}
 				</div>
 			</div>
-			<div class="col-xs-12 investbtn-all">
-				<div class="col-xs-6 bor-defult pd-a-0" style="height: 130px">
-					<button id="investbtn" type="button" class="col-xs-12 investbtn-invest" data-toggle="modal" data-target="#mymodal">
+			<div class="col-xs-12 investbtn-all"style="padding: 0px">
+				<div class="col-xs-6 bor-defult" style="height: 160px;padding: 0px" >
+					<button id="investbtn" type="button" class="col-xs-12 investbtn-invest" data-toggle="modal" data-target="#mymodal" style="padding: 0px">
 					투자하기
 					</button>
-					<button class="col-xs-12 investbtn-investguide">
+					<button class="col-xs-12 investbtn-investguide"  style="padding: 0px">
 					투자방법안내
 					</button>
 				</div>
-				<div class="col-xs-6 funding-investdata">
+				<div class="col-xs-6 funding-investdata"  style="padding: 0px">
 					펀딩형태 : ${Data.fdType}형 <br>
 					판매 주식수 : ${Data.numberOfShares} <br>
 					주당 발행가 : ${Data.issuePrice} <br>
@@ -161,12 +211,42 @@
  	</div>
  	</div>
 	<!-- 다른페이지에서 요청하는식으로 변경예정 -->
-	
 	<!-- 펀딩 Tab -->
 	<div class="row">
-	<c:import url="/resources/module/fundingtabmenu.jsp">
-		<c:param name="fdCode" value="${Data.fdCode}"></c:param>
-	</c:import>
+	<div> 
+		<ul id="myTab" class="nav nav-tabs font-j" role="tablist"> 
+			<li role="presentation" class="active">
+				<a data-target="#openstory" id="openstory-tab" role="tab" data-toggle="tab" aria-controls="openstory" aria-expanded="true">오픈스토리</a>
+			</li> 
+			<li role="presentation" class="">
+				<a data-target="#comValue" role="tab" id="comValue-tab" data-toggle="tab" aria-controls="comValue" aria-expanded="false">기업가치</a>
+			</li> 
+			<li role="presentation" class="">
+				<a data-target="#fundingqna" role="tab" id="fundingqna-tab" data-toggle="tab" aria-controls="fundingqna" aria-expanded="false">펀딩Q&A</a>
+			</li>
+		</ul>
+		<div id="myTabContent" class="tab-content font-j" style="text-align: center;">
+			<div role="tabpanel" class="tab-pane fade active in" id="openstory" aria-labelledby="openstory-tab">
+				<div id="openstoryContent"></div>
+			</div> 
+			<div role="tabpanel" class="tab-pane fade" id="comValue" aria-labelledby="comValue-tab"> 
+				<p id="comValueContent"></p> 
+			</div> 
+			<div role="tabpanel" class="tab-pane fade pd-a-0" id="fundingqna" aria-labelledby="fundingqna-tab"> 
+				<h2>펀딩 Q&A</h2>
+				<div class="col-xs-12"style="text-align: center;padding: 0px">
+					<div class="col-xs-10 " style="padding: 0px">
+					<input type="text" style="width: 100%; height: 100px;" value="질문 내용 적어주세요">
+					</div>
+					<div class="col-xs-2" style="padding-left: 20px;padding-right: 0px;">
+					<button class="pd-a-0 bor-defult" style="width: 100%; height: 100px; font-size: 28px;">질문등록하기</button>
+					</div>
+				</div>
+				<div id="fundingqnalist">
+				</div>
+			</div> 
+		</div> 
+	</div>
 	</div>
 <!-- 풋터 -->
 	<c:import url="/resources/module/footer.jsp"/>

@@ -20,28 +20,48 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pineapple.user.service.User;
 import com.pineapple.user.service.UserAndLevel;
 import com.pineapple.user.service.UserAndLevelAndEmployeeAndCompanyAndRank;
+import com.pineapple.user.service.UserDetail;
 import com.pineapple.user.service.UserServiceInterface;
 
 @Controller
-@SessionAttributes({"id", "nickname", "level", "msg", "rank"})
+@SessionAttributes({"id", "nickname", "level", "rank"})
 //id, nickname, level키로 저장된 attribute는 세션객체에 저장 됨
 public class UserController {
 	@Autowired
     private UserServiceInterface service;
-	
-	//회원상세정보입력 페이지 요청
-	
+
+	//회원상세정보입력 페이지 요청(회원상세정보 조회/수정은 mypage part에서 구현)
+	@RequestMapping(value="/userdetailinsert.user", method=RequestMethod.GET)
+	public String userdetailinsertpage(HttpSession session){
+		System.out.println("userdetailinsertpage 회원상세정보입력 페이지 요청 처리");
+		String redirect = null;
+		if(service.getUserDetail(session.getAttribute("id").toString())!=null){
+			redirect = "redirect:/mypage.user";
+		} else {
+			redirect = "user/userdetailinsert";
+		}
+		return redirect;
+	}
 	
 	//회원상세정보입력 처리
-	
-	
+	@RequestMapping(value="/userdetailinsert.user", method=RequestMethod.POST)
+	public String userdetailinsert( UserDetail userdetail){
+		System.out.println("userdetailinsert 회원상세정보입력 요청 처리");
+		service.addUserDetail(userdetail);
+		return "redirect:/mypage.user";
+	}
+
 	//로그아웃 요청 처리
 	@RequestMapping(value="/logout.user", method=RequestMethod.POST)
-	public String logout(HttpSession session, SessionStatus status){
+	public String logout(HttpSession session, SessionStatus status, Model model){
 		System.out.println("logout 요청 처리");
 		//session 종료 처리
-		status.setComplete();
 		session.setAttribute("userLogin", null);
+		model.addAttribute("id", null);
+		model.addAttribute("nickname", null);
+		model.addAttribute("level", null);
+		model.addAttribute("rank", null);
+		status.setComplete();
 		session.invalidate();
 		System.out.println("session 종료 처리");
 		return "redirect:/";
@@ -57,10 +77,10 @@ public class UserController {
 	//로그인 요청 처리
 	@RequestMapping(value="/login.user", method=RequestMethod.POST)
 	public String login(Model model, 
-							  HttpSession session,
-							  @RequestParam("id") String id,
-							  @RequestParam("pw") String pw
-							 ){
+						  HttpSession session,
+						  @RequestParam("id") String id,
+						  @RequestParam("pw") String pw
+						 ){
 		System.out.println("UserController login 요청 처리");
 		UserAndLevelAndEmployeeAndCompanyAndRank loginUser = service.gettUserByIdLevelnameRankname(id);
 		//아이디와 비밀번호 일치여부 확인
@@ -69,7 +89,6 @@ public class UserController {
 				if(pw.equals(loginUser.getPw())){
 					System.out.println("login 아이디, 비밀번호 일치");
 					//아이디, 비밀번호 일치할 경우 세션값 설정, @SessionAttributes를 통해 세션 객체에 담을 변수와 값 설정
-					model.addAttribute("msg", "파인애플 펀딩 로그인 성공");
 					session.setAttribute("userLogin", loginUser);
 					model.addAttribute("id", loginUser.getUserId());
 					model.addAttribute("nickname", loginUser.getNickname());

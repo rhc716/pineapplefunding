@@ -2,6 +2,12 @@ package com.pineapple.user.service;
 
 public interface UserDaoInterface {
 	
+	//회원상세정보조회를 위한 메서드 선언
+	UserDetail selectUserDetail(String userDetailId);
+	
+	//회원상세정보입력 처리를 위한 메서드 선언
+	int insertUserDetail(UserDetail userdetail);
+	
 	//로그인 요청 처리를 위한 권한명을 포함한 회원 정보 호출
 	UserAndLevelAndEmployeeAndCompanyAndRank selectUserByIdWithLevelnameRankname(String userId);
 	

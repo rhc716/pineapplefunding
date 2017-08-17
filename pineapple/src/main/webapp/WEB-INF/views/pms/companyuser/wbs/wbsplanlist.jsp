@@ -24,7 +24,39 @@
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
 
-
+<script>
+/* 펀딩 리스트 불러올 ajax */
+$(document).ready(function(){
+	var wbsplan = $.ajax({
+		type : "get",
+		url : "/pineapple/wbsplanlist.pms",
+		/* 아이디 세션에서 받아서 가져옴 */
+		data : { userId : "id01@maver.com" }
+	});
+	// 성공시
+	wbsplan.done(function(msg){
+		console.log(msg);
+	
+		var msgleng = msg.length;
+		for(var i = 0; i<msgleng; i++){
+				$('#wbsplanlist').append(
+					'<form action="/pineapple/wbsplandetail.pms" method="post">' 
+					+'<div class="col-xs-4 well">'
+					+'<div>'
+					+'<input type="hidden" name="wbsPlanCode" value="'+msg[i].wbsPlanCode+'"/>'
+					+'펀딩명 :'+msg[i].fdTitle+'<br>'
+					+'마일스톤명 :'+msg[i].milestoneName+'<br>'
+					+'wbs순서:'+msg[i].wbsPlanOrder
+					+'wbs이름 :'+msg[i].wbsPlanName+'<br>'
+					+'<input type="submit" value="상세정보"/>'
+					+'</div>'
+					+'</div>'
+					+'</form>'	
+		)}
+	})
+})
+		
+</script>
 </head>
 <body>
 
@@ -38,19 +70,21 @@
 	<div class="col-md-3">
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
-	<div class="col-md-9">
-		<c:forEach var="list" items="${wbsplanlist}">
+	<div class="col-md-9" id ="wbsplanlist">
+<%-- 		<c:forEach var="list" items="${wbsplanlist}">
 		 	<form action="/pineapple/wbsplandetail.pms" method="post"> 
 			 	<div class="col-xs-4 well">
 					<div>
 						<input type="hidden" name="wbsPlanCode" value="${list.wbsPlanCode}"/>
+						펀딩명 = ${list.fdTitle}<br>
+						마일스톤명 = ${list.milestoneName}<br>
 						wbs순서 = ${list.wbsPlanOrder}
 						wbs이름 = ${list.wbsPlanName}<br>
 						<input type="submit" value="상세정보"/> 
 					</div>
 				</div>	
 			</form>
-		</c:forEach>
+		</c:forEach> --%>
 	</div>
 </div>
 <!-- 풋터 -->

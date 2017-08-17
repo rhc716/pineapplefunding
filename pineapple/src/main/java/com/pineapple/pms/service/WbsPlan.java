@@ -68,7 +68,12 @@ public class WbsPlan {
 		return wbsPlanStartDate;
 	}
 	public void setWbsPlanStartDate(String wbsPlanStartDate) {
-		this.wbsPlanStartDate = wbsPlanStartDate;
+		//wbsPlanStartDate 가 공백일경우 null로 치환
+		if(wbsPlanStartDate==""){
+			wbsPlanStartDate = null;
+		}else{
+			this.wbsPlanStartDate = wbsPlanStartDate;
+		}
 	}
 	public int getWbsPlanDuration() {
 		System.out.println("wbsPlanDuration get"+wbsPlanDuration);
