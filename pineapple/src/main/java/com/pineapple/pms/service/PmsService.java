@@ -10,7 +10,7 @@ import com.pineapple.pms.service.WbsPlan;
 @Service
 public class PmsService{
 	@Autowired
-	private PmsDao pmsdao;
+	private PmsDaoInterface pmsdao;
 	
 	// wbsplan 생성 메서드
 	public void addWbsplan(WbsPlan wbsplan){
@@ -19,15 +19,14 @@ public class PmsService{
 	}
 
 	
-	public List<WbsPlan> getMyWbsPlanList() {
+	public List<WbsPlanView> getMyWbsPlanList(String userId) {
 		System.out.println("PmsService의 getMyWbsPlanList호출 성공");
-		List<WbsPlan> wbsplanlist = pmsdao.WbsPlanSelect();
-		return wbsplanlist;
+		return pmsdao.WbsPlanSelect(userId);
 	}
 	
-	public  WbsPlan getMyWbsPlanDetail(String wbsplancode) {
+	public  WbsPlanView getMyWbsPlanDetail(String wbsplancode) {
 		System.out.println("PmsService의 getMyWbsPlanList호출 성공");
-		WbsPlan wbsplandetail = pmsdao.getMyWbsPlanDetail(wbsplancode);
+		WbsPlanView wbsplandetail = pmsdao.getMyWbsPlanDetail(wbsplancode);
 		return wbsplandetail;
 	}
  

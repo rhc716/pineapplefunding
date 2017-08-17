@@ -32,7 +32,7 @@
 		<li><a href="">WBS관리</a>
 			<ul>
 				<li><a href="/pineapple/wbsplaninsert.pms">WBS예상작성</a></li>
-				<li><a href="/pineapple/wbsplanlist.pms">WBS예상조회</a></li>
+				<li><a href="/pineapple/wbsplanlistpage.pms">WBS예상조회</a></li>
 				<li><a href="">WBS실제작성</a></li>
 				<li><a href="">WBS실제조회</a></li>
 				<li><a href="">WBS승인</a></li>

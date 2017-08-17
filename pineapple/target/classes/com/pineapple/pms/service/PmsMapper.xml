@@ -9,14 +9,30 @@
 		(wbsPlanCode, wbsPlanFdCode, wbsPlanMsCode, wbsPlanOrder, wbsPlanChange, wbsPlanName,
 		 wbsPlanDependency, wbsPlanStartDate, wbsPlanDuration, wbsPlanWriteDate, wbsPlanManager, wbsPlanComCode)
 		 
-		VALUES (NULL, 0, 0, #{wbsPlanOrder}, 0, #{wbsPlanName}, #{wbsPlanDependency},
-				#{wbsPlanStartDate}, #{wbsPlanDuration}, NOW(), #{wbsPlanManager}, 0);
+		VALUES (NULL, #{wbsPlanFdCode}, #{wbsPlanMsCode}, #{wbsPlanOrder}, 0, #{wbsPlanName}, #{wbsPlanDependency},
+				#{wbsPlanStartDate}, #{wbsPlanDuration}, NOW(), #{wbsPlanManager}, #{wbsPlanComCode});
 	</insert>
 	<!-- wbsplan 리스트 요청쿼리 -->
-	<select id="selectWbsPlan" resultType="com.pineapple.pms.service.WbsPlan">
-		SELECT * FROM wbsplan;
+	<select id="selectWbsPlan" resultType="com.pineapple.pms.service.WbsPlanView" parameterType="String">
+		SELECT w.wbsPlanCode, w.wbsPlanOrder,
+			w.wbsPlanName, w.wbsPlanDependency,
+			w.wbsPlanStartDate, w.wbsPlanDuration,
+			w.wbsPlanManager, f.fdTitle, m.milestoneName
+		FROM wbsplan w LEFT JOIN funding f ON w.wbsPlanFdCode = f.fdCode 
+		LEFT JOIN milestone m ON w.wbsPlanMsCode = m.milestoneCode
+		where w.wbsPlanComCode = ANY 
+		(SELECT e.emComCode 
+		FROM user u INNER JOIN employee e 
+		ON u.userId = e.emUserId
+		WHERE u.userId = #{userId})
 	</select>
-		<select id="selectdetail" parameterType="String" resultType="com.pineapple.pms.service.WbsPlan">
-		SELECT * FROM wbsplan where wbsplancode = #{wbsplancode};
+		<select id="selectdetail" parameterType="String" resultType="com.pineapple.pms.service.WbsPlanView">
+		SELECT w.wbsPlanCode, w.wbsPlanOrder,
+				w.wbsPlanName, w.wbsPlanDependency,
+				w.wbsPlanStartDate, w.wbsPlanDuration,
+				w.wbsPlanManager, f.fdTitle, m.milestoneName
+		FROM wbsplan w LEFT JOIN funding f ON w.wbsPlanFdCode = f.fdCode 
+		LEFT JOIN milestone m ON w.wbsPlanMsCode = m.milestoneCode 
+		where wbsPlanCode=#{wbsplancode};
 	</select>
 </mapper>

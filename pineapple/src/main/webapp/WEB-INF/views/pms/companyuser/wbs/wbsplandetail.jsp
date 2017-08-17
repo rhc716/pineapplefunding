@@ -49,10 +49,10 @@
 		<div class="col-md-7">
 			<form method="get"> 
 				<label for="wbsplan">WBS예상계획</label><br>
-				펀딩코드:
-				<input type="text" class="form-control" name="wbsPlanFdCode" value="${wbsplandetail.wbsPlanFdCode}" readonly>
-				마일스톤코드:
-				<input type="text" class="form-control" name="wbsPlanMsCode" value="${wbsplandetail.wbsPlanMsCode}" readonly>
+				펀딩명:
+				<input type="text" class="form-control" name="wbsPlanFdCode" value="${wbsplandetail.fdTitle}" readonly>
+				마일스톤명:
+				<input type="text" class="form-control" name="wbsPlanMsCode" value="${wbsplandetail.milestoneName}" readonly>
 				WBS코드:
 				<input type="text" class="form-control" name="wbsPlanCode" value="${wbsplandetail.wbsPlanCode}" readonly>
 				WBS순서:

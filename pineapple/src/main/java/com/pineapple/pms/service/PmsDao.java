@@ -11,21 +11,33 @@ import java.util.Map;
 import com.pineapple.funding.service.Funding;
 
 @Repository
-public class PmsDao {
+public class PmsDao implements PmsDaoInterface {
     @Autowired
     private SqlSessionTemplate sqlSessionTemplate;
     
+	/* (non-Javadoc)
+	 * @see com.pineapple.pms.service.PmsDaoInterface#insertWbsPlan(com.pineapple.pms.service.WbsPlan)
+	 */
+	@Override
 	public void insertWbsPlan(WbsPlan wbsplan){
 		System.out.println("PmsDao의insertWbsplan호출 성공");
 		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.insertWbsPlan", wbsplan);
 	}
 	
-	public List<WbsPlan> WbsPlanSelect(){
+	/* (non-Javadoc)
+	 * @see com.pineapple.pms.service.PmsDaoInterface#WbsPlanSelect()
+	 */
+	@Override
+	public List<WbsPlanView> WbsPlanSelect(String userId){
 		System.out.println("PmsDao의 WbsPlanSelect호출 성공");
-		return sqlSessionTemplate.selectList("com.pineapple.pms.service.PmsMapper.selectWbsPlan");
+		return sqlSessionTemplate.selectList("com.pineapple.pms.service.PmsMapper.selectWbsPlan", userId);
 	}
 	
-	public WbsPlan getMyWbsPlanDetail(String wbsplancode){
+	/* (non-Javadoc)
+	 * @see com.pineapple.pms.service.PmsDaoInterface#getMyWbsPlanDetail(java.lang.String)
+	 */
+	@Override
+	public WbsPlanView getMyWbsPlanDetail(String wbsplancode){
 		System.out.println("PmsDao의 selectWbsPlandetail호출 성공");
 		return sqlSessionTemplate.selectOne("com.pineapple.pms.service.PmsMapper.selectdetail",wbsplancode);
 	}

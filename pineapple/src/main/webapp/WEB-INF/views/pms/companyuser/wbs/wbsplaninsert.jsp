@@ -58,6 +58,10 @@
 						<input type="date" name="wbsPlanStartDate"><br>
 						담당자ID:
 						<input type="text" class="form-control" name="wbsPlanManager">
+						<!-- 회사코드 펀딩코드 마일스톤 코드 받아와서 입력 -->
+						<input type="hidden" class="form-control" name="wbsPlanComCode" value="1">
+						<input type="hidden" class="form-control" name="wbsPlanFdCode" value="1">
+						<input type="hidden" class="form-control" name="wbsPlanMsCode" value="1">
 						<button type="submit">입력완료</button>
 					</form>
 				</div>
