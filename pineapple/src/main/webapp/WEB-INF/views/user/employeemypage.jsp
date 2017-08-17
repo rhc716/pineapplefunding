@@ -29,7 +29,6 @@
 <!-- 상단메뉴 -->
 	<c:import url="/resources/module/topmenu.jsp"/>
 <!-- 본문 -->
-
 <!-- 일반사원마이페이지 Tab bar -->
 	<div class="container"> 
 		<ul id="myTab" class="nav nav-tabs" role="tablist"> 
@@ -58,9 +57,41 @@
 					<div class="col-md-10">
 						<br>
 						<div>
-							${rank} 아이디 : ${Id}<br>
+							${rank} 아이디 : ${id}<br>
 							${rank} 닉네임 : ${nickname}<br>
 							${rank} 권한 : ${level} - ${rank}<br>
+						</div>
+						<br>
+						<!-- 상세정보 입력한 경우는 상세정보수정으로 버튼이 바뀐다 -->
+						<div>
+							<button type="submit" class="btn btn-info" data-toggle="modal" data-target="#userdetailcheckModal">회원상세정보보기</button>
+							<p id="explain">(회원상세정보를 확인하려면 클릭해주시기 바랍니다)</p>
+						</div>
+						<!-- userdetailcheckModal -->
+						<div class="modal fade" id="userdetailcheckModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						  <div class="modal-dialog">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						        <h4 class="modal-title" id="myModalLabel">${id} 상세정보확인</h4>
+						      </div>
+						      <div class="modal-body">
+						        	전화번호 : ${userdetail.phoneFront3} - ${userdetail.phoneRest8}<br>
+						        	우편번호 : ${userdetail.postalCode}<br>
+						        	주소 : ${userdetail.address}
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						        <button type="button" class="btn btn-primary">Save changes</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+						<div>
+							<form action="/pineapple/userdetailinsert.user">
+								<button type="submit" class="btn btn-info">상세정보입력</button>
+								<p id="explain">(회원상세정보를 입력해주시기 바랍니다)</p>
+							</form>
 						</div>
 						<br><br>
 						<p>내계좌정보</p>

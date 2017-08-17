@@ -4,8 +4,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>관리자 MyPage</title>
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -31,7 +29,6 @@
 <!-- 상단메뉴 -->
 	<c:import url="/resources/module/topmenu.jsp"/>
 <!-- 본문 -->
-
 <!-- 사이트관리자마이페이지 Tab bar -->
 	<div class="container"> 
 		<ul id="myTab" class="nav nav-tabs" role="tablist"> 
@@ -60,9 +57,16 @@
 					<div class="col-md-10">
 						<br>
 						<div>
-							${level} 아이디 : ${Id}<br>
+							${level} 아이디 : ${id}<br>
 							${level} 닉네임 : ${nickname}<br>
 							${level} 권한 : ${level}<br>
+						</div>
+						<br>
+						<div>
+							<form action="/pineapple/userdetailinsert.user">
+								<button type="submit" class="btn btn-info">상세정보입력</button>
+								<p id="explain">(회원상세정보를 입력해주시기 바랍니다)</p>
+							</form>
 						</div>
 						<br><br>
 						<p>내계좌정보</p>

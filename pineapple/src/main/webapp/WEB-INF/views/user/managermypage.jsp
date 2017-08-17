@@ -29,7 +29,6 @@
 <!-- 상단메뉴 -->
 	<c:import url="/resources/module/topmenu.jsp"/>
 <!-- 본문 -->
-
 <!-- 경영진마이페이지 Tab bar -->
 	<div class="container"> 
 		<ul id="myTab" class="nav nav-tabs" role="tablist"> 
@@ -58,9 +57,16 @@
 					<div class="col-md-10">
 						<br>
 						<div>
-							${rank} 아이디 : ${Id}<br>
+							${rank} 아이디 : ${id}<br>
 							${rank} 닉네임 : ${nickname}<br>
 							${rank} 권한 : ${level} - ${rank}<br>
+						</div>
+						<br>
+						<div>
+							<form action="/pineapple/userdetailinsert.user">
+								<button type="submit" class="btn btn-info">상세정보입력</button>
+								<p id="explain">(회원상세정보를 입력해주시기 바랍니다)</p>
+							</form>
 						</div>
 						<br><br>
 						<p>내계좌정보</p>

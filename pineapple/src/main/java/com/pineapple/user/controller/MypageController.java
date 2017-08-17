@@ -1,6 +1,8 @@
 package com.pineapple.user.controller;
 import com.pineapple.user.service.MypageServiceInterface;
 import com.pineapple.user.service.User;
+import com.pineapple.user.service.UserDetail;
+import com.pineapple.user.service.UserService;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,12 +17,13 @@ public class MypageController {
 	
 	@Autowired
 	private MypageServiceInterface mypageservice;
+	private UserService service;
 	
 	//투자자 마이페이지 분기
 	@RequestMapping(value="/investormypage.user", method=RequestMethod.GET)
 	public String investormypage(Model model, HttpSession session){
 		System.out.println("investormypage 페이지 요청");
-		User user = mypageservice.selectInvestorBasic(session.getId());
+		User user = mypageservice.selectInvestorBasic(session.getAttribute("id").toString());
     	model.addAttribute("user", user);
 		return "user/investormypage";
 	}
@@ -28,7 +31,7 @@ public class MypageController {
 	@RequestMapping(value="/managermypage.user", method=RequestMethod.GET)
 	public String managermypage(Model model, HttpSession session){
 		System.out.println("managermypage 페이지 요청");
-		User user = mypageservice.selectInvestorBasic(session.getId());
+		User user = mypageservice.selectInvestorBasic(session.getAttribute("id").toString());
     	model.addAttribute("user", user);
 		return "user/managermypage";
 	}
@@ -36,12 +39,16 @@ public class MypageController {
 	@RequestMapping(value="/employeemypage.user", method=RequestMethod.GET)
 	public String employeemypage(Model model, HttpSession session){
 		System.out.println("employeemypage 페이지 요청");
+		User user = mypageservice.selectInvestorBasic(session.getAttribute("id").toString());
+    	model.addAttribute("user", user);
 		return "user/employeemypage";
 	}
 	//관리자 마이페이지 분기
 	@RequestMapping(value="/adminmypage.user", method=RequestMethod.GET)
 	public String adminmypage(Model model, HttpSession session){
 		System.out.println("adminmypage 페이지 요청");
+		User user = mypageservice.selectInvestorBasic(session.getAttribute("id").toString());
+    	model.addAttribute("user", user);
 		return "user/adminmypage";
 	}	
 	//mypage main 페이지 요청

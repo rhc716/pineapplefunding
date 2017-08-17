@@ -4,7 +4,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>투자자 MyPage</title>
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -30,7 +29,6 @@
 <!-- 상단메뉴 -->
 	<c:import url="/resources/module/topmenu.jsp"/>
 <!-- 본문 -->
-
 <!-- 투자자마이페이지 Tab bar -->
 	<div class="container"> 
 		<ul id="myTab" class="nav nav-tabs" role="tablist"> 
@@ -59,9 +57,23 @@
 					<div class="col-md-10">
 						<br>
 						<div>
-							투자자 아이디 : ${id}<br>
-							투자자 닉네임 : ${nickname}<br>
-							투자자 권한 : ${level}<br>
+							${level} 아이디 : ${id}<br>
+							${level} 닉네임 : ${nickname}<br>
+							${level} 권한 : ${level}<br>
+						</div>
+						<br>
+						<!-- 상세정보 입력한 경우는 상세정보수정으로 버튼이 바뀐다 -->
+						<div>
+							<form action="/pineapple/userdetailselect.user">
+								<button type="submit" class="btn btn-info">회원상세정보보기</button>
+								<p id="explain">(회원상세정보를 수정하려면 클릭해주시기 바랍니다)</p>
+							</form>
+						</div>
+						<div>
+							<form action="/pineapple/userdetailinsert.user">
+								<button type="submit" class="btn btn-info">상세정보입력</button>
+								<p id="explain">(회원상세정보를 입력해주시기 바랍니다)</p>
+							</form>
 						</div>
 						<br><br>
 						<p>내계좌정보</p>
