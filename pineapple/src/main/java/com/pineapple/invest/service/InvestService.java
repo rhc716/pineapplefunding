@@ -2,12 +2,14 @@ package com.pineapple.invest.service;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.pineapple.funding.service.FundingDetail;
 
 @Service
 public class InvestService implements InvestServiceInterface {
+	private Logger log = Logger.getLogger(this.getClass());
 	@Autowired
 	private InvestDaoInterface investdaointerface;
 	
@@ -17,28 +19,28 @@ public class InvestService implements InvestServiceInterface {
 	 */
 	@Override
 	public List<InvestAndFd> getInvestFunding(){
-		System.out.println("------------------InvestService-----------------getinvestFunding()");
+		log.debug("------------------InvestService-----------------getinvestFunding()");
 		List<InvestAndFd> fdlist =  investdaointerface.investFundingSelect();
 		return fdlist;
 	}
 	//투자하기에서 펀딩클릭시 하나의 펀딩 정보 열람
 	@Override
 	public InvestAndFdLikeAndFd getInvestFundingone(int fdCode) {
-		System.out.println("------------------InvestService-----------------getInvestFundingone()");
+		log.debug("------------------InvestService-----------------getInvestFundingone()");
 		InvestAndFdLikeAndFd fdonedata = investdaointerface.investFundingDataSelect(fdCode);
 		return fdonedata;
 	}
 	//투자하기에서 펀딩클릭시 하나의 펀딩에 대한 Detail 정보열람
 	@Override
 	public FundingDetail getInvestFundingDetail(int fdCode) {
-		System.out.println("------------------InvestService-----------------getInvestFundingDetail()");
+		log.debug("------------------InvestService-----------------getInvestFundingDetail()");
 		FundingDetail fdonedetail = investdaointerface.investFundingDetailSelect(fdCode);
 		return fdonedetail;
 	}
 	//투자하기에서 펀딩클릭후 펀딩Q&A클릭시 펀딩 Q&A조회
 	@Override
 	public List<FundingQna> getInvestFundingQna(int fdCode) {
-		System.out.println("------------------InvestService-----------------getInvestFundingQna()");
+		log.debug("------------------InvestService-----------------getInvestFundingQna()");
 		List<FundingQna> fdlistqna = investdaointerface.investFundingQnaSelect(fdCode);
 		return fdlistqna;
 	}
