@@ -112,7 +112,7 @@
   			postalCode=#{postalCode},
   			address=#{address},
   			nameCheck=#{nameCheck}
- 		WHERE userDetailId=#{userId}
+ 		WHERE userDetailId=#{userDetailId}
 	</update>
 	
 	<select id="selectUserDetailById" parameterType="String" resultType="com.pineapple.user.service.UserDetail">

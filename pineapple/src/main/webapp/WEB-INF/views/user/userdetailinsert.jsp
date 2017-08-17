@@ -23,39 +23,32 @@
 
 <!-- css lbr -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lbr.css" />
-
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
 //가입정보 유효성검사
 	$(document).ready(function(){
 		 $('#submitBtn').click(function(){	// submit 버튼을 누르면 유효성 검사후 수동으로 submit 해줌.
-			 if ($("input[name='levelCode']:checked").val()!=null) {
-				if($('#inputSuccess2').val() != ''){  
-					if($('#pw2').val() != ''){
-						if($('#name').val() != ''){
-							if($('#nickname').val() != ''){
-								if(!$('#userAgreeCheck').is(":checked")){
-									alert('사이트 약관에 동의 해주세요');
-								} else {
-									$('#form').submit();
-								}
+				if($('#phoneFront3').val() != ''){  
+					if($('#phoneRest8').val() != ''){
+						if($('#postalCode').val() != ''){
+							if($('#address').val() == ''){
+								alert('주소를 입력 해주세요');
 							} else {
-								alert('닉네임 중복체크를 해주세요');
-							}
-					    } else {
-					        alert('이름을 입력해주세요');
+								$('#form').submit();
+				    		} 
+						} else {
+				        	alert('우편번호를 입력해주세요');
 					    }
 					} else {
-					    alert('비밀번호 중복체크를 해주세요');
+					    alert('전화번호 뒤 8자리를 입력 해주세요');
 					}
 				} else {
-					alert('아이디 중복체크를 해주세요');
+					alert('전화번호 앞 3자리를 입력 해주세요');
 				}
-			 } else {
-				 alert('권한을 선택 해주세요');
-			 }
 		 });
-	 });
+	});	
+</script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
     //다음 주소 찾기 api 사용
     function sample4_execDaumPostcode() {
         new daum.Postcode({
@@ -136,7 +129,6 @@ $(document).ready(function(){
 		}
 	});
 });
-
 </script>
 </head>
 <body>
@@ -157,9 +149,6 @@ $(document).ready(function(){
 						<input type="text" class="form-control" id="userDetailId" name="userDetailId" value="${id}" varia-describedby="inputSuccess2Status" readonly="readonly">
 						<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 						<span id="inputSuccess2Status" class="sr-only">(success)</span>
-						<br>
-						<button id="nameCheck" name="nameCheck" class="btn btn-primary btn-block" value="0">실명인증</button>
-						<span id="nameCheck"><input type="hidden" value="0" id="use_name" name="use_name"/></span>
 					</div>
 					<br>
 				  	<div class="form-group">

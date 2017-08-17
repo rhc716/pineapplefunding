@@ -30,11 +30,17 @@ public class UserController {
 	@Autowired
     private UserServiceInterface service;
 
-	//회원상세정보입력 페이지 요청
+	//회원상세정보입력 페이지 요청(회원상세정보 조회/수정은 mypage part에서 구현)
 	@RequestMapping(value="/userdetailinsert.user", method=RequestMethod.GET)
-	public String userdetailinsertpage(){
+	public String userdetailinsertpage(HttpSession session){
 		System.out.println("userdetailinsertpage 회원상세정보입력 페이지 요청 처리");
-		return "user/userdetailinsert";
+		String redirect = null;
+		if(service.getUserDetail(session.getAttribute("id").toString())!=null){
+			redirect = "redirect:/mypage.user";
+		} else {
+			redirect = "user/userdetailinsert";
+		}
+		return redirect;
 	}
 	
 	//회원상세정보입력 처리
@@ -47,11 +53,15 @@ public class UserController {
 
 	//로그아웃 요청 처리
 	@RequestMapping(value="/logout.user", method=RequestMethod.POST)
-	public String logout(HttpSession session, SessionStatus status){
+	public String logout(HttpSession session, SessionStatus status, Model model){
 		System.out.println("logout 요청 처리");
 		//session 종료 처리
-		status.setComplete();
 		session.setAttribute("userLogin", null);
+		model.addAttribute("id", null);
+		model.addAttribute("nickname", null);
+		model.addAttribute("level", null);
+		model.addAttribute("rank", null);
+		status.setComplete();
 		session.invalidate();
 		System.out.println("session 종료 처리");
 		return "redirect:/";
