@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,13 +28,15 @@ import com.pineapple.user.service.UserServiceInterface;
 @SessionAttributes({"id", "nickname", "level", "rank"})
 //id, nickname, level키로 저장된 attribute는 세션객체에 저장 됨
 public class UserController {
+	private Logger log = Logger.getLogger(this.getClass());
+	
 	@Autowired
     private UserServiceInterface service;
-
+	
 	//회원상세정보입력 페이지 요청(회원상세정보 조회/수정은 mypage part에서 구현)
 	@RequestMapping(value="/userdetailinsert.user", method=RequestMethod.GET)
 	public String userdetailinsertpage(HttpSession session){
-		System.out.println("userdetailinsertpage 회원상세정보입력 페이지 요청 처리");
+		log.debug("userdetailinsertpage 회원상세정보입력 페이지 요청 처리");
 		String redirect = null;
 		if(service.getUserDetail(session.getAttribute("id").toString())!=null){
 			redirect = "redirect:/mypage.user";
@@ -46,7 +49,7 @@ public class UserController {
 	//회원상세정보입력 처리
 	@RequestMapping(value="/userdetailinsert.user", method=RequestMethod.POST)
 	public String userdetailinsert( UserDetail userdetail){
-		System.out.println("userdetailinsert 회원상세정보입력 요청 처리");
+		log.debug("userdetailinsert 회원상세정보입력 요청 처리");
 		service.addUserDetail(userdetail);
 		return "redirect:/mypage.user";
 	}
@@ -54,7 +57,7 @@ public class UserController {
 	//로그아웃 요청 처리
 	@RequestMapping(value="/logout.user", method=RequestMethod.POST)
 	public String logout(HttpSession session, SessionStatus status, Model model){
-		System.out.println("logout 요청 처리");
+		log.debug("logout 요청 처리");
 		//session 종료 처리
 		session.setAttribute("userLogin", null);
 		model.addAttribute("id", null);
@@ -63,14 +66,14 @@ public class UserController {
 		model.addAttribute("rank", null);
 		status.setComplete();
 		session.invalidate();
-		System.out.println("session 종료 처리");
+		log.debug("session 종료 처리");
 		return "redirect:/";
 	}
 	
 	//로그인 페이지 요청
 	@RequestMapping(value="/login.user", method=RequestMethod.GET)
 	public String login(){
-		System.out.println("UserController login 페이지 요청 처리");
+		log.debug("UserController login 페이지 요청 처리");
 		return "redirect:/";
 	}
 	
@@ -81,13 +84,13 @@ public class UserController {
 						  @RequestParam("id") String id,
 						  @RequestParam("pw") String pw
 						 ){
-		System.out.println("UserController login 요청 처리");
+		log.debug("UserController login 요청 처리");
 		UserAndLevelAndEmployeeAndCompanyAndRank loginUser = service.gettUserByIdLevelnameRankname(id);
 		//아이디와 비밀번호 일치여부 확인
 		if(loginUser != null){
 			if(id.equals(loginUser.getUserId())){
 				if(pw.equals(loginUser.getPw())){
-					System.out.println("login 아이디, 비밀번호 일치");
+					log.debug("login 아이디, 비밀번호 일치");
 					//아이디, 비밀번호 일치할 경우 세션값 설정, @SessionAttributes를 통해 세션 객체에 담을 변수와 값 설정
 					session.setAttribute("userLogin", loginUser);
 					model.addAttribute("id", loginUser.getUserId());
@@ -95,26 +98,26 @@ public class UserController {
 					model.addAttribute("level", loginUser.getUserlevel().getUserLevelName());
 					if(loginUser.getRankcode()!=null){
 						if(loginUser.getRankcode().getRankName().equals("경영진")){
-							System.out.println(id+"님의 권한명 기업회원, 직급명 경영진 세션 설정 완료");
+							log.debug(id+"님의 권한명 기업회원, 직급명 경영진 세션 설정 완료");
 							model.addAttribute("rank", loginUser.getRankcode().getRankName());
 						} else {
-							System.out.println(id+"님의 권한명 기업회원, 직급명 일반사원 세션 설정 완료");
+							log.debug(id+"님의 권한명 기업회원, 직급명 일반사원 세션 설정 완료");
 							model.addAttribute("rank", loginUser.getRankcode().getRankName());
 						}
 					} else {
-						System.out.println(id+"님의 기업회원 여부 체크; 기업회원 아님");
+						log.debug(id+"님의 기업회원 여부 체크; 기업회원 아님");
 						model.addAttribute("rank", "");
 					}
 				} else {
-					System.out.println("login 비밀번호 불일치");
+					log.debug("login 비밀번호 불일치");
 					model.addAttribute("msg", "비밀번호가 일치하지 않습니다");
 				}
 			} else {
-				System.out.println("login 아이디 불일치");
+				log.debug("login 아이디 불일치");
 				model.addAttribute("msg", "아이디가 일치하지 않습니다");
 			}
 		} else {
-			System.out.println("유효하지 않은 아이디 또는 비밀번호 입력");
+			log.debug("유효하지 않은 아이디 또는 비밀번호 입력");
 			model.addAttribute("msg", "유효하지 않은 아이디 또는 비밀번호가 입력되었습니다");
 		}
 		return "redirect:/";
@@ -123,7 +126,7 @@ public class UserController {
 	//회원가입시 닉네임 중복 체크 ajax 요청 처리
 	@RequestMapping(value="/checkNick.user", method = RequestMethod.POST)
 	public @ResponseBody User checkNick(Locale locale, Model model, @RequestParam("nickname") String nickname){
-		System.out.println("UserController checknick : "+service.getUserByNickname(nickname).getNickname());
+		log.debug("UserController checknick : "+service.getUserByNickname(nickname).getNickname());
 		return service.getUserByNickname(nickname);
 	}
 	
@@ -134,8 +137,8 @@ public class UserController {
 						  @RequestParam("pw1") String pw1,
 						  @RequestParam("pw2") String pw2
 			){
-				System.out.println("UserController pw1 : "+pw1);
-				System.out.println("UserController pw2 : "+pw2);
+				log.debug("UserController pw1 : "+pw1);
+				log.debug("UserController pw2 : "+pw2);
 				Map<String, Object> map= new HashMap<String, Object>();
 				map.put("pw1", pw1);
 				map.put("pw2", pw2);
@@ -145,14 +148,14 @@ public class UserController {
 	//회원가입시 아이디 중복 체크 ajax 요청 처리
 	@RequestMapping(value="/checkId.user", method = RequestMethod.POST)
 	public @ResponseBody User checkId(Locale locale, Model model, @RequestParam("userId") String userId){
-		System.out.println("UserController checkid : "+userId);
+		log.debug("UserController checkid : "+userId);
 		return service.getUser(userId);
 	}
 	
 	//회원가입 요청
 	@RequestMapping(value="/userinsert.user", method = RequestMethod.POST)
     public String userAdd(User user) { //커맨드 객체
-        System.out.println("UserController user : "+user);
+        log.debug("UserController user : "+user);
         service.addUser(user);
         return "redirect:/"; // 글입력후 "/"로 리다이렉트(재요청)
     }
@@ -160,7 +163,7 @@ public class UserController {
 	//회원가입 페이지 요청
 	@RequestMapping(value="/userinsert.user", method = RequestMethod.GET)
     public String userAdd() {
-        System.out.println("addUserForm 폼 요청");
+        log.debug("addUserForm 폼 요청");
         return "user/userinsert";
     }
 }

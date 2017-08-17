@@ -1,31 +1,34 @@
 package com.pineapple.user.service;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService implements UserServiceInterface {
-
+	private Logger log = Logger.getLogger(this.getClass());
+	
 	@Autowired
 	private UserDaoInterface dao;
+	
 	//회원상세정보조회를 위한 메서드 호출
 	@Override
 	public UserDetail getUserDetail(String userDetailId) {
-		System.out.println("service getUserDetail 호출 : "+userDetailId);
+		log.debug("service getUserDetail 호출 : "+userDetailId);
 		return dao.selectUserDetail(userDetailId);
 	}
 	
 	//회원상세정보입력 처리를 위한 메서드 호출
 	@Override
 	public int addUserDetail(UserDetail userdetail) {
-		System.out.println("service addUserDetail 호출 : "+userdetail);
+		log.debug("service addUserDetail 호출 : "+userdetail);
 		return dao.insertUserDetail(userdetail);
 	}
 	
 	//로그인 요청 처리를 위한 권한명,직급명을 포함한 회원 정보 호출
 	@Override
 	public UserAndLevelAndEmployeeAndCompanyAndRank gettUserByIdLevelnameRankname(String userId) {
-		System.out.println("service gettUserByIdLevelnameRankname 호출 : "+dao.selectUserByIdWithLevelnameRankname(userId).getUserId());
+		log.debug("service gettUserByIdLevelnameRankname 호출 : "+dao.selectUserByIdWithLevelnameRankname(userId).getUserId());
 		return dao.selectUserByIdWithLevelnameRankname(userId);
 	}
 
@@ -35,7 +38,7 @@ public class UserService implements UserServiceInterface {
 		 */
 	@Override
 	public User getUserByNickname(String nickname){
-		System.out.println("service getUserByNickname 호출 : "+dao.selectUserByNickname(nickname).getNickname());
+		log.debug("service getUserByNickname 호출 : "+dao.selectUserByNickname(nickname).getNickname());
 		return dao.selectUserByNickname(nickname);
 	}
 	
@@ -45,7 +48,7 @@ public class UserService implements UserServiceInterface {
 	 */
 	@Override
 	public User getUser(String userId){
-		System.out.println("service getUser 호출");
+		log.debug("service getUser 호출");
 		return dao.selectUserById(userId);
 	}
 	
@@ -55,7 +58,7 @@ public class UserService implements UserServiceInterface {
 	 */
 	@Override
 	public int addUser(User user) {
-		System.out.println("service addUser 호출");
+		log.debug("service addUser 호출");
 		return dao.insertUser(user);
 	}
 

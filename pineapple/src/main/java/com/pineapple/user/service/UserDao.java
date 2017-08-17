@@ -1,31 +1,34 @@
 package com.pineapple.user.service;
 
+import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserDao implements UserDaoInterface {
+	private Logger log = Logger.getLogger(this.getClass());
+	
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
 	//회원상세정보조회를 위한 메서드 선언
 	@Override
 	public UserDetail selectUserDetail(String userDetailId) {
-		System.out.println("UserDao selectUserDetail : "+userDetailId);
+		log.debug("UserDao selectUserDetail : "+userDetailId);
 		return sqlSessionTemplate.selectOne("com.pineapple.user.service.UserMapper.selectUserDetailById", userDetailId);
 	}
 	
 	//회원상세정보입력 처리를 위한 메서드 선언
 	@Override
 	public int insertUserDetail(UserDetail userdetail) {
-		System.out.println("UserDao insertUserDetail : "+userdetail);
+		log.debug("UserDao insertUserDetail : "+userdetail);
 		return sqlSessionTemplate.insert("com.pineapple.user.service.UserMapper.insertUserDetail", userdetail);
 	}
 
 	//로그인 요청 처리를 위한 회원 정보 접근
 	@Override
 	public UserAndLevelAndEmployeeAndCompanyAndRank selectUserByIdWithLevelnameRankname(String userId) {
-		System.out.println("UserDao selectUserByIdWithLevelnameRankname : "+userId);
+		log.debug("UserDao selectUserByIdWithLevelnameRankname : "+userId);
 		return sqlSessionTemplate.selectOne("com.pineapple.user.service.UserMapper.getUserWithLevelnameComnameRankname", userId);
 	}
 	
@@ -35,7 +38,7 @@ public class UserDao implements UserDaoInterface {
 	 */
 	@Override
 	public User selectUserByNickname(String nickname){
-		System.out.println("UserDao selectUserByNickname : "+nickname);
+		log.debug("UserDao selectUserByNickname : "+nickname);
 		return sqlSessionTemplate.selectOne("com.pineapple.user.service.UserMapper.selectUserByNickname", nickname);	
 	}
 	
@@ -45,7 +48,7 @@ public class UserDao implements UserDaoInterface {
 	 */
 	@Override
 	public User selectUserById(String userId){
-		System.out.println("UserDao selectUserById : "+userId);
+		log.debug("UserDao selectUserById : "+userId);
 		return sqlSessionTemplate.selectOne("com.pineapple.user.service.UserMapper.selectUserById", userId);	
 	}
 	
@@ -56,7 +59,7 @@ public class UserDao implements UserDaoInterface {
 	@Override
 	public int insertUser(User user) {
     	int row = sqlSessionTemplate.insert("com.pineapple.user.service.UserMapper.insertUser", user);
-    	System.out.println("UserDao insertUser : "+row);
+    	log.debug("UserDao insertUser : "+row);
         return row;
     }
 
