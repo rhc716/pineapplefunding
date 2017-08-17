@@ -85,8 +85,9 @@ $(document).ready(function(){
 				    	/* 모달내용들어갈곳 (펀딩수정) */
 				    	+'<form action="/pineapple/modifyfundingdetail.pms" method="post">'		    
 				    	+'<input type="hidden" value="'+msg[i].fdDetailCode+'" name="fdDetailCode">'
+				    	/* summernote api 추가되는곳 */
 				    	+'오픈스토리'
-						+'<textarea id="summernote" name="openstory" class="form-control">'+msg[i].openstory+'</textarea><br>'
+						+'<textarea id="summernote'+i+'" name="openstory" class="form-control">'+msg[i].openstory+'</textarea><br>'
 						+'기업가치'
 						+'<input type="text" class="form-control" name="comValue" value="'+msg[i].comValue+'"><br>'				
 						+'<button type="submit" class="btn btn-success">수정완료</button>'
@@ -96,15 +97,17 @@ $(document).ready(function(){
 				    	+'<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>'
 				    	+'</div></div></div></div></div>'
 				);
-			}
 			
-			$('#myfundinglist').append(
-					'<script>'
-					+'$(document).ready(function() {'
-					      +'$(\'#summernote\').summernote();'
-					+'});'
-					+'<\/script>'
-			);		
+				$('#myfundinglist').append(
+						'<script>'
+						+'$(document).ready(function() {'
+						      +'$(\'#summernote'+i+'\').summernote();'
+						+'});'
+						+'<\/script>'
+				);		
+		
+		
+			}	
 		});
 });
 </script>

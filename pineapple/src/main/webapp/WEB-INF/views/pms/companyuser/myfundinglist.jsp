@@ -181,6 +181,9 @@ $(document).ready(function(){
 			<div class="col-md-1">
 			</div>
 				<div class="col-md-7" id="myfundinglist">
+				<span>
+					<b> 펀딩기본정보 수정 및 삭제는 펀딩개설 승인 전까지 가능합니다.</b><br><br>
+				</span>
 <!-- 펀딩 리스트 뿌려질 곳 -->
 					
 <!-- 펀딩 리스트 뿌려질 곳 -->

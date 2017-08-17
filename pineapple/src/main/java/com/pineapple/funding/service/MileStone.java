@@ -3,7 +3,7 @@ package com.pineapple.funding.service;
 public class MileStone {
 	private int milestoneCode;
 	private int msFdCode;
-	private String milestoneStep;
+	private int milestoneStep;
 	private String milestoneName;
 	private String milestoneSummary;
 	private int msComCode;
@@ -22,10 +22,10 @@ public class MileStone {
 	public void setMsFdCode(int msFdCode) {
 		this.msFdCode = msFdCode;
 	}
-	public String getMilestoneStep() {
+	public int getMilestoneStep() {
 		return milestoneStep;
 	}
-	public void setMilestoneStep(String milestoneStep) {
+	public void setMilestoneStep(int milestoneStep) {
 		this.milestoneStep = milestoneStep;
 	}
 	public String getMilestoneName() {

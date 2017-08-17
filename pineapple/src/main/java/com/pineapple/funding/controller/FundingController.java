@@ -16,6 +16,8 @@ import com.pineapple.funding.service.Funding;
 import com.pineapple.funding.service.FundingAndFdDetail;
 import com.pineapple.funding.service.FundingDetail;
 import com.pineapple.funding.service.FundingService;
+import com.pineapple.funding.service.MileStone;
+import com.pineapple.user.service.Employee;
 
 
 
@@ -112,7 +114,6 @@ public class FundingController {
 	public @ResponseBody List<FundingAndFdDetail> getMyFundingDetailList(Model model, Locale locale, @RequestParam("userId") String userId) {
 		log.debug("FundingController의 getMyFundingDetailList호출 성공");
 		log.debug("userId : " + userId);
-		log.debug("컨트롤러에서 받은 리턴값 : " + service.getMyFundingDetailList(userId));
 		return service.getMyFundingDetailList(userId);
 	}
 	
@@ -123,6 +124,31 @@ public class FundingController {
 		log.debug("fundingdetail : " + fundingdetail);
 		service.modifyFundingDetail(fundingdetail);
 		return "pms/companyuser/myfundingdetaillist";
+	}
+	
+	// 마일스톤 입력을 위한 조회 (회사코드,펀딩코드,펀딩명)
+	@RequestMapping(value = "/selectfundingforinsertmilestone.pms", method = RequestMethod.GET)
+	public @ResponseBody List<Funding> getFundingForInsertMileStone(Model model, Locale locale, @RequestParam("userId") String userId) {
+		log.debug("FundingController의 getFundingForInsertMileStone호출 성공");
+		log.debug("userId : " + userId);
+		return service.getFundingForInsertMileStone(userId);
+	}
+	
+	// 마일스톤 입력 
+	@RequestMapping(value = "/addmilestone.pms", method = RequestMethod.POST)
+	public String addMileStone(MileStone milestone, Model model, Locale locale) {
+		log.debug("FundingController의 addMileStone호출 성공");
+		log.debug("milestone : " + milestone);
+		service.addMileStone(milestone);
+		return "redirect:/pmsmain.pms";
+	}
+	
+	// 마일스톤 입력을 위한 사원조회
+	@RequestMapping(value = "/getemployeeforinsertmilestone.pms", method = RequestMethod.GET)
+	public @ResponseBody List<Employee> getemployeeforinsertmilestone(Model model, Locale locale, @RequestParam("fdCode") int fdCode) {
+		log.debug("FundingController의 getemployeeforinsertmilestone호출 성공");
+		log.debug("fdCode : " + fdCode);
+		return service.getemployeeforinsertmilestone(fdCode);
 	}
 	
 }

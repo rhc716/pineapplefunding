@@ -48,7 +48,7 @@
 					<input type="text" class="form-control" name="comValue"><br>
 					오픈스토리<br>
 					<textarea class="form-control" rows="30" name="openstory"></textarea><br>
-					<button type="submit">입력완료</button>
+					<button type="submit"  class="btn btn-success">입력완료</button>
 				</form>
 			</div>
 		<div class="col-md-1"></div>

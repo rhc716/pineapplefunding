@@ -6,6 +6,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pineapple.user.service.Employee;
+
 
 @Service
 public class FundingService implements FundingServiceInterface {
@@ -56,5 +58,27 @@ public class FundingService implements FundingServiceInterface {
 		log.debug("FundingService의 modifyFundingDetail호출 성공");
 		fundingdao.updateFundingDetail(fundingdetail);
 	}
+	
+	// 마일스톤 입력을 위한 조회 (회사코드,펀딩코드,펀딩명)
+	@Override
+	public List<Funding> getFundingForInsertMileStone(String userId) {
+		log.debug("FundingService의 getForInsertMileStone호출 성공");
+		return fundingdao.selectFundingForInsertMileStone(userId);
+	}
+	
+	// 마일스톤 입력
+	@Override
+	public void addMileStone(MileStone milestone) {
+		log.debug("FundingService의 addMileStone호출 성공");
+		fundingdao.insertMileStone(milestone);
+	}
+	
+	// 마일스톤 입력을 위한 사원조회
+	@Override
+	public List<Employee> getemployeeforinsertmilestone(int fdCode) {
+		log.debug("FundingService의 getemployeeforinsertmilestone호출 성공");
+		return fundingdao.selectemployeeforinsertmilestone(fdCode);
+	}
+
 }
  

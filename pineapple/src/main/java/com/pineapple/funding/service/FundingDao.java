@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.pineapple.user.service.Employee;
 import com.sun.org.apache.bcel.internal.generic.ObjectType;
 
 @Repository
@@ -76,5 +77,26 @@ public class FundingDao implements FundingDaoInterface {
 		sqlSessionTemplate.delete("com.pineapple.funding.service.FundingMapper.deleteFundingDetail", delfdCode);
 	}
 	
+	// 마일스톤 입력을 위한 조회 (회사코드,펀딩코드,펀딩명)
+	@Override
+	public List<Funding> selectFundingForInsertMileStone(String userId) {
+		log.debug("FundingDao의 selectFundingForInsertMileStone호출 성공");
+		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectForInsertMileStone", userId);
+	}
 	
+	// 마일스톤 입력
+	@Override
+	public void insertMileStone(MileStone milestone) {
+		log.debug("FundingDao의 insertMileStone호출 성공");
+		sqlSessionTemplate.insert("com.pineapple.funding.service.FundingMapper.insertMileStone", milestone);
+	}
+	
+	// 마일스톤 입력을 위한 사원조회
+	@Override
+	public List<Employee> selectemployeeforinsertmilestone(int fdCode) {
+		log.debug("FundingDao의 insertMileStone호출 성공");
+		log.debug("리턴값 ----------->>>>"+ sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectemployeeforinsertmilestone", fdCode ));
+		
+		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectemployeeforinsertmilestone", fdCode );
+	}
 } 

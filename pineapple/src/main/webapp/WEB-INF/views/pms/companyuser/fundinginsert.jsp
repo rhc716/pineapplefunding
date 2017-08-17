@@ -42,6 +42,7 @@
 	<div class="col-md-9">
 		<div class="col-md-1"></div>
 			<div class="col-md-7">
+			
 				<form action="/pineapple/wbsplanetcinsert.pms" method="post">
 					펀딩형태
 					<select name="fdType">
@@ -75,7 +76,7 @@
 					<input type="file" class="form-control" name="imageUpload"><br> -->
 						<!-- 히든값으로 펀딩개설자 name를 세션에서받아서 넣어줌 -->
 					<input type="hidden" class="form-control" name="fdPublisher" value="id01@maver.com">
-					<button type="submit">입력완료</button>
+					<button type="submit"  class="btn btn-success">입력완료</button>
 				</form>
 			</div>
 		<div class="col-md-1"></div>

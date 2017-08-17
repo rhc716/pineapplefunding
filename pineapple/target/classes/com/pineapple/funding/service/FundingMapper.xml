@@ -96,6 +96,37 @@
 		DELETE FROM fundingdetail 
 		WHERE fdDetailCode=#{delfdCode}
 	</delete>
+	
+	<!-- 마일스톤 입력을 위한 조회 (회사코드,펀딩코드,펀딩명) // 개설요청 중인 것  -->
+	<select id="selectForInsertMileStone" parameterType="String" resultType="java.util.HashMap">
+		SELECT *
+		FROM funding
+		WHERE fdComCode = ANY 
+		(SELECT e.emComCode 
+		FROM user u INNER JOIN employee e 
+		ON u.userId = e.emUserId
+		WHERE u.userId = #{userId})
+		AND fdStatus = '개설요청';
+	</select>
+	
+	<!-- 마일스톤입력 -->
+	<insert id="insertMileStone" parameterType="com.pineapple.funding.service.MileStone">
+		INSERT INTO milestone
+			(milestoneCode, msFdCode, milestoneStep, milestoneName, milestoneSummary, msComCode, pm)
+		VALUES (NULL, #{msFdCode}, #{milestoneStep}, #{milestoneName}, #{milestoneSummary}, #{msComCode}, #{pm})
+	</insert>
+	
+	<!-- 마일스톤입력을 위한 사원조회 -->
+	<select id="selectemployeeforinsertmilestone" parameterType="int" resultType="java.util.HashMap">
+		SELECT *
+		FROM employee e
+		WHERE e.emUserId = ANY
+		(SELECT authReceiver as emUserId
+		FROM fundingauth a
+		WHERE a.authFdCode = #{fdCode}
+		AND fdAuthLevelCode = '1')
+	</select>
+	
 </mapper>
 
  

@@ -43,7 +43,7 @@
 	</div>
 	<div class="col-md-3">
 	    <div class="btn-group btn-group-justified">
-		    <a href="fundingdetail.pms" class="btn btn-primary">펀딩 상세정보 입력</a>
+		    
 		</div>
 		<br>
 		<div class="btn-group btn-group-justified">
