@@ -8,8 +8,25 @@ public class WbsPlanView {
 	private String wbsPlanStartDate;
 	private int wbsPlanDuration;
 	private String wbsPlanManager;
+	private int wbsPlanFdCode;
+	private int wbsPlanMsCode;
+	private int wbsPlanComCode;
 	private String fdTitle;
 	private String milestoneName;
+	
+	public int getWbsPlanFdCode() {
+		return wbsPlanFdCode;
+	}
+	public void setWbsPlanFdCode(int wbsPlanFdCode) {
+		this.wbsPlanFdCode = wbsPlanFdCode;
+	}
+	public int getWbsPlanMsCode() {
+		return wbsPlanMsCode;
+	}
+	public void setWbsPlanMsCode(int wbsPlanMsCode) {
+		this.wbsPlanMsCode = wbsPlanMsCode;
+	}
+	
 	public int getWbsPlanCode() {
 		return wbsPlanCode;
 	}
@@ -64,11 +81,19 @@ public class WbsPlanView {
 	public void setMilestoneName(String milestoneName) {
 		this.milestoneName = milestoneName;
 	}
+	
+	public int getWbsPlanComCode() {
+		return wbsPlanComCode;
+	}
+	public void setWbsPlanComCode(int wbsPlanComCode) {
+		this.wbsPlanComCode = wbsPlanComCode;
+	}
 	@Override
 	public String toString() {
 		return "WbsPlanView [wbsPlanCode=" + wbsPlanCode + ", wbsPlanOrder=" + wbsPlanOrder + ", wbsPlanName="
 				+ wbsPlanName + ", wbsPlanDependency=" + wbsPlanDependency + ", wbsPlanStartDate=" + wbsPlanStartDate
-				+ ", wbsPlanDuration=" + wbsPlanDuration + ", wbsPlanManager=" + wbsPlanManager + ", fdTitle=" + fdTitle
-				+ ", milestoneName=" + milestoneName + "]";
+				+ ", wbsPlanDuration=" + wbsPlanDuration + ", wbsPlanManager=" + wbsPlanManager + ", wbsPlanFdCode="
+				+ wbsPlanFdCode + ", wbsPlanMsCode=" + wbsPlanMsCode + ", wbsPlanComCode=" + wbsPlanComCode
+				+ ", fdTitle=" + fdTitle + ", milestoneName=" + milestoneName + "]";
 	}
 }

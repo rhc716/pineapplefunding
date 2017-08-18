@@ -12,12 +12,18 @@
 		VALUES (NULL, #{wbsPlanFdCode}, #{wbsPlanMsCode}, #{wbsPlanOrder}, 0, #{wbsPlanName}, #{wbsPlanDependency},
 				#{wbsPlanStartDate}, #{wbsPlanDuration}, NOW(), #{wbsPlanManager}, #{wbsPlanComCode});
 	</insert>
+	<insert id="insertWbsPlanHuman" parameterType="com.pineapple.pms.service.WbsPlanHuman">
+		INSERT INTO wbsplanhuman
+		(wphCode, wphFdCode, wphMsCode, wphWpCode, wphNoPeople, wphCost, wphStartDate, wphEndDate, wphRemarks, wphComCode)
+		VALUES (NULL, #{wphFdCode}, #{wphMsCode}, #{wphWpCode}, #{wphNoPeople}, #{wphCost}, #{wphStartDate}, #{wphEndDate}, #{wphRemarks}, #{wphComCode})
+	</insert>
 	<!-- wbsplan 리스트 요청쿼리 -->
 	<select id="selectWbsPlan" resultType="com.pineapple.pms.service.WbsPlanView" parameterType="String">
 		SELECT w.wbsPlanCode, w.wbsPlanOrder,
 			w.wbsPlanName, w.wbsPlanDependency,
-			w.wbsPlanStartDate, w.wbsPlanDuration,
-			w.wbsPlanManager, f.fdTitle, m.milestoneName
+			w.wbsPlanStartDate, w.wbsPlanDuration, w.wbsPlanComCode,
+			w.wbsPlanManager, w.wbsPlanFdCode, w.wbsPlanMsCode,
+			f.fdTitle, m.milestoneName
 		FROM wbsplan w LEFT JOIN funding f ON w.wbsPlanFdCode = f.fdCode 
 		LEFT JOIN milestone m ON w.wbsPlanMsCode = m.milestoneCode
 		where w.wbsPlanComCode = ANY 
@@ -29,8 +35,9 @@
 		<select id="selectdetail" parameterType="String" resultType="com.pineapple.pms.service.WbsPlanView">
 		SELECT w.wbsPlanCode, w.wbsPlanOrder,
 				w.wbsPlanName, w.wbsPlanDependency,
-				w.wbsPlanStartDate, w.wbsPlanDuration,
-				w.wbsPlanManager, f.fdTitle, m.milestoneName
+				w.wbsPlanStartDate, w.wbsPlanDuration, w.wbsPlanComCode,
+				w.wbsPlanManager, w.wbsPlanFdCode, w.wbsPlanMsCode,
+				f.fdTitle, m.milestoneName
 		FROM wbsplan w LEFT JOIN funding f ON w.wbsPlanFdCode = f.fdCode 
 		LEFT JOIN milestone m ON w.wbsPlanMsCode = m.milestoneCode 
 		where wbsPlanCode=#{wbsplancode};

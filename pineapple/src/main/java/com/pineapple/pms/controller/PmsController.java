@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.pineapple.funding.service.Funding;
 import com.pineapple.pms.service.PmsService;
 import com.pineapple.pms.service.WbsPlan;
+import com.pineapple.pms.service.WbsPlanHuman;
 import com.pineapple.pms.service.WbsPlanView;
 
 @Controller
@@ -73,6 +73,20 @@ public class PmsController {
 			service.addWbsplan(wbsplan);
 			return "redirect:/pmsmain.pms";
 		}
+		// WbsPlanhuman 입력
+		@RequestMapping(value = "/wbsplanhumaninsert.pms", method = RequestMethod.POST)
+		public String addWbsplanHuman(WbsPlanHuman wbsplanhuman, Model model, Locale locale,HttpServletRequest request) {
+			System.out.println("PmsController의 addWbsplanHuman호출 성공");
+			System.out.println("wbsplanhuman : " + wbsplanhuman);
+			service.addWbsplanhuman(wbsplanhuman);
+			//원래 페이지로 돌아가는 코드
+			String wbsplancode = request.getParameter("wphWpCode");
+			System.out.println("wbs코드" + wbsplancode);
+			WbsPlanView wbsplandetail;
+			wbsplandetail = service.getMyWbsPlanDetail(wbsplancode);
+			model.addAttribute("wbsplandetail",wbsplandetail);
+			return "pms/companyuser/wbs/wbsplandetail";
+		}
 		
 		
 		
@@ -80,10 +94,6 @@ public class PmsController {
 		@RequestMapping(value = "/wbsplanlistpage.pms", method = RequestMethod.GET)
 		public String WbsPlanList(Locale locale, Model model) {
 			System.out.println("PmsController의 wbsplanlistpage호출 성공");
-			/*List<WbsPlanView> wbsplanlist = new ArrayList<WbsPlanView>();
-			wbsplanlist = service.getMyWbsPlanList();
-			model.addAttribute("wbsplanlist", wbsplanlist);
-			System.out.println(wbsplanlist+"<-----PmsController[wbsplanlist 값 출력]");*/
 			return "pms/companyuser/wbs/wbsplanlist";
 		}
 		
@@ -94,16 +104,4 @@ public class PmsController {
 			log.debug("컨트롤러에서 받은 리턴값 : " + service.getMyWbsPlanList(userId));;
 			return service.getMyWbsPlanList(userId);
 		}
-		
-		
-		
-		
-	/*	// 내가 속한 회사의 WbsPlan 리스트 확인
-		 @RequestMapping(value="/wbsplanlist", method = RequestMethod.GET)
-		public @ResponseBody ArrayList<WbsPlan> getMyWbsPlan(Model model, Locale locale, @RequestParam("userId") String userId) {
-			System.out.println("PmsController의 getMyWbsPlan호출 성공");
-			return null;
-		}
-		*/
-
 }

@@ -71,20 +71,7 @@ $(document).ready(function(){
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-md-9" id ="wbsplanlist">
-<%-- 		<c:forEach var="list" items="${wbsplanlist}">
-		 	<form action="/pineapple/wbsplandetail.pms" method="post"> 
-			 	<div class="col-xs-4 well">
-					<div>
-						<input type="hidden" name="wbsPlanCode" value="${list.wbsPlanCode}"/>
-						펀딩명 = ${list.fdTitle}<br>
-						마일스톤명 = ${list.milestoneName}<br>
-						wbs순서 = ${list.wbsPlanOrder}
-						wbs이름 = ${list.wbsPlanName}<br>
-						<input type="submit" value="상세정보"/> 
-					</div>
-				</div>	
-			</form>
-		</c:forEach> --%>
+	<!-- 리스트부분  -->
 	</div>
 </div>
 <!-- 풋터 -->

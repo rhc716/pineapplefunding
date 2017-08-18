@@ -41,5 +41,10 @@ public class PmsDao implements PmsDaoInterface {
 		System.out.println("PmsDao의 selectWbsPlandetail호출 성공");
 		return sqlSessionTemplate.selectOne("com.pineapple.pms.service.PmsMapper.selectdetail",wbsplancode);
 	}
+	@Override
+	public void insertWbsPlanHuman(WbsPlanHuman wbsplanhuman){
+		System.out.println("PmsDao의 insertWbsPlanHuman호출 성공");
+		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.insertWbsPlanHuman", wbsplanhuman);
+	}
 
 }

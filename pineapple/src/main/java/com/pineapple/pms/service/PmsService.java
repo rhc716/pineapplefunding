@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pineapple.pms.service.WbsPlan;
-
 @Service
 public class PmsService{
 	@Autowired
@@ -28,6 +26,11 @@ public class PmsService{
 		System.out.println("PmsService의 getMyWbsPlanList호출 성공");
 		WbsPlanView wbsplandetail = pmsdao.getMyWbsPlanDetail(wbsplancode);
 		return wbsplandetail;
+	}
+	
+	public void addWbsplanhuman(WbsPlanHuman wbsplanhuman){
+		System.out.println("PmsService의 addWbsplanhuman호출 성공");
+		pmsdao.insertWbsPlanHuman(wbsplanhuman);
 	}
  
 }

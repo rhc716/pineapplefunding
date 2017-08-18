@@ -9,5 +9,7 @@ public interface PmsDaoInterface {
 	List<WbsPlanView> WbsPlanSelect(String userId);
 
 	WbsPlanView getMyWbsPlanDetail(String wbsplancode);
+	
+	void insertWbsPlanHuman(WbsPlanHuman wbsplanhuman);
 
 }

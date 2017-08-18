@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -23,15 +23,7 @@
 
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
-<script>
-		$(function(){
-		    $("#insertwbsplanhuman").click(function(){
-		    	$('div.modal').modal({
-		    		remote : '/pineapple/wbsplaninserthuman.pms'
-				});
-		    })
-		})
-</script>
+
 </head>
 <body>
 
@@ -41,13 +33,12 @@
 <!-- 상단메뉴 -->
 	<c:import url="/resources/module/topmenu.jsp"/>
 <!-- 본문 -->
-<div class="row">
-	<div class="col-md-3">
-		<c:import url="/resources/module/pmsleftmenu.jsp"/>
-	</div>
-	<div class="col-md-9">
-		<div class="col-md-7">
-			<form method="get"> 
+	<div class="row">
+		<div class="col-md-3">
+			<c:import url="/resources/module/pmsleftmenu.jsp"/>
+		</div>
+		<div class="col-md-9">
+			<div class="col-md-7">
 				<label for="wbsplan">WBS예상계획</label><br>
 				펀딩명:
 				<input type="text" class="form-control" name="wbsPlanFdCode" value="${wbsplandetail.fdTitle}" readonly>
@@ -66,21 +57,189 @@
 				시작일:<br>
 				<input type="text" name="wbsPlanStartDate" value="${wbsplandetail.wbsPlanStartDate}" readonly><br>
 				담당자ID:
-				<input type="text" class="form-control" name="wbsPlanManager" value="${wbsplandetail.wbsPlanManager}" readonly>
-				<!-- 트리거 -->
-				<input type="button" class="btn btn-default" id="insertwbsplanhuman" data-toggle="modal" value="인원">
-				<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
- 					<div class="modal-dialog modal-sm">
-   						<div class="modal-content">
-    		   				 <!-- remote ajax call이 되는영역 -->
-  						</div>
-					</div>
+				<input type="text" class="form-control" name="wbsPlanManager" value="${wbsplandetail.wbsPlanManager}" readonly><br>
+				<!-- 트리거 각각의 모달창으로 이동한다 -->
+				<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#inserthuman">인원</button>				
+				<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#insertmaterial">장비</button>	
+				<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#insertfacility">시설</button>
+				<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#insertout">외주</button>
+				<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#insertetc">기타</button>	
+				<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#insertincome">수입</button>
+				<!-- 모달 -->
+				<div class="modal fade" id="inserthuman" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				<!-- 모달창 본문내용 -->				      
+				      <div class="modal-body">
+				        <form action="/pineapple/wbsplanhumaninsert.pms" method="post">
+				        <!-- 기본적으로 들어가는 wbs예상코드 펀딩코드 마일스톤코드 회사코드를 입력되는곳 -->
+				        	<label for="wbsplanhuman">WBS예상인원 지출</label><br>
+				        	<input type="hidden" class="form-control" name="wphWpCode" value="${wbsplandetail.wbsPlanCode}">
+				        	<input type="hidden" class="form-control" name="wphFdCode" value="${wbsplandetail.wbsPlanFdCode}">
+				        	<input type="hidden" class="form-control" name="wphMsCode" value="${wbsplandetail.wbsPlanMsCode}">
+				        	<input type="hidden" class="form-control" name="wphComCode" value="${wbsplandetail.wbsPlanComCode}">
+			          	<!-- 여기서부터는 직접 입력하는곳 --> 
+				           	인원수:
+				            <input type="number" class="form-control" name="wphNoPeople">
+						         총비용:
+				          	<input type="number" class="form-control" name="wphCost">
+				          	비고:
+				          	<input type="text" class="form-control" name="wphRemarks">
+				          	시작일:
+				          	<input type="date" class="form-control" name="wphStartDate">
+				          	종료일:
+				          	<input type="date" class="form-control" name="wphEndDate"><br>
+				          	<button type="submit">입력완료</button>
+				        </form>
+				      </div>
+				    </div>
+				  </div>
 				</div>
-			</form>
+				<div class="modal fade" id="insertmaterial" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">예상 장비 지출 입력</h5>
+				      </div>
+				      <div class="modal-body">
+				        <form action="/pineapple/wbsplanmaterialinsert.pms" method="post">
+				        	<input type="hidden" class="form-control" name="wpmWpCode" value="${wbsplandetail.wbsPlanCode}">
+				        	<input type="hidden" class="form-control" name="wpmFdCode" value="${wbsplandetail.wbsPlanFdCode}">
+				        	<input type="hidden" class="form-control" name="wpmMsCode" value="${wbsplandetail.wbsPlanMsCode}">
+				           	<input type="hidden" class="form-control" name="wpmComCode" value="${wbsplandetail.wbsPlanComCode}">
+				           	장비명:
+				            <input type="text" class="form-control" name="wpmName">
+						         수:
+				          	<input type="number" class="form-control" name="wpmNo">
+				          	단가:
+				          	<input type="number" class="form-control" name="wpmCostPerNo">
+				          	총비용:
+				          	<input type="number" class="form-control" name="wpmCost">
+				          	비고:
+				          	<input type="text" class="form-control" name="wpmRemarks">
+				          	시작일:
+				          	<input type="date" class="form-control" name="wpmStartDate">
+				          	종료일:
+				          	<input type="date" class="form-control" name="wpmEndDate"><br>
+				          	<button type="submit">입력완료</button>
+				        </form>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				<div class="modal fade" id="insertfacility" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">예상 시설 지출 입력</h5>
+				      </div>
+				      <div class="modal-body">
+				        <form action="/pineapple/wbsplanfacilityinsert.pms" method="post">
+				        	<input type="hidden" class="form-control" id="wpfWpCode" value="${wbsplandetail.wbsPlanCode}">
+				        	<input type="hidden" class="form-control" id="wpfFdCode" value="${wbsplandetail.wbsPlanFdCode}">
+				        	<input type="hidden" class="form-control" id="wpfMsCode" value="${wbsplandetail.wbsPlanMsCode}">
+				           	<input type="hidden" class="form-control" id="wpfComCode" value="${wbsplandetail.wbsPlanComCode}">
+				           	시설명:
+				            <input type="text" class="form-control" name="wpfName">
+				          	가격:
+				          	<input type="number" class="form-control" name="wpfCost">
+				          	비고:
+				          	<input type="text" class="form-control" name="wpfRemarks">
+				          	시작일:
+				          	<input type="date" class="form-control" name="wpfStartDate">
+				          	종료일:
+				          	<input type="date" class="form-control" name="wpfEndDate"><br>
+				          	<button type="submit">입력완료</button>
+				        </form>
+				      </div>				     
+				    </div>
+				  </div>
+				</div>
+				<div class="modal fade" id="insertout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">예상 외주 지출 입력</h5>
+				      </div>
+				      <div class="modal-body">
+				        <form action="/pineapple/wbsplanoutinsert.pms" method="post">
+				        	<input type="hidden" class="form-control" name="wpoWpCode" value="${wbsplandetail.wbsPlanCode}">
+				        	<input type="hidden" class="form-control" name="wpoFdCode" value="${wbsplandetail.wbsPlanFdCode}">
+				        	<input type="hidden" class="form-control" name="wpoMsCode" value="${wbsplandetail.wbsPlanMsCode}">
+				           	<input type="hidden" class="form-control" name="wpoComCode" value="${wbsplandetail.wbsPlanComCode}">
+				           	외주업체명:
+				            <input type="text" class="form-control" name="wpoOutComName">			    
+				          	비용:
+				          	<input type="number" class="form-control" name="wpoCost">
+				          	비고:
+				          	<input type="text" class="form-control" name="wpoRemarks">
+				          	시작일:
+				          	<input type="date" class="form-control" name="wpoStartDate">
+				          	종료일:
+				          	<input type="date" class="form-control" name="wpoEndDate"><br>
+				          	<button type="submit">입력완료</button>
+				        </form>
+				      </div>				     
+				    </div>
+				  </div>
+				</div>
+				<div class="modal fade" id="insertetc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">예상 기타 지출 입력</h5>
+				      </div>
+				      <div class="modal-body">
+				        <form action="/pineapple/wbsplanetcinsert.pms" method="post">
+				        	<input type="hidden" class="form-control" name="wpeWpCode" value="${wbsplandetail.wbsPlanCode}">
+				        	<input type="hidden" class="form-control" name="wpeFdCode" value="${wbsplandetail.wbsPlanFdCode}">
+				        	<input type="hidden" class="form-control" name="wpeMsCode" value="${wbsplandetail.wbsPlanMsCode}">
+				           	<input type="hidden" class="form-control" name="wpeComCode" value="${wbsplandetail.wbsPlanComCode}">
+				           	용도:
+				            <input type="text" class="form-control" name="wpePurpose">
+				          	비용:
+				          	<input type="number" class="form-control" name="wpeCost">
+				          	비고:
+				          	<input type="text" class="form-control" name="wpeRemarks">
+				          	시작일:
+				          	<input type="date" class="form-control" name="wpeStartDate">
+				          	종료일:
+				          	<input type="date" class="form-control" name="wpeEndDate"><br>
+				          	<button type="submit">입력완료</button>
+				        </form>
+				      </div>				      
+				    </div>
+				  </div>
+				</div>
+				<div class="modal fade" id="insertincome" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">예상 수입 입력</h5>
+				      </div>
+				      <div class="modal-body">
+				        <form action="/pineapple/wbsplanincomeinsert.pms" method="post">
+				        	<input type="hidden" class="form-control" name="wpiWpCode" value="${wbsplandetail.wbsPlanCode}">
+				        	<input type="hidden" class="form-control" name="wpiFdCode" value="${wbsplandetail.wbsPlanFdCode}">
+				        	<input type="hidden" class="form-control" name="wpiMsCode" value="${wbsplandetail.wbsPlanMsCode}">
+				        	<input type="hidden" class="form-control" name="wpiComCode" value="${wbsplandetail.wbsPlanComCode}">
+				           	수익사유:
+				            <input type="text" class="form-control" name="wpiReason">
+				          	수익:
+				          	<input type="number" class="form-control" name="wpiIncome">
+				          	시작일:
+				          	<input type="date" class="form-control" name="wpiStartDate">
+				          	종료일:
+				          	<input type="date" class="form-control" name="wpiEndDate"><br>
+				          	<button type="submit">입력완료</button>
+				        </form>
+				      </div>				   
+				    </div>
+				  </div>
+				</div>
+			</div>
 		</div>
-		<div class="col-md-1"></div>
 	</div>
-</div>
 <!-- 풋터 -->
 <div>
 	<c:import url="/resources/module/footer.jsp"/>
