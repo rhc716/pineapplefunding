@@ -1,5 +1,7 @@
 package com.pineapple.user.service;
 
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,13 @@ public class UserService implements UserServiceInterface {
 	@Autowired
 	private UserDaoInterface dao;
 	
+	//비밀번호 변경을 위한 메서드 호출
+	@Override
+	public int modifyUserPw(Map map) {
+		log.debug("service modifyUserPw 호출 : "+map.get("userId"));
+		return dao.updateUserPw(map);
+	}
+
 	//회원상세정보조회를 위한 메서드 호출
 	@Override
 	public UserDetail getUserDetail(String userDetailId) {
@@ -62,6 +71,7 @@ public class UserService implements UserServiceInterface {
 		return dao.insertUser(user);
 	}
 
+	
 	
 
 }

@@ -1,6 +1,11 @@
 package com.pineapple.user.service;
 
+import java.util.Map;
+
 public interface UserDaoInterface {
+	
+	//비밀번호 변경을 위한 메서드 선언
+	int updateUserPw(Map map);
 	
 	//회원상세정보조회를 위한 메서드 선언
 	UserDetail selectUserDetail(String userDetailId);

@@ -22,11 +22,188 @@
 
 <!-- css lbr -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lbr.css" />
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+//가입정보 유효성검사
+	$(document).ready(function(){
+		//모달에서 회원상세정보 수정하기를 클릭할 경우, 상세정보를 수정하는 모달을 보여줘서 수정 처리(모달 교체 코드)
+		$('#userdetailmodifyBtn').click(function(){
+			$('#userdetailcheckModal').modal("hide");
+			$('#userdetailmodifyModal').modal("show");
+		});
+		//모달 shown 이벤트 설정
+		$('#userdetailmodifyModal').on("shown.bs.modal", function() {
+			$('#submitBtn').click(function(){	// submit 버튼을 누르면 유효성 검사후 수동으로 submit 해줌.
+				if($('#phoneFront3').val() != ''){  
+					if($('#phoneRest8').val() != ''){
+						if($('#postalCode').val() != ''){
+							if($('#address').val() == ''){
+								alert('주소를 입력 해주세요');
+							} else {
+								$('#form').submit();
+				    		} 
+						} else {
+				        	alert('우편번호를 입력해주세요');
+					    }
+					} else {
+					    alert('전화번호 뒤 8자리를 입력 해주세요');
+					}
+				} else {
+					alert('전화번호 앞 3자리를 입력 해주세요');
+				}
+			 });
+	  
+			//전화번호 앞 3자리 유효성 검사(숫자만 입력될 수 있도록)
+			$('#phoneFront3').blur(function(){
+				var check = /^(?=.*[0-9]).{3}$/i;
+				var in_name = $('#phoneFront3').val();
+				if(!check.test(in_name)){
+					//전화번호 앞 3자리가 유효하지 않을때
+					$("#phch1").css("color", "#FF0000");
+					$('#phch1').text('전화번호 앞 3자리가 유효하지 않습니다');
+				} else {
+					//전화번호 앞 3자리가 유효할때
+					$("#phch1").css("color", "#008000");
+					$('#phch1').text('전화번호 앞 3자리를 사용할 수 있습니다');
+				}
+			});
+			//전화번호 뒤 8자리 숫자 유효성 검사(숫자만 8자리 입력) 
+			$('#phoneRest8').blur(function(){
+				var check = /^(?=.*[0-9]).{8}$/i;
+				var in_name = $('#phoneRest8').val();
+				if(!check.test(in_name)){
+					//전화번호 뒤 8자리가 유효하지 않을때
+					$("#phch2").css("color", "#FF0000");
+					$('#phch2').text('전화번호 뒤 8자리가 유효하지 않습니다');
+				} else {
+					//전화번호 뒤 8자리가 유효할때
+					$("#phch2").css("color", "#008000");
+					$('#phch2').text('전화번호 뒤 8자리를 사용할 수 있습니다');
+				}
+			});
+		});
+		
+		//취소버튼 누르면 마이페이지 메인으로
+		 $(document).ready(function(){
+			 $('#cancelBtn').click(function(){
+				location.href = '/pineapple/mypage.user';
+			 });
+		});
+	});
+	//새로운 비밀번호 유효성 검사 통과시 일치 확인
+	//영문 숫자 특문 6~20자
+	$(document).ready(function(){
+		$('#newpw1').blur(function(){
+			var check = /^(?=.*[a-z])(?=.*[0-9])(?=.*[~!@#$%^*()\-_=+\\\|\[\]{};:\'",.<>\/?]).{6,20}$/i;
+			var in_pw = $('#newpw1').val();
+			if(!check.test(in_pw)){
+				//비번이 유효하지 않을때
+				$("#newpwch1").css("color", "#FF0000");
+				$('#newpwch1').text('새로운 비밀번호가 유효하지 않습니다');
+			} else {
+				//비번이 유효할때
+				$("#newpwch1").css("color", "#008000");
+				$('#newpwch1').text('새로운 비밀번호를 사용 가능합니다');
+			}
+	    });
+		
+		$('#newpw2').blur(function(){
+			var check = /^(?=.*[a-z])(?=.*[0-9])(?=.*[~!@#$%^*()\-_=+\\\|\[\]{};:\'",.<>\/?]).{6,20}$/i;
+			var in_pw = $('#newpw2').val();
+			var temp = 0;
+			if(!check.test(in_pw)){
+				temp = 0; //비번이 유효하지 않을때
+			} else {
+				temp = 1; //비번이 유효할때
+			}
+			//새로운 비밀번호 유효성 통과 후 비밀번호 재확인 기능
+			if(temp == 1){
+				var newpwajax = $.ajax({ // ajax실행부분
+						            type : "post",
+						            url : "/pineapple/checkNewPw.user",
+						            data : {newpw1 : $('#newpw1').val(), newpw2 : $('#newpw2').val()},
+						            success : function(pc){
+						            	if(pc.newpw1 == pc.newpw2){
+						            		$('#newpwch2').css('color', '#008000');
+						            		$('#newpwch2').text('비밀번호가 일치합니다');
+						            	}else{
+						            		$('#newpwch2').css('color', '#FF0000');
+						            		$('#newpwch2').text('비밀번호가 불일치합니다');
+						            		$('#newpw2').val('');
+						        			$('#newpw2').focus();
+						            	}
+						            	
+						            },
+						            error : function error(){ alert('시스템 문제발생');}
+						        });
+							} else {
+								$('#newpwch2').css('color', '#FF0000');
+			            		$('#newpwch2').text('비밀번호는 6~20자의 영,숫자,특수문자가 모두 포함되어야 합니다');
+			            		$('#newpw2').val('');
+			            		$('#newpw2').focus();
+							}
+			//새로운 비밀번호 유효성 검사 후 회원정보 update
+			newpwajax.done(function(){
+				$('#submitnewpwBtn').click(function(){
+					$('#newpwform').submit();
+					alert('비밀번호 변경 완료. 다음 로그인부터 새로운 비밀번호로 로그인 해주세요.');
+				});
+			});
+		});
+	});
+	//다음 주소 찾기 api 사용
+    function sample4_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+                // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+                if(fullRoadAddr !== ''){
+                    fullRoadAddr += extraRoadAddr;
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('postalCode').value = data.zonecode; //5자리 새우편번호 사용
+                document.getElementById('address').value = fullRoadAddr;
+                document.getElementById('address').value = data.jibunAddress;
+
+                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                if(data.autoRoadAddress) {
+                    //예상되는 도로명 주소에 조합형 주소를 추가한다.
+                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                    document.getElementById('guide').innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+
+                } else if(data.autoJibunAddress) {
+                    var expJibunAddr = data.autoJibunAddress;
+                    document.getElementById('guide').innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+
+                } else {
+                    document.getElementById('guide').innerHTML = '';
+                }
+            }
+        }).open();
+    }
+</script>
 </head>
 <body>
-
 <!-- 본문 -->
-<!-- 마이페이지 내정보 Tab bar -->
+<!-- 마이페이지 내정보 공통모듈-->
 	<div class="row">
 		<div class="col-md-2">
 			<p>내정보</p>
@@ -34,11 +211,10 @@
 		<div class="col-md-10">
 			<br>
 			<div>
-				${level} 아이디 : ${id}<br>
-				${level} 닉네임 : ${nickname}<br>
-				${level} 권한 : ${level}<br>
+				${rank} 아이디 : ${id}<br>
+				${rank} 닉네임 : ${nickname}<br>
+				${rank} 권한 : ${level} - ${rank}<br>
 			</div>
-			<br>
 			<!-- 상세정보 입력한 경우는 더이상 입력 불가(마이페이지메인으로 리다이렉트됨), 확인만 가능 -->
 			<div>
 				<button type="submit" class="btn btn-info btn-block" data-toggle="modal" data-target="#userdetailcheckModal">회원상세정보보기</button>
@@ -79,7 +255,7 @@
 						<br>
 				      </div>
 			      </div>
-			       <div class="modal-footer">
+		       	  <div class="modal-footer">
 			        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 			        <button id="userdetailmodifyBtn" type="button" class="btn btn-primary" href="/pineapple/userdetailmodify.user">수정하기</button>
 			      </div>
@@ -120,7 +296,7 @@
 								<div>
 							    	<label for="postalCodeInput">우편번호</label>
 								    <p id="explain">(주소를 정확히 입력해 주시기 바랍니다)</p>
-								    <input type="text" id="postalCode" name="postalCode" value="${userdetail.phoneRest8}">
+								    <input type="text" id="postalCode" name="postalCode" value="${userdetail.postalCode}">
 									<input type="button" id="findPostalCode" onclick="sample4_execDaumPostcode()" value="우편번호찾기"><br>
 									<input type="text" id="address" name="address" value="${userdetail.address}">
 									<input type="text" id="address" name="address" placeholder="나머지 주소">
@@ -129,18 +305,39 @@
 								<br>
 						      </div>
 						      <div class="modal-footer">
-						        <button id="cancelBtn" type="reset" class="btn btn-default" data-dismiss="modal">닫기</button>
-						        <button id="submitBtn" type="submit" class="btn btn-primary" href="/pineapple/userdetailmodify.user">수정하기</button>
+						        <button id="cancelBtn" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+						        <button id="submitBtn" type="button" class="btn btn-primary" href="/pineapple/userdetailmodify.user">수정하기</button>
 						      </div>
 				      	</form>
 				    </div>
 				  </div>
 				</div>
 			</div>
+			<!-- 회원상세정보입력버튼(상세정보 최초 입력시 필요) -->
 			<div>
-				<form action="/pineapple/userdetailinsert.user">
-					<button type="submit" class="btn btn-info btn-block">상세정보입력</button>
-					<p id="explain">(회원상세정보를 입력해주시기 바랍니다. 최초입력 후에는 수정하기만 가능합니다)</p>
+			<form action="/pineapple/userdetailinsert.user">
+				<button type="submit" class="btn btn-info btn-block">상세정보입력</button>
+				<p id="explain">(회원상세정보를 입력해주시기 바랍니다. 최초입력 후에는 수정하기만 가능합니다)</p>
+			</form>
+			</div>
+		</div>	
+	</div>
+	<!-- 마이페이지에서 비밀번호 수정 기능 구현 -->
+	<br>
+	<div>
+		<div class="row">
+			<div class="col-md-2">
+				<p>비밀번호수정</p>
+			</div>
+			<div class="col-md-10">
+				<br>
+				<p id="explain">새로운 비밀번호를 입력해주세요. 비밀번호는 6~20자의 영,숫자,특수문자가 모두 포함되어야 합니다</p>
+				<form id="newpwform" action="/pineapple/changepw.user" method="post">
+					<input type="password" id="newpw1" name="newpw1" class="form-control" placeholder="새로운 비밀번호">
+					<span id="newpwch1"></span><br><br>
+					<input type="password" id="newpw2" name="newpw2" class="form-control" placeholder="새로운 비밀번호 재입력">
+					<span id="newpwch2"></span><br>
+					<input id="submitnewpwBtn" type="button" class="button_insert signupbtn btn-block" value="변경">
 				</form>
 			</div>
 		</div>
