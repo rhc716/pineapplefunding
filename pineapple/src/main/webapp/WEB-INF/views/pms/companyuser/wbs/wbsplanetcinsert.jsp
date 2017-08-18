@@ -26,7 +26,7 @@
 <!-- css rhc -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
 
-
+ 
 </head>
 <body>
 
