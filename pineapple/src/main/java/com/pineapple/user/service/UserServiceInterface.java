@@ -1,10 +1,15 @@
 package com.pineapple.user.service;
 
+import java.util.Map;
+
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public interface UserServiceInterface {
 
+	//비밀번호 변경을 위한 메서드 선언
+	int modifyUserPw(Map map);
+	
 	//회원상세정보조회를 위한 메서드 선언
 	UserDetail getUserDetail(String userDetailId);
 	

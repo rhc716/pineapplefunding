@@ -33,6 +33,37 @@ public class UserController {
 	@Autowired
     private UserServiceInterface service;
 	
+	//비밀번호 변경 요청 처리(두개의 변수를 파라미터맵을 사용하여 입력한 뒤 업데이트, Map객체 이용)
+	@RequestMapping(value="/changepw.user", method = RequestMethod.POST)
+    public String changePw(HttpSession session, @RequestParam("newpw2") String pw) { //커맨드 객체
+        log.debug("UserController session에 입력된 id로 회원정보 update : "+session.getAttribute("id").toString());
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("userId", session.getAttribute("id").toString());
+        map.put("pw", pw);
+        int result = service.modifyUserPw(map);
+        if(result == 1){
+        	log.debug(session.getAttribute("nickname")+"님의 비밀번호 변경 성공");
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님의 비밀번호 변경 실패");
+        }
+        return "redirect:/mypage.user"; // 글입력후 "/mypage.user"로 리다이렉트(재요청)
+    }
+	
+	//회원정보 중 비밀번호 변경시 비밀번호 일치확인 요청 처리
+	@RequestMapping(value="/checkNewPw.user", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> checkNewPw(Locale locale,
+						  Model model,
+						  @RequestParam("newpw1") String pw1,
+						  @RequestParam("newpw2") String pw2
+			){
+				log.debug("UserController newpw1 : "+pw1);
+				log.debug("UserController newpw2 : "+pw2);
+				Map<String, Object> map= new HashMap<String, Object>();
+				map.put("newpw1", pw1);
+				map.put("newpw2", pw2);
+			return map;
+	}
+	
 	//회원상세정보입력 페이지 요청(회원상세정보 조회/수정은 mypage part에서 구현)
 	@RequestMapping(value="/userdetailinsert.user", method=RequestMethod.GET)
 	public String userdetailinsertpage(HttpSession session){
@@ -48,7 +79,7 @@ public class UserController {
 	
 	//회원상세정보입력 처리
 	@RequestMapping(value="/userdetailinsert.user", method=RequestMethod.POST)
-	public String userdetailinsert( UserDetail userdetail){
+	public String userdetailinsert(UserDetail userdetail){
 		log.debug("userdetailinsert 회원상세정보입력 요청 처리");
 		service.addUserDetail(userdetail);
 		return "redirect:/mypage.user";

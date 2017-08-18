@@ -1,5 +1,7 @@
 package com.pineapple.user.service;
 
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,14 @@ public class UserDao implements UserDaoInterface {
 	
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
+	
+	//비밀번호 변경을 위한 메서드 선언
+	@Override
+	public int updateUserPw(Map map) {
+		log.debug("UserDao updateUserPw 호출 결과 : "+sqlSessionTemplate.update("com.pineapple.user.service.UserMapper.updatePwById", map));
+		return sqlSessionTemplate.update("com.pineapple.user.service.UserMapper.updatePwById", map);
+	}
+	
 	//회원상세정보조회를 위한 메서드 선언
 	@Override
 	public UserDetail selectUserDetail(String userDetailId) {
@@ -62,8 +72,6 @@ public class UserDao implements UserDaoInterface {
     	log.debug("UserDao insertUser : "+row);
         return row;
     }
-
-	
 
 	
 }

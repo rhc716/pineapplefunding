@@ -89,7 +89,68 @@
 				location.href = '/pineapple/mypage.user';
 			 });
 		});
-	});	
+	});
+	//새로운 비밀번호 유효성 검사 통과시 일치 확인
+	//영문 숫자 특문 6~20자
+	$(document).ready(function(){
+		$('#newpw1').blur(function(){
+			var check = /^(?=.*[a-z])(?=.*[0-9])(?=.*[~!@#$%^*()\-_=+\\\|\[\]{};:\'",.<>\/?]).{6,20}$/i;
+			var in_pw = $('#newpw1').val();
+			if(!check.test(in_pw)){
+				//비번이 유효하지 않을때
+				$("#newpwch1").css("color", "#FF0000");
+				$('#newpwch1').text('새로운 비밀번호가 유효하지 않습니다');
+			} else {
+				//비번이 유효할때
+				$("#newpwch1").css("color", "#008000");
+				$('#newpwch1').text('새로운 비밀번호를 사용 가능합니다');
+			}
+	    });
+		
+		$('#newpw2').blur(function(){
+			var check = /^(?=.*[a-z])(?=.*[0-9])(?=.*[~!@#$%^*()\-_=+\\\|\[\]{};:\'",.<>\/?]).{6,20}$/i;
+			var in_pw = $('#newpw2').val();
+			var temp = 0;
+			if(!check.test(in_pw)){
+				temp = 0; //비번이 유효하지 않을때
+			} else {
+				temp = 1; //비번이 유효할때
+			}
+			//새로운 비밀번호 유효성 통과 후 비밀번호 재확인 기능
+			if(temp == 1){
+				var newpwajax = $.ajax({ // ajax실행부분
+						            type : "post",
+						            url : "/pineapple/checkNewPw.user",
+						            data : {newpw1 : $('#newpw1').val(), newpw2 : $('#newpw2').val()},
+						            success : function(pc){
+						            	if(pc.newpw1 == pc.newpw2){
+						            		$('#newpwch2').css('color', '#008000');
+						            		$('#newpwch2').text('비밀번호가 일치합니다');
+						            	}else{
+						            		$('#newpwch2').css('color', '#FF0000');
+						            		$('#newpwch2').text('비밀번호가 불일치합니다');
+						            		$('#newpw2').val('');
+						        			$('#newpw2').focus();
+						            	}
+						            	
+						            },
+						            error : function error(){ alert('시스템 문제발생');}
+						        });
+							} else {
+								$('#newpwch2').css('color', '#FF0000');
+			            		$('#newpwch2').text('비밀번호는 6~20자의 영,숫자,특수문자가 모두 포함되어야 합니다');
+			            		$('#newpw2').val('');
+			            		$('#newpw2').focus();
+							}
+			//새로운 비밀번호 유효성 검사 후 회원정보 update
+			newpwajax.done(function(){
+				$('#submitnewpwBtn').click(function(){
+					$('#newpwform').submit();
+					alert('비밀번호 변경 완료. 다음 로그인부터 새로운 비밀번호로 로그인 해주세요.');
+				});
+			});
+		});
+	});
 	//다음 주소 찾기 api 사용
     function sample4_execDaumPostcode() {
         new daum.Postcode({
@@ -252,7 +313,7 @@
 				  </div>
 				</div>
 			</div>
-			<!-- 회원상세정보입력버튼 -->
+			<!-- 회원상세정보입력버튼(상세정보 최초 입력시 필요) -->
 			<div>
 			<form action="/pineapple/userdetailinsert.user">
 				<button type="submit" class="btn btn-info btn-block">상세정보입력</button>
@@ -260,6 +321,26 @@
 			</form>
 			</div>
 		</div>	
+	</div>
+	<!-- 마이페이지에서 비밀번호 수정 기능 구현 -->
+	<br>
+	<div>
+		<div class="row">
+			<div class="col-md-2">
+				<p>비밀번호수정</p>
+			</div>
+			<div class="col-md-10">
+				<br>
+				<p id="explain">새로운 비밀번호를 입력해주세요. 비밀번호는 6~20자의 영,숫자,특수문자가 모두 포함되어야 합니다</p>
+				<form id="newpwform" action="/pineapple/changepw.user" method="post">
+					<input type="password" id="newpw1" name="newpw1" class="form-control" placeholder="새로운 비밀번호">
+					<span id="newpwch1"></span><br><br>
+					<input type="password" id="newpw2" name="newpw2" class="form-control" placeholder="새로운 비밀번호 재입력">
+					<span id="newpwch2"></span><br>
+					<input id="submitnewpwBtn" type="button" class="button_insert signupbtn btn-block" value="변경">
+				</form>
+			</div>
+		</div>
 	</div>		
 </body>
 </html>
