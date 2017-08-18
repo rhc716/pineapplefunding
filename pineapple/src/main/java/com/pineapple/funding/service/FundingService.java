@@ -75,10 +75,28 @@ public class FundingService implements FundingServiceInterface {
 	
 	// 마일스톤 입력을 위한 사원조회
 	@Override
-	public List<Employee> getemployeeforinsertmilestone(int fdCode) {
+	public List<Employee> getEmployeeForInsertMileStone(int fdCode) {
 		log.debug("FundingService의 getemployeeforinsertmilestone호출 성공");
-		return fundingdao.selectemployeeforinsertmilestone(fdCode);
+		return fundingdao.selectEmployeeForInsertMileStone(fdCode);
 	}
-
+	
+	// 마일스톤조회 // 마일스톤 + 펀딩 리스트 가져오기
+	@Override
+	public List<FundingAndMileStone> getMyMileStoneList(String userId) {
+		log.debug("FundingService의 getMyMileStoneList호출 성공");
+		return fundingdao.selectMyMileStoneList(userId);
+	}
+	// 마일스톤 수정
+	@Override
+	public void modifyMileStone(MileStone mileStone) {
+		log.debug("FundingService의 modifyMileStone호출 성공");
+		fundingdao.updateMileStone(mileStone);
+	}
+	// 마일스톤 삭제 
+	@Override
+	public void removeMileStone(int delMsCode) {
+		log.debug("FundingService의 removeMileStone호출 성공");
+		fundingdao.deleteMileStone(delMsCode);
+	}
 }
  

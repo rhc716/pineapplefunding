@@ -30,7 +30,7 @@
 $(document).ready(function(){
 	var getfundinglist = $.ajax({
 		type : "get",
-		url : "/pineapple/selectmyfundinglist.pms",
+		url : "/pineapple/getmyfundinglist.pms",
 		/* 아이디 세션에서 받아서 가져옴 */
 		data : { userId : "id01@maver.com" }
 	});
@@ -137,7 +137,7 @@ $(document).ready(function(){
 				console.log(whatdelete);
 				var fundingdelete = $.ajax({
 					type : "get",
-					url : "/pineapple/deletefunding.pms",
+					url : "/pineapple/removefunding.pms",
 					/* 삭제해줄 펀딩코드를 전송 */
 					data : { delfdCode : whatdelete }
 				});

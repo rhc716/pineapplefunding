@@ -12,6 +12,9 @@ public interface FundingServiceInterface {
 	List<FundingAndFdDetail> getMyFundingDetailList(String userId);
 	void modifyFundingDetail(FundingDetail fundingdetail);
 	void addMileStone(MileStone milestone);
-	List<Employee> getemployeeforinsertmilestone(int fdCode);
 	List<Funding> getFundingForInsertMileStone(String userId);
+	List<Employee> getEmployeeForInsertMileStone(int fdCode);
+	List<FundingAndMileStone> getMyMileStoneList(String userId);
+	void modifyMileStone(MileStone mileStone);
+	void removeMileStone(int delMsCode);
 }

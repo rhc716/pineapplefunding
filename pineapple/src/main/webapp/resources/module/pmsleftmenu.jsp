@@ -26,7 +26,7 @@
 		<li><a href="">마일스톤관리</a>
 			<ul>
 				<li><a href="/pineapple/milestoneinsert.pms">마일스톤생성</a></li>
-				<li><a href="">마일스톤조회</a></li>
+				<li><a href="/pineapple/mymilestonelist.pms">마일스톤조회</a></li>
 			</ul>
 		</li>
 		<li><a href="">WBS관리</a>

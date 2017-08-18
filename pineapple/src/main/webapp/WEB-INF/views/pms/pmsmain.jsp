@@ -40,6 +40,7 @@
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-md-6">
+		<h1>프로젝트관리 메인페이지 입니다</h1>
 	</div>
 	<div class="col-md-3">
 	    <div class="btn-group btn-group-justified">
@@ -47,7 +48,6 @@
 		</div>
 		<br>
 		<div class="btn-group btn-group-justified">
-		    <a href="wbsplanetcinsert.pms" class="btn btn-primary">wbsplan 기타정보 입력</a>
 		</div>
 	</div>
 	

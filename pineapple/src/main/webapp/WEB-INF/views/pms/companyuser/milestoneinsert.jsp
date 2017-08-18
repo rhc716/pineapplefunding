@@ -31,7 +31,7 @@
 $(document).ready(function(){
 	var getfundinglist = $.ajax({
 		type : "get",
-		url : "/pineapple/selectfundingforinsertmilestone.pms",
+		url : "/pineapple/getfundingforinsertmilestone.pms",
 		/* 아이디 세션에서 받아서 가져옴 */
 		data : { userId : "id01@maver.com" }
 	});
@@ -86,6 +86,7 @@ $(document).ready(function(){
 			$('.selectbtn').click(function(){
 				//console.log($(this).parent().find("b:eq(0)").text());
 				$('#pmid').val($(this).parent().find("b:eq(0)").text());
+				$('#myModal').modal('hide');
 			});
 		});
 		

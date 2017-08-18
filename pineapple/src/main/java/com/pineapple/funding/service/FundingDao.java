@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.pineapple.user.service.Employee;
-import com.sun.org.apache.bcel.internal.generic.ObjectType;
 
 @Repository
 public class FundingDao implements FundingDaoInterface {
@@ -93,10 +92,32 @@ public class FundingDao implements FundingDaoInterface {
 	
 	// 마일스톤 입력을 위한 사원조회
 	@Override
-	public List<Employee> selectemployeeforinsertmilestone(int fdCode) {
+	public List<Employee> selectEmployeeForInsertMileStone(int fdCode) {
 		log.debug("FundingDao의 insertMileStone호출 성공");
 		log.debug("리턴값 ----------->>>>"+ sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectemployeeforinsertmilestone", fdCode ));
 		
 		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectemployeeforinsertmilestone", fdCode );
 	}
-} 
+	
+	// 마일스톤조회 // 마일스톤 + 펀딩 리스트 가져오기
+	@Override
+	public List<FundingAndMileStone> selectMyMileStoneList(String userId) {
+		log.debug("FundingDao의 selectMyMileStoneList호출 성공");
+		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectMyMileStoneList", userId );
+	}
+	
+	// 마일스톤 수정
+	@Override
+	public void updateMileStone(MileStone mileStone) {
+		log.debug("FundingDao의 updateMileStone호출 성공");
+		sqlSessionTemplate.update("com.pineapple.funding.service.FundingMapper.updateMileStone", mileStone );
+	}
+	
+	// 마일스톤 삭제 
+	@Override
+	public void deleteMileStone(int delMsCode) {
+		log.debug("FundingDao의 deleteMileStone호출 성공");
+		sqlSessionTemplate.delete("com.pineapple.funding.service.FundingMapper.deleteMileStone", delMsCode );
+	}
+	
+}

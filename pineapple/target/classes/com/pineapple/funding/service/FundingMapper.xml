@@ -127,6 +127,39 @@
 		AND fdAuthLevelCode = '1')
 	</select>
 	
+	<!-- 마일스톤입력을 위한 사원조회 -->
+	<select id="selectMyMileStoneList" parameterType="String" resultType="java.util.HashMap">
+		SELECT *
+		FROM milestone m INNER JOIN funding f
+		ON m.msFdCode = f.fdCode
+		WHERE m.msFdCode =  ANY
+			(SELECT fdCode
+			FROM funding
+			WHERE fdComCode = ANY 
+				(SELECT e.emComCode 
+				FROM user u INNER JOIN employee e 
+				ON u.userId = e.emUserId
+				WHERE u.userId = #{userId}))
+		ORDER BY fdCode
+	</select>
+	
+	<!-- 마일스톤 수정  -->
+	<update id="updateMileStone" parameterType="com.pineapple.funding.service.MileStone">
+		UPDATE milestone
+		SET
+			milestoneStep=#{milestoneStep},
+			milestoneName=#{milestoneName},
+			milestoneSummary=#{milestoneSummary},
+			pm=#{pm}
+		WHERE milestoneCode=#{milestoneCode}
+	</update>
+	
+	<!-- 마일스톤 삭제  -->
+	<delete id="deleteMileStone" parameterType="int">
+	DELETE FROM milestone 
+	WHERE milestoneCode=#{delMsCode}
+	</delete>
+	  
 </mapper>
 
  

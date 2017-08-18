@@ -15,6 +15,9 @@ public interface FundingDaoInterface {
 	void insertFundingDetail(int pk);
 	void deleteFundingDetail(int delfdCode);
 	void insertMileStone(MileStone milestone);
-	List<Employee> selectemployeeforinsertmilestone(int fdCode);
 	List<Funding> selectFundingForInsertMileStone(String userId);
+	List<Employee> selectEmployeeForInsertMileStone(int fdCode);
+	List<FundingAndMileStone> selectMyMileStoneList(String userId);
+	void updateMileStone(MileStone mileStone);
+	void deleteMileStone(int delMsCode);
 }
