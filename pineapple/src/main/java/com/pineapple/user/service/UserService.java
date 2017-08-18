@@ -13,6 +13,27 @@ public class UserService implements UserServiceInterface {
 	@Autowired
 	private UserDaoInterface dao;
 	
+	//투자자, 사이트관리자의 계좌삭제 메서드 선언
+	@Override
+	public int removeAccountByAccountNumber(String accountNumber) {
+		log.debug("service removeAccountByAccountNumber 호출 : "+accountNumber);
+		return dao.deleteAccountByAccountNumber(accountNumber);
+	}
+	
+	//투자자, 사이트관리자의 계좌조회 메서드 선언
+	@Override
+	public Account getAccountByAccountNumber(String accountNumber) {
+		log.debug("service getAccountByAccountNumber 호출 : "+accountNumber);
+		return dao.selectAccountByAccountNumber(accountNumber);
+	}
+	
+	//투자자, 사이트관리자 새로운 계좌등록을 위한 메서드 호출
+	@Override
+	public int addAccount(Account account) {
+		log.debug("service addAccount 호출 : "+account);
+		return dao.insertAccount(account);
+	}
+	
 	//비밀번호 변경을 위한 메서드 호출
 	@Override
 	public int modifyUserPw(Map map) {
@@ -71,7 +92,6 @@ public class UserService implements UserServiceInterface {
 		return dao.insertUser(user);
 	}
 
-	
 	
 
 }

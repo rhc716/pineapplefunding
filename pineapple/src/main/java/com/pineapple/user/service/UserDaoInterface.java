@@ -4,6 +4,15 @@ import java.util.Map;
 
 public interface UserDaoInterface {
 	
+	//투자자, 사이트관리자의 계좌삭제 메서드 선언
+	int deleteAccountByAccountNumber(String accountNumber);
+	
+	//투자자, 사이트관리자의 계좌조회 메서드 선언
+	Account selectAccountByAccountNumber(String accountNumber);
+	
+	//투자자, 사이트관리자의 새로운 계좌등록 메서드 선언
+	int insertAccount(Account account);
+	
 	//비밀번호 변경을 위한 메서드 선언
 	int updateUserPw(Map map);
 	

@@ -14,10 +14,31 @@ public class UserDao implements UserDaoInterface {
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
 	
+	//투자자, 사이트관리자의 계좌삭제 메서드 선언
+	@Override
+	public int deleteAccountByAccountNumber(String accountNumber) {
+		log.debug("UserDao deleteAccountByAccountNumber : "+accountNumber);
+		return sqlSessionTemplate.delete("com.pineapple.user.service.UserMapper.deleteAccountByAccountNumber", accountNumber);
+	}
+	
+	//투자자, 사이트관리자의 계좌조회 메서드 선언
+	@Override
+	public Account selectAccountByAccountNumber(String accountNumber) {
+		log.debug("UserDao selectAccountByAccountNumber : "+accountNumber);
+		return sqlSessionTemplate.selectOne("com.pineapple.user.service.UserMapper.selectAccountByAccountnumber", accountNumber);
+	}
+	
+	//투자자, 사이트관리자의 새로운 계좌등록 메서드 선언
+	@Override
+	public int insertAccount(Account account) {
+		log.debug("UserDao insertAccount 호출 : "+account);
+		return sqlSessionTemplate.insert("com.pineapple.user.service.UserMapper.insertAccount", account);
+	}
+
 	//비밀번호 변경을 위한 메서드 선언
 	@Override
 	public int updateUserPw(Map map) {
-		log.debug("UserDao updateUserPw 호출 결과 : "+sqlSessionTemplate.update("com.pineapple.user.service.UserMapper.updatePwById", map));
+		log.debug("UserDao updateUserPw 호출 : "+map);
 		return sqlSessionTemplate.update("com.pineapple.user.service.UserMapper.updatePwById", map);
 	}
 	
@@ -72,6 +93,8 @@ public class UserDao implements UserDaoInterface {
     	log.debug("UserDao insertUser : "+row);
         return row;
     }
+
+	
 
 	
 }

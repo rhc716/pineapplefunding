@@ -22,6 +22,16 @@
 
 <!-- css lbr -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lbr.css" />
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#newAccountSubmitBtn').click(function(){
+		$('#newaccountform').submit();
+	});
+	$('#newAccountCancelBtn').click(function(){
+		location.href = '/pineapple/mypage.user';
+	});
+});
+</script>
 </head>
 <body>
 <!--로그인 버튼 -->
@@ -53,32 +63,86 @@
 				<!-- 마이페이지 공통 모듈 -->
 				<c:import url="./mypageall.jsp"/>
 				<br>
-				<div class="row">
+					<div class="row">
 					<div class="col-md-2">
 						<p>계좌정보</p>
 					</div>
 					<div class="col-md-10">
-					<!-- 관리자 고유 영역 -->
+					<!-- 투자자 고유 영역 -->
 					<br><br>
-					<p>내계좌정보</p>
 					<table class="table table-striped table-bordered table-hover">
 						<thead>
 							<tr class="info">
 							<td>증권사</td>
 							<td>계좌번호</td>
 							<td>계좌이름</td>
+							<td>계좌정보수정</td>
 							</tr>
 						</thead>
-					<c:forEach var="useraccount" items="${user.account}">
 						<tbody>
-							<tr>
-								<td> ${useraccount.secCompany} </td>
-								<td> ${useraccount.accountNumber} </td>
-								<td> ${useraccount.accountNickname} </td>
-							</tr>
+							<c:forEach var="useraccount" items="${user.account}">
+								<tr>
+									<td> ${useraccount.secCompany} </td>
+									<td> ${useraccount.accountNumber} </td>
+									<td> ${useraccount.accountNickname} </td>
+									<td> 
+										<button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#changeaccountmodal">수정</button>
+									</td>
+								</tr>
+							</c:forEach>
 						</tbody>
-					</c:forEach>
+						<tfoot>
+							<div>
+								<button type="button" class="btn btn-info" data-toggle="modal" data-target="#newaccountmodal">+ 새로운 계좌등록</button>
+							</div>
+						</tfoot>
 					</table>
+					</div>
+					<!-- 새로운 계좌등록을위한 모달 내부 구현 -->
+					<div class="modal fade" id="newaccountmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title" id="myModalLabel">${nickname}님의 새로운 계좌등록</h4>
+					      </div>
+					      <div class="modal-body">
+					        <form id="newaccountform" action="/pineapple/addnewaccount.user" method="post">
+					        	<div class="container_insert">
+								    <div id="accountHolerIdinput" class="form-group has-success has-feedback">
+										<label class="control-label" for="inputSuccess2">${nickname}님의 아이디</label>
+										<input type="text" class="form-control" id="accountId" name="accountId" value="${id}" varia-describedby="inputSuccess2Status" readonly="readonly">
+										<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+										<span id="inputSuccess2Status" class="sr-only">(success)</span>
+									</div>
+									<br>
+								  	<div class="form-group">
+									    <label for="secCompany">증권사</label>
+									    <p id="explain">(계좌를 만든 증권사 이름을 정확히 입력해주세요)</p>
+									    <p><input type="text" id="secCompany" name="secCompany" class="form-control"></p>
+								  	</div>
+								  	<br>
+								  	<div class="form-group">
+								  		<label for="accountNumber">계좌번호</label>
+									    <p id="explain">(계좌번호를 -없이 입력해주세요)</p>
+									    <p><input type="text" id="accountNumber" name="accountNumber" class="form-control"></p>
+								  	</div>
+									<br>
+									<div class="form-group">
+								  		<label for="accountNickname">계좌번호 별명</label>
+									    <p id="explain">(계좌번호의 별명을 등록해주세요. 필수사항이 아니므로 별명을 등록하지 않으셔도 됩니다.)</p>
+									    <p><input type="text" id="accountNickname" name="accountNickname" class="form-control"></p>
+								  	</div>
+									<br>
+							      </div>
+							      <div class="modal-footer">
+							        <button id="newAccountCancelBtn" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+							        <button id="newAccountSubmitBtn" type="button" class="btn btn-primary" href="/pineapple/userdetailmodify.user">추가하기</button>
+							      </div>
+					        </form>
+					      </div>
+					    </div>
+					  </div>
 					</div>
 				</div>
 			</div>

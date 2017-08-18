@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pineapple.user.service.Account;
 import com.pineapple.user.service.User;
 import com.pineapple.user.service.UserAndLevel;
 import com.pineapple.user.service.UserAndLevelAndEmployeeAndCompanyAndRank;
@@ -32,6 +33,41 @@ public class UserController {
 	
 	@Autowired
     private UserServiceInterface service;
+	
+	//계좌 삭제 요청 처리
+	@RequestMapping(value="/deleteaccount.user", method = RequestMethod.GET)
+    public String deleteAccount(HttpSession session, @RequestParam("accountNumber") String accountNumber) { //커맨드 객체
+        log.debug("UserController deleteAccount 계좌삭제 요청 : "+session.getAttribute("id").toString());
+        Account account = service.getAccountByAccountNumber(accountNumber);
+        String redirect = null;
+        if(account != null){
+        	 int deleteresult = service.removeAccountByAccountNumber(account.getAccountNumber());
+        	 if(deleteresult == 1){
+             	log.debug(session.getAttribute("nickname")+"님의 계좌 삭제 성공");
+             	redirect = "redirect:/mypage.user";
+             } else {
+             	log.debug(session.getAttribute("nickname")+"님의 계좌 삭제 실패");
+             	redirect = "redirect:/mypage.user";
+             }
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님의 계좌가 존재하지 않습니다");
+        	redirect = "redirect:/mypage.user";
+        }
+        return redirect; // 글입력후 "/"로 리다이렉트(재요청)
+    }
+	
+	//투자자, 사이트관리자의 계좌 등록 요청 처리
+	@RequestMapping(value="/addnewaccount.user", method = RequestMethod.POST)
+    public String addAccount(HttpSession session, Account account) { //커맨드 객체
+        log.debug("UserController addAccount 새로운 계좌등록 요청 : "+account);
+        int result = service.addAccount(account);
+        if(result == 1){
+        	log.debug(session.getAttribute("nickname")+"님의 새로운 계좌등록 성공");
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님의 새로운 계좌등록 실패");
+        }
+        return "redirect:/mypage.user"; // 글입력후 "/"로 리다이렉트(재요청)
+    }
 	
 	//비밀번호 변경 요청 처리(두개의 변수를 파라미터맵을 사용하여 입력한 뒤 업데이트, Map객체 이용)
 	@RequestMapping(value="/changepw.user", method = RequestMethod.POST)
