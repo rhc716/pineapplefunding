@@ -123,7 +123,6 @@
 				.funding-qnaid{margin-top: 10px;
 							   padding-left: 0px;
 							   font-size: 12px;
-							   opacity: 0.4;
 							   text-align: left;}
 				.funding-title{margin: 10px 0px;
 							   font-size: 25px;
@@ -135,22 +134,16 @@
 								 text-align: left;}
 			/* 펀딩Q&A*/
 			/* 펀딩Q&A댓글 */
-				.replymain{margin: 10px 0px;
+				.reply-main{margin: 10px 0px;
 						   padding: 0px;
 						   text-align: left;}
-				.replycontent{margin: 10px 0px;
-							  padding: 0px;
-							  text-align: left;
-							  font-size: 18px;
-							  }
 			/* 펀딩Q&A댓글 */
 		/* 펀딩Q&A */
 	/* 펀딩Tab */
 /* CLASS and TAG CSS */
 
 /* invest main 투자하기 main */
-	.fdlist-main{
-				}
+	.fdlist-main{padding: 0px 20px}
 	.fdlist-box{height: 328px;
 				width: 303px;
 				margin: 0 auto;

@@ -14,6 +14,15 @@ public interface InvestDaoInterface {
 	//하나의 펀딩의 Q&A 불러오는 Dao
 	List<FundingQna> investFundingQnaSelect(int fdCode);
 	//하나의 펀딩 Q&A의 댓글 불러오는 Dao
-	List<FundingQnaReply> investFundingQnaReplySelect(int qnaReCode);
-	
+	List<FundingQnaReply> investFundingQnaReplySelect(int qnaCode);
+	//하나의 펀딩의 Q&A의 글 입력 Dao
+	int investFundingQnaInsert(FundingQna fundingqna);
+	//하나의 펀딩의 Q&A의 글 수정 Dao
+	int investFundingQnaUpdate(int qnaCode);
+	//하나의 펀딩의 Q&A의 글 삭제 Dao
+	int investFundingQnaDelete(int qnaCode);
+	//하나의 펀딩의 Q&A의 글 삭제시 댓글 같이 삭제 Dao
+	int investFundingQnaAllReplyDelete(int qnaCode);
+	//하나의 펀딩의 Q&A의 댓글 입력 Dao
+	int investFundingQnaReplyInsert(FundingQnaReply fundingqnareply);	
 }

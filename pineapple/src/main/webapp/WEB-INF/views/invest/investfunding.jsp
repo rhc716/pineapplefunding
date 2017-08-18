@@ -28,7 +28,7 @@
 
 <script> 
 	//펀딩 Tab Content
-	$(document).ready(function() { 
+	$(document).ready(function(param) { 
 		var getfundingdata = $.ajax({
 			type : "get",
 			url : "/pineapple/investfundingdetail.invest",
@@ -47,21 +47,69 @@
 				for(var i = 0 ;i < msg.length ; i++ ){
 				$('#fundingqnalist').append(
 							"<div class=\"col-xs-12 funding-qna\">"+
-							"<div class=\"col-xs-12 funding-qnaid\">"+msg[i].qnaFdId+""+
-							"<span>&nbsp;&nbsp;"+msg[i].qnaFdTime+"</span></div>"+
+								"<div class=\"col-xs-12 funding-qnaid\">"+
+							"<span style=\"opacity\:0.4;\">"+msg[i].qnaFdId+"&nbsp;&nbsp;"+msg[i].qnaFdTime+"</span>"+
+							"<span style=\"opacity\:0.8;\">"+
+							"&nbsp;&nbsp;<a href=\"/pineapple/investqnaupdate.invest?fdCode="+msg[i].qnaFdCode+"&qnaCode="+msg[i].qnaCode+"\">수정하기</a>"+
+							"&nbsp;&nbsp;<a href=\"/pineapple/investqnadelete.invest?fdCode="+msg[i].qnaFdCode+"&qnaCode="+msg[i].qnaCode+"\">삭제하기</a>"+
+							"</span>"+
+							"</div>"+
 							"<div class=\"col-xs-12 funding-title\">Q&A제목 : "+msg[i].qnaFdTitle+"</div>"+
-							"<div class=\"col-xs-12 funding-content\">Q&A내용 : "+msg[i].qnaFdContent+"</div>"+
-							"<a class=\"col-xs-12 replymain\" data-toggle=\"collapse\" href=\"#collapseExample"+[i]+"\" aria-expanded=\"false\" aria-controls=\"collapseExample"+[i]+"\">"+
-				  			"답글보기"+
-				  			"</a>"+
-				  			"<div class=\"collapse\" id=\"collapseExample"+[i]+"\">"+
-				  		  	"<div class=\"replycontent\">"+
-				  		    "<span class=\"glyphicon glyphicon-menu-right\"></span>..."+
-				  		  	"</div>"+
-				  			"</div>"+
-							"</div>"
+								"<div class=\"col-xs-12 funding-content\">Q&A내용 : "+msg[i].qnaFdContent+"</div>"+
+								"<div class=\"replyall\">"+
+								"<a class=\"col-xs-1 replymain\" id=\""+msg[i].qnaCode+"\" data-toggle=\"collapse\" href=\"#collapseExample"+[i]+"\" aria-expanded=\"false\" aria-controls=\"collapseExample"+[i]+"\""+
+								"style=\"padding\:0px; text-align\:left\">"+
+			  					"답글보기"+
+			  					"</a>"+
+			  					"<div class=\"col-xs-11\"></div>"+
+					  			"<div class=\"col-xs-12 collapse\" id=\"collapseExample"+[i]+"\">"+
+					  				"<div class=\"col-xs-12\" style=\"margin\:20px 0px;\">"+
+					  					"<form id=\"answerform\" action=\"/pineapple/investanswer.invest?fdCode="+msg[i].qnaFdCode+"\" method=\"post\">"+
+						  					"<div class=\"col-xs-8\">"+
+						  					"<input name=\"reQnaCode\" type=\"hidden\" value=\""+msg[i].qnaCode+"\">"+
+						  					"<input name=\"qnaReId\" type=\"hidden\" value=\"${id}\">"+
+						  					"<input name=\"qnaReContent\" type=\"text\" style=\"width\: 100%; height\: 100px; padding\:0px;\">"+
+						  					"</div>"+
+				  							"<div class=\"col-xs-4\" style=\"text-align\:left; padding\:0px;\">"+
+				  							"<button id=\"answerbtn\" style=\"width\: 50%; height\: 100px; padding\:0px; border\:1px solid; font-size\:20px;\">답변등록하기</button>"+
+				  							"</div>"+
+				  						"</form>"+
+			  						"</div>"+
+			  		  				"<div class=\"col-xs-12 replycontent qnaCode_"+msg[i].qnaCode+"\" style=\"text-align\: left; margin\:0px 0px 20px 0px;\">"+
+			  						"</div>"+
+								"</div>"
 							);
-				}
+				};
+		 		//답글보기 클릭시
+		 		$('.replymain').click(function(){
+		 			var turefalse = $(this).attr("aria-expanded")
+		 			var qnaCode = $(this).attr("id")
+						var getfundingqnareply = $.ajax({
+							type : "get",
+							url : "/pineapple/investfundingqnareply.invest",
+							data : {qnaCode : qnaCode}
+						});
+						getfundingqnareply.done(function(msg){
+							console.log(msg)
+							$('.qnaCode_'+qnaCode+'').empty();
+							if(msg.length == 0){
+								$('.qnaCode_'+qnaCode+'').append(
+										"<span class=\"glyphicon glyphicon-menu-right\"></span>"+
+										"<span class=\"reply-title\"></span><div style=\"padding\:0px 0px 0px 16px;font-size\:18px\">등록된 답변이 없습니다.</div>")
+							}else{
+								for(var i = 0; i< msg.length;i++){
+									$('.qnaCode_'+qnaCode+'').append(
+										"<span class=\"glyphicon glyphicon-menu-right\"></span>"+
+										"<span style=\"opacity\:0.4;font-size\:12px\">"+msg[i].qnaReId+"&nbsp;&nbsp;"+msg[i].qnaReTime+"</span>"+
+										"<div style=\"padding\:0px 0px 0px 16px ;font-size\:18px;\">"+msg[i].qnaReContent+"</div>")
+								}
+							}
+						});
+						getfundingqnareply.fail(function(){
+							alert("실패 ㅠㅠ");
+						});
+
+				});
 			});
 			getfundingqna.fail(function(){
 				alert('두번째 ajax통신실패');
@@ -77,28 +125,16 @@
 		getfundingdata.fail(function(){
 			alert('첫번째 ajax통신실패');
 		});
-/* 		//답글보기 클릭시
- 		$('.replymain').click(function(param){
-			$('.replycontent').empty();
-			var qnaReCode = $()
-			var getfundingqna = $.ajax({
-				type : "get",
-				url : "#",
-				data : {fdCode : ${param.fdCode}}
-			});
-			getfundingqna.done(function(msg){
-				console.log(msg)
-				for(var i = 0 ;i < msg.length ; i++ ){
-				$('#fundingqnalist').append(
-				}
-			});
-			getfundingqna.fail(function(){
-				alert('두번째 ajax통신실패');
-			});
-		});  */
 		//TAB 메뉴
 		$('a[data-toggle="tab"]').on('hidden.bs.tab', function(e){
 		}); 
+		//버튼클릭이벤트(질문하기,답변하기)
+		$('#questionbtn').click(function(){
+			$('#questionform').submit();
+		});
+		$('#answerform').click(function(){
+			$('#answerbtn').submit();
+		});
 		//MODAL
 		var check = "";
 		$('#investbtn').click(function () {
@@ -144,13 +180,15 @@
 <!-- 상단메뉴 -->
 	<c:import url="/resources/module/topmenu.jsp"/>
 <!-- 본문 -->
+	
 <div>
 	<!-- 펀딩제목 -->
+	<c:set var="Data" value="${fundingData}" />
 	<div>
-		<h2 style="text-align: center;">셀프웨딩족을 위한 웨딩O2O 어플</h2>
+		<h2 style="text-align: center;">${Data.fdTitle}</h2>
 	</div>
 	<div class="col-xs-12 pd-a-20 bor-defult ma-b-20 font-j"> 
-		<c:set var="Data" value="${fundingData}" />
+		
 		<div class="col-xs-7 funding-vedio pd-a-0">
 			<iframe width="620" height="349" src="https://www.youtube.com/embed/JGwWNGJdvx8" frameborder="0" allowfullscreen style="padding-right: 20px"></iframe>
 		</div>
@@ -254,12 +292,17 @@
 			<div role="tabpanel" class="tab-pane fade pd-a-0" id="fundingqna" aria-labelledby="fundingqna-tab"> 
 				<h2>펀딩 Q&A</h2>
 				<div class="col-xs-12"style="text-align: center;padding: 0px">
+				<form id="questionform" action="/pineapple/investquestion.invest?fdCode=${Data.fdCode}" method="post">
 					<div class="col-xs-10 " style="padding: 0px">
-					<input type="text" style="width: 100%; height: 100px;" value="질문 내용 적어주세요">
+					<input type="hidden" name="qnaFdId" value="${id}">
+					<input type="hidden" name="qnaFdCode" value="${Data.fdCode}">
+					<input name="qnaFdTitle" type="text" style="width: 100%; height: 30px; margin-bottom: 10px;" value="제목을 등록해주세요">
+					<input name="qnaFdContent" type="text" style="width: 100%; height: 100px;" value="질문을 등록해주세요">
 					</div>
 					<div class="col-xs-2" style="padding-left: 20px;padding-right: 0px;">
-					<button class="pd-a-0 bor-defult" style="width: 100%; height: 100px; font-size: 28px;">질문등록하기</button>
+					<button id="questionbtn" class="pd-a-0 bor-defult" style="width: 100%; height: 140px; font-size: 28px;">질문등록하기</button>
 					</div>
+				</form>
 				</div>
 				<div id="fundingqnalist">
 				</div>

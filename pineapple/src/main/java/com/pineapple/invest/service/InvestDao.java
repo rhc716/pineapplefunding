@@ -45,9 +45,39 @@ public class InvestDao implements InvestDaoInterface {
 	}
 	//하나의 펀딩 Q&A 댓글 SELECT
 	@Override
-	public List<FundingQnaReply> investFundingQnaReplySelect(int qnaReCode) {
+	public List<FundingQnaReply> investFundingQnaReplySelect(int qnaCode) {
 		log.debug("InvestDao-----investFundingQnaReplySelect");
-		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.getFundingQnaReply",qnaReCode);
+		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.getFundingQnaReply",qnaCode);
+	}
+	//하나의 펀딩 Q&A 글 INSERT
+	@Override
+	public int investFundingQnaInsert(FundingQna fundingqna) {
+		log.debug("InvestDao-----investFundingQnaInsert");
+		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.addFundingQna",fundingqna);
+	}
+	//하나의 펀딩 Q&A 글 UPDATE
+	@Override
+	public int investFundingQnaUpdate(int qnaCode) {
+		log.debug("InvestDao-----investFundingQnaUpdate");
+		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.modifyFundingQna",qnaCode);
+	}
+	//하나의 펀딩 Q&A 글 DELETE
+	@Override
+	public int investFundingQnaDelete(int qnaCode) {
+		log.debug("InvestDao-----investFindingQnaDelete");
+		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.removeFundingQna",qnaCode);
+	}
+	//하나의 펀딩 Q&A 글 DELETE시 댓글도 같이 DELETE
+	@Override
+	public int investFundingQnaAllReplyDelete(int qnaCode) {
+		log.debug("InvestDao-----investFundingQnaAllReplyDelete");
+		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.removeFundingQnaAllReply",qnaCode);
+	}
+	//하나의 펀딩 Q&A 댓글 INSERT
+	@Override
+	public int investFundingQnaReplyInsert(FundingQnaReply fundingqnareply) {
+		log.debug("InvestDao-----investFundingQnaInsert");
+		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.addFundingQnaReply",fundingqnareply);
 	}
 }
 
