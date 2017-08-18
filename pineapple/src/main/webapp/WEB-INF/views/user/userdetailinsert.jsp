@@ -4,7 +4,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>회원상세정보입력</title>
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -45,6 +44,13 @@
 					alert('전화번호 앞 3자리를 입력 해주세요');
 				}
 		 });
+		 
+		//취소버튼 누르면 메인으로
+		 $(document).ready(function(){
+			 $('#btn_cancel').click(function(){
+				location.href = '/pineapple/mypage.user';
+			 });
+		});
 	});	
 </script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -137,7 +143,6 @@ $(document).ready(function(){
 <!-- 상단메뉴 -->
 	<c:import url="/resources/module/topmenu.jsp"/>
 <!-- 본문 -->
-
 	<span class="topnamebar" ><h2>회원상세정보입력</h2></span>
 	<div class="row">
 		<div class="col-xs-3"></div>
@@ -174,7 +179,7 @@ $(document).ready(function(){
 					</div>
 					<br>
 					<div class="clearfix">
-					    <input id="cancelBtn" type="reset" class="button_insert cancelbtn" value="취소">
+					    <input id="btn_cancel" type="button" class="button_insert cancelbtn" value="취소">
 					    <input id="submitBtn" type="button" class="button_insert signupbtn" value="입력">
 				   	</div>
 				</div>

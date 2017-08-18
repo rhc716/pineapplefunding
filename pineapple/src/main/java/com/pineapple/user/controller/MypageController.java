@@ -25,7 +25,7 @@ public class MypageController {
 	public String userdetailmodify(UserDetail userdetail){
 		log.debug("userdetailmodify 회원정보수정 처리 요청");
 		mypageservice.updateUserDetail(userdetail);
-		return "user/investormypage";
+		return "redirect:/mypage.user";
 	}
 	
 	//마이페이지 회원상세정보 수정 페이지 요청
@@ -36,7 +36,7 @@ public class MypageController {
     	model.addAttribute("user", user);
     	UserDetail userdetail = mypageservice.selectUserDetail(session.getAttribute("id").toString());
     	model.addAttribute("userdetail", userdetail);
-		return "user/investormypage";
+		return "user/mypageall";
 	}
 	
 	//투자자 마이페이지 분기(회원상세정보조회 기능 포함)
