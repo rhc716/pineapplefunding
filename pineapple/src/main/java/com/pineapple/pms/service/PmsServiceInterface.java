@@ -2,26 +2,26 @@ package com.pineapple.pms.service;
 
 import java.util.List;
 
-public interface PmsDaoInterface {
+public interface PmsServiceInterface {
 
-	void insertWbsPlan(WbsPlan wbsplan);
+	// wbsplan 생성 메서드
+	void addWbsplan(WbsPlan wbsplan);
 
-	List<WbsPlanView> WbsPlanSelect(String userId);
+	List<WbsPlanView> getMyWbsPlanList(String userId);
 
 	WbsPlanView getMyWbsPlanDetail(String wbsplancode);
-	
+
 	void addWbsplanhuman(WbsPlanHuman wbsplanhuman);
 	
 	List<WbsPlanHuman> getMyWbsPlanHumanList(String wbsplancode);
 	
-	List<WbsPlanMaterial> getMyWbsPlanMaterialList(String wbsplancode);
-	
 	void deletewbsplanhuman(String wbhcode);
 	
 	void updatewbsplanhuman(WbsPlanHuman wbsplanhuman);
-	
+
 	void addWbsplanMaterial(WbsPlanMaterial wbsplanmaterial);
+	
+	List<WbsPlanMaterial> getMyWbsPlanMaterialList(String wbsplancode);
 
 	void deletewbsplanmaterial(String wbmcode);
-
 }

@@ -1,5 +1,6 @@
 package com.pineapple.pms.service;
 
+import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,6 +13,7 @@ import com.pineapple.funding.service.Funding;
 
 @Repository
 public class PmsDao implements PmsDaoInterface {
+	private Logger log = Logger.getLogger(this.getClass());
     @Autowired
     private SqlSessionTemplate sqlSessionTemplate;
     
@@ -20,7 +22,7 @@ public class PmsDao implements PmsDaoInterface {
 	 */
 	@Override
 	public void insertWbsPlan(WbsPlan wbsplan){
-		System.out.println("PmsDao의insertWbsplan호출 성공");
+		log.debug("PmsDao의insertWbsplan호출 성공");
 		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.insertWbsPlan", wbsplan);
 	}
 	
@@ -29,7 +31,7 @@ public class PmsDao implements PmsDaoInterface {
 	 */
 	@Override
 	public List<WbsPlanView> WbsPlanSelect(String userId){
-		System.out.println("PmsDao의 WbsPlanSelect호출 성공");
+		log.debug("PmsDao의 WbsPlanSelect호출 성공");
 		return sqlSessionTemplate.selectList("com.pineapple.pms.service.PmsMapper.selectWbsPlan", userId);
 	}
 	
@@ -38,13 +40,44 @@ public class PmsDao implements PmsDaoInterface {
 	 */
 	@Override
 	public WbsPlanView getMyWbsPlanDetail(String wbsplancode){
-		System.out.println("PmsDao의 selectWbsPlandetail호출 성공");
+		log.debug("PmsDao의 selectWbsPlandetail호출 성공");
 		return sqlSessionTemplate.selectOne("com.pineapple.pms.service.PmsMapper.selectdetail",wbsplancode);
 	}
 	@Override
-	public void insertWbsPlanHuman(WbsPlanHuman wbsplanhuman){
-		System.out.println("PmsDao의 insertWbsPlanHuman호출 성공");
+	public void addWbsplanhuman(WbsPlanHuman wbsplanhuman){
+		log.debug("PmsDao의 insertWbsPlanHuman호출 성공");
 		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.insertWbsPlanHuman", wbsplanhuman);
 	}
+	@Override
+	public void addWbsplanMaterial(WbsPlanMaterial wbsplanmaterial){
+		log.debug("PmsDao의 addWbsplanMaterial호출 성공");
+		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.insertWbsPlanMaterial", wbsplanmaterial);
+	}
+	
+	@Override
+	public List<WbsPlanHuman> getMyWbsPlanHumanList(String wbsplancode){
+		log.debug("PmsDao의 getMyWbsPlanHumanList호출 성공");
+		return sqlSessionTemplate.selectList("com.pineapple.pms.service.PmsMapper.selectWbsPlanHuman", wbsplancode);
+	}
+	@Override
+	public List<WbsPlanMaterial> getMyWbsPlanMaterialList(String wbsplancode){
+		log.debug("PmsDao의 getMyWbsPlanMaterialList호출 성공");
+		return sqlSessionTemplate.selectList("com.pineapple.pms.service.PmsMapper.selectWbsPlanMaterial", wbsplancode);
+	}
+	@Override
+	public void deletewbsplanhuman(String wbhcode){
+		log.debug("PmsDao의 deletewbsplanhuman호출 성공");
+		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.deletewbsplanhuman", wbhcode);
+	}
+	
+	@Override
+	public void deletewbsplanmaterial(String wbmcode){
+		log.debug("PmsDao의 deletewbsplanmaterial호출 성공");
+		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.deletewbsplanmaterial", wbmcode);
+	}
 
+	public void updatewbsplanhuman(WbsPlanHuman wbsplanhuman){
+		log.debug("PmsDao의 updatewbsplanhuman호출 성공");
+		sqlSessionTemplate.update("com.pineapple.pms.service.PmsMapper.updatewbsplanhuman", wbsplanhuman);
+	}
 }

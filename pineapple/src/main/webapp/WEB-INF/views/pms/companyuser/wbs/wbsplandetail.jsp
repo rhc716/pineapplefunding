@@ -59,12 +59,59 @@
 				담당자ID:
 				<input type="text" class="form-control" name="wbsPlanManager" value="${wbsplandetail.wbsPlanManager}" readonly><br>
 				<!-- 트리거 각각의 모달창으로 이동한다 -->
-				<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#inserthuman">인원</button>				
-				<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#insertmaterial">장비</button>	
-				<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#insertfacility">시설</button>
-				<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#insertout">외주</button>
-				<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#insertetc">기타</button>	
-				<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#insertincome">수입</button>
+				상세정보 입력:
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inserthuman">인원</button>				
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insertmaterial">장비</button>	
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insertfacility">시설</button>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insertout">외주</button>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insertetc">기타</button>	
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insertincome">수입</button><br>
+				<br>
+				<div class="row">
+					<div class="col-md-4">
+						<form action="/pineapple/wbsplanhumanlist.pms" method="post">
+							<input type="hidden"name="wbsPlanCode" value="${wbsplandetail.wbsPlanCode}">
+							<button type="submit" class="btn btn-primary">인원 상세보기</button>	
+						</form>
+					</div>
+					<div class="col-md-4">
+						<form action="/pineapple/wbsplanmateriallist.pms" method="post">
+							<input type="hidden"name="wbsPlanCode" value="${wbsplandetail.wbsPlanCode}">
+							<button type="submit" class="btn btn-primary">장비 상세보기</button>	
+						</form>
+					</div>
+					<div class="col-md-4">
+						<form>
+							<input type="hidden"name="wbsPlanCode" value="${wbsplandetail.wbsPlanCode}">
+							<button type="submit" class="btn btn-primary">장비 상세보기</button>	
+						</form>
+					</div>
+				</div><br>
+				<div class="row">
+					<div class="col-md-4">
+						<form>
+							<input type="hidden"name="wbsPlanCode" value="${wbsplandetail.wbsPlanCode}">
+							<button type="submit" class="btn btn-primary">외주 상세보기</button>
+						</form>
+					</div>
+					<div class="col-md-4">
+						<form>
+							<input type="hidden"name="wbsPlanCode" value="${wbsplandetail.wbsPlanCode}">
+							<button type="submit" class="btn btn-primary">기타 상세보기</button>	
+						</form>
+					</div>
+					<div class="col-md-4">
+						<form>
+							<input type="hidden"name="wbsPlanCode" value="${wbsplandetail.wbsPlanCode}">
+							<button type="submit" class="btn btn-primary">수입 상세보기</button>
+						</form>		
+					</div>	
+				</div>
+				
+				
+				
+				
+				
 				<!-- 모달 -->
 				<div class="modal fade" id="inserthuman" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				  <div class="modal-dialog" role="document">
@@ -95,14 +142,13 @@
 				    </div>
 				  </div>
 				</div>
+				<!-- 장비모달 -->
 				<div class="modal fade" id="insertmaterial" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				  <div class="modal-dialog" role="document">
 				    <div class="modal-content">
-				      <div class="modal-header">
-				        <h5 class="modal-title" id="exampleModalLabel">예상 장비 지출 입력</h5>
-				      </div>
 				      <div class="modal-body">
 				        <form action="/pineapple/wbsplanmaterialinsert.pms" method="post">
+				        	<label for="wbsplanmaterial">WBS예상장비 지출</label><br>
 				        	<input type="hidden" class="form-control" name="wpmWpCode" value="${wbsplandetail.wbsPlanCode}">
 				        	<input type="hidden" class="form-control" name="wpmFdCode" value="${wbsplandetail.wbsPlanFdCode}">
 				        	<input type="hidden" class="form-control" name="wpmMsCode" value="${wbsplandetail.wbsPlanMsCode}">

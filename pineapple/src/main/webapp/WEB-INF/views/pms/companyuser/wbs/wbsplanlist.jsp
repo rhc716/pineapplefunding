@@ -48,7 +48,7 @@ $(document).ready(function(){
 					+'마일스톤명 :'+msg[i].milestoneName+'<br>'
 					+'wbs순서:'+msg[i].wbsPlanOrder
 					+'wbs이름 :'+msg[i].wbsPlanName+'<br>'
-					+'<input type="submit" value="상세정보"/>'
+					+'<button type="submit" class="btn btn-primary btn-sm">상세정보</button>'
 					+'</div>'
 					+'</div>'
 					+'</form>'	

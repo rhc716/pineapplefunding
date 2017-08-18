@@ -17,6 +17,12 @@
 		(wphCode, wphFdCode, wphMsCode, wphWpCode, wphNoPeople, wphCost, wphStartDate, wphEndDate, wphRemarks, wphComCode)
 		VALUES (NULL, #{wphFdCode}, #{wphMsCode}, #{wphWpCode}, #{wphNoPeople}, #{wphCost}, #{wphStartDate}, #{wphEndDate}, #{wphRemarks}, #{wphComCode})
 	</insert>
+	<insert id="insertWbsPlanMaterial" parameterType="com.pineapple.pms.service.WbsPlanMaterial">
+		INSERT INTO wbsplanmaterial
+			(wpmCode, wpmFdCode, wpmMsCode, wpmWpCode, wpmName, wpmNo, wpmCostPerNo, wpmCost, wpmStartDate, wpmEndDate, wpmRemarks, wpmComCode)
+			VALUES (NULL, #{wpmFdCode}, #{wpmMsCode}, #{wpmWpCode}, #{wpmName}, #{wpmNo}, #{wpmCostPerNo}, #{wpmCost}, #{wpmStartDate}, #{wpmEndDate}, #{wpmRemarks}, #{wpmComCode})
+	</insert>
+	
 	<!-- wbsplan 리스트 요청쿼리 -->
 	<select id="selectWbsPlan" resultType="com.pineapple.pms.service.WbsPlanView" parameterType="String">
 		SELECT w.wbsPlanCode, w.wbsPlanOrder,
@@ -32,6 +38,15 @@
 		ON u.userId = e.emUserId
 		WHERE u.userId = #{userId})
 	</select>
+	<!-- wbsplanHuman 리스트 요청쿼리 -->
+	<select id="selectWbsPlanHuman" resultType="com.pineapple.pms.service.WbsPlanHuman" parameterType="String">
+		select *
+		from wbsplanhuman where wphWpCode = #{wbsplancode}
+	</select>
+	<select id="selectWbsPlanMaterial" resultType="com.pineapple.pms.service.WbsPlanMaterial" parameterType="String">
+		select *
+		from wbsplanmaterial where wpmWpCode = #{wbsplancode}
+	</select>
 		<select id="selectdetail" parameterType="String" resultType="com.pineapple.pms.service.WbsPlanView">
 		SELECT w.wbsPlanCode, w.wbsPlanOrder,
 				w.wbsPlanName, w.wbsPlanDependency,
@@ -42,4 +57,21 @@
 		LEFT JOIN milestone m ON w.wbsPlanMsCode = m.milestoneCode 
 		where wbsPlanCode=#{wbsplancode};
 	</select>
+	<delete id="deletewbsplanhuman" parameterType="String">
+		DELETE FROM wbsplanhuman WHERE wphCode= #{wbhcode}
+	</delete>
+	<delete id="deletewbsplanmaterial" parameterType="String">
+		DELETE FROM wbsplanmaterial WHERE wpmCode= #{wbmcode}
+	</delete>
+	
+	<update id="updatewbsplanhuman" parameterType="com.pineapple.pms.service.WbsPlanHuman">
+		UPDATE wbsplanhuman
+			SET
+			wphNoPeople=#{wphNoPeople},
+			wphCost=#{wphCost},
+			wphStartDate=#{wphStartDate},
+			wphEndDate=#{wphEndDate},
+			wphRemarks=#{wphRemarks}
+		WHERE wphCode=#{wphCode}
+	</update>
 </mapper>

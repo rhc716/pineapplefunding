@@ -58,7 +58,7 @@
 						<input type="hidden" class="form-control" name="wbsPlanComCode" value="1">
 						<input type="hidden" class="form-control" name="wbsPlanFdCode" value="1">
 						<input type="hidden" class="form-control" name="wbsPlanMsCode" value="1">
-						<button type="submit">입력완료</button>
+						<button type="submit" class="btn btn-success">입력완료</button>
 					</form>
 				</div>
 			<div class="col-md-1"></div>
