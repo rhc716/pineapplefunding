@@ -71,7 +71,7 @@
 						    <div class="modal-content">
 						<!-- 모달창 본문내용 -->				      
 						      <div class="modal-body">
-						        <form action="" method="post">
+						        <form action="/pineapple/wbsplanmaterialupdate.pms" method="post">
 						        	<label for="wbsplanmaterial">WBS예상장비 지출</label><br>
 						        	<!-- wph수정하기 위한 코드를 가져감 -->
 						        	<input type="hidden" class="form-control" name="wpmCode" value="${list.wpmCode}">
@@ -83,9 +83,9 @@
 								         개수:
 						          	<input type="number" class="form-control" name="wpmNo" value="${list.wpmNo}">
 						      		단가:
-						          	<input type="number" class="form-control" name="wpmNo" value="${list.wpmCostPerNo}">
+						          	<input type="number" class="form-control" name="wpmCostPerNo" value="${list.wpmCostPerNo}">
 						          	비용:
-						          	<input type="number" class="form-control" name="wpmNo" value="${list.wpmCost}">
+						          	<input type="number" class="form-control" name="wpmCost" value="${list.wpmCost}">
 						          	비고:
 						          	<input type="text" class="form-control" name="wpmRemarks" value="${list.wpmRemarks}">
 						          	시작일:

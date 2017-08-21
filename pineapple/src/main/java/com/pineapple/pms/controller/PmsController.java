@@ -117,9 +117,9 @@ public class PmsController {
 		log.debug("PmsController의 wbsplanoutlist호출 성공");
 		String wbsplancode = request.getParameter("wbsPlanCode");
 		log.debug("wbs코드" + wbsplancode);
-		List<WbsPlanOut> wbsplanoutllist = new ArrayList<WbsPlanOut>();
-		wbsplanoutllist = service.getMyWbsPlanOutList(wbsplancode);
-		model.addAttribute("wbsplanoutllist", wbsplanoutllist);
+		List<WbsPlanOut> wbsplanoutlist = new ArrayList<WbsPlanOut>();
+		wbsplanoutlist = service.getMyWbsPlanOutList(wbsplancode);
+		model.addAttribute("wbsplanoutlist", wbsplanoutlist);
 		return "pms/companyuser/wbs/wbsplanoutlist";
 	}
 	
@@ -146,8 +146,10 @@ public class PmsController {
 		return "pms/companyuser/wbs/wbsplanincomelist";
 	}
 
-////////////////////////////////////////////////위에는///페이지요청//////////////////////////////////////////////////////
+////////////////////////////////////////////////위에는///페이지요청////////////////////////////////////////////////////////
+////////////////////////////////////////////////아래는///insert요청//////////////////////////////////////////////////////		
 		
+	
 		// WbsPlan 생성
 		@RequestMapping(value = "/wbsplaninsert.pms", method = RequestMethod.POST)
 		public String addWbsplan(WbsPlan wbsplan, Model model, Locale locale) {
@@ -186,10 +188,168 @@ public class PmsController {
 			return "pms/companyuser/wbs/wbsplandetail";
 		}
 		
+		// WbsPlanfacility 입력
+		@RequestMapping(value = "/wbsplanfacilityinsert.pms", method = RequestMethod.POST)
+		public String wbsplanfacilityinsert(WbsPlanFacility wbsplanfacility, Model model, Locale locale,HttpServletRequest request) {
+			log.debug("PmsController의 wbsplanfacilityinsert호출 성공");
+			log.debug("wbsplanfacility : " + wbsplanfacility);
+			service.wbsplanfacilityinsert(wbsplanfacility);
+			//원래 페이지로 돌아가는 코드
+			String wbsplancode = request.getParameter("wpfWpCode");
+			log.debug("wbs코드" + wbsplancode);
+			WbsPlanView wbsplandetail;
+			wbsplandetail = service.getMyWbsPlanDetail(wbsplancode);
+			model.addAttribute("wbsplandetail",wbsplandetail);
+			return "pms/companyuser/wbs/wbsplandetail";
+		}
+		
+		// WbsPlanout 입력
+		@RequestMapping(value = "/wbsplanoutinsert.pms", method = RequestMethod.POST)
+		public String wbsplanoutinsert(WbsPlanOut wbsplanout, Model model, Locale locale,HttpServletRequest request) {
+			log.debug("PmsController의 wbsplanoutinsert호출 성공");
+			log.debug("wbsplanout : " + wbsplanout);
+			service.wbsplanoutinsert(wbsplanout);
+			//원래 페이지로 돌아가는 코드
+			String wbsplancode = request.getParameter("wpoWpCode");
+			log.debug("wbs코드" + wbsplancode);
+			WbsPlanView wbsplandetail;
+			wbsplandetail = service.getMyWbsPlanDetail(wbsplancode);
+			model.addAttribute("wbsplandetail",wbsplandetail);
+			return "pms/companyuser/wbs/wbsplandetail";
+		}
+		
+		// WbsPlanetc 입력
+		@RequestMapping(value = "/addwbsplanetc.pms", method = RequestMethod.POST)
+		public String wbsplanetcinser(WbsPlanEtc wbsplanetc, Model model, Locale locale,HttpServletRequest request) {
+			log.debug("PmsController의 wbsplanetcinser호출 성공");
+			log.debug("wbsplanout : " + wbsplanetc);
+			service.wbsplanetcinser(wbsplanetc);
+			//원래 페이지로 돌아가는 코드
+			String wbsplancode = request.getParameter("wpeWpCode");
+			log.debug("wbs코드" + wbsplancode);
+			WbsPlanView wbsplandetail;
+			wbsplandetail = service.getMyWbsPlanDetail(wbsplancode);
+			model.addAttribute("wbsplandetail",wbsplandetail);
+			return "pms/companyuser/wbs/wbsplandetail";
+		}
+		
+	
+		
+		// WbsPlanincome 입력
+		@RequestMapping(value = "/wbsplanincomeinsert.pms", method = RequestMethod.POST)
+		public String wbsplanincomeinsert(WbsPlanIncome wbsplanincome, Model model, Locale locale,HttpServletRequest request) {
+			log.debug("PmsController의 wbsplanincomeinsert호출 성공");
+			log.debug("wbsplanincome : " + wbsplanincome);
+			service.wbsplanincomeinsert(wbsplanincome);
+			//원래 페이지로 돌아가는 코드
+			String wbsplancode = request.getParameter("wpiWpCode");
+			log.debug("wbs코드" + wbsplancode);
+			WbsPlanView wbsplandetail;
+			wbsplandetail = service.getMyWbsPlanDetail(wbsplancode);
+			model.addAttribute("wbsplandetail",wbsplandetail);
+			return "pms/companyuser/wbs/wbsplandetail";
+		}
+		
+		
 		
 		
 
+////////////////////////////////////////////////위에는///insert요청////////////////////////////////////////////////////////
+////////////////////////////////////////////////아래는///update요청////////////////////////////////////////////////////////		
+		
+		
+		//wbsplanhuman 업데이트
+		@RequestMapping(value = "/wbsplanhumanupdate.pms", method = RequestMethod.POST)
+		public String wbsplanhumanupdate(WbsPlanHuman wbsplanhuman, Model model, Locale locale,HttpServletRequest request) {
+			log.debug("PmsController의 wbsplanhumandelete호출 성공");
+			String wphWpCode = request.getParameter("wphWpCode");
+			log.debug("wbsplanhuman : " + wbsplanhuman);
+			log.debug("wbs코드" + wphWpCode);
+			service.updatewbsplanhuman(wbsplanhuman);
+			List<WbsPlanHuman> wbsplanhumanlist = new ArrayList<WbsPlanHuman>();
+			wbsplanhumanlist = service.getMyWbsPlanHumanList(wphWpCode);
+			model.addAttribute("wbsplanhumanlist", wbsplanhumanlist);
+			return "pms/companyuser/wbs/wbsplanhumanlist";
+		}
+		
+		
+		//wbsplanmaterial 업데이트
+		@RequestMapping(value = "/wbsplanmaterialupdate.pms", method = RequestMethod.POST)
+		public String wbsplanmaterialupdate(WbsPlanMaterial wbsplanmaterial, Model model, Locale locale,HttpServletRequest request) {
+			log.debug("PmsController의 wbsplanmaterialupdate호출 성공");
+			String wpmWpCode = request.getParameter("wpmWpCode");
+			log.debug("wbsplanmaterial : " + wbsplanmaterial);
+			log.debug("wbs코드" + wpmWpCode);
+			service.wbsplanmaterialupdate(wbsplanmaterial);
+			List<WbsPlanMaterial> wbsplanmateriallist = new ArrayList<WbsPlanMaterial>();
+			wbsplanmateriallist = service.getMyWbsPlanMaterialList(wpmWpCode);
+			model.addAttribute("wbsplanmateriallist", wbsplanmateriallist);
+			return "pms/companyuser/wbs/wbsplanmateriallist";
+		}
+		
+		//wbsplanfacility 업데이트
+		@RequestMapping(value = "/wbsplanfacilityupdate.pms", method = RequestMethod.POST)
+		public String wbsplanfacilityupdate(WbsPlanFacility wbsplanfacility, Model model, Locale locale,HttpServletRequest request) {
+			log.debug("PmsController의 wbsplanfacilityupdate호출 성공");
+			String wpfWpCode = request.getParameter("wpfWpCode");
+			log.debug("wbsplanfacility : " + wbsplanfacility);
+			log.debug("wbs코드" + wpfWpCode);
+			service.wbsplanfacilityupdate(wbsplanfacility);
+			List<WbsPlanFacility> wbsplanfacilityllist = new ArrayList<WbsPlanFacility>();
+			wbsplanfacilityllist = service.getMyWbsPlanFacilityList(wpfWpCode);
+			model.addAttribute("wbsplanfacilityllist", wbsplanfacilityllist);
+			return "pms/companyuser/wbs/wbsplanfacilitylist";
+		}
+		
+		//wbsplanout 업데이트
+		@RequestMapping(value = "/wbsplanoutupdate.pms", method = RequestMethod.POST)
+		public String wbsplanoutupdate(WbsPlanOut wbsplanout, Model model, Locale locale,HttpServletRequest request) {
+			log.debug("PmsController의 wbsplanoutupdate호출 성공");
+			String wpoWpCode = request.getParameter("wpoWpCode");
+			log.debug("wbsplanout : " + wbsplanout);
+			log.debug("wbs코드" + wpoWpCode);
+			service.wbsplanoutupdate(wbsplanout);			
+			List<WbsPlanOut> wbsplanoutlist = new ArrayList<WbsPlanOut>();
+			wbsplanoutlist = service.getMyWbsPlanOutList(wpoWpCode);
+			model.addAttribute("wbsplanoutlist", wbsplanoutlist);
+			return "pms/companyuser/wbs/wbsplanoutlist";
+		}
+		
+		//wbsplanetc 업데이트
+		@RequestMapping(value = "/wbsplanetcupdate.pms", method = RequestMethod.POST)
+		public String wbsplanetcupdate(WbsPlanEtc wbsplanetc, Model model, Locale locale,HttpServletRequest request) {
+			log.debug("PmsController의 wbsplanoutupdate호출 성공");
+			String wpeWpCode = request.getParameter("wpeWpCode");
+			log.debug("wbsplanetc : " + wbsplanetc);
+			log.debug("wbs코드" + wpeWpCode);
+			service.wbsplanetcupdate(wbsplanetc);			
+			List<WbsPlanEtc> wbsplanetclist = new ArrayList<WbsPlanEtc>();
+			wbsplanetclist = service.getMyWbsPlanEtcList(wpeWpCode);
+			model.addAttribute("wbsplanetclist", wbsplanetclist);
+			return "pms/companyuser/wbs/wbsplanetclist";
+		}
+		
+		//wbsplanincome 업데이트
+		@RequestMapping(value = "/wbsplanincomeupdate.pms", method = RequestMethod.POST)
+		public String wbsplanincomeupdate(WbsPlanIncome wbsplanincome, Model model, Locale locale,HttpServletRequest request) {
+			log.debug("PmsController의 wbsplanincomeupdate호출 성공");
+			String wpiWpCode = request.getParameter("wpiWpCode");
+			log.debug("wbsplanincome : " + wbsplanincome);
+			log.debug("wbs코드" + wpiWpCode);
+			service.wbsplanincomeupdate(wbsplanincome);			
+			List<WbsPlanIncome> wbsplanincomelist = new ArrayList<WbsPlanIncome>();
+			wbsplanincomelist = service.getMyWbsPlanIncomeyList(wpiWpCode);
+			model.addAttribute("wbsplanincomelist", wbsplanincomelist);
+			return "pms/companyuser/wbs/wbsplanincomelist";
+		}
 
+		
+		
+////////////////////////////////////////////////위에는///update요청////////////////////////////////////////////////////////
+////////////////////////////////////////////////아래는///delete요청////////////////////////////////////////////////////////
+		
+		
+		
 		//wbsplanhuman 삭제
 		@RequestMapping(value = "/wbsplanhumandelete.pms", method = {RequestMethod.GET, RequestMethod.POST})
 		public String wbsplanhumandelete(Locale locale, Model model,HttpServletRequest request) {
@@ -234,17 +394,5 @@ public class PmsController {
 			return "pms/companyuser/wbs/wbsplanfacilitylist";
 		}
 		
-		//wbsplanhuman 업데이트
-		@RequestMapping(value = "/wbsplanhumanupdate.pms", method = RequestMethod.POST)
-		public String wbsplanhumanupdate(WbsPlanHuman wbsplanhuman, Model model, Locale locale,HttpServletRequest request) {
-			log.debug("PmsController의 wbsplanhumandelete호출 성공");
-			String wphWpCode = request.getParameter("wphWpCode");
-			log.debug("wbsplanhuman : " + wbsplanhuman);
-			log.debug("wbs코드" + wphWpCode);
-			service.updatewbsplanhuman(wbsplanhuman);
-			List<WbsPlanHuman> wbsplanhumanlist = new ArrayList<WbsPlanHuman>();
-			wbsplanhumanlist = service.getMyWbsPlanHumanList(wphWpCode);
-			model.addAttribute("wbsplanhumanlist", wbsplanhumanlist);
-			return "pms/companyuser/wbs/wbsplanhumanlist";
-		}
+
 }

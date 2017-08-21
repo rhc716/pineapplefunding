@@ -33,4 +33,22 @@ public interface PmsServiceInterface {
 
 	List<WbsPlanIncome> getMyWbsPlanIncomeyList(String wbsplancode);
 
+	void wbsplanfacilityinsert(WbsPlanFacility wbsplanfacility);
+
+	void wbsplanoutinsert(WbsPlanOut wbsplanout);
+
+	void wbsplanetcinser(WbsPlanEtc wbsplanetc);
+
+	void wbsplanincomeinsert(WbsPlanIncome wbsplanincome);
+
+	void wbsplanmaterialupdate(WbsPlanMaterial wbsplanmaterial);
+
+	void wbsplanfacilityupdate(WbsPlanFacility wbsplanfacility);
+
+	void wbsplanoutupdate(WbsPlanOut wbsplanout);
+
+	void wbsplanetcupdate(WbsPlanEtc wbsplanetc);
+
+	void wbsplanincomeupdate(WbsPlanIncome wbsplanincome);
+
 }

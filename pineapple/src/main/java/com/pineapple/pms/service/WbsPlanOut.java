@@ -57,13 +57,21 @@ public class WbsPlanOut {
 		return wpoStartDate;
 	}
 	public void setWpoStartDate(String wpoStartDate) {
-		this.wpoStartDate = wpoStartDate;
+		if(wpoStartDate==""){
+			wpoStartDate=null;
+		}else{
+			this.wpoStartDate = wpoStartDate;
+		}
 	}
 	public String getWpoEndDate() {
 		return wpoEndDate;
 	}
 	public void setWpoEndDate(String wpoEndDate) {
-		this.wpoEndDate = wpoEndDate;
+		if(wpoEndDate==""){
+			wpoEndDate=null;
+		}else{
+			this.wpoEndDate = wpoEndDate;
+		}
 	}
 	public String getWpoRemarks() {
 		return wpoRemarks;

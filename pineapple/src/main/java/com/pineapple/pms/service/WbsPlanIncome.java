@@ -56,13 +56,21 @@ public class WbsPlanIncome {
 		return wpiStartDate;
 	}
 	public void setWpiStartDate(String wpiStartDate) {
-		this.wpiStartDate = wpiStartDate;
+		if(wpiStartDate==""){
+			wpiStartDate=null;
+		}else{
+			this.wpiStartDate = wpiStartDate;
+		}
 	}
 	public String getWpiEndDate() {
 		return wpiEndDate;
 	}
 	public void setWpiEndDate(String wpiEndDate) {
-		this.wpiEndDate = wpiEndDate;
+		if(wpiEndDate==""){
+			wpiEndDate=null;
+		}else{
+			this.wpiEndDate = wpiEndDate;
+		}
 	}
 	@Override
 	public String toString() {

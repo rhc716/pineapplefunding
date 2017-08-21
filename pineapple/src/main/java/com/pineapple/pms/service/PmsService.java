@@ -91,6 +91,31 @@ public class PmsService implements PmsServiceInterface{
 		log.debug("PmsService의 addWbsplanMaterial호출 성공");
 		pmsdao.addWbsplanMaterial(wbsplanmaterial);
 	}
+	
+	@Override
+	public void wbsplanfacilityinsert(WbsPlanFacility wbsplanfacility){
+		log.debug("PmsService의 wbsplanfacilityinsert호출 성공");
+		pmsdao.wbsplanfacilityinsert(wbsplanfacility);
+	}
+	
+	@Override
+	public void wbsplanoutinsert(WbsPlanOut wbsplanout){
+		log.debug("PmsService의 wbsplanoutinsert호출 성공");
+		pmsdao.wbsplanoutinsert(wbsplanout);
+	}
+	
+	@Override
+	public void wbsplanetcinser(WbsPlanEtc wbsplanetc){
+		log.debug("PmsService의 wbsplanetcinser호출 성공");
+		pmsdao.wbsplanetcinser(wbsplanetc);
+	}
+	
+	@Override
+	public void wbsplanincomeinsert(WbsPlanIncome wbsplanincome){
+		log.debug("PmsService의 wbsplanincomeinsert호출 성공");
+		pmsdao.wbsplanincomeinsert(wbsplanincome);
+	}
+	
 	@Override
 	public void deletewbsplanhuman(String wbhcode){
 		log.debug("PmsService의 deletewbsplanhuman호출 성공");
@@ -109,5 +134,40 @@ public class PmsService implements PmsServiceInterface{
 		log.debug("PmsService의 updatewbsplanhuman호출 성공");
 		pmsdao.updatewbsplanhuman(wbsplanhuman);
 	}
+	
+	@Override
+	public void wbsplanmaterialupdate(WbsPlanMaterial wbsplanmaterial){
+		log.debug("PmsService의 wbsplanmaterialupdate호출 성공");
+		pmsdao.wbsplanmaterialupdate(wbsplanmaterial);
+	}
+	
+	@Override
+	public void wbsplanfacilityupdate(WbsPlanFacility wbsplanfacility){
+		log.debug("PmsService의 wbsplanfacilityupdate호출 성공");
+		pmsdao.wbsplanfacilityupdate(wbsplanfacility);
+	}
+	
+	@Override
+	public void wbsplanoutupdate(WbsPlanOut wbsplanout){
+		log.debug("PmsService의 wbsplanoutupdate호출 성공");
+		pmsdao.wbsplanoutupdate(wbsplanout);
+	}
+	
+	@Override
+	public void wbsplanetcupdate(WbsPlanEtc wbsplanetc){
+		log.debug("PmsService의 wbsplanetcupdate호출 성공");
+		pmsdao.wbsplanetcupdate(wbsplanetc);
+	}
+	
+	
+	@Override
+	public void wbsplanincomeupdate(WbsPlanIncome wbsplanincome){
+		log.debug("PmsService의 wbsplanincomeupdate호출 성공");
+		pmsdao.wbsplanincomeupdate(wbsplanincome);
+	}
+	
+	
+	
+	
  
 }

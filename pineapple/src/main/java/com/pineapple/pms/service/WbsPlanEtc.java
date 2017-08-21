@@ -57,13 +57,21 @@ public class WbsPlanEtc {
 		return wpeStartDate;
 	}
 	public void setWpeStartDate(String wpeStartDate) {
-		this.wpeStartDate = wpeStartDate;
+		if(wpeStartDate==""){
+			wpeStartDate=null;
+		}else{
+			this.wpeStartDate = wpeStartDate;
+		}
 	}
 	public String getWpeEndDate() {
 		return wpeEndDate;
 	}
 	public void setWpeEndDate(String wpeEndDate) {
-		this.wpeEndDate = wpeEndDate;
+		if(wpeEndDate==""){
+			wpeEndDate=null;
+		}else{
+			this.wpeEndDate = wpeEndDate;
+		}
 	}
 	public String getWpeRemarks() {
 		return wpeRemarks;

@@ -176,15 +176,13 @@
 				<div class="modal fade" id="insertfacility" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				  <div class="modal-dialog" role="document">
 				    <div class="modal-content">
-				      <div class="modal-header">
-				        <h5 class="modal-title" id="exampleModalLabel">예상 시설 지출 입력</h5>
-				      </div>
 				      <div class="modal-body">
 				        <form action="/pineapple/wbsplanfacilityinsert.pms" method="post">
-				        	<input type="hidden" class="form-control" id="wpfWpCode" value="${wbsplandetail.wbsPlanCode}">
-				        	<input type="hidden" class="form-control" id="wpfFdCode" value="${wbsplandetail.wbsPlanFdCode}">
-				        	<input type="hidden" class="form-control" id="wpfMsCode" value="${wbsplandetail.wbsPlanMsCode}">
-				           	<input type="hidden" class="form-control" id="wpfComCode" value="${wbsplandetail.wbsPlanComCode}">
+				        	<label for="wbsplanfacility">WBS예상시설 지출</label><br>
+				       	<input type="hidden" class="form-control" name="wpfWpCode" value="${wbsplandetail.wbsPlanCode}">
+				        	<input type="hidden" class="form-control" name="wpfFdCode" value="${wbsplandetail.wbsPlanFdCode}">
+				        	<input type="hidden" class="form-control" name="wpfMsCode" value="${wbsplandetail.wbsPlanMsCode}">
+				           	<input type="hidden" class="form-control" name="wpfComCode" value="${wbsplandetail.wbsPlanComCode}">
 				           	시설명:
 				            <input type="text" class="form-control" name="wpfName">
 				          	가격:
@@ -236,7 +234,7 @@
 				        <h5 class="modal-title" id="exampleModalLabel">예상 기타 지출 입력</h5>
 				      </div>
 				      <div class="modal-body">
-				        <form action="/pineapple/wbsplanetcinsert.pms" method="post">
+				        <form action="/pineapple/addwbsplanetc.pms" method="post">
 				        	<input type="hidden" class="form-control" name="wpeWpCode" value="${wbsplandetail.wbsPlanCode}">
 				        	<input type="hidden" class="form-control" name="wpeFdCode" value="${wbsplandetail.wbsPlanFdCode}">
 				        	<input type="hidden" class="form-control" name="wpeMsCode" value="${wbsplandetail.wbsPlanMsCode}">

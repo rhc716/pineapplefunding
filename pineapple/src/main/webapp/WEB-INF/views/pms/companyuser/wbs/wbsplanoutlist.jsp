@@ -43,7 +43,7 @@
 	<div class="col-md-9">
 			<div class="col-md-1"></div>
 				<div class="col-md-7">
-					<c:forEach var="list" items="${wbsplanoutllist}">
+					<c:forEach var="list" items="${wbsplanoutlist}">
 		 				<div class="col-md-4 well">
 							<div>
 								외주업체명 = ${list.wpoOutComName}<br>
@@ -69,12 +69,12 @@
 						    <div class="modal-content">
 						<!-- 모달창 본문내용 -->				      
 						      <div class="modal-body">
-						        <form action="" method="post">
+						        <form action="/pineapple/wbsplanoutupdate.pms" method="post">
 						        	<label for="wbsplanmaterial">WBS예상외주 지출</label><br>
 						        	<!-- wph수정하기 위한 코드를 가져감 -->
-						        	<input type="hidden" class="form-control" name="wpmCode" value="${list.wpoCode}">
+						        	<input type="hidden" class="form-control" name="wpoCode" value="${list.wpoCode}">
 						        	<!-- 수정 완료후 다시 페이지 불러오기 위해 wp코드가져감 -->
-						        	<input type="hidden" class="form-control" name="wpmWpCode" value="${list.wpoWpCode}">
+						        	<input type="hidden" class="form-control" name="wpoWpCode" value="${list.wpoWpCode}">
 					          	<!-- 여기서부터는 직접 입력하는곳 --> 	
 					          		외주업체명:
 						            <input type="text" class="form-control" name="wpoOutComName" value="${list.wpoOutComName}" >			    

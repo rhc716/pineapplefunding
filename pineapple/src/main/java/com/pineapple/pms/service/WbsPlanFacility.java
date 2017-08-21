@@ -57,13 +57,23 @@ public class WbsPlanFacility {
 		return wpfStartDate;
 	}
 	public void setWpfStartDate(String wpfStartDate) {
-		this.wpfStartDate = wpfStartDate;
+		if(wpfStartDate==""){
+			wpfStartDate =null;
+		}else{
+			this.wpfStartDate = wpfStartDate;
+		}
+		
 	}
 	public String getWpfEndDate() {
 		return wpfEndDate;
 	}
 	public void setWpfEndDate(String wpfEndDate) {
-		this.wpfEndDate = wpfEndDate;
+		if(wpfEndDate==""){
+			wpfEndDate=null;
+		}else{
+			this.wpfEndDate = wpfEndDate;
+		}
+		
 	}
 	public String getWpfRemarks() {
 		return wpfRemarks;

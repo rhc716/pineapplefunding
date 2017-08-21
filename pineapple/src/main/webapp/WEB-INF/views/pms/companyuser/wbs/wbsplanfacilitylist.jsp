@@ -69,12 +69,12 @@
 						    <div class="modal-content">
 						<!-- 모달창 본문내용 -->				      
 						      <div class="modal-body">
-						        <form action="" method="post">
+						        <form action="/pineapple/wbsplanfacilityupdate.pms" method="post">
 						        	<label for="wbsplanmaterial">WBS예상시설 지출</label><br>
 						        	<!-- wph수정하기 위한 코드를 가져감 -->
-						        	<input type="hidden" class="form-control" name="wpmCode" value="${list.wpfCode}">
+						        	<input type="hidden" class="form-control" name="wpfCode" value="${list.wpfCode}">
 						        	<!-- 수정 완료후 다시 페이지 불러오기 위해 wp코드가져감 -->
-						        	<input type="hidden" class="form-control" name="wpmWpCode" value="${list.wpfWpCode}">
+						        	<input type="hidden" class="form-control" name="wpfWpCode" value="${list.wpfWpCode}">
 					          	<!-- 여기서부터는 직접 입력하는곳 --> 
 						           	시설명:
 						            <input type="text" class="form-control" name="wpfName" value="${list.wpfName}">

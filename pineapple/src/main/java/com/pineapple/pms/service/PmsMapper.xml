@@ -23,6 +23,30 @@
 			VALUES (NULL, #{wpmFdCode}, #{wpmMsCode}, #{wpmWpCode}, #{wpmName}, #{wpmNo}, #{wpmCostPerNo}, #{wpmCost}, #{wpmStartDate}, #{wpmEndDate}, #{wpmRemarks}, #{wpmComCode})
 	</insert>
 	
+	<insert id="wbsplanfacilityinsert" parameterType="com.pineapple.pms.service.WbsPlanFacility">
+		INSERT INTO wbsplanfacility
+			(wpfCode, wpfFdCode, wpfMsCode, wpfWpCode, wpfName, wpfCost, wpfStartDate, wpfEndDate, wpfRemarks, wpfComCode)
+			VALUES (NULL, #{wpfFdCode}, #{wpfMsCode}, #{wpfWpCode}, #{wpfName}, #{wpfCost}, #{wpfStartDate}, #{wpfEndDate}, #{wpfRemarks}, #{wpfComCode})
+	</insert>
+	
+	<insert id="wbsplanoutinsert" parameterType="com.pineapple.pms.service.WbsPlanOut">
+		INSERT INTO wbsplanout
+			(wpoCode, wpoFdCode, wpoMsCode, wpoWpCode, wpoOutComName, wpoCost, wpoStartDate, wpoEndDate, wpoRemarks, wpoComCode)
+			VALUES (NULL, #{wpoFdCode}, #{wpoMsCode}, #{wpoWpCode}, #{wpoOutComName}, #{wpoCost}, #{wpoStartDate}, #{wpoEndDate}, #{wpoRemarks}, #{wpoComCode})
+	</insert>
+	
+	<insert id="wbsplanetcinser" parameterType="com.pineapple.pms.service.WbsPlanEtc">
+		INSERT INTO wbsplanetc
+			(wpeCode, wpeFdCode, wpeMsCode, wpeWpCode, wpePurpose, wpeCost, wpeStartDate, wpeEndDate, wpeRemarks, wpeComCode)
+			VALUES (NULL, #{wpeFdCode}, #{wpeMsCode}, #{wpeWpCode}, #{wpePurpose}, #{wpeCost}, #{wpeStartDate}, #{wpeEndDate}, #{wpeRemarks}, #{wpeComCode})
+	</insert>
+	<insert id="wbsplanincomeinsert" parameterType="com.pineapple.pms.service.WbsPlanIncome">
+		INSERT INTO wbsplanincome
+			(wpiCode, wpiFdCode, wpiMsCode, wpiWpCode, wpiReason, wpiIncome, wpiStartDate, wpiEndDate, wpiComCode)
+			VALUES (NULL, #{wpiFdCode}, #{wpiMsCode}, #{wpiWpCode}, #{wpiReason}, #{wpiIncome}, #{wpiStartDate}, #{wpiEndDate}, #{wpiComCode})
+	</insert>
+	
+	
 	<!-- wbsplan 리스트 요청쿼리 -->
 	<select id="selectWbsPlan" resultType="com.pineapple.pms.service.WbsPlanView" parameterType="String">
 		SELECT w.wbsPlanCode, w.wbsPlanOrder,
@@ -84,11 +108,67 @@
 	<update id="updatewbsplanhuman" parameterType="com.pineapple.pms.service.WbsPlanHuman">
 		UPDATE wbsplanhuman
 			SET
-			wphNoPeople=#{wphNoPeople},
-			wphCost=#{wphCost},
-			wphStartDate=#{wphStartDate},
-			wphEndDate=#{wphEndDate},
-			wphRemarks=#{wphRemarks}
-		WHERE wphCode=#{wphCode}
+				wphNoPeople=#{wphNoPeople},
+				wphCost=#{wphCost},
+				wphStartDate=#{wphStartDate},
+				wphEndDate=#{wphEndDate},
+				wphRemarks=#{wphRemarks}
+			WHERE wphCode=#{wphCode}
+	</update>
+	
+	<update id="wbsplanmaterialupdate" parameterType="com.pineapple.pms.service.WbsPlanMaterial">
+		UPDATE wbsplanmaterial
+			SET
+				wpmName=#{wpmName},
+				wpmNo=#{wpmNo},
+				wpmCostPerNo=#{wpmCostPerNo},
+				wpmCost=#{wpmCost},
+				wpmStartDate=#{wpmStartDate},
+				wpmEndDate=#{wpmEndDate},
+				wpmRemarks=#{wpmRemarks}
+			WHERE wpmCode=#{wpmCode}
+	</update>
+	
+	<update id="wbsplanfacilityupdate" parameterType="com.pineapple.pms.service.WbsPlanFacility">
+		UPDATE wbsplanfacility
+			SET
+				wpfName=#{wpfName},
+				wpfCost=#{wpfCost},
+				wpfStartDate=#{wpfStartDate},
+				wpfEndDate=#{wpfEndDate},
+				wpfRemarks=#{wpfRemarks}
+			WHERE wpfCode = #{wpfCode}
+	</update>
+	
+	<update id="wbsplanoutupdate" parameterType="com.pineapple.pms.service.WbsPlanOut">
+		UPDATE wbsplanout
+			SET
+				wpoOutComName=#{wpoOutComName},
+				wpoCost=#{wpoCost},
+				wpoStartDate=#{wpoStartDate},
+				wpoEndDate=#{wpoEndDate},
+				wpoRemarks=#{wpoRemarks}
+			WHERE wpoCode = #{wpoCode}
+	</update>
+	
+	<update id="wbsplanetcupdate" parameterType="com.pineapple.pms.service.WbsPlanEtc">
+		UPDATE wbsplanetc
+			SET
+				wpePurpose=#{wpePurpose},
+				wpeCost=#{wpeCost},
+				wpeStartDate=#{wpeStartDate},
+				wpeEndDate=#{wpeEndDate},
+				wpeRemarks=#{wpeRemarks}
+			WHERE wpeCode =#{wpeCode}
+	</update>
+	
+	<update id="wbsplanincomeupdate" parameterType="com.pineapple.pms.service.WbsPlanIncome">
+		UPDATE wbsplanincome
+			SET
+				wpiReason=#{wpiReason},
+				wpiIncome=#{wpiIncome},
+				wpiStartDate=#{wpiStartDate},
+				wpiEndDate=#{wpiEndDate}
+			WHERE wpiCode = #{wpiCode}
 	</update>
 </mapper>

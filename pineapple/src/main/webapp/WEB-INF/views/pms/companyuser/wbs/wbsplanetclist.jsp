@@ -55,8 +55,8 @@
 									</div>
 									<div class="col-md-5">
 										<form action="/pineapple/wbsplanmaterialdelete.pms" metod="post">
-											<input type="hidden" class="form-control" name="wpmWpCode" value="${list.wpeWpCode}">
-											<input type="hidden" class="form-control" name="wpmCode" value="${list.wpeCode}">
+											<input type="hidden" class="form-control" name="wpeWpCode" value="${list.wpeWpCode}">
+											<input type="hidden" class="form-control" name="wpeCode" value="${list.wpeCode}">
 											<button type="submit" class="btn btn-danger">삭제</button>
 										</form>
 									</div>
@@ -69,12 +69,12 @@
 						    <div class="modal-content">
 						<!-- 모달창 본문내용 -->				      
 						      <div class="modal-body">
-						        <form action="" method="post">
+						        <form action="/pineapple/wbsplanetcupdate.pms" method="post">
 						        	<label for="wbsplanmaterial">WBS예상기타 지출</label><br>
 						        	<!-- wph수정하기 위한 코드를 가져감 -->
-						        	<input type="hidden" class="form-control" name="wpmCode" value="${list.wpeCode}">
+						        	<input type="hidden" class="form-control" name="wpeCode" value="${list.wpeCode}">
 						        	<!-- 수정 완료후 다시 페이지 불러오기 위해 wp코드가져감 -->
-						        	<input type="hidden" class="form-control" name="wpmWpCode" value="${list.wpeWpCode}">
+						        	<input type="hidden" class="form-control" name="wpeWpCode" value="${list.wpeWpCode}">
 					          	<!-- 여기서부터는 직접 입력하는곳 --> 
 						           	용도:
 						            <input type="text" class="form-control" name="wpePurpose" value="${list.wpePurpose}">
