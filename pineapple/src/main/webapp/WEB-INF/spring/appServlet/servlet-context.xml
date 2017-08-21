@@ -50,6 +50,7 @@
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <!-- war배포할때에 localhost // 원격 작업할때는 jack716.cafe24.com  -->
+        <!-- <property name="url" value="jdbc:mysql://localhost:3306/jack716?useUnicode=true&amp;characterEncoding=utf8"/> -->
         <property name="url" value="jdbc:mysql://jack716.cafe24.com:3306/jack716?useUnicode=true&amp;characterEncoding=utf8"/>
         <property name="username" value="jack716"/>
         <property name="password" value="shguscjf12"/>
@@ -75,5 +76,21 @@
     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg index="0" ref="sqlSessionFactory"/>
     </bean>
-
+    
+    
+    
+    <!-- Multipart/form-data를 사용하기 위한 multipartResolver설정 // 파일업로드 관련 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    	<!-- 최대용량을 10메가로 설정해둠. 넘을시 에러가 뜸. -->
+		<property name="maxUploadSize" value="10000000" />
+		<property name="maxInMemorySize" value="10000000" />
+	</bean>
+	
+	
+	<!-- 파일 다운로드 요청의 응답을 뷰로 리턴할 클래스를 빈으로 지정  -->
+	<bean id="fileDownloadView" class="com.pineapple.util.FileDownloadView"/>
+	<bean id="fileViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+	    <property name="order" value="0"/>
+	</bean>
+	
 </beans>

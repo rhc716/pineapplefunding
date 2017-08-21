@@ -1,7 +1,12 @@
 package com.pineapple.funding.controller;
 
+import java.io.File;
 import java.util.List;
 import java.util.Locale;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +16,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.pineapple.funding.service.Funding;
 import com.pineapple.funding.service.FundingAndFdDetail;
 import com.pineapple.funding.service.FundingAndMileStone;
 import com.pineapple.funding.service.FundingDetail;
+import com.pineapple.funding.service.FundingAndFdFile;
 import com.pineapple.funding.service.FundingService;
 import com.pineapple.funding.service.MileStone;
 import com.pineapple.user.service.Employee;
+import com.pineapple.util.FileUpload;
 
 
 
@@ -30,6 +40,9 @@ public class FundingController {
 	// 입력, 수정인지 단순 페이지요청인지는 Get, Post로 구분함
 	@Autowired
     private FundingService service;
+	
+	@Autowired
+	private FileUpload fileupload;
 	
 	// pmsmain.jsp 뷰 요청
 	@RequestMapping(value = "/pmsmain.pms", method = RequestMethod.GET)
@@ -76,6 +89,21 @@ public class FundingController {
 		log.debug("FundingController의 myfundinglistpage호출 성공");
 		return "pms/companyuser/mymilestonelist";
 	}
+	
+	// 펀딩보고서 업로드 페이지 요청
+	@RequestMapping(value = "/fundingfileuploadpage.pms", method = RequestMethod.GET)
+	public String fundingFileUploadPage(Locale locale, Model model) {
+		log.debug("FundingController의 fundingFileUploadPage호출 성공");
+		return "pms/companyuser/fundingfileupload";
+	}
+		
+	//펀딩파일 리스트 페이지 요청
+	@RequestMapping(value = "/fundingfilelistpage.pms", method = RequestMethod.GET)
+	public String fundingFileListPage(Locale locale, Model model) {
+		log.debug("FundingController의 fundingFileListPage호출 성공");
+		return "pms/companyuser/fundingfilelist";
+	}
+
 ////////////////////////////////////////////////위에는///페이지요청//////////////////////////////////////////////////////
 	
 	// 펀딩개설요청 ( 기업회원 경영자 )
@@ -186,4 +214,43 @@ public class FundingController {
 		return "pms/companyuser/mymilestonelist";
 		
 	}
+	
+	// 펀딩 보고서 업로드 
+	@RequestMapping(value = "/addfundingfile.pms", method = RequestMethod.POST)
+	public String addFundingFile(Model model, Locale locale, MultipartHttpServletRequest request, MultipartFile uploadFile, @RequestParam("fileFdCode") int fdCode) {
+		log.debug("FundingController의 addFundingFile호출 성공");
+		log.debug("fileFdCode : "+fdCode);
+		log.debug("filename : "+uploadFile.getOriginalFilename());
+		log.debug("filesize : "+uploadFile.getSize());
+		//리턴값으로 업로드된 경로+파일명을 가져온다.
+		String result = fileupload.fileUpload(request, uploadFile);
+		log.debug("result : "+result);
+		//업로드된 경로+파일명 그리고 나머지 정보를 DB에 저장해줌
+		service.addFundingFile(uploadFile, result, fdCode);
+		return "redirect:/fundingfilelistpage.pms";
+	}
+	
+	// 펀딩파일 업로드 리스트 가져오기
+	@RequestMapping(value = "/getfundingfilelist.pms", method = RequestMethod.GET)
+	public @ResponseBody List<FundingAndFdFile> getFundingFileList(Model model, Locale locale, @RequestParam("userId") String userId) {
+		log.debug("FundingController의 getFundingFileList호출 성공");
+		log.debug("userId : " + userId);
+		return service.getFundingFileList(userId);
+	}
+	
+	
+	// 파일 다운로드 요청
+	@RequestMapping(value = "/calldownload.pms")
+	public ModelAndView callDownload(@RequestParam("fileFullPath") String fileFullPath, 
+	            HttpServletRequest request, 
+	            HttpServletResponse response) throws Exception {
+		log.debug("FundingController의 callDownload호출 성공");
+	    log.debug("fileFullPath : "+ fileFullPath);
+	    File downloadFile = new File(fileFullPath);
+	    if(!downloadFile.canRead()){
+	        throw new Exception("File can't read(파일을 찾을 수 없습니다)");
+	    }
+	    return new ModelAndView("fileDownloadView", "downloadFile",downloadFile);
+	}
+	
 }

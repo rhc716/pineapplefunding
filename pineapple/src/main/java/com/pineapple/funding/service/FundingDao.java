@@ -120,4 +120,18 @@ public class FundingDao implements FundingDaoInterface {
 		sqlSessionTemplate.delete("com.pineapple.funding.service.FundingMapper.deleteMileStone", delMsCode );
 	}
 	
+	// 펀딩파일 업로드정보 저장
+	@Override
+	public void insertFundingFile(FundingAndFdFile file) {
+		log.debug("FundingDao의 insertFundingFile호출 성공");
+		sqlSessionTemplate.insert("com.pineapple.funding.service.FundingMapper.insertFundingFile", file);
+		
+	}
+	
+	// 펀딩파일 업로드 리스트 가져오기
+	@Override
+	public List<FundingAndFdFile> selectFundingFileList(String userId) {
+		log.debug("FundingDao의 selectFundingFileList호출 성공");
+		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectFundingFileList", userId);
+	}
 }

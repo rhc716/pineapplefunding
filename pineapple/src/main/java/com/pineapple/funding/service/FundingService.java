@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.pineapple.user.service.Employee;
 
@@ -97,6 +98,34 @@ public class FundingService implements FundingServiceInterface {
 	public void removeMileStone(int delMsCode) {
 		log.debug("FundingService의 removeMileStone호출 성공");
 		fundingdao.deleteMileStone(delMsCode);
+	}
+	// 펀딩파일 업로드정보 저장
+	public void addFundingFile(MultipartFile uploadFile, String result, int fdCode) {
+		log.debug("FundingService의 addFundingFile호출 성공");
+		int fileFdCode = fdCode;
+		String fdFileName = uploadFile.getOriginalFilename();
+		String fdFileExtension = fdFileName.substring(fdFileName.lastIndexOf("."));
+		int fdFileSize = (int) uploadFile.getSize();
+		
+		log.debug("fileFdCode : "+ fileFdCode);
+		log.debug("fdFileName : "+ fdFileName);
+		log.debug("fdFileExtension : "+ fdFileExtension);
+		log.debug("fdFileSize : "+ fdFileSize);
+		
+		FundingAndFdFile file = new FundingAndFdFile();
+		file.setFileFdCode(fileFdCode);
+		file.setFdFileName(fdFileName);
+		file.setFdFileExtension(fdFileExtension);
+		file.setFdFileSize(fdFileSize);
+		file.setFdFileUploadName(result);
+		
+		fundingdao.insertFundingFile(file);
+	}
+	
+	// 펀딩파일 업로드 리스트 가져오기
+	public List<FundingAndFdFile> getFundingFileList(String userId) {
+		log.debug("FundingService의 getFundingFileList호출 성공");
+		return fundingdao.selectFundingFileList(userId);
 	}
 }
  

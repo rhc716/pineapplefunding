@@ -40,8 +40,8 @@
 		</li>
 		<li><a>보고서관리</a>
 			<ul>
-				<li><a href="">보고서작성</a></li>
-				<li><a href="">보고서조회</a></li>
+				<li><a href="/pineapple/fundingfileuploadpage.pms">보고서업로드</a></li>
+				<li><a href="/pineapple/fundingfilelistpage.pms">보고서조회</a></li>
 			</ul>
 		</li>
 		<li><a>배당하기</a></li>

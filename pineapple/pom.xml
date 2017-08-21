@@ -15,6 +15,19 @@
 	</properties>
 	<dependencies>
 		
+		
+		<!-- MultipartHttpServletRequset 파일업로드 -->
+		<dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.0.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>1.2.2</version>
+		</dependency>
+		
 		<!-- jackson // ajax로 DTO객체를 바로 리턴받기 위해서  -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>

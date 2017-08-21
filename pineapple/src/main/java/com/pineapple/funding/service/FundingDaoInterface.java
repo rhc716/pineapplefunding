@@ -20,4 +20,6 @@ public interface FundingDaoInterface {
 	List<FundingAndMileStone> selectMyMileStoneList(String userId);
 	void updateMileStone(MileStone mileStone);
 	void deleteMileStone(int delMsCode);
+	void insertFundingFile(FundingAndFdFile file);
+	List<FundingAndFdFile> selectFundingFileList(String userId);
 }

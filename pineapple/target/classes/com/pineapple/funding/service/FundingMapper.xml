@@ -156,10 +156,36 @@
 	
 	<!-- 마일스톤 삭제  -->
 	<delete id="deleteMileStone" parameterType="int">
-	DELETE FROM milestone 
-	WHERE milestoneCode=#{delMsCode}
+		DELETE FROM milestone 
+		WHERE milestoneCode=#{delMsCode}
 	</delete>
-	  
+	
+	<!-- 펀딩 보고서 업로드정보 저장 -->
+	<insert id="insertFundingFile" parameterType="com.pineapple.funding.service.FundingAndFdFile">
+		INSERT INTO fundingfile
+			(fileFdCode, fdFileName, fdFileUploadName, fdFileExtension, fdFileSize)
+		VALUES (#{fileFdCode}, #{fdFileName}, #{fdFileUploadName}, #{fdFileExtension}, #{fdFileSize})
+	</insert>
+	
+	<!-- 내가 소속된 회사의 모든 펀딩파일 리스트 불러오기 -->
+	<select id="selectFundingFileList" parameterType="String" resultType="java.util.HashMap">
+		SELECT *
+		FROM funding f INNER JOIN
+			(SELECT *
+			FROM fundingfile 
+			WHERE fileFdCode = ANY(
+							SELECT fdCode
+							FROM funding
+							WHERE fdComCode = ANY 
+							(SELECT e.emComCode 
+							FROM user u INNER JOIN employee e 
+							ON u.userId = e.emUserId
+							WHERE u.userId = #{userId})
+							)
+			ORDER BY fileFdCode) l
+		WHERE f.fdCode = l.fileFdCode
+	</select>
+	
 </mapper>
 
  
