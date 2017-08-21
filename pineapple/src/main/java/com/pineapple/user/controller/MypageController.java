@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class MypageController {
@@ -22,24 +24,34 @@ public class MypageController {
 	
 	//회원상세정보 수정 처리
 	@RequestMapping(value="/userdetailmodify.user", method=RequestMethod.POST)
-	public String userdetailmodify(UserDetail userdetail){
+	public String userdetailmodify(HttpSession session, UserDetail userdetail){
 		log.debug("userdetailmodify 회원정보수정 처리 요청");
-		mypageservice.updateUserDetail(userdetail);
+		int result = mypageservice.updateUserDetail(userdetail);
+		if(result != 0){
+			log.debug(session.getAttribute("nincname")+"님의 userdetailmodify 회원정보수정 처리 성공");
+		} else {
+			log.debug(session.getAttribute("nincname")+"님의 userdetailmodify 회원정보수정 처리 실패");
+		}
 		return "redirect:/mypage.user";
 	}
 	
 	//마이페이지 회원상세정보 수정 페이지 요청
 	@RequestMapping(value="/userdetailmodify.user", method=RequestMethod.GET)
-	public String userdetailmodify(Model model, HttpSession session){
+	public @ResponseBody UserDetail userdetailmodify(Model model, @RequestParam("userId") String userId){
 		log.debug("userdetailmodify 회원정보수정 페이지 요청");
-		User user = mypageservice.selectInvestorBasic(session.getAttribute("id").toString());
+		User user = mypageservice.selectInvestorBasic(userId);
     	model.addAttribute("user", user);
-    	UserDetail userdetail = mypageservice.selectUserDetail(session.getAttribute("id").toString());
-    	model.addAttribute("userdetail", userdetail);
-		return "user/mypageall";
+    	UserDetail userdetail = mypageservice.selectUserDetail(userId);
+    	if(userdetail != null){
+    		log.debug("수정페이지 구현을 위한 회원상세정보 조회 성공");
+    		model.addAttribute("userdetail", userdetail);
+    	} else {
+    		log.debug("수정페이지 구현을 위한 회원상세정보 조회 실패");
+    	}
+		return userdetail;
 	}
 	
-	//투자자 마이페이지 분기(회원상세정보조회 기능 포함)
+	//투자자 마이페이지 분기(회원상세정보조회, 계좌정보조회 기능 포함)
 	@RequestMapping(value="/investormypage.user", method=RequestMethod.GET)
 	public String investormypage(Model model, HttpSession session){
 		log.debug("investormypage 페이지 요청");

@@ -43,6 +43,30 @@ public class PmsService implements PmsServiceInterface{
 		return pmsdao.getMyWbsPlanMaterialList(wbsplancode);
 	}
 	
+	@Override
+	public List<WbsPlanFacility> getMyWbsPlanFacilityList(String wbsplancode) {
+		log.debug("PmsService의 getMyWbsPlanFacilityList호출 성공");
+		return pmsdao.getMyWbsPlanFacilityList(wbsplancode);
+	}
+	
+	@Override
+	public List<WbsPlanOut> getMyWbsPlanOutList(String wbsplancode) {
+		log.debug("PmsService의 getMyWbsPlanOutList호출 성공");
+		return pmsdao.getMyWbsPlanOutList(wbsplancode);
+	}
+	
+	@Override
+	public List<WbsPlanEtc> getMyWbsPlanEtcList(String wbsplancode) {
+		log.debug("PmsService의 getMyWbsPlanFacilityList호출 성공");
+		return pmsdao.getMyWbsPlanEtcList(wbsplancode);
+	}
+	
+	@Override
+	public List<WbsPlanIncome> getMyWbsPlanIncomeyList(String wbsplancode) {
+		log.debug("PmsService의 getMyWbsPlanFacilityList호출 성공");
+		return pmsdao.getMyWbsPlanIncomeyList(wbsplancode);
+	}
+	
 	
 	/* (non-Javadoc)
 	 * @see com.pineapple.pms.service.PmsServiceInterface#getMyWbsPlanDetail(java.lang.String)

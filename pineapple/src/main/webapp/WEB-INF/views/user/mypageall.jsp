@@ -24,72 +24,89 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lbr.css" />
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
-//가입정보 유효성검사
 	$(document).ready(function(){
-		//모달에서 회원상세정보 수정하기를 클릭할 경우, 상세정보를 수정하는 모달을 보여줘서 수정 처리(모달 교체 코드)
+		//회원상세정보 보기 모달에서 회원상세정보 수정하기를 클릭할 경우, 상세정보를 수정하는 모달을 보여줘서 수정 처리(모달 교체 코드)
 		$('#userdetailmodifyBtn').click(function(){
 			$('#userdetailcheckModal').modal("hide");
 			$('#userdetailmodifyModal').modal("show");
-		});
-		//모달 shown 이벤트 설정
-		$('#userdetailmodifyModal').on("shown.bs.modal", function() {
-			$('#submitBtn').click(function(){	// submit 버튼을 누르면 유효성 검사후 수동으로 submit 해줌.
-				if($('#phoneFront3').val() != ''){  
-					if($('#phoneRest8').val() != ''){
-						if($('#postalCode').val() != ''){
-							if($('#address').val() == ''){
-								alert('주소를 입력 해주세요');
-							} else {
-								$('#form').submit();
-				    		} 
-						} else {
-				        	alert('우편번호를 입력해주세요');
-					    }
-					} else {
-					    alert('전화번호 뒤 8자리를 입력 해주세요');
-					}
-				} else {
-					alert('전화번호 앞 3자리를 입력 해주세요');
-				}
-			 });
-	  
-			//전화번호 앞 3자리 유효성 검사(숫자만 입력될 수 있도록)
-			$('#phoneFront3').blur(function(){
-				var check = /^(?=.*[0-9]).{3}$/i;
-				var in_name = $('#phoneFront3').val();
-				if(!check.test(in_name)){
-					//전화번호 앞 3자리가 유효하지 않을때
-					$("#phch1").css("color", "#FF0000");
-					$('#phch1').text('전화번호 앞 3자리가 유효하지 않습니다');
-				} else {
-					//전화번호 앞 3자리가 유효할때
-					$("#phch1").css("color", "#008000");
-					$('#phch1').text('전화번호 앞 3자리를 사용할 수 있습니다');
-				}
-			});
-			//전화번호 뒤 8자리 숫자 유효성 검사(숫자만 8자리 입력) 
-			$('#phoneRest8').blur(function(){
-				var check = /^(?=.*[0-9]).{8}$/i;
-				var in_name = $('#phoneRest8').val();
-				if(!check.test(in_name)){
-					//전화번호 뒤 8자리가 유효하지 않을때
-					$("#phch2").css("color", "#FF0000");
-					$('#phch2').text('전화번호 뒤 8자리가 유효하지 않습니다');
-				} else {
-					//전화번호 뒤 8자리가 유효할때
-					$("#phch2").css("color", "#008000");
-					$('#phch2').text('전화번호 뒤 8자리를 사용할 수 있습니다');
-				}
+			//수정하기 모달 화면 교체되면서 수정전 회원상세정보 조회 후 뿌려주기
+			var in_userId = $('#userDetailIdChange').val();
+			var changeUserDetailAjax = $.ajax({ // ajax실행부분
+								        type: "get",
+								        url : "/pineapple/userdetailmodify.user",
+								        data : {userId : in_userId},
+								        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+								        error : function error(){
+								        		alert('회원상세정보 불러오기 오류');
+								        }
+									});
+			//ajax를 통해 조회한 계좌 정보를 모달창 수정페이지 각 입력값으로 넣어준다
+			changeUserDetailAjax.done(function(ic){
+				console.log(ic);
+				$('#phoneFront3Change').val(ic.phoneFront3);
+				$('#phoneRest8Change').val(ic.phoneRest8);
+	    		$('#postalCodeChange').val(ic.postalCode);
+	    		$('#addressChange').val(ic.address);
 			});
 		});
 		
+		//회원상세정보 수정하기 모달 화면에서 수정하기 버튼을 클릭할 경우 발생할 이벤트 설정(회원상세정보 수정 form 유효성 검사 후 수동 submit)
+		$('#userDetailChangeSubmitBtn').click(function(){	// submit 버튼을 누르면 유효성 검사후 수동으로 submit 해준다
+			if($('#phoneFront3Change').val() != ''){  
+				if($('#phoneRest8Change').val() != ''){
+					if($('#postalCodeChange').val() != ''){
+						if($('#addressChange').val() == ''){
+							alert('주소를 입력 해주세요');
+						} else {
+							$('#userDetailChangeform').submit();
+							alert('회원상세정보 수정완료')
+			    		} 
+					} else {
+			        	alert('우편번호를 입력해주세요');
+				    }
+				} else {
+				    alert('전화번호 뒤 8자리를 입력 해주세요');
+				}
+			} else {
+				alert('전화번호 앞 3자리를 입력 해주세요');
+			}
+		 });
+ 
+		//전화번호 앞 3자리 유효성 검사(숫자만 입력될 수 있도록)
+		$('#phoneFront3Change').blur(function(){
+			var check = /^(?=.*[0-9]).{3}$/i;
+			var in_name = $('#phoneFront3Change').val();
+			if(!check.test(in_name)){
+				//전화번호 앞 3자리가 유효하지 않을때
+				$("#phch1Change").css("color", "#FF0000");
+				$('#phch1Change').text('전화번호 앞 3자리가 유효하지 않습니다');
+			} else {
+				//전화번호 앞 3자리가 유효할때
+				$("#phch1Change").css("color", "#008000");
+				$('#phch1Change').text('전화번호 앞 3자리를 사용할 수 있습니다');
+			}
+		});
+		//전화번호 뒤 8자리 숫자 유효성 검사(숫자만 8자리 입력) 
+		$('#phoneRest8Change').blur(function(){
+			var check = /^(?=.*[0-9]).{8}$/i;
+			var in_name = $('#phoneRest8Change').val();
+			if(!check.test(in_name)){
+				//전화번호 뒤 8자리가 유효하지 않을때
+				$('#phch2Change').css("color", "#FF0000");
+				$('#phch2Change').text('전화번호 뒤 8자리가 유효하지 않습니다');
+			} else {
+				//전화번호 뒤 8자리가 유효할때
+				$('#phch2Change').css("color", "#008000");
+				$('#phch2Change').text('전화번호 뒤 8자리를 사용할 수 있습니다');
+			}
+		});
+	});
 		//취소버튼 누르면 마이페이지 메인으로
 		 $(document).ready(function(){
 			 $('#cancelBtn').click(function(){
 				location.href = '/pineapple/mypage.user';
 			 });
 		});
-	});
 	//새로운 비밀번호 유효성 검사 통과시 일치 확인
 	//영문 숫자 특문 6~20자
 	$(document).ready(function(){
@@ -151,6 +168,8 @@
 			});
 		});
 	});
+</script>
+<script>	
 	//다음 주소 찾기 api 사용
     function sample4_execDaumPostcode() {
         new daum.Postcode({
@@ -179,8 +198,8 @@
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('postalCode').value = data.zonecode; //5자리 새우편번호 사용
-                document.getElementById('address').value = fullRoadAddr;
+                document.getElementById('postalCodeChange').value = data.zonecode; //5자리 새우편번호 사용
+                document.getElementById('addressChange').value = fullRoadAddr;
                 document.getElementById('address').value = data.jibunAddress;
 
                 // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
@@ -220,7 +239,7 @@
 				<button type="submit" class="btn btn-info btn-block" data-toggle="modal" data-target="#userdetailcheckModal">회원상세정보보기</button>
 				<p id="explain">(회원상세정보를 확인하려면 클릭해주시기 바랍니다)</p>
 			</div>
-			<!-- userdetailcheckModal -->
+			<!-- 회원상세정보 보기 모달 화면 구현 -->
 			<div class="modal fade" id="userdetailcheckModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			  <div class="modal-dialog">
 			    <div class="modal-content">
@@ -248,7 +267,7 @@
 						<br>
 						<div>
 					    	<label for="postalCodeInput">주소</label>
-						    <input type="text" id="postalCode" name="postalCode" value="${userdetail.phoneRest8}" readonly="readonly">
+						    <input type="text" id="postalCode" name="postalCode" value="${userdetail.postalCode}" readonly="readonly">
 							<input type="text" id="address" name="address" value="${userdetail.address}" readonly="readonly">
 							<span id="guide" style="color:#999"></span>
 						</div>
@@ -257,7 +276,7 @@
 			      </div>
 		       	  <div class="modal-footer">
 			        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-			        <button id="userdetailmodifyBtn" type="button" class="btn btn-primary" href="/pineapple/userdetailmodify.user">수정하기</button>
+			        <button id="userdetailmodifyBtn" type="button" class="btn btn-primary">수정하기</button>
 			      </div>
 			    </div>
 			  </div>
@@ -272,11 +291,11 @@
 			        <p id="explain">(수정할 내용을 입력하고 수정 버튼을 누르세요)</p>
 			      </div>
 			      <div class="modal-body">
-      					<form id="form" action="/pineapple/userdetailmodify.user" name="userdetail" method="post" style="border:1px solid #ccc">
+      					<form id="userDetailChangeform" action="/pineapple/userdetailmodify.user" name="userdetail" method="post" style="border:1px solid #ccc">
 							<div class="container_insert">
 							    <div id="emailSuccess" class="form-group has-success has-feedback">
 									<label class="control-label" for="inputSuccess2">${nickname}님의 아이디</label>
-									<input type="text" class="form-control" id="userDetailId" name="userDetailId" value="${id}" varia-describedby="inputSuccess2Status" readonly="readonly">
+									<input type="text" class="form-control" id="userDetailIdChange" name="userDetailId" value="${id}" varia-describedby="inputSuccess2Status" readonly="readonly">
 									<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 									<span id="inputSuccess2Status" class="sr-only">(success)</span>
 								</div>
@@ -284,29 +303,29 @@
 							  	<div class="form-group">
 								    <label for="phoneFront3">전화번호앞3자리</label>
 								    <p id="explain">(전화번호 앞3자리는 3자리의 숫자로 입력해야합니다)</p>
-								    <p><input type="text" id="phoneFront3" name="phoneFront3" maxlength="3" class="form-control" value="${userdetail.phoneFront3}"></p>
-								    <span id="phch1"></span>
+								    <p><input type="text" id="phoneFront3Change" name="phoneFront3" maxlength="3" class="form-control"></p>
+								    <span id="phch1Change"></span>
 							  	</div>
 							  	<div class="form-group">
 								    <p id="explain">(전화번호 뒤8자리는 -없이 8자리의 숫자로 입력해야합니다)</p>
-								    <p><input type="text" id="phoneRest8" name="phoneRest8" maxlength="8" class="form-control" value="${userdetail.phoneRest8}"></p>
-								    <span id="phch2"></span>
+								    <p><input type="text" id="phoneRest8Change" name="phoneRest8" maxlength="8" class="form-control"></p>
+								    <span id="phch2Change"></span>
 							  	</div>
 								<br>
 								<div>
 							    	<label for="postalCodeInput">우편번호</label>
 								    <p id="explain">(주소를 정확히 입력해 주시기 바랍니다)</p>
-								    <input type="text" id="postalCode" name="postalCode" value="${userdetail.postalCode}">
+								    <input type="text" id="postalCodeChange" name="postalCode">
 									<input type="button" id="findPostalCode" onclick="sample4_execDaumPostcode()" value="우편번호찾기"><br>
-									<input type="text" id="address" name="address" value="${userdetail.address}">
-									<input type="text" id="address" name="address" placeholder="나머지 주소">
+									<input type="text" id="addressChange" name="address">
+									<input type="text" id="addressChange" name="address" placeholder="나머지 주소">
 									<span id="guide" style="color:#999"></span>
 								</div>
 								<br>
 						      </div>
 						      <div class="modal-footer">
 						        <button id="cancelBtn" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-						        <button id="submitBtn" type="button" class="btn btn-primary" href="/pineapple/userdetailmodify.user">수정하기</button>
+						        <button id="userDetailChangeSubmitBtn" type="button" class="btn btn-primary">수정하기</button>
 						      </div>
 				      	</form>
 				    </div>

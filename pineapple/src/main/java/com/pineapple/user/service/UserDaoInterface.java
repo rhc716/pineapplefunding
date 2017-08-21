@@ -3,12 +3,14 @@ package com.pineapple.user.service;
 import java.util.Map;
 
 public interface UserDaoInterface {
+	//투자자, 사이트관리자의 계좌수정 메서드 선언
+	int updateAccountByAccountCode(Account account);
 	
 	//투자자, 사이트관리자의 계좌삭제 메서드 선언
-	int deleteAccountByAccountNumber(String accountNumber);
+	int deleteAccountByAccountCode(int accountCode);
 	
 	//투자자, 사이트관리자의 계좌조회 메서드 선언
-	Account selectAccountByAccountNumber(String accountNumber);
+	Account selectAccountByAccountCode(int accountCode);
 	
 	//투자자, 사이트관리자의 새로운 계좌등록 메서드 선언
 	int insertAccount(Account account);

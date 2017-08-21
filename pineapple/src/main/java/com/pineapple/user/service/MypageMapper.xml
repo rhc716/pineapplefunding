@@ -9,7 +9,7 @@
 	<select id="getAllInvestorInfo"
 			parameterType="String"
 			resultMap="getAllInvestorInfo">
-		SELECT u.userId, u.nickname, u.name, u.levelCode, u.uDelTime, ac.accountId, ac.secCompany, ac.accountNumber, ac.accountNickname
+		SELECT u.userId, u.nickname, u.name, u.levelCode, u.uDelTime, ac.accountCode, ac.accountId, ac.secCompany, ac.accountNumber, ac.accountNickname
 		FROM user u
 		left join account ac
 		on u.userId = ac.accountId
@@ -25,7 +25,7 @@
 		<result property="uDelTime" column="uDelTime"/>
 		<collection property="account"
 					ofType="com.pineapple.user.service.Account">
-			<!-- <id property="accountCode" column="accountCode"/> -->
+			<result property="accountCode" column="accountCode"/>
 			<result property="accountId" column="accountId"/>
 			<result property="secCompany" column="secCompany"/>
 			<result property="accountNumber" column="accountNumber"/>

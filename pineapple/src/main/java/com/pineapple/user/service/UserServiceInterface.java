@@ -6,11 +6,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public interface UserServiceInterface {
+	//투자자, 사이트관리자의 계좌수정 메서드 선언
+	int changeAccountByAccountCode(Account account);
+	
 	//투자자, 사이트관리자의 계좌삭제 메서드 선언
-	int removeAccountByAccountNumber(String accountNumber);
+	int removeAccountByAccountCode(int accountCode);
 	
 	//투자자, 사이트관리자의 계좌조회 메서드 선언
-	Account getAccountByAccountNumber(String accountNumber);
+	Account getAccountByAccountCode(int accountCode);
 		
 	//투자자, 사이트관리자의 새로운 계좌등록 메서드 선언
 	int addAccount(Account account);

@@ -13,18 +13,25 @@ public class UserService implements UserServiceInterface {
 	@Autowired
 	private UserDaoInterface dao;
 	
+	//투자자, 사이트관리자의 계좌수정 메서드 선언
+	@Override
+	public int changeAccountByAccountCode(Account account) {
+		log.debug("service changeAccountByAccountCode 호출 : "+account);
+		return dao.updateAccountByAccountCode(account);
+	}
+	
 	//투자자, 사이트관리자의 계좌삭제 메서드 선언
 	@Override
-	public int removeAccountByAccountNumber(String accountNumber) {
-		log.debug("service removeAccountByAccountNumber 호출 : "+accountNumber);
-		return dao.deleteAccountByAccountNumber(accountNumber);
+	public int removeAccountByAccountCode(int accountCode) {
+		log.debug("service removeAccountByAccountCode 호출 : "+accountCode);
+		return dao.deleteAccountByAccountCode(accountCode);
 	}
 	
 	//투자자, 사이트관리자의 계좌조회 메서드 선언
 	@Override
-	public Account getAccountByAccountNumber(String accountNumber) {
-		log.debug("service getAccountByAccountNumber 호출 : "+accountNumber);
-		return dao.selectAccountByAccountNumber(accountNumber);
+	public Account getAccountByAccountCode(int accountCode) {
+		log.debug("service getAccountByAccountCode 호출 : "+accountCode);
+		return dao.selectAccountByAccountCode(accountCode);
 	}
 	
 	//투자자, 사이트관리자 새로운 계좌등록을 위한 메서드 호출
@@ -93,5 +100,4 @@ public class UserService implements UserServiceInterface {
 	}
 
 	
-
 }

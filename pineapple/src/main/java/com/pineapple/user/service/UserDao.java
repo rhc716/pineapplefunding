@@ -14,18 +14,25 @@ public class UserDao implements UserDaoInterface {
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
 	
+	//투자자, 사이트관리자의 계좌수정 메서드 선언
+	@Override
+	public int updateAccountByAccountCode(Account account) {
+		log.debug("UserDao updateAccountByAccountCode : "+account);
+		return sqlSessionTemplate.update("com.pineapple.user.service.UserMapper.updateAccountByAccountCode", account);
+	}
+	
 	//투자자, 사이트관리자의 계좌삭제 메서드 선언
 	@Override
-	public int deleteAccountByAccountNumber(String accountNumber) {
-		log.debug("UserDao deleteAccountByAccountNumber : "+accountNumber);
-		return sqlSessionTemplate.delete("com.pineapple.user.service.UserMapper.deleteAccountByAccountNumber", accountNumber);
+	public int deleteAccountByAccountCode(int accountCode) {
+		log.debug("UserDao deleteAccountByAccountCode : "+accountCode);
+		return sqlSessionTemplate.delete("com.pineapple.user.service.UserMapper.deleteAccountByAccountCode", accountCode);
 	}
 	
 	//투자자, 사이트관리자의 계좌조회 메서드 선언
 	@Override
-	public Account selectAccountByAccountNumber(String accountNumber) {
-		log.debug("UserDao selectAccountByAccountNumber : "+accountNumber);
-		return sqlSessionTemplate.selectOne("com.pineapple.user.service.UserMapper.selectAccountByAccountnumber", accountNumber);
+	public Account selectAccountByAccountCode(int accountCode) {
+		log.debug("UserDao selectAccountByAccountCode : "+accountCode);
+		return sqlSessionTemplate.selectOne("com.pineapple.user.service.UserMapper.selectAccountByAccountCode", accountCode);
 	}
 	
 	//투자자, 사이트관리자의 새로운 계좌등록 메서드 선언
@@ -94,7 +101,5 @@ public class UserDao implements UserDaoInterface {
         return row;
     }
 
-	
 
-	
 }

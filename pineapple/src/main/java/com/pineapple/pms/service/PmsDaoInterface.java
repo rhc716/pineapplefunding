@@ -16,6 +16,9 @@ public interface PmsDaoInterface {
 	
 	List<WbsPlanMaterial> getMyWbsPlanMaterialList(String wbsplancode);
 	
+	List<WbsPlanFacility> getMyWbsPlanFacilityList(String wbsplancode);
+	
+	
 	void deletewbsplanhuman(String wbhcode);
 	
 	void updatewbsplanhuman(WbsPlanHuman wbsplanhuman);
@@ -23,5 +26,11 @@ public interface PmsDaoInterface {
 	void addWbsplanMaterial(WbsPlanMaterial wbsplanmaterial);
 
 	void deletewbsplanmaterial(String wbmcode);
+
+	List<WbsPlanOut> getMyWbsPlanOutList(String wbsplancode);
+
+	List<WbsPlanEtc> getMyWbsPlanEtcList(String wbsplancode);
+
+	List<WbsPlanIncome> getMyWbsPlanIncomeyList(String wbsplancode);
 
 }
