@@ -24,4 +24,13 @@ public interface PmsServiceInterface {
 	List<WbsPlanMaterial> getMyWbsPlanMaterialList(String wbsplancode);
 
 	void deletewbsplanmaterial(String wbmcode);
+
+	List<WbsPlanFacility> getMyWbsPlanFacilityList(String wbsplancode);
+
+	List<WbsPlanOut> getMyWbsPlanOutList(String wbsplancode);
+
+	List<WbsPlanEtc> getMyWbsPlanEtcList(String wbsplancode);
+
+	List<WbsPlanIncome> getMyWbsPlanIncomeyList(String wbsplancode);
+
 }

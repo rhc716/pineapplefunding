@@ -81,27 +81,27 @@
 						</form>
 					</div>
 					<div class="col-md-4">
-						<form>
+						<form action="/pineapple/wbsplanfacilitylist.pms" method="post">
 							<input type="hidden"name="wbsPlanCode" value="${wbsplandetail.wbsPlanCode}">
-							<button type="submit" class="btn btn-primary">장비 상세보기</button>	
+							<button type="submit" class="btn btn-primary">시설 상세보기</button>	
 						</form>
 					</div>
 				</div><br>
 				<div class="row">
 					<div class="col-md-4">
-						<form>
+						<form  action="/pineapple/wbsplanoutlist.pms" method="post">
 							<input type="hidden"name="wbsPlanCode" value="${wbsplandetail.wbsPlanCode}">
 							<button type="submit" class="btn btn-primary">외주 상세보기</button>
 						</form>
 					</div>
 					<div class="col-md-4">
-						<form>
+						<form action="/pineapple/wbsplanetclist.pms" method="post">
 							<input type="hidden"name="wbsPlanCode" value="${wbsplandetail.wbsPlanCode}">
 							<button type="submit" class="btn btn-primary">기타 상세보기</button>	
 						</form>
 					</div>
 					<div class="col-md-4">
-						<form>
+						<form action="/pineapple/wbsplanincomelist.pms" method="post">
 							<input type="hidden"name="wbsPlanCode" value="${wbsplandetail.wbsPlanCode}">
 							<button type="submit" class="btn btn-primary">수입 상세보기</button>
 						</form>		

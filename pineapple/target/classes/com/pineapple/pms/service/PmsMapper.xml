@@ -47,6 +47,23 @@
 		select *
 		from wbsplanmaterial where wpmWpCode = #{wbsplancode}
 	</select>
+	<select id="selectWbsPlanFacility" resultType="com.pineapple.pms.service.WbsPlanFacility" parameterType="String">
+		select *
+		from wbsplanfacility where wpfWpCode = #{wbsplancode}
+	</select>
+	<select id="selectWbsPlanOut" resultType="com.pineapple.pms.service.WbsPlanOut" parameterType="String">
+		select *
+		from wbsplanout where wpoWpCode = #{wbsplancode}
+	</select>
+	<select id="selectWbsPlanEtc" resultType="com.pineapple.pms.service.WbsPlanEtc" parameterType="String">
+		select *
+		from wbsplanetc where wpeWpCode = #{wbsplancode}
+	</select>
+	<select id="selectWbsPlanIncome" resultType="com.pineapple.pms.service.WbsPlanIncome" parameterType="String">
+		select *
+		from wbsplanincome where wpiWpCode = #{wbsplancode}
+	</select>
+	
 		<select id="selectdetail" parameterType="String" resultType="com.pineapple.pms.service.WbsPlanView">
 		SELECT w.wbsPlanCode, w.wbsPlanOrder,
 				w.wbsPlanName, w.wbsPlanDependency,
