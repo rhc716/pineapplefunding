@@ -34,14 +34,42 @@ public class UserController {
 	@Autowired
     private UserServiceInterface service;
 	
+	//계좌 수정 요청 처리
+	@RequestMapping(value="/changeaccount.user", method = RequestMethod.POST)
+    public String changeAccount(HttpSession session, Account account) { //커맨드 객체
+        log.debug("UserController changeAccount 계좌수정 요청 : "+account);
+        int result = service.changeAccountByAccountCode(account);
+        if(result == 1){
+        	log.debug(session.getAttribute("nickname")+"님의 계좌수정 성공");
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님의 계좌수정 실패");
+        }
+        return "redirect:/mypage.user"; // 글입력후 "/"로 리다이렉트(재요청)
+    }
+	
+	//마이페이지 계좌정보 수정 페이지 요청
+	@RequestMapping(value="/changeaccountpage.user", method=RequestMethod.GET)
+	public @ResponseBody Account changeAccount(Model model, @RequestParam("accountCode") int accountCode){
+		log.debug("UserController changeAccountPage 회원계좌정보수정 페이지 요청");
+		Account account = service.getAccountByAccountCode(accountCode);
+		if(account != null){
+			log.debug("UserController changeAccountPage 회원계좌정보 조회 성공");
+			model.addAttribute("account", account);
+		} else {
+			log.debug("UserController changeAccountPage 회원계좌정보 조회 실패");
+		}
+		return account;
+	}
+	
 	//계좌 삭제 요청 처리
-	@RequestMapping(value="/deleteaccount.user", method = RequestMethod.GET)
-    public String deleteAccount(HttpSession session, @RequestParam("accountNumber") String accountNumber) { //커맨드 객체
+	@RequestMapping(value="/deleteaccount.user", method = RequestMethod.POST)
+    public String deleteAccount(HttpSession session, @RequestParam("accountCode") int accountCode) { //커맨드 객체
         log.debug("UserController deleteAccount 계좌삭제 요청 : "+session.getAttribute("id").toString());
-        Account account = service.getAccountByAccountNumber(accountNumber);
+        Account account = service.getAccountByAccountCode(accountCode);
         String redirect = null;
         if(account != null){
-        	 int deleteresult = service.removeAccountByAccountNumber(account.getAccountNumber());
+        	 log.debug("삭제요청된 "+session.getAttribute("nickname")+"님의 계좌 조회 성공");
+        	 int deleteresult = service.removeAccountByAccountCode(accountCode);
         	 if(deleteresult == 1){
              	log.debug(session.getAttribute("nickname")+"님의 계좌 삭제 성공");
              	redirect = "redirect:/mypage.user";

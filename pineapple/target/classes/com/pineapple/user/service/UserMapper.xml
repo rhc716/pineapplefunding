@@ -135,23 +135,34 @@
 		WHERE userDetailId=#{userDetailId}
 	</select>
 	
-	<!-- 계좌정보 입력/조회/삭제 -->
+	<!-- 계좌정보 입력 -->
 	<insert id="insertAccount" parameterType="com.pineapple.user.service.Account">
 		INSERT INTO account
 			(accountId, secCompany, accountNumber, accountNickname)
 		VALUES (#{accountId}, #{secCompany}, #{accountNumber}, #{accountNickname})
 	</insert>
-	
-	<select id="selectAccountByAccountnumber" parameterType="String" resultType="com.pineapple.user.service.Account">
+	<!-- 계좌정보 조회 -->
+	<select id="selectAccountByAccountCode" parameterType="int" resultType="com.pineapple.user.service.Account">
 		SELECT accountCode, accountId, secCompany, accountNumber, accountNickname
  		FROM account 
- 		WHERE accountNumber=#{accountNumber}
+ 		WHERE accountCode=#{accountCode}
 	</select>
-	
-	<delete id="deleteAccountByAccountNumber" parameterType="String">
+	<!-- 계좌정보 수정 -->
+	<update id="updateAccountByAccountCode" parameterType="com.pineapple.user.service.Account">
+		UPDATE account
+		SET
+		accountCode=#{accountCode},
+		accountId=#{accountId},
+		secCompany=#{secCompany},
+		accountNumber=#{accountNumber},
+		accountNickname=#{accountNickname}
+		WHERE accountCode=#{accountCode}
+	</update>
+	<!-- 계좌정보 삭제 -->
+	<delete id="deleteAccountByAccountCode" parameterType="int">
 		DELETE
 		FROM account 
-		WHERE accountNumber=#{accountNumber}
+		WHERE accountCode=#{accountCode}
 	</delete>
 	
 </mapper>

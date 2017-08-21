@@ -39,7 +39,7 @@ public class MypageController {
 		return "user/mypageall";
 	}
 	
-	//투자자 마이페이지 분기(회원상세정보조회 기능 포함)
+	//투자자 마이페이지 분기(회원상세정보조회, 계좌정보조회 기능 포함)
 	@RequestMapping(value="/investormypage.user", method=RequestMethod.GET)
 	public String investormypage(Model model, HttpSession session){
 		log.debug("investormypage 페이지 요청");
