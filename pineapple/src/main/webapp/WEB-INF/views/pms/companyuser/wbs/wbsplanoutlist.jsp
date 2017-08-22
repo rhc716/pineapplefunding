@@ -54,9 +54,9 @@
 										<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#${list.wpoCode}">수정</button>
 									</div>
 									<div class="col-md-5">
-										<form action="" metod="post">
-											<input type="hidden" class="form-control" name="wpmWpCode" value="${list.wpoWpCode}">
-											<input type="hidden" class="form-control" name="wpmCode" value="${list.wpoCode}">
+										<form action="/pineapple/wbsplanoutdelete.pms" metod="post">
+											<input type="hidden" class="form-control" name="wpoWpCode" value="${list.wpoWpCode}">
+											<input type="hidden" class="form-control" name="wpoCode" value="${list.wpoCode}">
 											<button type="submit" class="btn btn-danger">삭제</button>
 										</form>
 									</div>

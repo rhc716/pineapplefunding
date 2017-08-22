@@ -117,6 +117,18 @@ public class PmsService implements PmsServiceInterface{
 	}
 	
 	@Override
+	public void deletewbsplan(String wbsplancode){
+		log.debug("PmsService의 deletewbsplanetc호출 성공");
+		pmsdao.deletewbsplan(wbsplancode);
+		pmsdao.deletehuman(wbsplancode);
+		pmsdao.deletematerial(wbsplancode);
+		pmsdao.deletefacility(wbsplancode);
+		pmsdao.deleteout(wbsplancode);
+		pmsdao.deleteetc(wbsplancode);
+		pmsdao.deleteincome(wbsplancode);
+	}
+	
+	@Override
 	public void deletewbsplanhuman(String wbhcode){
 		log.debug("PmsService의 deletewbsplanhuman호출 성공");
 		pmsdao.deletewbsplanhuman(wbhcode);
@@ -127,6 +139,27 @@ public class PmsService implements PmsServiceInterface{
 	public void deletewbsplanmaterial(String wbmcode){
 		log.debug("PmsService의 deletewbsplanmaterial호출 성공");
 		pmsdao.deletewbsplanmaterial(wbmcode);
+	}
+	
+	@Override
+	public void deletewbsplanfacility(String wbfcode){
+		log.debug("PmsService의 deletewbsplanfacility호출 성공");
+		pmsdao.deletewbsplanfacility(wbfcode);
+	}
+		@Override
+	public void deletewbsplanout(String wbocode){
+		log.debug("PmsService의 deletewbsplanout호출 성공");
+		pmsdao.deletewbsplanout(wbocode);
+	}
+	@Override
+	public void deletewbsplanetc(String wbecode){
+		log.debug("PmsService의 deletewbsplanetc호출 성공");
+		pmsdao.deletewbsplanetc(wbecode);
+	}
+	@Override
+	public void deletewbsplanincome(String wbicode){
+		log.debug("PmsService의 deletewbsplanincome호출 성공");
+		pmsdao.deletewbsplanincome(wbicode);
 	}
 	
 	@Override
