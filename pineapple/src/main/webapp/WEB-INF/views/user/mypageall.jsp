@@ -47,6 +47,7 @@
 				$('#phoneRest8Change').val(ic.phoneRest8);
 	    		$('#postalCodeChange').val(ic.postalCode);
 	    		$('#addressChange').val(ic.address);
+	    		$('#address2Change').val(ic.address2);
 			});
 		});
 		
@@ -55,12 +56,15 @@
 			if($('#phoneFront3Change').val() != ''){  
 				if($('#phoneRest8Change').val() != ''){
 					if($('#postalCodeChange').val() != ''){
-						if($('#addressChange').val() == ''){
-							alert('주소를 입력 해주세요');
+						if($('#addressChange').val != ''){
+							if($('#address2Change').val() == ''){
+								alert('나머지 주소를 입력 해주세요');
+							} else {
+								$('#userDetailChangeform').submit();
+				    		}
 						} else {
-							$('#userDetailChangeform').submit();
-							alert('회원상세정보 수정완료')
-			    		} 
+							alert('주소를 입력해주세요')
+						}
 					} else {
 			        	alert('우편번호를 입력해주세요');
 				    }
@@ -200,7 +204,7 @@
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById('postalCodeChange').value = data.zonecode; //5자리 새우편번호 사용
                 document.getElementById('addressChange').value = fullRoadAddr;
-                document.getElementById('address').value = data.jibunAddress;
+                document.getElementById('address2Change').value = '';
 
                 // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
                 if(data.autoRoadAddress) {
@@ -221,7 +225,6 @@
 </script>
 </head>
 <body>
-<!-- 본문 -->
 <!-- 마이페이지 내정보 공통모듈-->
 	<div class="row">
 		<div class="col-md-2">
@@ -267,8 +270,9 @@
 						<br>
 						<div>
 					    	<label for="postalCodeInput">주소</label>
-						    <input type="text" id="postalCode" name="postalCode" value="${userdetail.postalCode}" readonly="readonly">
-							<input type="text" id="address" name="address" value="${userdetail.address}" readonly="readonly">
+						    <p><input type="text" id="postalCode" name="postalCode" value="${userdetail.postalCode}" readonly="readonly"></p>
+							<input type="text" id="address" name="address" value="${userdetail.address}" readonly="readonly">&nbsp
+							<input type="text" id="address2" name="address2" value="${userdetail.address2}" readonly="readonly">
 							<span id="guide" style="color:#999"></span>
 						</div>
 						<br>
@@ -318,7 +322,7 @@
 								    <input type="text" id="postalCodeChange" name="postalCode">
 									<input type="button" id="findPostalCode" onclick="sample4_execDaumPostcode()" value="우편번호찾기"><br>
 									<input type="text" id="addressChange" name="address">
-									<input type="text" id="addressChange" name="address" placeholder="나머지 주소">
+									<input type="text" id="address2Change" name="address2" placeholder="나머지 주소">
 									<span id="guide" style="color:#999"></span>
 								</div>
 								<br>

@@ -54,6 +54,7 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+<div class="container">
 <!--로그인 버튼 -->
 	<c:import url="/resources/module/toploginandlogo.jsp"/>
 <!-- 상단메뉴 -->
@@ -236,5 +237,6 @@ $(document).ready(function(){
 </div>
 <!-- 풋터 -->
 <c:import url="/resources/module/footer.jsp"/>
+</div>
 </body>
 </html>

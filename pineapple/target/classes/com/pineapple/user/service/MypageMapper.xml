@@ -4,11 +4,49 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.pineapple.user.service.MypageMapper">
+<!-- 경영진이 마이페이지에서 기업 등록 -->
+	<insert id="insertCompany" parameterType="com.pineapple.user.service.Company">
+		INSERT INTO company
+		(comName, comNumber, comHomePage, comCeoName, comEstablishYear, comInfo, comLogoServerName, comLogoHeight, comLogoWidth, comLogoSize, comLogoExtension, comSummary, comActivitySummary, comOpenUserId, comAdminApproval)
+		VALUES (#{comName}, #{comNumber}, #{comHomePage}, #{comCeoName}, #{comEstablishYear}, #{comInfo}, #{comLogoServerName}, #{comLogoHeight}, #{comLogoWidth}, #{comLogoSize}, #{comLogoExtension}, #{comSummary}, #{comActivitySummary}, #{comOpenUserId}, #{comAdminApproval})
+	</insert>
 
+<!-- 기업회원 중 경영진 마이페이지 분기시 자신이 등록요청한 회사정보 조회 -->
+	<select id="selectCompanyInfoByOpenId" parameterType="String" resultType="com.pineapple.user.service.Company">
+		SELECT *
+		FROM company
+		WHERE comOpenUserId=#{comOpenUserId}
+	</select>
+
+<!-- 사원요청시 등록할 전체회사정보 조회 -->
+	<select id="selectAllCompany" resultMap="selectAllCompany">
+		SELECT comCode, comName
+		FROM company
+	</select>
+	<resultMap type="com.pineapple.user.service.CompanyList" id="selectAllCompany">
+		<collection property="companylist"
+					ofType="com.pineapple.user.service.Company">
+			<result property="comCode" column="comCode"/>
+			<result property="comName" column="comName"/>
+		</collection>
+	</resultMap>
+	
+<!-- 사원요청시 등록할 특정회사정보 조회 -->
+	<select id="selectCompanyByName" parameterType="String" resultType="com.pineapple.user.service.Company">
+		SELECT comCode, comName
+		FROM company
+		WHERE comName=#{comName}
+	</select>	
+
+<!-- 사원등록요청 처리 -->
+	<insert id="insertEmployeeInfo" parameterType="com.pineapple.user.service.Employee">
+		INSERT INTO employee
+		(emUserId, emComCode, emComName, emRankCode, emDepartment, emCheck, emDelRequest)
+		VALUES (#{emUserId}, #{emComCode}, #{emComName}, #{emRankCode}, #{emDepartment}, #{emCheck}, #{emDelRequest})
+	</insert>	
+	
 <!-- 투자자 회원정보 및 계좌정보 조회 -->
-	<select id="getAllInvestorInfo"
-			parameterType="String"
-			resultMap="getAllInvestorInfo">
+	<select id="selectAllInvestorInfo" parameterType="String" resultMap="selectAllInvestorInfo">
 		SELECT u.userId, u.nickname, u.name, u.levelCode, u.uDelTime, ac.accountCode, ac.accountId, ac.secCompany, ac.accountNumber, ac.accountNickname
 		FROM user u
 		left join account ac
@@ -17,7 +55,7 @@
 	</select>
 	
 	<resultMap type="com.pineapple.user.service.User"
-			   id="getAllInvestorInfo">
+			   id="selectAllInvestorInfo">
 		<result property="userId" column="userId"/>
 		<result property="nickname" column="nickname"/>
 		<result property="name" column="name"/>
@@ -33,13 +71,13 @@
 		</collection>
 	</resultMap>
 	
-	<!-- 회원상세정보조회 -->
+	<!-- 마이페이지 공통모듈에서 회원상세정보조회 -->
 	<select id="selectUserDetailById" parameterType="String" resultType="com.pineapple.user.service.UserDetail">
-		SELECT userDetailId, phoneFront3, phoneRest8, postalCode, address, nameCheck
+		SELECT userDetailId, phoneFront3, phoneRest8, postalCode, address, address2, nameCheck
 		FROM userdetail 
 		WHERE userDetailId=#{userDetailId}
 	</select>
-	<!-- 회원상세정보수정 -->
+	<!--  마이페이지 공통모듈에서 회원상세정보수정 -->
 	<update id="updateUserDetailById" parameterType="com.pineapple.user.service.UserDetail">
 		UPDATE userdetail
  		SET
@@ -48,6 +86,7 @@
   			phoneRest8=#{phoneRest8},
   			postalCode=#{postalCode},
   			address=#{address},
+  			address2=#{address2},
   			nameCheck=#{nameCheck}
  		WHERE userDetailId=#{userDetailId}
 	</update>

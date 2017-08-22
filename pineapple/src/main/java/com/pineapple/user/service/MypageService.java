@@ -1,5 +1,7 @@
 package com.pineapple.user.service;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,28 +12,49 @@ public class MypageService implements MypageServiceInterface {
 	
 	@Autowired
 	private MypageDaoInterface mypagedao;
-
+	//사원등록시 특정회사검색 요청 처리
 	@Override
-	public int updateUserDetail(UserDetail userdetail) {
-		log.debug("MypageService updateUserDetail 호출 : "+userdetail);
-		return mypagedao.modifyUserDetail(userdetail);
+	public Company getMyCompany(String comName) {
+		log.debug("MypageService getMyCompany 호출");
+		return mypagedao.selectMyCompany(comName);
 	}
-	
+	//사원등록시 전체회사검색 요청 처리
+	@Override
+	public List<Company> getAllCompany() {
+		log.debug("MypageService getAllCompany 호출");
+		return mypagedao.selectAllCompany();
+	}
+	//경영진 마이페이지에서 기업등록요청 처리 메서드 선언
+	@Override
+	public int addCompany(Company company) {
+		log.debug("MypageService addCompany 호출 : "+company);
+		return mypagedao.insertCompany(company);
+	}
+	//경영진 마이페이지 분기시 자신이 개설한 회사정보 조회 메서드 선언
+	@Override
+	public Company getCompanyByOpenId(String comOpenUserId) {
+		log.debug("MypageService getCompanyByOpenId 호출 : "+comOpenUserId);
+		return mypagedao.selectCompanyByOpenId(comOpenUserId);
+	}
+	//회원상세정보 수정을 위한 메서드 선언
+	@Override
+	public int modifyUserDetail(UserDetail userdetail) {
+		log.debug("MypageService updateUserDetail 호출 : "+userdetail);
+		return mypagedao.updateUserDetail(userdetail);
+	}
 	//회원상세정보조회를 위한 메서드 호출
 	@Override
-	public UserDetail selectUserDetail(String userDetailId) {
+	public UserDetail getUserDetail(String userDetailId) {
 		log.debug("MypageService getUserDetail 호출 : "+userDetailId);
-		return mypagedao.getUserDetail(userDetailId);
+		return mypagedao.selectUserDetail(userDetailId);
 	}
-	
 	//투자자 마이페이지 첫화면 구성을 위한 투자자 기본 정보와 계좌 정보 조회 메서드
 	@Override
-	public User selectInvestorBasic(String userId) {
+	public User getInvestorBasic(String userId) {
 		log.debug("MypageService selectInvestorBasic 메서드 호출 "+userId);
-		return mypagedao.getInvestorBasic(userId);
+		return mypagedao.selectInvestorBasic(userId);
 	}
 
 	
 	
-
 }

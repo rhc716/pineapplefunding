@@ -6,6 +6,7 @@ public class UserDetail {
 	private String phoneRest8;
 	private String postalCode;
 	private String address;
+	private String address2;
 	private int nameCheck;
 	
 	public String getUserDetailId() {
@@ -38,6 +39,12 @@ public class UserDetail {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	public String getAddress2() {
+		return address2;
+	}
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
 	public int getNameCheck() {
 		return nameCheck;
 	}
@@ -47,6 +54,8 @@ public class UserDetail {
 	@Override
 	public String toString() {
 		return "UserDetail [userDetailId=" + userDetailId + ", phoneFront3=" + phoneFront3 + ", phoneRest8="
-				+ phoneRest8 + ", postalCode=" + postalCode + ", address=" + address + ", nameCheck=" + nameCheck + "]";
+				+ phoneRest8 + ", postalCode=" + postalCode + ", address=" + address + ", address2=" + address2
+				+ ", nameCheck=" + nameCheck + "]";
 	}
+	
 }

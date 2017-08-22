@@ -29,11 +29,15 @@
 				if($('#phoneFront3').val() != ''){  
 					if($('#phoneRest8').val() != ''){
 						if($('#postalCode').val() != ''){
-							if($('#address').val() == ''){
-								alert('주소를 입력 해주세요');
+							if($('#address').val != ''){
+								if($('#address2').val() == ''){
+									alert('나머지 주소를 입력 해주세요');
+								} else {
+									$('#form').submit();
+					    		}
 							} else {
-								$('#form').submit();
-				    		} 
+								alert('주소를 입력해주세요')
+							}
 						} else {
 				        	alert('우편번호를 입력해주세요');
 					    }
@@ -85,7 +89,7 @@
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById('postalCode').value = data.zonecode; //5자리 새우편번호 사용
                 document.getElementById('address').value = fullRoadAddr;
-                document.getElementById('address').value = data.jibunAddress;
+                document.getElementById('address2').value = '';
 
                 // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
                 if(data.autoRoadAddress) {
@@ -174,7 +178,7 @@ $(document).ready(function(){
 					    <input type="text" id="postalCode" name="postalCode" placeholder="우편번호">
 						<input type="button" id="findPostalCode" onclick="sample4_execDaumPostcode()" value="우편번호찾기"><br>
 						<input type="text" id="address" name="address" placeholder="도로명주소">
-						<input type="text" id="address" name="address" placeholder="나머지주소">
+						<input type="text" id="address2" name="address2" placeholder="나머지주소">
 						<span id="guide" style="color:#999"></span>
 					</div>
 					<br>

@@ -54,6 +54,7 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+<div class="container">
 <!--로그인 버튼 -->
 	<c:import url="/resources/module/toploginandlogo.jsp"/>
 <!-- 상단메뉴 -->
@@ -63,13 +64,13 @@ $(document).ready(function(){
 	<div class="container"> 
 		<ul id="myTab" class="nav nav-tabs" role="tablist"> 
 			<li role="presentation" class="active">
-				<a data-target="#investorinfo" id="investorinfo-tab" role="tab" data-toggle="tab" aria-controls="investorinfo" aria-expanded="true">내정보</a>
+				<a data-target="#admininfo" id="admininfo-tab" role="tab" data-toggle="tab" aria-controls="admininfo" aria-expanded="true">내정보</a>
 			</li> 
 			<li role="presentation" class="">
-				<a data-target="#timeline" role="tab" id="timeline-tab" data-toggle="tab" aria-controls="timeline" aria-expanded="false">타임라인</a>
+				<a data-target="#approveCompany" role="tab" id="approveCompany-tab" data-toggle="tab" aria-controls="approveCompany" aria-expanded="false">회사목록보기</a>
 			</li>
 			<li role="presentation" class="">
-				<a data-target="#fundingqna" role="tab" id="fundingqna-tab" data-toggle="tab" aria-controls="fundingqna" aria-expanded="false">펀딩Q&A</a>
+				<a data-target="#allUserList" role="tab" id="allUserList-tab" data-toggle="tab" aria-controls="allUserList" aria-expanded="false">전체회원보기</a>
 			</li>
 			<li role="presentation" class="">
 				<a data-target="#message" role="tab" id="message-tab" data-toggle="tab" aria-controls="message" aria-expanded="false">메세지</a>
@@ -79,7 +80,7 @@ $(document).ready(function(){
 			</li>  
 		</ul>
 		<div id="myTabContent" class="tab-content">
-			<div role="tabpanel" class="tab-pane fade active in" id="investorinfo" aria-labelledby="investorinfo-tab">
+			<div role="tabpanel" class="tab-pane fade active in" id="admininfo" aria-labelledby="admininfo-tab">
 				<!-- 마이페이지 공통 모듈 -->
 				<c:import url="./mypageall.jsp"/>
 				<br>
@@ -220,11 +221,11 @@ $(document).ready(function(){
 					</div>
 				</div>
 			</div>
-			<div role="tabpanel" class="tab-pane fade" id="timeline" aria-labelledby="timeline-tab"> 
-				<p>타임라인</p> 
+			<div role="tabpanel" class="tab-pane fade" id="approveCompany" aria-labelledby="approveCompany-tab"> 
+				<p>회사목록조회 및 회사등록/삭제요청승인</p> 
 			</div>
-			<div role="tabpanel" class="tab-pane fade" id="fundingqna" aria-labelledby="fundingqna-tab"> 
-				<p>펀딩Q&A</p> 
+			<div role="tabpanel" class="tab-pane fade" id="allUserList" aria-labelledby="allUserList-tab"> 
+				<p>전체회원보기</p> 
 			</div>
 			<div role="tabpanel" class="tab-pane fade" id="message" aria-labelledby="message-tab"> 
 				<p>메세지</p> 
@@ -236,5 +237,6 @@ $(document).ready(function(){
 	</div>
 <!-- 풋터 -->
 <c:import url="/resources/module/footer.jsp"/>
+</div>
 </body>
 </html>

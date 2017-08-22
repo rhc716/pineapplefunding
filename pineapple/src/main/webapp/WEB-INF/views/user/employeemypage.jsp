@@ -24,6 +24,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lbr.css" />
 </head>
 <body>
+<div class="container">
 <!--로그인 버튼 -->
 	<c:import url="/resources/module/toploginandlogo.jsp"/>
 <!-- 상단메뉴 -->
@@ -36,7 +37,7 @@
 				<a data-target="#investorinfo" id="investorinfo-tab" role="tab" data-toggle="tab" aria-controls="investorinfo" aria-expanded="true">내정보</a>
 			</li> 
 			<li role="presentation" class="">
-				<a data-target="#timeline" role="tab" id="timeline-tab" data-toggle="tab" aria-controls="timeline" aria-expanded="false">타임라인</a>
+				<a data-target="#insertEmployee" role="tab" id="#insertEmployee-tab" data-toggle="tab" aria-controls="#insertEmployee" aria-expanded="false">사원등록요청</a>
 			</li>
 			<li role="presentation" class="">
 				<a data-target="#fundingqna" role="tab" id="fundingqna-tab" data-toggle="tab" aria-controls="fundingqna" aria-expanded="false">펀딩Q&A</a>
@@ -53,8 +54,8 @@
 			<!-- 마이페이지 공통 모듈 -->
 			<c:import url="./mypageall.jsp"/>
 			</div> 
-			<div role="tabpanel" class="tab-pane fade" id="timeline" aria-labelledby="timeline-tab"> 
-				<p>타임라인</p> 
+			<div role="tabpanel" class="tab-pane fade" id="#insertEmployee" aria-labelledby="#insertEmployee-tab"> 
+				<p>사원등록요청</p> 
 			</div>
 			<div role="tabpanel" class="tab-pane fade" id="fundingqna" aria-labelledby="fundingqna-tab"> 
 				<p>펀딩Q&A</p> 
@@ -69,5 +70,6 @@
 	</div>
 <!-- 풋터 -->
 <c:import url="/resources/module/footer.jsp"/>
+</div>
 </body>
 </html>
