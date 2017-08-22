@@ -71,7 +71,7 @@
 						  						'<div class=\'col-xs-8\'>'+
 						  							'<input name=\'reQnaCode\' type=\'hidden\' value=\''+msg[i].qnaCode+'\'>'+
 						  							'<input name=\'qnaReId\' type=\'hidden\' value=\'${id}\'>'+
-						  							'<textarea class=\'form-control\' name=\'qnaReContent\' rows=\'3\' style=\'width\: 100%; height\: 100px; resize\: none;  padding\:0px;\' placeholder=\'답변을 입력해주세요\'></textarea>'+
+						  							'<textarea class=\'form-control\' name=\'qnaReContent\' rows=\'3\' style=\'width\: 100%; height\: 100px; resize\: none;\' placeholder=\'답변을 입력해주세요\'></textarea>'+
 						  						'</div>'+
 				  								'<div class=\'col-xs-4\' style=\'text-align\:left; padding\:0px;\'>'+
 				  									'<button id=\'answerbtn\' style=\'width\: 50%; height\: 100px; padding\:0px; border\:1px solid; font-size\:20px;\'>답변등록하기</button>'+

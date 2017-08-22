@@ -43,7 +43,29 @@
 		<h1>TIME LINE</h1>
 	</div>
 	<div class="col-xs-12">
-		
+		<div class="col-xs-9">
+			<input type="text" class="form-control" placeholder="타임라인을 등록해주세요" style="width: 100%; height: 40px; margin-bottom: 10px;">
+		</div>
+		<div class="col-xs-3">
+			<button style="width: 100%;height: 40px;font-size: 30px;border: 1px solid;">게시하기</button>
+		</div>
+		<div class="col-xs-12">
+			<h2 style="text-align: center;">TIME LINE LIST</h2>
+			<div class="col-xs-12">
+				<div class="col-xs-12">
+				ID or COMPANYNAME AND TIME
+				</div>
+				<div class="col-xs-12">
+				TIMELINE TITLE
+				</div>
+				<div class="col-xs-12">
+				TIMELINE CONTENT
+				</div>
+				<div class="col-xs-12">
+				TIMELINE FOOTER
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 <!-- 풋터 -->

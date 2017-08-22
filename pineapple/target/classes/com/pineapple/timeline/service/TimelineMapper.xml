@@ -3,5 +3,23 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.pineapple.invest.service.TimelineMapper">
-
+<!-- 타임라인 메인 페이지 에서 list 조회 -->
+<!-- 	<select id="">
+		SELECT t.tlCode,
+			   t.tlTitle,
+			   t.tlContent,
+			   t.tlTime,
+			   u.name,
+			   e.emRankCode,
+			   e.emComName,
+			   (SELECT COUNT(tlCode) FROM timelinelike WHERE tlCode = t.tlCode) as timelinelikecount,
+			   tl.tlLikeId 
+		FROM timeline t 
+		LEFT JOIN user u 
+		ON t.tlId = u.userId 
+		LEFT JOIN employee e 
+		ON u.userId = e.emUserId 
+		LEFT JOIN timelinelike tl 
+		ON tl.tlCode = t.tlCode
+	</select> -->
 </mapper>
