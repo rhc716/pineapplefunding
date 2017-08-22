@@ -12,7 +12,7 @@
 	<c:when test="${not empty sessionScope.userLogin }">
 		<div class="row navbar">
 			<ul class="navbar_pine"><a href="/pineapple">PineApple</a></ul>
-			<ul class="navbar_menuleft"><a href="">타임라인</a></ul>
+			<ul class="navbar_menuleft"><a href="/pineapple/timelinemain.timeline">타임라인</a></ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/investmain.invest">투자하기</a></ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/pmsmain.pms">프로젝트관리</a></ul>
 			<ul class="navbar_menuright">이용안내</ul>
@@ -22,7 +22,7 @@
 	<c:otherwise>
 		<div class="row navbar">
 			<ul class="navbar_pine"><a href="/pineapple">PineApple</a></ul>
-			<ul class="navbar_menuleft"><a href="">타임라인</a></ul>
+			<ul class="navbar_menuleft"><a href="/pineapple/timelinemain.timeline">타임라인</a></ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/investmain.invest">투자하기</a></ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/pmsmain.pms">프로젝트관리</a></ul>
 			<ul class="navbar_menuright">이용안내</ul>

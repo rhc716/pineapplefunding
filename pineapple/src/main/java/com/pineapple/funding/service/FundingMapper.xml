@@ -231,6 +231,14 @@
 						ON u.userId = e.emUserId
 						WHERE u.userId = #{userId})
 	</select>
+	
+	<!-- 펀딩 포스터이미지 수정 -->
+	<update id="updateFundingImage" parameterType="java.util.Map">
+		UPDATE funding
+		SET
+		posterImg=#{posterImg}
+		WHERE fdCode = #{fdCode}
+	</update>
 </mapper>
 
  

@@ -2,6 +2,7 @@ package com.pineapple.funding.service;
 
 import java.util.List;
 
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pineapple.invest.service.Investment;
@@ -29,4 +30,5 @@ public interface FundingServiceInterface {
 	List<Investment> getFundingInvestorList(int fdCode);
 	List<Company> getComList(String userId);
 	void addFunding(Funding funding);
+	void modifyFundingImage(Model model);
 }

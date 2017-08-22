@@ -59,7 +59,7 @@ $(document).ready(function(){
 						'<div class="container-fluid fundinglistbox">'
 						+'<input type="hidden" readonly="readonly" value="'+msg[i].fdCode+'">'
 						+'<div class="fundinglistboxtop">'
-						+'<h3>펀딩명 : '+msg[i].fdTitle+'</h3><br>'
+						+'<h3>'+msg[i].fdTitle+'</h3><br>'
 						+'<b>펀딩상태 : '+msg[i].fdStatus+'</b><br>펀딩개설자 : '+msg[i].fdPublisher
 						+'개설요청일 : '+formatDate(msg[i].fdDate)+'</div>'
 						+'<div class="fundinglistboxbottom">'
@@ -104,8 +104,6 @@ $(document).ready(function(){
 						+'<input type="text" class="form-control" name="projectStartDate" value="'+formatDate(msg[i].projectStartDate)+'"><br>'
 						+'프로젝트 마감일'
 						+'<input type="text" class="form-control" name="projectEndDate" value="'+formatDate(msg[i].projectEndDate)+'"><br>'
-						+'<!-- 펀딩 포스터 이미지 업로드'
-						+'<input type="file" class="form-control" name="imageUpload"><br> -->'
 						+'<button type="submit" class="btn btn-success">수정완료</button>'
 				    	+'</form>'
 				    	+'</div>'
@@ -117,7 +115,7 @@ $(document).ready(function(){
 				$('#myfundinglist').append(
 						'<div class="container-fluid fundinglistbox">'
 						+'<div class="fundinglistboxtop">'
-						+'<h3>펀딩명 : '+msg[i].fdTitle+'</h3><br>'
+						+'<h3>'+msg[i].fdTitle+'</h3><br>'
 						+'<b>펀딩상태 : '+msg[i].fdStatus+'</b><br>펀딩개설자 : '+msg[i].fdPublisher
 						+'개설요청일 : '+formatDate(msg[i].fdDate)+'</div>'
 						+'<div class="fundinglistboxbottom">'

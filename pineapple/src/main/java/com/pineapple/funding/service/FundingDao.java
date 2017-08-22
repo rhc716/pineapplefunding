@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.ui.Model;
 
 import com.pineapple.invest.service.Investment;
 import com.pineapple.user.service.Company;
@@ -177,5 +178,12 @@ public class FundingDao implements FundingDaoInterface {
 	public List<Company> selectComList(String userId) {
 		log.debug("FundingDao의 selectComList호출 성공");
 		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectComList", userId);
+	}
+	
+	// 펀딩 포스터 이미지 수정
+	@Override
+	public void updateFundingImage(Model model) {
+		log.debug("FundingDao의 updateFundingImage호출 성공");
+		sqlSessionTemplate.update("com.pineapple.funding.service.FundingMapper.updateFundingImage", model);
 	}
 }

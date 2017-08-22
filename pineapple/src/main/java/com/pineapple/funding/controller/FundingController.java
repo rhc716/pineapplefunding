@@ -121,23 +121,22 @@ public class FundingController {
 		log.debug("FundingController의 myFundingInvestorListPage호출 성공");
 		return "pms/companyuser/myfundinginvestorlist";
 	}
-
+	
+	//펀딩 포스터이미지 관리 페이지 요청
+	@RequestMapping(value = "/myfundingposterimgpage.pms", method = RequestMethod.GET)
+	public String myFundingPosterImgPage(Locale locale, Model model) {
+		log.debug("FundingController의 myFundingPosterImgPage호출 성공");
+		return "pms/companyuser/myfundingposterimg";
+	}
 ////////////////////////////////////////////////위에는///페이지요청//////////////////////////////////////////////////////
 	
 	// 펀딩개설요청 ( 기업회원 경영자 )
 	@RequestMapping(value = "/addfunding.pms", method = RequestMethod.POST)
-	public String addFunding(Funding funding, Model model, Locale locale, MultipartFile imageUpload, MultipartHttpServletRequest request) {
+	public String addFunding(Funding funding, Model model, Locale locale) {
 		log.debug("FundingController의 addFunding호출 성공");
 		log.debug("funding : " + funding);
-		log.debug("imageUpload : " + imageUpload);
 		
-		//log.debug(imageUpload);
-		//포스터 이미지를 먼져 업로드시킴
-		//String result = fileutil.fileUpload(request, imageUpload);
-		//파일경로+파일명을 리턴받아 펀딩객체에 set해줌
-		//funding.setPosterImgName(result);
-		//펀딩을 DB에 insert해줌
-		//service.addFunding(funding);
+		service.addFunding(funding);
 		return "redirect:/myfundinglistpage.pms";
 	}
 	
@@ -337,4 +336,15 @@ public class FundingController {
 		return service.getComList(userId);
 	}
 	
+	// 펀딩 포스터 이미지수정
+	@RequestMapping(value = "/modifyfundingimage.pms", method = RequestMethod.POST)
+	public String modifyFundingImage(Model model, Locale locale, Funding funding) {
+		log.debug("FundingController의 modifyFundingImage호출 성공");
+		log.debug("funding : " + funding);
+		model.addAttribute("posterImg", funding.getPosterImg());
+		model.addAttribute("fdCode", funding.getFdCode());
+		service.modifyFundingImage(model);
+		model.addAttribute("posterImg", null);
+		return "redirect:/myfundingposterimgpage.pms";
+	}
 }

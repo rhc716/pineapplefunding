@@ -98,8 +98,6 @@ $(document).ready(function(){
 					<input type="text" class="form-control" name="projectStartDate"><br>
 					프로젝트 마감일
 					<input type="text" class="form-control" name="projectEndDate"><br>
-					펀딩 포스터 이미지 업로드
-					<input type="file" class="form-control" name="imageUpload" ><br>
 						<!-- 히든값으로 펀딩개설자 name를 세션에서받아서 넣어줌 -->
 					<input type="hidden" class="form-control" name="fdPublisher" value="id01@maver.com">
 					<button type="submit"  class="btn btn-success">입력완료</button>

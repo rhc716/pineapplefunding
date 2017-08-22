@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pineapple.invest.service.Investment;
@@ -172,6 +173,13 @@ public class FundingService implements FundingServiceInterface {
 	public List<Company> getComList(String userId) {
 		log.debug("FundingService의 getComList호출 성공");
 		return fundingdao.selectComList(userId);
+	}
+	
+	// 펀딩 포스터 이미지수정
+	@Override
+	public void modifyFundingImage(Model model) {
+		log.debug("FundingService의 modifyFundingImage호출 성공");
+		fundingdao.updateFundingImage(model);
 	}
 }
  

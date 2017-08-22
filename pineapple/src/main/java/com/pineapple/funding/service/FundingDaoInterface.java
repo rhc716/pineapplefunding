@@ -3,6 +3,8 @@ package com.pineapple.funding.service;
 
 import java.util.List;
 
+import org.springframework.ui.Model;
+
 import com.pineapple.invest.service.Investment;
 import com.pineapple.user.service.Company;
 import com.pineapple.user.service.Employee;
@@ -30,4 +32,5 @@ public interface FundingDaoInterface {
 	void deleteFundingDividendPaln(int divCode);
 	List<Investment> selectFundingInvestorList(int fdCode);
 	List<Company> selectComList(String userId);
+	void updateFundingImage(Model model);
 }

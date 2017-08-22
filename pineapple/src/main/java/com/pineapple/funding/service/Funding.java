@@ -14,11 +14,7 @@ public class Funding {
 	private String fdStatus;
 	private String projectStartDate;
 	private String projectEndDate;
-	private String posterImgName;
-	private String posterImgExtension;
-	private int posterImgWidth;
-	private int posterImgHeight;
-	private int posterImgSize;
+	private String posterImg;
 	private String fdPublisher;
 	private int adminApproval;
 	private String fdApprovalDate;
@@ -102,35 +98,11 @@ public class Funding {
 	public void setProjectEndDate(String projectEndDate) {
 		this.projectEndDate = projectEndDate;
 	}
-	public String getPosterImgName() {
-		return posterImgName;
+	public String getPosterImg() {
+		return posterImg;
 	}
-	public void setPosterImgName(String posterImgName) {
-		this.posterImgName = posterImgName;
-	}
-	public String getPosterImgExtension() {
-		return posterImgExtension;
-	}
-	public void setPosterImgExtension(String posterImgExtension) {
-		this.posterImgExtension = posterImgExtension;
-	}
-	public int getPosterImgWidth() {
-		return posterImgWidth;
-	}
-	public void setPosterImgWidth(int posterImgWidth) {
-		this.posterImgWidth = posterImgWidth;
-	}
-	public int getPosterImgHeight() {
-		return posterImgHeight;
-	}
-	public void setPosterImgHeight(int posterImgHeight) {
-		this.posterImgHeight = posterImgHeight;
-	}
-	public int getPosterImgSize() {
-		return posterImgSize;
-	}
-	public void setPosterImgSize(int posterImgSize) {
-		this.posterImgSize = posterImgSize;
+	public void setPosterImg(String posterImg) {
+		this.posterImg = posterImg;
 	}
 	public String getFdPublisher() {
 		return fdPublisher;
@@ -174,12 +146,12 @@ public class Funding {
 				+ closeDate + ", minInterestRate=" + minInterestRate
 				+ ", fdType=" + fdType + ", fdStatus=" + fdStatus
 				+ ", projectStartDate=" + projectStartDate + ", projectEndDate="
-				+ projectEndDate + ", posterImgName=" + posterImgName
-				+ ", posterImgExtension=" + posterImgExtension
-				+ ", posterImgWidth=" + posterImgWidth + ", posterImgHeight="
-				+ posterImgHeight + ", posterImgSize=" + posterImgSize
-				+ ", fdPublisher=" + fdPublisher + ", adminApproval="
-				+ adminApproval + ", fdApprovalDate=" + fdApprovalDate
-				+ ", fdApprovalId=" + fdApprovalId + ", fdDate=" + fdDate + "]";
+				+ projectEndDate + ", posterImg=" + posterImg + ", fdPublisher="
+				+ fdPublisher + ", adminApproval=" + adminApproval
+				+ ", fdApprovalDate=" + fdApprovalDate + ", fdApprovalId="
+				+ fdApprovalId + ", fdDate=" + fdDate + "]";
 	}
+	
+
+	
 }
