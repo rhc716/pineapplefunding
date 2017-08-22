@@ -64,7 +64,7 @@ $(document).ready(function(){
 						'<div class="container-fluid fundinglistbox">'
 						+'<input type="hidden" readonly="readonly" value="'+msg[i].fdCode+'">'
 						+'<div class="fundinglistboxtop">'
-						+'<h3>펀딩명 : '+msg[i].fdTitle+'</h3><br>'
+						+'<h3>'+msg[i].fdTitle+'</h3><br>'
 						+'<b>펀딩상태 : '+msg[i].fdStatus+'</b><br>펀딩개설자 : '+msg[i].fdPublisher
 						+'개설요청일 : '+formatDate(msg[i].fdDate)+'</div>'
 						+'<div class="fundinglistboxbottom">'
