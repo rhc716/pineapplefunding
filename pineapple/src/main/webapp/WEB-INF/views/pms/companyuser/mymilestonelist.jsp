@@ -52,7 +52,6 @@ $(document).ready(function(){
 						+'<td><button type="button" class="btn btn-sm btn-danger deletebtn">삭제</button></td>'
 						+'<input type="hidden" value="'+msg[i].milestoneCode+'">'
 					+'</tr>'
-					
 				);
 			
 				$('#modalarea').append(
@@ -236,7 +235,6 @@ $(document).ready(function(){
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-md-9">
-				<div class="col-md-9">
 					<span>
 						<b> 마일스톤 삭제는 펀딩개설 승인 전까지만 가능합니다.</b><br><br>
 					</span>
@@ -251,7 +249,6 @@ $(document).ready(function(){
 						</tr>
 						<!-- 마일스톤 리스트 뿌려질 곳 -->						
 					</table>
-				</div>
 	</div>
 	
 				<!-- 모달뿌려질곳  -->

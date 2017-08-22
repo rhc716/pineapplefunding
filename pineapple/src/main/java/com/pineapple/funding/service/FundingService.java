@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.pineapple.invest.service.Investment;
+import com.pineapple.user.service.Company;
 import com.pineapple.user.service.Employee;
 
 
@@ -100,6 +102,7 @@ public class FundingService implements FundingServiceInterface {
 		fundingdao.deleteMileStone(delMsCode);
 	}
 	// 펀딩파일 업로드정보 저장
+	@Override
 	public void addFundingFile(MultipartFile uploadFile, String result, int fdCode) {
 		log.debug("FundingService의 addFundingFile호출 성공");
 		int fileFdCode = fdCode;
@@ -123,9 +126,52 @@ public class FundingService implements FundingServiceInterface {
 	}
 	
 	// 펀딩파일 업로드 리스트 가져오기
+	@Override
 	public List<FundingAndFdFile> getFundingFileList(String userId) {
 		log.debug("FundingService의 getFundingFileList호출 성공");
 		return fundingdao.selectFundingFileList(userId);
+	}
+	
+	// 펀딩파일 삭제
+	@Override
+	public void removeFundingFile(int fdFileCode) {
+		log.debug("FundingService의 removeFundingFile호출 성공");
+		fundingdao.deleteFundingFile(fdFileCode);
+	}
+	
+	// 펀딩배당계획 입력
+	@Override
+	public void addDividendPlan(FundingDividendPlan fundingdividendplan) {
+		log.debug("FundingService의 addDividendPlan호출 성공");
+		fundingdao.insertDividendPlan(fundingdividendplan);
+	}
+	
+	// 펀딩배당계획 리스트 가져오기
+	@Override
+	public List<FundingDividendPlan> getFundingDividendPalnList(int fdCode) {
+		log.debug("FundingService의 getFundingDividendPalnList호출 성공");
+		return fundingdao.selectFundingDividendPalnList(fdCode);
+	}
+	
+	// 펀딩배당계획 삭제
+	@Override
+	public void removeFundingDividendPaln(int divCode) {
+		log.debug("FundingService의 removeFundingDividendPaln호출 성공");
+		fundingdao.deleteFundingDividendPaln(divCode);
+	}
+	
+	// 펀딩별 투자자 리스트 불러오기
+	@Override
+	public List<Investment> getFundingInvestorList(int fdCode) {
+		log.debug("FundingService의 getFundingInvestorList호출 성공");
+		return fundingdao.selectFundingInvestorList(fdCode);
+	}
+	
+	// 펀딩생성에서 사용할 회사정보 가져오기
+	@Override
+	public List<Company> getComList(String userId) {
+		log.debug("FundingService의 getComList호출 성공");
+		return fundingdao.selectComList(userId);
 	}
 }
  

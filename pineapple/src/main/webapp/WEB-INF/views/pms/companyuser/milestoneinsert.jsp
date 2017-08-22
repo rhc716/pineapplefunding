@@ -92,6 +92,7 @@ $(document).ready(function(){
 		
 		selectemployee.fail(function(){
 			alert('펀딩을 선택해주세요');
+			document.location.reload();
 		});
 	});
 	
@@ -119,9 +120,7 @@ $(document).ready(function(){
 	<div class="col-md-3">
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
-	<div class="col-md-9">	
-		<div class="col-md-1"></div>
-			<div class="col-md-7">
+	<div class="col-md-9">
 			<span>
 				<b> 마일스톤은 관리자 승인전까지 추가 입력 가능하고<br> 모집시작부터는 수정만 가능합니다.</b><br><br>
 			</span>
@@ -144,7 +143,6 @@ $(document).ready(function(){
 					<input type="hidden" id="msComCode" name="msComCode" value="">
 					<button type="submit" class="btn btn-success">입력완료</button>
 				</form>
-			</div>
 			
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
@@ -163,10 +161,6 @@ $(document).ready(function(){
       
     </div>
   </div>
-
-
-			
-		<div class="col-md-1"></div>
 	</div>
 </div>
 <!-- 풋터 -->

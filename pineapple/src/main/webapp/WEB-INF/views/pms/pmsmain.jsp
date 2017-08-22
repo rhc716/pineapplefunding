@@ -39,16 +39,8 @@
 	<div class="col-md-3">
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-9">
 		<h1>프로젝트관리 메인페이지 입니다</h1>
-	</div>
-	<div class="col-md-3">
-	    <div class="btn-group btn-group-justified">
-		    
-		</div>
-		<br>
-		<div class="btn-group btn-group-justified">
-		</div>
 	</div>
 	
 	

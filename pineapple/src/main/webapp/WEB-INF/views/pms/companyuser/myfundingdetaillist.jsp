@@ -124,18 +124,10 @@ $(document).ready(function(){
 	<div class="col-md-3">
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
-	<div class="col-md-9">
-			<div class="col-md-1">
-			</div>
-				<div class="col-md-7" id="myfundinglist">
+	<div class="col-md-9" id="myfundinglist">
 <!-- 펀딩 리스트 뿌려질 곳 -->
 					
-<!-- 펀딩 리스트 뿌려질 곳 -->
-				</div>
 	</div>
-			<div class="col-md-1">
-			</div>
-
 </div>
 
 <!-- 풋터 -->

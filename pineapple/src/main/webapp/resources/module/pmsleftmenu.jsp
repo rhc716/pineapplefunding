@@ -18,9 +18,11 @@
 	<ul>
 		<li><a href="">펀딩관리</a>
 			<ul>
-		  		<li><a href="/pineapple/fundinginsert.pms">펀딩개설</a>
-		  		<li><a href="/pineapple/myfundinglistpage.pms">펀딩조회</a>
-		  		<li><a href="/pineapple/myfundingdetaillist.pms">펀딩상세관리</a>
+		  		<li><a href="/pineapple/fundinginsert.pms">펀딩개설</a></li>
+		  		<li><a href="/pineapple/myfundinglistpage.pms">펀딩조회</a></li>
+		  		<li><a href="/pineapple/myfundingdetaillist.pms">펀딩상세관리</a></li>
+		  		<li><a href="/pineapple/myfundingdividendplan.pms">펀딩배당계획관리</a></li>
+		  		<li><a href="/pineapple/myfundinginvestorlistpage.pms">펀딩투자자조회</a></li>
 			</ul>
 		</li>
 		<li><a href="">마일스톤관리</a>

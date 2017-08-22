@@ -56,6 +56,8 @@ $(document).ready(function(){
 				+'<td>'+number_to_human_size(msg[i].fdFileSize)+'</td>'
 				+'<td><a href="calldownload.pms?fileFullPath='+msg[i].fdFileUploadName+'">'
 				+'<button type="button" class="btn btn-sm btn-success">다운로드</button></a></td>'
+				+'<td><a href="deletefundingfile.pms?fileFullPath='+msg[i].fdFileUploadName+'&fdFileCode='+msg[i].fdFileCode+'">'
+				+'<button type="button" class="btn btn-sm btn-danger">삭제</button></a></td>'
 			+'</tr>'
 		);
 	}
@@ -82,23 +84,18 @@ $(document).ready(function(){
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-md-9">
-			<div class="col-md-1">
-			</div>
-				<div class="col-md-7">
-					<table class="table" id="myfundingfilelist">
-						<tr>
-							<td>펀딩명</td>
-							<td>보고서명</td>
-							<td>보고서확장자</td>
-							<td>보고서용량</td>
-							<td>다운로드</td>
-						</tr>
-						<!-- 리스트 뿌려질 곳 -->					
-					</table>
-				</div>
+		<table class="table" id="myfundingfilelist">
+			<tr>
+				<td>펀딩명</td>
+				<td>보고서명</td>
+				<td>보고서확장자</td>
+				<td>보고서용량</td>
+				<td>다운로드</td>
+				<td>삭제</td>
+			</tr>
+			<!-- 리스트 뿌려질 곳 -->					
+		</table>
 	</div>
-			<div class="col-md-1">
-			</div>
 
 </div>
 

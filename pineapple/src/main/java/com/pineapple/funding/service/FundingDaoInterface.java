@@ -3,6 +3,8 @@ package com.pineapple.funding.service;
 
 import java.util.List;
 
+import com.pineapple.invest.service.Investment;
+import com.pineapple.user.service.Company;
 import com.pineapple.user.service.Employee;
 
 public interface FundingDaoInterface {
@@ -22,4 +24,10 @@ public interface FundingDaoInterface {
 	void deleteMileStone(int delMsCode);
 	void insertFundingFile(FundingAndFdFile file);
 	List<FundingAndFdFile> selectFundingFileList(String userId);
+	void deleteFundingFile(int fdFileCode);
+	void insertDividendPlan(FundingDividendPlan fundingdividendplan);
+	List<FundingDividendPlan> selectFundingDividendPalnList(int fdCode);
+	void deleteFundingDividendPaln(int divCode);
+	List<Investment> selectFundingInvestorList(int fdCode);
+	List<Company> selectComList(String userId);
 }

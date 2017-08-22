@@ -8,6 +8,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.pineapple.invest.service.Investment;
+import com.pineapple.user.service.Company;
 import com.pineapple.user.service.Employee;
 
 @Repository
@@ -133,5 +135,47 @@ public class FundingDao implements FundingDaoInterface {
 	public List<FundingAndFdFile> selectFundingFileList(String userId) {
 		log.debug("FundingDao의 selectFundingFileList호출 성공");
 		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectFundingFileList", userId);
+	}
+	
+	// 펀딩파일 삭제
+	@Override
+	public void deleteFundingFile(int fdFileCode) {
+		log.debug("FundingDao의 deleteFundingFile호출 성공");
+		sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.deleteFundingFile", fdFileCode);
+	}
+	
+	// 펀딩배당계획 입력
+	@Override
+	public void insertDividendPlan(FundingDividendPlan fundingdividendplan) {
+		log.debug("FundingDao의 insertDividendPlan호출 성공");
+		sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.insertDividendPlan", fundingdividendplan);
+	}
+	
+	// 펀딩배당계획 리스트 가져오기	
+	@Override
+	public List<FundingDividendPlan> selectFundingDividendPalnList(int fdCode) {
+		log.debug("FundingDao의 selectFundingDividendPalnList호출 성공");
+		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectFundingDividendPalnList", fdCode);
+	}
+	
+	// 펀딩배당계획 삭제
+	@Override
+	public void deleteFundingDividendPaln(int divCode) {
+		log.debug("FundingDao의 deleteFundingDividendPaln호출 성공");
+		sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.deleteFundingDividendPaln", divCode);
+	}
+	
+	// 펀딩별 투자자 리스트 불러오기
+	@Override
+	public List<Investment> selectFundingInvestorList(int fdCode) {
+		log.debug("FundingDao의 selectFundingInvestorList호출 성공");
+		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectFundingInvestorList", fdCode);
+	}
+	
+	// 펀딩생성에서 사용할 회사정보 가져오기
+	@Override
+	public List<Company> selectComList(String userId) {
+		log.debug("FundingDao의 selectComList호출 성공");
+		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectComList", userId);
 	}
 }

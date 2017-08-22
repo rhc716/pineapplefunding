@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Component
-public class FileUpload {
+public class FileUtil {
 private Logger log = Logger.getLogger(this.getClass());
 String fileName = "";
     
@@ -85,4 +85,18 @@ String fileName = "";
         log.debug("UtilFile getSaveLocation path : " + uploadPath + attachPath);
         return uploadPath + attachPath;
 	}
+    
+    
+// 		파일 삭제 메소드
+    
+    public String deleteFile(String fileFullPath){
+    	log.debug("FileUtil의 deleteFile호출 성공");
+    	log.debug("fileFullPath : " + fileFullPath);
+    	File file = new File(fileFullPath);
+    	if(file.exists()) {
+    	      file.delete();
+    	      return "파일 삭제완료";
+    	}
+    	return "파일 삭제안됨";
+    }
 }

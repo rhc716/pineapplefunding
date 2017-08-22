@@ -24,11 +24,14 @@ import com.pineapple.funding.service.Funding;
 import com.pineapple.funding.service.FundingAndFdDetail;
 import com.pineapple.funding.service.FundingAndMileStone;
 import com.pineapple.funding.service.FundingDetail;
+import com.pineapple.funding.service.FundingDividendPlan;
 import com.pineapple.funding.service.FundingAndFdFile;
 import com.pineapple.funding.service.FundingService;
 import com.pineapple.funding.service.MileStone;
+import com.pineapple.invest.service.Investment;
+import com.pineapple.user.service.Company;
 import com.pineapple.user.service.Employee;
-import com.pineapple.util.FileUpload;
+import com.pineapple.util.FileUtil;
 
 
 
@@ -42,7 +45,7 @@ public class FundingController {
     private FundingService service;
 	
 	@Autowired
-	private FileUpload fileupload;
+	private FileUtil fileutil;
 	
 	// pmsmain.jsp 뷰 요청
 	@RequestMapping(value = "/pmsmain.pms", method = RequestMethod.GET)
@@ -103,16 +106,39 @@ public class FundingController {
 		log.debug("FundingController의 fundingFileListPage호출 성공");
 		return "pms/companyuser/fundingfilelist";
 	}
+	
+	//펀딩배당계획관리 페이지 요청
+	
+	@RequestMapping(value = "/myfundingdividendplan.pms", method = RequestMethod.GET)
+	public String myFundingDividendPlan(Locale locale, Model model) {
+		log.debug("FundingController의 myFundingDividendPlan호출 성공");
+		return "pms/companyuser/myfundingdividendplan";
+	}
+	
+	//펀딩투자자조회 페이지 요청
+	@RequestMapping(value = "/myfundinginvestorlistpage.pms", method = RequestMethod.GET)
+	public String myFundingInvestorListPage(Locale locale, Model model) {
+		log.debug("FundingController의 myFundingInvestorListPage호출 성공");
+		return "pms/companyuser/myfundinginvestorlist";
+	}
 
 ////////////////////////////////////////////////위에는///페이지요청//////////////////////////////////////////////////////
 	
 	// 펀딩개설요청 ( 기업회원 경영자 )
-	@RequestMapping(value = "/wbsplanetcinsert.pms", method = RequestMethod.POST)
-	public String addFunding(Funding funding, Model model, Locale locale) {
+	@RequestMapping(value = "/addfunding.pms", method = RequestMethod.POST)
+	public String addFunding(Funding funding, Model model, Locale locale, MultipartFile imageUpload, MultipartHttpServletRequest request) {
 		log.debug("FundingController의 addFunding호출 성공");
 		log.debug("funding : " + funding);
-		service.addFunding(funding);
-		return "redirect:/pmsmain.pms";
+		log.debug("imageUpload : " + imageUpload);
+		
+		//log.debug(imageUpload);
+		//포스터 이미지를 먼져 업로드시킴
+		//String result = fileutil.fileUpload(request, imageUpload);
+		//파일경로+파일명을 리턴받아 펀딩객체에 set해줌
+		//funding.setPosterImgName(result);
+		//펀딩을 DB에 insert해줌
+		//service.addFunding(funding);
+		return "redirect:/myfundinglistpage.pms";
 	}
 	
 	// 내가 소속된 회사 펀딩 리스트 불러오기 ( 기업회원 )
@@ -211,7 +237,7 @@ public class FundingController {
 		log.debug("FundingController의 removeMileStone호출 성공");
 		log.debug("delMsCode : " + delMsCode);
 		service.removeMileStone(delMsCode);
-		return "pms/companyuser/mymilestonelist";
+		return "redirect:/mymilestonelist.pms";
 		
 	}
 	
@@ -223,7 +249,7 @@ public class FundingController {
 		log.debug("filename : "+uploadFile.getOriginalFilename());
 		log.debug("filesize : "+uploadFile.getSize());
 		//리턴값으로 업로드된 경로+파일명을 가져온다.
-		String result = fileupload.fileUpload(request, uploadFile);
+		String result = fileutil.fileUpload(request, uploadFile);
 		log.debug("result : "+result);
 		//업로드된 경로+파일명 그리고 나머지 정보를 DB에 저장해줌
 		service.addFundingFile(uploadFile, result, fdCode);
@@ -239,7 +265,7 @@ public class FundingController {
 	}
 	
 	
-	// 파일 다운로드 요청
+	// 펀딩파일 다운로드 요청
 	@RequestMapping(value = "/calldownload.pms")
 	public ModelAndView callDownload(@RequestParam("fileFullPath") String fileFullPath, 
 	            HttpServletRequest request, 
@@ -251,6 +277,64 @@ public class FundingController {
 	        throw new Exception("File can't read(파일을 찾을 수 없습니다)");
 	    }
 	    return new ModelAndView("fileDownloadView", "downloadFile",downloadFile);
+	}
+	
+	// 펀딩파일 삭제
+	@RequestMapping(value = "/deletefundingfile.pms")
+	public String removeFundingFile(@RequestParam("fileFullPath") String fileFullPath, @RequestParam("fdFileCode") int fdFileCode) throws Exception {
+		log.debug("FundingController의 removeFundingFile호출 성공");
+	    log.debug("fileFullPath : "+ fileFullPath);
+	    log.debug("fdFileCode : "+ fdFileCode);
+	    //실제파일 삭제
+	    String result = fileutil.deleteFile(fileFullPath);
+	    log.debug("result : "+ result);
+	    //DB에서 삭제
+	    service.removeFundingFile(fdFileCode);
+	    
+	    return "redirect:/fundingfilelistpage.pms";
+	}
+	
+	// 펀딩배당계획 입력
+	@RequestMapping(value = "/adddividendplan.pms", method = RequestMethod.POST)
+	public String addDividendPlan(FundingDividendPlan fundingdividendplan, Model model, Locale locale) {
+		log.debug("FundingController의 addDividendPlan호출 성공");
+		log.debug("fundingdividendplan : " + fundingdividendplan);
+		service.addDividendPlan(fundingdividendplan);
+		return "redirect:/myfundingdividendplan.pms";
+	}
+	
+	// 펀딩배당계획 리스트 가져오기
+	@RequestMapping(value = "/getfundingdividendpalnlist.pms", method = RequestMethod.GET)
+	public @ResponseBody List<FundingDividendPlan> getFundingDividendPalnList(Model model, Locale locale, @RequestParam("fdCode") int fdCode) {
+		log.debug("FundingController의 getFundingDividendPalnList호출 성공");
+		log.debug("fdCode : " + fdCode);
+		return service.getFundingDividendPalnList(fdCode);
+	}
+	
+	// 펀딩배당계획 삭제
+	@RequestMapping(value = "/removefundingdividendpaln.pms", method = RequestMethod.GET)
+	public String removeFundingDividendPaln(Model model, Locale locale, @RequestParam("divCode") int divCode) {
+		log.debug("FundingController의 removeFundingDividendPaln호출 성공");
+		log.debug("divCode : " + divCode);
+		service.removeFundingDividendPaln(divCode);
+		return "redirect:/myfundingdividendplan.pms";
+		
+	}
+	
+	// 펀딩별 투자자 리스트 불러오기
+	@RequestMapping(value = "/getfundinginvestorlist.pms", method = RequestMethod.GET)
+	public @ResponseBody List<Investment> getFundingInvestorList(Model model, Locale locale, @RequestParam("fdCode") int fdCode) {
+		log.debug("FundingController의 getFundingInvestorList호출 성공");
+		log.debug("fdCode : " + fdCode);
+		return service.getFundingInvestorList(fdCode);
+	}
+	
+	// 펀딩생성에서 사용할 회사정보 가져오기
+	@RequestMapping(value = "/getcomlist.pms", method = RequestMethod.GET)
+	public @ResponseBody List<Company> getComList(Model model, Locale locale, @RequestParam("userId") String userId) {
+		log.debug("FundingController의 getComList호출 성공");
+		log.debug("userId : " + userId);
+		return service.getComList(userId);
 	}
 	
 }

@@ -52,8 +52,7 @@ $(document).ready(function(){
 		}
 		
 		//alert(formatDate(msg[0].fdDate));
-		var msgleng = msg.length;
-		for(var i = 0; i<msgleng; i++){
+		for(var i = 0; i<msg.length; i++){
 			if(msg[i].fdStatus == "개설요청"){ // 개설요청중 -> 수정, 삭제 버튼이 나오게 함
 				$('#myfundinglist').append(
 						/* 펀딩리스트 폼, 모달 버튼  */
@@ -177,20 +176,12 @@ $(document).ready(function(){
 	<div class="col-md-3">
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
-	<div class="col-md-9">
-			<div class="col-md-1">
-			</div>
-				<div class="col-md-7" id="myfundinglist">
+	<div class="col-md-9" id="myfundinglist">
 				<span>
 					<b> 펀딩기본정보 수정 및 삭제는 펀딩개설 승인 전까지 가능합니다.</b><br><br>
 				</span>
 <!-- 펀딩 리스트 뿌려질 곳 -->
-					
-<!-- 펀딩 리스트 뿌려질 곳 -->
-				</div>
 	</div>
-			<div class="col-md-1">
-			</div>
 
 </div>
 

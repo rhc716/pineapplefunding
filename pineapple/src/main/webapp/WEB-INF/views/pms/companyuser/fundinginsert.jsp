@@ -26,6 +26,32 @@
 <!-- css rhc -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
 
+<script>
+/*******************회사코드, 회사명 select option채워줄 ajax  ********************/
+$(document).ready(function(){
+	var getcomlist = $.ajax({
+		type : "get",
+		url : "/pineapple/getcomlist.pms",
+		/* 아이디 세션에서 받아서 가져옴 */
+		data : { userId : "id01@maver.com" }
+	});
+	// 성공시
+	getcomlist.done(function(msg){
+		console.log(msg);
+		for(var i = 0; i<msg.length; i++){
+			$('#comList').append(
+				'<option value="'+msg[i].comCode+'">'+msg[i].comName+'</option>'
+			);
+		}
+	});
+	// 실패시
+	getcomlist.fail(function(){
+		alert('ajax요청실패');
+	});
+});	
+	
+</script>
+
 </head>
 <body>
 
@@ -43,16 +69,16 @@
 		<div class="col-md-1"></div>
 			<div class="col-md-7">
 			
-				<form action="/pineapple/wbsplanetcinsert.pms" method="post">
+				<form action="/pineapple/addfunding.pms" method="post" enctype="multipart/form-data">
 					펀딩형태
 					<select name="fdType">
 						<option value="채권">채권</option>
 						<option value="주식">주식</option>
 					</select><br><br>
 					회사명
-					<select name="fdComCode">
+					<select name="fdComCode" id="comList">
 						<!-- ajax요청으로 회사명과 회사코드를 각각 넣어줌  -->
-						<option value="1">xx회사</option>
+						<option value="null">선택하세요</option>
 					</select><br><br>			
 					펀딩명
 					<input type="text" class="form-control" name="fdTitle"><br>
@@ -72,8 +98,8 @@
 					<input type="text" class="form-control" name="projectStartDate"><br>
 					프로젝트 마감일
 					<input type="text" class="form-control" name="projectEndDate"><br>
-					<!-- 펀딩 포스터 이미지 업로드
-					<input type="file" class="form-control" name="imageUpload"><br> -->
+					펀딩 포스터 이미지 업로드
+					<input type="file" class="form-control" name="imageUpload" ><br>
 						<!-- 히든값으로 펀딩개설자 name를 세션에서받아서 넣어줌 -->
 					<input type="hidden" class="form-control" name="fdPublisher" value="id01@maver.com">
 					<button type="submit"  class="btn btn-success">입력완료</button>
