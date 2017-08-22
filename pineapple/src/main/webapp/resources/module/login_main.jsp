@@ -36,8 +36,8 @@
 			<p>로그인</p>
 			<form id="loginForm" action="/pineapple/login.user" class="login_up login_form" method="post">
 				<div class="login_insert">
-					<input type="text" class="login_id" name="id">
-					<input type="password" class="login_pw" name="pw">
+					<input type="text" class="login_id" name="id" value="id01@maver.com">
+					<input type="password" class="login_pw" name="pw" value="asdf1234">
 				</div>
 				<div class="login_btnsec">
 				<div class="login_save">
