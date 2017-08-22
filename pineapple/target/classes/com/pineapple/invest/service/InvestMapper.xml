@@ -52,6 +52,17 @@
 		<result property="qnaReContent" column="qnaReContent"/>
 		<result property="qnaReTime" column="qnaReTime"/>
 	</resultMap>
+	<!-- FundingQnaAndQnaReply -->
+	<resultMap type="com.pineapple.invest.service.FundingQnaAndQnaReply" id="getFundingQnaAndQnaReplyresult">
+		<result property="qnaFdCode" column="qnaFdCode"/>
+		<collection property="fundingQnaReply" resultMap="getFundingQnaReply">
+			<id property="qnaReCode" column="qnaReCode"/>
+			<result property="reQnaCode" column="reQnaCode"/>
+			<result property="qnaReId" column="qnaReId"/>
+			<result property="qnaReContent" column="qnaReContent"/>
+			<result property="qnaReTime" column="qnaReTime"/>
+		</collection>
+	</resultMap>
 	<!-- 투자하기 main 에서 사용하는 모집중인 펀딩 리스트 조회 쿼리 -->
 	<select id="getInvestAndFd" parameterType="java.util.Map" resultType="com.pineapple.invest.service.InvestAndFd">
 		SELECT  f.fdCode,
@@ -97,6 +108,12 @@
 		FROM fundingdetail fd 
 		WHERE fd.fdDetailCode = #{fdCode};
 	</select>
+	<!-- 펀딩 투자 예약하기 -->
+	<insert id="addinvestment">
+		INSERT INTO investment
+			   (investFdCode, investId, purchaseShares, investTime)
+		VALUES (#{investFdCode}, #{investId}, #{purchaseShares}, NOW())
+	</insert>
 	<!-- 하나의 펀딩의 Q&A정보 -->
  	<select id="getFundingQna" parameterType="INT" resultType="com.pineapple.invest.service.FundingQna">
 		SELECT fq.qnaCode,
@@ -110,13 +127,16 @@
 		ORDER BY fq.qnaFdTime DESC;
 	</select>
 	<!-- 하나의 펀딩 Q&A에 대한 댓글조회 -->
-	<select id="getFundingQnaReply" parameterType="INT" resultType="com.pineapple.invest.service.FundingQnaReply">
-		SELECT qnaReCode,
-			   reQnaCode,
-			   qnaReId,
-			   qnaReContent,
-			   qnaReTime 
-		FROM fundingqnareply
+	<select id="getFundingQnaAndQnaReply" parameterType="INT" resultMap="getFundingQnaAndQnaReplyresult">
+		SELECT fqr.qnaReCode,
+			   fqr.reQnaCode,
+			   fqr.qnaReId,
+			   fqr.qnaReContent,
+			   fqr.qnaReTime,
+			   fq.qnaFdCode 
+		FROM fundingqnareply fqr 
+		LEFT JOIN fundingqna fq 
+		ON fqr.reQnaCode = fq.qnaCode 
 		WHERE reQnaCode = #{qnaCode}
 		ORDER BY qnaReTime DESC
 	</select>
@@ -127,44 +147,37 @@
 		VALUES (#{qnaFdId}, #{qnaFdCode}, #{qnaFdTitle}, #{qnaFdContent}, NOW())
 	</insert>
 	<!-- 하나의 펀딩 Q&A 수정하기 -->
-	<update id="modifyFundingQna" parameterType="INT">
+	<update id="modifyFundingQna" parameterType="com.pineapple.invest.service.FundingQna">
 		UPDATE fundingqna
 			SET
-				qnaFdId='',
-				qnaFdCode=0,
-				qnaFdTitle='',
-				qnaFdContent='',
-				qnaFdTime=NOW()
+				qnaFdCode=#{qnaFdCode},
+				qnaFdTitle=#{qnaFdTitle},
+				qnaFdContent=#{qnaFdContent}
 		WHERE qnaCode=#{qnaCode}
 	</update>
-<!-- 	
- 	하나의 펀딩 Q&A 수정시 댓글수정
-	<update id="modifyFundingQna" parameterType="INT">
-		UPDATE fundingqna
-			SET
-				qnaFdId='',
-				qnaFdCode=0,
-				qnaFdTitle='',
-				qnaFdContent='',
-				qnaFdTime=NOW()
-		WHERE qnaCode=#{qnaCode}
-	</update>
-	 -->
-	 <!-- 하나의 펀딩 Q&A 댓글 삭제시 댓글삭제 -->
-	<delete id="removeFundingQnaAllReply">
+	 <!-- 하나의 펀딩 Q&A 글 삭제시 댓글삭제 -->
+	<delete id="removeFundingQnaAllReply" parameterType="INT">
 		DELETE FROM fundingqnareply WHERE reQnaCode=#{qnaCode}
 	</delete>
 	<!-- 하나의 펀딩 Q&A 삭제하기 -->
-	<delete id="removeFundingQna">
+	<delete id="removeFundingQna" parameterType="INT">
 		DELETE FROM fundingqna WHERE qnaCode=#{qnaCode}
 	</delete>
-
 	<!-- 하나의 펀딩 Q&A 댓글 입력하기 -->
 	<insert id="addFundingQnaReply" parameterType="com.pineapple.invest.service.FundingQna">
 		INSERT INTO fundingqnareply
 			   (reQnaCode, qnaReId, qnaReContent, qnaReTime)
 		VALUES (#{reQnaCode}, #{qnaReId}, #{qnaReContent}, NOW())
 	</insert>
-	
-
+	<!-- 하나의 펀딩 Q&A 댓글 수정하기 -->
+	<update id="modifyFundingQnaReply">
+		UPDATE fundingqnareply
+			SET
+				qnaReContent=#{qnaReContent}
+	WHERE qnaReCode = #{qnaReCode}
+	</update>
+	<!-- 하나의 펀딩 Q&A 댓글 삭제하기 -->
+	<delete id="removeFundingQnaReply">
+		DELETE FROM fundingqnareply WHERE qnaReCode=#{qnaReCode}
+	</delete>
 </mapper>

@@ -37,6 +37,12 @@ public class InvestService implements InvestServiceInterface {
 		FundingDetail fdonedetail = investdaointerface.investFundingDetailSelect(fdCode);
 		return fdonedetail;
 	}
+	//투자하기에서 펀딩클릭후 투자예약하기
+	public int addInvestment(Investment investment){
+		log.debug("------------------InvestService-----------------getInvestFundingDetail()");
+		int addinvestment = investdaointerface.investmentinsert(investment);
+		return addinvestment;
+	}
 	//투자하기에서 펀딩클릭후 펀딩Q&A클릭시 펀딩 Q&A조회
 	@Override
 	public List<FundingQna> getInvestFundingQna(int fdCode) {
@@ -55,13 +61,15 @@ public class InvestService implements InvestServiceInterface {
 	@Override
 	public int addInvestFundingQna(FundingQna fundingqna) {
 		log.debug("------------------InvestService-----------------addInvestFundingQna()");
-		return investdaointerface.investFundingQnaInsert(fundingqna);
+		int addinvestfundingqna = investdaointerface.investFundingQnaInsert(fundingqna);
+		return addinvestfundingqna;
 	}
 	//투자하기에서 펀딩 클릭후 펀딩 Q&A에 대한 글 수정
 	@Override
-	public int modifyInvestFundingQna(int qnaCode) {
+	public int modifyInvestFundingQna(FundingQna fundingqna) {
 		log.debug("------------------InvestService-----------------modifyInvestFundingQna()");
-		return investdaointerface.investFundingQnaUpdate(qnaCode);
+		int modifyinvestfundingqna = investdaointerface.investFundingQnaUpdate(fundingqna);
+		return modifyinvestfundingqna;
 	}
 	//투자하기에서 펀딩 클릭후 펀딩 Q&A에 대한 글 삭제
 	@Override
@@ -75,6 +83,21 @@ public class InvestService implements InvestServiceInterface {
 	@Override
 	public int addInvestFundingQnaReply(FundingQnaReply fundingqnareply) {
 		log.debug("------------------InvestService-----------------addInvestFundingQna()");
-		return investdaointerface.investFundingQnaReplyInsert(fundingqnareply);
+		int addinvestfundingqnareply = investdaointerface.investFundingQnaReplyInsert(fundingqnareply);
+		return addinvestfundingqnareply;
+	}
+	//투자하기에서 펀딩 클릭후 펀딩 Q&A에 대한 댓글 수정
+	@Override
+	public int modifyInvestFundingQnaReply(FundingQnaReply fundingqnareply) {
+		log.debug("------------------InvestService-----------------modifyInvestFundingQnaReply()");
+		int modifyinvestfundingqnareply = investdaointerface.investFundingQnaReplyUpdate(fundingqnareply);
+		return modifyinvestfundingqnareply;
+	}
+	//투자하기에서 펀딩 클릭후 펀딩 Q&A에 대한 댓글 삭제
+	@Override
+	public int removeInvestFundingQnaReply(int qnaReCode) {
+		log.debug("------------------InvestService-----------------removeInvestFundingQnaReply()");
+		int removeinvestfundingqnareply = investdaointerface.investFundingQnaReplyDelete(qnaReCode);
+		return removeinvestfundingqnareply;
 	}
 }
