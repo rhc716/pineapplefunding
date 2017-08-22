@@ -43,13 +43,13 @@
 					<form action="/pineapple/wbsplaninsert.pms" method="post">
 						<label for="wbsplan">WBS예상계획</label><br>
 						WBS순서:
-						<input type="text" class="form-control" name="wbsPlanOrder">
+						<input type="number" class="form-control" name="wbsPlanOrder">
 						작업명:
 						<input type="text" class="form-control" name="wbsPlanName">
 						선행작업:
-						<input type="text" class="form-control" name="wbsPlanDependency">
+						<input type="number" class="form-control" name="wbsPlanDependency">
 						작업기간:
-						<input type="text" class="form-control" name="wbsPlanDuration">
+						<input type="number" class="form-control" name="wbsPlanDuration">
 						시작일:<br>
 						<input type="date" name="wbsPlanStartDate"><br>
 						담당자ID:

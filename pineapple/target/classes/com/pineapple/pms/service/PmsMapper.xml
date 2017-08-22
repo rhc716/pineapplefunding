@@ -50,7 +50,7 @@
 	<!-- wbsplan 리스트 요청쿼리 -->
 	<select id="selectWbsPlan" resultType="com.pineapple.pms.service.WbsPlanView" parameterType="String">
 		SELECT w.wbsPlanCode, w.wbsPlanOrder,
-			w.wbsPlanName, w.wbsPlanDependency,
+			w.wbsPlanName, w.wbsPlanDependency, max(w.wbsPlanChange) wbsPlanChange,
 			w.wbsPlanStartDate, w.wbsPlanDuration, w.wbsPlanComCode,
 			w.wbsPlanManager, w.wbsPlanFdCode, w.wbsPlanMsCode,
 			f.fdTitle, m.milestoneName
@@ -60,7 +60,7 @@
 		(SELECT e.emComCode 
 		FROM user u INNER JOIN employee e 
 		ON u.userId = e.emUserId
-		WHERE u.userId = #{userId})
+		WHERE u.userId = #{userId}) group by w.wbsPlanOrder , w.wbsPlanMsCode
 	</select>
 	<!-- wbsplanHuman 리스트 요청쿼리 -->
 	<select id="selectWbsPlanHuman" resultType="com.pineapple.pms.service.WbsPlanHuman" parameterType="String">
@@ -98,11 +98,44 @@
 		LEFT JOIN milestone m ON w.wbsPlanMsCode = m.milestoneCode 
 		where wbsPlanCode=#{wbsplancode};
 	</select>
+	<delete id="deletewbsplan" parameterType="String">
+		DELETE FROM wbsplan WHERE wbsPlanCode= #{wbsplancode}
+	</delete>
+	<delete id="deletehuman" parameterType="String">
+		DELETE FROM wbsplanhuman WHERE wphWpCode= #{wbsplancode}
+	</delete>
+	<delete id="deletematerial" parameterType="String">
+		DELETE FROM wbsplanmaterial WHERE wpmWpCode= #{wbsplancode}
+	</delete>
+	<delete id="deletefacility" parameterType="String">
+		DELETE FROM wbsplanfacility WHERE wpfWpCode= #{wbsplancode}
+	</delete>
+	<delete id="deleteout" parameterType="String">
+		DELETE FROM wbsplanout WHERE wpoWpCode= #{wbsplancode}
+	</delete>
+	<delete id="deleteetc" parameterType="String">
+		DELETE FROM wbsplanetc WHERE wpeWpCode= #{wbsplancode}
+	</delete>
+	<delete id="deleteincome" parameterType="String">
+		DELETE FROM wbsplanincome WHERE wpiWpCode= #{wbsplancode}
+	</delete>
 	<delete id="deletewbsplanhuman" parameterType="String">
 		DELETE FROM wbsplanhuman WHERE wphCode= #{wbhcode}
 	</delete>
 	<delete id="deletewbsplanmaterial" parameterType="String">
 		DELETE FROM wbsplanmaterial WHERE wpmCode= #{wbmcode}
+	</delete>
+	<delete id="deletewbsplanfacility" parameterType="String">
+		DELETE FROM wbsplanfacility WHERE wpfCode= #{wbfcode}
+	</delete>
+	<delete id="deletewbsplanout" parameterType="String">
+		DELETE FROM wbsplanout WHERE wpoCode= #{wbocode}
+	</delete>
+		<delete id="deletewbsplanetc" parameterType="String">
+		DELETE FROM wbsplanetc WHERE wpeCode= #{wbecode}
+	</delete>
+		<delete id="deletewbsplanincome" parameterType="String">
+		DELETE FROM wbsplanincome WHERE wpiCode= #{wbicode}
 	</delete>
 	
 	<update id="updatewbsplanhuman" parameterType="com.pineapple.pms.service.WbsPlanHuman">

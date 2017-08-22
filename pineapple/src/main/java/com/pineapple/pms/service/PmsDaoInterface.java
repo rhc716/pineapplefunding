@@ -50,4 +50,26 @@ public interface PmsDaoInterface {
 
 	void wbsplanoutupdate(WbsPlanOut wbsplanout);
 
+	void deletewbsplanfacility(String wbfcode);
+
+	void deletewbsplanout(String wbocode);
+
+	void deletewbsplanetc(String wbecode);
+
+	void deletewbsplanincome(String wbicode);
+
+	void deletewbsplan(String wbsplancode);
+
+	void deletehuman(String wbsplancode);
+
+	void deletematerial(String wbsplancode);
+
+	void deletefacility(String wbsplancode);
+
+	void deleteout(String wbsplancode);
+
+	void deleteetc(String wbsplancode);
+
+	void deleteincome(String wbsplancode);
+
 }

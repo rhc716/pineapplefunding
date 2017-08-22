@@ -54,7 +54,7 @@
 										<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#${list.wpeCode}">수정</button>
 									</div>
 									<div class="col-md-5">
-										<form action="/pineapple/wbsplanmaterialdelete.pms" metod="post">
+										<form action="/pineapple/wbsplanetcdelete.pms" metod="post">
 											<input type="hidden" class="form-control" name="wpeWpCode" value="${list.wpeWpCode}">
 											<input type="hidden" class="form-control" name="wpeCode" value="${list.wpeCode}">
 											<button type="submit" class="btn btn-danger">삭제</button>

@@ -11,6 +11,7 @@ public class WbsPlanView {
 	private int wbsPlanFdCode;
 	private int wbsPlanMsCode;
 	private int wbsPlanComCode;
+	private int wbsPlanChange;
 	private String fdTitle;
 	private String milestoneName;
 	
@@ -88,12 +89,20 @@ public class WbsPlanView {
 	public void setWbsPlanComCode(int wbsPlanComCode) {
 		this.wbsPlanComCode = wbsPlanComCode;
 	}
+	public int getWbsPlanChange() {
+		return wbsPlanChange;
+	}
+	public void setWbsPlanChange(int wbsPlanChange) {
+		this.wbsPlanChange = wbsPlanChange;
+	}
 	@Override
 	public String toString() {
 		return "WbsPlanView [wbsPlanCode=" + wbsPlanCode + ", wbsPlanOrder=" + wbsPlanOrder + ", wbsPlanName="
 				+ wbsPlanName + ", wbsPlanDependency=" + wbsPlanDependency + ", wbsPlanStartDate=" + wbsPlanStartDate
 				+ ", wbsPlanDuration=" + wbsPlanDuration + ", wbsPlanManager=" + wbsPlanManager + ", wbsPlanFdCode="
 				+ wbsPlanFdCode + ", wbsPlanMsCode=" + wbsPlanMsCode + ", wbsPlanComCode=" + wbsPlanComCode
-				+ ", fdTitle=" + fdTitle + ", milestoneName=" + milestoneName + "]";
+				+ ", wbsPlanChange=" + wbsPlanChange + ", fdTitle=" + fdTitle + ", milestoneName=" + milestoneName
+				+ "]";
 	}
+	
 }
