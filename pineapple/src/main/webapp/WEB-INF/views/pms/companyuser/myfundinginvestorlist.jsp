@@ -81,7 +81,7 @@ $(document).ready(function(){
 			data : { fdCode : $("#selectfd option:selected").val() }
 		});
 		
-		//성공시
+		//성공시 투자자 리스트를 investorlist에 채워줌
 		getfundingdividendpalnlist.done(function(msg){
 			console.log(msg);
 			for(var i = 0; i<msg.length; i++){

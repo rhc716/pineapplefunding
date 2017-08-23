@@ -53,7 +53,7 @@ $(document).ready(function(){
 			}else{
 				var poster = msg[i].posterImg
 			}
-				
+			// 펀딩리스트와 포스터 이미지를 myfundinglist에 채워줌, 수정버튼과 모달창을 각각 추가해줌
 			$('#myfundinglist').append(
 						/* 펀딩리스트 폼, 모달 버튼  */
 						'<div class="container-fluid fundinglistbox">'

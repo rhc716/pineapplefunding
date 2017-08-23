@@ -52,6 +52,7 @@ $(document).ready(function(){
 		}
 		
 		//alert(formatDate(msg[0].fdDate));
+		//펀딩리스트를 myfundinglist에 채워줌 // 수정버튼과 모달창, 삭제버튼을 만들어줌
 		for(var i = 0; i<msg.length; i++){
 			if(msg[i].fdStatus == "개설요청"){ // 개설요청중 -> 수정, 삭제 버튼이 나오게 함
 				$('#myfundinglist').append(

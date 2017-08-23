@@ -39,6 +39,8 @@ $(document).ready(function(){
 		console.log(msg);
 		
 		//alert(formatDate(msg[0].fdDate));
+		
+		//마일스톤리스트를 mymilestonelist에 채워줌, 수정버튼,삭제버튼 모달창을 추가해줌.
 		var msgleng = msg.length;
 		for(var i = 0; i<msgleng; i++){
 			if(msg[i].fdStatus == "개설요청"){ // 개설요청중 -> 수정, 삭제 버튼이 나오게 함
@@ -87,7 +89,7 @@ $(document).ready(function(){
 				    	+'<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>'
 				    	+'</div></div></div></div>'
 				);
-			} else { // 모집중 혹은 그 이상 -> 수정버튼만 나오게 함
+			} else { // 펀딩개설요청이 지난 상태는 -> 수정버튼만 나오게 함
 				$('#mymilestonelist').append(
 					'<tr>'
 						+'<td><a>'+msg[i].fdTitle+'</a></td>'
@@ -153,10 +155,11 @@ $(document).ready(function(){
 					fdCode : $(this).parent().find("input:eq(1)").val()
 				}
 			});
-			
+			//성공시
 			selectemployee.done(function(msg){
 				console.log(msg);
 				for(var i = 0; i<msg.length; i++){
+					// PM권한의 사원리스트를 emlist에 선택버튼과 함께 채워줌
 					$('#emlist').append(
 						'<span>아이디 : <b>'+msg[i].emUserId+'</b>'
 						+' 회사명 : <b>'+msg[i].emComName+'</b>'
@@ -174,7 +177,7 @@ $(document).ready(function(){
 					$('#myModal').modal('hide');				
 				});
 			});
-			
+			//실패시
 			selectemployee.fail(function(){
 				alert('ajax통신 실패');
 			});

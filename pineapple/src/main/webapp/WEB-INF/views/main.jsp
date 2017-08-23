@@ -56,16 +56,17 @@
 			    <!-- 화면에 보여줄 아이템 들어갈 곳 -->
 			    <div class="carousel-inner">
 			      <div class="item active">
-			        <img src="https://www.w3schools.com/bootstrap/la.jpg" alt="Los Angeles" style="width:100%;">
+			        <img src="${pageContext.request.contextPath}/resources/img/main/photo1.jpg" alt="Los Angeles" style="width:100%; height:450px;">
 			      </div>
 			
 			      <div class="item">
-			        <img src="https://www.w3schools.com/bootstrap/chicago.jpg" alt="Chicago" style="width:100%;">
+			        <img src="${pageContext.request.contextPath}/resources/img/main/photo2.jpg" alt="Chicago" style="width:100%; height:450px;">
 			      </div>
-			    
-			      <div class="item">
+			    	
+			    	<!-- 아이템 추가 가능 -->
+			     <!--  <div class="item">
 			        <img src="https://www.w3schools.com/bootstrap/ny.jpg" alt="New york" style="width:100%;">
-			      </div>
+			      </div> -->
 			    </div>
 			
 			    <!-- Left and right controls -->

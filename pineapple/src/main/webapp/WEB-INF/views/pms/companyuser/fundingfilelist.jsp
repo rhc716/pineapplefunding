@@ -46,7 +46,7 @@ $(document).ready(function(){
 	// 성공시
 	getfundingfilelist.done(function(msg){
 		console.log(msg);
-	
+	// 펀딩파일의 목록을 화면에 뿌려줌 
 	for(var i = 0; i<msg.length; i++){
 		$('#myfundingfilelist').append(
 			'<tr>'

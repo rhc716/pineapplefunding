@@ -58,6 +58,8 @@ $(document).ready(function(){
 		
 		//alert(formatDate(msg[0].fdDate));
 		var msgleng = msg.length;
+		
+		//펀딩상세리스트를 myfundinglist에 채워줌 // 수정버튼을 넣어서 수정모달창을 띄워주게함
 		for(var i = 0; i<msgleng; i++){
 				$('#myfundinglist').append(
 						/* 펀딩리스트 폼, 모달 버튼  */
