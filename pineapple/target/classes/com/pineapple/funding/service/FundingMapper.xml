@@ -201,11 +201,12 @@
 	</insert>
 	
 	
-	<!-- 펀딩배당계획 조회 -->
+	<!-- 펀딩배당계획 조회, 펀딩정보와 같이 불러옴 -->
 	<select id="selectFundingDividendPalnList" parameterType="int" resultType="java.util.HashMap">
 		SELECT *
-		FROM dividendplan
-		WHERE divFdCode = #{fdCode}
+		FROM dividendplan d INNER JOIN funding f
+		ON d.divFdCode = f.fdCode
+		WHERE d.divFdCode = #{fdCode}
 	</select>
 	
 	<!-- 펀딩배당계획 삭제 -->

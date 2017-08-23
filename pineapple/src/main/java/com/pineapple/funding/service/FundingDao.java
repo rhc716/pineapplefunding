@@ -154,7 +154,7 @@ public class FundingDao implements FundingDaoInterface {
 	
 	// 펀딩배당계획 리스트 가져오기	
 	@Override
-	public List<FundingDividendPlan> selectFundingDividendPalnList(int fdCode) {
+	public List<FundingAndFdDividendPlan> selectFundingDividendPalnList(int fdCode) {
 		log.debug("FundingDao의 selectFundingDividendPalnList호출 성공");
 		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectFundingDividendPalnList", fdCode);
 	}

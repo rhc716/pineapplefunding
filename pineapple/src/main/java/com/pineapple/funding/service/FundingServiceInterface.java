@@ -21,7 +21,7 @@ public interface FundingServiceInterface {
 	List<FundingAndMileStone> getMyMileStoneList(String userId);
 	void modifyMileStone(MileStone mileStone);
 	void removeMileStone(int delMsCode);
-	List<FundingDividendPlan> getFundingDividendPalnList(int fdCode);
+	List<FundingAndFdDividendPlan> getFundingDividendPalnList(int fdCode);
 	void addDividendPlan(FundingDividendPlan fundingdividendplan);
 	void removeFundingFile(int fdFileCode);
 	List<FundingAndFdFile> getFundingFileList(String userId);

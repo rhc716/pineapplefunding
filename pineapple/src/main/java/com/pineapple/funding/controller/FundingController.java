@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.pineapple.funding.service.Funding;
 import com.pineapple.funding.service.FundingAndFdDetail;
+import com.pineapple.funding.service.FundingAndFdDividendPlan;
 import com.pineapple.funding.service.FundingAndMileStone;
 import com.pineapple.funding.service.FundingDetail;
 import com.pineapple.funding.service.FundingDividendPlan;
@@ -304,7 +305,7 @@ public class FundingController {
 	
 	// 펀딩배당계획 리스트 가져오기
 	@RequestMapping(value = "/getfundingdividendpalnlist.pms", method = RequestMethod.GET)
-	public @ResponseBody List<FundingDividendPlan> getFundingDividendPalnList(Model model, Locale locale, @RequestParam("fdCode") int fdCode) {
+	public @ResponseBody List<FundingAndFdDividendPlan> getFundingDividendPalnList(Model model, Locale locale, @RequestParam("fdCode") int fdCode) {
 		log.debug("FundingController의 getFundingDividendPalnList호출 성공");
 		log.debug("fdCode : " + fdCode);
 		return service.getFundingDividendPalnList(fdCode);

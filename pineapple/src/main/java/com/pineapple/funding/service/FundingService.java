@@ -149,7 +149,7 @@ public class FundingService implements FundingServiceInterface {
 	
 	// 펀딩배당계획 리스트 가져오기
 	@Override
-	public List<FundingDividendPlan> getFundingDividendPalnList(int fdCode) {
+	public List<FundingAndFdDividendPlan> getFundingDividendPalnList(int fdCode) {
 		log.debug("FundingService의 getFundingDividendPalnList호출 성공");
 		return fundingdao.selectFundingDividendPalnList(fdCode);
 	}

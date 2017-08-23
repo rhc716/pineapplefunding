@@ -28,7 +28,7 @@ public interface FundingDaoInterface {
 	List<FundingAndFdFile> selectFundingFileList(String userId);
 	void deleteFundingFile(int fdFileCode);
 	void insertDividendPlan(FundingDividendPlan fundingdividendplan);
-	List<FundingDividendPlan> selectFundingDividendPalnList(int fdCode);
+	List<FundingAndFdDividendPlan> selectFundingDividendPalnList(int fdCode);
 	void deleteFundingDividendPaln(int divCode);
 	List<Investment> selectFundingInvestorList(int fdCode);
 	List<Company> selectComList(String userId);

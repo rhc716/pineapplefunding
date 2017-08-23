@@ -44,11 +44,23 @@ $(document).ready(function(){
 	getfundinglist.done(function(msg){
 		console.log(msg);
 		
-		//펀딩을 선택하는 select option 채워주는 코드 
+		// 펀딩을 선택하는 select option 채워주는 코드
+		// 개설요청중인 펀딩은 조회도 입력도 가능하지만, 그 외의 상태는 조회만 가능하다.
 		for(var i = 0; i<msg.length; i++){
-			$('.fdselectlist').append(
-				'<option value="'+msg[i].fdCode+'">'+msg[i].fdTitle+'</option>'
-			);
+			switch(msg[i].fdStatus){
+				case '개설요청' :
+					$('.fdselectlist').append(
+						'<option value="'+msg[i].fdCode+'">'+msg[i].fdTitle+'</option>'
+					);
+					break;
+				default :
+					$('#selectfdforview').append(
+						'<option value="'+msg[i].fdCode+'">'+msg[i].fdTitle+'</option>'
+					);
+					break;
+			}
+					
+			
 		}
 	});	
 	// 실패시
@@ -57,31 +69,49 @@ $(document).ready(function(){
 	});
 
 	/*********** 펀딩을 셀렉트 했을때 배당계획 리스트를 불러오는 ajax*********/
-	$('#selectfd').change(function(){
+	$('#selectfdforview').change(function(){
 		// 폼 초기화
 		$('#dividendlist').html('');
 		//console.log($("#selectfd option:selected").val());
 		var getfundingdividendpalnlist = $.ajax({
 			type : "get",
 			url : "/pineapple/getfundingdividendpalnlist.pms",
-			data : { fdCode : $("#selectfd option:selected").val() }
+			data : { fdCode : $("#selectfdforview option:selected").val() }
 		});
 		
 		//성공시
 		getfundingdividendpalnlist.done(function(msg){
 			console.log(msg);
 			for(var i = 0; i<msg.length; i++){
-				$('#dividendlist').append(
-					'<tr>'
-						+'<td>'+msg[i].divIndexName+'</td>'
-						+'<td>'+msg[i].settlementUnit+'일</td>'
-						+'<td>'+msg[i].minMargin+'원</td>'
-						+'<td>'+msg[i].maxMargin+'원</td>'
-						+'<td>'+msg[i].dividendRate+'%</td>'
-						+'<td><a href="/pineapple/removefundingdividendpaln.pms?divCode='+msg[i].divCode+'">'
-						+'<button type="button" class="btn btn-sm btn-danger deletebtn">삭제</button></a></td>'
-					+'</tr>'
-				);
+				switch(msg[i].fdStatus){
+					// 펀딩상태가 개설요청중일때 삭제가능
+					case '개설요청' :
+						$('#dividendlist').append(
+							'<tr>'
+							+'<td>'+msg[i].divIndexName+'</td>'
+							+'<td>'+msg[i].settlementUnit+'일</td>'
+							+'<td>'+msg[i].minMargin+'원</td>'
+							+'<td>'+msg[i].maxMargin+'원</td>'
+							+'<td>'+msg[i].dividendRate+'%</td>'
+							+'<td><a href="/pineapple/removefundingdividendpaln.pms?divCode='+msg[i].divCode+'">'
+							+'<button type="button" class="btn btn-sm btn-danger deletebtn">삭제</button></a></td>'
+							+'</tr>'
+						);
+					break;
+					// 펀딩상태가 개설요청중이 아닐때 삭제 불가능		
+					default :
+						$('#dividendlist').append(
+							'<tr>'
+							+'<td>'+msg[i].divIndexName+'</td>'
+							+'<td>'+msg[i].settlementUnit+'일</td>'
+							+'<td>'+msg[i].minMargin+'원</td>'
+							+'<td>'+msg[i].maxMargin+'원</td>'
+							+'<td>'+msg[i].dividendRate+'%</td>'
+							+'<td><a href="/pineapple/removefundingdividendpaln.pms?divCode='+msg[i].divCode+'">'
+							+'</tr>'
+						);
+					break;
+				}
 			}
 		});
 		
@@ -109,6 +139,7 @@ $(document).ready(function(){
 	<div class="col-md-9">
 		<span>
 			<b>한 펀딩당 배당계획은 3개 이상이 좋습니다, 마감기준은 펀딩단위로 통일되어야 합니다.</b><br>
+			<b>배당계획은 펀딩개설요청중에만 입력,삭제가 가능합니다. 이후에는 바꿀 수 없습니다.</b><br>
 			<br>ex) 마감기준 : 30 / 최소마진 : 1000 / 최대마진 : 2000 / 배당율 : 1
 			<br>=> 30일 기준으로 계산된 마진이 1000~2000(원) 사이일때 마진의 1%를
 			<br>=> 구매 구좌수의 비율만큼 배당해줌.  	
@@ -137,7 +168,7 @@ $(document).ready(function(){
 		<div class="col-md-9" id="myfundinglist">
 		<!-- 펀딩배당계획 리스트 뿌려질 곳 -->
 		<b> 펀딩배당계획 보기 </b>
-		<select class="fdselectlist" id="selectfd">
+		<select class="fdselectlist" id="selectfdforview">
 			<option value="null">선택해주세요</option>	
 		</select><br><br>
 			<table class="table">

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -81,23 +81,23 @@ $(document).ready(function(){
 						<option value="null">선택하세요</option>
 					</select><br><br>			
 					펀딩명
-					<input type="text" class="form-control" name="fdTitle"><br>
+					<input type="text" class="form-control" name="fdTitle" required="required"><br>
 					최소투자금액
-					<input type="text" class="form-control" name="minInvestMoney"><br>
+					<input type="text" class="form-control" name="minInvestMoney" required="required"><br>
 					판매주식수
-					<input type="text" class="form-control" name="numberOfShares"><br>
+					<input type="text" class="form-control" name="numberOfShares" required="required"><br>
 					주당발행가
-					<input type="text" class="form-control" name="issuePrice"><br>	
+					<input type="text" class="form-control" name="issuePrice" required="required"><br>	
 					오픈일
-					<input type="text" class="form-control" name="openDate"><br>
+					<input type="text" class="form-control" name="openDate" required="required"><br>
 					마감일
-					<input type="text" class="form-control" name="closeDate"><br>
+					<input type="text" class="form-control" name="closeDate" required="required"><br>
 					최소보장이율
-					<input type="text" class="form-control" name="numberOfShares"><br>
+					<input type="text" class="form-control" name="numberOfShares" required="required"><br>
 					프로젝트 시작일
-					<input type="text" class="form-control" name="projectStartDate"><br>
+					<input type="text" class="form-control" name="projectStartDate" required="required"><br>
 					프로젝트 마감일
-					<input type="text" class="form-control" name="projectEndDate"><br>
+					<input type="text" class="form-control" name="projectEndDate" required="required"><br>
 						<!-- 히든값으로 펀딩개설자 name를 세션에서받아서 넣어줌 -->
 					<input type="hidden" class="form-control" name="fdPublisher" value="id01@maver.com">
 					<button type="submit"  class="btn btn-success">입력완료</button>
