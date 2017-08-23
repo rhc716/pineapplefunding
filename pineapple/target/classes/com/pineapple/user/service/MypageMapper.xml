@@ -4,6 +4,12 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.pineapple.user.service.MypageMapper">
+<!-- 기업명 조회(기업명 중복체크 기능) -->
+	<select id="selectCompanyByComName" parameterType="String" resultType="com.pineapple.user.service.Company">
+		SELECT comName
+		FROM company
+		WHERE comName=#{comName}
+	</select>
 <!-- 기업회원 레벨의 회원의 마이페이지 분기시 사원정보조회 -->
 	<select id="selectEmployeeById" parameterType="String" resultMap="selectEmployeeById">
 		SELECT *

@@ -228,6 +228,7 @@
 <!-- 마이페이지 내정보 공통모듈-->
 	<div class="row">
 		<div class="col-md-2">
+			<br>
 			<p>내정보</p>
 		</div>
 		<div class="col-md-10">

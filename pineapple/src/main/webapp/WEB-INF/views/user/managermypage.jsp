@@ -266,13 +266,14 @@
 						      <div class="modal-body">
 						        <form id="companyCheckForm">
 									<div class="container_insert">
+									
 										<c:choose>
-											<c:when test="${not empty company.comApprovalId}">
+											<c:when test="${not empty company[0].comApprovalId}">
 												<form class="form-inline">
 												  <div class="form-group has-success has-feedback">
 												    <label class="control-label" for="inputSuccess4">기업승인여부</label>
 												    <input type="text" class="form-control" id="comAdminApproved" name="comAdminApproved" value="기업승인완료" aria-describedby="inputSuccess4Status" readonly>
-												    <input type="hidden" class="form-control" id="comAdminApprovalCheck1" name="comAdminApproval" value="${company.comAdminApproval}">
+												    <input type="hidden" class="form-control" id="comAdminApprovalCheck1" name="comAdminApproval" value="${company[0].comAdminApproval}">
 												    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 												    <span id="comApprovedStatus" class="sr-only">(success)</span>
 												  </div>
@@ -284,7 +285,7 @@
 												  <div class="form-group has-success has-feedback">
 												    <label class="control-label" for="inputSuccess4">기업승인여부</label>
 												    <input type="text" class="form-control" id="comAdminNotApproved" name="comAdminNotApproved" value="기업미승인" aria-describedby="inputSuccess4Status" readonly>
-												    <input type="hidden" class="form-control" id="comAdminApprovalCheck2" name="comAdminApproval" value="${company.comAdminApproval}">
+												    <input type="hidden" class="form-control" id="comAdminApprovalCheck2" name="comAdminApproval" value="${company[0].comAdminApproval}">
 												    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 												    <span id="comApprovedStatus" class="sr-only">(success)</span>
 												  </div>
@@ -294,68 +295,68 @@
 										</c:choose>
 									    <div id="comOpenEmail" class="form-group has-success has-feedback">
 											<label class="control-label" for="inputSuccess2">기업등록요청아이디</label>
-											<input id="comOpenUserId" name="comOpenUserId" type="text" class="form-control" value="${company.comOpenUserId}" varia-describedby="inputSuccess2Status" readonly>
+											<input id="comOpenUserId" name="comOpenUserId" type="text" class="form-control" value="${company[0].comOpenUserId}" varia-describedby="inputSuccess2Status" readonly>
 											<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 											<span id="inputSuccess2Status" class="sr-only">(success)</span>
 										</div>
 										<br>
 										<div>
 									    	<label for="comLogoFileInput">기업로고업로드</label>
-										    <input type="file" id="comLogoServerName" name="comLogoServerName" value="${company.comLogoServerName}">
+										    <input type="file" id="comLogoServerName" name="comLogoServerName" value="${company[0].comLogoServerName}">
 										     <p class="help-block">기업로고 이미지 파일업로드</p>
-										    <input type="number" id="comLogoHeight" name="comLogoHeight" value="${company.comLogoHeight}" hidden>
-										    <input type="number" id="comLogoWidth" name="comLogoWidth" value="${company.comLogoWidth}" hidden>
-										    <input type="number" id="comLogoSize" name="comLogoSize" value="${company.comLogoSize}" hidden>
-										    <input type="text" id="comLogoExtension" name="comLogoExtension" value="${company.comLogoExtension}" hidden>
+										    <input type="number" id="comLogoHeight" name="comLogoHeight" value="${company[0].comLogoHeight}" hidden>
+										    <input type="number" id="comLogoWidth" name="comLogoWidth" value="${company[0].comLogoWidth}" hidden>
+										    <input type="number" id="comLogoSize" name="comLogoSize" value="${company[0].comLogoSize}" hidden>
+										    <input type="text" id="comLogoExtension" name="comLogoExtension" value="${company[0].comLogoExtension}" hidden>
 										</div>
 										<br>
 										<div id="comNameCheck" class="form-group">
 										    <label class="control-label" for="comNameInput">*기업이름</label>
 										    <p id="explain"> (정확한 기업이름을 입력해주시기 바랍니다. 이미 등록된 기업이 존재하는 경우 기업을 등록할 수 없습니다.)</p>
-										    <input id="comName" name="comName" type="text" class="form-control" value="${company.comName}" placeholder="Enter Company Name">
+										    <input id="comName" name="comName" type="text" class="form-control" value="${company[0].comName}" placeholder="Enter Company Name">
 									  		<span id="comnamech"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
 										<br>
 									  	</div>
 									  	<div class="form-group">
 										    <label for="exampleInputPassword1">*사업자번호</label>
 										    <p id="explain">(-없이 사업자번호 10자리를 정확히 입력해주시기 바랍니다)</p>
-										    <input id="comNumber" name="comNumber" type="text" class="form-control" value="${company.comNumber}" maxlength="10" placeholder="Enter Company Number">
+										    <input id="comNumber" name="comNumber" type="text" class="form-control" value="${company[0].comNumber}" maxlength="10" placeholder="Enter Company Number">
 										    <span id="pwch"></span>
 									  	</div>
 									  	<br>
 									  	<div>
 									  		<label for="comHomePageInput">기업웹사이트주소</label>
-										    <input id="comHomePage" name="comHomePage" type="text" class="form-control" value="${company.comHomePage}" placeholder="Enter Company Web Site Address">
+										    <input id="comHomePage" name="comHomePage" type="text" class="form-control" value="${company[0].comHomePage}" placeholder="Enter Company Web Site Address">
 										</div>
 										<br>
 										<div>
 									    	<label for="comCeoNameInput">기업대표이름</label>
 										    <p id="explain">(현재 기업 대표의 실명을 입력해주시기 바랍니다)</p>
-										    <input id="comCeoName" name="comCeoName" type="text" class="form-control" value="${company.comCeoName}" placeholder="Enter Company CEO Name">
+										    <input id="comCeoName" name="comCeoName" type="text" class="form-control" value="${company[0].comCeoName}" placeholder="Enter Company CEO Name">
 										</div>
 										<br>
 										<div>
 									    	<label for="comEstablishYearInupt">기업설립연도</label>
 										    <p id="explain">(기업의 설립연도를 입력해주시기 바랍니다)</p>
-										    <input id="comEstablishYear" name="comEstablishYear" type="text" class="form-control" value="${company.comEstablishYear}" maxlength="4" placeholder="Enter Company Establish Year">
+										    <input id="comEstablishYear" name="comEstablishYear" type="text" class="form-control" value="${company[0].comEstablishYear}" maxlength="4" placeholder="Enter Company Establish Year">
 										</div>
 										<br>
 										<div>
 									    	<label for="comInfoInupt">기업정보</label>
 										    <p id="explain">(기업에 대한 전반적인 정보를 입력해주시기 바랍니다)</p>
-										    <textarea id="comInfo" name="comInfo" class="form-control" value="${company.comInfo}" rows="4"></textarea>
+										    <textarea id="comInfo" name="comInfo" class="form-control" value="${company[0].comInfo}" rows="4"></textarea>
 										</div>
 										<br>
 										<div>
 									    	<label for="comSummaryInupt">기업간략소개</label>
 										    <p id="explain">(기업에 대한 소개글을 입력해주시기 바랍니다)</p>
-										    <textarea id="comSummary" name="comSummary" class="form-control" value="${company.comSummary}" rows="4"></textarea>
+										    <textarea id="comSummary" name="comSummary" class="form-control" value="${company[0].comSummary}" rows="4"></textarea>
 										</div>
 										<br>
 										<div>
 									    	<label for="comActivitySummaryInupt">기업활동정보</label>
 										    <p id="explain">(기업의 활동분야에 대한 정보를 입력해주시기 바랍니다)</p>
-										    <textarea id="comActivitySummary" name="comActivitySummary" class="form-control" value="${company.comActivitySummary}" rows="4"></textarea>
+										    <textarea id="comActivitySummary" name="comActivitySummary" class="form-control" value="${company[0].comActivitySummary}" rows="4"></textarea>
 										</div>
 										</div>
 									</form>
@@ -384,15 +385,15 @@
 											<!-- 기업정보검색없이 사원등록하기 -->
 											<div class="form-group has-success has-feedback">
 											    <label class="control-label" for="inputSuccess4">소속기업명</label>
-											    <input id="emComName1" name="emComName" type="text" class="focus form-control" value="${company.comName}" readonly>
-									  			<input id="emComCode1" name="emComCode" type="hidden" class="form-control" value="${company.comCode}">
+											    <input id="emComName1" name="emComName" type="text" class="focus form-control" value="${company[0].comName}" readonly>
+									  			<input id="emComCode1" name="emComCode" type="hidden" class="form-control" value="${company[0].comCode}">
 											    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 											    <span id="comApprovedStatus" class="sr-only">(success)</span>
 										    </div>
 											<br>
 										    <div id="emUserIdEmail" class="form-group has-success has-feedback">
 												<label class="control-label" for="inputSuccess2">사원등록요청아이디</label>
-												<input id="emUserId1" name="emUserId" type="text" class="form-control" value="${company.comOpenUserId}" varia-describedby="inputSuccess2Status" readonly>
+												<input id="emUserId1" name="emUserId" type="text" class="form-control" value="${company[0].comOpenUserId}" varia-describedby="inputSuccess2Status" readonly>
 												<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 												<span id="inputSuccess2Status" class="sr-only">(success)</span>
 												<p id="explain">(사원으로 등록하려고 하는 분의 아이디입니다)</p>

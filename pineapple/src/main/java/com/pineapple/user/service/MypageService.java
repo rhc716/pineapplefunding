@@ -12,6 +12,12 @@ public class MypageService implements MypageServiceInterface {
 	
 	@Autowired
 	private MypageDaoInterface mypagedao;
+	//기업명 중복체크 기능 구현을 위한 메서드 선언
+	@Override
+	public Company getCompanyByComName(String comName) {
+		log.debug("MypageService getCompanyByComName 호출");
+		return mypagedao.selectCompanyByComName(comName);
+	}
 	//아이디로 사원조회
 	@Override
 	public List<Employee> getEmployeeById(String userId) {
@@ -66,6 +72,7 @@ public class MypageService implements MypageServiceInterface {
 		log.debug("MypageService selectInvestorBasic 메서드 호출 "+userId);
 		return mypagedao.selectInvestorBasic(userId);
 	}
+	
 	
 	
 }

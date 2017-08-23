@@ -3,6 +3,8 @@ package com.pineapple.user.service;
 import java.util.List;
 
 public interface MypageServiceInterface {
+	//기업명 중복체크 기능 구현을 위한 메서드 선언
+	Company getCompanyByComName(String comName);
 	
 	//아이디로 사원조회
 	List<Employee> getEmployeeById(String userId);

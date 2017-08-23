@@ -13,7 +13,12 @@ public class MypageDao implements MypageDaoInterface {
 	
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
-	
+	//기업명 중복체크 기능 구현을 위한 메서드 선언
+	@Override
+	public Company selectCompanyByComName(String comName) {
+		log.debug("MypageDao selectCompanyByComName 호출 "+comName);
+		return sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectCompanyByComName", comName);
+	}
 	//아이디로 사원조회
 	@Override
 	public List<Employee> selectEmployee(String userId) {
@@ -48,7 +53,7 @@ public class MypageDao implements MypageDaoInterface {
 	@Override
 	public List<Company> selectCompanyByOpenId(String comOpenUserId) {
 		log.debug("MypageDao selectCompanyByOpenId 호출 "+comOpenUserId);
-		return sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectCompanyInfoByOpenId", comOpenUserId);
+		return sqlSessionTemplate.selectList("com.pineapple.user.service.MypageMapper.selectCompanyInfoByOpenId", comOpenUserId);
 	}
 	//회원상세정보 수정을 위한 메서드 선언
 	@Override
@@ -71,6 +76,7 @@ public class MypageDao implements MypageDaoInterface {
 		log.debug("MypageDao selectInvestorBasic 메서드 호출 결과"+sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAllInvestorInfo", userId));
 		return sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAllInvestorInfo", userId);
 	}
+	
 
 	
 }

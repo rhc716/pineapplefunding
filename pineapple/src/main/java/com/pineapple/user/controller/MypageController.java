@@ -6,6 +6,7 @@ import com.pineapple.user.service.User;
 import com.pineapple.user.service.UserDetail;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
@@ -23,6 +24,13 @@ public class MypageController {
 	
 	@Autowired
 	private MypageServiceInterface mypageservice;
+	//기업등록요청시 ajax 활용한 기업명 중복검사 
+	@RequestMapping(value="/checkcomname.user", method = RequestMethod.POST)
+	public @ResponseBody Company checkComName(Locale locale, Model model, @RequestParam("comName") String comName){
+		log.debug("checkComName 기업명 중복검사: "+comName);
+		return mypageservice.getCompanyByComName(comName);
+	}
+	
 	//사원등록요청 처리(employee 테이블에 insert)
 	@RequestMapping(value="/addemployee.user", method = RequestMethod.POST)
     public String addEmployee(HttpSession session, Employee employee) { //커맨드 객체
