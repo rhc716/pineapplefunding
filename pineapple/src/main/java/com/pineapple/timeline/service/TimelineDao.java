@@ -18,4 +18,10 @@ public class TimelineDao implements TimelineDaoInterface{
 		log.debug("TimelineDao-----timelineListSelect");
 		return sqlSessionTemplate.selectList("com.pineapple.timeline.service.TimelineMapper.getTimelineList");
 	}
+	//타임라인 등록하기
+	@Override
+	public int timelineInsert(Timeline timeline) {
+		log.debug("TimelineDao-----timelineInsert");
+		return sqlSessionTemplate.insert("com.pineapple.timeline.service.TimelineMapper.addTimeline",timeline);
+	}
 }

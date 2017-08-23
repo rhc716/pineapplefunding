@@ -32,112 +32,108 @@
 
 <!-- include summernote-ko-KR -->
 <script src="${pageContext.request.contextPath}/resources/summernote/summernote-ko-KR.js"></script>
+
 <script type="text/javascript">
 	$(document).ready(function() {
-	      $('#summernote').summernote();
+		$('#summernote').summernote();
+        $('#timelinereservebtn').click(function(){
+        	 $('#timelineform').submit();
+	    });
 	})
 </script>
 </head>
 <body>
-<div class="container">
-<!--로고 및 검색 -->
-	<div class="row">
-		<div class="col-md-3"></div>
-		<div class="col-md-6 logoandsearch">
-			<img src="${pageContext.request.contextPath}/resources/img/logo.jpg">
-			<i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;<input type="text">&nbsp;
-			<button type="button" class="btn btnpine">검색</button>
-		</div>
-		<div class="col-md-3"></div>
-	</div>
-<!-- 상단메뉴 -->
-	<c:import url="/resources/module/topmenu.jsp"/>
-<!-- 본문 -->
-<div class="row">
-	<div class="col-xs 12" style="text-align: center;">
-		<h1>TIME LINE</h1>
-	</div>
-	<div class="col-xs-12">
-		<div class="col-xs-12 timemaintop">
-			<div class="col-xs-9 timeinputbox">
-				<input id="timeinputbox" type="text" class="form-control box1" placeholder="타임라인을 등록해주세요"  data-toggle="modal" data-target="#myModal">
+	<div class="container">
+	<!--로그인 버튼 -->
+		<c:import url="/resources/module/toploginandlogo.jsp"/>
+	<!-- 상단메뉴 -->
+		<c:import url="/resources/module/topmenu.jsp"/>
+	<!-- 본문 -->
+		<div class="row">
+			<div class="col-xs 12" style="text-align: center;">
+				<h1>TIME LINE</h1>
 			</div>
-			<div class="col-xs-3 timeinputbtn">
-				<button id="timeinputbotton" class="timeinputbotton" data-toggle="modal" data-target="#myModal">게시하기</button>
-			</div>
-		</div>
-		<!-- Time line input modal -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	 	  <div class="modal-dialog modal-lg" role="document">
-	 	    <div class="modal-content font-j"> 
-	 	      <div class="modal-header text-lr-center">
-	 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	 	        <h1 class="modal-title" id="myModalLabel">타임라인 등록 하기</h1>
-	 	      </div>
-	 	      <div class="modal-body">
-	 	      <div class="form-group">
-	 	      	<form id="investform" action="/pineapple/investmentinsert.invest" method="post">
-	 	      		<input class="form-control" type="hidden" name="tlId" value="${id}">
-	 	      		<div>
-					<div>제목</div>
-					<input class="form-control" type="text" name="tlTitle" placeholder="타임라인의 제목을 입력해주세요">
+			<div class="col-xs-12">
+				<div class="col-xs-12 timemaintop">
+					<div class="col-xs-9 timeinputbox">
+						<input id="timeinputbox" type="text" class="form-control box1" placeholder="타임라인을 등록해주세요"  data-toggle="modal" data-target="#myModal">
 					</div>
-					<div>
-					<div>내용</div>
-					<textarea id="summernote" name="tlContent" class="form-control" style="height: 100%;"></textarea>
+					<div class="col-xs-3 timeinputbtn">
+						<button id="timeinputbotton" class="timeinputbotton" data-toggle="modal" data-target="#myModal">게시하기</button>
 					</div>
-	 			</form>
-	 	      </div>
-	 	      <div class="modal-footer">
-	 	      	<button id="investreservebtn" type="button" class="btn btn-default" data-dismiss="modal">투자예약하기</button>
-	 	        <button type="button" class="btn btn-default" data-dismiss="modal">투자그만두기</button>
-	 	      </div>
-	 	    </div>
-	 	  </div>
-	 	</div>
-	 	</div>
-		<div class="col-xs-12">
-			<c:forEach var="Data" items="${timelinelist}">
-			<div class="col-xs-12 timelinelist">
+				</div>
+				<!-- Time line input modal -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			 	  <div class="modal-dialog modal-lg" role="document">
+			 	    <div class="modal-content font-j"> 
+			 	      <div class="modal-header text-lr-center">
+			 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			 	        <h1 class="modal-title" id="myModalLabel">타임라인 등록 하기</h1>
+			 	      </div>
+			 	      <div class="modal-body">
+			 	      <div class="form-group">
+			 	      	<form id="timelineform" action="/pineapple/timelineinsert.timeline" method="post">
+			 	      		<input class="form-control" type="hidden" name="tlId" value="${id}">
+			 	      		<div>
+							<h3>제목</h3>
+							<input class="form-control" type="text" name="tlTitle" placeholder="타임라인의 제목을 입력해주세요">
+							</div>
+							<div>
+							<h3>내용</h3>
+							<textarea id="summernote" name="tlContent" class="form-control" style="height: 100%;"></textarea>
+							</div>
+			 			</form>
+			 	      </div>
+			 	      <div class="modal-footer">
+			 	      	<button id="timelinereservebtn" type="button" class="btn btn-default" data-dismiss="modal">타임라인등록</button>
+			 	        <button type="button" class="btn btn-default" data-dismiss="modal">등록그만두기</button>
+			 	      </div>
+			 	    </div>
+			 	  </div>
+			 	</div>
+			 	</div>
 				<div class="col-xs-12">
-				<div class="col-xs-12 timelinenameandtime">
-				<c:choose>
-				<c:when test="${Data.emComName == null}">
-				<span>${Data.name}</span><span>${Data.tlTime}</span>
-				</c:when>
-				<c:otherwise>
-				<span>${Data.emComName}</span><span>${Data.tlTime}</span>
-				</c:otherwise>
-				</c:choose>
-				</div>
-				<h3 class="col-xs-12 timelinetitle">
-				${Data.tlTitle}
-				</h3>
-				<div class="col-xs-12 timelinecontent">
-				${Data.tlContent}
-				</div>
-				<div class="col-xs-12 timelinefooter">
-				<a class="likecount" href="#">
-				<span class="glyphicon glyphicon-thumbs-up"></span>
-				<span>${Data.timelinelikecount}</span>
-				</a>
-				<a class="timereply" href="#">댓글더보기</a>
-				</div>
-				<div class="col-xs-12">
-					<c:forEach var="Datalist" items="${Data.timelineLike}">
-					<div class="col-xs-12">
-						<!-- 좋아요에 마우스 올렸을때 list 보이게 만들기 -->
+					<c:forEach var="Data" items="${timelinelist}">
+					<div class="col-xs-12 timelinelist">
+						<div class="col-xs-12">
+							<div class="col-xs-12 timelinenameandtime">
+								<c:choose>
+									<c:when test="${Data.emComName == null}">
+										<span>${Data.name}</span><span>${Data.tlTime}</span>
+									</c:when>
+									<c:otherwise>
+										<span>${Data.emComName}</span><span>${Data.tlTime}</span>
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<h3 class="col-xs-12 timelinetitle">
+								${Data.tlTitle}
+							</h3>
+							<div class="col-xs-12 timelinecontent">
+								${Data.tlContent}
+							</div>
+							<div class="col-xs-12 timelinefooter">
+								<a class="likecount" href="#">
+									<span class="glyphicon glyphicon-thumbs-up"></span>
+									<span>${Data.timelinelikecount}</span>
+								</a>
+								<a class="timereply" href="#">댓글더보기</a>
+							</div>
+						<div class="col-xs-12">
+							<c:forEach var="Datalist" items="${Data.timelineLike}">
+							<div class="col-xs-12">
+								<!-- 좋아요에 마우스 올렸을때 list 보이게 만들기 -->
+							</div>
+							</c:forEach>
+						</div>
+						</div>
 					</div>
 					</c:forEach>
 				</div>
-				</div>
 			</div>
-			</c:forEach>
 		</div>
+	<!-- 풋터 -->
+		<c:import url="/resources/module/footer.jsp"/>
 	</div>
-</div>
-<!-- 풋터 -->
-	<c:import url="/resources/module/footer.jsp"/>
-</div>
 </body>
 </html>

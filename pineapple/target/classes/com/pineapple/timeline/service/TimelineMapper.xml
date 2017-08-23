@@ -43,4 +43,10 @@
 		ON tl.tlCode = t.tlCode
 		ORDER BY t.tlTime DESC
 	</select>
+	<!-- 타임라인 입력 -->
+	<insert id="addTimeline" parameterType="com.pineapple.timeline.service.Timeline">
+		INSERT INTO timeline
+					(tlId, tlTitle, tlContent, tlTime)
+		VALUES (#{tlId}, #{tlTitle}, #{tlContent}, NOW())
+	</insert>
 </mapper>

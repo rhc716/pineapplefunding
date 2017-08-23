@@ -18,4 +18,11 @@ public class TimelineService implements TimelineServiceInterface{
 		List<TimelineAndUserAndEmployeeAndTimelineLike> timelinelist = timelinedaointerface.timelineListSelect();
 		return timelinelist;
 	}
+	//타임라인에서 타임라인 등록하기
+	@Override
+	public int addTimeline(Timeline timeline) {
+		log.debug("------------------TimelineService-----------------addTimeline()");
+		int timelineinsert = timelinedaointerface.timelineInsert(timeline);
+		return timelineinsert;
+	}
 }
