@@ -16,11 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.pineapple.user.service.Account;
 import com.pineapple.user.service.User;
-import com.pineapple.user.service.UserAndLevel;
 import com.pineapple.user.service.UserAndLevelAndEmployeeAndCompanyAndRank;
 import com.pineapple.user.service.UserDetail;
 import com.pineapple.user.service.UserServiceInterface;

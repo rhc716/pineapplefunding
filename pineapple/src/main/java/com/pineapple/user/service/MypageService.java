@@ -12,6 +12,18 @@ public class MypageService implements MypageServiceInterface {
 	
 	@Autowired
 	private MypageDaoInterface mypagedao;
+	//아이디로 사원조회
+	@Override
+	public List<Employee> getEmployeeById(String userId) {
+		log.debug("MypageService getEmployee 호출");
+		return mypagedao.selectEmployee(userId);
+	}
+	//사원등록 요청 처리
+	@Override
+	public int addEmployee(Employee employee) {
+		log.debug("MypageService addEmployee 호출");
+		return mypagedao.insertEmployee(employee);
+	}
 	//사원등록시 특정회사검색 요청 처리
 	@Override
 	public Company getMyCompany(String comName) {
@@ -32,7 +44,7 @@ public class MypageService implements MypageServiceInterface {
 	}
 	//경영진 마이페이지 분기시 자신이 개설한 회사정보 조회 메서드 선언
 	@Override
-	public Company getCompanyByOpenId(String comOpenUserId) {
+	public List<Company> getCompanyByOpenId(String comOpenUserId) {
 		log.debug("MypageService getCompanyByOpenId 호출 : "+comOpenUserId);
 		return mypagedao.selectCompanyByOpenId(comOpenUserId);
 	}
@@ -54,7 +66,6 @@ public class MypageService implements MypageServiceInterface {
 		log.debug("MypageService selectInvestorBasic 메서드 호출 "+userId);
 		return mypagedao.selectInvestorBasic(userId);
 	}
-
 	
 	
 }

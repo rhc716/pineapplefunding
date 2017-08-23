@@ -72,74 +72,122 @@
 /* FONT CSS */
 
 /* CLASS and TAG CSS */
-	/* 펀딩 동영상 부분 */
-		.funding-vedio{line-height: 329px;
-					   text-align: center;}
-	/* 펀딩 동영상 부분 */
-	/* 펀딩Data 동영상 옆 */
-		/* 모집,투자자,달성률 */
-			.fundingdata1{padding-top: 10px;}
-			div.fundingdata1 div{font-size: 20px;}
-			div.fundingdata1 h4{margin: 0px;}
-			.fundingdata .topdata{padding-top: 10;
-								  border: 1px solid;
-								  height: 80px;}
-		/* 모집,투자자,달성률 */
-		/* 차트바 */
-			.chart-bar{height: 85px;
-					   line-height: 42px;
-					   border: 1px solid;}
-		/* 차트바 */
-		/* 펀딩좋아요,마감일자 */
-			div.fundingdata2 div{padding: 10px;
-								 text-align: center;
-								 border: 1px solid;
-								 height: 45px}
-		/* 펀딩좋아요,마감일자 */
-		/* 투자하기,투자방법안내 btn */
-			.investbtn-all{padding: 0px;
-						   height: 160px;
+	/* 투자하기 */
+		/* 펀딩 동영상 부분 */
+			.funding-vedio{line-height: 329px;
+						   text-align: center;}
+		/* 펀딩 동영상 부분 */
+		/* 펀딩Data 동영상 옆 */
+			/* 모집,투자자,달성률 */
+				.fundingdata1{padding-top: 10px;}
+				div.fundingdata1 div{font-size: 20px;}
+				div.fundingdata1 h4{margin: 0px;}
+				.fundingdata .topdata{padding-top: 10;
+									  border: 1px solid;
+									  height: 80px;}
+			/* 모집,투자자,달성률 */
+			/* 차트바 */
+				.chart-bar{height: 85px;
+						   line-height: 42px;
 						   border: 1px solid;}
-			.investbtn-invest{padding: 0px;
-					   height: 100px;
-					   font-size: 30px;
-					   border: 1px solid;}
-			.investbtn-investguide{padding: 0px;
-								   height: 60px;
-								   font-size: 20px;
-								   border: 1px solid;}
-		/* 투자하기,투자방법안내 btn */
-		/* 펀딩형태,판매주식수,주당발행가,최소신청금액 */
-			.funding-investdata{line-height: 40px;
-								height: 160px;
-								border: 1px solid;}
-		/* 펀딩형태,판매주식수,최소신청금액 */
-	/* 펀딩Data 동영상 옆 */
-	/* 펀딩Tab */
-		/* 펀딩Q&A */
+			/* 차트바 */
+			/* 펀딩좋아요,마감일자 */
+				div.fundingdata2 div{padding: 10px;
+									 text-align: center;
+									 border: 1px solid;
+									 height: 45px}
+			/* 펀딩좋아요,마감일자 */
+			/* 투자하기,투자방법안내 btn */
+				.investbtn-all{padding: 0px;
+							   height: 160px;
+							   border: 1px solid;}
+				.investbtn-invest{padding: 0px;
+						   height: 100px;
+						   font-size: 30px;
+						   border: 1px solid;}
+				.investbtn-investguide{padding: 0px;
+									   height: 60px;
+									   font-size: 20px;
+									   border: 1px solid;}
+			/* 투자하기,투자방법안내 btn */
+			/* 펀딩형태,판매주식수,주당발행가,최소신청금액 */
+				.funding-investdata{line-height: 40px;
+									height: 160px;
+									border: 1px solid;}
+			/* 펀딩형태,판매주식수,최소신청금액 */
+		/* 펀딩Data 동영상 옆 */
+		/* 펀딩Tab */
 			/* 펀딩Q&A */
-				.funding-qna{margin-top: 20px;
-							 border: 1px solid;}
-				.funding-qnaid{margin-top: 10px;
-							   padding-left: 0px;
-							   font-size: 12px;
-							   text-align: left;}
-				.funding-title{margin: 10px 0px;
-							   font-size: 25px;
+				/* 펀딩Q&A */
+					.funding-qna{margin-top: 20px;
+								 border: 1px solid;}
+					.funding-qnaid{margin-top: 10px;
+								   padding-left: 0px;
+								   font-size: 12px;
+								   text-align: left;}
+					.funding-title{margin: 10px 0px;
+								   font-size: 25px;
+								   padding: 0px;
+								   text-align: left;}
+					.funding-content{margin: 10px 0px;
+									 font-size: 17px;
+									 padding: 0px;
+									 text-align: left;}
+				/* 펀딩Q&A*/
+				/* 펀딩Q&A댓글 */
+					.reply-main{margin: 10px 0px;
 							   padding: 0px;
 							   text-align: left;}
-				.funding-content{margin: 10px 0px;
-								 font-size: 17px;
-								 padding: 0px;
-								 text-align: left;}
-			/* 펀딩Q&A*/
-			/* 펀딩Q&A댓글 */
-				.reply-main{margin: 10px 0px;
-						   padding: 0px;
-						   text-align: left;}
-			/* 펀딩Q&A댓글 */
-		/* 펀딩Q&A */
-	/* 펀딩Tab */
+				/* 펀딩Q&A댓글 */
+			/* 펀딩Q&A */
+		/* 펀딩Tab */
+	/* 투자하기 */
+	/* 타임라인 */
+		/* 타임라인 main page */
+			/* 타임라인 상단 input,btn */
+				.timemaintop{padding: 0px 15px;
+							 margin-bottom: 20px}
+				.timeinputbox{width: 75%;
+							  height: 46px;
+							  padding-left: 0px;}
+				.timeinputbtn{width: 25%;
+							  height: 100%;
+							  font-size: 30px;
+							  border: 1px solid;
+							  padding: 0px}
+				.box1{height: 100%;}
+				.timeinputbotton{width: 100%}
+			/* 타임라인 상단 input,btn */
+			/* 타임라인 list */
+				.timelinelist{padding: 0px; 
+							  margin-bottom: 20px;
+							  border: 1px solid;}
+				.timelinenameandtime{padding: 0px;
+									 opacity: 0.4;
+									 font-size: 12px;
+									 margin: 10px 0px 5px 0px;}
+				.timelinetitle{padding: 0px 0px 10px 0px;
+							   margin: 0px;
+							   border-bottom: 1px solid;
+							   border-bottom-color: #d7d7d7}
+				.timelinecontent{padding: 10px 0px 10px 10px;
+								 font-size: 20px;
+								 border-bottom: 1px solid;
+								 border-bottom-color: #d7d7d7}
+				.timelinefooter{padding: 10px 0px;
+								font-size: 14px;}
+				.likecount:hover{text-decoration: none;}
+				.likecount:link{text-decoration: none;
+								color: black;}
+				.likecount:visited{text-decoration: none;
+								 color: black;}
+				.timereply:hover{text-decoration: none;}
+				.timereply:link{text-decoration: none;}
+				.timereply:visited{text-decoration: none;}
+				.timereply:active{text-decoration: none;}
+			/* 타임라인 list */
+		/* 타임라인 main page */
+	/* 타임라인 */
 /* CLASS and TAG CSS */
 
 /* invest main 투자하기 main */

@@ -3,6 +3,13 @@ package com.pineapple.user.service;
 import java.util.List;
 
 public interface MypageDaoInterface {
+	
+	//아이디로 사원조회
+	List<Employee> selectEmployee(String userId);
+	
+	//사원등록 요청 처리
+	int insertEmployee(Employee employee);
+	
 	//사원등록시 특정회사검색 요청 처리
 	Company selectMyCompany(String comName);
 	
@@ -13,7 +20,7 @@ public interface MypageDaoInterface {
 	int insertCompany(Company company);
 	
 	//경영진 마이페이지 분기시 자신이 개설한 회사정보 조회 메서드 선언
-	Company selectCompanyByOpenId(String comOpenUserId);
+	List<Company> selectCompanyByOpenId(String comOpenUserId);
 	
 	//회원상세정보 수정을 위한 메서드 선언
 	int updateUserDetail(UserDetail userdetail);

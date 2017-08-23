@@ -13,6 +13,19 @@ public class MypageDao implements MypageDaoInterface {
 	
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
+	
+	//아이디로 사원조회
+	@Override
+	public List<Employee> selectEmployee(String userId) {
+		log.debug("MypageDao selectEmployee 호출 "+userId);
+		return sqlSessionTemplate.selectList("com.pineapple.user.service.MypageMapper.selectEmployeeById", userId);
+	}
+	//사원등록 요청 처리
+	@Override
+	public int insertEmployee(Employee employee) {
+		log.debug("MypageDao insertEmployee 호출 "+employee);
+		return sqlSessionTemplate.insert("com.pineapple.user.service.MypageMapper.insertEmployeeInfo", employee);
+	}
 	//사원등록시 특정회사검색 요청 처리
 	@Override
 	public Company selectMyCompany(String comName) {
@@ -33,7 +46,7 @@ public class MypageDao implements MypageDaoInterface {
 	}
 	//경영진 마이페이지 분기시 자신이 개설한 회사정보 조회 메서드 선언
 	@Override
-	public Company selectCompanyByOpenId(String comOpenUserId) {
+	public List<Company> selectCompanyByOpenId(String comOpenUserId) {
 		log.debug("MypageDao selectCompanyByOpenId 호출 "+comOpenUserId);
 		return sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectCompanyInfoByOpenId", comOpenUserId);
 	}
@@ -58,6 +71,6 @@ public class MypageDao implements MypageDaoInterface {
 		log.debug("MypageDao selectInvestorBasic 메서드 호출 결과"+sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAllInvestorInfo", userId));
 		return sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAllInvestorInfo", userId);
 	}
-	
+
 	
 }
