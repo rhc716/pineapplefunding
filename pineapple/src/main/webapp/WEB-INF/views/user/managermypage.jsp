@@ -51,8 +51,36 @@
 			});
 		});
 	});
+	//기업등록시 기업명 존재여부 검사
+	
+		$('#comName3').blur(function(){
+			if($('#comName3').val() != ''){
+				$.ajax({ // ajax실행부분
+				    type: "post",
+				    url : "/pineapple/checkcomname.user",
+				    data : {comName : $('#comName3').val()},
+				    success : function(rs){ 
+			    			$('#comnamech3').css("color", "#FF0000");
+			    			$('#comnamech3').text('이미 존재하는 기업명입니다.');
+			    			$('#comName3').val('');
+				    	},
+				    //만약 해당 페이지에 값을 성공적으로 보냈다면 페이지를 rs 라는 매개변수로 받아 id = 'comnamech3' 구역에 rs를 출력하겠다. 
+				    error : function error(){
+				    		$('#comnamech3eck').hide();
+				    		$('#comNameSuccess2').show();
+				    		document.getElementById("comName4").readOnly = true;
+				    		$("#comName4").val($('#comName3').val());
+				    		
+				    	}
+				});
+			} else {
+				alert('유효한 기업명을 입력해주시기 바랍니다');
+			}
+		});
+		
+
 	//기업정보확인모달과 사원등록모달 교체 기능 구현
-	$(document).ready(function(){
+	
 		$('#addEmployeeMngBtn').click(function(){
 			$('#getCompanyOpenInfo').modal("hide");
 		});
@@ -62,7 +90,11 @@
 		$('#employeeCancelBtn').click(function(){
 			location.href = '/pineapple/mypage.user';
 		});
-	});
+
+	
+</script>
+<script type="text/javascript">
+
 </script>
 </head>
 <body>
@@ -80,6 +112,9 @@
 			</li> 
 			<li role="presentation" class="">
 				<a data-target="#insertCompany" role="tab" id="insertCompany-tab" data-toggle="tab" aria-controls="insertCompany" aria-expanded="false">기업등록요청</a>
+			</li>
+			<li role="presentation" class="">
+				<a data-target="#insertEmployee" role="tab" id="#insertEmployee-tab" data-toggle="tab" aria-controls="#insertEmployee" aria-expanded="false">사원등록요청</a>
 			</li>
 			<li role="presentation" class="">
 				<a data-target="#approveEmployee" role="tab" id="approveEmployee-tab" data-toggle="tab" aria-controls="approveEmployee" aria-expanded="false">사원요청승인</a>
@@ -121,7 +156,7 @@
 								<td> ${useraccount.accountNumber} </td>
 								<td> ${useraccount.accountNickname} </td>
 								<td>
-									<button id="changeAccountModalBtn" type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#changeAccountModal" value="${useraccount.accountCode}">수정</button>
+									<a id="changeAccountModalBtn" type="button" class="btn btn-info btn-block" data-toggle="modal" href="#changeAccountModal" value="${useraccount.accountCode}">수정</a>
 								</td>
 								<td>
 									<form action="/pineapple/deleteaccount.user" method="post">
@@ -134,7 +169,7 @@
 					</tbody>
 					<tfoot>
 						<div>
-							<button type="button" class="btn btn-info" data-toggle="modal" data-target="#newaccountmodal">+ 새로운 계좌등록</button>
+							<a type="button" class="btn btn-info" data-toggle="modal" href="#newaccountmodal">+ 새로운 계좌등록</a>
 						</div>
 					</tfoot>
 					</table>
@@ -234,6 +269,7 @@
 					</div>
 				</div>
 			</div>
+			<!-- 두번째탭 시작 -->
 			<!-- 기업등록요청하기 입력폼; 기업을 등록하는 경영진과 등록하지 않는 경영진 여부에 따라 페이지 구분 기능 구현 -->
 			<div role="tabpanel" class="tab-pane fade" id="insertCompany" aria-labelledby="insertCompany-tab">
 				<div class="row">
@@ -243,18 +279,13 @@
 					<div class="col-xs-10">
 						<!-- 기업을 등록한 경영진은 자신이 등록한 기업정보와 관리자에 의한 기업승인여부를 확인할 수 있다(사원정보입력) -->
 						<!-- 기업을 등록지않은 경영진은 기존의 기업들 중 자신이 소속된 기업을 검색하여 사원정보를 입력한다 -->
-						<c:choose>
-							<c:when test="${not empty company}">
-								<br>
-								<a id="getCompanyOpenInfoBtn" class="btn btn-info btn-block" data-toggle="modal" href="#getCompanyOpenInfo">기업개설정보확인</a>
-								<p id="explain">개설한 기업정보를 확인할 수 있습니다</p>
-							</c:when>
-							<c:otherwise>
-								<br>
-								<a href="#addEmployee" class="btn btn-info btn-block" data-toggle="modal" >사원등록하기</a>
-								<p id="explain">소속한 기업을 검색하여 사원으로 등록해주시기 바랍니다</p>
-							</c:otherwise>
-						</c:choose>
+					<br>
+					<c:forEach var="companyOpenedByMyId1" items="${company}">
+						<a id="getCompanyOpenInfoBtn" class="btn btn-info btn-block" data-toggle="modal" href="#getCompanyOpenInfo">${companyOpenedByMyId1.comName} 정보확인</a>
+					</c:forEach>
+					<p id="explain">본인의 아이디로 개설한 모든 기업정보를 확인할 수 있습니다</p>
+						<!-- 개설한 모든 회사가 리스트 타입으로 리턴되므로 forEach 태그립을 사용하여 모달 내부 구현 -->
+						<c:forEach var="companyOpenedByMyId2" items="${company}">
 						<!-- 개설한 기업의 승인여부 및 세부사항 확인을 위한 모달 내부 구현 -->
 						<div class="modal fade" id="getCompanyOpenInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						  <div class="modal-dialog">
@@ -266,97 +297,92 @@
 						      <div class="modal-body">
 						        <form id="companyCheckForm">
 									<div class="container_insert">
-									
 										<c:choose>
-											<c:when test="${not empty company[0].comApprovalId}">
-												<form class="form-inline">
+											<c:when test="${not empty companyOpenedByMyId2.comApprovalId}">
 												  <div class="form-group has-success has-feedback">
 												    <label class="control-label" for="inputSuccess4">기업승인여부</label>
 												    <input type="text" class="form-control" id="comAdminApproved" name="comAdminApproved" value="기업승인완료" aria-describedby="inputSuccess4Status" readonly>
-												    <input type="hidden" class="form-control" id="comAdminApprovalCheck1" name="comAdminApproval" value="${company[0].comAdminApproval}">
+												    <input type="hidden" class="form-control" id="comAdminApprovalCheck1" name="comAdminApproval" value="${companyOpenedByMyId2.comAdminApproval}">
 												    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 												    <span id="comApprovedStatus" class="sr-only">(success)</span>
 												  </div>
-												</form>
 												<br>
 											</c:when>
 											<c:otherwise>
-												<form class="form-inline">
 												  <div class="form-group has-success has-feedback">
 												    <label class="control-label" for="inputSuccess4">기업승인여부</label>
 												    <input type="text" class="form-control" id="comAdminNotApproved" name="comAdminNotApproved" value="기업미승인" aria-describedby="inputSuccess4Status" readonly>
-												    <input type="hidden" class="form-control" id="comAdminApprovalCheck2" name="comAdminApproval" value="${company[0].comAdminApproval}">
+												    <input type="hidden" class="form-control" id="comAdminApprovalCheck2" name="comAdminApproval" value="${companyOpenedByMyId2.comAdminApproval}">
 												    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 												    <span id="comApprovedStatus" class="sr-only">(success)</span>
 												  </div>
-												</form>
 												<br>
 											</c:otherwise>
 										</c:choose>
 									    <div id="comOpenEmail" class="form-group has-success has-feedback">
 											<label class="control-label" for="inputSuccess2">기업등록요청아이디</label>
-											<input id="comOpenUserId" name="comOpenUserId" type="text" class="form-control" value="${company[0].comOpenUserId}" varia-describedby="inputSuccess2Status" readonly>
+											<input id="comOpenUserId" name="comOpenUserId" type="text" class="form-control" value="${companyOpenedByMyId2.comOpenUserId}" varia-describedby="inputSuccess2Status" readonly>
 											<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 											<span id="inputSuccess2Status" class="sr-only">(success)</span>
 										</div>
 										<br>
 										<div>
 									    	<label for="comLogoFileInput">기업로고업로드</label>
-										    <input type="file" id="comLogoServerName" name="comLogoServerName" value="${company[0].comLogoServerName}">
+										    <input type="file" id="comLogoServerName" name="comLogoServerName" value="${companyOpenedByMyId2.comLogoServerName}">
 										     <p class="help-block">기업로고 이미지 파일업로드</p>
-										    <input type="number" id="comLogoHeight" name="comLogoHeight" value="${company[0].comLogoHeight}" hidden>
-										    <input type="number" id="comLogoWidth" name="comLogoWidth" value="${company[0].comLogoWidth}" hidden>
-										    <input type="number" id="comLogoSize" name="comLogoSize" value="${company[0].comLogoSize}" hidden>
-										    <input type="text" id="comLogoExtension" name="comLogoExtension" value="${company[0].comLogoExtension}" hidden>
+										    <input type="number" id="comLogoHeight" name="comLogoHeight" value="${companyOpenedByMyId2.comLogoHeight}" hidden>
+										    <input type="number" id="comLogoWidth" name="comLogoWidth" value="${companyOpenedByMyId2.comLogoWidth}" hidden>
+										    <input type="number" id="comLogoSize" name="comLogoSize" value="${companyOpenedByMyId2.comLogoSize}" hidden>
+										    <input type="text" id="comLogoExtension" name="comLogoExtension" value="${companyOpenedByMyId2.comLogoExtension}" hidden>
 										</div>
 										<br>
-										<div id="comNameCheck" class="form-group">
+										<div id="comnamech3eck" class="form-group">
 										    <label class="control-label" for="comNameInput">*기업이름</label>
 										    <p id="explain"> (정확한 기업이름을 입력해주시기 바랍니다. 이미 등록된 기업이 존재하는 경우 기업을 등록할 수 없습니다.)</p>
-										    <input id="comName" name="comName" type="text" class="form-control" value="${company[0].comName}" placeholder="Enter Company Name">
-									  		<span id="comnamech"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
+										    <input id="comName" name="comName" type="text" class="form-control" value="${companyOpenedByMyId2.comName}" placeholder="Enter Company Name">
+									  		<span id="comnamech3"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
 										<br>
 									  	</div>
 									  	<div class="form-group">
 										    <label for="exampleInputPassword1">*사업자번호</label>
 										    <p id="explain">(-없이 사업자번호 10자리를 정확히 입력해주시기 바랍니다)</p>
-										    <input id="comNumber" name="comNumber" type="text" class="form-control" value="${company[0].comNumber}" maxlength="10" placeholder="Enter Company Number">
+										    <input id="comNumber" name="comNumber" type="text" class="form-control" value="${companyOpenedByMyId2.comNumber}" maxlength="10" placeholder="Enter Company Number">
 										    <span id="pwch"></span>
 									  	</div>
 									  	<br>
 									  	<div>
 									  		<label for="comHomePageInput">기업웹사이트주소</label>
-										    <input id="comHomePage" name="comHomePage" type="text" class="form-control" value="${company[0].comHomePage}" placeholder="Enter Company Web Site Address">
+										    <input id="comHomePage" name="comHomePage" type="text" class="form-control" value="${companyOpenedByMyId2.comHomePage}" placeholder="Enter Company Web Site Address">
 										</div>
 										<br>
 										<div>
 									    	<label for="comCeoNameInput">기업대표이름</label>
 										    <p id="explain">(현재 기업 대표의 실명을 입력해주시기 바랍니다)</p>
-										    <input id="comCeoName" name="comCeoName" type="text" class="form-control" value="${company[0].comCeoName}" placeholder="Enter Company CEO Name">
+										    <input id="comCeoName" name="comCeoName" type="text" class="form-control" value="${companyOpenedByMyId2.comCeoName}" placeholder="Enter Company CEO Name">
 										</div>
 										<br>
 										<div>
 									    	<label for="comEstablishYearInupt">기업설립연도</label>
 										    <p id="explain">(기업의 설립연도를 입력해주시기 바랍니다)</p>
-										    <input id="comEstablishYear" name="comEstablishYear" type="text" class="form-control" value="${company[0].comEstablishYear}" maxlength="4" placeholder="Enter Company Establish Year">
+										    <input id="comEstablishYear" name="comEstablishYear" type="text" class="form-control" value="${companyOpenedByMyId2.comEstablishYear}" maxlength="4" placeholder="Enter Company Establish Year">
 										</div>
 										<br>
 										<div>
 									    	<label for="comInfoInupt">기업정보</label>
 										    <p id="explain">(기업에 대한 전반적인 정보를 입력해주시기 바랍니다)</p>
-										    <textarea id="comInfo" name="comInfo" class="form-control" value="${company[0].comInfo}" rows="4"></textarea>
+										    <textarea id="comInfo" name="comInfo" class="form-control" value="${companyOpenedByMyId2.comInfo}" rows="4"></textarea>
 										</div>
 										<br>
 										<div>
 									    	<label for="comSummaryInupt">기업간략소개</label>
 										    <p id="explain">(기업에 대한 소개글을 입력해주시기 바랍니다)</p>
-										    <textarea id="comSummary" name="comSummary" class="form-control" value="${company[0].comSummary}" rows="4"></textarea>
+										    <textarea id="comSummary" name="comSummary" class="form-control" value="${companyOpenedByMyId2.comSummary}" rows="4"></textarea>
 										</div>
 										<br>
 										<div>
 									    	<label for="comActivitySummaryInupt">기업활동정보</label>
 										    <p id="explain">(기업의 활동분야에 대한 정보를 입력해주시기 바랍니다)</p>
-										    <textarea id="comActivitySummary" name="comActivitySummary" class="form-control" value="${company[0].comActivitySummary}" rows="4"></textarea>
+										    <textarea id="comActivitySummary" name="comActivitySummary" class="form-control" value="${companyOpenedByMyId2.comActivitySummary}" rows="4"></textarea>
 										</div>
 										</div>
 									</form>
@@ -385,15 +411,15 @@
 											<!-- 기업정보검색없이 사원등록하기 -->
 											<div class="form-group has-success has-feedback">
 											    <label class="control-label" for="inputSuccess4">소속기업명</label>
-											    <input id="emComName1" name="emComName" type="text" class="focus form-control" value="${company[0].comName}" readonly>
-									  			<input id="emComCode1" name="emComCode" type="hidden" class="form-control" value="${company[0].comCode}">
+											    <input id="emcomName3" name="emComName" type="text" class="focus form-control" value="${companyOpenedByMyId2.comName}" readonly>
+									  			<input id="emComCode1" name="emComCode" type="hidden" class="form-control" value="${companyOpenedByMyId2.comCode}">
 											    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 											    <span id="comApprovedStatus" class="sr-only">(success)</span>
 										    </div>
 											<br>
 										    <div id="emUserIdEmail" class="form-group has-success has-feedback">
 												<label class="control-label" for="inputSuccess2">사원등록요청아이디</label>
-												<input id="emUserId1" name="emUserId" type="text" class="form-control" value="${company[0].comOpenUserId}" varia-describedby="inputSuccess2Status" readonly>
+												<input id="emUserId1" name="emUserId" type="text" class="form-control" value="${companyOpenedByMyId2.comOpenUserId}" varia-describedby="inputSuccess2Status" readonly>
 												<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 												<span id="inputSuccess2Status" class="sr-only">(success)</span>
 												<p id="explain">(사원으로 등록하려고 하는 분의 아이디입니다)</p>
@@ -430,10 +456,10 @@
 											<div id="comNameSearch" class="form-group">
 											    <label class="control-label" for="comNameInput">기업검색</label>
 											    <p id="explain"> (소속한 기업을 검색하여 입력해주시기 바랍니다)</p>
-											    <input id="emComName2" name="emComName" type="text" class="focus form-control" placeholder="Enter Company Name" readonly>
+											    <input id="emcomName4" name="emComName" type="text" class="focus form-control" placeholder="Enter Company Name" readonly>
 											    <a data-toggle="modal" href="#searchCompanyModal" class="btn btn-info btn-block">기업검색</a>
 										  		<input id="emComCode2" name="emComCode" type="hidden" class="form-control">
-										  		<span id="comnamech"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
+										  		<span id="comnamech3"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
 											</div>
 											<br>
 										    <div id="emUserIdEmail2" class="form-group has-success has-feedback">
@@ -473,6 +499,7 @@
 					    	</div>
 						  </div>
 						</div>
+						</c:forEach>
 						<!-- 소속기업 검색 모달 내부 구현 -->
 						<div class="modal fade" id="searchCompanyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						  <div class="modal-dialog">
@@ -554,111 +581,135 @@
 						  </div>
 						</div>
 					</div>
-
 				</div>
 				<br>
-				<!-- 기업등록요청을 하지 않은 경영진일 경우 화면에 출력된다 -->
+				<!-- 첫번째탭 두번째row 시작-->
+				<!-- 기업등록요청하기 입력폼; 기업을 등록하는 경영진과 등록하지 않는 경영진 여부에 따라 페이지 구분 기능 구현 -->
 				<div class="row">
 					<div class="col-xs-2">
+						<br>
 						<p>기업등록요청하기</p>
 					</div>
-					<c:choose>
-						<c:when test="${not empty company}">
-							<div class="col-xs-10">
-								<a href="#" class="btn btn-warning btn-block">회사개설신청완료</a>
-								<p id="explain">기업개설신청을 완료하였습니다. 기업등록 승인결과를 확인해주세요.</p>
+					<div class="col-xs-10">
+						<br>
+						<p id="explanation">기존에 존재하지 않는 새로운 기업을 등록할 수 있습니다. 새로운 기업을 최초로 등록하면 [일반사원] 직급에서 개설한 기업 소속 [경영진] 직급으로 변경됩니다.</p>
+						<form id="companyInsertForm" action="/pineapple/addnewcompany.user" method="post">
+							<div class="container_insert">
+								<div>
+									<input type="hidden" id="comAdminApproval" name="comAdminApproval" value="0">
+								</div>
+							    <div id="comOpenEmail" class="form-group has-success has-feedback">
+									<label class="control-label" for="inputSuccess2">기업등록요청아이디</label>
+									<input id="comOpenUserId" name="comOpenUserId" type="text" class="form-control" value="${id}" varia-describedby="inputSuccess2Status" readonly>
+									<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+									<span id="inputSuccess2Status" class="sr-only">(success)</span>
+								</div>
+								<br>
+								<div>
+							    	<label for="comLogoFileInput">기업로고업로드</label>
+								    <input type="file" id="comLogoServerName" name="comLogoServerName">
+								     <p class="help-block">기업로고 이미지 파일업로드</p>
+								    <input type="number" id="comLogoHeight" name="comLogoHeight" hidden>
+								    <input type="number" id="comLogoWidth" name="comLogoWidth" hidden>
+								    <input type="number" id="comLogoSize" name="comLogoSize" hidden>
+								    <input type="text" id="comLogoExtension" name="comLogoExtension" hidden>
+								</div>
+								<br>
+								<div id="comnamech3eck" class="form-group">
+								    <label class="control-label" for="comNameInput">*기업이름</label>
+								    <p id="explain"> (정확한 기업이름을 입력해주시기 바랍니다. 이미 등록된 기업이 존재하는 경우 기업을 등록할 수 없습니다.)</p>
+								    <input id="comName3" name="comNameInput" type="text" class="form-control" placeholder="Enter Company Name">
+							  		<span id="comnamech3"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
+							  	</div>
+							  	<div id="comNameSuccess2" class="form-group has-success has-feedback" hidden="hidden">
+									<label class="control-label" for="inputSuccess2">사용가능한 기업명</label>
+									<input type="text" class="form-control" id="comName4" name="comName" varia-describedby="inputSuccess2Status">
+									<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+									<span id="inputSuccess2Status" class="sr-only">(success)</span>
+								</div>
+								<br>
+							  	<div class="form-group">
+								    <label for="exampleInputPassword1">*사업자번호</label>
+								    <p id="explain">(-없이 사업자번호 10자리를 정확히 입력해주시기 바랍니다)</p>
+								    <input id="comNumber" name="comNumber" type="text" class="form-control" maxlength="10" placeholder="Enter Company Number">
+								    <span id="pwch"></span>
+							  	</div>
+							  	<br>
+							  	<div>
+							  		<label for="comHomePageInput">기업웹사이트주소</label>
+								    <input id="comHomePage" name="comHomePage" type="text" class="form-control" placeholder="Enter Company Web Site Address">
+								</div>
+								<br>
+								<div>
+							    	<label for="comCeoNameInput">기업대표이름</label>
+								    <p id="explain">(현재 기업 대표의 실명을 입력해주시기 바랍니다)</p>
+								    <input id="comCeoName" name="comCeoName" type="text" class="form-control" placeholder="Enter Company CEO Name">
+								</div>
+								<br>
+								<div>
+							    	<label for="comEstablishYearInupt">기업설립연도</label>
+								    <p id="explain">(기업의 설립연도를 입력해주시기 바랍니다)</p>
+								    <input id="comEstablishYear" name="comEstablishYear" type="text" class="form-control" maxlength="4" placeholder="Enter Company Establish Year">
+								</div>
+								<br>
+								<div>
+							    	<label for="comInfoInupt">기업정보</label>
+								    <p id="explain">(기업에 대한 전반적인 정보를 입력해주시기 바랍니다)</p>
+								    <textarea id="comInfo" name="comInfo" class="form-control" rows="4"></textarea>
+								</div>
+								<br>
+								<div>
+							    	<label for="comSummaryInupt">기업간략소개</label>
+								    <p id="explain">(기업에 대한 소개글을 입력해주시기 바랍니다)</p>
+								    <textarea id="comSummary" name="comSummary" class="form-control" rows="4"></textarea>
+								</div>
+								<br>
+								<div>
+							    	<label for="comActivitySummaryInupt">기업활동정보</label>
+								    <p id="explain">(기업의 활동분야에 대한 정보를 입력해주시기 바랍니다)</p>
+								    <textarea id="comActivitySummary" name="comActivitySummary" class="form-control" rows="4"></textarea>
+								</div>
+								<br>
+								<div class="clearfix">
+								    <input id="cancelComInsertBtn" type="reset" class="button_insert cancelbtn" value="초기화">
+								    <input id="submitComInsertBtn" type="button" class="button_insert signupbtn" value="기업등록">
+							   	</div>
 							</div>
-						</c:when>
-						<c:otherwise>
-							<div class="col-xs-10">
-								<form id="companyInsertForm" action="/pineapple/addnewcompany.user" method="post">
-									<div class="container_insert">
-										<div>
-											<input type="hidden" id="comAdminApproval" name="comAdminApproval" value="0">
-										</div>
-									    <div id="comOpenEmail" class="form-group has-success has-feedback">
-											<label class="control-label" for="inputSuccess2">기업등록요청아이디</label>
-											<input id="comOpenUserId" name="comOpenUserId" type="text" class="form-control" value="${id}" varia-describedby="inputSuccess2Status" readonly>
-											<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-											<span id="inputSuccess2Status" class="sr-only">(success)</span>
-										</div>
-										<br>
-										<div>
-									    	<label for="comLogoFileInput">기업로고업로드</label>
-										    <input type="file" id="comLogoServerName" name="comLogoServerName">
-										     <p class="help-block">기업로고 이미지 파일업로드</p>
-										    <input type="number" id="comLogoHeight" name="comLogoHeight" hidden>
-										    <input type="number" id="comLogoWidth" name="comLogoWidth" hidden>
-										    <input type="number" id="comLogoSize" name="comLogoSize" hidden>
-										    <input type="text" id="comLogoExtension" name="comLogoExtension" hidden>
-										</div>
-										<br>
-										<div id="comNameCheck" class="form-group">
-										    <label class="control-label" for="comNameInput">*기업이름</label>
-										    <p id="explain"> (정확한 기업이름을 입력해주시기 바랍니다. 이미 등록된 기업이 존재하는 경우 기업을 등록할 수 없습니다.)</p>
-										    <input id="comName" name="comName" type="text" class="form-control" placeholder="Enter Company Name">
-									  		<span id="comnamech"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
-										<br>
-									  	</div>
-									  	<div class="form-group">
-										    <label for="exampleInputPassword1">*사업자번호</label>
-										    <p id="explain">(-없이 사업자번호 10자리를 정확히 입력해주시기 바랍니다)</p>
-										    <input id="comNumber" name="comNumber" type="text" class="form-control" maxlength="10" placeholder="Enter Company Number">
-										    <span id="pwch"></span>
-									  	</div>
-									  	<br>
-									  	<div>
-									  		<label for="comHomePageInput">기업웹사이트주소</label>
-										    <input id="comHomePage" name="comHomePage" type="text" class="form-control" placeholder="Enter Company Web Site Address">
-										</div>
-										<br>
-										<div>
-									    	<label for="comCeoNameInput">기업대표이름</label>
-										    <p id="explain">(현재 기업 대표의 실명을 입력해주시기 바랍니다)</p>
-										    <input id="comCeoName" name="comCeoName" type="text" class="form-control" placeholder="Enter Company CEO Name">
-										</div>
-										<br>
-										<div>
-									    	<label for="comEstablishYearInupt">기업설립연도</label>
-										    <p id="explain">(기업의 설립연도를 입력해주시기 바랍니다)</p>
-										    <input id="comEstablishYear" name="comEstablishYear" type="text" class="form-control" maxlength="4" placeholder="Enter Company Establish Year">
-										</div>
-										<br>
-										<div>
-									    	<label for="comInfoInupt">기업정보</label>
-										    <p id="explain">(기업에 대한 전반적인 정보를 입력해주시기 바랍니다)</p>
-										    <textarea id="comInfo" name="comInfo" class="form-control" rows="4"></textarea>
-										</div>
-										<br>
-										<div>
-									    	<label for="comSummaryInupt">기업간략소개</label>
-										    <p id="explain">(기업에 대한 소개글을 입력해주시기 바랍니다)</p>
-										    <textarea id="comSummary" name="comSummary" class="form-control" rows="4"></textarea>
-										</div>
-										<br>
-										<div>
-									    	<label for="comActivitySummaryInupt">기업활동정보</label>
-										    <p id="explain">(기업의 활동분야에 대한 정보를 입력해주시기 바랍니다)</p>
-										    <textarea id="comActivitySummary" name="comActivitySummary" class="form-control" rows="4"></textarea>
-										</div>
-										<br>
-										<div class="clearfix">
-										    <input id="cancelComInsertBtn" type="reset" class="button_insert cancelbtn" value="초기화">
-										    <input id="submitComInsertBtn" type="button" class="button_insert signupbtn" value="기업등록">
-									   	</div>
-									</div>
-								</form>
-							</div>
-						</c:otherwise>
-					</c:choose>
+						</form>
+					</div>
 				</div>
 			</div>
+			<!-- 세번째탭 시작 -->
+			<div role="tabpanel" class="tab-pane fade" id="insertEmployee" aria-labelledby="insertEmployee-tab">
+				<!-- 기업회원일 경우 마이페이지 로딩시, 항상 사원정보를 조회하여 객체 데이터를 담아 전송한다 -->
+				<div class="row">
+					<div class="col-xs-2">
+						<p>사원등록요청하기</p>
+					</div>
+					<div class="col-xs-10">
+						<c:choose>
+							<c:when test="${not empty employee}">
+							<br>
+							<a href="#addEmployee" class="btn btn-info btn-block" data-toggle="modal" >사원등록하기</a>
+							<p id="explain">소속한 모든 기업을 검색하여 사원으로 등록해주시기 바랍니다</p>
+								사원정보보기(승인여부체크가능), 사원요청계속 할 수 있음, 회사개설가능
+							</c:when>
+							<c:otherwise>
+								사원등록요청, 회사개설가능
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
+			</div>
+			<!-- 네번째탭 시작 -->
 			<div role="tabpanel" class="tab-pane fade" id="approveEmployee" aria-labelledby="approveEmployee-tab"> 
 				<p>사원요청승인</p>
 			</div>
+			<!-- 다섯번째탭 시작 -->
 			<div role="tabpanel" class="tab-pane fade" id="employeeList" aria-labelledby="employeeList-tab"> 
 				<p>전체사원리스트</p> 
 			</div>
+			<!-- 여섯번째탭 시작 -->
 			<div role="tabpanel" class="tab-pane fade" id="message" aria-labelledby="message-tab"> 
 				<p>메세지</p> 
 			</div>

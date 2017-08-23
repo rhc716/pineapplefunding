@@ -26,12 +26,11 @@
 $(document).ready(function(){
 	//기업등록시 기업명 존재여부 검사
 	$('#comName1').blur(function(){
-		if($('#comName1').val() != ''){
 			$.ajax({ // ajax실행부분
 			    type: "post",
 			    url : "/pineapple/checkcomname.user",
 			    data : {comName : $('#comName1').val()},
-			    success : function(rs){ 
+			    success : function(){ 
 			    			$('#comnamech').css("color", "#FF0000");
 			    			$('#comnamech').text('이미 존재하는 기업명입니다.');
 			    			$('#comName1').val('');
@@ -45,9 +44,6 @@ $(document).ready(function(){
 			    		
 			    	}
 			});
-		} else {
-			alert('유효한 기업명을 입력해주시기 바랍니다');
-		}
 	});
 	
 });

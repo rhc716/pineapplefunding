@@ -20,17 +20,35 @@
 
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
+<!-- 아이콘 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 <!-- 세션값 있을 경우 로그인 성공 후 화면, 세션값 없을 경우 로그인 화면 -->
 	<c:choose>
-		<c:when test="${not empty sessionScope.userLogin }">
-			로그인 성공<br>
-			${id}님 ${level} 권한으로 로그인<br>
-			<a href="#">메시지</a>&nbsp&nbsp&nbsp
-			<form action="/pineapple/logout.user" method="post">
-				<button id="logoutBtn"type="submit" class="login_bt btnpine btn-primary">로그아웃</button>
-			</form>
+		<c:when test="${not empty sessionScope.userLogin}">
+			<div id="user-widget" class="list-group">
+	            <div class="list-group-item heading">
+	               <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/ademilter/128.jpg">
+	               <div class="text-wrap">
+	                  <h4 class="list-group-item-heading">${userLogin.nickname}</h4>
+	                  <p class="list-group-item-text">${level} ${rank} 권한 로그인중</p>
+	               </div>
+	               <div class="clearfix"></div>
+	            </div>
+	            <a href="/pineapple/mypage.user" class="list-group-item">
+	               <i class="fa fa-user fa-lg pull-right"></i>
+	               <p class="list-group-item-text">${nickname}님의 마이페이지</p>
+	            </a>
+	            <a href="" class="list-group-item">
+	               <i class="fa fa-bar-chart-o fa-lg pull-right"></i>
+	               <p class="list-group-item-text">메세지</p>
+	            </a>
+	            <a href="/pineapple/logout.user" class="list-group-item">
+	               <i class="fa fa-wrench fa-lg pull-right"></i>
+	               <p class="list-group-item-text">로그아웃</p>
+	            </a>
+			</div>
 		</c:when>
 		<c:otherwise>
 			<p>로그인</p>

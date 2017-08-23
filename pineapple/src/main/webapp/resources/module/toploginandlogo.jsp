@@ -9,26 +9,46 @@
 <body>
 <div class="row">
 	<div class="col-md-3"></div>
-	<div class="col-md-6 logoandsearch">
+	<div class="col-md-3 logoandsearch">
 		<a href="/pineapple"><img src="${pageContext.request.contextPath}/resources/img/logo.jpg"></a>
 	</div>
-	<c:choose>
-		<c:when test="${not empty sessionScope.userLogin }">
-			<div class="col-md-3">
-				<form action="/pineapple/logout.user" method="post">
-					<button id="logoutBtn" type="submit" class="btn btnpine loginorlogoutbtn">로그아웃</button>
-				</form>
-			</div> 
-		</c:when>
-		<c:otherwise>
-			<div class="col-md-3">
-				<form action="/pineapple/login.user" method="get">
-					<button id="loginBtn" type="submit" class="btn btnpine loginorlogoutbtn">로그인</button>
-				</form>
-			</div>
-		</c:otherwise>
-	</c:choose>
-	
+	<div class="col-md-6">
+		<br>
+			<c:choose>
+				<c:when test="${not empty sessionScope.userLogin}">
+					<div class="col-md-3">
+						<a href="/pineapple/logout.user">
+							<button type="button" class="btn btn-danger" aria-label="left Align">
+							  <span class="glyphicon glyphicon-off" aria-hidden="true"> 로그아웃</span>
+							</button>
+						 </a>
+					 </div>
+					 <div class="col-md-3">
+						 <a href="/pineapple/mypage.user">
+							<button type="button" class="btn btn-danger" aria-label="left Align">
+							  <span class="glyphicon glyphicon-user" aria-hidden="true"> 마이페이지</span>
+							</button>
+						 </a>
+					</div> 
+				</c:when>
+				<c:otherwise>
+					<div class="col-md-3">
+						<a href="/pineapple/login.user">
+							<button type="button" class="btn btn-success" aria-label="left Align">
+							  <span class="glyphicon glyphicon-globe" aria-hidden="true"> 로그인</span>
+							</button>
+						</a>
+					</div>
+					 <div class="col-md-3">
+						<a href="/pineapple/userinsert.user">
+							<button type="button" class="btn btn-success" aria-label="left Align">
+							  <span class="glyphicon glyphicon-globe" aria-hidden="true"> 회원가입</span>
+							</button>
+						</a>
+					</div> 
+				</c:otherwise>
+			</c:choose>
+	</div>
 </div>
 </body>
 </html>

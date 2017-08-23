@@ -147,7 +147,7 @@ public class UserController {
 	}
 
 	//로그아웃 요청 처리
-	@RequestMapping(value="/logout.user", method=RequestMethod.POST)
+	@RequestMapping(value="/logout.user", method=RequestMethod.GET)
 	public String logout(HttpSession session, SessionStatus status, Model model){
 		log.debug("logout 요청 처리");
 		//session 종료 처리
