@@ -1,6 +1,7 @@
 package com.pineapple.pms.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -24,6 +25,7 @@ import com.pineapple.pms.service.WbsPlanIncome;
 import com.pineapple.pms.service.WbsPlanMaterial;
 import com.pineapple.pms.service.WbsPlanOut;
 import com.pineapple.pms.service.WbsPlanView;
+import com.pineapple.pms.service.WbsPlanUpdate;
 
 @Controller
 public class PmsController {
@@ -41,12 +43,12 @@ public class PmsController {
 
 	// wbsplan 상세보기 페이지
 	@RequestMapping(value = "/wbsplandetail.pms", method = {RequestMethod.GET, RequestMethod.POST})
-	public String wbsplandetail(Locale locale, Model model, HttpServletRequest request) {
+	public String wbsplandetail(WbsPlan wbsplan,Locale locale, Model model, HttpServletRequest request) {
 		String btn = request.getParameter("btn");
+		String wbsplancode = request.getParameter("wbsPlanCode");
 		log.debug("btn"+btn);
 		if(btn.equals("detail")){	
 			log.debug("PmsController의 wbsplandetail의 detail호출 성공");
-			String wbsplancode = request.getParameter("wbsPlanCode");
 			log.debug("wbs코드" + wbsplancode);
 			WbsPlanView wbsplandetail;
 			wbsplandetail = service.getMyWbsPlanDetail(wbsplancode);
@@ -55,11 +57,26 @@ public class PmsController {
 			return "pms/companyuser/wbs/wbsplandetail";
 		}else if(btn.equals("delete")){
 			log.debug("PmsController의 wbsplandetail의 delete호출 성공");
-			String wbsplancode = request.getParameter("wbsPlanCode");
 			log.debug("wbs코드" + wbsplancode);
 			service.deletewbsplan(wbsplancode);
 			return "redirect:/wbsplanlistpage.pms";
 		}else{
+			log.debug("PmsController의 wbsplandetail의 update호출 성공");
+			log.debug("WbsPlan" + wbsplan);
+			//수정한 데이터 새로 삽입
+			service.addWbsplan(wbsplan);
+			//이전 데이터의 상태를 0으로 만듬
+			service.updatewbsplan(wbsplancode);
+			WbsPlanUpdate wbsplanupdate;
+			//기타항목들에 들어갈 wbsplancode를 바뀐데이터로 바꾸기 위해서 코드를 가져옴
+			wbsplanupdate = service.wbsplanupdate(wbsplan);
+			log.debug("wbsplanupdate" + wbsplanupdate);
+			HashMap map = new HashMap<String, Object>();
+			map.put("wbsplancode", wbsplancode);
+			String changecode = wbsplanupdate.getWbsPlanCode();
+			map.put("changecode", changecode);
+			log.debug("map테스트" + map);
+			service.wbsplanupdateetc(map);
 			return "redirect:/wbsplanlistpage.pms";
 		}
 		

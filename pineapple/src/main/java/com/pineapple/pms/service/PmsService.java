@@ -1,5 +1,6 @@
 package com.pineapple.pms.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -77,7 +78,23 @@ public class PmsService implements PmsServiceInterface{
 		WbsPlanView wbsplandetail = pmsdao.getMyWbsPlanDetail(wbsplancode);
 		return wbsplandetail;
 	}
-	
+	@Override
+	public  WbsPlanUpdate wbsplanupdate(WbsPlan wbsplan) {
+		log.debug("PmsService의 wbsplanupdate호출 성공");
+		WbsPlanUpdate wbsplanupdate = pmsdao.wbsplanupdate(wbsplan);
+		return wbsplanupdate;
+	}
+	@Override
+	public  void wbsplanupdateetc(HashMap map) {
+		log.debug("PmsService의 wbsplanupdateetc호출 성공");
+		pmsdao.wbsplanupdateetc(map);
+		pmsdao.wbsplanupdatehuman(map);
+		pmsdao.wbsplanupdatefacility(map);
+		pmsdao.wbsplanupdateincome(map);
+		pmsdao.wbsplanupdatematerial(map);
+		pmsdao.wbsplanupdateout(map);
+		
+	}
 	/* (non-Javadoc)
 	 * @see com.pineapple.pms.service.PmsServiceInterface#addWbsplanhuman(com.pineapple.pms.service.WbsPlanHuman)
 	 */
@@ -168,6 +185,7 @@ public class PmsService implements PmsServiceInterface{
 		pmsdao.updatewbsplanhuman(wbsplanhuman);
 	}
 	
+	
 	@Override
 	public void wbsplanmaterialupdate(WbsPlanMaterial wbsplanmaterial){
 		log.debug("PmsService의 wbsplanmaterialupdate호출 성공");
@@ -197,6 +215,15 @@ public class PmsService implements PmsServiceInterface{
 	public void wbsplanincomeupdate(WbsPlanIncome wbsplanincome){
 		log.debug("PmsService의 wbsplanincomeupdate호출 성공");
 		pmsdao.wbsplanincomeupdate(wbsplanincome);
+	}
+
+
+
+
+	@Override
+	public void updatewbsplan(String wbsplanCode) {
+		log.debug("PmsService의 updatewbsplan호출 성공");
+		pmsdao.updatewbsplan(wbsplanCode);		
 	}
 	
 	

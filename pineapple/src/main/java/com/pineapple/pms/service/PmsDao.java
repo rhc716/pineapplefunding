@@ -26,6 +26,37 @@ public class PmsDao implements PmsDaoInterface {
 		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.insertWbsPlan", wbsplan);
 	}
 	
+	@Override
+	public void wbsplanupdateetc(HashMap map){
+		log.debug("PmsDao의wbsplanupdateetc호출 성공");
+		sqlSessionTemplate.update("com.pineapple.pms.service.PmsMapper.wbsplanupdateetc", map);
+	}
+	@Override
+	public void wbsplanupdatehuman(HashMap map){
+		log.debug("PmsDao의wbsplanupdateetc호출 성공");
+		sqlSessionTemplate.update("com.pineapple.pms.service.PmsMapper.wbsplanupdatehuman", map);
+	}
+	@Override
+	public void wbsplanupdatefacility(HashMap map){
+		log.debug("PmsDao의wbsplanupdateetc호출 성공");
+		sqlSessionTemplate.update("com.pineapple.pms.service.PmsMapper.wbsplanupdatefacility", map);
+	}
+	@Override
+	public void wbsplanupdateincome(HashMap map){
+		log.debug("PmsDao의wbsplanupdateetc호출 성공");
+		sqlSessionTemplate.update("com.pineapple.pms.service.PmsMapper.wbsplanupdateincome", map);
+	}
+	@Override
+	public void wbsplanupdatematerial(HashMap map){
+		log.debug("PmsDao의wbsplanupdateetc호출 성공");
+		sqlSessionTemplate.update("com.pineapple.pms.service.PmsMapper.wbsplanupdatematerial", map);
+	}
+	@Override
+	public void wbsplanupdateout(HashMap map){
+		log.debug("PmsDao의wbsplanupdateetc호출 성공");
+		sqlSessionTemplate.update("com.pineapple.pms.service.PmsMapper.wbsplanupdateout", map);
+	}
+	
 	/* (non-Javadoc)
 	 * @see com.pineapple.pms.service.PmsDaoInterface#WbsPlanSelect()
 	 */
@@ -83,6 +114,12 @@ public class PmsDao implements PmsDaoInterface {
 	public List<WbsPlanHuman> getMyWbsPlanHumanList(String wbsplancode){
 		log.debug("PmsDao의 getMyWbsPlanHumanList호출 성공");
 		return sqlSessionTemplate.selectList("com.pineapple.pms.service.PmsMapper.selectWbsPlanHuman", wbsplancode);
+	}
+	
+	@Override
+	public WbsPlanUpdate wbsplanupdate(WbsPlan wbsplan){
+		log.debug("PmsDao의 wbsplanupdate호출 성공");
+		return sqlSessionTemplate.selectOne("com.pineapple.pms.service.PmsMapper.wbsplanupdate", wbsplan);
 	}
 	@Override
 	public List<WbsPlanMaterial> getMyWbsPlanMaterialList(String wbsplancode){
@@ -162,6 +199,12 @@ public class PmsDao implements PmsDaoInterface {
 	public void updatewbsplanhuman(WbsPlanHuman wbsplanhuman){
 		log.debug("PmsDao의 updatewbsplanhuman호출 성공");
 		sqlSessionTemplate.update("com.pineapple.pms.service.PmsMapper.updatewbsplanhuman", wbsplanhuman);
+	}
+	
+	@Override
+	public void updatewbsplan(String wbsplancode){
+		log.debug("PmsDao의 updatewbsplan호출 성공");
+		sqlSessionTemplate.update("com.pineapple.pms.service.PmsMapper.updatewbsplan", wbsplancode);
 	}
 	
 	@Override

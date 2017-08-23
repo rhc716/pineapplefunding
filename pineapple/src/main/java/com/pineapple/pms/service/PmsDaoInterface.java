@@ -1,5 +1,6 @@
 package com.pineapple.pms.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface PmsDaoInterface {
@@ -71,5 +72,21 @@ public interface PmsDaoInterface {
 	void deleteetc(String wbsplancode);
 
 	void deleteincome(String wbsplancode);
+
+	void updatewbsplan(String wbsplancode);
+
+	WbsPlanUpdate wbsplanupdate(WbsPlan wbsplan);
+
+	void wbsplanupdateetc(HashMap map);
+
+	void wbsplanupdatehuman(HashMap map);
+
+	void wbsplanupdatefacility(HashMap map);
+
+	void wbsplanupdateincome(HashMap map);
+
+	void wbsplanupdatematerial(HashMap map);
+
+	void wbsplanupdateout(HashMap map);
 
 }
