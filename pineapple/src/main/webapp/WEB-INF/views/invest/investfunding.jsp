@@ -299,7 +299,7 @@
  	    <div class="modal-content font-j"> 
  	      <div class="modal-header text-lr-center">
  	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
- 	        <h1 class="modal-title" id="myModalLabel">투자 예약하기</h1>
+ 	        <h1 class="modal-title" id="myModalLabel">투자 예약 하기</h1>
  	      </div>
  	      <div class="modal-body">
  	      <div class="form-group">

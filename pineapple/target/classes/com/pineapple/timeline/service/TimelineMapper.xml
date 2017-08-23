@@ -2,9 +2,29 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.pineapple.invest.service.TimelineMapper">
-<!-- 타임라인 메인 페이지 에서 list 조회 -->
-<!-- 	<select id="">
+<mapper namespace="com.pineapple.timeline.service.TimelineMapper">
+	<!-- TimelineLike -->
+	<resultMap type="com.pineapple.timeline.service.TimelineLike" id="getTimelineLikeresultmap">
+		<id property="tlLikeId" column="tlLikeId"/>
+		<id property="tlCode" column="tlCode"/>
+	</resultMap>
+	<!-- TimelineAndUserAndEmployeeAndTimelineLike -->
+	<resultMap type="com.pineapple.timeline.service.TimelineAndUserAndEmployeeAndTimelineLike" id="getTimelineListresultmap">
+		<id property="tlCode" column="tlCode"/>
+		<result property="tlTitle" column="tlTitle"/>
+		<result property="tlContent" column="tlContent"/>
+		<result property="tlTime" column="tlTime"/>
+		<result property="name" column="name"/>
+		<result property="emRankCode" column="emRankCode"/>
+		<result property="emComName" column="emComName"/>
+		<result property="timelinelikecount" column="timelinelikecount"/>
+		<collection property="timelineLike" resultMap="getTimelineLikeresultmap">
+			<id property="tlLikeId" column="tlLikeId"/>
+			<id property="tlCode" column="tlCode"/>
+		</collection>
+	</resultMap>
+	<!-- 타임라인 메인 페이지 에서 list 조회 -->
+ 	<select id="getTimelineList" resultMap="getTimelineListresultmap">
 		SELECT t.tlCode,
 			   t.tlTitle,
 			   t.tlContent,
@@ -21,5 +41,6 @@
 		ON u.userId = e.emUserId 
 		LEFT JOIN timelinelike tl 
 		ON tl.tlCode = t.tlCode
-	</select> -->
+		ORDER BY t.tlTime DESC
+	</select>
 </mapper>
