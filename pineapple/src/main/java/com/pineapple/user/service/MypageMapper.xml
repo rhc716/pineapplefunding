@@ -4,6 +4,23 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.pineapple.user.service.MypageMapper">
+<!-- 기업회원 레벨의 회원의 마이페이지 분기시 사원정보조회 -->
+	<select id="selectEmployeeById" parameterType="String" resultMap="selectEmployeeById">
+		SELECT *
+		FROM employee
+		WHERE emUserId=#{emUserId}
+	</select>
+	<resultMap type="com.pineapple.user.service.Employee" id="selectEmployeeById">
+		<result property="emCode" column="emCode"/>
+		<result property="emUserId" column="emUserId"/>
+		<result property="emComCode" column="emComCode"/>
+		<result property="emComName" column="emComName"/>
+		<result property="emRankCode" column="emRankCode"/>
+		<result property="emDepartment" column="emDepartment"/>
+		<result property="emCheck" column="emCheck"/>
+		<result property="emDelRequest" column="emDelRequest"/>
+	</resultMap>
+
 <!-- 경영진이 마이페이지에서 기업 등록 -->
 	<insert id="insertCompany" parameterType="com.pineapple.user.service.Company">
 		INSERT INTO company
@@ -17,18 +34,30 @@
 		FROM company
 		WHERE comOpenUserId=#{comOpenUserId}
 	</select>
+	<resultMap type="com.pineapple.user.service.Company" id="selectCompanyInfoByOpenId">
+		<result property="comCode" column="comCode"/>
+		<result property="comName" column="comName"/>
+		<result property="comNumber" column="comNumber"/>
+		<result property="comHomePage" column="comHomePage"/>
+		<result property="comCeoName" column="comCeoName"/>
+		<result property="comEstablishYear" column="comEstablishYear"/>
+		<result property="comOpenUserId" column="comOpenUserId"/>
+		<result property="comAdminApproval" column="comAdminApproval"/>
+		<result property="comApprovalDate" column="comApprovalDate"/>
+		<result property="comApprovalId" column="comApprovalId"/>
+		<result property="comDelRequestId" column="comDelRequestId"/>
+		<result property="comDelTime" column="comDelTime"/>
+		<result property="comDelApprovalId" column="comDelApprovalId"/>
+	</resultMap>
 
-<!-- 사원요청시 등록할 전체회사정보 조회 -->
+<!-- 사원등록요청시 등록할 전체회사정보 조회(검색기능) -->
 	<select id="selectAllCompany" resultMap="selectAllCompany">
 		SELECT comCode, comName
 		FROM company
 	</select>
-	<resultMap type="com.pineapple.user.service.CompanyList" id="selectAllCompany">
-		<collection property="companylist"
-					ofType="com.pineapple.user.service.Company">
-			<result property="comCode" column="comCode"/>
-			<result property="comName" column="comName"/>
-		</collection>
+	<resultMap type="com.pineapple.user.service.Company" id="selectAllCompany">
+		<result property="comCode" column="comCode"/>
+		<result property="comName" column="comName"/>
 	</resultMap>
 	
 <!-- 사원요청시 등록할 특정회사정보 조회 -->
@@ -53,7 +82,6 @@
 		on u.userId = ac.accountId
 		where u.userId=#{userId}
 	</select>
-	
 	<resultMap type="com.pineapple.user.service.User"
 			   id="selectAllInvestorInfo">
 		<result property="userId" column="userId"/>

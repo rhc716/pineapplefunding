@@ -1,5 +1,7 @@
 package com.pineapple.user.service;
 
+import java.util.List;
+
 public class Company {
 	private int comCode;
 	private String comName;
@@ -22,7 +24,7 @@ public class Company {
 	private String comDelRequestId;
 	private String comDelTime;
 	private String comDelApprovalId;
-	
+
 	public int getComCode() {
 		return comCode;
 	}
@@ -160,6 +162,4 @@ public class Company {
 				+ comApprovalDate + ", comApprovalId=" + comApprovalId + ", comDelRequestId=" + comDelRequestId
 				+ ", comDelTime=" + comDelTime + ", comDelApprovalId=" + comDelApprovalId + "]";
 	}
-	
-	
 }
