@@ -7,7 +7,7 @@ public class TimelineAndUserAndEmployeeAndTimelineLike {
 	private String tlTitle;
 	private String tlContent;
 	private String tlTime;
-	private String name;
+	private String nickname;
 	private int emRankCode;
 	private String emComName;
 	private int timelinelikecount;
@@ -36,11 +36,11 @@ public class TimelineAndUserAndEmployeeAndTimelineLike {
 	public void setTlTime(String tlTime) {
 		this.tlTime = tlTime;
 	}
-	public String getName() {
-		return name;
+	public String getNickname() {
+		return nickname;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	public int getEmRankCode() {
 		return emRankCode;
@@ -69,9 +69,9 @@ public class TimelineAndUserAndEmployeeAndTimelineLike {
 	@Override
 	public String toString() {
 		return "TimelineAndUserAndEmployeeAndTimelineLike [tlCode=" + tlCode + ", tlTitle=" + tlTitle + ", tlContent="
-				+ tlContent + ", tlTime=" + tlTime + ", name=" + name + ", emRankCode=" + emRankCode + ", emComName="
-				+ emComName + ", timelinelikecount=" + timelinelikecount + ", timelineLike=" + timelineLike + "]";
+				+ tlContent + ", tlTime=" + tlTime + ", nickname=" + nickname + ", emRankCode=" + emRankCode
+				+ ", emComName=" + emComName + ", timelinelikecount=" + timelinelikecount + ", timelineLike="
+				+ timelineLike + "]";
 	}
 
-	
 }

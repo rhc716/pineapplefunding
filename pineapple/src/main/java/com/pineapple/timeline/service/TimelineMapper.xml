@@ -3,10 +3,20 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.pineapple.timeline.service.TimelineMapper">
+	<!-- TimelineReplyAndUser -->
+	<resultMap type="com.pineapple.timeline.service.TimelineReply" id="getTimelineReply">
+		<id property="tlReCode" column="tlReCode"/>
+		<result property="tlCode" column="tlCode"/>
+		<result property="tlReId" column="tlReId"/>
+		<result property="tlReContent" column="tlReContent"/>
+		<result property="tlReTime" column="tlReTime"/>
+		<result property="nickname" column="nickname"/>
+	</resultMap>
 	<!-- TimelineLike -->
 	<resultMap type="com.pineapple.timeline.service.TimelineLike" id="getTimelineLikeresultmap">
 		<id property="tlLikeId" column="tlLikeId"/>
 		<id property="tlCode" column="tlCode"/>
+		<result property="timelinelikenickname" column="timelinelikenickname"/>
 	</resultMap>
 	<!-- TimelineAndUserAndEmployeeAndTimelineLike -->
 	<resultMap type="com.pineapple.timeline.service.TimelineAndUserAndEmployeeAndTimelineLike" id="getTimelineListresultmap">
@@ -14,26 +24,29 @@
 		<result property="tlTitle" column="tlTitle"/>
 		<result property="tlContent" column="tlContent"/>
 		<result property="tlTime" column="tlTime"/>
-		<result property="name" column="name"/>
+		<result property="nickname" column="nickname"/>
 		<result property="emRankCode" column="emRankCode"/>
 		<result property="emComName" column="emComName"/>
 		<result property="timelinelikecount" column="timelinelikecount"/>
 		<collection property="timelineLike" resultMap="getTimelineLikeresultmap">
 			<id property="tlLikeId" column="tlLikeId"/>
 			<id property="tlCode" column="tlCode"/>
+			<result property="timelinelikenickname" column="timelinelikenickname"/>
 		</collection>
 	</resultMap>
+	
 	<!-- 타임라인 메인 페이지 에서 list 조회 -->
  	<select id="getTimelineList" resultMap="getTimelineListresultmap">
 		SELECT t.tlCode,
 			   t.tlTitle,
 			   t.tlContent,
 			   t.tlTime,
-			   u.name,
+			   u.nickname,
 			   e.emRankCode,
 			   e.emComName,
 			   (SELECT COUNT(tlCode) FROM timelinelike WHERE tlCode = t.tlCode) as timelinelikecount,
-			   tl.tlLikeId 
+			   tl.tlLikeId,
+			   (SELECT nickname FROM user su WHERE tl.tlLikeId = su.userId) as timelinelikenickname
 		FROM timeline t 
 		LEFT JOIN user u 
 		ON t.tlId = u.userId 
@@ -48,5 +61,37 @@
 		INSERT INTO timeline
 					(tlId, tlTitle, tlContent, tlTime)
 		VALUES (#{tlId}, #{tlTitle}, #{tlContent}, NOW())
+	</insert>
+	<!-- 타임라인 수정 -->
+	<update id="modifyTimeline" parameterType="com.pineapple.timeline.service.Timeline">
+		UPDATE timeline
+			SET
+				tlTitle=#{tlTitle},
+				tlContent=#{tlContent}
+		WHERE tlCode = #{tlCode}
+	</update>
+	<!-- 타임라인 삭제 -->
+	<delete id="removeTimeline" parameterType="INT">
+		DELETE FROM timeline WHERE tlCode=#{tlCode}
+	</delete>
+	<!-- 타임라인 삭제시 댓글같이 삭제 -->
+	<delete id="removeTimelineAndReply" parameterType="INT">
+		DELETE FROM timelinereply WHERE tlCode=#{tlCode}
+	</delete>
+	<!-- 타임라인 댓글 list 조회 -->
+	<select id="getTimelineReplyList" resultMap="getTimelineReply" parameterType="INT">
+		SELECT tr.tlReCode, 
+			   tr.tlCode, 
+			   tr.tlReId, 
+			   tr.tlReContent, 
+			   tr.tlReTime,
+			   (SELECT u.nickname FROM user u WHERE u.userId = tr.tlReId ) nickname 
+		FROM timelinereply tr  
+		WHERE tr.tlCode = #{tlCode}
+	</select>
+	<insert id="addTimelineReply">
+		INSERT INTO timelinereply
+			   (tlCode, tlReId, tlReContent, tlReTime)
+		VALUES (#{tlCode}, #{tlReId}, #{tlReContent}, NOW())
 	</insert>
 </mapper>

@@ -161,15 +161,16 @@
 			/* 타임라인 list */
 				.timelinelist{padding: 0px; 
 							  margin-bottom: 20px;
-							  border: 1px solid;}
+							  border: 1px solid #d7d7d7;}
 				.timelinenameandtime{padding: 0px;
-									 opacity: 0.4;
 									 font-size: 12px;
 									 margin: 10px 0px 5px 0px;}
+				.timelinenameandtimespan{opacity: 0.5;}
+				.timeupanddelspan{opacity: 0.8;}
 				.timelinetitle{padding: 0px 0px 10px 0px;
 							   margin: 0px;
 							   border-bottom: 1px solid;
-							   border-bottom-color: #d7d7d7}
+							   border-bottom-color: #d7d7d7;}
 				.timelinecontent{padding: 10px 0px 10px 10px;
 								 font-size: 20px;
 								 border-bottom: 1px solid;
@@ -186,6 +187,18 @@
 				.timereply:visited{text-decoration: none;}
 				.timereply:active{text-decoration: none;}
 			/* 타임라인 list */
+			/* 타임라인 댓글list */
+				.timeline-reply{margin-top: 20px;
+							    border: 1px solid;}
+				.timeline-replyidandtime{font-size: 12px;
+										 opacity: 0.5}
+				.timeline-replyupanddel{font-size: 12px;
+									    opacity: 0.8}
+				.timeline-content{margin-left:20px;
+								 font-size: 18px;
+								 padding-left: 16px;}
+				.timeline-display{display: none;}
+			/* 타임라인 댓글list */
 		/* 타임라인 main page */
 	/* 타임라인 */
 /* CLASS and TAG CSS */

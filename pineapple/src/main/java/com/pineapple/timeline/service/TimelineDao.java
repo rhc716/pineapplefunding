@@ -24,4 +24,34 @@ public class TimelineDao implements TimelineDaoInterface{
 		log.debug("TimelineDao-----timelineInsert");
 		return sqlSessionTemplate.insert("com.pineapple.timeline.service.TimelineMapper.addTimeline",timeline);
 	}
+	//타임라인 수정하기
+	@Override
+	public int timelineUpdate(Timeline timeline) {
+		log.debug("TimelineDao-----timelineInsert");
+		return sqlSessionTemplate.update("com.pineapple.timeline.service.TimelineMapper.modifyTimeline",timeline);
+	}
+	//타임라인 삭제하기
+	@Override
+	public int timelineDelete(int tlCode) {
+		log.debug("TimelineDao-----timelinedelete");
+		return sqlSessionTemplate.delete("com.pineapple.timeline.service.TimelineMapper.removeTimeline",tlCode);
+	}
+	//타임라인 삭제시 댓글도 같이 삭제하기
+	@Override
+	public int timelineAndReplyDelete(int tlCode) {
+		log.debug("TimelineDao-----timelineAndReplyDelete");
+		return sqlSessionTemplate.delete("com.pineapple.timeline.service.TimelineMapper.removeTimelineAndReply",tlCode);
+	}
+	//타임라인 댓글 list select
+	@Override
+	public List<TimelineReply> timelineReplyListSelect(int tlCode) {
+		log.debug("TimelineDao-----timelineReplyListSelect");
+		return sqlSessionTemplate.selectList("com.pineapple.timeline.service.TimelineMapper.getTimelineReplyList",tlCode);
+	}
+	//타임라인 댓글 등록하기
+	@Override
+	public int timelineReplyInsert(TimelineReply timelinereply) {
+		log.debug("TimelineDao-----timelineReplyInsert");
+		return sqlSessionTemplate.insert("com.pineapple.timeline.service.TimelineMapper.addTimelineReply",timelinereply);
+	}
 }
