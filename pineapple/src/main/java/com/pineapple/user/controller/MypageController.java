@@ -51,9 +51,12 @@ public class MypageController {
 	
 	//기업등록요청시 ajax 활용한 기업명 중복검사 
 	@RequestMapping(value="/checkcomname.user", method = RequestMethod.POST)
-	public @ResponseBody Company checkComName(Locale locale, @RequestParam("comName") String comName){
+	public @ResponseBody Company checkComName(Locale locale, Model model, @RequestParam("comName") String comName){
 		log.debug("checkComName 기업명 중복검사: "+comName);
-		return mypageservice.getCompanyByComName(comName);
+		Company com = mypageservice.getCompanyByComName(comName);
+		model.addAttribute("com", com);
+		return com;
+		
 	}
 	
 	//사원등록요청 처리(employee 테이블에 insert)

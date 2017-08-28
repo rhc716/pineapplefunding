@@ -1,6 +1,5 @@
 package com.pineapple.user.service;
 
-import java.util.List;
 
 public class Company {
 	private int comCode;

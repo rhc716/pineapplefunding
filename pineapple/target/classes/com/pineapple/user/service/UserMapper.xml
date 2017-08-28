@@ -20,8 +20,8 @@
 	
 	<!-- 회원공통정보 조회(닉네임 중복체크 기능) -->
 	<select id="selectUserByNickname" parameterType="String" resultType="com.pineapple.user.service.User">
-		SELECT nickname
-		FROM user 
+		SELECT userId, nickname, name, pw, levelCode, uDelTime
+		FROM user
 		WHERE nickname=#{nickname}
 	</select>
 	

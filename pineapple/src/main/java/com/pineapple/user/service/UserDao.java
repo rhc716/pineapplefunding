@@ -78,7 +78,7 @@ public class UserDao implements UserDaoInterface {
 	@Override
 	public User selectUserByNickname(String nickname){
 		log.debug("UserDao selectUserByNickname : "+nickname);
-		return sqlSessionTemplate.selectOne("com.pineapple.user.service.UserMapper.selectUserByNickname", nickname);	
+		return sqlSessionTemplate.selectOne("com.pineapple.user.service.UserMapper.selectUserByNickname", nickname);
 	}
 	
 	//회원가입 이메일아이디 중복체크 ajax를 위한 회원아이디 데이터 접근

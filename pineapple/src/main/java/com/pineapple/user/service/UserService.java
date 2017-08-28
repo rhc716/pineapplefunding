@@ -76,7 +76,7 @@ public class UserService implements UserServiceInterface {
 		 */
 	@Override
 	public User getUserByNickname(String nickname){
-		log.debug("service getUserByNickname 호출 : "+dao.selectUserByNickname(nickname).getNickname());
+		log.debug("service getUserByNickname 호출 : "+nickname);
 		return dao.selectUserByNickname(nickname);
 	}
 	

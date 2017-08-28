@@ -77,18 +77,21 @@
 				    url : "/pineapple/checkcomname.user",
 				    data : {comName : comname},
 				    success : function(ic){
-				    		alert('성공');
-			    			$('#comnamech3').css("color", "#FF0000");
-			    			$('#comnamech3').text('이미 존재하는 기업명입니다.');
-			    			$('#comName3').val('');
+				    		console.log(ic.comName);
+				    		if(ic.comName == null){
+					    		$('#comnameCheck').hide();
+					    		$('#comNameSuccess2').show();
+					    		$('#comName4').val(comname);
+				    		} else {
+				    			$('#comnamech3').css("color", "#FF0000");
+				    			$('#comnamech3').text('이미 존재하는 기업명입니다.');
+				    			$('#comName3').val('');
+				    		}
 				    	},
 				    //만약 해당 페이지에 값을 성공적으로 보냈다면 페이지를 rs 라는 매개변수로 받아 id = 'comnamech3' 구역에 rs를 출력하겠다. 
 				    error : function error(){
-				    		alert('에러');
-				    		$('#comnameCheck').hide();
-				    		$('#comNameSuccess2').show();
-				    		$('#comName4').val(comname);
-				    	}
+				    	alert('기업명 중복검사 ajax 에러 발생');
+				    }
 				});
 			} else {
 				alert('유효한 기업명을 입력해주시기 바랍니다.');
@@ -298,7 +301,7 @@
 						<!-- 기업을 등록지않은 경영진은 기존의 기업들 중 자신이 소속된 기업을 검색하여 사원정보를 입력한다 -->
 					<br>
 					<c:forEach var="companyOpenedByMyId1" items="${company}">
-						<a class="btn btn-info btn-block cominfoclass" data-toggle="modal" href="#getCompanyOpenInfo">${companyOpenedByMyId1.comName} 정보확인</a>
+						<a class="btn btn-info btn-block cominfoclass" data-toggle="modal" value="${companyOpenedByMyId1.comName}" href="#getCompanyOpenInfo">${companyOpenedByMyId1.comName} 정보확인</a>
 					</c:forEach>
 					<p id="explain">본인의 아이디로 개설한 모든 기업정보를 확인할 수 있습니다</p>
 						<!-- 개설한 모든 회사가 리스트 타입으로 리턴되므로 forEach 태그립을 사용하여 모달 내부 구현 -->
@@ -353,11 +356,11 @@
 										    <input type="text" id="comLogoExtension" name="comLogoExtension" value="${companyOpenedByMyId2.comLogoExtension}" hidden>
 										</div>
 										<br>
-										<div id="comnamech3eck" class="form-group">
+										<div id="comnameChModal" class="form-group">
 										    <label class="control-label" for="comNameInput">*기업이름</label>
 										    <p id="explain"> (정확한 기업이름을 입력해주시기 바랍니다. 이미 등록된 기업이 존재하는 경우 기업을 등록할 수 없습니다.)</p>
 										    <input id="comName" name="comName" type="text" class="form-control" value="${companyOpenedByMyId2.comName}" placeholder="Enter Company Name">
-									  		<span id="comnamech3"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
+									  		<span id="comnamech"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
 										<br>
 									  	</div>
 									  	<div class="form-group">
@@ -600,7 +603,7 @@
 					</div>
 				</div>
 				<br>
-				<!-- 첫번째탭 두번째row 시작-->
+				<!-- 두번째탭 두번째row 시작-->
 				<!-- 기업등록요청하기 입력폼; 기업을 등록하는 경영진과 등록하지 않는 경영진 여부에 따라 페이지 구분 기능 구현 -->
 				<div class="row">
 					<div class="col-xs-2">
@@ -624,7 +627,7 @@
 								<br>
 								<div>
 							    	<label for="comLogoFileInput">기업로고업로드</label>
-								    <input type="file" id="comLogoServerName" name="comLogoServerName">
+								    <input type="text" id="comLogoServerName" name="comLogoServerName">
 								     <p class="help-block">기업로고 이미지 파일업로드</p>
 								    <input type="number" id="comLogoHeight" name="comLogoHeight" hidden>
 								    <input type="number" id="comLogoWidth" name="comLogoWidth" hidden>
@@ -689,7 +692,7 @@
 								<br>
 								<div class="clearfix">
 								    <input id="cancelComInsertBtn" type="reset" class="button_insert cancelbtn" value="초기화">
-								    <input id="submitComInsertBtn" type="button" class="button_insert signupbtn" value="기업등록">
+								    <input type="submit" class="button_insert signupbtn" value="기업등록">
 							   	</div>
 							</div>
 						</form>

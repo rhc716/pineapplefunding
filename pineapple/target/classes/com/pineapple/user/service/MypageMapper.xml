@@ -14,6 +14,9 @@
 		f.fdCode,
 		f.fdType,
 		f.fdStatus,
+		f.numberOfShares,
+		f.fdTitle,
+		f.issuePrice,
 		CASE f.fdStatus WHEN '모집중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode GROUP BY si.investFdCode ) WHEN '결제모집중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode AND si.payCheck = 1 GROUP BY si.investFdCode) END investtotal 
 	FROM investment i 
 	INNER JOIN funding f 
@@ -73,8 +76,8 @@
 <!-- 경영진이 마이페이지에서 기업 등록 -->
 	<insert id="insertCompany" parameterType="com.pineapple.user.service.Company">
 		INSERT INTO company
-		(comName, comNumber, comHomePage, comCeoName, comEstablishYear, comInfo, comLogoServerName, comLogoHeight, comLogoWidth, comLogoSize, comLogoExtension, comSummary, comActivitySummary, comOpenUserId, comAdminApproval)
-		VALUES (#{comName}, #{comNumber}, #{comHomePage}, #{comCeoName}, #{comEstablishYear}, #{comInfo}, #{comLogoServerName}, #{comLogoHeight}, #{comLogoWidth}, #{comLogoSize}, #{comLogoExtension}, #{comSummary}, #{comActivitySummary}, #{comOpenUserId}, #{comAdminApproval})
+		(comCode, comName, comNumber, comHomePage, comCeoName, comEstablishYear, comInfo, comLogoServerName, comLogoHeight, comLogoWidth, comLogoSize, comLogoExtension, comSummary, comActivitySummary, comOpenUserId, comAdminApproval)
+		VALUES (#{comCode}, #{comName}, #{comNumber}, #{comHomePage}, #{comCeoName}, #{comEstablishYear}, #{comInfo}, #{comLogoServerName}, #{comLogoHeight}, #{comLogoWidth}, #{comLogoSize}, #{comLogoExtension}, #{comSummary}, #{comActivitySummary}, #{comOpenUserId}, #{comAdminApproval})
 	</insert>
 
 <!-- 기업회원 중 경영진 마이페이지 분기시 자신이 등록요청한 회사정보 조회 -->
