@@ -48,7 +48,62 @@ $(document).ready(function(){
 	getcomlist.fail(function(){
 		alert('ajax요청실패');
 	});
-});	
+
+
+
+	/******************* 유효성검사 *********************/
+//	펀딩명 유효성검사 및 중복검사
+	$('#fdTitle').blur(function() {
+        var temp = 0;
+		var in_fdtitle = $('#fdTitle').val();
+		// 한 영 숫자 4~20자
+		var check = /^[0-9a-zA-Z가-힣]{4,20}$/;
+		if(!check.test(in_fdtitle)) {
+			//유효하지 않을때
+			temp = 1;
+		} else {
+			//유효할때
+			temp = 0;
+		}
+		    	
+// 유효성 검사 통과시 중복확인용 ajax실행
+        if(temp==0){
+        	$.ajax({ // ajax실행부분
+                type: "get",
+                url : "/pineapple/fdtitlecheck.pms",
+                data : {fdTitle : in_fdtitle},
+                success : function(ic){ 
+                	// 공백일때 -> 펀딩명 중복검사 결과가 없을때 -> 펀딩명 사용가능
+                	if (ic=='') {
+                		$('#checkresult').css("color", "#008000");
+            			$('#checkresult').text('사용가능한 펀딩명입니다.');
+                	// 공백이 아닐때 -> 펀딩명 중복검사 결과가 있을때 -> 펀딩명 사용불가능
+                	} else {
+                		$('#checkresult').css("color", "#FF0000");
+            			$('#checkresult').text('이미 사용중인 펀딩명입니다.');
+                    	$('#fdTitle').val('');
+            			$('#fdTitle').focus();
+                	}		
+                	
+                	},
+                //만약 해당 페이지에 값을 성공적으로 보냈다면 페이지를 ic 라는 매개변수로 받아 id = 'idch' 구역에 ic를 출력하겠다. 
+                error : function error(){
+                		alert('ajax 통신실패');	
+                	}
+        	});
+        } else {
+        	$('#checkresult').css("color", "#FF0000");
+			$('#checkresult').text('유효한 펀딩명을 입력해주시기 바랍니다.');
+        	$('#fdTitle').val('');
+			$('#fdTitle').focus();
+        }
+	
+	});
+});
+
+
+
+
 	
 </script>
 
@@ -68,20 +123,26 @@ $(document).ready(function(){
 	<div class="col-md-9">
 		<div class="col-md-1"></div>
 			<div class="col-md-7">
-			
+				<span>
+					<b> 펀딩명은 수정이 불가능하니 신중히 지어주세요 </b><br>
+					<b> 오픈일, 마감일 -> 펀딩 모집기간 </b><br>
+					<b> 프로젝트 시작일, 프로젝트 마감일 -> 실제 프로젝트 기간 </b><br>
+					<b> 최소보장이율은 펀딩전체 기간동안 배당금과 별개로 투자원금에 대해 지급되는 이자율입니다 </b><br><br>
+				</span>
 				<form action="/pineapple/addfunding.pms" method="post" enctype="multipart/form-data">
 					펀딩형태
-					<select name="fdType">
+					<select name="fdType" required="required">
 						<option value="채권">채권</option>
 						<option value="주식">주식</option>
 					</select><br><br>
 					회사명
-					<select name="fdComCode" id="comList">
+					<select name="fdComCode" id="comList" required="required">
 						<!-- ajax요청으로 회사명과 회사코드를 각각 넣어줌  -->
 						<option value="null">선택하세요</option>
-					</select><br><br>			
+					</select><br><br>
 					펀딩명
-					<input type="text" class="form-control" name="fdTitle" required="required"><br>
+					<input type="text" class="form-control" id="fdTitle" name="fdTitle" required="required"><br>
+					<span id="checkresult"></span><br><br>
 					최소투자금액
 					<input type="text" class="form-control" name="minInvestMoney" required="required"><br>
 					판매주식수
@@ -89,15 +150,15 @@ $(document).ready(function(){
 					주당발행가
 					<input type="text" class="form-control" name="issuePrice" required="required"><br>	
 					오픈일
-					<input type="text" class="form-control" name="openDate" required="required"><br>
+					<input type="date" class="form-control" name="openDate" required="required"><br>
 					마감일
-					<input type="text" class="form-control" name="closeDate" required="required"><br>
+					<input type="date" class="form-control" name="closeDate" required="required"><br>
 					최소보장이율
 					<input type="text" class="form-control" name="numberOfShares" required="required"><br>
 					프로젝트 시작일
-					<input type="text" class="form-control" name="projectStartDate" required="required"><br>
+					<input type="date" class="form-control" name="projectStartDate" required="required"><br>
 					프로젝트 마감일
-					<input type="text" class="form-control" name="projectEndDate" required="required"><br>
+					<input type="date" class="form-control" name="projectEndDate" required="required"><br>
 						<!-- 히든값으로 펀딩개설자 name를 세션에서받아서 넣어줌 -->
 					<input type="hidden" class="form-control" name="fdPublisher" value="id01@maver.com">
 					<button type="submit"  class="btn btn-success">입력완료</button>

@@ -186,4 +186,18 @@ public class FundingDao implements FundingDaoInterface {
 		log.debug("FundingDao의 updateFundingImage호출 성공");
 		sqlSessionTemplate.update("com.pineapple.funding.service.FundingMapper.updateFundingImage", model);
 	}
+	
+	// 펀딩 insert ( 펀딩명 중복검사 )fdtitleCheck
+	@Override
+	public Funding fdtitleCheck(String fdTitle) {
+		log.debug("FundingDao의 fdtitleCheck호출 성공");
+		return sqlSessionTemplate.selectOne("com.pineapple.funding.service.FundingMapper.fdtitleCheck", fdTitle);
+	}
+	
+	// 펀딩코드로 펀딩정보한개 가져오기
+	@Override
+	public Funding selectMyFunding(int fdCode) {
+		log.debug("FundingDao의 selectMyFunding호출 성공");
+		return sqlSessionTemplate.selectOne("com.pineapple.funding.service.FundingMapper.selectMyFunding", fdCode);
+	}
 }

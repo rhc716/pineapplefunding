@@ -48,10 +48,13 @@ $(document).ready(function(){
 		for(var i = 0; i<msg.length; i++){
 			
 			//기존 이미지가 있을때 없을때 다른것을 보여줌
-			if(msg[i].posterImg=="undefined"){
-				var poster = "이미지를 추가해주세요"
+			if(msg[i].posterImg==null){
+				var poster = '<br><br><br><span style="color:#300aac;">이미지를 추가해주세요</span>';
 			}else{
-				var poster = msg[i].posterImg
+				var poster = '<img src="'+msg[i].posterImg+'">'; 
+				    
+				   
+
 			}
 			// 펀딩리스트와 포스터 이미지를 myfundinglist에 채워줌, 수정버튼과 모달창을 각각 추가해줌
 			$('#myfundinglist').append(
@@ -78,22 +81,43 @@ $(document).ready(function(){
 				    	+'</div>'
 				    	+'<div class="modal-body">'
 				    	/* 모달내용들어갈곳 (포스터 이미지 추가,수정) */
-				    	+'<form action="/pineapple/modifyfundingimage.pms" method="post">'
+				    	+'이미지는 가로 300px 세로 150px에 맞춰주세요<br><br><br>'
+				    	+'<form action="/pineapple/modifyfundingimage.pms" method="post" enctype="multipart/form-data">'
 				    	+'<input type="hidden" name="fdCode" value="'+msg[i].fdCode+'">'
-				    	+'<textarea id="summernote'+i+'" name="posterImg" class="form-control">'+msg[i].posterImg+'</textarea><br>'
+				    	+'<img src="" alt="미리보기"><br><br>'
+				    	+'<input type="file" class="getfile" accept="image/*" name="uploadimage"><br>'
 						+'<button type="submit" class="btn btn-success">수정완료</button>'
 				    	+'</form>'
 				    	+'</div>'
 				    	+'<div class="modal-footer">'
 				    	+'<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>'
 				    	+'</div></div></div></div></div>'
-				    	+'<script>'
-						+'$(document).ready(function() {'
-						      +'$(\'#summernote'+i+'\').summernote();'
-						+'});'
-						+'<\/script>'
 				);
 			}		
+	
+			//이미지 업로드 전 미리보기 썸네일
+			$('.getfile').change(function(e){
+				   var reader = new FileReader();
+				   reader.readAsDataURL(e.target.files[0]);
+				   console.log(e.target.files[0])
+				   // 클릭했을때 해당 모달의 이미지태그의 값을 가져와서 미리보기를 채워줌
+				   var imgtag = $(this).parent().find('img');
+				   reader.onload = function  () {
+				       var tempImage = new Image();
+				       tempImage.src = reader.result;
+				       tempImage.onload = function () {
+				            var canvas = document.createElement('canvas');
+				            var canvasContext = canvas.getContext("2d");
+				            canvas.width = 300; 
+				            canvas.height = 150;
+				            canvasContext.drawImage(this, 0, 0, 300, 150);
+				            var dataURI = canvas.toDataURL("image/jpeg");
+				            imgtag.attr("src",dataURI);
+				            
+				        };
+				    };
+				});
+	
 	});
 	// 실패시
 	getfundinglist.fail(function(){

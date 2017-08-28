@@ -8,21 +8,26 @@
 		INSERT INTO funding
 			(fdCode, fdComCode, fdTitle, minInvestMoney, numberOfShares,
 	 		issuePrice, openDate, closeDate, minInterestRate, fdType,
-	  		fdStatus, projectStartDate, projectEndDate, posterImgName,
-	  		 posterImgExtension, posterImgWidth, posterImgHeight, posterImgSize,
-			 fdPublisher, adminApproval, fdApprovalDate, fdApprovalId, fdDate)
+	  		fdStatus, projectStartDate, projectEndDate, posterImg,
+	  		 fdPublisher, adminApproval, fdApprovalDate, fdApprovalId, fdDate)
 			
 		VALUES (NULL, #{fdComCode}, #{fdTitle}, #{minInvestMoney}, #{numberOfShares},
 		 		#{issuePrice}, #{openDate}, #{closeDate}, #{minInterestRate}, #{fdType},
-  				'개설요청',#{projectStartDate}, #{projectEndDate}, #{posterImgName},
- 				#{posterImgExtension}, #{posterImgWidth}, #{posterImgHeight}, #{posterImgSize},
-				#{fdPublisher}, 0, NULL, NULL, NOW())
+  				'개설요청',#{projectStartDate}, #{projectEndDate}, #{posterImg},
+  					#{fdPublisher}, 0, NULL, NULL, NOW())
 		
 		<!-- insert 후 parameterType에 보드객체에 autoincrement된 보드넘버를 넣어주세요 -->
         <selectKey keyProperty="fdCode" resultType="int" order="AFTER"> <!-- pk가 아닐땐, 키컬럼도 넣어 설정할 수 있음 -->
             select last_insert_id() as fdCode
         </selectKey>
 	</insert>
+	
+	<!-- 펀딩코드로 펀딩하나 가져오기 -->
+	<select id="selectMyFunding" parameterType="int" resultType="com.pineapple.funding.service.Funding">
+		SELECT *
+		FROM funding
+		WHERE fdCode = #{fdCode}
+	</select>
 	
 	<!-- (기업회원) 내가 소속된 회사의 펀딩 리스트 가져오기 -->
 	<select id="selectMyFundingList" resultType="java.util.HashMap" parameterType="String">
@@ -240,6 +245,14 @@
 		posterImg=#{posterImg}
 		WHERE fdCode = #{fdCode}
 	</update>
+	
+	
+	<!-- 펀딩 insert ( 펀딩명 중복검사 ) -->
+	<select id="fdtitleCheck" parameterType="String" resultType="com.pineapple.funding.service.Funding">
+		SELECT * 
+		FROM funding
+		WHERE fdTitle = #{fdTitle}
+	</select>
 </mapper>
 
  

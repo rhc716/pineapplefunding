@@ -30,6 +30,13 @@ public class FundingService implements FundingServiceInterface {
 		fundingdao.insertFundingDetail(pk);
 	}
 	
+	// 펀딩코드로 해당 펀딩 정보 가져오기
+	@Override
+	public Funding getMyFunding(int fdCode){
+		log.debug("FundingService의 getMyFunding호출 성공");
+		return fundingdao.selectMyFunding(fdCode);
+	}
+	
 	// 내가 소속된 회사 펀딩 리스트 불러오기 ( 기업회원 )
 	@Override
 	public List<Funding> getMyFundinglist(String userId){
@@ -180,6 +187,13 @@ public class FundingService implements FundingServiceInterface {
 	public void modifyFundingImage(Model model) {
 		log.debug("FundingService의 modifyFundingImage호출 성공");
 		fundingdao.updateFundingImage(model);
+	}
+
+	// 펀딩 insert ( 펀딩명 중복검사 )
+	@Override
+	public Funding fdtitleCheck(String fdTitle) {
+		log.debug("FundingService의 fdtitleCheck호출 성공");
+		return fundingdao.fdtitleCheck(fdTitle);
 	}
 }
  

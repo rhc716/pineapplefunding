@@ -69,5 +69,20 @@
 			</form>
 		</c:otherwise>
 	</c:choose>
+	<form id="loginForm" action="/pineapple/login.user" method="post">
+					<input type="hidden" name="id" value="admin">
+					<input type="hidden" name="pw" value="asdf1234">
+	<button type="submit" class="btn btn-sm btn-success" style="float:left; padding:2px 2px;">관리자 로그인</button>
+	</form>
+	<form id="loginForm" action="/pineapple/login.user"  method="post">
+					<input type="hidden" name="id" value="investor@maver.com">
+					<input type="hidden" name="pw" value="asdf1234">
+	<button type="submit" class="btn btn-sm btn-success" style="float:left; padding:2px 2px;">투자자 로그인</button>
+	</form>
+	<form id="loginForm" action="/pineapple/login.user"  method="post">
+					<input type="hidden" name="id" value="id01@maver.com">
+					<input type="hidden" name="pw" value="asdf1234">
+	<button type="submit" class="btn btn-sm btn-success" style="float:left; padding:2px 2px;">기업회원 로그인</button>
+	</form>
 </body>
 </html>

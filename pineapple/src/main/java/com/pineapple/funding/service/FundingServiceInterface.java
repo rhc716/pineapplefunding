@@ -31,4 +31,6 @@ public interface FundingServiceInterface {
 	List<Company> getComList(String userId);
 	void addFunding(Funding funding);
 	void modifyFundingImage(Model model);
+	Funding fdtitleCheck(String fdTitle);
+	Funding getMyFunding(int fdCode);
 }

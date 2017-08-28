@@ -33,4 +33,6 @@ public interface FundingDaoInterface {
 	List<Investment> selectFundingInvestorList(int fdCode);
 	List<Company> selectComList(String userId);
 	void updateFundingImage(Model model);
+	Funding fdtitleCheck(String fdTitle);
+	Funding selectMyFunding(int fdCode);
 }

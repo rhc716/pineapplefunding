@@ -338,13 +338,46 @@ public class FundingController {
 	
 	// 펀딩 포스터 이미지수정
 	@RequestMapping(value = "/modifyfundingimage.pms", method = RequestMethod.POST)
-	public String modifyFundingImage(Model model, Locale locale, Funding funding) {
+	public String modifyFundingImage(Model model, Locale locale, Funding funding, MultipartFile uploadimage, MultipartHttpServletRequest request) {
 		log.debug("FundingController의 modifyFundingImage호출 성공");
-		log.debug("funding : " + funding);
-		model.addAttribute("posterImg", funding.getPosterImg());
-		model.addAttribute("fdCode", funding.getFdCode());
-		service.modifyFundingImage(model);
-		model.addAttribute("posterImg", null);
+		log.debug("funding : " + funding);		
+		log.debug("upload image name : "+uploadimage.getOriginalFilename());
+		log.debug("upload image size : "+uploadimage.getSize());
+		
+		// 이전에 올렸던 이미지 파일이 있으면 삭제
+		int fdCode = funding.getFdCode();
+		Funding fundingresult = service.getMyFunding(fdCode);
+		log.debug("이전의 펀딩 이미지경로 : " + fundingresult.getPosterImg());		
+		if(fundingresult.getPosterImg()!=null){
+			fileutil.deleteFile(fundingresult.getPosterImg());
+		}
+		
+		
+		// 새로운 이미지를 파일업로드하고 경로를 DB에서 수정해준다.
+		// 업로드되는 파일이 있을때
+		if(uploadimage.getSize()!=0){
+			//리턴값으로 업로드된 경로+파일명을 가져온다.
+			String result = fileutil.fileUpload(request, uploadimage);
+			model.addAttribute("posterImg", result);
+			model.addAttribute("fdCode", funding.getFdCode());
+			service.modifyFundingImage(model);
+		}else{
+		// 파일을 안올린채 수정완료를 눌렀을때 DB의 이미지에 null값 넣어줌
+			model.addAttribute("posterImg", null);
+			model.addAttribute("fdCode", funding.getFdCode());
+			service.modifyFundingImage(model);
+		}
+		
 		return "redirect:/myfundingposterimgpage.pms";
 	}
+	
+	// 펀딩 insert ( 펀딩명 중복검사 )
+	@RequestMapping(value = "/fdtitlecheck.pms", method = RequestMethod.GET)
+	public @ResponseBody Funding fdtitleCheck(Model model, Locale locale, @RequestParam("fdTitle") String fdTitle) {
+		log.debug("FundingController의 fdtitleCheck호출 성공");
+		log.debug("fdTitle : " + fdTitle);
+		return service.fdtitleCheck(fdTitle);
+	}
+	
+	
 }

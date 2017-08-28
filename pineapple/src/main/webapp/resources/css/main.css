@@ -1,6 +1,6 @@
 @CHARSET "UTF-8";
+/* 폰트 */
 @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
-
 /* 메인페이지 제외한 곳 // 로그인or 로그아웃 버튼 */
 body{
 	font-family: 'Jeju Gothic', serif;	

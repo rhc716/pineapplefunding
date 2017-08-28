@@ -88,7 +88,7 @@ $(document).ready(function(){
 						+'<option value="주식">주식</option>'
 						+'</select><br><br>'
 						+'펀딩명'
-						+'<input type="text" class="form-control" name="fdTitle" value="'+msg[i].fdTitle+'"><br>'
+						+'<input type="text" class="form-control" name="fdTitle" value="'+msg[i].fdTitle+'" readonly><br>'
 						+'최소투자금액'
 						+'<input type="text" class="form-control" name="minInvestMoney" value="'+msg[i].minInvestMoney+'"><br>'
 						+'판매주식수'
