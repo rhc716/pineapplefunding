@@ -54,4 +54,18 @@ public class TimelineService implements TimelineServiceInterface{
 		int timelinereplyinsert = timelinedaointerface.timelineReplyInsert(timelinereply);
 		return timelinereplyinsert;
 	}
+	//타임라인에서 타임라인 댓글 수정하기
+	@Override
+	public int modifyTimelineReply(TimelineReply timelinereply) {
+		log.debug("------------------TimelineService-----------------modifyTimelineReply()");
+		int timelinereplyupdate = timelinedaointerface.timelineReplyUpdate(timelinereply);
+		return timelinereplyupdate;
+	}
+	//타임라인에서 타임라인 댓글 삭제하기
+	@Override
+	public int removeTimelineReply(int tlReCode) {
+		log.debug("------------------TimelineService-----------------removeTimelineReply()");
+		int timelinereplydelete = timelinedaointerface.timelineReplyDelete(tlReCode);
+		return timelinereplydelete;
+	}
 }

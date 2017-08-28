@@ -1,6 +1,7 @@
 package com.pineapple.user.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -43,26 +44,11 @@ public class UserController {
         }
         return "redirect:/mypage.user"; // 글입력후 "/"로 리다이렉트(재요청)
     }
-	
-	//마이페이지 계좌정보 수정 페이지 요청
-	@RequestMapping(value="/changeaccountpage.user", method=RequestMethod.GET)
-	public @ResponseBody Account changeAccount(Model model, @RequestParam("accountCode") int accountCode){
-		log.debug("UserController changeAccountPage 회원계좌정보수정 페이지 요청");
-		Account account = service.getAccountByAccountCode(accountCode);
-		if(account != null){
-			log.debug("UserController changeAccountPage 회원계좌정보 조회 성공");
-			model.addAttribute("account", account);
-		} else {
-			log.debug("UserController changeAccountPage 회원계좌정보 조회 실패");
-		}
-		return account;
-	}
-	
 	//계좌 삭제 요청 처리
 	@RequestMapping(value="/deleteaccount.user", method = RequestMethod.POST)
     public String deleteAccount(HttpSession session, @RequestParam("accountCode") int accountCode) { //커맨드 객체
         log.debug("UserController deleteAccount 계좌삭제 요청 : "+session.getAttribute("id").toString());
-        Account account = service.getAccountByAccountCode(accountCode);
+        List<Account> account = service.getAccountByAccountCode(accountCode);
         String redirect = null;
         if(account != null){
         	 log.debug("삭제요청된 "+session.getAttribute("nickname")+"님의 계좌 조회 성공");
@@ -80,7 +66,6 @@ public class UserController {
         }
         return redirect; // 글입력후 "/"로 리다이렉트(재요청)
     }
-	
 	//투자자, 사이트관리자의 계좌 등록 요청 처리
 	@RequestMapping(value="/addnewaccount.user", method = RequestMethod.POST)
     public String addAccount(HttpSession session, Account account) { //커맨드 객체
@@ -93,7 +78,6 @@ public class UserController {
         }
         return "redirect:/mypage.user"; // 글입력후 "/"로 리다이렉트(재요청)
     }
-	
 	//비밀번호 변경 요청 처리(두개의 변수를 파라미터맵을 사용하여 입력한 뒤 업데이트, Map객체 이용)
 	@RequestMapping(value="/changepw.user", method = RequestMethod.POST)
     public String changePw(HttpSession session, @RequestParam("newpw2") String pw) { //커맨드 객체
@@ -109,7 +93,6 @@ public class UserController {
         }
         return "redirect:/mypage.user"; // 글입력후 "/mypage.user"로 리다이렉트(재요청)
     }
-	
 	//회원정보 중 비밀번호 변경시 비밀번호 일치확인 요청 처리
 	@RequestMapping(value="/checkNewPw.user", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> checkNewPw(Locale locale,
@@ -124,7 +107,6 @@ public class UserController {
 				map.put("newpw2", pw2);
 			return map;
 	}
-	
 	//회원상세정보입력 페이지 요청(회원상세정보 조회/수정은 mypage part에서 구현)
 	@RequestMapping(value="/userdetailinsert.user", method=RequestMethod.GET)
 	public String userdetailinsertpage(HttpSession session){
@@ -137,7 +119,6 @@ public class UserController {
 		}
 		return redirect;
 	}
-	
 	//회원상세정보입력 처리
 	@RequestMapping(value="/userdetailinsert.user", method=RequestMethod.POST)
 	public String userdetailinsert(UserDetail userdetail){
@@ -219,7 +200,9 @@ public class UserController {
 	@RequestMapping(value="/checkNick.user", method = RequestMethod.POST)
 	public @ResponseBody User checkNick(Locale locale, Model model, @RequestParam("nickname") String nickname){
 		log.debug("UserController checknick : "+service.getUserByNickname(nickname).getNickname());
-		return service.getUserByNickname(nickname);
+		User usernick = service.getUserByNickname(nickname);
+		model.addAttribute("usernick", usernick);
+		return usernick;
 	}
 	
 	//회원가입시 비밀번호 일치 체크 ajax 요청 처리
@@ -241,7 +224,9 @@ public class UserController {
 	@RequestMapping(value="/checkId.user", method = RequestMethod.POST)
 	public @ResponseBody User checkId(Locale locale, Model model, @RequestParam("userId") String userId){
 		log.debug("UserController checkid : "+userId);
-		return service.getUser(userId);
+		User user = service.getUser(userId);
+		model.addAttribute("user", user);
+		return user;
 	}
 	
 	//회원가입 요청

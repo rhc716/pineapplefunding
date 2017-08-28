@@ -34,6 +34,12 @@ public class PmsService implements PmsServiceInterface{
 	}
 	
 	@Override
+	public List<WbsActual> wbsactuallist(String userId) {
+		log.debug("PmsService의 wbsactuallist호출 성공");
+		return pmsdao.wbsactuallist(userId);
+	}
+	
+	@Override
 	public List<WbsPlanHuman> getMyWbsPlanHumanList(String wbsplancode) {
 		log.debug("PmsService의 getMyWbsPlanList호출 성공");
 		return pmsdao.getMyWbsPlanHumanList(wbsplancode);
@@ -78,6 +84,7 @@ public class PmsService implements PmsServiceInterface{
 		WbsPlanView wbsplandetail = pmsdao.getMyWbsPlanDetail(wbsplancode);
 		return wbsplandetail;
 	}
+	
 	@Override
 	public  WbsPlanUpdate wbsplanupdate(WbsPlan wbsplan) {
 		log.debug("PmsService의 wbsplanupdate호출 성공");
@@ -95,6 +102,13 @@ public class PmsService implements PmsServiceInterface{
 		pmsdao.wbsplanupdateout(map);
 		
 	}
+	
+	@Override
+	public  WbsActual wbsactualdetail(String wbsactualcode) {
+		log.debug("PmsService의 wbsactualdetail호출 성공");
+		WbsActual wbsactual = pmsdao.wbsactualdetail(wbsactualcode);
+		return wbsactual;
+	}
 	/* (non-Javadoc)
 	 * @see com.pineapple.pms.service.PmsServiceInterface#addWbsplanhuman(com.pineapple.pms.service.WbsPlanHuman)
 	 */
@@ -102,6 +116,12 @@ public class PmsService implements PmsServiceInterface{
 	public void addWbsplanhuman(WbsPlanHuman wbsplanhuman){
 		log.debug("PmsService의 addWbsplanhuman호출 성공");
 		pmsdao.addWbsplanhuman(wbsplanhuman);
+	}
+	
+	@Override
+	public void wbsactualinsert(WbsActual wbsactual){
+		log.debug("PmsService의 wbsactualinsert호출 성공");
+		pmsdao.wbsactualinsert(wbsactual);
 	}
 	@Override
 	public void addWbsplanMaterial(WbsPlanMaterial wbsplanmaterial){

@@ -30,55 +30,75 @@
 		$('#newAccountCancelBtn').click(function(){
 			location.href = '/pineapple/mypage.user';
 		});
-		$('#changeAccountModalBtn').click(function(){
-			var in_accountCode = $('#changeAccountModalBtn').val();
+	
+		$('.changeaccount').click(function(){
+			var in_accountCode = $(this).attr('value');
 			var changeAccountAjax = $.ajax({ // ajax실행부분
-								        type: "get",
-								        url : "/pineapple/changeaccountpage.user",
+								        type: "post",
+								        url : "/pineapple/accountchangepage.user",
 								        data : {accountCode : in_accountCode},
+								        success : function success(){
+								        	alert('수정할 계좌코드 : '+ in_accountCode);
+								        },
 								        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
 								        error : function error(){
-								        		alert('계좌정보 불러오기 오류');
-								        	}
+							        		alert('계좌정보 불러오기 오류');
+							        	}
 									});
 			//ajax를 통해 조회한 계좌 정보를 모달창 수정페이지 각 입력값으로 넣어준다
 			changeAccountAjax.done(function(ic){
-				console.log(ic);
 				$('#accountCodeChange').val(ic.accountCode);
 				$('#secCompanyChange').val(ic.secCompany);
 	    		$('#accountNumberChange').val(ic.accountNumber);
 	    		$('#accountNicknameChange').val(ic.accountNickname);
 			});
+			
 		});
+
 	});
 	//기업등록시 기업명 존재여부 검사
-	
+	$(document).ready(function(){
 		$('#comName3').blur(function(){
-			if($('#comName3').val() != ''){
+			var temp = 0;
+			var comname = $('#comName3').val();
+			var check = /^(?=.*[0-9a-zA-Z가-힣]).{2,20}$/i;
+			if(!check.test(comname)) {
+				//유효하지 않을때
+				temp = 1;
+			} else {
+				//유효할때
+				temp = 0;
+			}
+			    	
+	// 기업명 유효성 검사 통과시 중복확인용 ajax실행
+	        if(temp==0){
 				$.ajax({ // ajax실행부분
 				    type: "post",
 				    url : "/pineapple/checkcomname.user",
-				    data : {comName : $('#comName3').val()},
-				    success : function(rs){ 
-			    			$('#comnamech3').css("color", "#FF0000");
-			    			$('#comnamech3').text('이미 존재하는 기업명입니다.');
-			    			$('#comName3').val('');
+				    data : {comName : comname},
+				    success : function(ic){
+				    		console.log(ic.comName);
+				    		if(ic.comName == null){
+					    		$('#comnameCheck').hide();
+					    		$('#comNameSuccess2').show();
+					    		$('#comName4').val(comname);
+				    		} else {
+				    			$('#comnamech3').css("color", "#FF0000");
+				    			$('#comnamech3').text('이미 존재하는 기업명입니다.');
+				    			$('#comName3').val('');
+				    		}
 				    	},
 				    //만약 해당 페이지에 값을 성공적으로 보냈다면 페이지를 rs 라는 매개변수로 받아 id = 'comnamech3' 구역에 rs를 출력하겠다. 
 				    error : function error(){
-				    		$('#comnamech3eck').hide();
-				    		$('#comNameSuccess2').show();
-				    		document.getElementById("comName4").readOnly = true;
-				    		$("#comName4").val($('#comName3').val());
-				    		
-				    	}
+				    	alert('기업명 중복검사 ajax 에러 발생');
+				    }
 				});
 			} else {
-				alert('유효한 기업명을 입력해주시기 바랍니다');
+				alert('유효한 기업명을 입력해주시기 바랍니다.');
 			}
 		});
-		
-
+	});
+	$(document).ready(function(){
 	//기업정보확인모달과 사원등록모달 교체 기능 구현
 	
 		$('#addEmployeeMngBtn').click(function(){
@@ -90,7 +110,7 @@
 		$('#employeeCancelBtn').click(function(){
 			location.href = '/pineapple/mypage.user';
 		});
-
+	});
 	
 </script>
 <script type="text/javascript">
@@ -156,7 +176,7 @@
 								<td> ${useraccount.accountNumber} </td>
 								<td> ${useraccount.accountNickname} </td>
 								<td>
-									<a id="changeAccountModalBtn" type="button" class="btn btn-info btn-block" data-toggle="modal" href="#changeAccountModal" value="${useraccount.accountCode}">수정</a>
+									<a type="button" class="btn btn-info btn-block changeaccount" data-toggle="modal" value="${useraccount.accountCode}" href="#changeAccountModal">수정</a>
 								</td>
 								<td>
 									<form action="/pineapple/deleteaccount.user" method="post">
@@ -173,53 +193,6 @@
 						</div>
 					</tfoot>
 					</table>
-					</div>
-					<!-- 새로운 계좌등록을위한 모달 내부 구현 -->
-					<div class="modal fade" id="newaccountmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-					  <div class="modal-dialog">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					        <h4 class="modal-title" id="myModalLabel">${nickname}님의 새로운 계좌등록</h4>
-					      </div>
-					      <div class="modal-body">
-					        <form id="newaccountform" action="/pineapple/addnewaccount.user" method="post">
-					        	<div class="container_insert">
-								    <div id="accountHolerIdinput" class="form-group has-success has-feedback">
-										<label class="control-label" for="inputSuccess2">${nickname}님의 아이디</label>
-										<input type="text" class="form-control" id="accountId" name="accountId" value="${id}" varia-describedby="inputSuccess2Status" readonly="readonly">
-										<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-										<span id="inputSuccess2Status" class="sr-only">(success)</span>
-									</div>
-									<br>
-								  	<div class="form-group">
-									    <label for="secCompany">증권사</label>
-									    <p id="explain">(계좌를 만든 증권사 이름을 정확히 입력해주세요)</p>
-									    <p><input type="text" id="secCompany" name="secCompany" class="form-control"></p>
-								  	</div>
-								  	<br>
-								  	<div class="form-group">
-								  		<label for="accountNumber">계좌번호</label>
-									    <p id="explain">(계좌번호를 -없이 입력해주세요)</p>
-									    <p><input type="text" id="accountNumber" name="accountNumber" class="form-control"></p>
-								  	</div>
-									<br>
-									<div class="form-group">
-								  		<label for="accountNickname">계좌번호 별명</label>
-									    <p id="explain">(계좌번호의 별명을 등록해주세요. 필수사항이 아니므로 별명을 등록하지 않으셔도 됩니다.)</p>
-									    <p><input type="text" id="accountNickname" name="accountNickname" class="form-control"></p>
-								  	</div>
-									<br>
-							      </div>
-							      <div class="modal-footer">
-							        <button id="newAccountCancelBtn" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-							        <button id="newAccountSubmitBtn" type="button" class="btn btn-primary">추가하기</button>
-							      </div>
-					        </form>
-					      </div>
-					    </div>
-					  </div>
-					</div>
 					<!-- 계좌정보 수정을위한 모달 내부 구현 -->
 					<div class="modal fade" id="changeAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					  <div class="modal-dialog">
@@ -267,6 +240,53 @@
 					    </div>
 					  </div>
 					</div>
+					</div>
+					<!-- 새로운 계좌등록을위한 모달 내부 구현 -->
+					<div class="modal fade" id="newaccountmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title" id="myModalLabel">${nickname}님의 새로운 계좌등록</h4>
+					      </div>
+					      <div class="modal-body">
+					        <form id="newaccountform" action="/pineapple/addnewaccount.user" method="post">
+					        	<div class="container_insert">
+								    <div id="accountHolerIdinput" class="form-group has-success has-feedback">
+										<label class="control-label" for="inputSuccess2">${nickname}님의 아이디</label>
+										<input type="text" class="form-control" id="accountId" name="accountId" value="${id}" varia-describedby="inputSuccess2Status" readonly="readonly">
+										<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+										<span id="inputSuccess2Status" class="sr-only">(success)</span>
+									</div>
+									<br>
+								  	<div class="form-group">
+									    <label for="secCompany">증권사</label>
+									    <p id="explain">(계좌를 만든 증권사 이름을 정확히 입력해주세요)</p>
+									    <p><input type="text" id="secCompany" name="secCompany" class="form-control"></p>
+								  	</div>
+								  	<br>
+								  	<div class="form-group">
+								  		<label for="accountNumber">계좌번호</label>
+									    <p id="explain">(계좌번호를 -없이 입력해주세요)</p>
+									    <p><input type="text" id="accountNumber" name="accountNumber" class="form-control"></p>
+								  	</div>
+									<br>
+									<div class="form-group">
+								  		<label for="accountNickname">계좌번호 별명</label>
+									    <p id="explain">(계좌번호의 별명을 등록해주세요. 필수사항이 아니므로 별명을 등록하지 않으셔도 됩니다.)</p>
+									    <p><input type="text" id="accountNickname" name="accountNickname" class="form-control"></p>
+								  	</div>
+									<br>
+							      </div>
+							      <div class="modal-footer">
+							        <button id="newAccountCancelBtn" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+							        <button id="newAccountSubmitBtn" type="button" class="btn btn-primary">추가하기</button>
+							      </div>
+					        </form>
+					      </div>
+					    </div>
+					  </div>
+					</div>
 				</div>
 			</div>
 			<!-- 두번째탭 시작 -->
@@ -281,7 +301,7 @@
 						<!-- 기업을 등록지않은 경영진은 기존의 기업들 중 자신이 소속된 기업을 검색하여 사원정보를 입력한다 -->
 					<br>
 					<c:forEach var="companyOpenedByMyId1" items="${company}">
-						<a id="getCompanyOpenInfoBtn" class="btn btn-info btn-block" data-toggle="modal" href="#getCompanyOpenInfo">${companyOpenedByMyId1.comName} 정보확인</a>
+						<a class="btn btn-info btn-block cominfoclass" data-toggle="modal" value="${companyOpenedByMyId1.comName}" href="#getCompanyOpenInfo">${companyOpenedByMyId1.comName} 정보확인</a>
 					</c:forEach>
 					<p id="explain">본인의 아이디로 개설한 모든 기업정보를 확인할 수 있습니다</p>
 						<!-- 개설한 모든 회사가 리스트 타입으로 리턴되므로 forEach 태그립을 사용하여 모달 내부 구현 -->
@@ -336,11 +356,11 @@
 										    <input type="text" id="comLogoExtension" name="comLogoExtension" value="${companyOpenedByMyId2.comLogoExtension}" hidden>
 										</div>
 										<br>
-										<div id="comnamech3eck" class="form-group">
+										<div id="comnameChModal" class="form-group">
 										    <label class="control-label" for="comNameInput">*기업이름</label>
 										    <p id="explain"> (정확한 기업이름을 입력해주시기 바랍니다. 이미 등록된 기업이 존재하는 경우 기업을 등록할 수 없습니다.)</p>
 										    <input id="comName" name="comName" type="text" class="form-control" value="${companyOpenedByMyId2.comName}" placeholder="Enter Company Name">
-									  		<span id="comnamech3"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
+									  		<span id="comnamech"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
 										<br>
 									  	</div>
 									  	<div class="form-group">
@@ -459,7 +479,7 @@
 											    <input id="emcomName4" name="emComName" type="text" class="focus form-control" placeholder="Enter Company Name" readonly>
 											    <a data-toggle="modal" href="#searchCompanyModal" class="btn btn-info btn-block">기업검색</a>
 										  		<input id="emComCode2" name="emComCode" type="hidden" class="form-control">
-										  		<span id="comnamech3"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
+										  		<span id="emcomnamech2"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
 											</div>
 											<br>
 										    <div id="emUserIdEmail2" class="form-group has-success has-feedback">
@@ -583,7 +603,7 @@
 					</div>
 				</div>
 				<br>
-				<!-- 첫번째탭 두번째row 시작-->
+				<!-- 두번째탭 두번째row 시작-->
 				<!-- 기업등록요청하기 입력폼; 기업을 등록하는 경영진과 등록하지 않는 경영진 여부에 따라 페이지 구분 기능 구현 -->
 				<div class="row">
 					<div class="col-xs-2">
@@ -607,7 +627,7 @@
 								<br>
 								<div>
 							    	<label for="comLogoFileInput">기업로고업로드</label>
-								    <input type="file" id="comLogoServerName" name="comLogoServerName">
+								    <input type="text" id="comLogoServerName" name="comLogoServerName">
 								     <p class="help-block">기업로고 이미지 파일업로드</p>
 								    <input type="number" id="comLogoHeight" name="comLogoHeight" hidden>
 								    <input type="number" id="comLogoWidth" name="comLogoWidth" hidden>
@@ -615,15 +635,15 @@
 								    <input type="text" id="comLogoExtension" name="comLogoExtension" hidden>
 								</div>
 								<br>
-								<div id="comnamech3eck" class="form-group">
+								<div id="comnameCheck" class="form-group">
 								    <label class="control-label" for="comNameInput">*기업이름</label>
 								    <p id="explain"> (정확한 기업이름을 입력해주시기 바랍니다. 이미 등록된 기업이 존재하는 경우 기업을 등록할 수 없습니다.)</p>
-								    <input id="comName3" name="comNameInput" type="text" class="form-control" placeholder="Enter Company Name">
+								    <input id="comName3" name="comNameInput" type="text" class="form-control" placeholder="Enter Company Name" required>
 							  		<span id="comnamech3"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
 							  	</div>
 							  	<div id="comNameSuccess2" class="form-group has-success has-feedback" hidden="hidden">
 									<label class="control-label" for="inputSuccess2">사용가능한 기업명</label>
-									<input type="text" class="form-control" id="comName4" name="comName" varia-describedby="inputSuccess2Status">
+									<input id="comName4" type="text" class="form-control" name="comName" varia-describedby="inputSuccess2Status" readonly>
 									<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 									<span id="inputSuccess2Status" class="sr-only">(success)</span>
 								</div>
@@ -672,7 +692,7 @@
 								<br>
 								<div class="clearfix">
 								    <input id="cancelComInsertBtn" type="reset" class="button_insert cancelbtn" value="초기화">
-								    <input id="submitComInsertBtn" type="button" class="button_insert signupbtn" value="기업등록">
+								    <input type="submit" class="button_insert signupbtn" value="기업등록">
 							   	</div>
 							</div>
 						</form>

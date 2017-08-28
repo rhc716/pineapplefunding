@@ -6,12 +6,27 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pineapple.invest.service.InvestorInvestList;
+
 @Service
 public class MypageService implements MypageServiceInterface {
 	private Logger log = Logger.getLogger(this.getClass());
 	
 	@Autowired
 	private MypageDaoInterface mypagedao;
+	//투자자 투자내역 조회
+	@Override
+	public List<InvestorInvestList> getInvestor(String investId) {
+		log.debug("MypageService getInvestor 호출 결과: "+mypagedao.selectInvestor(investId));
+		return mypagedao.selectInvestor(investId);
+	}
+	
+	//투자자, 사이트관리자의 계좌조회 메서드 선언(id로)
+	@Override
+	public Account getAccountByAccountCode(int accountCode) {
+		log.debug("MypageService getAccountByAccountId 호출 결과: "+mypagedao.selectAccountByAccountCode(accountCode));
+		return mypagedao.selectAccountByAccountCode(accountCode);
+	}
 	//기업명 중복체크 기능 구현을 위한 메서드 선언
 	@Override
 	public Company getCompanyByComName(String comName) {
@@ -75,4 +90,5 @@ public class MypageService implements MypageServiceInterface {
 	
 	
 	
+
 }

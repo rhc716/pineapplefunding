@@ -52,7 +52,7 @@
 		<div class="fdlist-data pd-a-10">
 			구입한 주식합 = ${list.total}
 			판매하는 주식 = ${list.numberOfShares}
-			<div class="progress bor-defult">
+		<div class="progress bor-defult">
   				<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ${(list.total/list.numberOfShares)*100}%; min-width: 3em; max-width: 100%;">
     				${(list.total/list.numberOfShares)*100}%
   				</div>

@@ -1,5 +1,6 @@
 package com.pineapple.user.service;
 
+import java.util.List;
 import java.util.Map;
 
 public interface UserDaoInterface {
@@ -10,7 +11,7 @@ public interface UserDaoInterface {
 	int deleteAccountByAccountCode(int accountCode);
 	
 	//투자자, 사이트관리자의 계좌조회 메서드 선언
-	Account selectAccountByAccountCode(int accountCode);
+	List<Account> selectAccountByAccountCode(int accountCode);
 	
 	//투자자, 사이트관리자의 새로운 계좌등록 메서드 선언
 	int insertAccount(Account account);

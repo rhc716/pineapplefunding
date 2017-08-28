@@ -17,7 +17,8 @@ public class WbsActual {
 	private String wbsActualWriteManager;
 	private String wbsActualApprovalManager;
 	private int wbsActualComCode;
-	
+	private String fdTitle;
+	private String milestoneName;
 	
 	public int getWbsActualCode() {
 		return wbsActualCode;
@@ -53,14 +54,24 @@ public class WbsActual {
 		return wbsActualStartDate;
 	}
 	public void setWbsActualStartDate(String wbsActualStartDate) {
-		this.wbsActualStartDate = wbsActualStartDate;
+		if(wbsActualStartDate==""){
+			wbsActualStartDate=null;
+		}else{
+			this.wbsActualStartDate = wbsActualStartDate;
+		}
+		
 	}
 	public String getWbsActualEndDate() {
 		return wbsActualEndDate;
 	}
 	public void setWbsActualEndDate(String wbsActualEndDate) {
-		this.wbsActualEndDate = wbsActualEndDate;
+		if(wbsActualEndDate==""){
+			wbsActualEndDate=null;
+		}else{
+			this.wbsActualEndDate = wbsActualEndDate;
+		}
 	}
+		
 	public int getWbsActualDuration() {
 		return wbsActualDuration;
 	}
@@ -83,13 +94,21 @@ public class WbsActual {
 		return wbsActualWriteDate;
 	}
 	public void setWbsActualWriteDate(String wbsActualWriteDate) {
-		this.wbsActualWriteDate = wbsActualWriteDate;
+		if(wbsActualWriteDate==""){
+			wbsActualWriteDate=null;
+		}else{
+			this.wbsActualWriteDate = wbsActualWriteDate;
+		}
 	}
 	public String getWbsActualApprovalDate() {
 		return wbsActualApprovalDate;
 	}
 	public void setWbsActualApprovalDate(String wbsActualApprovalDate) {
-		this.wbsActualApprovalDate = wbsActualApprovalDate;
+		if(wbsActualApprovalDate==""){
+			wbsActualApprovalDate=null;
+		}else{
+			this.wbsActualApprovalDate = wbsActualApprovalDate;
+		}
 	}
 	public String getWbsActualApprovalReason() {
 		return wbsActualApprovalReason;
@@ -115,23 +134,43 @@ public class WbsActual {
 	public void setWbsActualComCode(int wbsActualComCode) {
 		this.wbsActualComCode = wbsActualComCode;
 	}
-	
-	
+	public String getFdTitle() {
+		return fdTitle;
+	}
+	public void setFdTitle(String fdTitle) {
+		this.fdTitle = fdTitle;
+	}
+	public String getMilestoneName() {
+		return milestoneName;
+	}
+	public void setMilestoneName(String milestoneName) {
+		this.milestoneName = milestoneName;
+	}
 	@Override
 	public String toString() {
-		return "WbsActual [wbsActualCode=" + wbsActualCode
-				+ ", wbsActualFdCode=" + wbsActualFdCode + ", wbsActualMsCode="
-				+ wbsActualMsCode + ", wbsPlanAcCode=" + wbsPlanAcCode
-				+ ", wbsActualName=" + wbsActualName + ", wbsActualStartDate="
-				+ wbsActualStartDate + ", wbsActualEndDate=" + wbsActualEndDate
-				+ ", wbsActualDuration=" + wbsActualDuration
-				+ ", wbsActualStatus=" + wbsActualStatus
-				+ ", wbsActualProgress=" + wbsActualProgress
-				+ ", wbsActualWriteDate=" + wbsActualWriteDate
-				+ ", wbsActualApprovalDate=" + wbsActualApprovalDate
-				+ ", wbsActualApprovalReason=" + wbsActualApprovalReason
-				+ ", wbsActualWriteManager=" + wbsActualWriteManager
-				+ ", wbsActualApprovalManager=" + wbsActualApprovalManager
-				+ ", wbsActualComCode=" + wbsActualComCode + "]";
+		return "WbsActual [wbsActualCode=" + wbsActualCode + ", wbsActualFdCode=" + wbsActualFdCode
+				+ ", wbsActualMsCode=" + wbsActualMsCode + ", wbsPlanAcCode=" + wbsPlanAcCode + ", wbsActualName="
+				+ wbsActualName + ", wbsActualStartDate=" + wbsActualStartDate + ", wbsActualEndDate="
+				+ wbsActualEndDate + ", wbsActualDuration=" + wbsActualDuration + ", wbsActualStatus=" + wbsActualStatus
+				+ ", wbsActualProgress=" + wbsActualProgress + ", wbsActualWriteDate=" + wbsActualWriteDate
+				+ ", wbsActualApprovalDate=" + wbsActualApprovalDate + ", wbsActualApprovalReason="
+				+ wbsActualApprovalReason + ", wbsActualWriteManager=" + wbsActualWriteManager
+				+ ", wbsActualApprovalManager=" + wbsActualApprovalManager + ", wbsActualComCode=" + wbsActualComCode
+				+ ", fdTitle=" + fdTitle + ", milestoneName=" + milestoneName + ", getWbsActualCode()="
+				+ getWbsActualCode() + ", getWbsActualFdCode()=" + getWbsActualFdCode() + ", getWbsActualMsCode()="
+				+ getWbsActualMsCode() + ", getWbsPlanAcCode()=" + getWbsPlanAcCode() + ", getWbsActualName()="
+				+ getWbsActualName() + ", getWbsActualStartDate()=" + getWbsActualStartDate()
+				+ ", getWbsActualEndDate()=" + getWbsActualEndDate() + ", getWbsActualDuration()="
+				+ getWbsActualDuration() + ", getWbsActualStatus()=" + getWbsActualStatus()
+				+ ", getWbsActualProgress()=" + getWbsActualProgress() + ", getWbsActualWriteDate()="
+				+ getWbsActualWriteDate() + ", getWbsActualApprovalDate()=" + getWbsActualApprovalDate()
+				+ ", getWbsActualApprovalReason()=" + getWbsActualApprovalReason() + ", getWbsActualWriteManager()="
+				+ getWbsActualWriteManager() + ", getWbsActualApprovalManager()=" + getWbsActualApprovalManager()
+				+ ", getWbsActualComCode()=" + getWbsActualComCode() + ", getFdTitle()=" + getFdTitle()
+				+ ", getMilestoneName()=" + getMilestoneName() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
 	}
+	
+	
+
 }

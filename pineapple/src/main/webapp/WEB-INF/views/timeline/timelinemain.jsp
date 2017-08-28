@@ -92,6 +92,7 @@
 						<button id="timeinputbotton" class="timeinputbotton" data-toggle="modal" data-target="#myModal">게시하기</button>
 					</div>
 				</div>
+				
 				<!-- Time line input modal -->
 				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			 	  <div class="modal-dialog modal-lg" role="document">
@@ -122,6 +123,8 @@
 			 	  </div>
 			 	</div>
 			 	</div>
+				<!-- Time line input modal -->
+				
 				<div class="col-xs-12">
 					<c:forEach var="Data" items="${timelinelist}">
 					<div class="col-xs-12 timelinelist">
@@ -175,6 +178,7 @@
 							</div>
 						</div>
 					</div>
+					
 					<!-- Time line update modal -->
 					<div class="modal fade" id="${Data.tlCode}" tabindex="-1" role="dialog" aria-labelledby="myModalLabelupdate" aria-hidden="true">
 				 	  <div class="modal-dialog modal-lg" role="document">
@@ -205,6 +209,8 @@
 				 	  </div>
 				 	</div>
 				 	</div>
+				 	<!-- Time line update modal -->
+				 	
 					</c:forEach>
 				</div>
 			</div>

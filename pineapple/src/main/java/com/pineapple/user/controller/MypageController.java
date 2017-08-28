@@ -1,4 +1,6 @@
 package com.pineapple.user.controller;
+import com.pineapple.invest.service.InvestorInvestList;
+import com.pineapple.user.service.Account;
 import com.pineapple.user.service.Company;
 import com.pineapple.user.service.Employee;
 import com.pineapple.user.service.MypageServiceInterface;
@@ -24,11 +26,37 @@ public class MypageController {
 	
 	@Autowired
 	private MypageServiceInterface mypageservice;
+	//투자자 투자내역 조회
+	@RequestMapping(value="/investorinvestment.user", method=RequestMethod.GET)
+	public String getInvestor(Model model, HttpSession session){
+		log.debug("MypageController accountchangepage 투자내역 페이지 요청");
+		List<InvestorInvestList> investorinvest = mypageservice.getInvestor(session.getAttribute("id").toString());
+		model.addAttribute("investorinvest", investorinvest);
+		return "user/investormypageajax/investormypage";
+	}
+	
+	//마이페이지 계좌정보 수정 페이지 요청
+	@RequestMapping(value="/accountchangepage.user", method=RequestMethod.POST)
+	public @ResponseBody Account changeAccount(Model model, @RequestParam("accountCode") int accountCode){
+		log.debug("MypageController accountchangepage 회원계좌정보수정 페이지 요청");
+		Account account = mypageservice.getAccountByAccountCode(accountCode);
+		if(account != null){
+			log.debug("MypageController changeAccountPage 회원계좌정보 조회 성공");
+			model.addAttribute("account", account);
+		} else {
+			log.debug("MypageController changeAccountPage 회원계좌정보 조회 실패");
+		}
+		return account;
+	}
+	
 	//기업등록요청시 ajax 활용한 기업명 중복검사 
 	@RequestMapping(value="/checkcomname.user", method = RequestMethod.POST)
-	public @ResponseBody Company checkComName(Locale locale, @RequestParam("comName") String comName){
+	public @ResponseBody Company checkComName(Locale locale, Model model, @RequestParam("comName") String comName){
 		log.debug("checkComName 기업명 중복검사: "+comName);
-		return mypageservice.getCompanyByComName(comName);
+		Company com = mypageservice.getCompanyByComName(comName);
+		model.addAttribute("com", com);
+		return com;
+		
 	}
 	
 	//사원등록요청 처리(employee 테이블에 insert)
@@ -110,8 +138,34 @@ public class MypageController {
 	@RequestMapping(value="/managermypage.user", method=RequestMethod.GET)
 	public String managermypage(Model model, HttpSession session){
 		log.debug(session.getAttribute("rank")+" 권한으로 "+session.getAttribute("nickname")+"님의 managermypage 페이지로 분기");
-		
-    	
+		User user = mypageservice.getInvestorBasic(session.getAttribute("id").toString());
+    	model.addAttribute("user", user);
+    	UserDetail userdetail = mypageservice.getUserDetail(session.getAttribute("id").toString());
+    	model.addAttribute("userdetail", userdetail);
+    	//기업회원 레벨의 회원이 마이페이지 분기 요청시, 자신의 아이디로 개설한 회사정보조회(회사등록한 경영진만 객체 조회 가능)
+    	List<Company> company = mypageservice.getCompanyByOpenId(session.getAttribute("id").toString());
+    	if(company != null){
+			log.debug("getCompanyInfoByOpenId 회사개설정보 조회 성공");
+			model.addAttribute("company", company);
+		} else {
+			log.debug("getCompanyInfoByOpenId 회사개설정보 조회 실패");
+		}
+    	//기업회원 레벨의 회원이 마이페이지 분기 요청시, 페이지 로딩시 전체 회사 목록 조회
+    	List<Company> allcompany = mypageservice.getAllCompany();
+        if(allcompany != null){
+        	log.debug(session.getAttribute("nickname")+"님의 전체회사조회 성공");
+         	model.addAttribute("allcompany", allcompany);
+         } else {
+         	log.debug(session.getAttribute("nickname")+"님의  전체회사조회 실패");
+         }
+        //기업회원 레벨의 회원이 마이페이지 분기 요청시, 페이지 로딩시 아이디로 사원등록여부와 사원승인여부 조회
+        List<Employee> employee = mypageservice.getEmployeeById(session.getAttribute("id").toString());
+        if(employee != null){
+        	log.debug(session.getAttribute("nickname")+"님의 사원정보조회 성공");
+         	model.addAttribute("employee", employee);
+         } else {
+         	log.debug(session.getAttribute("nickname")+"님의  사원정보조회 실패");
+         }
 		return "user/managermypage";
 	}
 	//기업회원 중 일반사원 마이페이지 분기(회원상세정보조회 기능 포함)
@@ -122,6 +176,30 @@ public class MypageController {
     	model.addAttribute("user", user);
     	UserDetail userdetail = mypageservice.getUserDetail(session.getAttribute("id").toString());
     	model.addAttribute("userdetail", userdetail);
+    	//기업회원 레벨의 회원이 마이페이지 분기 요청시, 자신의 아이디로 개설한 회사정보조회(회사등록한 경영진만 객체 조회 가능)
+    	List<Company> company = mypageservice.getCompanyByOpenId(session.getAttribute("id").toString());
+    	if(company != null){
+			log.debug("getCompanyInfoByOpenId 회사개설정보 조회 성공");
+			model.addAttribute("company", company);
+		} else {
+			log.debug("getCompanyInfoByOpenId 회사개설정보 조회 실패");
+		}
+    	//기업회원 레벨의 회원이 마이페이지 분기 요청시, 페이지 로딩시 전체 회사 목록 조회
+    	List<Company> allcompany = mypageservice.getAllCompany();
+        if(allcompany != null){
+        	log.debug(session.getAttribute("nickname")+"님의 전체회사조회 성공");
+         	model.addAttribute("allcompany", allcompany);
+         } else {
+         	log.debug(session.getAttribute("nickname")+"님의  전체회사조회 실패");
+         }
+        //기업회원 레벨의 회원이 마이페이지 분기 요청시, 페이지 로딩시 아이디로 사원등록여부와 사원승인여부 조회
+        List<Employee> employee = mypageservice.getEmployeeById(session.getAttribute("id").toString());
+        if(employee != null){
+        	log.debug(session.getAttribute("nickname")+"님의 사원정보조회 성공");
+         	model.addAttribute("employee", employee);
+         } else {
+         	log.debug(session.getAttribute("nickname")+"님의  사원정보조회 실패");
+         }
 		return "user/employeemypage";
 	}
 	//관리자 마이페이지 분기(회원상세정보조회 기능 포함)
@@ -138,47 +216,18 @@ public class MypageController {
 	@RequestMapping(value="/mypage.user", method=RequestMethod.GET)
 	public String mypagemain(HttpSession session, Model model){
 		log.debug("공통 mypage main 페이지 요청 - 권한별 분기 예정");
-		//모든 권한으로 마이페이지 분기시 회원기본정보와 상세정보 조회
-		User user = mypageservice.getInvestorBasic(session.getAttribute("id").toString());
-    	model.addAttribute("user", user);
-    	UserDetail userdetail = mypageservice.getUserDetail(session.getAttribute("id").toString());
-    	model.addAttribute("userdetail", userdetail);
 		String levelResult = null;
 		if(session.getAttribute("level").equals("투자자")){
-			levelResult = "user/investormypage";
+			levelResult = "redirect:/investormypage.user";
 		} else if(session.getAttribute("level").equals("기업회원")) {
-			//기업회원 레벨의 회원이 마이페이지 분기 요청시, 자신의 아이디로 개설한 회사정보조회(회사등록한 경영진만 객체 조회 가능)
-	    	List<Company> company = mypageservice.getCompanyByOpenId(session.getAttribute("id").toString());
-	    	if(company != null){
-				log.debug("getCompanyInfoByOpenId 회사개설정보 조회 성공");
-				model.addAttribute("company", company);
-			} else {
-				log.debug("getCompanyInfoByOpenId 회사개설정보 조회 실패");
-			}
-	    	//기업회원 레벨의 회원이 마이페이지 분기 요청시, 페이지 로딩시 전체 회사 목록 조회
-	    	List<Company> allcompany = mypageservice.getAllCompany();
-	        if(allcompany != null){
-	        	log.debug(session.getAttribute("nickname")+"님의 전체회사조회 성공");
-	         	model.addAttribute("allcompany", allcompany);
-	         } else {
-	         	log.debug(session.getAttribute("nickname")+"님의  전체회사조회 실패");
-	         }
-	        //기업회원 레벨의 회원이 마이페이지 분기 요청시, 페이지 로딩시 아이디로 사원등록여부와 사원승인여부 조회
-	        List<Employee> employee = mypageservice.getEmployeeById(session.getAttribute("id").toString());
-	        if(employee != null){
-	        	log.debug(session.getAttribute("nickname")+"님의 사원정보조회 성공");
-	         	model.addAttribute("employee", employee);
-	         } else {
-	         	log.debug(session.getAttribute("nickname")+"님의  사원정보조회 실패");
-	         }
 	        //기업회원 레벨 중 직급이 경영진인 경우와 일반사원인 경우 마이페이지 분기된다
 			if(session.getAttribute("rank").equals("경영진")){
-				levelResult = "user/managermypage";
+				levelResult = "redirect:/managermypage.user";
 			} else {
-				levelResult = "user/employeemypage";
+				levelResult = "redirect:/employeemypage.user";
 			}
 		} else {
-			levelResult = "user/adminmypage";
+			levelResult = "redirect:/adminmypage.user";
 		}
 		return levelResult;
 	}

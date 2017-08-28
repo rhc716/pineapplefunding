@@ -1,5 +1,6 @@
 package com.pineapple.user.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -30,9 +31,9 @@ public class UserDao implements UserDaoInterface {
 	
 	//투자자, 사이트관리자의 계좌조회 메서드 선언
 	@Override
-	public Account selectAccountByAccountCode(int accountCode) {
+	public List<Account> selectAccountByAccountCode(int accountCode) {
 		log.debug("UserDao selectAccountByAccountCode : "+accountCode);
-		return sqlSessionTemplate.selectOne("com.pineapple.user.service.UserMapper.selectAccountByAccountCode", accountCode);
+		return sqlSessionTemplate.selectList("com.pineapple.user.service.UserMapper.selectAccountByAccountCode", accountCode);
 	}
 	
 	//투자자, 사이트관리자의 새로운 계좌등록 메서드 선언
@@ -77,7 +78,7 @@ public class UserDao implements UserDaoInterface {
 	@Override
 	public User selectUserByNickname(String nickname){
 		log.debug("UserDao selectUserByNickname : "+nickname);
-		return sqlSessionTemplate.selectOne("com.pineapple.user.service.UserMapper.selectUserByNickname", nickname);	
+		return sqlSessionTemplate.selectOne("com.pineapple.user.service.UserMapper.selectUserByNickname", nickname);
 	}
 	
 	//회원가입 이메일아이디 중복체크 ajax를 위한 회원아이디 데이터 접근

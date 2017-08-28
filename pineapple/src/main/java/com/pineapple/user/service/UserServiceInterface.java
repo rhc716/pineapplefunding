@@ -1,5 +1,6 @@
 package com.pineapple.user.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +14,7 @@ public interface UserServiceInterface {
 	int removeAccountByAccountCode(int accountCode);
 	
 	//투자자, 사이트관리자의 계좌조회 메서드 선언
-	Account getAccountByAccountCode(int accountCode);
+	List<Account> getAccountByAccountCode(int accountCode);
 		
 	//투자자, 사이트관리자의 새로운 계좌등록 메서드 선언
 	int addAccount(Account account);

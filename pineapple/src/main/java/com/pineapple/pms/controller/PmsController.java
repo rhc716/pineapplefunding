@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pineapple.pms.service.PmsService;
+import com.pineapple.pms.service.WbsActual;
 import com.pineapple.pms.service.WbsPlan;
 import com.pineapple.pms.service.WbsPlanEtc;
 import com.pineapple.pms.service.WbsPlanFacility;
@@ -39,6 +40,31 @@ public class PmsController {
 	public String addWbsplan(Locale locale, Model model) {
 		log.debug("PmsController의 addWbsplan호출 성공");
 		return "pms/companyuser/wbs/wbsplaninsert";
+	}
+	
+	// wbsactual입력 페이지 요청
+	@RequestMapping(value = "/wbsactualinsertform.pms", method = RequestMethod.GET)
+	public String addWbsactualPage(Locale locale, Model model) {
+		log.debug("PmsController의 addWbsactualPage호출 성공");                                                                                                                   
+		return "pms/companyuser/wbs/wbsactualinsert";
+	}
+	
+	@RequestMapping(value = "/wbsactualinsert.pms", method = {RequestMethod.GET, RequestMethod.POST})
+	public String wbsactualinsert(WbsActual wbsactual,Locale locale, Model model) {
+		log.debug("wbsactual 내용 "+wbsactual);         
+		service.wbsactualinsert(wbsactual);
+		log.debug("PmsController의 wbsactualinsert호출 성공");                                                                                                                   
+		return "pms/companyuser/wbs/wbsactualinsert";
+	}
+	
+	
+	
+	@RequestMapping(value = "/insertwbsactual.pms", method = {RequestMethod.GET, RequestMethod.POST})
+	public String wbsactualinsertfrom(WbsActual wbsactual,Locale locale, Model model, HttpServletRequest request) {
+		log.debug("PmsController의 wbsactualinsertfrom호출 성공");
+		model.addAttribute("wbsactual", wbsactual);
+		log.debug("WbsActual값"+wbsactual);
+		return "pms/companyuser/wbs/wbsactualinsertform";
 	}
 
 	// wbsplan 상세보기 페이지
@@ -82,6 +108,34 @@ public class PmsController {
 		
 	}
 	
+	// wbsplan 상세보기 페이지
+	@RequestMapping(value = "/wbsactualdetail.pms", method = {RequestMethod.GET, RequestMethod.POST})
+	public String wbsactualdetail(WbsActual wbsactual,Locale locale, Model model, HttpServletRequest request) {
+		String btn = request.getParameter("btn");
+		String wbsActualCode = request.getParameter("wbsActualCode");
+		log.debug("btn"+btn);
+		if(btn.equals("detail")){	
+			log.debug("PmsController의 wbsactualdetail의 detail호출 성공");
+			log.debug("wbs코드" + wbsActualCode);
+			WbsActual wbsactualdetail;
+			wbsactualdetail = service.wbsactualdetail(wbsActualCode);
+			model.addAttribute("wbsactualdetail",wbsactualdetail);
+			log.debug(wbsactualdetail+"<------PmsController[wbsplandetail 값 출력]");
+			return "pms/companyuser/wbs/wbsplandetail";
+		}else if(btn.equals("delete")){
+			log.debug("PmsController의 wbsactualdetail의 delete호출 성공");
+			log.debug("wbs코드" + wbsActualCode);
+			service.deletewbsplan(wbsActualCode);
+			return "redirect:/wbsplanlistpage.pms";
+		}else{
+			log.debug("PmsController의 wbsactualdetail의 update호출 성공");
+			log.debug("WbsPlan" + wbsactual);
+			
+			return "redirect:/wbsplanlistpage.pms";
+		}
+		
+	}
+	
 	//wbsplan 리스트페이지 불러오기
 	@RequestMapping(value = "/wbsplanlistpage.pms", method = RequestMethod.GET)
 	public String WbsPlanList(Locale locale, Model model) {
@@ -96,6 +150,22 @@ public class PmsController {
 		log.debug("PmsController의 wbsplanlist호출 성공");
 		log.debug("컨트롤러에서 받은 리턴값 : " + service.getMyWbsPlanList(userId));;
 		return service.getMyWbsPlanList(userId);
+	}
+	
+	//wbsactual 리스트페이지 불러오기
+	@RequestMapping(value = "/wbsactuallistform.pms", method = RequestMethod.GET)
+	public String wbsactuallistform(Locale locale, Model model) {
+		log.debug("PmsController의 wbsactuallistform호출 성공");
+		return "pms/companyuser/wbs/wbsactuallist";
+	}
+	
+	//wbsactual 리스트내용 불러오기
+	@RequestMapping(value = "/wbsactuallist.pms", method = RequestMethod.GET)
+	public @ResponseBody List<WbsActual> wbsactuallist(Locale locale, Model model, @RequestParam("userId") String userId) {
+		log.debug("userId : " + userId);
+		log.debug("PmsController의 wbsactuallist호출 성공");
+		log.debug("컨트롤러에서 받은 리턴값 : " + service.wbsactuallist(userId));;
+		return service.wbsactuallist(userId);
 	}
 	
 	// wbsplan 인원 상세보기 리스트 페이지

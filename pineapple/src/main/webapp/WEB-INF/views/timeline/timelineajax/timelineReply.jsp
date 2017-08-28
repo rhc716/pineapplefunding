@@ -21,6 +21,8 @@ $(document).ready(function() {
 		var tlReCode = $(this).attr('dataCode');
 		$('#timelinereplyreload'+tlReCode+'').attr('class','')
 		$('#timelinereplyreload_'+tlReCode+'').attr('class','timeline-display')
+		$('#timelinereplyform'+tlReCode+'').submit();
+		
 	});
 });
 </script>
@@ -29,36 +31,43 @@ $(document).ready(function() {
  	<c:set var="Datalist" value="${timelinereplylist}"/>
  	<c:choose>
  	<c:when test="${Datalist.size() == 0}">
-	<div>
-		<div><span class="glyphicon glyphicon-menu-right" style="margin-left: 20px"></span></div>
-		<div class="timeline-content">등록된 댓글이 없습니다.</div>
-	</div>
+		<div>
+			<div><span class="glyphicon glyphicon-menu-right timeline-replyicon"></span></div>
+			<div class="timeline-content">등록된 댓글이 없습니다.</div>
+		</div>
  	</c:when>
  	<c:otherwise>
-	<c:forEach var="Data" items="${timelinereplylist}">
-	<div>
-		<div>
-			<span class="glyphicon glyphicon-menu-right" style="margin-left: 20px"></span>
-			<span class="timeline-replyidandtime">
-				<span>${Data.nickname}</span>
-				<span>${Data.tlReTime}</span>
-			</span>
-			<span class="timeline-replyupanddel">
-				&nbsp;&nbsp;<a class="timelinereupdate" id="qnareupdate" dataCode="${Data.tlReCode}">수정하기</a>
-				&nbsp;&nbsp;<a href="/pineapple/investqnaredelete.invest">삭제하기</a>
-			</span>
-		</div>
-		<div class="" id="timelinereplyreload${Data.tlReCode}">
-		<div class="timeline-content" id="timelinereContent${Data.tlReCode}">${Data.tlReContent}</div>
-		</div>
-		<div class="timeline-display" id="timelinereplyreload_${Data.tlReCode}">
-		<form>
-		<input type="text" value="${Data.tlReContent}">
-		</form>
-		<button class="timelinereplyreloadupdatebtn" dataCode="${Data.tlReCode}">수정완료</button>
-		</div>
-	</div>
-	</c:forEach>
+		<c:forEach var="Data" items="${timelinereplylist}">
+			<div>
+				<div class="col-xs-12">
+					<span class="glyphicon glyphicon-menu-right timeline-replyicon"></span>
+					<span class="timeline-replyidandtime">
+						<span>${Data.nickname}</span>
+						<span>${Data.tlReTime}</span>
+					</span>
+					<span class="timeline-replyupanddel">
+						&nbsp;&nbsp;<a class="timelinereupdate" dataCode="${Data.tlReCode}">수정하기</a>
+						&nbsp;&nbsp;<a href="/pineapple/timelinereplydelete.invest?tlReCode=${Data.tlReCode}">삭제하기</a>
+					</span>
+				</div>
+				<div class="" id="timelinereplyreload${Data.tlReCode}">
+					<div class="col-xs-12">
+						<div class="timeline-content" id="timelinereContent${Data.tlReCode}">${Data.tlReContent}</div>
+					</div>
+				</div>
+				<div class="timeline-display" id="timelinereplyreload_${Data.tlReCode}">
+					<form id="timelinereplyform${Data.tlReCode}" action="/pineapple/timelinereplyupdate.invest" method="post">
+						<div class="col-xs-6">
+							<input type="hidden" name="tlReCode" value="${Data.tlReCode}">
+							<input class="form-control timeline-replyupdateforminput" type="text" name="tlReContent" value="${Data.tlReContent}">
+						</div>
+						<div class="col-xs-6">
+							<button class="timelinereplyreloadupdatebtn timeline-replyupdateformbtn" dataCode="${Data.tlReCode}">수정완료</button>	
+						</div>
+					</form>
+				</div>
+			</div>
+		</c:forEach>
  	</c:otherwise>
 	</c:choose>
 </body>

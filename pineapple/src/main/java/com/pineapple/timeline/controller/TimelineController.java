@@ -66,6 +66,22 @@ public class TimelineController {
 		log.debug(timelinereplyinsert+"<-----TimelineController[timelinereplyinsert 값 출력]");
 		return "redirect:/timelinemain.timeline";
 	}
+	//타임라인 댓글 수정하기
+	@RequestMapping(value="/timelinereplyupdate.invest",method=RequestMethod.POST)
+	public String timelineReplyModify(Locale locale,Model model,TimelineReply timelinereply){
+		log.debug("<----- TimelineController[timelineReplyModify호출]----->");
+		int timelinereplyupdate = timelineserviceinterface.modifyTimelineReply(timelinereply);
+		log.debug(timelinereplyupdate+"<-----TimelineController[timelinereplyupdate 값 출력]");
+		return "redirect:/timelinemain.timeline";
+	}
+	//타임라인 댓글 삭제하기
+	@RequestMapping(value="/timelinereplydelete.invest",method=RequestMethod.GET)
+	public String timelineReplyRemove(Locale locale,Model model,@RequestParam(value="tlReCode")int tlReCode){
+		log.debug("<----- TimelineController[timelineReplyRemove호출]----->");
+		int timelinereplydelete = timelineserviceinterface.removeTimelineReply(tlReCode);
+		log.debug(timelinereplydelete+"<-----TimelineController[timelinereplydelete 값 출력]");
+		return "redirect:/timelinemain.timeline";
+	}
 /////////////////////////////REST CONTROLLER//////////////////////////
 	//댓글더보기 클릭시 ajax로 댓글 list 조회
 	@RequestMapping(value="/timelinereplylist.invest",method=RequestMethod.GET)

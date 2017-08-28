@@ -118,8 +118,27 @@ public class InvestController {
 		model.addAttribute("fdCode",fdCode);
 		return "redirect:/investfunding.invest";
 	}
-
-	
+	//////////////////////////////////////ajax 통신/////////////////////////////////
+	//펀딩 하나의 Q&A 정보 ajax 통신
+	@RequestMapping(value="/investfundingqna.invest",method=RequestMethod.GET)
+	public String investFuningQna(Locale locale, Model model,@RequestParam(value="fdCode") int fdCode){
+		log.debug("<-----InvestController[investfundingqna호출]----->");
+		log.debug(fdCode+"<-----InvestController[fdCode 값 출력]");
+		List<FundingQna> fundingqna = investserviceinterface.getInvestFundingQna(fdCode);
+		model.addAttribute("fundingqna", fundingqna);
+		log.debug(fundingqna+"<-----InvestController[fundingqna 값 출력]");
+		return "invest/investajax/investqna";
+	}
+	//펀딩 하나의 Q&A의 댓글 ajax 통신
+	@RequestMapping(value="/investfundingqnareply.invest",method=RequestMethod.GET)
+	public String investFundingQnaReply(Locale locale, Model model,@RequestParam(value="qnaCode") int qnaCode){
+		log.debug("<-----InvestController[investFundingQnaReply호출]----->");
+		log.debug(qnaCode+"<-----InvestController[qnaCode 값 출력]");
+		List<FundingQnaReply> fundingqnareply = investserviceinterface.getInvestFundingQnaReply(qnaCode);
+		model.addAttribute("fundingqnareply",fundingqnareply);
+		log.debug(fundingqnareply+"<-----InvestController[fundingqnareply 값 출력]");
+		return "invest/investajax/investqnareply";
+	}
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	//REST CONTOROLLER
 	//펀딩 하나의 detail 정보 ajax 통신
@@ -131,35 +150,5 @@ public class InvestController {
 		log.debug(fundingdetail+"<-----InvestController[fundingdetail 값 출력]");
 		return fundingdetail;
 	}
-	
-	//펀딩 하나의 Q&A 정보 ajax 통신
-	@RequestMapping(value="/investfundingqna.invest",method=RequestMethod.GET)
-	public @ResponseBody List<FundingQna> investFuningQna(Locale locale, Model model,@RequestParam(value="fdCode") int fdCode){
-		log.debug("<-----InvestController[investfundingqna호출]----->");
-		log.debug(fdCode+"<-----InvestController[fdCode 값 출력]");
-		List<FundingQna> fundingqna = investserviceinterface.getInvestFundingQna(fdCode);
-		model.addAttribute("fundingqna", fundingqna);
-		log.debug(fundingqna+"<-----InvestController[fundingqna 값 출력]");
-		return fundingqna;
-	}
-	
-	//펀딩 하나의 Q&A의 댓글 ajax 통신
-	@RequestMapping(value="/investfundingqnareply.invest",method=RequestMethod.GET)
-	public @ResponseBody List<FundingQnaReply> investFundingQnaReply(Locale locale, Model model,@RequestParam(value="qnaCode") int qnaCode){
-		log.debug("<-----InvestController[investFundingQnaReply호출]----->");
-		log.debug(qnaCode+"<-----InvestController[qnaCode 값 출력]");
-		List<FundingQnaReply> fundingqnareply = investserviceinterface.getInvestFundingQnaReply(qnaCode);
-		model.addAttribute("fundingqnareply",fundingqnareply);
-		log.debug(fundingqnareply+"<-----InvestController[fundingqnareply 값 출력]");
-		return fundingqnareply;
-	}
-	
-	
-	
-	//펀딩 하나의 Q&A의 댓글 ajax 통신
-	@RequestMapping(value="/myBody.invest",method=RequestMethod.GET)
-	public String myBody(Locale locale, Model model){
-			
-		return "invest/investfunding";
-	}
+
 }

@@ -23,6 +23,12 @@
 			VALUES (NULL, #{wpmFdCode}, #{wpmMsCode}, #{wpmWpCode}, #{wpmName}, #{wpmNo}, #{wpmCostPerNo}, #{wpmCost}, #{wpmStartDate}, #{wpmEndDate}, #{wpmRemarks}, #{wpmComCode})
 	</insert>
 	
+	<insert id="wbsactualinsert" parameterType="com.pineapple.pms.service.WbsActual">
+		INSERT INTO wbsactual
+			(wbsActualCode, wbsActualFdCode, wbsActualMsCode, wbsPlanAcCode, wbsActualName, wbsActualStartDate, wbsActualEndDate, wbsActualDuration, wbsActualStatus, wbsActualProgress, wbsActualWriteDate, wbsActualApprovalDate, wbsActualApprovalReason, wbsActualWriteManager, wbsActualApprovalManager, wbsActualComCode)
+			VALUES (NULL, #{wbsActualFdCode}, #{wbsActualMsCode}, #{wbsPlanAcCode}, #{wbsActualName}, #{wbsActualStartDate}, null, #{wbsActualDuration}, null, 0, NOW(), null, null, #{wbsActualWriteManager}, null, #{wbsActualComCode})
+	</insert>
+	
 	<insert id="wbsplanfacilityinsert" parameterType="com.pineapple.pms.service.WbsPlanFacility">
 		INSERT INTO wbsplanfacility
 			(wpfCode, wpfFdCode, wpfMsCode, wpfWpCode, wpfName, wpfCost, wpfStartDate, wpfEndDate, wpfRemarks, wpfComCode)
@@ -61,6 +67,24 @@
 		FROM user u INNER JOIN employee e 
 		ON u.userId = e.emUserId
 		WHERE u.userId = #{userId}) group by w.wbsPlanOrder , w.wbsPlanMsCode
+	</select>
+	
+	<!-- wbsactual 리스트 요청쿼리 -->
+	<select id="wbsactuallist" resultType="com.pineapple.pms.service.WbsActual" parameterType="String">
+				SELECT w.wbsActualCode, w.wbsActualFdCode,
+			w.wbsActualMsCode, w.wbsPlanAcCode,
+			w.wbsActualName, w.wbsActualStartDate, w.wbsActualEndDate,
+			w.wbsActualDuration, w.wbsActualStatus, w.wbsActualProgress,
+			w.wbsActualWriteDate, w.wbsActualApprovalDate, w.wbsActualApprovalReason,
+			w.wbsActualWriteManager, w.wbsActualApprovalManager, w.wbsActualComCode,
+			f.fdTitle, m.milestoneName
+		FROM wbsactual w LEFT JOIN funding f ON w.wbsActualFdCode = f.fdCode 
+		LEFT JOIN milestone m ON w.wbsActualMsCode = m.milestoneCode
+		where w.wbsActualComCode = ANY 
+		(SELECT e.emCode 
+		FROM user u INNER JOIN employee e 
+		ON u.userId = e.emUserId
+		WHERE u.userId = #{userId})
 	</select>
 	<!-- wbsplanHuman 리스트 요청쿼리 -->
 	<select id="selectWbsPlanHuman" resultType="com.pineapple.pms.service.WbsPlanHuman" parameterType="String">

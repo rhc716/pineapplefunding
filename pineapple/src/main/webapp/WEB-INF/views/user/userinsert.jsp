@@ -97,21 +97,27 @@ $(document).ready(function(){
 // 아이디 검사 통과시 중복확인용 ajax실행
         if(temp==0){
         	$.ajax({ // ajax실행부분
-                type: "post",
+                type : "post",
+                async : false,
                 url : "/pineapple/checkId.user",
                 data : {userId : in_id},
-                success : function(ic){ 
-                			$('#idch').css("color", "#FF0000");
-                			$('#idch').text('이미 존재하는 이메일입니다.');
-                			$('#userId').val('');
-                			$('#userId').focus();
+                success : function(user){ 
+                	 	console.log(user.userId);
+			    		if(user.userId == null){
+			    			$('#emailCheck').hide();
+	                		$('#emailSuccess').show();
+	                		document.getElementById("inputSuccess2").readOnly = true;
+	                		$("#inputSuccess2").val(in_id);
+			    		} else {
+			    			$('#idch').css("color", "#FF0000");
+	               			$('#idch').text('이미 존재하는 이메일입니다.');
+	               			$('#userId').val('');
+	               			$('#userId').focus();
+			    		}
                 	},
                 //만약 해당 페이지에 값을 성공적으로 보냈다면 페이지를 ic 라는 매개변수로 받아 id = 'idch' 구역에 ic를 출력하겠다. 
                 error : function error(){
-                		$('#emailCheck').hide();
-                		$('#emailSuccess').show();
-                		document.getElementById("inputSuccess2").readOnly = true;
-                		$("#inputSuccess2").val(in_id);
+                		alert('아이디 중복체크 ajax 통신 에러');
                 		
                 	}
         	});
@@ -156,6 +162,7 @@ $(document).ready(function(){
 			$.ajax({ // ajax실행부분
 	            type : "post",
 	            url : "/pineapple/checkPw.user",
+	            async : false,
 	            data : {pw1 : $('#pw').val(), pw2 : $('#pw2').val()},
 	            success : function(pc){
 	            	if(pc.pw1 == pc.pw2){
@@ -177,37 +184,36 @@ $(document).ready(function(){
 		
    });
 });
-
+/*
 //닉네임(2~20자,한,영,숫자,특문) 검사와 중복 확인
  $(document).ready(function(){
 	$('#nickname').blur(function(){
 		var temp = 0;
 		var in_nick = $('#nickname').val();
-		var re = /^[0-9a-zA-Z가-힣]{2,20}$/;
-       	if(!re.test(in_nick)) {
-    		temp = 1;
-        }
-		
-// 닉네임 검사 통과시 중복확인용 ajax실행
-        if(temp==0){
+//중복확인용 ajax실행
        	$.ajax({ // ajax실행부분
                type: "post",
+               async : false,
                url : "/pineapple/checkNick.user",
                data : {nickname : in_nick},
-               success : function(nc){ 
-               	$('#nickch').css("color", "#FF0000");
-       			$('#nickch').text('이미 존재하는 닉네임입니다');
-       			$('#nickname').val('');
-       			$('#nickname').focus();
-               	},
-               error : function error(){ 
-               	$('#nickch').css("color", "#008000");
-       			$('#nickch').text('닉네임을 사용할 수 있습니다');
-              	}
+               success : function(nick){
+            	   if(nick.nickname == null){
+	          		    $('#nickch').css("color", "#008000");
+	         			$('#nickch').text('닉네임을 사용할 수 있습니다');
+            	   } else {
+           				$('#nickch').css("color", "#FF0000");
+              			$('#nickch').text('이미 존재하는 닉네임입니다');
+              			$('#nickname').val('');
+              			$('#nickname').focus();
+       			   }
+               },
+               error : function error(){
+               		alert('닉네임 중복검사 ajax 통신 에러');
+              }
            });
-        }
     });
 });
+*/
 </script>
 </head>
 <body class="container">
