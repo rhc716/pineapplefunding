@@ -27,6 +27,12 @@ public class PmsDao implements PmsDaoInterface {
 	}
 	
 	@Override
+	public void wbsactualinsert(WbsActual wbsactual){
+		log.debug("PmsDao의wbsactualinsert호출 성공");
+		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.wbsactualinsert", wbsactual);
+	}
+	
+	@Override
 	public void wbsplanupdateetc(HashMap map){
 		log.debug("PmsDao의wbsplanupdateetc호출 성공");
 		sqlSessionTemplate.update("com.pineapple.pms.service.PmsMapper.wbsplanupdateetc", map);
@@ -66,6 +72,12 @@ public class PmsDao implements PmsDaoInterface {
 		return sqlSessionTemplate.selectList("com.pineapple.pms.service.PmsMapper.selectWbsPlan", userId);
 	}
 	
+	@Override
+	public List<WbsActual> wbsactuallist(String userId){
+		log.debug("PmsDao의 wbsactuallist호출 성공");
+		return sqlSessionTemplate.selectList("com.pineapple.pms.service.PmsMapper.wbsactuallist", userId);
+	}
+	
 	/* (non-Javadoc)
 	 * @see com.pineapple.pms.service.PmsDaoInterface#getMyWbsPlanDetail(java.lang.String)
 	 */
@@ -73,6 +85,11 @@ public class PmsDao implements PmsDaoInterface {
 	public WbsPlanView getMyWbsPlanDetail(String wbsplancode){
 		log.debug("PmsDao의 selectWbsPlandetail호출 성공");
 		return sqlSessionTemplate.selectOne("com.pineapple.pms.service.PmsMapper.selectdetail",wbsplancode);
+	}
+	@Override
+	public WbsActual wbsactualdetail(String wbsactualcode){
+		log.debug("PmsDao의 wbsactualdetail호출 성공");
+		return sqlSessionTemplate.selectOne("com.pineapple.pms.service.PmsMapper.wbsactualdetail",wbsactualcode);
 	}
 	@Override
 	public void addWbsplanhuman(WbsPlanHuman wbsplanhuman){

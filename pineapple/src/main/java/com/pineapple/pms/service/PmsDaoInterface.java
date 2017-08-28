@@ -89,4 +89,10 @@ public interface PmsDaoInterface {
 
 	void wbsplanupdateout(HashMap map);
 
+	void wbsactualinsert(WbsActual wbsactual);
+
+	List<WbsActual> wbsactuallist(String userId);
+
+	WbsActual wbsactualdetail(String wbsactualcode);
+
 }

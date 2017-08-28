@@ -68,4 +68,10 @@ public interface PmsServiceInterface {
 
 	void wbsplanupdateetc(HashMap map);
 
+	void wbsactualinsert(WbsActual wbsactual);
+
+	List<WbsActual> wbsactuallist(String userId);
+
+	WbsActual wbsactualdetail(String wbsplancode);
+
 }
