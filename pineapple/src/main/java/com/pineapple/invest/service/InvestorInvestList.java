@@ -9,7 +9,10 @@ public class InvestorInvestList {
 	private int fdCode;
 	private String fdType;
 	private String fdStatus;
+	private String fdTitle;
+	private int numberOfShares;
 	private int investtotal;
+	private int issuePrice;
 	public int getInvestCode() {
 		return investCode;
 	}
@@ -58,17 +61,36 @@ public class InvestorInvestList {
 	public void setFdStatus(String fdStatus) {
 		this.fdStatus = fdStatus;
 	}
+	public String getFdTitle() {
+		return fdTitle;
+	}
+	public void setFdTitle(String fdTitle) {
+		this.fdTitle = fdTitle;
+	}
+	public int getNumberOfShares() {
+		return numberOfShares;
+	}
+	public void setNumberOfShares(int numberOfShares) {
+		this.numberOfShares = numberOfShares;
+	}
 	public int getInvesttotal() {
 		return investtotal;
 	}
 	public void setInvesttotal(int investtotal) {
 		this.investtotal = investtotal;
 	}
+	public int getIssuePrice() {
+		return issuePrice;
+	}
+	public void setIssuePrice(int issuePrice) {
+		this.issuePrice = issuePrice;
+	}
 	@Override
 	public String toString() {
 		return "InvestorInvestList [investCode=" + investCode + ", investFdCode=" + investFdCode + ", investId="
 				+ investId + ", investTime=" + investTime + ", payCheck=" + payCheck + ", fdCode=" + fdCode
-				+ ", fdType=" + fdType + ", fdStatus=" + fdStatus + ", investtotal=" + investtotal + "]";
+				+ ", fdType=" + fdType + ", fdStatus=" + fdStatus + ", fdTitle=" + fdTitle + ", numberOfShares="
+				+ numberOfShares + ", investtotal=" + investtotal + ", issuePrice=" + issuePrice + "]";
 	}
-	
+
 }

@@ -58,6 +58,7 @@ $(document).ready(function(){
 	        url : "/pineapple/investorinvestment.user",
 	        success : function success(msg){
 	        	alert('INVESTMENT AJAX 성공');
+	        	$('#investorinvest').html(msg);
 	        },
 	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
 	        error : function error(){
@@ -246,7 +247,8 @@ $(document).ready(function(){
 			<p>메세지</p> 
 		</div>
 		<div role="tabpanel" class="tab-pane fade" id="investmemt" aria-labelledby="investmemt-tab"> 
-			<p>내투자 및 배당금</p> 
+			<p>INVEST LIST</p>
+			<div class="col-xs-12" id="investorinvest"></div> 
 		</div>
 	</div>
 </div>

@@ -22,23 +22,65 @@
 
 <!-- css lbr -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lbr.css" />
-<script type="text/javascript">
-$(document).ready(function(){
-});
-</script>
+
 </head>
 <body>
-<div class="container">
-<!--로그인 버튼 -->
-	<c:import url="/resources/module/toploginandlogo.jsp"/>
-<!-- 상단메뉴 -->
-	<c:import url="/resources/module/topmenu.jsp"/>
-<!-- 본문 -->
-<!-- 투자자마이페이지 Tab bar -->
-<div class="container"> 
-</div>
-<!-- 풋터 -->
-<c:import url="/resources/module/footer.jsp"/>
-</div>
+<c:forEach var="investorData" items="${investorinvest}">
+	<c:choose>
+	<c:when test="${investorData.payCheck == 1}">
+	<div class="col-xs-12"style="padding: 0px">
+		<div class="col-xs-6" style="padding: 0px">
+			<div class="col-xs-12" style="padding: 0px">
+			<span>펀딩제목 넣을공간</span>
+			<span>${investorData.investTime}</span>
+			</div>
+			<div class="col-xs-12" style="padding: 0px">
+				<div class="col-xs-6">
+				내가 투자한 금액 : ${investorData.investtotal*investorData.issuePrice} 하고 주당발행가 합산
+				</div>
+			</div>
+			<div class="col-xs-12" style="padding: 0px">
+				<div class="progress bor-defult">
+  					<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%; min-width: 3em; max-width: 100%;">
+    					프로그레스 바 
+  					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-6" style="padding: 0px">
+			<div class="col-xs-12" style="padding: 0px">
+			4
+			</div>
+		</div>
+	</div>
+	</c:when>
+	<c:otherwise>
+	<div class="col-xs-12"style="padding: 0px">
+		<div class="col-xs-6" style="padding: 0px">
+			<div class="col-xs-12" style="padding: 0px">
+			<span></span>
+			</div>
+			<div class="col-xs-12" style="padding: 0px">
+				<div class="col-xs-6">
+				내가 투자한 금액 : ${investorData.investtotal*investorData.issuePrice} 하고 주당발행가 합산
+				</div>
+			</div>
+			<div class="col-xs-12" style="padding: 0px">
+				<div class="progress bor-defult">
+  					<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%; min-width: 3em; max-width: 100%;">
+    					프로그레스 바 
+  					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-6" style="padding: 0px">
+			<div class="col-xs-12" style="padding: 0px">
+			4
+			</div>
+		</div>
+	</div>
+	</c:otherwise>
+	</c:choose>
+</c:forEach>
 </body>
 </html>
