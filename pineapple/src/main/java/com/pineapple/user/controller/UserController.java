@@ -230,7 +230,9 @@ public class UserController {
 	@RequestMapping(value="/checkId.user", method = RequestMethod.POST)
 	public @ResponseBody User checkId(Locale locale, Model model, @RequestParam("userId") String userId){
 		log.debug("UserController checkid : "+userId);
-		return service.getUser(userId);
+		User user = service.getUser(userId);
+		model.addAttribute("user", user);
+		return user;
 	}
 	
 	//회원가입 요청

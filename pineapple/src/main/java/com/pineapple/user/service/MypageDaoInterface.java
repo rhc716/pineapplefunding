@@ -2,7 +2,12 @@ package com.pineapple.user.service;
 
 import java.util.List;
 
+import com.pineapple.invest.service.InvestorInvestList;
+
 public interface MypageDaoInterface {
+	//투자자 투자내역 조회
+	List<InvestorInvestList> selectInvestor(String investId);
+	
 	//투자자, 사이트관리자의 계좌조회 메서드 선언
 	Account selectAccountByAccountCode(int accountCode);
 	

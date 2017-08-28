@@ -57,33 +57,45 @@
 
 	});
 	//기업등록시 기업명 존재여부 검사
-	
+	$(document).ready(function(){
 		$('#comName3').blur(function(){
-			if($('#comName3').val() != ''){
+			var temp = 0;
+			var comname = $('#comName3').val();
+			var check = /^(?=.*[0-9a-zA-Z가-힣]).{2,20}$/i;
+			if(!check.test(comname)) {
+				//유효하지 않을때
+				temp = 1;
+			} else {
+				//유효할때
+				temp = 0;
+			}
+			    	
+	// 기업명 유효성 검사 통과시 중복확인용 ajax실행
+	        if(temp==0){
 				$.ajax({ // ajax실행부분
 				    type: "post",
 				    url : "/pineapple/checkcomname.user",
-				    data : {comName : $('#comName3').val()},
-				    success : function(rs){ 
+				    data : {comName : comname},
+				    success : function(ic){
+				    		alert('성공');
 			    			$('#comnamech3').css("color", "#FF0000");
 			    			$('#comnamech3').text('이미 존재하는 기업명입니다.');
 			    			$('#comName3').val('');
 				    	},
 				    //만약 해당 페이지에 값을 성공적으로 보냈다면 페이지를 rs 라는 매개변수로 받아 id = 'comnamech3' 구역에 rs를 출력하겠다. 
 				    error : function error(){
-				    		$('#comnamech3eck').hide();
+				    		alert('에러');
+				    		$('#comnameCheck').hide();
 				    		$('#comNameSuccess2').show();
-				    		document.getElementById("comName4").readOnly = true;
-				    		$("#comName4").val($('#comName3').val());
-				    		
+				    		$('#comName4').val(comname);
 				    	}
 				});
 			} else {
-				alert('유효한 기업명을 입력해주시기 바랍니다');
+				alert('유효한 기업명을 입력해주시기 바랍니다.');
 			}
 		});
-		
-
+	});
+	$(document).ready(function(){
 	//기업정보확인모달과 사원등록모달 교체 기능 구현
 	
 		$('#addEmployeeMngBtn').click(function(){
@@ -95,7 +107,7 @@
 		$('#employeeCancelBtn').click(function(){
 			location.href = '/pineapple/mypage.user';
 		});
-
+	});
 	
 </script>
 <script type="text/javascript">
@@ -286,7 +298,7 @@
 						<!-- 기업을 등록지않은 경영진은 기존의 기업들 중 자신이 소속된 기업을 검색하여 사원정보를 입력한다 -->
 					<br>
 					<c:forEach var="companyOpenedByMyId1" items="${company}">
-						<a id="getCompanyOpenInfoBtn" class="btn btn-info btn-block" data-toggle="modal" href="#getCompanyOpenInfo">${companyOpenedByMyId1.comName} 정보확인</a>
+						<a class="btn btn-info btn-block cominfoclass" data-toggle="modal" href="#getCompanyOpenInfo">${companyOpenedByMyId1.comName} 정보확인</a>
 					</c:forEach>
 					<p id="explain">본인의 아이디로 개설한 모든 기업정보를 확인할 수 있습니다</p>
 						<!-- 개설한 모든 회사가 리스트 타입으로 리턴되므로 forEach 태그립을 사용하여 모달 내부 구현 -->
@@ -464,7 +476,7 @@
 											    <input id="emcomName4" name="emComName" type="text" class="focus form-control" placeholder="Enter Company Name" readonly>
 											    <a data-toggle="modal" href="#searchCompanyModal" class="btn btn-info btn-block">기업검색</a>
 										  		<input id="emComCode2" name="emComCode" type="hidden" class="form-control">
-										  		<span id="comnamech3"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
+										  		<span id="emcomnamech2"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
 											</div>
 											<br>
 										    <div id="emUserIdEmail2" class="form-group has-success has-feedback">
@@ -620,15 +632,15 @@
 								    <input type="text" id="comLogoExtension" name="comLogoExtension" hidden>
 								</div>
 								<br>
-								<div id="comnamech3eck" class="form-group">
+								<div id="comnameCheck" class="form-group">
 								    <label class="control-label" for="comNameInput">*기업이름</label>
 								    <p id="explain"> (정확한 기업이름을 입력해주시기 바랍니다. 이미 등록된 기업이 존재하는 경우 기업을 등록할 수 없습니다.)</p>
-								    <input id="comName3" name="comNameInput" type="text" class="form-control" placeholder="Enter Company Name">
+								    <input id="comName3" name="comNameInput" type="text" class="form-control" placeholder="Enter Company Name" required>
 							  		<span id="comnamech3"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
 							  	</div>
 							  	<div id="comNameSuccess2" class="form-group has-success has-feedback" hidden="hidden">
 									<label class="control-label" for="inputSuccess2">사용가능한 기업명</label>
-									<input type="text" class="form-control" id="comName4" name="comName" varia-describedby="inputSuccess2Status">
+									<input id="comName4" type="text" class="form-control" name="comName" varia-describedby="inputSuccess2Status" readonly>
 									<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 									<span id="inputSuccess2Status" class="sr-only">(success)</span>
 								</div>

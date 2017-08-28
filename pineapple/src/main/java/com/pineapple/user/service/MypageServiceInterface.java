@@ -2,7 +2,12 @@ package com.pineapple.user.service;
 
 import java.util.List;
 
+import com.pineapple.invest.service.InvestorInvestList;
+
 public interface MypageServiceInterface {
+	//투자자 투자내역 조회
+	List<InvestorInvestList> getInvestor(String investId);
+	
 	//투자자, 사이트관리자의 계좌조회 메서드 선언
 	Account getAccountByAccountCode(int accountCode);
 	

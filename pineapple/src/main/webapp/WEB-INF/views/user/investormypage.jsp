@@ -56,7 +56,7 @@ $(document).ready(function(){
 		var investmenttab = $.ajax({ // ajax실행부분
 	        type: "get",
 	        url : "/pineapple/investorinvestment.user",
-	        success : function success(){
+	        success : function success(msg){
 	        	alert('INVESTMENT AJAX 성공');
 	        },
 	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력

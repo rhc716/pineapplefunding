@@ -1,4 +1,5 @@
 package com.pineapple.user.controller;
+import com.pineapple.invest.service.InvestorInvestList;
 import com.pineapple.user.service.Account;
 import com.pineapple.user.service.Company;
 import com.pineapple.user.service.Employee;
@@ -25,6 +26,15 @@ public class MypageController {
 	
 	@Autowired
 	private MypageServiceInterface mypageservice;
+	//투자자 투자내역 조회
+	@RequestMapping(value="/investorinvestment.user", method=RequestMethod.GET)
+	public String getInvestor(Model model, HttpSession session){
+		log.debug("MypageController accountchangepage 투자내역 페이지 요청");
+		List<InvestorInvestList> investorinvest = mypageservice.getInvestor(session.getAttribute("id").toString());
+		model.addAttribute("investorinvest", investorinvest);
+		return "user/investormypageajax/investormypage";
+	}
+	
 	//마이페이지 계좌정보 수정 페이지 요청
 	@RequestMapping(value="/accountchangepage.user", method=RequestMethod.POST)
 	public @ResponseBody Account changeAccount(Model model, @RequestParam("accountCode") int accountCode){

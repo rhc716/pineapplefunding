@@ -97,14 +97,17 @@ $(document).ready(function(){
 // 아이디 검사 통과시 중복확인용 ajax실행
         if(temp==0){
         	$.ajax({ // ajax실행부분
-                type: "post",
+                type : "post",
+                async : false,
                 url : "/pineapple/checkId.user",
                 data : {userId : in_id},
-                success : function(ic){ 
-                			$('#idch').css("color", "#FF0000");
-                			$('#idch').text('이미 존재하는 이메일입니다.');
-                			$('#userId').val('');
-                			$('#userId').focus();
+                success : function(user){ 
+                	 	console.log(user);
+                		alert(userId+'는 이미 존재하는 이메일입니다');	
+               			$('#idch').css("color", "#FF0000");
+               			$('#idch').text('이미 존재하는 이메일입니다.');
+               			$('#userId').val('');
+               			$('#userId').focus();
                 	},
                 //만약 해당 페이지에 값을 성공적으로 보냈다면 페이지를 ic 라는 매개변수로 받아 id = 'idch' 구역에 ic를 출력하겠다. 
                 error : function error(){
@@ -156,6 +159,7 @@ $(document).ready(function(){
 			$.ajax({ // ajax실행부분
 	            type : "post",
 	            url : "/pineapple/checkPw.user",
+	            async : false,
 	            data : {pw1 : $('#pw').val(), pw2 : $('#pw2').val()},
 	            success : function(pc){
 	            	if(pc.pw1 == pc.pw2){
@@ -192,6 +196,7 @@ $(document).ready(function(){
         if(temp==0){
        	$.ajax({ // ajax실행부분
                type: "post",
+               async : false,
                url : "/pineapple/checkNick.user",
                data : {nickname : in_nick},
                success : function(nc){ 

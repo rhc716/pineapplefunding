@@ -4,6 +4,34 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.pineapple.user.service.MypageMapper">
+<!-- 투자내역조회 -->
+<select id="selectInvest" parameterType="String" resultMap="selectInvest">
+	SELECT  i.investCode,
+		i.investFdCode,
+		i.investId,
+		i.investTime,
+		i.payCheck,
+		f.fdCode,
+		f.fdType,
+		f.fdStatus,
+		CASE f.fdStatus WHEN '모집중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode GROUP BY si.investFdCode ) WHEN '결제모집중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode AND si.payCheck = 1 GROUP BY si.investFdCode) END investtotal 
+	FROM investment i 
+	INNER JOIN funding f 
+	ON i.investFdCode = f.fdCode  
+	WHERE i.investId = #{investId}
+	GROUP BY i.investCode
+</select>
+<resultMap type="com.pineapple.invest.service.InvestorInvestList" id="selectInvest">
+	<id property="investCode" column="investCode"/>
+ 	<result property="investFdCode" column="investFdCode"/>
+ 	<result property="investId" column="investId"/>
+ 	<result property="investTime" column="investTime"/>
+ 	<result property="payCheck" column="payCheck"/>
+ 	<result property="fdCode" column="fdCode"/>
+ 	<result property="fdType" column="fdType"/>
+ 	<result property="fdStatus" column="fdStatus"/>
+ 	<result property="investtotal" column="investtotal"/>	
+</resultMap>
 <!-- 계좌 삭제(계좌코드로) -->
 
 <!-- 계좌정보 조회(accountCode로) -->
