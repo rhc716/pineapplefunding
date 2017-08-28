@@ -198,6 +198,13 @@
 								 font-size: 18px;
 								 padding-left: 16px;}
 				.timeline-display{display: none;}
+				.timeline-replyupdateforminput{margin: 0px 0px 0px 30px;
+											   padding: 0px;
+											   font-size: 18px;}
+				.timeline-replyupdateformbtn{height: 34px;
+											 border: 1px solid;
+											 margin-left: 20px}
+				.timeline-replyicon{margin-left: 20px}
 			/* 타임라인 댓글list */
 		/* 타임라인 main page */
 	/* 타임라인 */

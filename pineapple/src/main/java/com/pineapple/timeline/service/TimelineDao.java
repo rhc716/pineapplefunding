@@ -54,4 +54,16 @@ public class TimelineDao implements TimelineDaoInterface{
 		log.debug("TimelineDao-----timelineReplyInsert");
 		return sqlSessionTemplate.insert("com.pineapple.timeline.service.TimelineMapper.addTimelineReply",timelinereply);
 	}
+	//타임라인 댓글 수정하기
+	@Override
+	public int timelineReplyUpdate(TimelineReply timelinereply) {
+		log.debug("TimelineDao-----timelineReplyUpdate");
+		return sqlSessionTemplate.update("com.pineapple.timeline.service.TimelineMapper.modifyTimelineReply",timelinereply);
+	}
+	//타임라인 댓글 삭제하기
+	@Override
+	public int timelineReplyDelete(int tlReCode) {
+		log.debug("TimelineDao-----timelineReplyDelete");
+		return sqlSessionTemplate.delete("com.pineapple.timeline.service.TimelineMapper.removeTimelineReply",tlReCode);
+	}
 }

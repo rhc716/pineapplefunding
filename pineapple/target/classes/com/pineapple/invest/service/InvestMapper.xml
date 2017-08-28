@@ -46,7 +46,7 @@
 	<!-- FundingQnaReply -->
 	<resultMap type="com.pineapple.invest.service.FundingQnaReply"
 			   id="getFundingQnaReply">
-		<result property="qnaReCode" column="qnaReCode"/>
+		<id property="qnaReCode" column="qnaReCode"/>
 		<result property="reQnaCode" column="reQnaCode"/>
 		<result property="qnaReId" column="qnaReId"/>
 		<result property="qnaReContent" column="qnaReContent"/>
@@ -54,14 +54,12 @@
 	</resultMap>
 	<!-- FundingQnaAndQnaReply -->
 	<resultMap type="com.pineapple.invest.service.FundingQnaAndQnaReply" id="getFundingQnaAndQnaReplyresult">
+		<id property="qnaReCode" column="qnaReCode"/>
+		<result property="reQnaCode" column="reQnaCode"/>
+		<result property="qnaReId" column="qnaReId"/>
+		<result property="qnaReContent" column="qnaReContent"/>
+		<result property="qnaReTime" column="qnaReTime"/>
 		<result property="qnaFdCode" column="qnaFdCode"/>
-		<collection property="fundingQnaReply" resultMap="getFundingQnaReply">
-			<id property="qnaReCode" column="qnaReCode"/>
-			<result property="reQnaCode" column="reQnaCode"/>
-			<result property="qnaReId" column="qnaReId"/>
-			<result property="qnaReContent" column="qnaReContent"/>
-			<result property="qnaReTime" column="qnaReTime"/>
-		</collection>
 	</resultMap>
 	<!-- 투자하기 main 에서 사용하는 모집중인 펀딩 리스트 조회 쿼리 -->
 	<select id="getInvestAndFd" parameterType="java.util.Map" resultType="com.pineapple.invest.service.InvestAndFd">

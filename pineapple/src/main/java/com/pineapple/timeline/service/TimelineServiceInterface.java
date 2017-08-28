@@ -17,4 +17,8 @@ public interface TimelineServiceInterface {
 	List<TimelineReply> getTimelineReplyList(int tlCode);
 	//타임라인 댓글 등록하는 Service
 	int addTimelineReply(TimelineReply timelinereply);
+	//타임라인 댓글 수정하는 Service
+	int modifyTimelineReply(TimelineReply timelinereply);
+	//타임라인 댓글 삭제하는 Service
+	int removeTimelineReply(int tlReCode);
 }

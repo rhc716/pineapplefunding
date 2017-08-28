@@ -17,4 +17,8 @@ public interface TimelineDaoInterface {
 	List<TimelineReply> timelineReplyListSelect(int tlCode);
 	//타임라인 댓글 입력 Dao
 	int timelineReplyInsert(TimelineReply timelinereply);
+	//타임라인 댓글 수정 Dao
+	int timelineReplyUpdate(TimelineReply timelinereply);
+	//타임라인 댓글 삭제 Dao
+	int timelineReplyDelete(int tlReCode);
 }

@@ -89,9 +89,21 @@
 		FROM timelinereply tr  
 		WHERE tr.tlCode = #{tlCode}
 	</select>
-	<insert id="addTimelineReply">
+	<!-- 타임라인 댓글 입력 -->
+	<insert id="addTimelineReply" parameterType="com.pineapple.timeline.service.TimelineReply">
 		INSERT INTO timelinereply
 			   (tlCode, tlReId, tlReContent, tlReTime)
 		VALUES (#{tlCode}, #{tlReId}, #{tlReContent}, NOW())
 	</insert>
+	<!-- 타임라인 댓글 수정 -->
+	<update id="modifyTimelineReply" parameterType="com.pineapple.timeline.service.TimelineReply">
+		UPDATE timelinereply
+			SET
+				tlReContent=#{tlReContent}
+		WHERE tlReCode=#{tlReCode}
+	</update>
+	<!-- 타임라인 댓글 삭제 -->
+	<delete id="removeTimelineReply" parameterType="com.pineapple.timeline.service.TimelineReply">
+		DELETE FROM timelinereply WHERE tlReCode=#{tlReCode}
+	</delete>
 </mapper>
