@@ -73,9 +73,9 @@
 		ON f.fdComCode = c.comCode 
 		LEFT JOIN investment i 
 		ON f.fdCode = i.investFdCode 
-		WHERE f.fdStatus = '모집중' 
+		WHERE f.fdStatus = '모집중' OR f.fdStatus = '결제모집중'
 		GROUP BY f.fdCode 
-		ORDER BY f.openDate ASC;
+		ORDER BY f.fdDate DESC;
 	</select>
 	<!-- 투자하기 main 에서 사용하는 모집중인 펀딩 리스트 조회 쿼리 -->
 	<select id="getInvestAndFdLikeAndFd" parameterType="INT" resultType="com.pineapple.invest.service.InvestAndFdLikeAndFd">

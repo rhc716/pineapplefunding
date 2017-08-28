@@ -52,6 +52,19 @@ $(document).ready(function(){
     		$('#accountNicknameChange').val(ic.accountNickname);
 		});
 	});
+	$('#investmemt-tab').click(function(){
+		var investmenttab = $.ajax({ // ajax실행부분
+	        type: "get",
+	        url : "/pineapple/investorinvestment.user",
+	        success : function success(){
+	        	alert('INVESTMENT AJAX 성공');
+	        },
+	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+	        error : function error(){
+        		alert('INVESTMENT AJAX 실패');
+        	}
+		});
+	});
 });
 </script>
 </head>
