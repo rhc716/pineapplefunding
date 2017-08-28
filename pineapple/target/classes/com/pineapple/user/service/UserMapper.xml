@@ -143,11 +143,18 @@
 		VALUES (#{accountId}, #{secCompany}, #{accountNumber}, #{accountNickname})
 	</insert>
 	<!-- 계좌정보 조회 -->
-	<select id="selectAccountByAccountCode" parameterType="int" resultType="com.pineapple.user.service.Account">
+	<select id="selectAccountByAccountCode" parameterType="int" resultMap="selectAccountByAccountCode">
 		SELECT accountCode, accountId, secCompany, accountNumber, accountNickname
  		FROM account 
  		WHERE accountCode=#{accountCode}
 	</select>
+	<resultMap type="com.pineapple.user.service.Account" id="selectAccountByAccountCode">
+		<result property="accountCode" column="accountCode"/>
+		<result property="accountId" column="accountId"/>
+		<result property="secCompany" column="secCompany"/>
+		<result property="accountNumber" column="accountNumber"/>
+		<result property="accountNickname" column="accountNickname"/>
+	</resultMap>
 	<!-- 계좌정보 수정 -->
 	<update id="updateAccountByAccountCode" parameterType="com.pineapple.user.service.Account">
 		UPDATE account

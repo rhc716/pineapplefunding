@@ -12,6 +12,12 @@ public class MypageService implements MypageServiceInterface {
 	
 	@Autowired
 	private MypageDaoInterface mypagedao;
+	//투자자, 사이트관리자의 계좌조회 메서드 선언(id로)
+	@Override
+	public Account getAccountByAccountCode(int accountCode) {
+		log.debug("MypageService getAccountByAccountId 호출 결과: "+mypagedao.selectAccountByAccountCode(accountCode));
+		return mypagedao.selectAccountByAccountCode(accountCode);
+	}
 	//기업명 중복체크 기능 구현을 위한 메서드 선언
 	@Override
 	public Company getCompanyByComName(String comName) {
@@ -74,5 +80,5 @@ public class MypageService implements MypageServiceInterface {
 	}
 	
 	
-	
+
 }

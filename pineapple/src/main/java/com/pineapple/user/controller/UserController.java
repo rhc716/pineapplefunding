@@ -1,6 +1,7 @@
 package com.pineapple.user.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -44,25 +45,13 @@ public class UserController {
         return "redirect:/mypage.user"; // 글입력후 "/"로 리다이렉트(재요청)
     }
 	
-	//마이페이지 계좌정보 수정 페이지 요청
-	@RequestMapping(value="/changeaccountpage.user", method=RequestMethod.GET)
-	public @ResponseBody Account changeAccount(Model model, @RequestParam("accountCode") int accountCode){
-		log.debug("UserController changeAccountPage 회원계좌정보수정 페이지 요청");
-		Account account = service.getAccountByAccountCode(accountCode);
-		if(account != null){
-			log.debug("UserController changeAccountPage 회원계좌정보 조회 성공");
-			model.addAttribute("account", account);
-		} else {
-			log.debug("UserController changeAccountPage 회원계좌정보 조회 실패");
-		}
-		return account;
-	}
+	
 	
 	//계좌 삭제 요청 처리
 	@RequestMapping(value="/deleteaccount.user", method = RequestMethod.POST)
     public String deleteAccount(HttpSession session, @RequestParam("accountCode") int accountCode) { //커맨드 객체
         log.debug("UserController deleteAccount 계좌삭제 요청 : "+session.getAttribute("id").toString());
-        Account account = service.getAccountByAccountCode(accountCode);
+        List<Account> account = service.getAccountByAccountCode(accountCode);
         String redirect = null;
         if(account != null){
         	 log.debug("삭제요청된 "+session.getAttribute("nickname")+"님의 계좌 조회 성공");

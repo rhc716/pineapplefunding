@@ -3,6 +3,9 @@ package com.pineapple.user.service;
 import java.util.List;
 
 public interface MypageDaoInterface {
+	//투자자, 사이트관리자의 계좌조회 메서드 선언
+	Account selectAccountByAccountCode(int accountCode);
+	
 	//기업명 중복체크 기능 구현을 위한 메서드 선언
 	Company selectCompanyByComName(String comName);
 	

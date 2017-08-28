@@ -30,20 +30,22 @@ $(document).ready(function(){
 	$('#newAccountCancelBtn').click(function(){
 		location.href = '/pineapple/mypage.user';
 	});
-	$('#changeAccountModalBtn').click(function(){
-		var in_accountCode = $('#changeAccountModalBtn').val();
+	$('.changeaccount').click(function(){
+		var in_accountCode = $(this).attr('value');
 		var changeAccountAjax = $.ajax({ // ajax실행부분
-							        type: "get",
-							        url : "/pineapple/changeaccountpage.user",
+							        type: "post",
+							        url : "/pineapple/accountchangepage.user",
 							        data : {accountCode : in_accountCode},
+							        success : function success(){
+							        	alert('수정할 계좌코드 : '+ in_accountCode);
+							        },
 							        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
 							        error : function error(){
-							        		alert('계좌정보 불러오기 오류');
-							        	}
+						        		alert('계좌정보 불러오기 오류');
+						        	}
 								});
 		//ajax를 통해 조회한 계좌 정보를 모달창 수정페이지 각 입력값으로 넣어준다
 		changeAccountAjax.done(function(ic){
-			console.log(ic);
 			$('#accountCodeChange').val(ic.accountCode);
 			$('#secCompanyChange').val(ic.secCompany);
     		$('#accountNumberChange').val(ic.accountNumber);
@@ -108,7 +110,7 @@ $(document).ready(function(){
 								<td> ${useraccount.accountNumber} </td>
 								<td> ${useraccount.accountNickname} </td>
 								<td>
-									<button id="changeAccountModalBtn" type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#changeAccountModal" value="${useraccount.accountCode}">수정</button>
+									<a type="button" class="btn btn-info btn-block changeaccount" data-toggle="modal" value="${useraccount.accountCode}" href="#changeAccountModal">수정</a>
 								</td>
 								<td>
 									<form action="/pineapple/deleteaccount.user" method="post">

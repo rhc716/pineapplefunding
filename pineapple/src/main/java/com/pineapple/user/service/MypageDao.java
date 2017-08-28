@@ -13,6 +13,12 @@ public class MypageDao implements MypageDaoInterface {
 	
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
+	//투자자, 사이트관리자의 계좌조회 메서드 선언
+	@Override
+	public Account selectAccountByAccountCode(int accountCode) {
+		log.debug("MypageDao selectAccountByAccountId 호출 "+accountCode);
+		return sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAccountByAccountCode", accountCode);
+	}
 	//기업명 중복체크 기능 구현을 위한 메서드 선언
 	@Override
 	public Company selectCompanyByComName(String comName) {
@@ -77,6 +83,6 @@ public class MypageDao implements MypageDaoInterface {
 		return sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAllInvestorInfo", userId);
 	}
 	
-
+	
 	
 }

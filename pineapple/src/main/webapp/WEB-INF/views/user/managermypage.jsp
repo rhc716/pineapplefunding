@@ -30,26 +30,31 @@
 		$('#newAccountCancelBtn').click(function(){
 			location.href = '/pineapple/mypage.user';
 		});
-		$('#changeAccountModalBtn').click(function(){
-			var in_accountCode = $('#changeAccountModalBtn').val();
+	
+		$('.changeaccount').click(function(){
+			var in_accountCode = $(this).attr('value');
 			var changeAccountAjax = $.ajax({ // ajax실행부분
-								        type: "get",
-								        url : "/pineapple/changeaccountpage.user",
+								        type: "post",
+								        url : "/pineapple/accountchangepage.user",
 								        data : {accountCode : in_accountCode},
+								        success : function success(){
+								        	alert('수정할 계좌코드 : '+ in_accountCode);
+								        },
 								        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
 								        error : function error(){
-								        		alert('계좌정보 불러오기 오류');
-								        	}
+							        		alert('계좌정보 불러오기 오류');
+							        	}
 									});
 			//ajax를 통해 조회한 계좌 정보를 모달창 수정페이지 각 입력값으로 넣어준다
 			changeAccountAjax.done(function(ic){
-				console.log(ic);
 				$('#accountCodeChange').val(ic.accountCode);
 				$('#secCompanyChange').val(ic.secCompany);
 	    		$('#accountNumberChange').val(ic.accountNumber);
 	    		$('#accountNicknameChange').val(ic.accountNickname);
 			});
+			
 		});
+
 	});
 	//기업등록시 기업명 존재여부 검사
 	
@@ -156,7 +161,7 @@
 								<td> ${useraccount.accountNumber} </td>
 								<td> ${useraccount.accountNickname} </td>
 								<td>
-									<a id="changeAccountModalBtn" type="button" class="btn btn-info btn-block" data-toggle="modal" href="#changeAccountModal" value="${useraccount.accountCode}">수정</a>
+									<a type="button" class="btn btn-info btn-block changeaccount" data-toggle="modal" value="${useraccount.accountCode}" href="#changeAccountModal">수정</a>
 								</td>
 								<td>
 									<form action="/pineapple/deleteaccount.user" method="post">
@@ -173,53 +178,6 @@
 						</div>
 					</tfoot>
 					</table>
-					</div>
-					<!-- 새로운 계좌등록을위한 모달 내부 구현 -->
-					<div class="modal fade" id="newaccountmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-					  <div class="modal-dialog">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					        <h4 class="modal-title" id="myModalLabel">${nickname}님의 새로운 계좌등록</h4>
-					      </div>
-					      <div class="modal-body">
-					        <form id="newaccountform" action="/pineapple/addnewaccount.user" method="post">
-					        	<div class="container_insert">
-								    <div id="accountHolerIdinput" class="form-group has-success has-feedback">
-										<label class="control-label" for="inputSuccess2">${nickname}님의 아이디</label>
-										<input type="text" class="form-control" id="accountId" name="accountId" value="${id}" varia-describedby="inputSuccess2Status" readonly="readonly">
-										<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-										<span id="inputSuccess2Status" class="sr-only">(success)</span>
-									</div>
-									<br>
-								  	<div class="form-group">
-									    <label for="secCompany">증권사</label>
-									    <p id="explain">(계좌를 만든 증권사 이름을 정확히 입력해주세요)</p>
-									    <p><input type="text" id="secCompany" name="secCompany" class="form-control"></p>
-								  	</div>
-								  	<br>
-								  	<div class="form-group">
-								  		<label for="accountNumber">계좌번호</label>
-									    <p id="explain">(계좌번호를 -없이 입력해주세요)</p>
-									    <p><input type="text" id="accountNumber" name="accountNumber" class="form-control"></p>
-								  	</div>
-									<br>
-									<div class="form-group">
-								  		<label for="accountNickname">계좌번호 별명</label>
-									    <p id="explain">(계좌번호의 별명을 등록해주세요. 필수사항이 아니므로 별명을 등록하지 않으셔도 됩니다.)</p>
-									    <p><input type="text" id="accountNickname" name="accountNickname" class="form-control"></p>
-								  	</div>
-									<br>
-							      </div>
-							      <div class="modal-footer">
-							        <button id="newAccountCancelBtn" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-							        <button id="newAccountSubmitBtn" type="button" class="btn btn-primary">추가하기</button>
-							      </div>
-					        </form>
-					      </div>
-					    </div>
-					  </div>
-					</div>
 					<!-- 계좌정보 수정을위한 모달 내부 구현 -->
 					<div class="modal fade" id="changeAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					  <div class="modal-dialog">
@@ -261,6 +219,53 @@
 							      <div class="modal-footer">
 							        <button id="newAccountCancelBtn" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 							        <button type="submit" class="btn btn-primary">수정하기</button>
+							      </div>
+					        </form>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+					</div>
+					<!-- 새로운 계좌등록을위한 모달 내부 구현 -->
+					<div class="modal fade" id="newaccountmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title" id="myModalLabel">${nickname}님의 새로운 계좌등록</h4>
+					      </div>
+					      <div class="modal-body">
+					        <form id="newaccountform" action="/pineapple/addnewaccount.user" method="post">
+					        	<div class="container_insert">
+								    <div id="accountHolerIdinput" class="form-group has-success has-feedback">
+										<label class="control-label" for="inputSuccess2">${nickname}님의 아이디</label>
+										<input type="text" class="form-control" id="accountId" name="accountId" value="${id}" varia-describedby="inputSuccess2Status" readonly="readonly">
+										<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+										<span id="inputSuccess2Status" class="sr-only">(success)</span>
+									</div>
+									<br>
+								  	<div class="form-group">
+									    <label for="secCompany">증권사</label>
+									    <p id="explain">(계좌를 만든 증권사 이름을 정확히 입력해주세요)</p>
+									    <p><input type="text" id="secCompany" name="secCompany" class="form-control"></p>
+								  	</div>
+								  	<br>
+								  	<div class="form-group">
+								  		<label for="accountNumber">계좌번호</label>
+									    <p id="explain">(계좌번호를 -없이 입력해주세요)</p>
+									    <p><input type="text" id="accountNumber" name="accountNumber" class="form-control"></p>
+								  	</div>
+									<br>
+									<div class="form-group">
+								  		<label for="accountNickname">계좌번호 별명</label>
+									    <p id="explain">(계좌번호의 별명을 등록해주세요. 필수사항이 아니므로 별명을 등록하지 않으셔도 됩니다.)</p>
+									    <p><input type="text" id="accountNickname" name="accountNickname" class="form-control"></p>
+								  	</div>
+									<br>
+							      </div>
+							      <div class="modal-footer">
+							        <button id="newAccountCancelBtn" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+							        <button id="newAccountSubmitBtn" type="button" class="btn btn-primary">추가하기</button>
 							      </div>
 					        </form>
 					      </div>

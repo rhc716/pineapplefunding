@@ -1,5 +1,6 @@
 package com.pineapple.user.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -29,7 +30,7 @@ public class UserService implements UserServiceInterface {
 	
 	//투자자, 사이트관리자의 계좌조회 메서드 선언
 	@Override
-	public Account getAccountByAccountCode(int accountCode) {
+	public List<Account> getAccountByAccountCode(int accountCode) {
 		log.debug("service getAccountByAccountCode 호출 : "+accountCode);
 		return dao.selectAccountByAccountCode(accountCode);
 	}
