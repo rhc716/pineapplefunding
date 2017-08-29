@@ -76,9 +76,36 @@
 <!-- 경영진이 마이페이지에서 기업 등록 -->
 	<insert id="insertCompany" parameterType="com.pineapple.user.service.Company">
 		INSERT INTO company
-		(comCode, comName, comNumber, comHomePage, comCeoName, comEstablishYear, comInfo, comLogoServerName, comLogoHeight, comLogoWidth, comLogoSize, comLogoExtension, comSummary, comActivitySummary, comOpenUserId, comAdminApproval)
-		VALUES (#{comCode}, #{comName}, #{comNumber}, #{comHomePage}, #{comCeoName}, #{comEstablishYear}, #{comInfo}, #{comLogoServerName}, #{comLogoHeight}, #{comLogoWidth}, #{comLogoSize}, #{comLogoExtension}, #{comSummary}, #{comActivitySummary}, #{comOpenUserId}, #{comAdminApproval})
+		(comCode, comName, comNumber, comHomePage, comCeoName, comEstablishYear, comInfo, comLogoServerName, comLogoHeight, comLogoWidth, comLogoSize, comLogoExtension, comSummary, comActivitySummary, comOpenUserId, comAdminApproval, comApprovalDate, comApprovalId, comDelRequestId, comDelTime, comDelApprovalId)
+		VALUES (null, #{comName}, #{comNumber}, #{comHomePage}, #{comCeoName}, #{comEstablishYear}, #{comInfo}, #{comLogoServerName}, #{comLogoHeight}, #{comLogoWidth}, #{comLogoSize}, #{comLogoExtension}, #{comSummary}, #{comActivitySummary}, #{comOpenUserId}, null, null, null, null, null, null)
 	</insert>
+<!-- 경영진 마이페이지 기업정보 수정 -->
+	<update id="updateCompanyInfo" parameterType="com.pineapple.user.service.Company">
+		UPDATE company
+		SET
+		comCode=#{comCode},
+		comName=#{comName},
+		comNumber=#{comNumber},
+		comHomePage=#{comHomePage},
+		comCeoName=#{comCeoName},
+		comEstablishYear=#{comEstablishYear},
+		comInfo=#{comInfo},
+		comLogoServerName=#{comLogoServerName},
+		comLogoHeight=#{comLogoHeight},
+		comLogoWidth=#{comLogoWidth},
+		comLogoSize=#{comLogoSize},
+		comLogoExtension=#{comLogoExtension},    
+		comSummary=#{comSummary},
+		comActivitySummary=#{comActivitySummary},
+		comOpenUserId=#{comOpenUserId},
+		comAdminApproval=#{comAdminApproval},
+		comApprovalDate=#{comApprovalDate},
+		comApprovalId=#{comApprovalId},
+		comDelRequestId=#{comDelRequestId},
+		comDelTime=#{comDelTime},
+		comDelApprovalId=#{comDelApprovalId}
+		WHERE comCode=#{comCode}
+	</update>
 
 <!-- 기업회원 중 경영진 마이페이지 분기시 자신이 등록요청한 회사정보 조회 -->
 	<select id="selectCompanyInfoByOpenId" parameterType="String" resultType="com.pineapple.user.service.Company">

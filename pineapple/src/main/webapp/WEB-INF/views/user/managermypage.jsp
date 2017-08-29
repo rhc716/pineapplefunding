@@ -202,7 +202,7 @@
 					        <h4 class="modal-title" id="myModalLabel">${nickname}님의 계좌정보수정</h4>
 					      </div>
 					      <div class="modal-body">
-					        <form id="changeaccountform" action="/pineapple/changeaccount.user" method="post">
+					        <form action="/pineapple/changeaccount.user" method="post">
 					        	<div class="container_insert">
 					        		<input type="hidden" id="accountCodeChange" name="accountCode">
 								    <div id="accountHolerIdinput" class="form-group has-success has-feedback">
@@ -232,8 +232,8 @@
 									<br>
 							      </div>
 							      <div class="modal-footer">
-							        <button id="newAccountCancelBtn" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-							        <button type="submit" class="btn btn-primary">수정하기</button>
+							        <button type="submit" class="btn btn-info">수정하기</button>
+							        <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
 							      </div>
 					        </form>
 					      </div>
@@ -294,312 +294,132 @@
 			<div role="tabpanel" class="tab-pane fade" id="insertCompany" aria-labelledby="insertCompany-tab">
 				<div class="row">
 					<div class="col-xs-2">
+						<br>
 						<p>기업등록정보확인</p>
 					</div>
 					<div class="col-xs-10">
 						<!-- 기업을 등록한 경영진은 자신이 등록한 기업정보와 관리자에 의한 기업승인여부를 확인할 수 있다(사원정보입력) -->
 						<!-- 기업을 등록지않은 경영진은 기존의 기업들 중 자신이 소속된 기업을 검색하여 사원정보를 입력한다 -->
 					<br>
-					<c:forEach var="companyOpenedByMyId1" items="${company}">
+					<c:forEach var="companyOpenedByMyId1" items="${companyOpen}">
 						<a class="btn btn-info btn-block cominfoclass" data-toggle="modal" value="${companyOpenedByMyId1.comName}" href="#getCompanyOpenInfo">${companyOpenedByMyId1.comName} 정보확인</a>
 					</c:forEach>
 					<p id="explain">본인의 아이디로 개설한 모든 기업정보를 확인할 수 있습니다</p>
 						<!-- 개설한 모든 회사가 리스트 타입으로 리턴되므로 forEach 태그립을 사용하여 모달 내부 구현 -->
-						<c:forEach var="companyOpenedByMyId2" items="${company}">
-						<!-- 개설한 기업의 승인여부 및 세부사항 확인을 위한 모달 내부 구현 -->
-						<div class="modal fade" id="getCompanyOpenInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						  <div class="modal-dialog">
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						        <h4 class="modal-title" id="myModalLabel">${nickname}님의 기업등록정보</h4>
-						      </div>
-						      <div class="modal-body">
-						        <form id="companyCheckForm">
-									<div class="container_insert">
-										<c:choose>
-											<c:when test="${not empty companyOpenedByMyId2.comApprovalId}">
-												  <div class="form-group has-success has-feedback">
-												    <label class="control-label" for="inputSuccess4">기업승인여부</label>
-												    <input type="text" class="form-control" id="comAdminApproved" name="comAdminApproved" value="기업승인완료" aria-describedby="inputSuccess4Status" readonly>
-												    <input type="hidden" class="form-control" id="comAdminApprovalCheck1" name="comAdminApproval" value="${companyOpenedByMyId2.comAdminApproval}">
-												    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-												    <span id="comApprovedStatus" class="sr-only">(success)</span>
-												  </div>
-												<br>
-											</c:when>
-											<c:otherwise>
-												  <div class="form-group has-success has-feedback">
-												    <label class="control-label" for="inputSuccess4">기업승인여부</label>
-												    <input type="text" class="form-control" id="comAdminNotApproved" name="comAdminNotApproved" value="기업미승인" aria-describedby="inputSuccess4Status" readonly>
-												    <input type="hidden" class="form-control" id="comAdminApprovalCheck2" name="comAdminApproval" value="${companyOpenedByMyId2.comAdminApproval}">
-												    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-												    <span id="comApprovedStatus" class="sr-only">(success)</span>
-												  </div>
-												<br>
-											</c:otherwise>
-										</c:choose>
-									    <div id="comOpenEmail" class="form-group has-success has-feedback">
-											<label class="control-label" for="inputSuccess2">기업등록요청아이디</label>
-											<input id="comOpenUserId" name="comOpenUserId" type="text" class="form-control" value="${companyOpenedByMyId2.comOpenUserId}" varia-describedby="inputSuccess2Status" readonly>
-											<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-											<span id="inputSuccess2Status" class="sr-only">(success)</span>
-										</div>
-										<br>
-										<div>
-									    	<label for="comLogoFileInput">기업로고업로드</label>
-										    <input type="file" id="comLogoServerName" name="comLogoServerName" value="${companyOpenedByMyId2.comLogoServerName}">
-										     <p class="help-block">기업로고 이미지 파일업로드</p>
-										    <input type="number" id="comLogoHeight" name="comLogoHeight" value="${companyOpenedByMyId2.comLogoHeight}" hidden>
-										    <input type="number" id="comLogoWidth" name="comLogoWidth" value="${companyOpenedByMyId2.comLogoWidth}" hidden>
-										    <input type="number" id="comLogoSize" name="comLogoSize" value="${companyOpenedByMyId2.comLogoSize}" hidden>
-										    <input type="text" id="comLogoExtension" name="comLogoExtension" value="${companyOpenedByMyId2.comLogoExtension}" hidden>
-										</div>
-										<br>
-										<div id="comnameChModal" class="form-group">
-										    <label class="control-label" for="comNameInput">*기업이름</label>
-										    <p id="explain"> (정확한 기업이름을 입력해주시기 바랍니다. 이미 등록된 기업이 존재하는 경우 기업을 등록할 수 없습니다.)</p>
-										    <input id="comName" name="comName" type="text" class="form-control" value="${companyOpenedByMyId2.comName}" placeholder="Enter Company Name">
-									  		<span id="comnamech"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
-										<br>
-									  	</div>
-									  	<div class="form-group">
-										    <label for="exampleInputPassword1">*사업자번호</label>
-										    <p id="explain">(-없이 사업자번호 10자리를 정확히 입력해주시기 바랍니다)</p>
-										    <input id="comNumber" name="comNumber" type="text" class="form-control" value="${companyOpenedByMyId2.comNumber}" maxlength="10" placeholder="Enter Company Number">
-										    <span id="pwch"></span>
-									  	</div>
-									  	<br>
-									  	<div>
-									  		<label for="comHomePageInput">기업웹사이트주소</label>
-										    <input id="comHomePage" name="comHomePage" type="text" class="form-control" value="${companyOpenedByMyId2.comHomePage}" placeholder="Enter Company Web Site Address">
-										</div>
-										<br>
-										<div>
-									    	<label for="comCeoNameInput">기업대표이름</label>
-										    <p id="explain">(현재 기업 대표의 실명을 입력해주시기 바랍니다)</p>
-										    <input id="comCeoName" name="comCeoName" type="text" class="form-control" value="${companyOpenedByMyId2.comCeoName}" placeholder="Enter Company CEO Name">
-										</div>
-										<br>
-										<div>
-									    	<label for="comEstablishYearInupt">기업설립연도</label>
-										    <p id="explain">(기업의 설립연도를 입력해주시기 바랍니다)</p>
-										    <input id="comEstablishYear" name="comEstablishYear" type="text" class="form-control" value="${companyOpenedByMyId2.comEstablishYear}" maxlength="4" placeholder="Enter Company Establish Year">
-										</div>
-										<br>
-										<div>
-									    	<label for="comInfoInupt">기업정보</label>
-										    <p id="explain">(기업에 대한 전반적인 정보를 입력해주시기 바랍니다)</p>
-										    <textarea id="comInfo" name="comInfo" class="form-control" value="${companyOpenedByMyId2.comInfo}" rows="4"></textarea>
-										</div>
-										<br>
-										<div>
-									    	<label for="comSummaryInupt">기업간략소개</label>
-										    <p id="explain">(기업에 대한 소개글을 입력해주시기 바랍니다)</p>
-										    <textarea id="comSummary" name="comSummary" class="form-control" value="${companyOpenedByMyId2.comSummary}" rows="4"></textarea>
-										</div>
-										<br>
-										<div>
-									    	<label for="comActivitySummaryInupt">기업활동정보</label>
-										    <p id="explain">(기업의 활동분야에 대한 정보를 입력해주시기 바랍니다)</p>
-										    <textarea id="comActivitySummary" name="comActivitySummary" class="form-control" value="${companyOpenedByMyId2.comActivitySummary}" rows="4"></textarea>
-										</div>
-										</div>
-									</form>
-						        </div>
-						        <br>
-								<div class="modal-footer">
-							        <button id="cancelBtn" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-							        <a id="addEmployeeMngBtn" class="btn btn-primary" href="#addEmployee" data-toggle="modal">사원등록화면</a>
-							    </div>
-						    </div>
-						  </div>
-						</div>
-						<!-- 사원등록(모든경영진사용) 모달 내부 구현 -->
-						<div class="modal fade" id="addEmployee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						  <div class="modal-dialog">
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						        <h4 class="modal-title" id="myModalLabel">${nickname}님의 사원등록요청</h4>
-						      </div>
-						      <!-- 기업을 최초로 개설신청한 경영진은 사원등록시 기업검색없이 기업명 데이터를 입력시켜준다 -->
-						      <c:choose>
-						      	<c:when test="${not empty company}">
-						      		 <div class="modal-body">
-								        <form id="companyCheckForm1" action="/pineapple/addemployee.user" method="post">
-											<!-- 기업정보검색없이 사원등록하기 -->
-											<div class="form-group has-success has-feedback">
-											    <label class="control-label" for="inputSuccess4">소속기업명</label>
-											    <input id="emcomName3" name="emComName" type="text" class="focus form-control" value="${companyOpenedByMyId2.comName}" readonly>
-									  			<input id="emComCode1" name="emComCode" type="hidden" class="form-control" value="${companyOpenedByMyId2.comCode}">
-											    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-											    <span id="comApprovedStatus" class="sr-only">(success)</span>
-										    </div>
-											<br>
-										    <div id="emUserIdEmail" class="form-group has-success has-feedback">
-												<label class="control-label" for="inputSuccess2">사원등록요청아이디</label>
-												<input id="emUserId1" name="emUserId" type="text" class="form-control" value="${companyOpenedByMyId2.comOpenUserId}" varia-describedby="inputSuccess2Status" readonly>
+						<c:forEach var="companyOpenedByMyId2" items="${companyOpen}">
+						<!-- 개설한 기업의 승인여부 및 세부사항 확인 을 위한 모달 내부 구현 -->
+							<div class="modal fade" id="getCompanyOpenInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							        <h4 class="modal-title" id="myModalLabel">${nickname}님의 기업등록정보</h4>
+							      </div>
+							      <div class="modal-body">
+							      <!-- 회사정보확인 및 수정 모달 -->
+							        <form action="/pineapple/changecompanyinfo.user" method="post">
+							        	<div class="container_insert">
+											<c:choose>
+												<c:when test="${not empty companyOpenedByMyId2.comApprovalId}">
+													  <div class="form-group has-success has-feedback">
+													    <label class="control-label" for="inputSuccess4">기업승인여부</label>
+													    <input type="text" class="form-control" name="comAdminApproved" value="기업승인완료" aria-describedby="inputSuccess4Status" readonly>
+													    <input type="hidden" class="form-control" name="comAdminApproval" value="${companyOpenedByMyId2.comAdminApproval}">
+													    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+													    <span id="comApprovedStatus" class="sr-only">(success)</span>
+													  </div>
+													<br>
+												</c:when>
+												<c:otherwise>
+													  <div class="form-group has-success has-feedback">
+													    <label class="control-label" for="inputSuccess4">기업승인여부</label>
+													    <input type="text" class="form-control" name="comAdminNotApproved" value="기업미승인" aria-describedby="inputSuccess4Status" readonly>
+													    <input type="hidden" class="form-control" name="comAdminApproval" value="${companyOpenedByMyId2.comAdminApproval}">
+													    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+													    <span id="comApprovedStatus" class="sr-only">(success)</span>
+													  </div>
+													<br>
+												</c:otherwise>
+											</c:choose>
+										    <input type="hidden" class="form-control" name=comCode value="${companyOpenedByMyId2.comCode}">
+										    <div id="comOpenEmail" class="form-group has-success has-feedback">
+												<label class="control-label" for="inputSuccess2">기업등록요청아이디</label>
+												<input name="comOpenUserId" type="text" class="form-control" value="${companyOpenedByMyId2.comOpenUserId}" varia-describedby="inputSuccess2Status" readonly>
 												<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 												<span id="inputSuccess2Status" class="sr-only">(success)</span>
-												<p id="explain">(사원으로 등록하려고 하는 분의 아이디입니다)</p>
 											</div>
 											<br>
-											<div class="form-group">
-											    <label for="emRankCodeInput">직급선택</label>
-											    <p id="explain">(경영진과 일반사원 중 하나를 선택해주시기 바랍니다)</p>
-											      경영진<input id="emRankCodeMng1" name="emRankCode" value="1" type="radio" checked>&nbsp&nbsp&nbsp
-											      일반사원<input id="emRankCodeEmp1" name="emRankCode" value="2" type="radio">
-											    <span id="emrankch1"></span>
+											<div>
+										    	<label for="comLogoFileInput">기업로고업로드</label>
+											    <input type="file" name="comLogoServerName" value="${companyOpenedByMyId2.comLogoServerName}">
+											     <p class="help-block">기업로고 이미지 파일업로드</p>
+											    <input type="number" name="comLogoHeight" value="${companyOpenedByMyId2.comLogoHeight}" hidden>
+											    <input type="number" name="comLogoWidth" value="${companyOpenedByMyId2.comLogoWidth}" hidden>
+											    <input type="number" name="comLogoSize" value="${companyOpenedByMyId2.comLogoSize}" hidden>
+											    <input type="text" name="comLogoExtension" value="${companyOpenedByMyId2.comLogoExtension}" hidden>
+											</div>
+											<br>
+											<div id="comnameChModal" class="form-group">
+											    <label class="control-label" for="comNameInput">*기업이름</label>
+											    <p id="explain"> (정확한 기업이름을 입력해주시기 바랍니다. 이미 등록된 기업이 존재하는 경우 기업을 등록할 수 없습니다.)</p>
+											    <input name="comName" type="text" class="form-control" value="${companyOpenedByMyId2.comName}" placeholder="Enter Company Name">
+										  		<span id="comnamech"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
+											<br>
 										  	</div>
-										  	<br>
 										  	<div class="form-group">
-											    <label for="employeeDepInput1">부서선택</label>
-											    <p id="explain">(기업내의 소속 부서를 입력해주시기 바랍니다)</p>
-											    <input id="emDepartment1" name="emDepartment" type="text" class="form-control">
+											    <label for="exampleInputPassword1">*사업자번호</label>
+											    <p id="explain">(-없이 사업자번호 10자리를 정확히 입력해주시기 바랍니다)</p>
+											    <input name="comNumber" type="text" class="form-control" value="${companyOpenedByMyId2.comNumber}" maxlength="10" placeholder="Enter Company Number">
+											    <span id="pwch"></span>
 										  	</div>
 										  	<br>
 										  	<div>
-										  	<!-- 기업을 최초로 등록한 경영진은 자동적으로 사원요청승인처리됨 -->
-										  		<input id="emCheck1" name="emCheck" type="hidden" value="1" class="form-control">
-										  		<input id="emDelRequest1" name="emDelRequest" type="hidden" value="0" class="form-control">
-										  	</div>
-											<button id="addEmployeeMngSubmit" type="submit" class="btn btn-info">사원등록</button>
-										</form>
-								      </div>
-						      	</c:when>
-						      	<c:otherwise>
-						      		<div class="modal-body">
-								        <form id="companyCheckForm2" action="/pineapple/addemployee.user" method="post">
-											<!-- 최초기업개설자가 아닌 경우기업정보검색 후 사원등록하기 -->
-											<!-- ajax통신을 활용해 기업명, 기업코드에 검색되어 조회한 데이터 출력해준다 -->
-											<div id="comNameSearch" class="form-group">
-											    <label class="control-label" for="comNameInput">기업검색</label>
-											    <p id="explain"> (소속한 기업을 검색하여 입력해주시기 바랍니다)</p>
-											    <input id="emcomName4" name="emComName" type="text" class="focus form-control" placeholder="Enter Company Name" readonly>
-											    <a data-toggle="modal" href="#searchCompanyModal" class="btn btn-info btn-block">기업검색</a>
-										  		<input id="emComCode2" name="emComCode" type="hidden" class="form-control">
-										  		<span id="emcomnamech2"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
+										  		<label for="comHomePageInput">기업웹사이트주소</label>
+											    <input name="comHomePage" type="text" class="form-control" value="${companyOpenedByMyId2.comHomePage}" placeholder="Enter Company Web Site Address">
 											</div>
 											<br>
-										    <div id="emUserIdEmail2" class="form-group has-success has-feedback">
-												<label class="control-label" for="inputSuccess2">사원등록요청아이디</label>
-												<p id="explain">(사원으로 등록하려고 하는 분의 아이디입니다)</p>
-												<input id="emUserId2" name="emUserId" type="text" class="form-control" value="${id}" varia-describedby="inputSuccess2Status">
-												<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-												<span id="inputSuccess2Status" class="sr-only">(success)</span>
-											</div>
-											<br>
-											<div class="form-group">
-											    <label for="emRankCodeInput2">직급선택</label>
-											    <p id="explain">(경영진과 일반사원 중 하나를 선택해주시기 바랍니다)</p>
-											      경영진<input id="emRankCodeMng2" name="emRankCode" type="radio" value="1" checked>&nbsp&nbsp&nbsp
-											      일반사원<input id="emRankCodeEmp2" name="emRankCode" type="radio" value="2">
-											    <span id="emrankch2"></span>
-										  	</div>
-										  	<br>
-											<div class="form-group">
-											    <label for="employeeDepInput2">부서선택</label>
-											    <p id="explain">(기업내의 소속 부서를 입력해주시기 바랍니다)</p>
-											    <input id="emDepartment2" name="emDepartment" type="text" class="form-control">
-										  	</div>
 											<div>
-										  		<input id="emCheck2" name="emCheck" type="hidden" value="0" class="form-control">
-										  		<input id="emDelRequest2" name="emDelRequest" type="hidden" value="0" class="form-control">
-										  	</div>
-										  	<br>
-											<button id="addEmployeeMngSubmit" type="submit" class="btn btn-info">사원등록</button>
+										    	<label for="comCeoNameInput">기업대표이름</label>
+											    <p id="explain">(현재 기업 대표의 실명을 입력해주시기 바랍니다)</p>
+											    <input name="comCeoName" type="text" class="form-control" value="${companyOpenedByMyId2.comCeoName}" placeholder="Enter Company CEO Name">
+											</div>
+											<br>
+											<div>
+										    	<label for="comEstablishYearInupt">기업설립연도</label>
+											    <p id="explain">(기업의 설립연도를 입력해주시기 바랍니다)</p>
+											    <input name="comEstablishYear" type="text" class="form-control" value="${companyOpenedByMyId2.comEstablishYear}" maxlength="4" placeholder="Enter Company Establish Year">
+											</div>
+											<br>
+											<div>
+										    	<label for="comInfoInupt">기업정보</label>
+											    <p id="explain">(기업에 대한 전반적인 정보를 입력해주시기 바랍니다)</p>
+											    <textarea name="comInfo" class="form-control" value="${companyOpenedByMyId2.comInfo}" rows="4">${companyOpenedByMyId2.comInfo}</textarea>
+											</div>
+											<br>
+											<div>
+										    	<label for="comSummaryInupt">기업간략소개</label>
+											    <p id="explain">(기업에 대한 소개글을 입력해주시기 바랍니다)</p>
+											    <textarea name="comSummary" class="form-control" value="${companyOpenedByMyId2.comSummary}" rows="4">${companyOpenedByMyId2.comSummary}</textarea>
+											</div>
+											<br>
+											<div>
+										    	<label for="comActivitySummaryInupt">기업활동정보</label>
+											    <p id="explain">(기업의 활동분야에 대한 정보를 입력해주시기 바랍니다)</p>
+											    <textarea name="comActivitySummary" class="form-control" value="${companyOpenedByMyId2.comActivitySummary}" rows="4">${companyOpenedByMyId2.comActivitySummary}</textarea>
+											</div>
+											</div>
+											<br>
+											<div class="modal-footer">
+												<button type="submit" class="btn btn-info" data-dismiss="modal">수정하기</button>
+												<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+											</div>
 										</form>
-								      </div>
-						      	</c:otherwise>
-						      </c:choose>
-						      <div class="modal-footer">
-						        <button id="employeeCancelBtn" type="button" class="btn btn-success btn-block" data-dismiss="modal">닫기</button>
-			      	 		  </div>
-					    	</div>
-						  </div>
-						</div>
+							        </div>
+							    </div>
+							  </div>
+							</div>
 						</c:forEach>
-						<!-- 소속기업 검색 모달 내부 구현 -->
-						<div class="modal fade" id="searchCompanyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						  <div class="modal-dialog">
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						        <h4 class="modal-title" id="myModalLabel">${nickname}님의 소속기업검색</h4>
-						      </div>
-						      <div class="modal-body">
-						        <form id="companySelect" action="/pineapple/selectcompany.user" method="post">
-								  	<div class="form-group">
-									    <label for="companySearchList">회사검색</label>
-									    <input id="comName" name="comName" type="text" class="form-control">
-									    <button id="mycomSearchBtn" type="submit">검색</button>
-								  	</div>
-									<br>
-									<!-- 
-									<c:choose>
-										<c:when test="${not empty mycompany}">
-									  		<table class="table table-striped table-bordered table-hover">
-											    	<thead>
-											    		<tr>
-											    			<td>회사코드</td>
-											    			<td>회사명</td>
-											    		</tr>
-											    	</thead>
-											    	<tbody>
-													    <c:forEach var="mycompany" items="${mycompany}">
-													    	<tr>
-													    		<td>
-													    			${mycompany.emComCode}
-													    		</td>
-													    		<td>
-													    			${mycompany.emComName}
-													    		</td>
-													    	</tr>
-													    </c:forEach>
-											    	</tbody>
-											    </table>
-									  	</c:when>
-									  	<c:otherwise>
-									  	 -->
-									  		<div class="form-group">
-											    <label for="allcompanylist">전체회사목록</label>
-											    <table class="table table-striped table-bordered table-hover">
-											    	<thead>
-											    		<tr>
-											    			<td>회사코드</td>
-											    			<td>회사명</td>
-											    		</tr>
-											    	</thead>
-											    	<tbody>
-											    	<!-- 
-													    <c:forEach var="allcompany" items="${allcompany}">
-													    	<tr>
-													    		<td>
-													    			 ${allcompany.comCode} 
-													    		</td>
-													    		<td>
-													    			 ${allcompany.comName}
-													    		</td>
-													    	</tr>
-													    </c:forEach>
-													     -->
-											    	</tbody>
-											    </table>
-										  	</div>
-										  	<!-- 
-									  	</c:otherwise>
-								  	</c:choose>
-								  	 -->
-								  	<div class="modal-footer">
-								        <button id="cancelBtn" type="button" class="btn btn-success btn-lg" data-dismiss="modal">닫기</button>
-								        <button id="addCompanyBtn" type="submit" class="btn btn-primary btn-lg">기업등록</button>
-						      	  	</div>
-								</form>
-						      </div>
-					    	</div>
-						  </div>
-						</div>
+	
 					</div>
 				</div>
 				<br>
@@ -704,36 +524,38 @@
 				<!-- 기업회원일 경우 마이페이지 로딩시, 항상 사원정보를 조회하여 객체 데이터를 담아 전송한다 -->
 				<div class="row">
 					<div class="col-xs-2">
-						<p>사원등록요청하기</p>
+						<br>
+						<p>사원등록정보확인</p>
 					</div>
 					<div class="col-xs-10">
-						<c:choose>
-							<c:when test="${not empty employee}">
-								<c:forEach var="employeeList" items="${employee}">
-									<a href="#getEmployee" class="btn btn-info btn-block employeeModal" data-toggle="modal" >${employeeList.emComName}사원등록정보확인</a>
-						
-						<div class="modal fade" id="getEmployee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						  <div class="modal-dialog">
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						        <h4 class="modal-title" id="myModalLabel">${nickname}님의 사원등록요청</h4>
-						      </div>
-						      <!-- 기업을 최초로 개설신청한 경영진은 사원등록시 기업검색없이 기업명 데이터를 입력시켜준다 -->
-						      		 <div class="modal-body">
-								        <form id="companyCheckForm1" action="/pineapple/addemployee.user" method="post">
+						<br>
+						<!-- 사원 등록 정보 확인 버튼 및 사원등록 정보확인 모달 -->
+						<c:forEach var="employeeOneId" items="${employeeOneId}">
+							<a href="#getEmployee" class="btn btn-success btn-block employeeModal" data-toggle="modal">${employeeOneId.emComName}사원등록정보확인</a>
+							<p id="explain">${employeeOneId.emComName}에 등록한 사원정보를 확인할 수 있습니다</p>
+							<!-- 사원등록 정보 확인 모달창 -->
+							<div class="modal fade" id="getEmployee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							        <h4 class="modal-title" id="myModalLabel">${nickname}님의 사원정보확인</h4>
+							      </div>
+							      <!-- 기업을 최초로 개설신청한 경영진은 사원등록시 기업검색없이 기업명 데이터를 입력시켜준다 -->
+					      		  <div class="modal-body">
+								        <form id="companyCheckForm1" action="/pineapple/changeemployeeinfo.user" method="post">
+								        	<input name="emComCode" type="hidden" class="form-control" value="${employeeOneId.emComCode}">
 											<!-- 기업정보검색없이 사원등록하기 -->
 											<div class="form-group has-success has-feedback">
 											    <label class="control-label" for="inputSuccess4">소속기업명</label>
-											    <input id="emcomName3" name="emComName" type="text" class="focus form-control" readonly>
-									  			<input id="emComCode1" name="emComCode" type="hidden" class="form-control" >
+											    <input name="emComName" type="text" class="focus form-control" value="${employeeOneId.emComName}" readonly>
 											    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 											    <span id="comApprovedStatus" class="sr-only">(success)</span>
 										    </div>
 											<br>
 										    <div id="emUserIdEmail" class="form-group has-success has-feedback">
 												<label class="control-label" for="inputSuccess2">사원등록요청아이디</label>
-												<input id="emUserId1" name="emUserId" type="text" class="form-control"  varia-describedby="inputSuccess2Status" readonly>
+												<input name="emUserId" type="text" class="form-control" value="${employeeOneId.emUserId}" varia-describedby="inputSuccess2Status" readonly>
 												<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 												<span id="inputSuccess2Status" class="sr-only">(success)</span>
 												<p id="explain">(사원으로 등록하려고 하는 분의 아이디입니다)</p>
@@ -742,36 +564,185 @@
 											<div class="form-group">
 											    <label for="emRankCodeInput">직급선택</label>
 											    <p id="explain">(경영진과 일반사원 중 하나를 선택해주시기 바랍니다)</p>
-											      경영진<input id="emRankCodeMng1" name="emRankCode" value="1" type="radio" checked>&nbsp&nbsp&nbsp
-											      일반사원<input id="emRankCodeEmp1" name="emRankCode" value="2" type="radio">
+										        ${rank}  <input name="emRankCode" value="${employeeOneId.emRankCode}" type="radio" checked>
 											    <span id="emrankch1"></span>
 										  	</div>
 										  	<br>
 										  	<div class="form-group">
 											    <label for="employeeDepInput1">부서선택</label>
 											    <p id="explain">(기업내의 소속 부서를 입력해주시기 바랍니다)</p>
-											    <input id="emDepartment1" name="emDepartment" type="text" class="form-control">
+											    <input name="emDepartment" type="text" class="form-control" value="${employeeOneId.emDepartment}">
 										  	</div>
 										  	<br>
-										  	<div>
-										  	<!-- 기업을 최초로 등록한 경영진은 자동적으로 사원요청승인처리됨 -->
-										  		<input id="emCheck1" name="emCheck" type="hidden" value="1" class="form-control">
-										  		<input id="emDelRequest1" name="emDelRequest" type="hidden" value="0" class="form-control">
+										 	<!-- 기업을 최초로 등록한 경영진은 자동적으로 사원요청승인처리됨 -->
+										  	<div class="form-group">
+											    <label for="emRankCodeInput">기업개설자 여부</label>
+											    <c:choose>
+											    	<c:when test="${not empty companyOpen}">
+											    		<p>기업 최초 개설자 입니다</p>
+											    	</c:when>
+											    	<c:otherwise>
+											    		<p>일반 경영진 입니다</p>
+											    	</c:otherwise>
+											    </c:choose>
+											    <input name="emCheck" value="${employeeOneId.emCheck}" hidden>
+											    <span id="emrankch1"></span>
 										  	</div>
-											<button id="addEmployeeMngSubmit" type="submit" class="btn btn-info">사원등록</button>
+										  	<div>
+										  		<input name="emDelRequest" type="hidden" value="${employeeOneId.emDelRequest}" class="form-control">
+										  	</div>
+										  	<div>
+												<button type="submit" class="btn btn-info">수정</button>&nbsp
+												<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+											</div>
 										</form>
-								      </div>
-								      </div>
-								      </div>
-								      </div>
-								      
-								</c:forEach>
-								<p id="explain">사원 직급으로 등록한 자신의 사원 정보를 확인할 수 있습니다</p>
-							</c:when>
-							<c:otherwise>
-								사원등록요청, 회사개설가능
-							</c:otherwise>
-						</c:choose>
+							      	</div>
+							      </div>
+						      </div>
+					      	</div>
+				      </c:forEach>	
+					</div>
+				</div>
+				<br>
+				<!-- 세번째탭 두번째 row; 사원등록요청 양식 -->
+				<div class="row">
+					<div class="col-xs-2">
+						<br>
+						<p>사원등록요청하기</p>
+					</div>
+					<div class="col-xs-10">
+						<br>
+						<!-- 사원등록 요청하기 입력폼 -->
+				        <h4>${nickname}님의 사원등록요청</h4>
+				        <p id="explain">소속된 기업이 있다면 사원으로 등록 요청을 해주시기 바랍니다. 경영진이 사원승인을 할 경우 사원으로 등록 완료됩니다.</p>
+				        <p id="explain">기업을 최초로 개설한 기업에 사원등록하는 경우, 승인없이 사원등록이 완료됩니다.</p>
+						<br>
+				        <form action="/pineapple/addemployee.user" method="post">
+							<div id="comNameSearch" class="form-group">
+							    <label class="control-label" for="comNameInput">기업검색</label>
+							    <p id="explain">(소속한 기업을 검색하여 입력해주시기 바랍니다)</p>
+							    <input name="emComName" type="text" class="focus form-control" placeholder="Enter Company Name" readonly>
+							    <br>
+							    <a data-toggle="modal" href="#searchCompanyModal" class="btn btn-info btn-block">기업검색</a>
+						  		<input name="emComCode" type="hidden" class="form-control">
+						  		<span id="emcomnamech2"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
+							</div>
+							<br>
+						    <div id="emUserIdEmail" class="form-group has-success has-feedback">
+								<label class="control-label" for="inputSuccess2">사원등록요청아이디</label>
+								<input name="emUserId" type="text" class="form-control" value="${id}" varia-describedby="inputSuccess2Status" readonly>
+								<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+								<span id="inputSuccess2Status" class="sr-only">(success)</span>
+								<p id="explain">(사원으로 등록하려고 하는 분의 아이디입니다)</p>
+							</div>
+							<br>
+							<div class="form-group">
+							    <label for="emRankCodeInput">직급선택</label>
+							    <p id="explain">(경영진과 일반사원 중 하나를 선택해주시기 바랍니다)</p>
+							      경영진<input name="emRankCode" value="1" type="radio" checked>&nbsp&nbsp&nbsp
+							      일반사원<input name="emRankCode" value="2" type="radio">
+							    <span id="emrankch1"></span>
+						  	</div>
+						  	<br>
+						  	<div class="form-group">
+							    <label for="employeeDepInput1">부서선택</label>
+							    <p id="explain">(기업내의 소속 부서를 입력해주시기 바랍니다)</p>
+							    <input name="emDepartment" type="text" class="form-control">
+						  	</div>
+						  	<br>
+						  	<div>
+						  	<!-- 기업을 최초로 등록한 경영진은 자동적으로 사원요청승인처리됨 -->
+						  	<div class="form-group">
+							    <label for="emRankCodeInput">기업개설자 여부선택</label>
+							    <p id="explain">(기업을 최초로 개설요청한 경영진이라면 최초개설에 체크해주시기 바랍니다. 일반 경영진의 경우 일반경영진에 체크해주시기 바랍니다.)</p>
+							      최초개설자<input name="emCheck" value="1" type="radio" checked>&nbsp&nbsp&nbsp
+							      일반경영진<input name="emCheck" value="0" type="radio">
+							    <span id="emrankch1"></span>
+						  	</div>
+						  		<input name="emDelRequest" type="hidden" value="0" class="form-control">
+						  	</div>
+							<button type="submit" class="btn btn-info">사원등록</button>
+						</form>
+						<!-- 소속기업 검색 모달 내부 구현 -->
+						<div class="modal fade" id="searchCompanyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						  <div class="modal-dialog">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						        <h4 class="modal-title" id="myModalLabel">${nickname}님의 소속기업검색</h4>
+						      </div>
+						      <div class="modal-body">
+						        <form id="companySelect" action="/pineapple/selectcompany.user" method="post">
+								  	<div class="form-group">
+									    <label for="companySearchList">회사검색</label>
+									    <input id="comName" name="comName" type="text" class="form-control">
+									    <button id="mycomSearchBtn" type="submit">검색</button>
+								  	</div>
+									<br>
+									<!-- 
+									<c:choose>
+										<c:when test="${not empty mycompany}">
+									  		<table class="table table-striped table-bordered table-hover">
+											    	<thead>
+											    		<tr>
+											    			<td>회사코드</td>
+											    			<td>회사명</td>
+											    		</tr>
+											    	</thead>
+											    	<tbody>
+													    <c:forEach var="mycompany" items="${mycompany}">
+													    	<tr>
+													    		<td>
+													    			${mycompany.emComCode}
+													    		</td>
+													    		<td>
+													    			${mycompany.emComName}
+													    		</td>
+													    	</tr>
+													    </c:forEach>
+											    	</tbody>
+											    </table>
+									  	</c:when>
+									  	<c:otherwise>
+									  	 -->
+									  		<div class="form-group">
+											    <label for="allcompanylist">전체회사목록</label>
+											    <table class="table table-striped table-bordered table-hover">
+											    	<thead>
+											    		<tr>
+											    			<td>회사코드</td>
+											    			<td>회사명</td>
+											    		</tr>
+											    	</thead>
+											    	<tbody>
+											    	<!-- 
+													    <c:forEach var="allcompany" items="${allcompany}">
+													    	<tr>
+													    		<td>
+													    			 ${allcompany.comCode} 
+													    		</td>
+													    		<td>
+													    			 ${allcompany.comName}
+													    		</td>
+													    	</tr>
+													    </c:forEach>
+													     -->
+											    	</tbody>
+											    </table>
+										  	</div>
+										  	<!-- 
+									  	</c:otherwise>
+								  	</c:choose>
+								  	 -->
+								  	<div class="modal-footer">
+								        <button type="button" class="btn btn-success btn-lg" data-dismiss="modal">닫기</button>
+								        <button type="submit" class="btn btn-primary btn-lg">기업선택</button>
+						      	  	</div>
+								</form>
+						      </div>
+					    	</div>
+						  </div>
+						</div>
 					</div>
 				</div>
 			</div>

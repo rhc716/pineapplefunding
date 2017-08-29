@@ -26,6 +26,22 @@ public class MypageController {
 	
 	@Autowired
 	private MypageServiceInterface mypageservice;
+	//사원등록정보 확인 모달에서 부서명 수정하기 요청 처리
+	
+	
+	//경영진 마이페이지 개설한 기업정보 수정 요청 처리
+	@RequestMapping(value="/changecompanyinfo.user", method = RequestMethod.POST)
+    public String modifyCompanyInfo(HttpSession session, Company company) { //커맨드 객체
+        log.debug("modifyCompanyInfo 기업정보 수정 요청 : "+company);
+        int result = mypageservice.modifyCompanyInfo(company);
+        if(result == 1){
+        	log.debug(session.getAttribute("nickname")+"님의 기업정보 수정 처리 성공");
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님의기업정보 수정 처리 실패");
+        }
+        return "redirect:/mypage.user"; // 글입력후 "/"로 리다이렉트(재요청)
+    }
+	
 	//투자자 투자내역 조회
 	@RequestMapping(value="/investorinvestment.user", method=RequestMethod.GET)
 	public String getInvestor(Model model, HttpSession session){
@@ -143,10 +159,10 @@ public class MypageController {
     	UserDetail userdetail = mypageservice.getUserDetail(session.getAttribute("id").toString());
     	model.addAttribute("userdetail", userdetail);
     	//기업회원 레벨의 회원이 마이페이지 분기 요청시, 자신의 아이디로 개설한 회사정보조회(회사등록한 경영진만 객체 조회 가능)
-    	List<Company> company = mypageservice.getCompanyByOpenId(session.getAttribute("id").toString());
-    	if(company != null){
+    	List<Company> companyOpen = mypageservice.getCompanyByOpenId(session.getAttribute("id").toString());
+    	if(companyOpen != null){
 			log.debug("getCompanyInfoByOpenId 회사개설정보 조회 성공");
-			model.addAttribute("company", company);
+			model.addAttribute("companyOpen", companyOpen);
 		} else {
 			log.debug("getCompanyInfoByOpenId 회사개설정보 조회 실패");
 		}
@@ -159,10 +175,10 @@ public class MypageController {
          	log.debug(session.getAttribute("nickname")+"님의  전체회사조회 실패");
          }
         //기업회원 레벨의 회원이 마이페이지 분기 요청시, 페이지 로딩시 아이디로 사원등록여부와 사원승인여부 조회
-        List<Employee> employee = mypageservice.getEmployeeById(session.getAttribute("id").toString());
-        if(employee != null){
+        List<Employee> employeeOneId = mypageservice.getEmployeeById(session.getAttribute("id").toString());
+        if(employeeOneId != null){
         	log.debug(session.getAttribute("nickname")+"님의 사원정보조회 성공");
-         	model.addAttribute("employee", employee);
+         	model.addAttribute("employeeOneId", employeeOneId);
          } else {
          	log.debug(session.getAttribute("nickname")+"님의  사원정보조회 실패");
          }
@@ -193,10 +209,10 @@ public class MypageController {
          	log.debug(session.getAttribute("nickname")+"님의  전체회사조회 실패");
          }
         //기업회원 레벨의 회원이 마이페이지 분기 요청시, 페이지 로딩시 아이디로 사원등록여부와 사원승인여부 조회
-        List<Employee> employee = mypageservice.getEmployeeById(session.getAttribute("id").toString());
-        if(employee != null){
+        List<Employee> employeeOneId = mypageservice.getEmployeeById(session.getAttribute("id").toString());
+        if(employeeOneId != null){
         	log.debug(session.getAttribute("nickname")+"님의 사원정보조회 성공");
-         	model.addAttribute("employee", employee);
+         	model.addAttribute("employeeOneId", employeeOneId);
          } else {
          	log.debug(session.getAttribute("nickname")+"님의  사원정보조회 실패");
          }

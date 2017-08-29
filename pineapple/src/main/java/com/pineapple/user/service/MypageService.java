@@ -14,6 +14,17 @@ public class MypageService implements MypageServiceInterface {
 	
 	@Autowired
 	private MypageDaoInterface mypagedao;
+	
+	//사원등록정보 확인 모달에서 부서명 수정하기 요청 처리
+	
+	
+	//경영진 마이페이지 개설한 기업정보 수정 요청 처리
+	@Override
+	public int modifyCompanyInfo(Company company) {
+		log.debug("MypageService modifyCompanyInfo 호출 결과: "+mypagedao.updateCompanyInfo(company));
+		return mypagedao.updateCompanyInfo(company);
+	}
+	
 	//투자자 투자내역 조회
 	@Override
 	public List<InvestorInvestList> getInvestor(String investId) {
@@ -87,8 +98,6 @@ public class MypageService implements MypageServiceInterface {
 		log.debug("MypageService selectInvestorBasic 메서드 호출 "+userId);
 		return mypagedao.selectInvestorBasic(userId);
 	}
-	
-	
-	
+
 
 }
