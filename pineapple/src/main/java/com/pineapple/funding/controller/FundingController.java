@@ -343,6 +343,7 @@ public class FundingController {
 		log.debug("funding : " + funding);		
 		log.debug("upload image name : "+uploadimage.getOriginalFilename());
 		log.debug("upload image size : "+uploadimage.getSize());
+		log.debug("upload image ContentType : "+uploadimage.getContentType());
 		
 		// 이전에 올렸던 이미지 파일이 있으면 삭제
 		int fdCode = funding.getFdCode();
@@ -351,6 +352,7 @@ public class FundingController {
 		if(fundingresult.getPosterImg()!=null){
 			fileutil.deleteFile(fundingresult.getPosterImg());
 		}
+		
 		
 		
 		// 새로운 이미지를 파일업로드하고 경로를 DB에서 수정해준다.

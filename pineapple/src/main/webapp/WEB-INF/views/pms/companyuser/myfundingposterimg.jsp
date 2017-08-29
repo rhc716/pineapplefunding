@@ -51,10 +51,12 @@ $(document).ready(function(){
 			if(msg[i].posterImg==null){
 				var poster = '<br><br><br><span style="color:#300aac;">이미지를 추가해주세요</span>';
 			}else{
-				var poster = '<img src="'+msg[i].posterImg+'">'; 
+				
+				// 파일이름만 잘라서 절대경로에서 사용하기
+				var imgname = msg[i].posterImg.substring(msg[i].posterImg.lastIndexOf("/"), msg[i].posterImg.length); 
+				//console.log(imgname);
+				var poster = '<img src="${pageContext.request.contextPath}/resources/files'+imgname+'">'; 
 				    
-				   
-
 			}
 			// 펀딩리스트와 포스터 이미지를 myfundinglist에 채워줌, 수정버튼과 모달창을 각각 추가해줌
 			$('#myfundinglist').append(
@@ -99,9 +101,11 @@ $(document).ready(function(){
 			$('.getfile').change(function(e){
 				   var reader = new FileReader();
 				   reader.readAsDataURL(e.target.files[0]);
-				   console.log(e.target.files[0])
+				   console.log($(this));
+				   //console.log(e.target.files[0]);
 				   // 클릭했을때 해당 모달의 이미지태그의 값을 가져와서 미리보기를 채워줌
 				   var imgtag = $(this).parent().find('img');
+				   var thisgetfile = $(this).attr("src");
 				   reader.onload = function  () {
 				       var tempImage = new Image();
 				       tempImage.src = reader.result;
@@ -113,7 +117,6 @@ $(document).ready(function(){
 				            canvasContext.drawImage(this, 0, 0, 300, 150);
 				            var dataURI = canvas.toDataURL("image/jpeg");
 				            imgtag.attr("src",dataURI);
-				            
 				        };
 				    };
 				});

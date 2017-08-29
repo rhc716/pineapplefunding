@@ -5,7 +5,7 @@
 	  background-color: #f7f7f9; /* White */
       color: #555555;
       text-align: center;
-      height : 230px;
+      height : 250px;
 	  width : 330px;
 	  float : left;
 	  border: 1px solid #01022c;
@@ -13,11 +13,11 @@
 }
 .fundinglistboxtop{
 	width : 300px;
-	height : 180px;
+	height : 210px;
 }
 .fundinglistboxbottom{
 	width : 300px;
-	height : 30px;
+	height : 20px;
 }	  
 
 /* 수정중 */
