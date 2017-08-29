@@ -5,6 +5,12 @@ import java.util.List;
 import com.pineapple.invest.service.InvestorInvestList;
 
 public interface MypageDaoInterface {
+	//사원등록정보 확인 모달에서 부서명 수정하기 요청 처리
+	
+	
+	//경영진 마이페이지 개설한 기업정보 수정 요청 처리
+	int updateCompanyInfo(Company company);
+	
 	//투자자 투자내역 조회
 	List<InvestorInvestList> selectInvestor(String investId);
 	

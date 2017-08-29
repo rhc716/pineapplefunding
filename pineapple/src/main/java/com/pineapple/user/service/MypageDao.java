@@ -15,6 +15,17 @@ public class MypageDao implements MypageDaoInterface {
 	
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
+	
+	//사원등록정보 확인 모달에서 부서명 수정하기 요청 처리
+	
+	
+	//경영진 마이페이지 개설한 기업정보 수정 요청 처리
+	@Override
+	public int updateCompanyInfo(Company company) {
+		log.debug("MypageDao updateCompanyInfo 호출 "+company);
+		return sqlSessionTemplate.update("com.pineapple.user.service.MypageMapper.updateCompanyInfo", company);
+	}
+	
 	//투자자 투자내역 조회
 	@Override
 	public List<InvestorInvestList> selectInvestor(String investId) {
@@ -91,8 +102,6 @@ public class MypageDao implements MypageDaoInterface {
 		log.debug("MypageDao selectInvestorBasic 메서드 호출 결과"+sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAllInvestorInfo", userId));
 		return sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAllInvestorInfo", userId);
 	}
-	
-	
-	
+
 	
 }
