@@ -23,78 +23,89 @@ public class InvestDao implements InvestDaoInterface {
 	public List<InvestAndFd> investFundingSelect(){
 		log.debug("InvestDao-----investFundingSelect");
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.getInvestAndFd",map);
+		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.selectInvestAndFd",map);
 	}
 	//하나의 펀딩 정보 열람
 	@Override
 	public InvestAndFdLikeAndFd investFundingDataSelect(int fdCode){
 		log.debug("InvestDao-----investFundingDataSelect");
-		return sqlSessionTemplate.selectOne("com.pineapple.invest.service.InvestMapper.getInvestAndFdLikeAndFd",fdCode);
+		return sqlSessionTemplate.selectOne("com.pineapple.invest.service.InvestMapper.selectInvestAndFdLikeAndFd",fdCode);
 	}
 	//하나의 펀딩 Detail 열람
 	@Override
 	public FundingDetail investFundingDetailSelect(int fdCode) {
 		log.debug("InvestDao-----investFundingDetailSelect");
-		return sqlSessionTemplate.selectOne("com.pineapple.invest.service.InvestMapper.getFundingDetail",fdCode);
+		return sqlSessionTemplate.selectOne("com.pineapple.invest.service.InvestMapper.selectFundingDetail",fdCode);
 	}
 	//하나의 펀딩에서 투하예약하기
 	public int investmentinsert(Investment investment){
 		log.debug("InvestDao-----investinsert");
-		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.addinvestment",investment);
+		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.insertInvestment",investment);
 	}
 	//하나의 펀딩 Q&A SELECT
 	@Override
 	public List<FundingQna> investFundingQnaSelect(int fdCode) {
 		log.debug("InvestDao-----investFundingQnaSelect");
-		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.getFundingQna",fdCode);
+		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.selectFundingQna",fdCode);
 	}
 	//하나의 펀딩 Q&A 댓글 SELECT
 	@Override
 	public List<FundingQnaReply> investFundingQnaReplySelect(int qnaCode) {
 		log.debug("InvestDao-----investFundingQnaReplySelect");
-		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.getFundingQnaAndQnaReply",qnaCode);
+		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.selectFundingQnaAndQnaReply",qnaCode);
 	}
 	//하나의 펀딩 Q&A 글 INSERT
 	@Override
 	public int investFundingQnaInsert(FundingQna fundingqna) {
 		log.debug("InvestDao-----investFundingQnaInsert");
-		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.addFundingQna",fundingqna);
+		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.insertFundingQna",fundingqna);
 	}
 	//하나의 펀딩 Q&A 글 UPDATE
 	@Override
 	public int investFundingQnaUpdate(FundingQna fundingqna) {
 		log.debug("InvestDao-----investFundingQnaUpdate");
-		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.modifyFundingQna",fundingqna);
+		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.updateFundingQna",fundingqna);
 	}
 	//하나의 펀딩 Q&A 글 DELETE
 	@Override
 	public int investFundingQnaDelete(int qnaCode) {
 		log.debug("InvestDao-----investFindingQnaDelete");
-		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.removeFundingQna",qnaCode);
+		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.deleteFundingQna",qnaCode);
 	}
 	//하나의 펀딩 Q&A 글 DELETE시 댓글도 같이 DELETE
 	@Override
 	public int investFundingQnaAllReplyDelete(int qnaCode) {
 		log.debug("InvestDao-----investFundingQnaAllReplyDelete");
-		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.removeFundingQnaAllReply",qnaCode);
+		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.deleteFundingQnaAllReply",qnaCode);
 	}
 	//하나의 펀딩 Q&A 댓글 INSERT
 	@Override
 	public int investFundingQnaReplyInsert(FundingQnaReply fundingqnareply) {
 		log.debug("InvestDao-----investFundingQnaInsert");
-		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.addFundingQnaReply",fundingqnareply);
+		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.insertFundingQnaReply",fundingqnareply);
 	}
 	//하나의 펀딩 Q&A 댓글 UPDATE
 	@Override
 	public int investFundingQnaReplyUpdate(FundingQnaReply fundingqnareply) {
 		log.debug("InvestDao-----investFundingQnaReplyUpdate");
-		return sqlSessionTemplate.update("com.pineapple.invest.service.InvestMapper.modifyFundingQnaReply", fundingqnareply);
+		return sqlSessionTemplate.update("com.pineapple.invest.service.InvestMapper.updateFundingQnaReply", fundingqnareply);
 	}
 	//하나의 펀딩 Q&A 댓글 DELETE
 	@Override
 	public int investFundingQnaReplyDelete(int qnaReCode) {
 		log.debug("InvestDao-----investFundingQnaReplyDelete");
-		return sqlSessionTemplate.delete("com.pineapple.invest.service.InvestMapper.removeFundingQnaReply", qnaReCode);
+		return sqlSessionTemplate.delete("com.pineapple.invest.service.InvestMapper.deleteFundingQnaReply", qnaReCode);
+	}
+	
+	
+	
+	
+	///////////////////////////////My Page Investor/////////////////////
+	//자신의 펀딩 Q&A 글 조회
+	@Override
+	public List<MyInvestorFundingQna> investorQnaSelect(String qnaFdId){
+		log.debug("InvestDao-----investorQnaSelect");
+		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.selectMypageFundingQna", qnaFdId);
 	}
 }
 

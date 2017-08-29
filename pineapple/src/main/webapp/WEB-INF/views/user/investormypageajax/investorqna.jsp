@@ -1,28 +1,33 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>투자자 MyPage</title>
 
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/ehj.css" />
 
 </head>
 <body>
-<c:forEach var="QnaData" items="${fundingqna}">
+<c:forEach var="QnaData" items="${investorqnalist}">
 	<div class="col-xs-12 funding-qna">
-		<div class="col-xs-12 funding-qnaid">
-			<span class="funding-qnaidandtime">${QnaData.qnaFdId}&nbsp;&nbsp;${QnaData.qnaFdTime}</span>
+		<div class="col-xs-12 mypageqnatop">
+			<div class="col-xs-12 mypageqnatitle2">질문한 펀딩 : <span>${QnaData.fdTitle}</span></div>
+			<div class="col-xs-12 mypageqnaqnaid">
+				<span class="funding-qnaidandtime">${QnaData.comName}</span>
+			</div>
+		</div>
+		<div class="col-xs-12 mypageqnatitle">Q&A제목 : <span id="qnatitle${QnaData.qnaCode}">${QnaData.qnaFdTitle}</span></div>
+		<div class="col-xs-12 mypageqnaqnaid">
+			<span class="funding-qnaidandtime">Q&A등록 일자 :&nbsp;&nbsp;${QnaData.qnaFdTime}</span>
 			<span class="funding-qnaupanddel">
 				&nbsp;&nbsp;<a class="qnaupdate" id="qnaupdate${QnaData.qnaCode}" data-toggle="modal" data-target="#myqna${QnaData.qnaCode}" qna-title="${QnaData.qnaFdCode}">수정하기</a>
 				&nbsp;&nbsp;<a href="/pineapple/investqnadelete.invest?fdCode=${QnaData.qnaFdCode}&qnaCode=${QnaData.qnaCode}">삭제하기</a>
 			</span>
 		</div>
-		<div class="col-xs-12 funding-title">Q&A제목 : <span id="qnatitle${QnaData.qnaCode}">${QnaData.qnaFdTitle}</span></div>
-		<div class="col-xs-12 funding-content">Q&A내용 : <span id="qnacontent${QnaData.qnaCode}">${QnaData.qnaFdContent}</span></div>
+		<div class="col-xs-12 mypageqnacontent">Q&A내용 : <span id="qnacontent${QnaData.qnaCode}">${QnaData.qnaFdContent}</span></div>
 		<div class="replyall">
 			<a class="col-xs-1 reply-main" id="${QnaData.qnaCode}" data-toggle="collapse" href="#collapseExample${QnaData.qnaCode}" aria-expanded="false" aria-controls="collapseExample${QnaData.qnaCode}">
 			답글보기
@@ -53,14 +58,14 @@
 				    <h1 class="modal-title" id="myModalLabel${QnaData.qnaCode}">질문 내용 수정</h1>
 				</div>
 				<div class="modal-body">
-					<form id="qnaform${QnaData.qnaCode}" action="/pineapple/investqnaupdate.invest?fdCode=${QnaData.qnaCode}" method="post">
+					<form id="qnaform${QnaData.qnaCode}" action="/pineapple/investorqnaupdate.invest" method="post">
 						<div class="form-group">
 							<input type="hidden" name="qnaCode" value="${QnaData.qnaCode}">
 							<input class="form-control modalqnareplytitle" id="qnaupdatetitle"  name="qnaFdTitle" type="text"  placeholder="수정할 제목을 입력해주세요"value="${QnaData.qnaFdTitle}">
 							<textarea class="form-control modalqnareplycontent" id="qnaupdatecontent" name="qnaFdContent" rows="3" placeholder="수정할 내용을 입력해주세요">${QnaData.qnaFdContent}</textarea>
 						</div>
 						<div class="modal-footer">
-							<button class="qnaupdateform btn btn-default" id="${QnaData.qnaCode}" type="button" data-dismiss="modal">수정하기</button>
+							<button class="qnaupdateform btn btn-default" type="button" data-dismiss="modal" dataCode="${QnaData.qnaCode}">수정하기</button>
 			       			<button type="button" class="btn btn-default" data-dismiss="modal">취소하기</button>
 			      		</div>
 					</form>

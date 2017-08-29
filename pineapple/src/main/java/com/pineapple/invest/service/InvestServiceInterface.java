@@ -31,4 +31,11 @@ public interface InvestServiceInterface {
 	int modifyInvestFundingQnaReply(FundingQnaReply fundingqnareply);
 	//하나의 펀딩 Q&A 댓글 삭제하는 Service
 	int removeInvestFundingQnaReply(int qnaReCode);
+	
+	
+	
+	
+	////////MY Page Investor////////////
+	//자신의 펀딩 Q&A 글 조회
+	List<MyInvestorFundingQna> getInvestorQna(String qnaFdId);
 }

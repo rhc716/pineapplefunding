@@ -100,4 +100,15 @@ public class InvestService implements InvestServiceInterface {
 		int removeinvestfundingqnareply = investdaointerface.investFundingQnaReplyDelete(qnaReCode);
 		return removeinvestfundingqnareply;
 	}
+	
+	
+	
+	////////////MY Page Investor///////////
+	//자신의 펀딩 Q&A 글 조회
+	@Override
+	public List<MyInvestorFundingQna> getInvestorQna(String qnaFdId) {
+		log.debug("------------------InvestService-----------------removeInvestFundingQnaReply()");
+		List<MyInvestorFundingQna> getInvestorQnalist = investdaointerface.investorQnaSelect(qnaFdId);
+		return getInvestorQnalist;
+	}
 }

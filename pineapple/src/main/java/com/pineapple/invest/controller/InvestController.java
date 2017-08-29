@@ -3,6 +3,8 @@ package com.pineapple.invest.controller;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,7 @@ import com.pineapple.invest.service.InvestAndFd;
 import com.pineapple.invest.service.InvestAndFdLikeAndFd;
 import com.pineapple.invest.service.InvestServiceInterface;
 import com.pineapple.invest.service.Investment;
+import com.pineapple.invest.service.MyInvestorFundingQna;
 
 @Controller
 public class InvestController {
@@ -139,6 +142,25 @@ public class InvestController {
 		log.debug(fundingqnareply+"<-----InvestController[fundingqnareply 값 출력]");
 		return "invest/investajax/investqnareply";
 	}
+	
+	
+	/////////////////////////////////MY Page Investor////////////////////////////////
+	//자신의 펀딩 Q&A 글 조회
+	@RequestMapping(value="/investorfundingqna.invest",method=RequestMethod.GET)
+	public String investorFundingQna(Locale locale, Model model,HttpSession session){
+		String qnaFdId = session.getAttribute("id").toString();
+		log.debug("<-----InvestController[investorFundingQna호출]----->");
+		log.debug(qnaFdId+"<-----InvestController[session ID 값 출력]");
+		List<MyInvestorFundingQna> investorqnalist = investserviceinterface.getInvestorQna(qnaFdId);
+		model.addAttribute("investorqnalist",investorqnalist);
+		log.debug(investorqnalist+"<-----InvestController[investorqnalist 값 출력]");
+		return "user/investormypageajax/investorqna";
+	}
+	
+
+	
+	
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	//REST CONTOROLLER
 	//펀딩 하나의 detail 정보 ajax 통신

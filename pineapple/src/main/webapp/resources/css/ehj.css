@@ -120,7 +120,7 @@
 			/* 펀딩Q&A */
 				/* 펀딩Q&A */
 					.funding-qna{margin-top: 20px;
-								 border: 1px solid;}
+								 border: 1px solid #d7d7d7;}
 					.funding-qnaid{margin-top: 10px;
 								   padding-left: 0px;
 								   font-size: 12px;
@@ -133,11 +133,30 @@
 									 font-size: 17px;
 									 padding: 0px;
 									 text-align: left;}
+					.funding-qnaidandtime{opacity: 0.4}
+					.funding-qnaupanddel{opacity: 0.8}
+					
 				/* 펀딩Q&A*/
 				/* 펀딩Q&A댓글 */
 					.reply-main{margin: 10px 0px;
 							   padding: 0px;
 							   text-align: left;}
+					.collapse-main{margin: 20px 0px 0px 0px}
+					.collapsereply-btn{text-align: left;
+									   padding: 0px;}
+					.collapsereplyanswerbtn{width: 50%;
+											height: 100px;
+											padding: 0px;
+											border: 1px solid;
+											font-size: 20px;}
+					.replycontent{text-align: left;
+								  margin: 0px 0px 20px 0px;}
+					.modalqnareplytitle{width: 100%;
+									    height: 30px;
+									    margin-bottom: 10px;}
+					.modalqnareplycontent{width: 100%;
+										  height: 100px;
+										  resize: none;}
 				/* 펀딩Q&A댓글 */
 			/* 펀딩Q&A */
 		/* 펀딩Tab */
@@ -208,6 +227,32 @@
 			/* 타임라인 댓글list */
 		/* 타임라인 main page */
 	/* 타임라인 */
+	/* My Page */
+		/* My Page Q&A*/
+			/* My Page Q&A List*/
+				.mypageqnatop{padding: 0px;}
+				.mypageqnatitle{margin: 0px;
+							   font-size: 25px;
+							   padding: 0px;
+							   text-align: left;}
+				.mypageqnatitle2{margin: 10px 0px 0px 0px;
+							  	 font-size: 25px;
+							     padding: 0px;
+							     text-align: left;}
+				.mypageqnaqnaid{margin : 0px;
+							   padding-left: 0px;
+							   padding-bottom: 10px;
+							   font-size: 12px;
+							   text-align: left;
+							   border-bottom: 1px solid #d7d7d7;}
+				.mypageqnacontent{margin: 10px 0px 0px 0px;
+								 font-size: 17px;
+								 padding: 0px 0px 10px 0px;
+								 text-align: left;
+								 border-bottom: 1px solid #d7d7d7;}
+			/* My Page Q&A List*/
+		/* My Page Q&A*/
+	/* My Page */
 /* CLASS and TAG CSS */
 
 /* invest main 투자하기 main */

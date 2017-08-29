@@ -31,4 +31,9 @@ public interface InvestDaoInterface {
 	int investFundingQnaReplyUpdate(FundingQnaReply fundingqnareply);
 	//하나의 펀딩의 Q&A의 댓글 삭제 Dao
 	int investFundingQnaReplyDelete(int qnaReCode);
+	
+	
+	/////////MY Page Investor/////////
+	//자신의 펀딩 Q&A 글 조회
+	List<MyInvestorFundingQna> investorQnaSelect(String qnaFdId);
 }

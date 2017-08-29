@@ -5,77 +5,72 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>투자자 MyPage</title>
-<!-- jqeury -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-<!-- 부가적인 테마 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-
-<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<!-- css -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
-
-<!-- css lbr -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lbr.css" />
-
 </head>
 <body>
 <c:forEach var="investorData" items="${investorinvest}">
 	<c:choose>
 	<c:when test="${investorData.payCheck == 1}">
-	<div class="col-xs-12"style="padding: 0px">
+	<div class="col-xs-12"style="padding: 10px; border: 1px solid #d7d7d7; margin-bottom: 20px">
 		<div class="col-xs-6" style="padding: 0px">
-			<div class="col-xs-12" style="padding: 0px">
-			<span>펀딩제목 넣을공간</span>
-			<span>${investorData.investTime}</span>
+			<div class="col-xs-12" style="padding: 0px 10px 0px 0px;border-bottom: 1px solid #d7d7d7; margin-bottom: 5px;">
+				<div style="font-size: 25px;padding: 0px;">${investorData.fdTitle}</div>
+				<span style="opacity: 0.5">${investorData.investTime}</span>
 			</div>
 			<div class="col-xs-12" style="padding: 0px">
-				<div class="col-xs-6">
-				내가 투자한 금액 : ${investorData.investtotal*investorData.issuePrice} 하고 주당발행가 합산
-				</div>
-			</div>
-			<div class="col-xs-12" style="padding: 0px">
-				<div class="progress bor-defult">
-  					<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%; min-width: 3em; max-width: 100%;">
-    					프로그레스 바 
-  					</div>
+				<div class="col-xs-6" style="padding: 0px">
+				<div style="font-size: 20px; margin-bottom: 10px;">투자 결제 금액</div><div>새로운 쿼리문으로 적용</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-xs-6" style="padding: 0px">
-			<div class="col-xs-12" style="padding: 0px">
-			4
+		<div class="col-xs-6" style="padding: 10px; line-height: 60px; text-align: center; border-left: 1px solid #d7d7d7;">
+			<div style="font-size: 20px">
+			결제 모집금 : ${investorData.investtotal*investorData.issuePrice}
+			</div>
+			<div class="progress" style="margin: 0px; border: 1px solid; height: 40px;">
+ 					<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ${(investorData.investtotal/investorData.numberOfShares)*100}%; min-width: 4em; max-width: 100%;">
+   					<span style="line-height: 40px; font-size: 15px;">${(investorData.investtotal/investorData.numberOfShares)*100}%</span>
+ 					</div>
 			</div>
 		</div>
 	</div>
 	</c:when>
 	<c:otherwise>
-	<div class="col-xs-12"style="padding: 0px">
+	<div class="col-xs-12"style="padding: 10px; border: 1px solid #d7d7d7; margin-bottom: 20px">
 		<div class="col-xs-6" style="padding: 0px">
-			<div class="col-xs-12" style="padding: 0px">
-			<span></span>
+			<div class="col-xs-12" style="padding: 0px 10px 0px 0px;border-bottom: 1px solid #d7d7d7; margin-bottom: 5px;">
+				<div style="font-size: 25px;padding: 0px;">${investorData.fdTitle}</div>
+				<span style="opacity: 0.5">${investorData.investTime}</span>
+			<c:choose>
+				<c:when test="${investorData.fdStatus == '결제모집중'}">
+				<a href="#">결제하기</a>
+				</c:when>
+			</c:choose>
 			</div>
 			<div class="col-xs-12" style="padding: 0px">
-				<div class="col-xs-6">
-				내가 투자한 금액 : ${investorData.investtotal*investorData.issuePrice} 하고 주당발행가 합산
-				</div>
-			</div>
-			<div class="col-xs-12" style="padding: 0px">
-				<div class="progress bor-defult">
-  					<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%; min-width: 3em; max-width: 100%;">
-    					프로그레스 바 
-  					</div>
+				<div class="col-xs-6" style="padding: 0px">
+				<div style="font-size: 20px; margin-bottom: 10px;">투자 예약 금액</div><div>새로운 쿼리문으로 적용</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-xs-6" style="padding: 0px">
-			<div class="col-xs-12" style="padding: 0px">
-			4
+		<div class="col-xs-6" style="padding: 10px; line-height: 60px; text-align: center; border-left: 1px solid #d7d7d7;">
+			<div>
+				<c:choose>
+					<c:when test="${investorData.fdStatus == '결제모집중'}">
+						<div style="font-size: 20px">
+						결제 모집금 : ${investorData.investtotal*investorData.issuePrice}
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div style="font-size: 20px">
+						예약 모집금 : ${investorData.investtotal*investorData.issuePrice}
+						</div>
+					</c:otherwise>
+				</c:choose>
+			</div>
+			<div class="progress" style="margin: 0px;border: 1px solid; height: 40px;">
+ 					<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ${(investorData.investtotal/investorData.numberOfShares)*100}%; min-width: 4em; max-width: 100%;">
+   					<span style="line-height: 40px; font-size: 15px;">${(investorData.investtotal/investorData.numberOfShares)*100}%</span>
+ 					</div>
 			</div>
 		</div>
 	</div>

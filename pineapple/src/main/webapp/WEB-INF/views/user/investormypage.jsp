@@ -8,20 +8,13 @@
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-<!-- 부가적인 테마 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-
-<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
 
 <!-- css lbr -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lbr.css" />
+
+
 <script type="text/javascript">
 $(document).ready(function(){
 	$('#newAccountSubmitBtn').click(function(){
@@ -52,20 +45,40 @@ $(document).ready(function(){
     		$('#accountNicknameChange').val(ic.accountNickname);
 		});
 	});
+	//투자내역 tab ajax 요청
 	$('#investmemt-tab').click(function(){
 		var investmenttab = $.ajax({ // ajax실행부분
-	        type: "get",
-	        url : "/pineapple/investorinvestment.user",
+	        type: 'get',
+	        url : '/pineapple/investorinvestment.user',
 	        success : function success(msg){
-	        	alert('INVESTMENT AJAX 성공');
 	        	$('#investorinvest').html(msg);
 	        },
 	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
 	        error : function error(){
-        		alert('INVESTMENT AJAX 실패');
         	}
 		});
 	});
+ 	//Q&A tab ajax 요청
+	$('#fundingqna-tab').click(function(){
+		var investorqnatab = $.ajax({ // ajax실행부분
+	        type: "get",
+	        url : "/pineapple/investorfundingqna.invest",
+	        success : function success(msg){
+	        	$('#investorfundingqna').html(msg);
+	         	//수정 버튼 click 이벤트
+	         	$('.qnaupdateform').click(function(){
+	         		var qnaCode = $(this).attr('dataCode');
+	         		alert(qnaCode)
+	         		$('#qnaform'+qnaCode+'').submit();
+	         	});
+	        },
+	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+	        error : function error(){
+        	}
+		});
+	});
+
+	
 });
 </script>
 </head>
@@ -238,16 +251,19 @@ $(document).ready(function(){
 			</div>
 		</div>
 		<div role="tabpanel" class="tab-pane fade" id="timeline" aria-labelledby="timeline-tab"> 
-			<p>타임라인</p> 
+			<h1 style="text-align: center;">MY TIMELINE LIST</h1> 
+			<div class="col-xs-12" id="investortimeline"></div> 
 		</div>
 		<div role="tabpanel" class="tab-pane fade" id="fundingqna" aria-labelledby="fundingqna-tab"> 
-			<p>펀딩Q&A</p> 
+			<h1 style="text-align: center;">MY FUNDING Q&A LIST</h1>
+			<div class="col-xs-12" id="investorfundingqna"></div> 
 		</div>
 		<div role="tabpanel" class="tab-pane fade" id="message" aria-labelledby="message-tab"> 
-			<p>메세지</p> 
+			<h1 style="text-align: center;">MY MESSAGE LIST</h1>
+			<div class="col-xs-12" id="investormessage"></div> 
 		</div>
 		<div role="tabpanel" class="tab-pane fade" id="investmemt" aria-labelledby="investmemt-tab"> 
-			<p>INVEST LIST</p>
+			<h1 style="text-align: center;">MY INVEST LIST</h1>
 			<div class="col-xs-12" id="investorinvest"></div> 
 		</div>
 	</div>

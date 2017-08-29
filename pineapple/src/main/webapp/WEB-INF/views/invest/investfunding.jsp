@@ -53,7 +53,7 @@
 					$('#qnaform'+qnaupdate+'').submit();
 				});
 		 		//답글보기 클릭시
-		 		$('.replymain').click(function(){
+		 		$('.reply-main').click(function(){
 		 			var turefalse = $(this).attr('aria-expanded')
 		 			var qnaCode = $(this).attr('id')
 						var getfundingqnareply = $.ajax({
