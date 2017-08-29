@@ -77,7 +77,7 @@
 	<insert id="insertCompany" parameterType="com.pineapple.user.service.Company">
 		INSERT INTO company
 		(comCode, comName, comNumber, comHomePage, comCeoName, comEstablishYear, comInfo, comLogoServerName, comLogoHeight, comLogoWidth, comLogoSize, comLogoExtension, comSummary, comActivitySummary, comOpenUserId, comAdminApproval, comApprovalDate, comApprovalId, comDelRequestId, comDelTime, comDelApprovalId)
-		VALUES (null, #{comName}, #{comNumber}, #{comHomePage}, #{comCeoName}, #{comEstablishYear}, #{comInfo}, #{comLogoServerName}, #{comLogoHeight}, #{comLogoWidth}, #{comLogoSize}, #{comLogoExtension}, #{comSummary}, #{comActivitySummary}, #{comOpenUserId}, null, null, null, null, null, null)
+		VALUES (null, #{comName}, #{comNumber}, #{comHomePage}, #{comCeoName}, #{comEstablishYear}, #{comInfo}, #{comLogoServerName}, #{comLogoHeight}, #{comLogoWidth}, #{comLogoSize}, #{comLogoExtension}, #{comSummary}, #{comActivitySummary}, #{comOpenUserId}, 0, null, null, null, null, null)
 	</insert>
 <!-- 경영진 마이페이지 기업정보 수정 -->
 	<update id="updateCompanyInfo" parameterType="com.pineapple.user.service.Company">

@@ -24,14 +24,12 @@ public class MypageService implements MypageServiceInterface {
 		log.debug("MypageService modifyCompanyInfo 호출 결과: "+mypagedao.updateCompanyInfo(company));
 		return mypagedao.updateCompanyInfo(company);
 	}
-	
 	//투자자 투자내역 조회
 	@Override
 	public List<InvestorInvestList> getInvestor(String investId) {
 		log.debug("MypageService getInvestor 호출 결과: "+mypagedao.selectInvestor(investId));
 		return mypagedao.selectInvestor(investId);
 	}
-	
 	//투자자, 사이트관리자의 계좌조회 메서드 선언(id로)
 	@Override
 	public Account getAccountByAccountCode(int accountCode) {
@@ -98,6 +96,8 @@ public class MypageService implements MypageServiceInterface {
 		log.debug("MypageService selectInvestorBasic 메서드 호출 "+userId);
 		return mypagedao.selectInvestorBasic(userId);
 	}
+
+	
 
 
 }

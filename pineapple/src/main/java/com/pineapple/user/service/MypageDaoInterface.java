@@ -10,7 +10,7 @@ public interface MypageDaoInterface {
 	
 	//경영진 마이페이지 개설한 기업정보 수정 요청 처리
 	int updateCompanyInfo(Company company);
-	
+
 	//투자자 투자내역 조회
 	List<InvestorInvestList> selectInvestor(String investId);
 	

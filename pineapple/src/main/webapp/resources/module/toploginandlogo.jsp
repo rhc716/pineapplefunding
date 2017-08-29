@@ -16,14 +16,14 @@
 		<br>
 			<c:choose>
 				<c:when test="${not empty sessionScope.userLogin}">
-					<div class="col-md-3">
+					<div class="col-md-3" style="float: right">
 						<a href="/pineapple/logout.user">
 							<button type="button" class="btn btn-danger" aria-label="left Align">
 							  <span class="glyphicon glyphicon-off" aria-hidden="true"> 로그아웃</span>
 							</button>
 						 </a>
 					 </div>
-					 <div class="col-md-3">
+					 <div class="col-md-3" style="float: right">
 						 <a href="/pineapple/mypage.user">
 							<button type="button" class="btn btn-danger" aria-label="left Align">
 							  <span class="glyphicon glyphicon-user" aria-hidden="true"> 마이페이지</span>
@@ -32,14 +32,14 @@
 					</div> 
 				</c:when>
 				<c:otherwise>
-					<div class="col-md-3">
+					<div class="col-md-3" style="float: right">
 						<a href="/pineapple/login.user">
 							<button type="button" class="btn btn-success" aria-label="left Align">
 							  <span class="glyphicon glyphicon-globe" aria-hidden="true"> 로그인</span>
 							</button>
 						</a>
 					</div>
-					 <div class="col-md-3">
+					 <div class="col-md-3" style="float: right">
 						<a href="/pineapple/userinsert.user">
 							<button type="button" class="btn btn-success" aria-label="left Align">
 							  <span class="glyphicon glyphicon-globe" aria-hidden="true"> 회원가입</span>

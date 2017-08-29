@@ -225,7 +225,7 @@ $(document).ready(function(){
 	<span class="topnamebar" ><h2>회원가입</h2></span>
 	<div class="row">
 		<div class="col-xs-2"></div>
-		<div class="col-xs-10 form_page">
+		<div class="col-xs-10">
 			<form id="form" action="/pineapple/userinsert.user" name="userinput" method="post" style="border:1px solid #ccc">
 				<div class="container_insert">
 				    <label for="levelCodeChoice">권한</label>

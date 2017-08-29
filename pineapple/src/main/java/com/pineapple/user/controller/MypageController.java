@@ -26,13 +26,14 @@ public class MypageController {
 	
 	@Autowired
 	private MypageServiceInterface mypageservice;
+	
 	//사원등록정보 확인 모달에서 부서명 수정하기 요청 처리
 	
 	
 	//경영진 마이페이지 개설한 기업정보 수정 요청 처리
 	@RequestMapping(value="/changecompanyinfo.user", method = RequestMethod.POST)
     public String modifyCompanyInfo(HttpSession session, Company company) { //커맨드 객체
-        log.debug("modifyCompanyInfo 기업정보 수정 요청 : "+company);
+        log.debug("modifyCompanyInfo 기업정보 수정처리 요청 : "+company);
         int result = mypageservice.modifyCompanyInfo(company);
         if(result == 1){
         	log.debug(session.getAttribute("nickname")+"님의 기업정보 수정 처리 성공");
@@ -89,17 +90,17 @@ public class MypageController {
     }
 	
 	//사원등록시 회사검색 요청 처리
-	@RequestMapping(value="/selectcompany.user", method = RequestMethod.POST)
+	@RequestMapping(value="/searchcomname.user", method = RequestMethod.GET)
     public @ResponseBody Company searchCompany(HttpSession session, Model model, @RequestParam("comName") String comName) { 
-        log.debug("searchCompany 회사검색");
-        Company mycompany = mypageservice.getMyCompany(comName);
-        if(mycompany != null){
+        log.debug("searchCompany 회사검색 요청 : "+comName);
+        Company comSearchResult = mypageservice.getMyCompany(comName);
+        if(comSearchResult != null){
         	log.debug(session.getAttribute("nickname")+"님의 소속회사조회 성공");
-        	model.addAttribute("mycompany", mycompany);
+        	model.addAttribute("comSearchResult", comSearchResult);
         } else {
         	log.debug(session.getAttribute("nickname")+"님의  소속회사조회 실패");
         }
-        return mycompany;
+        return comSearchResult;
     }
 	//경영진의 회사등록 요청 처리
 	@RequestMapping(value="/addnewcompany.user", method = RequestMethod.POST)
