@@ -40,4 +40,6 @@ public interface InvestServiceInterface {
 	List<MyInvestorFundingQna> getInvestorQna(String qnaFdId);
 	//자신의 펀딩 Q&A 댓글 조회
 	List<FundingQnaReply> getInvestorQnaReply(int qnaCode);
+	
+	//test
 }
