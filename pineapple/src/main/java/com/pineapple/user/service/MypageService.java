@@ -15,8 +15,26 @@ public class MypageService implements MypageServiceInterface {
 	@Autowired
 	private MypageDaoInterface mypagedao;
 	
-	//사원등록정보 확인 모달에서 부서명 수정하기 요청 처리
+	//사원정보 조회 메서드 선언(사원정보 수정페이지 요청을 위해)
+	@Override
+	public Employee getEmployeeByEmCode(int emCode) {
+		log.debug("MypageService getEmployeeByEmCode 호출 결과: "+mypagedao.selectEmployeeByEmCode(emCode));
+		return mypagedao.selectEmployeeByEmCode(emCode);
+	}
 	
+	//기업정보 조회 메서드 선언(기업정보 수정페이지 요청을 위해)
+	@Override
+	public Company getCompanyByComCode(int comCode) {
+		log.debug("MypageService getEmployeeByEmCode 호출 결과: "+mypagedao.selectCompanyByComCode(comCode));
+		return mypagedao.selectCompanyByComCode(comCode);
+	}
+	
+	//사원등록정보 확인 모달에서 부서명 수정하기 요청 처리
+	@Override
+	public int modifyEmployeeInfo(Employee employee) {
+		log.debug("MypageService modifyEmployeeInfo 호출 결과: "+mypagedao.updateEmployeeInfo(employee));
+		return mypagedao.updateEmployeeInfo(employee);
+	}
 	
 	//경영진 마이페이지 개설한 기업정보 수정 요청 처리
 	@Override
@@ -98,6 +116,5 @@ public class MypageService implements MypageServiceInterface {
 	}
 
 	
-
-
+	
 }

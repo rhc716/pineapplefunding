@@ -77,7 +77,7 @@
 	<insert id="insertCompany" parameterType="com.pineapple.user.service.Company">
 		INSERT INTO company
 		(comCode, comName, comNumber, comHomePage, comCeoName, comEstablishYear, comInfo, comLogoServerName, comLogoHeight, comLogoWidth, comLogoSize, comLogoExtension, comSummary, comActivitySummary, comOpenUserId, comAdminApproval, comApprovalDate, comApprovalId, comDelRequestId, comDelTime, comDelApprovalId)
-		VALUES (null, #{comName}, #{comNumber}, #{comHomePage}, #{comCeoName}, #{comEstablishYear}, #{comInfo}, #{comLogoServerName}, #{comLogoHeight}, #{comLogoWidth}, #{comLogoSize}, #{comLogoExtension}, #{comSummary}, #{comActivitySummary}, #{comOpenUserId}, 0, null, null, null, null, null)
+		VALUES (null, #{comName}, #{comNumber}, #{comHomePage}, #{comCeoName}, #{comEstablishYear}, #{comInfo}, #{comLogoServerName}, #{comLogoHeight}, #{comLogoWidth}, #{comLogoSize}, #{comLogoExtension}, #{comSummary}, #{comActivitySummary}, #{comOpenUserId}, #{comAdminApproval}, null, null, null, null, null)
 	</insert>
 <!-- 경영진 마이페이지 기업정보 수정 -->
 	<update id="updateCompanyInfo" parameterType="com.pineapple.user.service.Company">
@@ -108,7 +108,7 @@
 	</update>
 
 <!-- 기업회원 중 경영진 마이페이지 분기시 자신이 등록요청한 회사정보 조회 -->
-	<select id="selectCompanyInfoByOpenId" parameterType="String" resultType="com.pineapple.user.service.Company">
+	<select id="selectCompanyInfoByOpenId" parameterType="String" resultMap="selectCompanyInfoByOpenId">
 		SELECT *
 		FROM company
 		WHERE comOpenUserId=#{comOpenUserId}
@@ -128,7 +128,45 @@
 		<result property="comDelTime" column="comDelTime"/>
 		<result property="comDelApprovalId" column="comDelApprovalId"/>
 	</resultMap>
-
+<!-- 기업회원 중 경영진 개설한 회사정보 조회(comCode로)-->
+	<select id="selectCompanyInfoByComCode" parameterType="int" resultMap="selectCompanyInfoByComCode">
+		SELECT *
+		FROM company
+		WHERE comCode=#{comCode}
+	</select>
+	<resultMap type="com.pineapple.user.service.Company" id="selectCompanyInfoByComCode">
+		<result property="comCode" column="comCode"/>
+		<result property="comName" column="comName"/>
+		<result property="comNumber" column="comNumber"/>
+		<result property="comHomePage" column="comHomePage"/>
+		<result property="comCeoName" column="comCeoName"/>
+		<result property="comEstablishYear" column="comEstablishYear"/>
+		<result property="comOpenUserId" column="comOpenUserId"/>
+		<result property="comAdminApproval" column="comAdminApproval"/>
+		<result property="comApprovalDate" column="comApprovalDate"/>
+		<result property="comApprovalId" column="comApprovalId"/>
+		<result property="comDelRequestId" column="comDelRequestId"/>
+		<result property="comDelTime" column="comDelTime"/>
+		<result property="comDelApprovalId" column="comDelApprovalId"/>
+	</resultMap>
+	
+<!-- 사원정보 조회(emCode로) -->
+	<select id="selectEmployeeByEmCode" parameterType="int" resultMap="selectEmployeeByEmCode">
+		SELECT *
+		FROM employee
+		WHERE emCode=#{emCode}
+	</select>
+	<resultMap type="com.pineapple.user.service.Employee" id="selectEmployeeByEmCode">
+		<result property="emCode" column="emCode"/>
+		<result property="emUserId" column="emUserId"/>
+		<result property="emComCode" column="emComCode"/>
+		<result property="emComName" column="emComName"/>
+		<result property="emRankCode" column="emRankCode"/>
+		<result property="emDepartment" column="emDepartment"/>
+		<result property="emCheck" column="emCheck"/>
+		<result property="emDelRequest" column="emDelRequest"/>
+	</resultMap>
+	
 <!-- 사원등록요청시 등록할 전체회사정보 조회(검색기능) -->
 	<select id="selectAllCompany" resultMap="selectAllCompany">
 		SELECT comCode, comName
@@ -151,7 +189,22 @@
 		INSERT INTO employee
 		(emUserId, emComCode, emComName, emRankCode, emDepartment, emCheck, emDelRequest)
 		VALUES (#{emUserId}, #{emComCode}, #{emComName}, #{emRankCode}, #{emDepartment}, #{emCheck}, #{emDelRequest})
-	</insert>	
+	</insert>
+	
+<!-- 사원정보수정 요청 처리 -->		
+	<update id="updateEmployeeInfo" parameterType="com.pineapple.user.service.Employee">
+		UPDATE employee
+		SET
+		emCode=#{emCode},
+		emUserId=#{emUserId},
+		emComCode=#{emComCode},
+		emComName=#{emComName},
+		emRankCode=#{emRankCode},
+		emDepartment=#{emDepartment},
+		emCheck=#{emCheck},
+		emDelRequest=#{emDelRequest}
+		WHERE emCode=#{emCode}
+	</update>
 	
 <!-- 투자자 회원정보 및 계좌정보 조회 -->
 	<select id="selectAllInvestorInfo" parameterType="String" resultMap="selectAllInvestorInfo">

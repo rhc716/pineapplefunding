@@ -27,8 +27,34 @@ public class MypageController {
 	@Autowired
 	private MypageServiceInterface mypageservice;
 	
-	//사원등록정보 확인 모달에서 부서명 수정하기 요청 처리
 	
+	
+	//사원등록정보 확인 모달에서 사원정보(주로 부서명) 수정하기 요청 처리
+	@RequestMapping(value="/changeemployeeinfo.user", method = RequestMethod.POST)
+    public String modifyEmployeeInfo(HttpSession session, Employee employee) { //커맨드 객체
+        log.debug("modifyEmployeeInfo 사원정보 수정처리 요청 : "+employee);
+        int result = mypageservice.modifyEmployeeInfo(employee);
+        if(result == 1){
+        	log.debug(session.getAttribute("nickname")+"님의 사원정보 수정 처리 성공");
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님의 사원정보 수정 처리 실패");
+        }
+        return "redirect:/mypage.user"; // 글입력후 "/"로 리다이렉트(재요청)
+    }
+	
+	//마이페이지 사원정보 수정 페이지 요청
+	@RequestMapping(value="/employeechangepage.user", method=RequestMethod.GET)
+	public @ResponseBody Employee modifyEmployeePage(Model model, @RequestParam("emCode") int emCode){
+		log.debug("MypageController modifyEmployeePage 사원정보수정 페이지 요청");
+		Employee employee = mypageservice.getEmployeeByEmCode(emCode);
+		if(employee != null){
+			log.debug("MypageController changeEmployee 사원정보 조회 성공");
+			model.addAttribute("employee", employee);
+		} else {
+			log.debug("MypageController changeAccountPage 사원정보 조회 실패");
+		}
+		return employee;
+	}
 	
 	//경영진 마이페이지 개설한 기업정보 수정 요청 처리
 	@RequestMapping(value="/changecompanyinfo.user", method = RequestMethod.POST)
@@ -38,11 +64,25 @@ public class MypageController {
         if(result == 1){
         	log.debug(session.getAttribute("nickname")+"님의 기업정보 수정 처리 성공");
         } else {
-        	log.debug(session.getAttribute("nickname")+"님의기업정보 수정 처리 실패");
+        	log.debug(session.getAttribute("nickname")+"님의 기업정보 수정 처리 실패");
         }
         return "redirect:/mypage.user"; // 글입력후 "/"로 리다이렉트(재요청)
     }
 	
+	//마이페이지 사원정보 수정 페이지 요청
+	@RequestMapping(value="/companychangepage.user", method=RequestMethod.GET)
+	public @ResponseBody Company modifyCompanyPage(Model model, @RequestParam("comCode") int comCode){
+		log.debug("MypageController modifyCompanyPage 기업정보수정 페이지 요청");
+		Company company = mypageservice.getCompanyByComCode(comCode);
+		if(company != null){
+			log.debug("MypageController modifyCompanyPage 기업정보 조회 성공");
+			model.addAttribute("company", company);
+		} else {
+			log.debug("MypageController modifyCompanyPage 기업정보 조회 실패");
+		}
+		return company;
+	}
+
 	//투자자 투자내역 조회
 	@RequestMapping(value="/investorinvestment.user", method=RequestMethod.GET)
 	public String getInvestor(Model model, HttpSession session){
@@ -53,7 +93,7 @@ public class MypageController {
 	}
 	
 	//마이페이지 계좌정보 수정 페이지 요청
-	@RequestMapping(value="/accountchangepage.user", method=RequestMethod.POST)
+	@RequestMapping(value="/accountchangepage.user", method=RequestMethod.GET)
 	public @ResponseBody Account changeAccount(Model model, @RequestParam("accountCode") int accountCode){
 		log.debug("MypageController accountchangepage 회원계좌정보수정 페이지 요청");
 		Account account = mypageservice.getAccountByAccountCode(accountCode);

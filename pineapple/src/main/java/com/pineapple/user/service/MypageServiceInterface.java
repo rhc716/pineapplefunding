@@ -6,10 +6,16 @@ import com.pineapple.invest.service.InvestorInvestList;
 
 public interface MypageServiceInterface {
 	//사원등록정보 확인 모달에서 부서명 수정하기 요청 처리
+	int modifyEmployeeInfo(Employee employee);
 	
+	//사원정보 조회 메서드 선언(사원정보 수정페이지 요청을 위해)
+	Employee getEmployeeByEmCode(int emCode);
 	
 	//경영진 마이페이지 개설한 기업정보 수정 요청 처리
 	int modifyCompanyInfo(Company company);
+	
+	//기업정보 조회 메서드 선언(기업정보 수정페이지 요청을 위해)
+	Company getCompanyByComCode(int comCode);
 	
 	//투자자 투자내역 조회
 	List<InvestorInvestList> getInvestor(String investId);
