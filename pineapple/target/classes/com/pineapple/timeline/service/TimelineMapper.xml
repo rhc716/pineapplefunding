@@ -4,7 +4,7 @@
   
 <mapper namespace="com.pineapple.timeline.service.TimelineMapper">
 	<!-- TimelineReplyAndUser -->
-	<resultMap type="com.pineapple.timeline.service.TimelineReply" id="getTimelineReply">
+	<resultMap type="com.pineapple.timeline.service.TimelineReply" id="selectTimelineReply">
 		<id property="tlReCode" column="tlReCode"/>
 		<result property="tlCode" column="tlCode"/>
 		<result property="tlReId" column="tlReId"/>
@@ -13,13 +13,13 @@
 		<result property="nickname" column="nickname"/>
 	</resultMap>
 	<!-- TimelineLike -->
-	<resultMap type="com.pineapple.timeline.service.TimelineLike" id="getTimelineLikeresultmap">
+	<resultMap type="com.pineapple.timeline.service.TimelineLike" id="selectTimelineLikeresultmap">
 		<id property="tlLikeId" column="tlLikeId"/>
 		<id property="tlCode" column="tlCode"/>
 		<result property="timelinelikenickname" column="timelinelikenickname"/>
 	</resultMap>
 	<!-- TimelineAndUserAndEmployeeAndTimelineLike -->
-	<resultMap type="com.pineapple.timeline.service.TimelineAndUserAndEmployeeAndTimelineLike" id="getTimelineListresultmap">
+	<resultMap type="com.pineapple.timeline.service.TimelineAndUserAndEmployeeAndTimelineLike" id="selectTimelineListresultmap">
 		<id property="tlCode" column="tlCode"/>
 		<result property="tlTitle" column="tlTitle"/>
 		<result property="tlContent" column="tlContent"/>
@@ -28,7 +28,7 @@
 		<result property="emRankCode" column="emRankCode"/>
 		<result property="emComName" column="emComName"/>
 		<result property="timelinelikecount" column="timelinelikecount"/>
-		<collection property="timelineLike" resultMap="getTimelineLikeresultmap">
+		<collection property="timelineLike" resultMap="selectTimelineLikeresultmap">
 			<id property="tlLikeId" column="tlLikeId"/>
 			<id property="tlCode" column="tlCode"/>
 			<result property="timelinelikenickname" column="timelinelikenickname"/>
@@ -36,7 +36,7 @@
 	</resultMap>
 	
 	<!-- 타임라인 메인 페이지 에서 list 조회 -->
- 	<select id="getTimelineList" resultMap="getTimelineListresultmap">
+ 	<select id="selectTimelineList" resultMap="selectTimelineListresultmap">
 		SELECT t.tlCode,
 			   t.tlTitle,
 			   t.tlContent,
@@ -57,13 +57,13 @@
 		ORDER BY t.tlTime DESC
 	</select>
 	<!-- 타임라인 입력 -->
-	<insert id="addTimeline" parameterType="com.pineapple.timeline.service.Timeline">
+	<insert id="insertTimeline" parameterType="com.pineapple.timeline.service.Timeline">
 		INSERT INTO timeline
 					(tlId, tlTitle, tlContent, tlTime)
 		VALUES (#{tlId}, #{tlTitle}, #{tlContent}, NOW())
 	</insert>
 	<!-- 타임라인 수정 -->
-	<update id="modifyTimeline" parameterType="com.pineapple.timeline.service.Timeline">
+	<update id="updateTimeline" parameterType="com.pineapple.timeline.service.Timeline">
 		UPDATE timeline
 			SET
 				tlTitle=#{tlTitle},
@@ -71,15 +71,15 @@
 		WHERE tlCode = #{tlCode}
 	</update>
 	<!-- 타임라인 삭제 -->
-	<delete id="removeTimeline" parameterType="INT">
+	<delete id="deleteTimeline" parameterType="INT">
 		DELETE FROM timeline WHERE tlCode=#{tlCode}
 	</delete>
 	<!-- 타임라인 삭제시 댓글같이 삭제 -->
-	<delete id="removeTimelineAndReply" parameterType="INT">
+	<delete id="deleteTimelineAndReply" parameterType="INT">
 		DELETE FROM timelinereply WHERE tlCode=#{tlCode}
 	</delete>
 	<!-- 타임라인 댓글 list 조회 -->
-	<select id="getTimelineReplyList" resultMap="getTimelineReply" parameterType="INT">
+	<select id="selectTimelineReplyList" resultMap="selectTimelineReply" parameterType="INT">
 		SELECT tr.tlReCode, 
 			   tr.tlCode, 
 			   tr.tlReId, 
@@ -90,20 +90,79 @@
 		WHERE tr.tlCode = #{tlCode}
 	</select>
 	<!-- 타임라인 댓글 입력 -->
-	<insert id="addTimelineReply" parameterType="com.pineapple.timeline.service.TimelineReply">
+	<insert id="insertTimelineReply" parameterType="com.pineapple.timeline.service.TimelineReply">
 		INSERT INTO timelinereply
 			   (tlCode, tlReId, tlReContent, tlReTime)
 		VALUES (#{tlCode}, #{tlReId}, #{tlReContent}, NOW())
 	</insert>
 	<!-- 타임라인 댓글 수정 -->
-	<update id="modifyTimelineReply" parameterType="com.pineapple.timeline.service.TimelineReply">
+	<update id="updateTimelineReply" parameterType="com.pineapple.timeline.service.TimelineReply">
 		UPDATE timelinereply
 			SET
 				tlReContent=#{tlReContent}
 		WHERE tlReCode=#{tlReCode}
 	</update>
 	<!-- 타임라인 댓글 삭제 -->
-	<delete id="removeTimelineReply" parameterType="com.pineapple.timeline.service.TimelineReply">
+	<delete id="deleteTimelineReply" parameterType="com.pineapple.timeline.service.TimelineReply">
 		DELETE FROM timelinereply WHERE tlReCode=#{tlReCode}
 	</delete>
+	
+	
+	
+	
+	
+	<!-- MY Page MY Page MY Page MY Page MY Page MY Page MY Page MY Page MY Page MY Page MY Page MY Page MY Page MY Page MY Page  -->
+	<!-- MyInvestorTimeline -->
+	<resultMap type="com.pineapple.timeline.service.MyInvestorTimeline" id="selectMypageTimelineListresultmapper">
+		<id property="tlCode" column="tlCode"/>
+		<result property="tlTitle" column="tlTitle"/>
+		<result property="tlContent" column="tlContent"/>
+		<result property="tlTime" column="tlTime"/>
+		<result property="nickname" column="nickname"/>
+		<result property="timelinelikecount" column="timelinelikecount"/>
+		<result property="totaltimelinecount" column="totaltimelinecount"/>
+		<collection property="timelineLike" resultMap="selectTimelineLikeresultmap">
+			<id property="tlLikeId" column="tlLikeId"/>
+			<id property="tlCode" column="tlCode"/>
+			<result property="timelinelikenickname" column="timelinelikenickname"/>
+		</collection>
+	</resultMap>
+	<!-- MyInvestorTimelineLog -->
+	<resultMap type="com.pineapple.timeline.service.MyInvestorTimelineLog" id="selectMypageTimelinelogResultMapper">
+		<result property="daycount" column="daycount"/>
+		<result property="oneweekcount" column="oneweekcount"/>
+		<result property="twoweekcount" column="twoweekcount"/>
+		<result property="threeweekcount" column="threeweekcount"/>
+		<result property="fourweekcount" column="fourweekcount"/>
+		<result property="onemonthcount" column="onemonthcount"/>
+	</resultMap>
+	<!-- 자신이 등록한 타임라인 list 조회 -->
+	<select id="selectMypageTimelineList" parameterType="String" resultMap="selectMypageTimelineListresultmapper">
+		SELECT t.tlCode,
+			   t.tlTitle,
+			   t.tlContent,
+			   t.tlTime,
+			   u.nickname,
+			   t.tlId,
+			   (SELECT COUNT(tlCode) FROM timelinelike WHERE tlCode = t.tlCode) as timelinelikecount,
+			   tl.tlLikeId,
+			   (SELECT nickname FROM user su WHERE tl.tlLikeId = su.userId) as timelinelikenickname,
+			   (SELECT COUNT(tlCode) FROM timeline st WHERE st.tlId = #{tlId} ) as totaltimelinecount
+		FROM timeline t 
+		INNER JOIN user u 
+		ON t.tlId = u.userId 
+		LEFT JOIN timelinelike tl 
+		ON tl.tlCode = t.tlCode
+		WHERE t.tlId = #{tlId}
+		ORDER BY t.tlTime DESC
+	</select>
+	<select id="selectMypageTimelinelog" parameterType="String" resultMap="selectMypageTimelinelogResultMapper">
+		SELECT (SELECT COUNT(tlCode) FROM timeline st where st.tlTime >= date_add(now(), interval -0 day) and st.tlId = #{tlId}) as daycount,
+			   (SELECT COUNT(tlCode) FROM timeline st where st.tlTime >= date_add(now(), interval -7 day) and st.tlId = #{tlId}) as oneweekcount,
+			   (SELECT COUNT(tlCode) FROM timeline st where st.tlTime >= date_add(now(), interval -14 day) and st.tlId = #{tlId}) as twoweekcount,
+			   (SELECT COUNT(tlCode) FROM timeline st where st.tlTime >= date_add(now(), interval -21 day) and st.tlId = #{tlId}) as threeweekcount,
+			   (SELECT COUNT(tlCode) FROM timeline st where st.tlTime >= date_add(now(), interval -28 day) and st.tlId = #{tlId}) as fourweekcount,
+			   (SELECT COUNT(tlCode) FROM timeline st where st.tlTime >= date_add(now(), interval -30 day) and st.tlId = #{tlId}) as onemonthcount
+	</select>
+	
 </mapper>

@@ -21,4 +21,10 @@ public interface TimelineServiceInterface {
 	int modifyTimelineReply(TimelineReply timelinereply);
 	//타임라인 댓글 삭제하는 Service
 	int removeTimelineReply(int tlReCode);
+	
+	/////////////////My Page Time Line//////////////////////
+	//자신이 등록한 타임라인 list 조회
+	List<MyInvestorTimeline> getMypageTimelineList(String tlId);
+	//자신의 한달간의 활동기록 조회
+	MyInvestorTimelineLog getMypageTimelineLog(String tlId);
 }

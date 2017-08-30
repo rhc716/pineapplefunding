@@ -1,18 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Invest Funding Qna Reply</title>
+<title>투자자 MyPage</title>
 
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/ehj.css" />
 
 </head>
-<body> 
-<c:set var="reply" value="${fundingqnareply}"></c:set>
+<body>
+<c:set var="reply" value="${investorqnareplylist}"></c:set>
 <c:choose>
 	<c:when test="${reply.size() == 0}">
 		<span class="glyphicon glyphicon-menu-right"></span>
@@ -20,14 +19,14 @@
 		<div class="replycontentnull">등록된 답변이 없습니다.</div>
 	</c:when>
 	<c:otherwise>
-		<c:forEach var="QnareData" items="${fundingqnareply}">
+		<c:forEach var="QnareData" items="${investorqnareplylist}">
 			<span class="glyphicon glyphicon-menu-right"></span>
 			<span class="replyidandtime">${QnareData.qnaReId}&nbsp;&nbsp;${QnareData.qnaReTime}</span>
 			<c:choose>
 			<c:when test="${QnareData.qnaReId == id}">
 			<span class="replyupanddel">
 				&nbsp;&nbsp;<a class="qnareupdate" id="qnareupdate${QnareData.qnaReCode}" data-toggle="modal" data-target="#myqnare${QnareData.qnaReCode}" qna-title="${QnareData.qnaFdCode}">수정하기</a>
-				&nbsp;&nbsp;<a href="/pineapple/investqnaredelete.invest?fdCode=${QnareData.qnaFdCode}&qnaReCode=${QnareData.qnaReCode}">삭제하기</a>
+				&nbsp;&nbsp;<a href="/pineapple/investorqnareplydelete.invest?qnaReCode=${QnareData.qnaReCode}">삭제하기</a>
 			</span>
 			</c:when>
 			</c:choose>	
@@ -40,7 +39,7 @@
 							<h1 class="modal-title" id="myModalreLabel${QnareData.qnaReCode}">답변 내용 수정</h1>
 						</div>
 					<div class="modal-body">
-						<form id="qnareform${QnareData.qnaReCode}" action="/pineapple/investqnareupdate.invest?fdCode=${QnareData.qnaFdCode}" method="post">
+						<form id="qnareform${QnareData.qnaReCode}" action="/pineapple/investorqnarelyupdate.invest" method="post">
 							<div class="form-group">
 								<input type="hidden" name="qnaReCode" value="${QnareData.qnaReCode}">
 								<textarea class="form-control" id="qnaupdatecontent" name="qnaReContent" rows="3" style="width: 100%; height: 100px; resize: none;" placeholder="수정할 내용을 입력해주세요">${QnareData.qnaReContent}</textarea>

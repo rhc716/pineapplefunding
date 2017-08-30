@@ -86,9 +86,6 @@ public class InvestController {
 		int qnaupdate = investserviceinterface.modifyInvestFundingQna(fundingqna);
 		log.debug(qnaupdate+"<-----InvestController[qnaupdate 값 출력]");
 		model.addAttribute("fdCode",fundingqna.getQnaFdCode());
-		//↓고려사항 선생님
-		//프로세스 처리 dao 
-		//정상 처리가 되었다면은?
 		return "redirect:/investfunding.invest";
 	}
 	//펀딩페이지에서 Q&A댓글입력
@@ -155,6 +152,52 @@ public class InvestController {
 		model.addAttribute("investorqnalist",investorqnalist);
 		log.debug(investorqnalist+"<-----InvestController[investorqnalist 값 출력]");
 		return "user/investormypageajax/investorqna";
+	}
+	//자신의 펀딩 Q&A 글 수정
+	@RequestMapping(value="/investorqnaupdate.invest",method=RequestMethod.POST)
+	public String investorFundingQnaModify(Locale locale, Model model,FundingQna fundingqna){
+		log.debug("<-----InvestController[investQuestionModify호출]----->");
+		log.debug(fundingqna+"<-----InvestController[fundingqna 값 출력]");
+		int qnaupdate = investserviceinterface.modifyInvestFundingQna(fundingqna);
+		log.debug(qnaupdate+"<-----InvestController[qnaupdate 값 출력]");
+		return "redirect:/investormypage.user";
+	}
+	//자신의 펀딩 Q&A 글 삭제
+	@RequestMapping(value="/investorqnadelete.invest",method=RequestMethod.GET)
+	public String investorQnaRemove(Locale locale, Model model,@RequestParam(value="qnaCode") int qnaCode){
+		log.debug("<-----InvestController[investQuestionRemove호출]----->");
+		log.debug(qnaCode+"<-----InvestController[qnaCode 값 출력]");
+		int qnadelete = investserviceinterface.removeInvestFundingQna(qnaCode);
+		log.debug(qnadelete+"<-----InvestController[qnadelete 값 출력]");
+		return "redirect:/investormypage.user";
+	}
+	//자신의 펀딩 Q&A 댓글 조회
+	@RequestMapping(value="/investorfundingqnareply.invest",method=RequestMethod.GET)
+	public String investorFundingQnaReply(Locale locale, Model model,@RequestParam(value="qnaCode")int qnaCode){
+		log.debug("<-----InvestController[investorFundingQnaReply호출]----->");
+		log.debug(qnaCode+"<-----InvestController[qnaCode 값 출력]");
+		List<FundingQnaReply> investorqnareplylist = investserviceinterface.getInvestorQnaReply(qnaCode);
+		model.addAttribute("investorqnareplylist",investorqnareplylist);
+		log.debug(investorqnareplylist+"<-----InvestController[investorqnareplylist 값 출력]");
+		return "user/investormypageajax/investorqnareply";
+	}
+	//자신의 펀딩 Q&A 댓글 수정
+	@RequestMapping(value="/investorqnarelyupdate.invest",method=RequestMethod.POST)
+	public String investorQnaReplyModify(Locale locale, Model model, FundingQnaReply fundingqnareply){
+		log.debug("<-----InvestController[investorQnaReplyModify호출]----->");
+		log.debug(fundingqnareply+"<-----InvestController[fundingqnareply 값 출력]");
+		int qnareplyupdate = investserviceinterface.modifyInvestFundingQnaReply(fundingqnareply);
+		log.debug(qnareplyupdate+"<-----InvestController[qnareplyupdate 값 출력]");
+		return "redirect:/investormypage.user";
+	}
+	//자신의 펀딩 Q&A 댓글 삭제
+	@RequestMapping(value="/investorqnareplydelete.invest",method=RequestMethod.GET)
+	public String investorQnaReplyDelete(Locale locale,Model model,@RequestParam(value="qnaReCode")int qnaReCode){
+		log.debug("<-----InvestController[investorQnaReplyDelete호출]----->");
+		log.debug(qnaReCode+"<-----InvestController[qnaReCode 값 출력]");
+		int qnareplydelete = investserviceinterface.removeInvestFundingQnaReply(qnaReCode);
+		log.debug(qnareplydelete+"<-----InvestController[qnareplydelete 값 출력]");
+		return "redirect:/investormypage.user";
 	}
 	
 

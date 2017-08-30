@@ -68,4 +68,22 @@ public class TimelineService implements TimelineServiceInterface{
 		int timelinereplydelete = timelinedaointerface.timelineReplyDelete(tlReCode);
 		return timelinereplydelete;
 	}
+	
+	
+	
+	////////////////////////My Page Time Line////////////////////////////////
+	//자신이 등록한 타임라인 list 조회
+	@Override
+	public List<MyInvestorTimeline> getMypageTimelineList(String tlId) {
+		log.debug("------------------TimelineService-----------------getMypageTimelineList()");
+		List<MyInvestorTimeline> timelinelist = timelinedaointerface.mypageTimelineListSelect(tlId);
+		return timelinelist;
+	}
+	//자신의 한달간의 활동기록 조회
+	@Override
+	public MyInvestorTimelineLog getMypageTimelineLog(String tlId) {
+		log.debug("------------------TimelineService-----------------getMypageTimelineLog()");
+		MyInvestorTimelineLog timelinelog = timelinedaointerface.mypageTimelineLogSelect(tlId);
+		return timelinelog;
+	}
 }

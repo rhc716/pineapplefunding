@@ -6,82 +6,28 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Time Line</title>
-
-<!-- jqeury -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-<!-- 부가적인 테마 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-
-<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<!-- css -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
+<title>Investor Time Line List</title>
 
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/ehj.css" />
 
-<!-- include summernote css/js-->
-<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.7/summernote.css" rel="stylesheet">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.7/summernote.js"></script>
-
-<!-- include summernote-ko-KR -->
-<script src="${pageContext.request.contextPath}/resources/summernote/summernote-ko-KR.js"></script>
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('[data-toggle="tooltip"]').tooltip({
-		});
-		$('.summernote').summernote();
-        $('#timelinereservebtn').click(function(){
-        	 $('#timelineform').submit();
-	    });
- 		$('.timelinereservebtn').click(function(){
- 			var tlCode = $(this).attr('dataCode');
- 			$('#timelineform'+tlCode+'').submit();
- 		});
- 		$('.timelinereplyinsertbtn').click(function(){
- 			var tlCode = $(this).attr('dataCode');
- 			$('#timelinereplyform'+tlCode+'').submit();
- 		});
-        $('.timereply').click(function(){
- 			var tlCode = $(this).attr('dataCode')
- 			var TF = $(this).attr('aria-expanded')
- 				if(TF == 'false'){
-				var getfundingqnareply = $.ajax({
-					type : 'get',
-					url : '/pineapple/timelinereplylist.invest',
-					data : {tlCode : tlCode}
-				});
-				getfundingqnareply.done(function(msg){	
-					$('#timelinereplylist'+tlCode+'').html(msg)
-				});
-				getfundingqnareply.fail(function(){
-					alert("실패");
-				});
- 				}else{
- 					console.log('ajax미실행')
- 					$('#timelinereply'+tlCode+'').attr('aria-expanded',false)
- 				}
-        });
-	})
-</script>
 </head>
 <body>
-	<div class="container">
-	<!--로그인 버튼 -->
-		<c:import url="/resources/module/toploginandlogo.jsp"/>
-	<!-- 상단메뉴 -->
-		<c:import url="/resources/module/topmenu.jsp"/>
-	<!-- 본문 -->
-		<div class="row">
-			<div class="col-xs 12" style="text-align: center;">
-				<h1>TIME LINE</h1>
+			<div class="col-xs-12" style="text-align: center; border: 1px solid;">
+				<div class="col-xs-6" style="padding: 0px">
+					<div class="col-xs-12">
+					1
+					</div>
+					<div class="col-xs-12">
+					2
+					</div>
+					<div class="col-xs-12">
+					3
+					</div>
+				</div>
+				<div class="col-xs-6" style="padding: 0px">
+					<div id="linechart_material" style="width: 100%; height: 200px;">4</div>
+				</div>
 			</div>
 			<div class="col-xs-12">
 				<div class="col-xs-12 timemaintop">
@@ -126,19 +72,12 @@
 				<!-- Time line input modal -->
 				
 				<div class="col-xs-12">
-					<c:forEach var="Data" items="${timelinelist}">
+					<c:forEach var="Data" items="${myinvestortimeline}">
 					<div class="col-xs-12 timelinelist">
 						<div class="col-xs-12">
 							<div class="col-xs-12 timelinenameandtime">
 								<span class="timelinenameandtimespan">
-								<c:choose>
-									<c:when test="${Data.emComName == null}">
 										<span>${Data.nickname}</span><span>${Data.tlTime}</span>
-									</c:when>
-									<c:otherwise>
-										<span>${Data.emComName}</span><span>${Data.tlTime}</span>
-									</c:otherwise>
-								</c:choose>
 								</span>
 								<span class="timeupanddelspan">
 								&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#${Data.tlCode}">수정하기</a>
@@ -214,9 +153,5 @@
 					</c:forEach>
 				</div>
 			</div>
-		</div>
-	<!-- 풋터 -->
-		<c:import url="/resources/module/footer.jsp"/>
-	</div>
 </body>
 </html>

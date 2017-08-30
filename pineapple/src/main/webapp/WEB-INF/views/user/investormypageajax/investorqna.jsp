@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>투자자 MyPage</title>
+<title>투자자 MyPage Funding Qna</title>
 
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/ehj.css" />
@@ -24,12 +24,12 @@
 			<span class="funding-qnaidandtime">Q&A등록 일자 :&nbsp;&nbsp;${QnaData.qnaFdTime}</span>
 			<span class="funding-qnaupanddel">
 				&nbsp;&nbsp;<a class="qnaupdate" id="qnaupdate${QnaData.qnaCode}" data-toggle="modal" data-target="#myqna${QnaData.qnaCode}" qna-title="${QnaData.qnaFdCode}">수정하기</a>
-				&nbsp;&nbsp;<a href="/pineapple/investqnadelete.invest?fdCode=${QnaData.qnaFdCode}&qnaCode=${QnaData.qnaCode}">삭제하기</a>
+				&nbsp;&nbsp;<a href="/pineapple/investorqnadelete.invest?qnaCode=${QnaData.qnaCode}">삭제하기</a>
 			</span>
 		</div>
 		<div class="col-xs-12 mypageqnacontent">Q&A내용 : <span id="qnacontent${QnaData.qnaCode}">${QnaData.qnaFdContent}</span></div>
 		<div class="replyall">
-			<a class="col-xs-1 reply-main" id="${QnaData.qnaCode}" data-toggle="collapse" href="#collapseExample${QnaData.qnaCode}" aria-expanded="false" aria-controls="collapseExample${QnaData.qnaCode}">
+			<a class="col-xs-1 reply-main" dataCode="${QnaData.qnaCode}" data-toggle="collapse" href="#collapseExample${QnaData.qnaCode}" aria-expanded="false" aria-controls="collapseExample${QnaData.qnaCode}">
 			답글보기
 			</a>
 			<div class="col-xs-11"></div>
@@ -46,7 +46,7 @@
 						</div>
 					</form>
 				</div>
-				<div class="col-xs-12 replycontent qnaCode_${QnaData.qnaCode}">
+				<div class="col-xs-12 replycontent" id="qnaCode_${QnaData.qnaCode}">
 		  		</div>
 			</div>
 		</div>
@@ -61,6 +61,7 @@
 					<form id="qnaform${QnaData.qnaCode}" action="/pineapple/investorqnaupdate.invest" method="post">
 						<div class="form-group">
 							<input type="hidden" name="qnaCode" value="${QnaData.qnaCode}">
+							<input type="hidden" name="qnaFdCode" value="${QnaData.qnaFdCode}">
 							<input class="form-control modalqnareplytitle" id="qnaupdatetitle"  name="qnaFdTitle" type="text"  placeholder="수정할 제목을 입력해주세요"value="${QnaData.qnaFdTitle}">
 							<textarea class="form-control modalqnareplycontent" id="qnaupdatecontent" name="qnaFdContent" rows="3" placeholder="수정할 내용을 입력해주세요">${QnaData.qnaFdContent}</textarea>
 						</div>

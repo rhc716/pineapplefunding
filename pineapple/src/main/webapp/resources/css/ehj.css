@@ -157,6 +157,15 @@
 					.modalqnareplycontent{width: 100%;
 										  height: 100px;
 										  resize: none;}
+					.replycontentnull{padding: 0px 0px 0px 16px;
+									  font-size: 18px;}
+					.replyidandtime{opacity: 0.4;
+									font-size: 12px;}
+					.replyupanddel{opacity: 0.8;
+								   font-size: 12px;}
+					.qnareplycontent{padding: 0px 0xp 0px 16px;
+									 margin: 0px 0px 0px 16px;
+									 font-size: 18px;}
 				/* 펀딩Q&A댓글 */
 			/* 펀딩Q&A */
 		/* 펀딩Tab */

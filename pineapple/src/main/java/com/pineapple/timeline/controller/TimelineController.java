@@ -3,6 +3,8 @@ package com.pineapple.timeline.controller;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pineapple.timeline.service.MyInvestorTimeline;
+import com.pineapple.timeline.service.MyInvestorTimelineLog;
 import com.pineapple.timeline.service.Timeline;
 import com.pineapple.timeline.service.TimelineAndUserAndEmployeeAndTimelineLike;
 import com.pineapple.timeline.service.TimelineReply;
@@ -82,7 +86,28 @@ public class TimelineController {
 		log.debug(timelinereplydelete+"<-----TimelineController[timelinereplydelete 값 출력]");
 		return "redirect:/timelinemain.timeline";
 	}
-/////////////////////////////REST CONTROLLER//////////////////////////
+	
+	
+	///////////////////////My Page Time Line//////////////////////////
+	@RequestMapping(value="/investortimeline.timeline",method=RequestMethod.GET)
+	public String investorTimelinelist(Locale locale,Model model,HttpSession session){
+		log.debug("<----- TimelineController[timelineMain호출]----->");
+		List<MyInvestorTimeline> myinvestortimeline = timelineserviceinterface.getMypageTimelineList(session.getAttribute("id").toString());
+		model.addAttribute("myinvestortimeline",myinvestortimeline);
+		log.debug(myinvestortimeline+"<-----TimelineController[myinvestortimeline 값 출력]");
+		return "user/investormypageajax/investortimeline";
+	}
+	
+    //////////////////////////REST CONTROLLER//////////////////////////
+	//자신의 한달간의 활동기록 조회
+	@RequestMapping(value="/investortimelinelog.timeline",method=RequestMethod.GET)
+	public @ResponseBody MyInvestorTimelineLog myInvestorTimelineLog(Locale locale,Model model,HttpSession session){
+		log.debug("<----- TimelineController[myInvestorTimelineLog호출]----->");
+		MyInvestorTimelineLog myinvestortimelinelog = timelineserviceinterface.getMypageTimelineLog(session.getAttribute("id").toString());
+		model.addAttribute("myinvestortimelinelog",myinvestortimelinelog);
+		log.debug(myinvestortimelinelog+"<-----TimelineController[myinvestortimelinelog 값 출력]");
+		return myinvestortimelinelog;
+	}
 	//댓글더보기 클릭시 ajax로 댓글 list 조회
 	@RequestMapping(value="/timelinereplylist.invest",method=RequestMethod.GET)
 	public String timelineReplyGet(Locale locale,Model model,@RequestParam(value="tlCode")int tlCode){

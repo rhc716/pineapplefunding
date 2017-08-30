@@ -215,11 +215,4 @@
 		WHERE fq.qnaFdId = #{qnaFdId} 
 		ORDER BY fq.qnaFdTime DESC
 	</select>
-<!-- 	<update id="insertMypageFundingQna" parameterType="com.pineapple.invest.service.FundingQna">
-		UPDATE fundingqna
-			SET
-				qnaFdTitle=#{qnaFdTitle},
-				qnaFdContent=#{qnaFdContent}
-		WHERE qnaCode=#{qnaCode}
-	</update> -->
 </mapper>

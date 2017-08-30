@@ -21,4 +21,12 @@ public interface TimelineDaoInterface {
 	int timelineReplyUpdate(TimelineReply timelinereply);
 	//타임라인 댓글 삭제 Dao
 	int timelineReplyDelete(int tlReCode);
+	
+	
+	
+	///////////////////////////My Page Time Line /////////////////////////
+	//자신이 등록한 타임라인 list 조회
+	List<MyInvestorTimeline> mypageTimelineListSelect(String tlId);
+	//자신의 한달간의 활동기록 조회
+	MyInvestorTimelineLog mypageTimelineLogSelect(String tlId);
 }

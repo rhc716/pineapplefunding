@@ -14,6 +14,7 @@
 <!-- css lbr -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lbr.css" />
 
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -68,17 +69,84 @@ $(document).ready(function(){
 	         	//수정 버튼 click 이벤트
 	         	$('.qnaupdateform').click(function(){
 	         		var qnaCode = $(this).attr('dataCode');
-	         		alert(qnaCode)
 	         		$('#qnaform'+qnaCode+'').submit();
 	         	});
+	        	$('.reply-main').click(function(){
+	        		var qnaCode = $(this).attr('dataCode');
+	        		var investorqnatab = $.ajax({ // ajax실행부분
+	        	        type: "get",
+	        	        url : "/pineapple/investorfundingqnareply.invest",
+	        	        data : {qnaCode : qnaCode},
+	        	        success : function success(msg){
+	        	        	$('#qnaCode_'+qnaCode+'').html(msg);
+	        	        	$('.qnareupdateform').click(function(){
+	        	        		var qnaReCode = $(this).attr('id');
+	        	        		$('#qnareform'+qnaReCode+'').submit();
+	        	        	});
+	        	        },
+	        	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+	        	        error : function error(){
+	                	}
+	        		});
+	        	});
 	        },
 	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
 	        error : function error(){
         	}
 		});
 	});
-
-	
+	//타임라인 tab ajax 요청
+	$('#timeline-tab').click(function(){
+		var investmenttab = $.ajax({ // ajax실행부분
+	        type: 'get',
+	        url : '/pineapple/investortimeline.timeline',
+	        success : function success(msg){
+	        	$('#investortimeline').html(msg);
+  	    		var investmenttab = $.ajax({ // ajax실행부분
+	    	        type: 'get',
+	    	        url : '/pineapple/investortimelinelog.timeline',
+	    	        success : function success(msg){ 	
+	    	        	console.log(msg.daycount)
+ 	    	        	google.charts.load('current', {'packages':['line']});
+						google.charts.setOnLoadCallback(drawChart);
+						
+						function drawChart() {
+							
+						var data = new google.visualization.DataTable();
+						data.addColumn('number', 'Day');
+						data.addColumn('number', 'UserTimelinelog');
+						
+						data.addRows([
+						  [0,   msg.daycount],
+						  [-7,  msg.oneweekcount],
+						  [-14, msg.twoweekcount],
+						  [-21, msg.threeweekcount],
+						  [-28, msg.fourweekcount],
+						  [-30, msg.onemonthcount]
+						]);
+						
+						var options = {
+							legend: {position: 'none'},
+							forceIFrame: true
+						};
+						
+						var chart = new google.charts.Line(document.getElementById('linechart_material'));
+						
+						chart.draw(data,options);
+						}
+	    	        },
+	    	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+	    	        error : function error(){
+	    	        	alert('2실패')
+	            	}
+	    		});	
+	        },
+	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+	        error : function error(){
+	        	alert('1실패')
+        	}
+		});
+	});
 });
 </script>
 </head>

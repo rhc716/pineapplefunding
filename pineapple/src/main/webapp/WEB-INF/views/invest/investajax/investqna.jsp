@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Invest Funding Qna</title>
 
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/ehj.css" />
@@ -16,10 +16,14 @@
 	<div class="col-xs-12 funding-qna">
 		<div class="col-xs-12 funding-qnaid">
 			<span class="funding-qnaidandtime">${QnaData.qnaFdId}&nbsp;&nbsp;${QnaData.qnaFdTime}</span>
+			<c:choose>
+			<c:when test="${QnaData.qnaFdId == id}">
 			<span class="funding-qnaupanddel">
 				&nbsp;&nbsp;<a class="qnaupdate" id="qnaupdate${QnaData.qnaCode}" data-toggle="modal" data-target="#myqna${QnaData.qnaCode}" qna-title="${QnaData.qnaFdCode}">수정하기</a>
 				&nbsp;&nbsp;<a href="/pineapple/investqnadelete.invest?fdCode=${QnaData.qnaFdCode}&qnaCode=${QnaData.qnaCode}">삭제하기</a>
 			</span>
+			</c:when>
+			</c:choose>
 		</div>
 		<div class="col-xs-12 funding-title">Q&A제목 : <span id="qnatitle${QnaData.qnaCode}">${QnaData.qnaFdTitle}</span></div>
 		<div class="col-xs-12 funding-content">Q&A내용 : <span id="qnacontent${QnaData.qnaCode}">${QnaData.qnaFdContent}</span></div>
@@ -53,9 +57,10 @@
 				    <h1 class="modal-title" id="myModalLabel${QnaData.qnaCode}">질문 내용 수정</h1>
 				</div>
 				<div class="modal-body">
-					<form id="qnaform${QnaData.qnaCode}" action="/pineapple/investqnaupdate.invest?fdCode=${QnaData.qnaCode}" method="post">
+					<form id="qnaform${QnaData.qnaCode}" action="/pineapple/investqnaupdate.invest?fdCode=${QnaData.qnaFdCode}" method="post">
 						<div class="form-group">
 							<input type="hidden" name="qnaCode" value="${QnaData.qnaCode}">
+							<input type="hidden" name="qnaFdCode" value="${QnaData.qnaFdCode}">
 							<input class="form-control modalqnareplytitle" id="qnaupdatetitle"  name="qnaFdTitle" type="text"  placeholder="수정할 제목을 입력해주세요"value="${QnaData.qnaFdTitle}">
 							<textarea class="form-control modalqnareplycontent" id="qnaupdatecontent" name="qnaFdContent" rows="3" placeholder="수정할 내용을 입력해주세요">${QnaData.qnaFdContent}</textarea>
 						</div>

@@ -111,4 +111,11 @@ public class InvestService implements InvestServiceInterface {
 		List<MyInvestorFundingQna> getInvestorQnalist = investdaointerface.investorQnaSelect(qnaFdId);
 		return getInvestorQnalist;
 	}
+	//자신의 펀딩 Q&A 댓글 조회
+	@Override
+	public List<FundingQnaReply> getInvestorQnaReply(int qnaCode) {
+		log.debug("------------------InvestService-----------------getInvestFundingQnaReply()");
+		List<FundingQnaReply> fdlistqnareply = investdaointerface.investFundingQnaReplySelect(qnaCode);
+		return fdlistqnareply;
+	}
 }
