@@ -128,28 +128,38 @@
 		<result property="comDelTime" column="comDelTime"/>
 		<result property="comDelApprovalId" column="comDelApprovalId"/>
 	</resultMap>
+	
 <!-- 기업회원 중 경영진 개설한 회사정보 조회(comCode로)-->
-	<select id="selectCompanyInfoByComCode" parameterType="int" resultMap="selectCompanyInfoByComCode">
+	<select id="selectCompanyInfoByComCode" parameterType="int" resultType="com.pineapple.user.service.Company">
 		SELECT *
 		FROM company
 		WHERE comCode=#{comCode}
 	</select>
-	<resultMap type="com.pineapple.user.service.Company" id="selectCompanyInfoByComCode">
-		<result property="comCode" column="comCode"/>
-		<result property="comName" column="comName"/>
-		<result property="comNumber" column="comNumber"/>
-		<result property="comHomePage" column="comHomePage"/>
-		<result property="comCeoName" column="comCeoName"/>
-		<result property="comEstablishYear" column="comEstablishYear"/>
-		<result property="comOpenUserId" column="comOpenUserId"/>
-		<result property="comAdminApproval" column="comAdminApproval"/>
-		<result property="comApprovalDate" column="comApprovalDate"/>
-		<result property="comApprovalId" column="comApprovalId"/>
-		<result property="comDelRequestId" column="comDelRequestId"/>
-		<result property="comDelTime" column="comDelTime"/>
-		<result property="comDelApprovalId" column="comDelApprovalId"/>
-	</resultMap>
 	
+<!-- 경영진으로 속한 회사이름을 조회하기 위해 employee 정보 조회(ID로)-->
+	<select id="selectEmployeeMngById" parameterType="String" resultType="com.pineapple.user.service.Employee">
+		SELECT *
+		FROM employee
+		WHERE emUserId=#{emUserId} AND emRankCode=1
+	</select>	
+
+<!-- 사원정보 조회(기업이름으로 조회하여 사원등록요청 목록 조회 목적) -->
+	<select id="selectEmployeeRequestByComName" parameterType="String" resultMap="selectEmployeeRequestByComName">
+		SELECT *
+		FROM employee
+		WHERE emComName=#{emComName} and emCheck=0
+	</select>
+	<resultMap type="com.pineapple.user.service.Employee" id="selectEmployeeRequestByComName">
+		<result property="emCode" column="emCode"/>
+		<result property="emUserId" column="emUserId"/>
+		<result property="emComCode" column="emComCode"/>
+		<result property="emComName" column="emComName"/>
+		<result property="emRankCode" column="emRankCode"/>
+		<result property="emDepartment" column="emDepartment"/>
+		<result property="emCheck" column="emCheck"/>
+		<result property="emDelRequest" column="emDelRequest"/>
+	</resultMap>
+
 <!-- 사원정보 조회(emCode로) -->
 	<select id="selectEmployeeByEmCode" parameterType="int" resultMap="selectEmployeeByEmCode">
 		SELECT *
