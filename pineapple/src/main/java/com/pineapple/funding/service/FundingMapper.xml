@@ -3,6 +3,47 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.pineapple.funding.service.FundingMapper">
+<!-- 각각의 권한별로 pmsmain에서 보여줄 정보들을 담는 객체 -->
+	<!-- 관리자 -->
+	<resultMap type="com.pineapple.funding.service.InfomationForPmsMainViewOfAdminUser" 
+	id="InfomationForPmsMainViewOfAdminUser">
+		<result property="totalUserCount" column="totalUserCount"/>
+		<result property="totalComCount" column="totalComCount"/>
+		<result property="totalInvestorUserCount" column="totalInvestorUserCount"/>
+		<result property="totalComUserCount" column="totalComUserCount"/>
+		<result property="totalVisitCount" column="totalComUserCount"/>
+		<result property="todayVisitCount" column="todayVisitCount"/>
+		<result property="totalFundingCount" column="totalFundingCount"/>
+		<result property="totalRecruitingFundingCount" column="totalRecruitingFundingCount"/>
+		<result property="totalProceedingFundingCount" column="totalProceedingFundingCount"/>
+		<result property="totalCommissionRevenue" column="totalCommissionRevenue"/>
+		<result property="todayCommissionRevenue" column="todayCommissionRevenue"/>
+	</resultMap>
+	<!-- 기업회원 -->
+	<!-- <resultMap type="com.pineapple.funding.service.InfomationForPmsMainViewOfCompanyUser" 
+	id="InfomationForPmsMainViewOfCompanyUser">
+		<collection property="comNameList" javaType="ArrayList" ofType="String">
+            <id `></id>
+            <result property="comName" column="comName"/>
+        </collection>
+		<collection property="FdList" javaType="ArrayList" ofType="com.pineapple.funding.service.Funding">
+			<result property="fdTitle" column="fdTitle"/>
+			<result property="fdStatus" column="fdStatus"/>
+			<result property="fdCode" column="fdCode"/>
+		</collection>
+		<result property="fdTotalCount" column="fdTotalCount"/>
+		<result property="fdRecruitingCount" column="fdRecruitingCount"/>
+		<result property="fdProceedingCount" column="fdProceedingCount"/>
+	</resultMap> -->
+	<!-- <resultMap type="com.pineapple.funding.service.InfomationForPmsMainViewOfInvestorUser" 
+	id="InfomationForPmsMainViewOfInvestorUser">
+	
+	
+	</resultMap> -->
+	
+	
+	
+	
 	<!-- 펀딩 개설 요청 쿼리 -->
 	<insert id="insertFunding" parameterType="com.pineapple.funding.service.Funding">
 		INSERT INTO funding

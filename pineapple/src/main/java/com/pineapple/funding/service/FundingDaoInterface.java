@@ -1,6 +1,7 @@
 package com.pineapple.funding.service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.ui.Model;
@@ -35,4 +36,5 @@ public interface FundingDaoInterface {
 	void updateFundingImage(Model model);
 	Funding fdtitleCheck(String fdTitle);
 	Funding selectMyFunding(int fdCode);
+	ArrayList<Object> selectProjectInfoList(String userId, String level);
 }

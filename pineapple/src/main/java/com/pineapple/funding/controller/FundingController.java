@@ -1,6 +1,7 @@
 package com.pineapple.funding.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -381,5 +382,20 @@ public class FundingController {
 		return service.fdtitleCheck(fdTitle);
 	}
 	
+	
+	// pmsmain.jsp 에서 권한별로 필요한 정보의 리스트를 ajax요청
+	@RequestMapping(value = "/getprojectinfolist.pms", method = RequestMethod.GET)
+	public @ResponseBody Model getprojectinfolist(Model model, Locale locale
+			, @RequestParam("userId") String userId, @RequestParam("userLevel") String level) {
+		
+		log.debug("FundingController의 getprojectinfolist호출 성공");
+		log.debug("userId : " + userId);
+		log.debug("level : " + level);
+		
+		ArrayList<Object> list = service.getProjectInfoList(userId, level);
+		
+		
+		return model;
+	}
 	
 }

@@ -2,11 +2,22 @@
 /* 폰트 */
 @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
 /* 메인페이지 제외한 곳 // 로그인or 로그아웃 버튼 */
-body{
+html body{
 	font-family: 'Jeju Gothic', serif;
 }
 
 
+.footer{
+	height:50px;
+	line-height:50px;
+	background-color:#5f5f5f;
+	color:white;
+	margin-top: 20px;
+	bottom: 0%;
+	width:inherit;
+	position: relative;
+
+}
 .loginorlogoutbtn{
 	margin-top:20px;
 	float:right;
@@ -80,13 +91,7 @@ button{
 	color:white;
 	font-size:20px;
 }
-.footer{
-	height:50px;
-	line-height:50px;
-	background-color:#5f5f5f;
-	color:white;
-	margin-top: 20px;
-}
+
 
 /* 메인 로그인 부분 */
 .login_up {

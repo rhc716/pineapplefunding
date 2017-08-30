@@ -25,8 +25,29 @@
 
 <!-- css rhc -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
-
-
+<script>
+$(document).ready(function(){
+	
+//	각각의 권한별로 프로젝트관리 메인화면에서 보여줄 대표정보를 가져오는 ajax요청
+	var getprojectinfolist = $.ajax({
+		type : "get",
+		url : "/pineapple/getprojectinfolist.pms",
+		/* 아이디와 권한을 세션에서 받아서 가져옴 */
+		data : { userId : "${id}"
+				, userLevel : "${level}"}
+	});
+	
+	//성공시
+	getprojectinfolist.done(function(msg){
+		console.log(msg);
+	});
+	
+	//실패시
+	/* getprojectinfolist.fail(function(){
+		alert('ajax통신 실패');
+	}); */
+});
+</script>
 </head>
 <body>
 <div class="container">
@@ -40,6 +61,7 @@
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-md-9">
+	로그인 안할시 페이지 접근 막을것
 		<c:if test="${level eq '기업회원'}">
 			<div class="pagetitleandexplainbox">
 				<h2>기업회원용 프로젝트관리</h2>
@@ -49,7 +71,7 @@
                     <h2>${nickname}</h2>
                     <p><strong>직급 :</strong> ${rank} </p>
                     <p><strong>회사 : </strong> Read</p>
-                    <p><strong>펀딩 : </strong>
+                    <p><strong>모집 & 진행중인 펀딩 : </strong>
                         <span class="tags">html5</span> 
                     </p>
                 </div>
@@ -76,9 +98,10 @@
             <div class="col-sm-12">
                 <div class="col-xs-12 col-sm-8"><br>
                     <h2>${nickname}</h2>
-                    <p><strong>직급 :</strong> ${rank} </p>
-                    <p><strong>회사 : </strong> Read</p>
-                    <p><strong>펀딩 : </strong>
+                    <p><strong>사전예약중 펀딩 : </strong>
+                        <span class="tags">html5</span> 
+                    </p>
+                    <p><strong>투자중인 펀딩 : </strong>
                         <span class="tags">html5</span> 
                     </p>
                 </div>
@@ -86,15 +109,27 @@
             <div class="col-xs-12 divider text-center pmsmainboxbottom">
                 <div class="col-xs-12 col-sm-4 emphasis">
                     <h2><strong> 20,7K </strong></h2>                    
-                    <p><small>총 펀딩수</small></p>
+                    <p><small>총투자금액</small></p>
                 </div>
                 <div class="col-xs-12 col-sm-4 emphasis">
                     <h2><strong>245</strong></h2>                    
-                    <p><small>모집중인 펀딩수</small></p>
+                    <p><small>총배당금액</small></p>
                 </div>
                 <div class="col-xs-12 col-sm-4 emphasis">
                     <h2><strong>43</strong></h2>                    
-                    <p><small>진행중인 펀딩수</small></p>
+                    <p><small>총투자건수</small></p>
+                </div>
+                <div class="col-xs-12 col-sm-4 emphasis">
+                    <h2><strong>43</strong></h2>                    
+                    <p><small>진행중인투자건수</small></p>
+                </div>
+                 <div class="col-xs-12 col-sm-4 emphasis">
+                    <h2><strong>43</strong></h2>                    
+                    <p><small>진행중인펀딩의투자금액</small></p>
+                </div>
+                <div class="col-xs-12 col-sm-4 emphasis">
+                    <h2><strong>43</strong></h2>                    
+                    <p><small>진행중인펀딩의배당금액</small></p>
                 </div>
             </div>
 		</c:if>
@@ -105,17 +140,24 @@
 			<div class="col-sm-12">
                 <div class="col-xs-12 col-sm-8"><br>
                     <h2>${nickname}</h2>
-                    <p><strong>직급 :</strong> ${rank} </p>
-                    <p><strong>회사 : </strong> Read</p>
-                    <p><strong>펀딩 : </strong>
-                        <span class="tags">html5</span> 
-                    </p>
+                    <p><strong>총 회원수</strong>  </p>
+                    <p><strong>총 회사수</strong>  </p>
+                    <p><strong>총 투자자수</strong>  </p>
+                    <p><strong>총 기업회원수</strong>  </p>
+                    <p><strong>총 방문자수</strong>  </p>
+                    <p><strong>오늘 방문자수</strong>  </p>
                 </div>
+              
+              <br><br>
+              <br><br>
+                회원 권한 비율 그래프 들어갈 곳<br><br>
+                
+                방문객 추이 그래프 들어갈 곳
             </div>            
             <div class="col-xs-12 divider text-center pmsmainboxbottom">
                 <div class="col-xs-12 col-sm-4 emphasis">
                     <h2><strong> 20,7K </strong></h2>                    
-                    <p><small>총 펀딩수</small></p>
+                    <p><small>총펀딩수</small></p>
                 </div>
                 <div class="col-xs-12 col-sm-4 emphasis">
                     <h2><strong>245</strong></h2>                    
@@ -124,6 +166,14 @@
                 <div class="col-xs-12 col-sm-4 emphasis">
                     <h2><strong>43</strong></h2>                    
                     <p><small>진행중인 펀딩수</small></p>
+                </div>
+                <div class="col-xs-12 col-sm-4 emphasis">
+                    <h2><strong>43</strong></h2>                    
+                    <p><small>총수수료수익금</small></p>
+                </div>
+                <div class="col-xs-12 col-sm-4 emphasis">
+                    <h2><strong>43</strong></h2>                    
+                    <p><small>오늘발생수수료수익금</small></p>
                 </div>
             </div>
 		</c:if>

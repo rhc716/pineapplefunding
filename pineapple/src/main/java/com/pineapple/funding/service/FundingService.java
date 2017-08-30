@@ -1,5 +1,6 @@
 package com.pineapple.funding.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -194,6 +195,13 @@ public class FundingService implements FundingServiceInterface {
 	public Funding fdtitleCheck(String fdTitle) {
 		log.debug("FundingService의 fdtitleCheck호출 성공");
 		return fundingdao.fdtitleCheck(fdTitle);
+	}
+	
+	// pmsmain.jsp 에서 권한별로 필요한 정보의 리스트를 가져옴
+	@Override
+	public ArrayList<Object> getProjectInfoList(String userId, String level) {
+		log.debug("FundingService의 getprojectinfolist호출 성공");
+		return fundingdao.selectProjectInfoList(userId, level);
 	}
 }
  

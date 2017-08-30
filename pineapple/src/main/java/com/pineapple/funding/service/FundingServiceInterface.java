@@ -1,5 +1,6 @@
 package com.pineapple.funding.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.ui.Model;
@@ -33,4 +34,5 @@ public interface FundingServiceInterface {
 	void modifyFundingImage(Model model);
 	Funding fdtitleCheck(String fdTitle);
 	Funding getMyFunding(int fdCode);
+	ArrayList<Object> getProjectInfoList(String userId, String level);
 }
