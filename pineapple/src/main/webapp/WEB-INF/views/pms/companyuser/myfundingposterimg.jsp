@@ -38,7 +38,7 @@ $(document).ready(function(){
 		type : "get",
 		url : "/pineapple/getmyfundinglist.pms",
 		/* 아이디 세션에서 받아서 가져옴 */
-		data : { userId : "id01@maver.com" }
+		data : { userId : "${id}"}
 	});
 	// 성공시
 	getfundinglist.done(function(msg){
@@ -61,12 +61,12 @@ $(document).ready(function(){
 			// 펀딩리스트와 포스터 이미지를 myfundinglist에 채워줌, 수정버튼과 모달창을 각각 추가해줌
 			$('#myfundinglist').append(
 						/* 펀딩리스트 폼, 모달 버튼  */
-						'<div class="container-fluid fundinglistbox">'
+						'<div class="container-fluid fundinglistposterbox">'
 						+'<input type="hidden" readonly="readonly" value="'+msg[i].fdCode+'">'
-						+'<div class="fundinglistboxtop">'
+						+'<div class="fundinglistposterboxtop">'
 						+'<b>'+msg[i].fdTitle+'</b><br>'
 						+'<div>'+poster+'</div></div>'
-						+'<div class="fundinglistboxbottom">'
+						+'<div class="fundinglistposterboxbottom">'
 						+'<button type="button" class="btn btn-sm btn-primary"'
 						+' data-toggle="modal" data-target="#myModal'+i+'">'
 						+'수정'
@@ -143,9 +143,12 @@ $(document).ready(function(){
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-md-9" id="myfundinglist">
+			<div class="pagetitleandexplainbox" style="width: 670px;">
+				<h1>펀딩포스터이미지관리</h1>
 				<span>
-					<b> 펀딩기본정보 수정 및 삭제는 펀딩개설 승인 전까지 가능합니다.</b><br><br>
+					<b> 펀딩기본정보 수정 및 삭제는 펀딩개설 승인 전까지 가능합니다.</b>
 				</span>
+			</div>
 <!-- 펀딩 리스트 뿌려질 곳 -->
 	</div>
 

@@ -3,8 +3,10 @@
 @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
 /* 메인페이지 제외한 곳 // 로그인or 로그아웃 버튼 */
 body{
-	font-family: 'Jeju Gothic', serif;	
+	font-family: 'Jeju Gothic', serif;
 }
+
+
 .loginorlogoutbtn{
 	margin-top:20px;
 	float:right;
@@ -193,7 +195,7 @@ button{
 
 .amazonmenu > ul{
 	background: white;
-	border: 1px solid gray;
+	border: 1.5px solid #009442;
 	border-radius: 5px;
 	width: 200px; /* width of main menu */
 	height: 400px; /* height of main menu */
@@ -201,7 +203,9 @@ button{
 }
 
 .amazonmenu > ul li a{
-	color: black;
+	font-family: 'Jeju Gothic' ;
+	font-size: 15px;
+	color: #337ab7;
 	display: block;
 	overflow: auto;
 	padding: 10px 0;

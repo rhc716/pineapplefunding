@@ -32,7 +32,7 @@ $(document).ready(function(){
 		type : "get",
 		url : "/pineapple/getmymilestonelist.pms",
 		/* 아이디 세션에서 받아서 가져옴 */
-		data : { userId : "id01@maver.com" }
+		data : { userId : "${id}"}
 	});
 	// 성공시
 	getfundinglist.done(function(msg){
@@ -238,26 +238,29 @@ $(document).ready(function(){
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-md-9">
-					<span>
-						<b> 마일스톤 삭제는 펀딩개설 승인 전까지만 가능합니다.</b><br><br>
-					</span>
-					<table class="table" id="mymilestonelist">
-						<tr>
-							<td>펀딩명</td>
-							<td>마일스톤명</td>
-							<td>담당PM아이디</td>
-							<td>마일스톤단계</td>
-							<td>수정버튼</td>
-							<td>삭제버튼</td>
-						</tr>
-						<!-- 마일스톤 리스트 뿌려질 곳 -->						
-					</table>
+		<div class="pagetitleandexplainbox">
+			<h1>마일스톤조회</h1>
+			<span>
+				<b> 마일스톤 삭제는 펀딩개설 승인 전까지만 가능합니다.</b>
+			</span>
+		</div>
+		<table class="table" id="mymilestonelist">
+			<tr>
+				<td>펀딩명</td>
+				<td>마일스톤명</td>
+				<td>담당PM아이디</td>
+				<td>마일스톤단계</td>
+				<td>수정버튼</td>
+				<td>삭제버튼</td>
+			</tr>
+			<!-- 마일스톤 리스트 뿌려질 곳 -->						
+		</table>
 	</div>
 	
-				<!-- 모달뿌려질곳  -->
-				<div id="modalarea">
-				</div>
-	
+		<!-- 모달뿌려질곳  -->
+		<div id="modalarea">
+		</div>
+
 	
 	
 	

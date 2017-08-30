@@ -33,7 +33,7 @@ $(document).ready(function(){
 		type : "get",
 		url : "/pineapple/getfundingforinsertmilestone.pms",
 		/* 아이디 세션에서 받아서 가져옴 */
-		data : { userId : "id01@maver.com" }
+		data : { userId : "${id}"}
 	});
 	
 	getfundinglist.done(function(msg){
@@ -121,29 +121,69 @@ $(document).ready(function(){
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-md-9">
+		<div class="pagetitleandexplainbox">
+			<h1>마일스톤생성</h1>
 			<span>
-				<b> 마일스톤은 관리자 승인전까지 추가 입력 가능하고<br> 모집시작부터는 수정만 가능합니다.</b><br><br>
+				<b> 마일스톤은 관리자 승인전까지 추가 입력 가능하고<br> 모집시작부터는 수정만 가능합니다.</b>
 			</span>
-				<form action="/pineapple/addmilestone.pms" method="post" id="mileform">
-					펀딩명
-					<select name="msFdCode" id="fdselectlist">
-					<option value="null">선택해주세요</option>
-						<!-- ajax요청으로 목록을 채워줌 -->
-					</select><br><br>
-					마일스톤 단계
-					<input type="number" class="form-control" name="milestoneStep" min="1" max="100"><br>
-					마일스톤 담당자 아이디
-					<input type="text" class="form-control" name="pm" id="pmid" readonly><br>
-					<button type="button" id="employeebtn" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
-					담당사원찾기</button><br><br>
-					마일스톤 이름
-					<input type="text" class="form-control" name="milestoneName"><br>
-					마일스톤 요약<br>
-					<textarea class="form-control" rows="5" name="milestoneSummary"></textarea>
-					<input type="hidden" id="msComCode" name="msComCode" value="">
-					<button type="submit" class="btn btn-success">입력완료</button>
-				</form>
-			
+		</div>		
+			<div class="panel panel-default">
+				<div class="panel-body form-horizontal payment-form">
+					<form action="/pineapple/addmilestone.pms" method="post" id="mileform">
+						
+						<div class="form-group">
+	                        <label for="description" class="col-sm-3 control-label">펀딩명</label>
+		                        <div class="col-sm-9">
+									<select name="msFdCode" id="fdselectlist">
+									<option value="null">선택해주세요</option>
+										<!-- ajax요청으로 목록을 채워줌 -->
+									</select> 
+								</div>
+	                    </div>
+	                    <div class="form-group">
+	                        <label for="description" class="col-sm-3 control-label">마일스톤 단계</label>
+		                        <div class="col-sm-9">
+									<input type="number" class="form-control" name="milestoneStep" min="1" max="100">
+								</div>
+	                   	</div>
+						
+						<div class="form-group">
+	                        <label for="description" class="col-sm-3 control-label">마일스톤 담당자 아이디</label>
+		                        <div class="col-sm-9">
+									<input type="text" class="form-control" name="pm" id="pmid" readonly>
+								</div>
+	                   	</div>
+	                   	<div class="form-group">
+		                   	<div class="col-sm-12 text-right">
+								<button type="button" id="employeebtn" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+									담당사원찾기
+								</button>
+							</div>
+						</div>
+						<div class="form-group">
+	                        <label for="description" class="col-sm-3 control-label">마일스톤 이름</label>
+		                        <div class="col-sm-9">
+						<input type="text" class="form-control" name="milestoneName">
+								</div>
+	                   	</div>
+						<div class="form-group">
+	                        <label for="description" class="col-sm-3 control-label">마일스톤 요약</label>
+		                        <div class="col-sm-9">
+						<textarea class="form-control" rows="5" name="milestoneSummary"></textarea>
+								</div>
+	                   	</div>
+						<input type="hidden" id="msComCode" name="msComCode" value="">
+						<div class="form-group">
+		                        <div class="col-sm-12 text-right">
+		                            <button type="submit" class="btn btn-success preview-add-button">
+		                            	입력완료
+		                            </button>
+	                            </div>
+	                   	</div>
+					</form>
+				</div>
+			</div>
+	
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">

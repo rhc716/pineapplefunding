@@ -38,7 +38,7 @@ $(document).ready(function(){
 		type : "get",
 		url : "/pineapple/getmyfundinglist.pms",
 		/* 아이디 세션에서 받아서 가져옴 */
-		data : { userId : "id01@maver.com" }
+		data : { userId : "${id}"}
 	});
 	// 성공시
 	getfundinglist.done(function(msg){
@@ -118,6 +118,9 @@ $(document).ready(function(){
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-md-9" id="myfundinglist">
+		<div class="pagetitleandexplainbox">
+			<h1>펀딩투자자조회</h1>
+		</div>
 		<select class="fdselectlist" id="selectfd">
 			<option value="null">선택해주세요</option>	
 		</select><br><br>

@@ -38,7 +38,7 @@ $(document).ready(function(){
 		type : "get",
 		url : "/pineapple/getmyfundinglist.pms",
 		/* 아이디 세션에서 받아서 가져옴 */
-		data : { userId : "id01@maver.com" }
+		data : { userId : "${id}"}
 	});
 	// 성공시
 	getfundinglist.done(function(msg){
@@ -137,14 +137,16 @@ $(document).ready(function(){
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-md-9">
-		<span>
-			<b>한 펀딩당 배당계획은 3개 이상이 좋습니다, 마감기준은 펀딩단위로 통일되어야 합니다.</b><br>
-			<b>배당계획은 펀딩개설요청중에만 입력,삭제가 가능합니다. 이후에는 바꿀 수 없습니다.</b><br>
-			<br>ex) 마감기준 : 30 / 최소마진 : 1000 / 최대마진 : 2000 / 배당율 : 1
-			<br>=> 30일 기준으로 계산된 마진이 1000~2000(원) 사이일때 마진의 1%를
-			<br>=> 구매 구좌수의 비율만큼 배당해줌.  	
-			<hr>
-		</span>
+		<div class="pagetitleandexplainbox">
+			<h1>펀딩배당계획관리</h1>
+			<span>
+				<b>한 펀딩당 배당계획은 3개 이상이 좋습니다, 마감기준은 펀딩단위로 통일되어야 합니다.</b><br>
+				<b>배당계획은 펀딩개설요청중에만 입력,삭제가 가능합니다. 이후에는 바꿀 수 없습니다.</b><br>
+				<br>ex) 마감기준 : 30 / 최소마진 : 1000 / 최대마진 : 2000 / 배당율 : 1
+				<br>=> 30일 기준으로 계산된 마진이 1000~2000(원) 사이일때 마진의 1%를
+				<br>=> 구매 구좌수의 비율만큼 배당해주게 됩니다. 	
+			</span>
+		</div>
 		<div class="col-md-3">
 			<form action="/pineapple/adddividendplan.pms" method="post">
 				펀딩명

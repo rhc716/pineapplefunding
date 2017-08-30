@@ -33,7 +33,7 @@ $(document).ready(function(){
 		type : "get",
 		url : "/pineapple/getcomlist.pms",
 		/* 아이디 세션에서 받아서 가져옴 */
-		data : { userId : "id01@maver.com" }
+		data : { userId : "${id}"}
 	});
 	// 성공시
 	getcomlist.done(function(msg){
@@ -121,50 +121,112 @@ $(document).ready(function(){
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-md-9">
-		<div class="col-md-1"></div>
-			<div class="col-md-7">
-				<span>
-					<b> 펀딩명은 수정이 불가능하니 신중히 지어주세요 </b><br>
-					<b> 오픈일, 마감일 -> 펀딩 모집기간 </b><br>
-					<b> 프로젝트 시작일, 프로젝트 마감일 -> 실제 프로젝트 기간 </b><br>
-					<b> 최소보장이율은 펀딩전체 기간동안 배당금과 별개로 투자원금에 대해 지급되는 이자율입니다 </b><br><br>
-				</span>
-				<form action="/pineapple/addfunding.pms" method="post" enctype="multipart/form-data">
-					펀딩형태
-					<select name="fdType" required="required">
-						<option value="채권">채권</option>
-						<option value="주식">주식</option>
-					</select><br><br>
-					회사명
-					<select name="fdComCode" id="comList" required="required">
-						<!-- ajax요청으로 회사명과 회사코드를 각각 넣어줌  -->
-						<option value="null">선택하세요</option>
-					</select><br><br>
-					펀딩명
-					<input type="text" class="form-control" id="fdTitle" name="fdTitle" required="required"><br>
-					<span id="checkresult"></span><br><br>
-					최소투자금액
-					<input type="text" class="form-control" name="minInvestMoney" required="required"><br>
-					판매주식수
-					<input type="text" class="form-control" name="numberOfShares" required="required"><br>
-					주당발행가
-					<input type="text" class="form-control" name="issuePrice" required="required"><br>	
-					오픈일
-					<input type="date" class="form-control" name="openDate" required="required"><br>
-					마감일
-					<input type="date" class="form-control" name="closeDate" required="required"><br>
-					최소보장이율
-					<input type="text" class="form-control" name="numberOfShares" required="required"><br>
-					프로젝트 시작일
-					<input type="date" class="form-control" name="projectStartDate" required="required"><br>
-					프로젝트 마감일
-					<input type="date" class="form-control" name="projectEndDate" required="required"><br>
-						<!-- 히든값으로 펀딩개설자 name를 세션에서받아서 넣어줌 -->
-					<input type="hidden" class="form-control" name="fdPublisher" value="id01@maver.com">
-					<button type="submit"  class="btn btn-success">입력완료</button>
-				</form>
+			<div class="col-md-9">
+				<div class="pagetitleandexplainbox">
+					<h1>펀딩개설</h1>
+					<span>
+						<b> 펀딩명은 수정이 불가능하니 신중히 지어주세요 </b><br>
+						<b> 오픈일, 마감일 -> 펀딩 모집기간 </b><br>
+						<b> 프로젝트 시작일, 프로젝트 마감일 -> 실제 프로젝트 기간 </b><br>
+						<b> 최소보장이율은 펀딩전체 기간동안 배당금과 별개로 투자원금에 대해 지급되는 이자율입니다 </b><br><br>
+					</span>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-body form-horizontal payment-form">
+					<form action="/pineapple/addfunding.pms" method="post" enctype="multipart/form-data">
+						<div class="form-group">
+	                        <label for="description" class="col-sm-3 control-label">펀딩형태</label>
+		                        <div class="col-sm-9">
+									<select name="fdType" class="form-control" required="required">
+										<option value="채권">채권</option>
+										<option value="주식">주식</option>
+									</select>
+       							</div>
+                    	</div>
+						<div class="form-group">
+	                        <label for="description" class="col-sm-3 control-label">회사명</label>
+		                        <div class="col-sm-9">
+									<select name="fdComCode" class="form-control" id="comList" required="required">
+										<!-- ajax요청으로 회사명과 회사코드를 각각 넣어줌  -->
+										<option value="null">선택하세요</option>
+									</select>
+								</div>
+                    	</div>
+                    	<div class="form-group">
+	                        <label for="description" class="col-sm-3 control-label">펀딩명</label>
+		                        <div class="col-sm-9">
+								<input type="text" class="form-control" id="fdTitle" name="fdTitle" required="required"><br>
+								<span id="checkresult"></span>
+							</div>
+                    	</div>
+						<div class="form-group">
+	                        <label for="description" class="col-sm-3 control-label">최소투자금액</label>
+		                        <div class="col-sm-9">
+								<input type="number" class="form-control" name="minInvestMoney" required="required">
+								</div>
+                    	</div>
+						
+						<div class="form-group">
+	                        <label for="description" class="col-sm-3 control-label">판매주식수</label>
+		                        <div class="col-sm-9">
+									<input type="number" class="form-control" name="numberOfShares" required="required">
+								</div>
+                    	</div>
+						
+						<div class="form-group">
+	                        <label for="description" class="col-sm-3 control-label">주당발행가</label>
+		                        <div class="col-sm-9">
+									<input type="number" class="form-control" name="issuePrice" required="required">	
+								</div>
+                    	</div>
+						
+						<div class="form-group">
+	                        <label for="description" class="col-sm-3 control-label">오픈일</label>
+		                        <div class="col-sm-9">
+									<input type="date" class="form-control" name="openDate" required="required">
+								</div>
+                    	</div>
+						
+						<div class="form-group">
+	                        <label for="description" class="col-sm-3 control-label">마감일</label>
+		                        <div class="col-sm-9">
+									<input type="date" class="form-control" name="closeDate" required="required">
+								</div>
+                    	</div>
+						
+						<div class="form-group">
+	                        <label for="description" class="col-sm-3 control-label">최소보장이율</label>
+		                        <div class="col-sm-9">
+									<input type="number" class="form-control" name="minInterestRate" required="required">
+								</div>
+                    	</div>
+						
+						<div class="form-group">
+	                        <label for="description" class="col-sm-3 control-label">프로젝트 시작일</label>
+		                        <div class="col-sm-9">
+									<input type="date" class="form-control" name="projectStartDate" required="required">
+								</div>
+                    	</div>
+						
+						<div class="form-group">
+	                        <label for="description" class="col-sm-3 control-label">프로젝트 마감일</label>
+		                        <div class="col-sm-9">
+									<input type="date" class="form-control" name="projectEndDate" required="required">
+								</div>
+                    	</div>
+							<!-- 히든값으로 펀딩개설자 id를 세션에서받아서 넣어줌 -->
+						<input type="hidden" class="form-control" name="fdPublisher" value="${id}">
+						<div class="form-group">
+	                        <div class="col-sm-12 text-right">
+	                            <button type="submit" class="btn btn-success preview-add-button">
+									입력완료
+	                            </button>
+	                        </div>
+                    	</div>
+					</form>
+				</div>
 			</div>
-		<div class="col-md-1"></div>
+			</div>
 	</div>
 </div>
 <!-- 풋터 -->

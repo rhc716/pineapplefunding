@@ -32,7 +32,7 @@ $(document).ready(function(){
 		type : "get",
 		url : "/pineapple/getmyfundinglist.pms",
 		/* 아이디 세션에서 받아서 가져옴 */
-		data : { userId : "id01@maver.com" }
+		data : { userId : "${id}"}
 	});
 	// 성공시
 	getfundinglist.done(function(msg){
@@ -176,9 +176,12 @@ $(document).ready(function(){
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-md-9" id="myfundinglist">
+			<div class="pagetitleandexplainbox" style="width: 690px;">
+				<h1>펀딩조회</h1>
 				<span>
-					<b> 펀딩기본정보 수정 및 삭제는 펀딩개설 승인 전까지 가능합니다.</b><br><br>
+					<b> 펀딩기본정보 수정 및 삭제는 펀딩개설 승인 전까지 가능합니다.</b>
 				</span>
+			</div>
 <!-- 펀딩 리스트 뿌려질 곳 -->
 	</div>
 

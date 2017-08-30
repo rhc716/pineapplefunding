@@ -32,7 +32,7 @@ $(document).ready(function(){
 		type : "get",
 		url : "/pineapple/getmyfundinglist.pms",
 		/* 아이디 세션에서 받아서 가져옴 */
-		data : { userId : "id01@maver.com" }
+		data : { userId : "${id}"}
 	});
 	
 	getfundinglist.done(function(msg){
@@ -64,15 +64,41 @@ $(document).ready(function(){
 	<div class="col-md-9">
 		<div class="col-md-1"></div>
 			<div class="col-md-7">
-				<form action="/pineapple/addfundingfile.pms" enctype="multipart/form-data" method="post">
-					펀딩명
-					<select name="fileFdCode" id="fdselectlist">
-					<option value="null">선택해주세요</option>
-						<!-- ajax요청으로 목록을 채워줌 -->
-					</select><br><br>
-					<input type="file" name="uploadFile"><br><br>
-					<button type="submit" class="btn btn-success">입력완료</button>
-				</form>
+			<div class="pagetitleandexplainbox">
+				<h1>펀딩보고서업로드</h1>
+				<span>
+					<b>보고서 용량 제한은 10MB이며 개수는 제한이 없습니다</b>
+				</span>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-body form-horizontal payment-form">
+					<form action="/pineapple/addfundingfile.pms" enctype="multipart/form-data" method="post">
+						<div class="form-group">
+	                        <label for="concept" class="col-sm-3 control-label">펀딩선택</label>
+		                        <div class="col-sm-9">
+		                            <select name="fileFdCode" class="form-control" id="fdselectlist">
+										<option value="null">선택해주세요</option>
+										<!-- ajax요청으로 목록을 채워줌 -->
+									</select>
+		                        </div>
+                    	</div>
+                    	<div class="form-group">
+	                        <label for="description" class="col-sm-3 control-label">보고서파일</label>
+		                        <div class="col-sm-9">
+		                            <input type="file" class="form-control" name="uploadFile">
+		                        </div>
+                    	</div>
+                    	
+                    	<div class="form-group">
+	                        <div class="col-sm-12 text-right">
+	                            <button type="submit" class="btn btn-success preview-add-button">
+	                                	입력완료
+	                            </button>
+	                        </div>
+                    	</div>
+					</form>
+				</div>    
+			</div>
 			</div>
 		<div class="col-md-1"></div>
 	</div>

@@ -37,7 +37,7 @@ $(document).ready(function(){
 		type : "get",
 		url : "/pineapple/getmyfundingdetaillist.pms",
 		/* 아이디 세션에서 받아서 가져옴 */
-		data : { userId : "id01@maver.com" }
+		data : { userId : "${id}"}
 	});
 	// 성공시
 	getfundinglist.done(function(msg){
@@ -127,11 +127,14 @@ $(document).ready(function(){
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-md-9" id="myfundinglist">
-		<span>
-			<b> 펀딩상세내용은 투자자들에게 펀딩에 대해 상세하게 설명해주는 내용을 작성해주시면 됩니다. </b><br>
-			<b> 오픈스토리는 상세한 설명이 들어가는 글 형식입니다 </b><br>
-			<b> 기업가치는 금액으로 산정된 회사가치를 나타냅니다 </b><br><br>
-		</span>
+		<div class="pagetitleandexplainbox" style="width: 690px;">
+			<h1>펀딩상세관리</h1>
+			<span>
+				<b> 펀딩상세내용은 투자자들에게 펀딩에 대해 상세하게 설명해주는 내용을 작성해주시면 됩니다. </b><br>
+				<b> 오픈스토리는 상세한 설명이 들어가는 글 형식입니다 </b><br>
+				<b> 기업가치는 금액으로 산정된 회사가치를 나타냅니다 </b>
+			</span>
+		</div>
 <!-- 펀딩 리스트 뿌려질 곳 -->
 					
 	</div>

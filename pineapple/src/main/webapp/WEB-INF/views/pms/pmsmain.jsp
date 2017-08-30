@@ -40,7 +40,95 @@
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-md-9">
-		<h1>프로젝트관리 메인페이지 입니다</h1>
+		<c:if test="${level eq '기업회원'}">
+			<div class="pagetitleandexplainbox">
+				<h2>기업회원용 프로젝트관리</h2>
+			</div> 
+            <div class="col-sm-12">
+                <div class="col-xs-12 col-sm-8"><br>
+                    <h2>${nickname}</h2>
+                    <p><strong>직급 :</strong> ${rank} </p>
+                    <p><strong>회사 : </strong> Read</p>
+                    <p><strong>펀딩 : </strong>
+                        <span class="tags">html5</span> 
+                    </p>
+                </div>
+            </div>            
+            <div class="col-xs-12 divider text-center pmsmainboxbottom">
+                <div class="col-xs-12 col-sm-4 emphasis">
+                    <h2><strong> 20,7K </strong></h2>                    
+                    <p><small>총 펀딩수</small></p>
+                </div>
+                <div class="col-xs-12 col-sm-4 emphasis">
+                    <h2><strong>245</strong></h2>                    
+                    <p><small>모집중인 펀딩수</small></p>
+                </div>
+                <div class="col-xs-12 col-sm-4 emphasis">
+                    <h2><strong>43</strong></h2>                    
+                    <p><small>진행중인 펀딩수</small></p>
+                </div>
+            </div>
+		</c:if>
+		<c:if test="${level eq '투자자'}">
+			<div class="pagetitleandexplainbox">
+				<h2>투자자용 프로젝트관리</h2>
+			</div> 
+            <div class="col-sm-12">
+                <div class="col-xs-12 col-sm-8"><br>
+                    <h2>${nickname}</h2>
+                    <p><strong>직급 :</strong> ${rank} </p>
+                    <p><strong>회사 : </strong> Read</p>
+                    <p><strong>펀딩 : </strong>
+                        <span class="tags">html5</span> 
+                    </p>
+                </div>
+            </div>            
+            <div class="col-xs-12 divider text-center pmsmainboxbottom">
+                <div class="col-xs-12 col-sm-4 emphasis">
+                    <h2><strong> 20,7K </strong></h2>                    
+                    <p><small>총 펀딩수</small></p>
+                </div>
+                <div class="col-xs-12 col-sm-4 emphasis">
+                    <h2><strong>245</strong></h2>                    
+                    <p><small>모집중인 펀딩수</small></p>
+                </div>
+                <div class="col-xs-12 col-sm-4 emphasis">
+                    <h2><strong>43</strong></h2>                    
+                    <p><small>진행중인 펀딩수</small></p>
+                </div>
+            </div>
+		</c:if>
+		<c:if test="${level eq '관리자'}">
+			<div class="pagetitleandexplainbox">
+				<h2>관리자용 프로젝트관리</h2>
+			</div> 
+			<div class="col-sm-12">
+                <div class="col-xs-12 col-sm-8"><br>
+                    <h2>${nickname}</h2>
+                    <p><strong>직급 :</strong> ${rank} </p>
+                    <p><strong>회사 : </strong> Read</p>
+                    <p><strong>펀딩 : </strong>
+                        <span class="tags">html5</span> 
+                    </p>
+                </div>
+            </div>            
+            <div class="col-xs-12 divider text-center pmsmainboxbottom">
+                <div class="col-xs-12 col-sm-4 emphasis">
+                    <h2><strong> 20,7K </strong></h2>                    
+                    <p><small>총 펀딩수</small></p>
+                </div>
+                <div class="col-xs-12 col-sm-4 emphasis">
+                    <h2><strong>245</strong></h2>                    
+                    <p><small>모집중인 펀딩수</small></p>
+                </div>
+                <div class="col-xs-12 col-sm-4 emphasis">
+                    <h2><strong>43</strong></h2>                    
+                    <p><small>진행중인 펀딩수</small></p>
+                </div>
+            </div>
+		</c:if>
+		
+		    	
 	</div>
 	
 	

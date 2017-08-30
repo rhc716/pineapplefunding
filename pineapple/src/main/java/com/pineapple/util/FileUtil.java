@@ -81,7 +81,7 @@ String fileName = "";
             	//썸네일 가로사이즈
                 int thumbnail_width = 300;
                 //썸네일 세로사이즈
-                int thumbnail_height = 150;     
+                int thumbnail_height = 245;     
 
                 BufferedImage bfimage = ImageIO.read(file);
                 BufferedImage bfthumbnailimage = new BufferedImage(thumbnail_width, thumbnail_height, BufferedImage.TYPE_3BYTE_BGR);
