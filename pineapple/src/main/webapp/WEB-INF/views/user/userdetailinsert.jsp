@@ -141,16 +141,16 @@ $(document).ready(function(){
 });
 </script>
 </head>
-<body>
+<body class="container">
 <!--로그인 버튼 -->
 	<c:import url="/resources/module/toploginandlogo.jsp"/>
 <!-- 상단메뉴 -->
 	<c:import url="/resources/module/topmenu.jsp"/>
 <!-- 본문 -->
-	<span class="topnamebar" ><h2>회원상세정보입력</h2></span>
+	<span class="topnamebar" ></span>
 	<div class="row">
-		<div class="col-xs-3"></div>
-		<div class="col-xs-6 form_page">
+		<div class="col-xs-2"><h4>회원상세정보입력</h4></div>
+		<div class="col-xs-10">
 			<form id="form" action="/pineapple/userdetailinsert.user" name="userdetail" method="post" style="border:1px solid #ccc">
 				<div class="container_insert">
 				    <div id="emailSuccess" class="form-group has-success has-feedback">
@@ -186,13 +186,11 @@ $(document).ready(function(){
 					    <input id="btn_cancel" type="button" class="button_insert cancelbtn" value="취소">
 					    <input id="submitBtn" type="button" class="button_insert signupbtn" value="입력">
 				   	</div>
-				</div>
+			   	</div>
 			</form>
 		</div>
-		<div class="col-xs-3"></div>
 	</div>
- 
 <!-- 풋터 -->
-	<c:import url="/resources/module/footer.jsp"/>
+<c:import url="/resources/module/footer.jsp"/>
 </body>
 </html>

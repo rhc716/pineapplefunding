@@ -114,8 +114,15 @@
 								    type: "get",
 								    url : "/pineapple/searchcomname.user",
 								    data : {comName : in_comName},
-								    success : function(){
-								    	alert('ajax 성공');
+								    success : function(re){
+								    	if(re.comName != null){
+									    	$('#comNamech').css('color','#008000');
+									    	$('#comNamech').text('기업명이 존재합니다. 기업선택을 해주시기 바랍니다.');
+								    	} else {
+								    		$('#comNamech').css('color','#FF0000');
+									    	$('#comNamech').text('기업명이 존재하지 않습니다. 기업을 개설하거나 올바른 기업명을 검색해주시기 바랍니다.');
+									    	$('#comNameSearch').val('');
+								    	}
 							    	},
 								    //만약 해당 페이지에 값을 성공적으로 보냈다면 페이지를 rs 라는 매개변수로 받아 id = 'comnamech3' 구역에 rs를 출력하겠다. 
 								    error : function error(){
@@ -123,9 +130,10 @@
 								    }
 			});
 			comSearchAjax.done(function(cs){
-				$('#searchCompanyModal').modal('hide');
-				$('#emComCodeRes').val(cs.comCode);
-				$('#emComNameRes').val(cs.comName);
+				$('#comNameChooseBtn').click(function(){
+					$('#emComCodeRes').val(cs.comCode);
+					$('#emComNameRes').val(cs.comName);
+				});
 			});
 		});
 	});
@@ -695,7 +703,7 @@
 							  	</form>
 								 <br>
 							  	<div class="modal-footer">
-							  		<button type="button" class="btn btn-primary btn-lg">기업선택</button>
+							  		<button id="comNameChooseBtn" type="button" class="btn btn-primary btn-lg" data-dismiss="modal">기업선택</button>
 							        <button type="button" class="btn btn-success btn-lg" data-dismiss="modal">닫기</button>
 					      	  	</div>
 							
