@@ -95,4 +95,8 @@ public interface PmsDaoInterface {
 
 	WbsActual wbsactualdetail(String wbsactualcode);
 
+	List<WbsMs> wbsmsview(String fdcode);
+
+	List<WbsPlan> wbsplanlist(String milestoneCode);
+
 }

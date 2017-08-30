@@ -37,7 +37,20 @@
 	<div class="col-md-3">
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
-	<div class="col-md-9">
+	<div class="col-md-9">	
+		<form action="/pineapple/wbsmsview.pms" method="post">	
+			<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
+			<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
+			<button type="submit" class="btn btn-sm btn-primary">펀딩명 :  ${fdTitle}</button>
+		</form><br>
+		<form action="/pineapple/wbsplaninsertform.pms" method="post">	
+			<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
+			<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
+			<input type="hidden" readonly="readonly"  name="milestoneCode" value="${milestoneCode}">
+			<input type="hidden" readonly="readonly"  name="milestoneName" value="${milestoneName}">
+			<input type="hidden" readonly="readonly"  name="msComCode" value="${msComCode}">
+			<button type="submit" class="btn btn-sm btn-primary">마일스톤명 :  ${milestoneName}</button>
+		</form><br>
 			<div class="col-md-1"></div>
 				<div class="col-md-7">
 					<form action="/pineapple/wbsplaninsert.pms" method="post">
@@ -55,10 +68,10 @@
 						담당자ID:
 						<input type="text" class="form-control" name="wbsPlanManager">
 						<!-- 회사코드 펀딩코드 마일스톤 코드 받아와서 입력 -->
-						<input type="hidden" class="form-control" name="wbsPlanComCode" value="1">
-						<input type="hidden" class="form-control" name="wbsPlanFdCode" value="1">
-						<input type="hidden" class="form-control" name="wbsPlanMsCode" value="1">
-						<button type="submit" class="btn btn-success">입력완료</button>
+						<input type="hidden" class="form-control" name="wbsPlanComCode" value="${msComCode}">
+						<input type="hidden" class="form-control" name="wbsPlanFdCode" value="${fdCode}">
+						<input type="hidden" class="form-control" name="wbsPlanMsCode" value="${milestoneCode}">
+						<button type="hidden" class="btn btn-success">입력완료</button>
 					</form>
 				</div>
 			<div class="col-md-1"></div>

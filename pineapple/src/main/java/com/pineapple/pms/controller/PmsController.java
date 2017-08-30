@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pineapple.pms.service.PmsService;
 import com.pineapple.pms.service.WbsActual;
+import com.pineapple.pms.service.WbsMs;
 import com.pineapple.pms.service.WbsPlan;
 import com.pineapple.pms.service.WbsPlanEtc;
 import com.pineapple.pms.service.WbsPlanFacility;
@@ -36,16 +37,42 @@ public class PmsController {
     private PmsService service;
 	
 	// wbsplan입력 페이지 요청
-	@RequestMapping(value = "/wbsplaninsert.pms", method = RequestMethod.GET)
-	public String addWbsplan(Locale locale, Model model) {
+	@RequestMapping(value = "/wbsform.pms", method = {RequestMethod.GET, RequestMethod.POST})
+	public String addWbsplan(Locale locale, Model model, HttpServletRequest request) {
 		log.debug("PmsController의 addWbsplan호출 성공");
-		return "pms/companyuser/wbs/wbsplaninsert";
+		String fdCode = request.getParameter("fdCode");
+		String fdTitle = request.getParameter("fdTitle");
+		String milestoneCode = request.getParameter("milestoneCode");
+		String milestoneName = request.getParameter("milestoneName");
+		String msComCode = request.getParameter("msComCode");
+		String btn = request.getParameter("btn");
+		if(btn.equals("wbsinsert")){
+			model.addAttribute("fdCode", fdCode);
+			model.addAttribute("fdTitle", fdTitle);
+			model.addAttribute("milestoneCode", milestoneCode);
+			model.addAttribute("milestoneName", milestoneName);
+			model.addAttribute("msComCode", msComCode);
+			log.debug("펀딩코드"+fdCode+"펀딩명"+fdTitle+"마일스톤코드"+milestoneCode+"마일스톤명"+milestoneName+"회사코드"+msComCode);
+			return "pms/companyuser/wbs/wbsplaninsert";
+		}else{
+			log.debug("PmsController의 wbsplanlistpage호출 성공");
+			List<WbsPlan> wbsplan = service.wbsplanlist(milestoneCode);
+			log.debug("wbsplan리스트  = "+wbsplan);
+			model.addAttribute("wbsplan", wbsplan);
+			model.addAttribute("fdCode", fdCode);
+			model.addAttribute("fdTitle", fdTitle);
+			model.addAttribute("milestoneCode", milestoneCode);
+			model.addAttribute("milestoneName", milestoneName);
+			model.addAttribute("msComCode", msComCode);
+			return "pms/companyuser/wbs/wbsplanlist2";
+		}
+		
 	}
 	
 	// wbsactual입력 페이지 요청
 	@RequestMapping(value = "/wbsactualinsertform.pms", method = RequestMethod.GET)
 	public String addWbsactualPage(Locale locale, Model model) {
-		log.debug("PmsController의 addWbsactualPage호출 성공");                                                                                                                   
+		log.debug("PmsController의 addWbsactual Page호출 성공");                                                                                                                   
 		return "pms/companyuser/wbs/wbsactualinsert";
 	}
 	
@@ -108,7 +135,7 @@ public class PmsController {
 		
 	}
 	
-	// wbsplan 상세보기 페이지
+	// wbsactual 상세보기 페이지
 	@RequestMapping(value = "/wbsactualdetail.pms", method = {RequestMethod.GET, RequestMethod.POST})
 	public String wbsactualdetail(WbsActual wbsactual,Locale locale, Model model, HttpServletRequest request) {
 		String btn = request.getParameter("btn");
@@ -140,9 +167,22 @@ public class PmsController {
 	@RequestMapping(value = "/wbsplanlistpage.pms", method = RequestMethod.GET)
 	public String WbsPlanList(Locale locale, Model model) {
 		log.debug("PmsController의 wbsplanlistpage호출 성공");
-		return "pms/companyuser/wbs/wbsplanlist";
+		return "pms/companyuser/wbs/wbsfdlist";
 	}
-	
+	//wbsmsview 리스트페이지 불러오기
+	@RequestMapping(value = "/wbsmsview.pms", method = {RequestMethod.GET, RequestMethod.POST})
+	public String wbsmsview(Locale locale, Model model, HttpServletRequest request) {
+		log.debug("PmsController의 wbsmsview호출 성공");
+		String fdcode = request.getParameter("fdCode");
+		String fdtitle = request.getParameter("fdTitle");
+		log.debug("펀딩코드 "+fdcode);
+		List<WbsMs> mslist = service.wbsmsview(fdcode);
+		log.debug("마일스톤 "+mslist);
+		model.addAttribute("mslist", mslist );
+		model.addAttribute("fdTitle", fdtitle );
+		model.addAttribute("fdCode", fdcode );;
+		return "pms/companyuser/wbs/wbsmslist";
+	}
 	//wbsplan 리스트내용 불러오기
 	@RequestMapping(value = "/wbsplanlist.pms", method = RequestMethod.GET)
 	public @ResponseBody List<WbsPlanView> getMyWbsPlanList(Locale locale, Model model, @RequestParam("userId") String userId) {
