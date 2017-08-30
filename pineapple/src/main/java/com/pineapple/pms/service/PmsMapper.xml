@@ -91,6 +91,14 @@
 		select *
 		from wbsplanhuman where wphWpCode = #{wbsplancode}
 	</select>
+		<select id="wbsplanlist" resultType="com.pineapple.pms.service.WbsPlan" parameterType="String">
+		SELECT * FROM wbsplan 
+		where wbsPlanStatus =1 and wbsPlanMsCode = #{milestoneCode}
+	</select>
+	<select id="wbsmsview" resultType="com.pineapple.pms.service.WbsMs" parameterType="String">
+		select *
+		from milestone where msFdCode = #{fdcode}
+	</select>
 	<select id="selectWbsPlanMaterial" resultType="com.pineapple.pms.service.WbsPlanMaterial" parameterType="String">
 		select *
 		from wbsplanmaterial where wpmWpCode = #{wbsplancode}

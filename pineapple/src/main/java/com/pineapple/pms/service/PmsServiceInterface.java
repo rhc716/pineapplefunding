@@ -74,4 +74,8 @@ public interface PmsServiceInterface {
 
 	WbsActual wbsactualdetail(String wbsplancode);
 
+	List<WbsMs> wbsmsview(String fdcode);
+
+	List<WbsPlan> wbsplanlist(String milestoneCode);
+
 }
