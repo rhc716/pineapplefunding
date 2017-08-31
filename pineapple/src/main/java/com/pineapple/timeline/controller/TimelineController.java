@@ -89,6 +89,7 @@ public class TimelineController {
 	
 	
 	///////////////////////My Page Time Line//////////////////////////
+	//자신이 등록한 타임라인 list 조회
 	@RequestMapping(value="/investortimeline.timeline",method=RequestMethod.GET)
 	public String investorTimelinelist(Locale locale,Model model,HttpSession session){
 		log.debug("<----- TimelineController[timelineMain호출]----->");
@@ -97,6 +98,67 @@ public class TimelineController {
 		log.debug(myinvestortimeline+"<-----TimelineController[myinvestortimeline 값 출력]");
 		return "user/investormypageajax/investortimeline";
 	}
+	//My Page 에서 타임라인 새로 등록하기
+	@RequestMapping(value="/investortimelineinsert.timeline",method=RequestMethod.POST)
+	public String investorTimelineAdd(Locale locale,Model model,Timeline timeline){
+		log.debug("<----- TimelineController[investorTimelineAdd호출]----->");
+		int timelineinsert = timelineserviceinterface.addTimeline(timeline);
+		log.debug(timelineinsert+"<-----TimelineController[timelineinsert 값 출력]");
+		return "redirect:/investormypage.user";
+	}
+	//자신이 등록한 타임라인 수정하기
+	@RequestMapping(value="/investortimelineupdate.timeline",method=RequestMethod.POST)
+	public String investorTimelineModify(Locale locale,Model model,Timeline timeline){
+		log.debug("<----- TimelineController[investorTimelineModify호출]----->");
+		int timelineupdate = timelineserviceinterface.modifyTimeline(timeline);
+		log.debug(timelineupdate+"<-----TimelineController[timelineupdate 값 출력]");
+		return "redirect:/investormypage.user";
+	}
+	//자신이 등록한 타임라인 삭제하기
+	@RequestMapping(value="/investortimelinedelete.timeline",method=RequestMethod.GET)
+	public String investorTimelineRemove(Locale locale,Model model,@RequestParam(value="tlCode")int tlCode){
+		log.debug("<----- TimelineController[investorTimelineRemove호출]----->");
+		int timelinedelete = timelineserviceinterface.removeTimeline(tlCode);
+		log.debug(timelinedelete+"<-----TimelineController[timelinedelete 값 출력]");
+		return "redirect:/investormypage.user";
+	}
+	//자신이 등록한 타임라인의 댓글 list 조회
+	@RequestMapping(value="/investortimelinereply.timeline",method=RequestMethod.GET)
+	public String investorTimelineReplylist(Locale locale,Model model,@RequestParam(value="tlCode")int tlCode){
+		log.debug("<----- TimelineController[investorTimelineReplylist호출]----->");
+		List<TimelineReply> timelinereplylist = timelineserviceinterface.getTimelineReplyList(tlCode);
+		log.debug(timelinereplylist+"<-----TimelineController[timelinereplylist 값 출력]");
+		model.addAttribute("timelinereplylist",timelinereplylist);
+		log.debug(timelinereplylist.size()+"<-----TimelineController[timelinereplylist 값 출력]");
+		return "user/investormypageajax/investortimelinereply";
+	}
+	//자신이 등록한 타임라인 댓글 입력하기
+	@RequestMapping(value="/investortimelinereplyinsert.invest",method=RequestMethod.POST)
+	public String investorTimelineReplyAdd(Locale locale,Model model,TimelineReply timelinereply){
+		log.debug("<----- TimelineController[investorTimelineReplyAdd호출]----->");
+		int timelinereplyinsert = timelineserviceinterface.addTimelineReply(timelinereply);
+		log.debug(timelinereplyinsert+"<-----TimelineController[timelinereplyinsert 값 출력]");
+		return "redirect:/investormypage.user";
+	}
+	//자신이 등록한 타임라인 댓글 수정하기
+	@RequestMapping(value="/investortimelinereplyupdate.invest",method=RequestMethod.POST)
+	public String investorTimelineReplyModify(Locale locale,Model model,TimelineReply timelinereply){
+		log.debug("<----- TimelineController[investorTimelineReplyModify호출]----->");
+		int timelinereplyupdate = timelineserviceinterface.modifyTimelineReply(timelinereply);
+		log.debug(timelinereplyupdate+"<-----TimelineController[timelinereplyupdate 값 출력]");
+		return "redirect:/investormypage.user";
+	}
+	//자신이 등록한 타임라인 댓글 삭제하기
+	@RequestMapping(value="/investortimelinereplydelete.invest",method=RequestMethod.GET)
+	public String investorTimelineReplyRemove(Locale locale,Model model,@RequestParam(value="tlReCode")int tlReCode){
+		log.debug("<----- TimelineController[investorTimelineReplyRemove호출]----->");
+		int timelinereplydelete = timelineserviceinterface.removeTimelineReply(tlReCode);
+		log.debug(timelinereplydelete+"<-----TimelineController[timelinereplydelete 값 출력]");
+		return "redirect:/investormypage.user";
+	}
+	
+	
+	
 	
     //////////////////////////REST CONTROLLER//////////////////////////
 	//자신의 한달간의 활동기록 조회
