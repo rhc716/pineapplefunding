@@ -54,9 +54,9 @@ public class MypageController {
 		return employee;
 	}
 	
-	//경영진이 마이페이지 사원승인 탭에서, 각 회사 사원정보보기 버튼을 클릭하면 자신이 소속된 기업에 사원등록요청한 사원 목록 조회
+	//경영진이 마이페이지 사원승인 탭을 클릭하면 자신이 소속된 기업에 사원등록요청한 사원 목록을 불러올 수 있음
 	@RequestMapping(value="/getemrequestlist.user", method=RequestMethod.GET)
-	public @ResponseBody List<Employee> getEmployeeRequestListByComName(HttpSession session, Model model, @RequestParam("comName") String comName){
+	public String getEmployeeRequestListByComName(HttpSession session, Model model, @RequestParam("comName") String comName){
 		log.debug("MypageController getEmployeeRequestListByComName 기업에 속한 사원등록 목록 요청");
 		List<Employee> employeeRequestList = mypageservice.getEmployeeRequestList(comName);
         if(employeeRequestList != null){
@@ -65,7 +65,7 @@ public class MypageController {
          } else {
          	log.debug(session.getAttribute("nickname")+"님의  기업에 사원등록요청목록 조회 실패");
          }
-		return employeeRequestList;
+		return "user/managermypageajax/managerapproveemployee";
 	}
 	
 	//사원등록정보 확인 모달에서 사원정보(주로 부서명) 수정하기 요청 처리

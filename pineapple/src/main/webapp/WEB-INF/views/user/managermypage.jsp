@@ -7,16 +7,8 @@
 <title>경영진 MyPage</title>
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-<!-- 부가적인 테마 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
 
@@ -25,63 +17,77 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		//사원요청 승인탭에서 기업명별 사원요청목록 데이터 불러오는 함수
-	    $('.emreqlistcollapsebtn').click(function(){
-	    	var in_emComName = $(this).attr('value');
-	    	//동적 a href 생성하는 함수 설정
-	    	var URL = "#"+in_emComName;
-	 		$(".emreqlistcollapsebtn").attr('href', URL);
-	 		$(".emreqlistcollapsebtn").attr('aria-controls', in_emComName);
-	 		$(".collapsediv").attr('id', in_emComName);
-	 		var id = $(".collapse").attr('id');
-		     var emRequestListByComNameAjax = $.ajax({ // ajax실행부분
-										        type: "get",
-										        url : "/pineapple/getemrequestlist.user",
-										        data : {comName : in_emComName},
-										        success : function success(){
-										        	alert('사원등록요청 기업이름 : '+ in_emComName);
-										        },
-										        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
-										        error : function error(){
-									        		alert('사원등록요청 사원리스트 불러오기 오류');
-									        	}
-											});
-		     //ajax 실행한 뒤, 불러온 데이터를 테이블에 출력
-		    emRequestListByComNameAjax.done(function(emlistres){
-		    	var appendlist = '';
-		    	$.each(emlistres, function(index, item){
-		    		appendlist += '<tr><td>'+item.emCode+'</td> <td>'+item.emUserId+'</td> <td>'+item.emComName+'</td> <td>'+item.emDepartment+'</td>'
-		    		+'<td><a type="button" class="btn btn-success btn-block td5 employeeinfomodal" data-toggle="modal" value= "'+item.emCode+'" href="#emcheckmodal">승인</a></td></tr>';
-		    	});
-		     //각 사원등록요청 별 승인 페이지 요청 처리
-	    	 $('#tbodytarget').append(appendlist);
-	    	 $('.employeeinfomodal').click(function(){
-	    			var in_employeeCode = $(this).attr('value');
-	    			var appreveEmployeeAjax = $.ajax({ // ajax실행부분
-	    								        type: "get",
-	    								        url : "/pineapple/approveemployeepage.user",
-	    								        data : {emCode : in_employeeCode},
-	    								        success : function success(){
-	    								        	alert('승인할 사원코드 : '+ in_employeeCode);
-	    								        },
-	    								        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
-	    								        error : function error(){
-	    							        		alert('사원정보 불러오기 오류');
-	    							        	}
-	    									});
-	    			//ajax를 통해 조회한 계좌 정보를 모달창 수정페이지 각 입력값으로 넣어준다
-	    			appreveEmployeeAjax.done(function(aec){
-	    				$('#emCodeCheck').val(aec.emCode);
-	    				$('#emComCodeCheck').val(aec.emComCode);
-	    	    		$('#emComNameCheck').val(aec.emComName);
-	    	    		$('#emUserIdCheck').val(aec.emUserId);
-	    	    		$('#emRankCodeCheck').val(aec.emRankCode);
-	    	    		$('#emDepartmentCheck').val(aec.emDepartment);
-	    			});
-	    		});
-		    });
-		}); 
+	    $('#approveEmployee-tab').click(function(){
+	    	 var comobject = document.getElementsByClassName("emapproveBtn");
+	    	 console.log(comobject);
+	    	 var comlength = document.getElementsByClassName("emapproveBtn").length;
+	    	 console.log(comlength);
+	    	 var approvebtnId;
+	    	 var idselector;
+	    	 var in_emComName;
+	    	 var thishref;
+	    	 for(var i=0; i<comlength; i++){
+	    		 approvebtnId = "a"+i;
+	    		 $(comobject[i]).attr('id', approvebtnId);
+	    		 idselector = "#"+ approvebtnId;
+	    		 console.log($('.emapproveBtn').attr('id'));
+	    		 in_emComName = $(idselector).attr('value');
+		    	 console.log(in_emComName);
+		    	 thishref = "#"+approvebtnId;
+		    	 console.log(thishref);
+		    	 $(idselector).attr('href', idselector);
+		    	 $(idselector).attr('aria-controls', approvebtnId);
+		    	 console.log($(idselector).attr('aria-controls'));
+		    	 $('.collapseid').attr('id', approvebtnId);
+		    	 console.log($('.collapseid').attr('id'));
+		    	 $(idselector).click(function(){
+				     var emRequestListByComNameAjax = $.ajax({ // ajax실행부분
+					        type: "get",
+					        url : "/pineapple/getemrequestlist.user",
+					        data : {comName : in_emComName},
+					        success : function success(emlistres){
+					        	$('#employeelistimport').html(emlistres);
+					        	//각 사원요청별 승인 처리
+					    	    $('.approveemployee').click(function(){
+					    			var in_employeeCode = $(this).attr('value');
+					    			var approveEmployeeAjax = $.ajax({ // ajax실행부분
+					    								        type: "get",
+					    								        url : "/pineapple/approveemployeepage.user",
+					    								        data : {emCode : in_employeeCode},
+					    								        success : function success(){
+					    								        	alert('승인할 사원코드 : '+ in_employeeCode);
+					    								        },
+					    								        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+					    								        error : function error(){
+					    							        		alert('사원정보 불러오기 오류');
+					    							        	}
+					    									});
+					    			//ajax를 통해 조회한 계좌 정보를 모달창 수정페이지 각 입력값으로 넣어준다
+					    			/*
+					    			approveEmployeeAjax.done(function(aec){
+					    				$('#emCodeCheck').val(aec.emCode);
+					    				$('#emComCodeCheck').val(aec.emComCode);
+					    				$('#emComNameCheck').val(aec.emComName);
+					    				$('#emUserIdCheck').val(aec.emUserId);
+					    				$('#emRankCodeCheck').val(aec.emRankCode);
+					    				$('#emDepartmentCheck').val(aec.emDepartment);
+					    			});
+					    			*/
+					    		});
+					        },
+					        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+					        error : function error(){
+				        		alert('사원등록요청 사원리스트 불러오기 오류');
+				        	}
+						});
+	    	 	});
+	    	 };
+
+	    	
+
+	     });
 		
-	});
+	}); 
 	$(document).ready(function(){
 		$('#newAccountSubmitBtn').click(function(){
 			$('#newaccountform').submit();
@@ -871,90 +877,43 @@
 						<br>
 						<p id="explanation">경영진으로 속한 기업에 사원등록 요청을 한 사원의 리스트를 보고 승인 또는 삭제 처리를 할 수 있습니다.</p>
 						<!-- 경영진 직급으로 소속된 기업에 사원등록요청한 사원의 목록 보기(부트스트랩 드롭다운 사용) -->
-						 <c:forEach var="comMngRankList" items="${comMngRank}">
-						  	<a class="btn btn-info btn-block emreqlistcollapsebtn" value="${comMngRankList.emComName}" data-toggle="collapse" href="#"  aria-expanded="false" aria-controls="a">
+						 <c:forEach var="comMngRankList" items="${comMngRank}" varStatus="status">
+						  	<a class="btn btn-info btn-block emapproveBtn" id="" value="${comMngRankList.emComName}" data-toggle="collapse" href="#"  aria-expanded="false" aria-controls="">
 							  ${comMngRankList.emComName}
 							</a>
-							<!-- id 설정 필요&aria-controls -->
-							<div class="collapse collapsediv" id="i">
-							  <div>
-							    <table class="table table-striped table-bordered table-hover">
-									<thead>
-										<tr class="info">
-										<td>사원코드</td>
-										<td>사원아이디</td>
-										<td>기업이름</td>
-										<td>부서</td>
-										<td>사원승인</td>
-										</tr>
-									 </thead>
-									 <tbody id="tbodytarget">
-									 </tbody>
-									 <tfoot>
-									 <div>
-										 <p id="explanation">해당 사원요청에 대한 승인여부를 결정해주시기 바랍니다</p>
-									 </div>
-									 </tfoot>
-								 </table>
-								 <button type="button" class="btn btn-danger" data-toggle="collapse">목록접기</button>
-						  	 </div>
-				    	   </div>
-				           <br>
-				           </c:forEach>	
-				            <!-- 사원등록요청 승인처리를 위한 사원정보확인 모달 내부 구현 (승인까지 가능)-->
-							<div class="modal fade" id="emcheckmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-							  <div class="modal-dialog">
-							    <div class="modal-content">
-							      <div class="modal-header">
-							        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							        <h4 class="modal-title" id="myModalLabel">사원요청에 대한 사원승인결정</h4>
-							      </div>
-							      <div class="modal-body">
-							        <form action="/pineapple/approveemployee.user" method="post">
-							        	<input id="emCodeCheck" name="emCode" type="hidden" class="form-control">
-							        	<input id="emComCodeCheck" name="emComCode" type="hidden" class="form-control">
-										<div class="form-group has-success has-feedback">
-										    <label class="control-label" for="inputSuccess4">소속기업명</label>
-										    <input id="emComNameCheck" name="emComName" type="text" class="focus form-control" readonly>
-										    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-										    <span id="comApprovedStatus" class="sr-only">(success)</span>
-									    </div>
-										<br>
-									    <div id="emUserIdEmail" class="form-group has-success has-feedback">
-											<label class="control-label" for="inputSuccess2">사원등록요청아이디</label>
-											<input id="emUserIdCheck" name="emUserId" type="text" class="form-control" varia-describedby="inputSuccess2Status" readonly>
-											<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-											<span id="inputSuccess2Status" class="sr-only">(success)</span>
-											<p id="explain">(사원으로 등록하려고 하는 분의 아이디입니다)</p>
-										</div>
-										<br>
-										<div class="form-group">
-										    <label for="emRankCodeInput">직급</label>
-										    <p id="explain">(1:경영진/2:일반사원)</p>
-									        <input id="emRankCodeCheck" name="emRankCode" type="text" readonly>
-										    <span id="emrankch1"></span>
-									  	</div>
-									  	<br>
-									  	<div class="form-group">
-										    <label for="employeeDepInput1">부서</label>
-										    <p id="explain">(사원등록요청한 사원의 기업내의 소속 부서)</p>
-										    <input id="emDepartmentCheck" name="emDepartment" type="text" class="form-control" readonly>
-									  	</div>
-									  	<br>
-									  	<div>
-									  	 	<input id="emCheckCheck" name="emCheck" type="hidden" value="1">
-									  		<input id="emDelRequestCheck" name="emDelRequest" type="hidden" value="0" class="form-control">
-									  	</div>
-									  	<div>
-											<button type="submit" class="btn btn-info">사원승인</button>&nbsp
-											<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
-										</div>
-							        </form>
-							      </div>
-							    </div>
-							  </div>
-							</div>
+							<br>
+							<!-- collapse 본문부분 id는 javascript로 지정 -->
+							<div class="collapse collapseid" id="">
+								<div>
+									<table class="table table-striped table-bordered table-hover">
+										<thead>
+											<tr class="info">
+												<td>사원코드</td>
+												<td>사원아이디</td>
+												<td>기업이름</td>
+												<td>부서</td>
+												<td>사원승인</td>
+											</tr>
+										 </thead>
+										 <!-- 각 기업별 사원등록요청 목록 import -->
+										 <tbody id="employeelistimport">
+										 </tbody>
+										 <tfoot>
+											 <div>
+												 <p id="explanation">해당 사원요청에 대한 승인여부를 결정해주시기 바랍니다</p>
+											 </div>
+										 </tfoot>
+									 </table>
+							 	</div>
+							 	<div>
+									<button type="button" class="btn btn-danger" data-toggle="collapse">목록접기</button>
+								</div>
+							 </div>
+							 <br>
+						 </c:forEach>
+							
 						
+						 
 						<!-- 사원삭제버튼 참고
 						+'<td><form action="/pineapple/deleteemployee.user" method="post">'
 					+'<input type="hidden" name="emCode" class="td6" value="'+item.emCode+'">'
@@ -962,18 +921,6 @@
 						 -->
 							
 				         
-				         
-				       
-					
-							
-						
-						  
-						  
-						 
-						
-						
-						
-						
 					</div>
 					<!-- 새로운 계좌등록을위한 모달 내부 구현 -->
 					<div class="modal fade" id="newaccountmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
