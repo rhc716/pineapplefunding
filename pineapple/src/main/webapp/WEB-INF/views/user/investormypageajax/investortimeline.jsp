@@ -8,29 +8,69 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Investor Time Line List</title>
 
+<!-- jqeury -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/ehj.css" />
 
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+	var datacheck =	$('#timelinelogcheck').attr('dataCode');
+	var datanumber = $('#codenumber').attr('dataCode');
+	$('#timelinetotalcount').text(''+datanumber+'');
+	if(datacheck == 'on'){
+		var investmenttab = $.ajax({ // ajax실행부분
+		    type: 'get',
+		    url : '/pineapple/investortimelinelog.timeline',
+		    success : function success(msg){ 	
+		    	console.log(msg.daycount)
+		        google.charts.load('current', {'packages':['line']});
+				google.charts.setOnLoadCallback(drawChart);
+				
+				function drawChart() {
+					
+				var data = new google.visualization.DataTable();
+				data.addColumn('number', 'Day');
+				data.addColumn('number', 'UserTimelinelog');
+				
+				data.addRows([
+				  [0,   msg.daycount],
+				  [-7,  msg.oneweekcount],
+				  [-14, msg.twoweekcount],
+				  [-21, msg.threeweekcount],
+				  [-28, msg.fourweekcount],
+				  [-30, msg.onemonthcount]
+				]);
+				
+				var options = {
+					legend: {position: 'none'}
+				};
+				
+				var chart = new google.charts.Line(document.getElementById('linechart_material'));
+				
+				chart.draw(data,options);
+				}
+		    },
+		    //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+		    error : function error(){
+		    	alert('2실패')
+		   	}
+		});	
+		$('#timelinelogcheck').attr('dataCode','off')
+	}else{
+		console.log('미실행')
+	}
+	
+});
+</script>
+
 </head>
 <body>
-			<div class="col-xs-12" style="text-align: center; border: 1px solid;">
-				<div class="col-xs-6" style="padding: 0px">
-					<div class="col-xs-12">
-					1
-					</div>
-					<div class="col-xs-12">
-					2
-					</div>
-					<div class="col-xs-12">
-					3
-					</div>
-				</div>
-				<div class="col-xs-6" style="padding: 0px">
-					<div id="linechart_material" style="width: 100%; height: 200px;">4</div>
-				</div>
-			</div>
-			<div class="col-xs-12">
-				<div class="col-xs-12 timemaintop">
+			<div class="col-xs-12" style="padding: 0px">
+				<div class="col-xs-12 timemaintop" style="padding: 0px">
 					<div class="col-xs-9 timeinputbox">
 						<input id="timeinputbox" type="text" class="form-control box1" placeholder="타임라인을 등록해주세요"  data-toggle="modal" data-target="#myModal" readonly="readonly">
 					</div>
@@ -38,7 +78,6 @@
 						<button id="timeinputbotton" class="timeinputbotton" data-toggle="modal" data-target="#myModal">게시하기</button>
 					</div>
 				</div>
-				
 				<!-- Time line input modal -->
 				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			 	  <div class="modal-dialog modal-lg" role="document">
@@ -49,7 +88,7 @@
 			 	      </div>
 			 	      <div class="modal-body">
 			 	      <div class="form-group">
-			 	      	<form id="timelineform" action="/pineapple/timelineinsert.timeline" method="post">
+			 	      	<form id="timelineform" action="/pineapple/investortimelineinsert.timeline" method="post">
 			 	      		<input class="form-control" type="hidden" name="tlId" value="${id}">
 			 	      		<div>
 							<h3>제목</h3>
@@ -70,8 +109,7 @@
 			 	</div>
 			 	</div>
 				<!-- Time line input modal -->
-				
-				<div class="col-xs-12">
+				<div class="col-xs-12" style="padding: 0px">
 					<c:forEach var="Data" items="${myinvestortimeline}">
 					<div class="col-xs-12 timelinelist">
 						<div class="col-xs-12">
@@ -81,7 +119,7 @@
 								</span>
 								<span class="timeupanddelspan">
 								&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#${Data.tlCode}">수정하기</a>
-								&nbsp;&nbsp;<a href="/pineapple/timelinedelete.timeline?tlCode=${Data.tlCode}">삭제하기</a>
+								&nbsp;&nbsp;<a href="/pineapple/investortimelinedelete.timeline?tlCode=${Data.tlCode}">삭제하기</a>
 								</span>
 							</div>
 
@@ -100,7 +138,7 @@
 								<a class="timereply" id="timelinereply${Data.tlCode}" href="#collapseExample${Data.tlCode}" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample${Data.tlCode}" dataCode="${Data.tlCode}">댓글더보기</a>
 								<div class="col-xs-12 collapse" id="collapseExample${Data.tlCode}">
 									<div class="col-xs-12" style="margin:20px 0px;">
-										<form id="timelinereplyform${Data.tlCode}" action="/pineapple/timelinereplyinsert.invest" method="post">
+										<form id="timelinereplyform${Data.tlCode}" action="/pineapple/investortimelinereplyinsert.invest" method="post">
 											<div class="col-xs-8">
 												<input name="tlCode" type="hidden" value="${Data.tlCode}">
 												<input name="tlReId" type="hidden" value="${id}">
@@ -128,7 +166,7 @@
 				 	      </div>
 				 	      <div class="modal-body">
 				 	      <div class="form-group">
-				 	      	<form id="timelineform${Data.tlCode}" action="/pineapple/timelineupdate.timeline" method="post">
+				 	      	<form id="timelineform${Data.tlCode}" action="/pineapple/investortimelineupdate.timeline" method="post">
 				 	      		<input class="form-control" type="hidden" name="tlCode" value="${Data.tlCode}">
 				 	      		<div>
 								<h3>제목</h3>
@@ -149,7 +187,7 @@
 				 	</div>
 				 	</div>
 				 	<!-- Time line update modal -->
-				 	
+				 	<span id="codenumber" dataCode="${Data.totaltimelinecount}"></span>
 					</c:forEach>
 				</div>
 			</div>

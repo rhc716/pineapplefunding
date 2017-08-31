@@ -10,7 +10,7 @@ public interface PmsServiceInterface {
 
 	List<WbsPlanView> getMyWbsPlanList(String userId);
 
-	WbsPlanView getMyWbsPlanDetail(String wbsplancode);
+	WbsPlan getMyWbsPlanDetail(String wbsplancode);
 
 	void addWbsplanhuman(WbsPlanHuman wbsplanhuman);
 	
@@ -73,5 +73,9 @@ public interface PmsServiceInterface {
 	List<WbsActual> wbsactuallist(String userId);
 
 	WbsActual wbsactualdetail(String wbsplancode);
+
+	List<WbsMs> wbsmsview(String fdcode);
+
+	List<WbsPlan> wbsplanlist(String milestoneCode);
 
 }

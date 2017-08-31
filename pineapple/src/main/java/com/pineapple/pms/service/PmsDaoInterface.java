@@ -9,7 +9,7 @@ public interface PmsDaoInterface {
 
 	List<WbsPlanView> WbsPlanSelect(String userId);
 
-	WbsPlanView getMyWbsPlanDetail(String wbsplancode);
+	WbsPlan getMyWbsPlanDetail(String wbsplancode);
 	
 	void addWbsplanhuman(WbsPlanHuman wbsplanhuman);
 	
@@ -94,5 +94,9 @@ public interface PmsDaoInterface {
 	List<WbsActual> wbsactuallist(String userId);
 
 	WbsActual wbsactualdetail(String wbsactualcode);
+
+	List<WbsMs> wbsmsview(String fdcode);
+
+	List<WbsPlan> wbsplanlist(String milestoneCode);
 
 }

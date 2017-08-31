@@ -8,12 +8,6 @@
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<!-- css -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
-
-<!-- css lbr -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lbr.css" />
-
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script type="text/javascript">
@@ -65,6 +59,7 @@ $(document).ready(function(){
 	        type: "get",
 	        url : "/pineapple/investorfundingqna.invest",
 	        success : function success(msg){
+	        	$('#investorfundingqna').empty();
 	        	$('#investorfundingqna').html(msg);
 	         	//수정 버튼 click 이벤트
 	         	$('.qnaupdateform').click(function(){
@@ -97,49 +92,38 @@ $(document).ready(function(){
 	});
 	//타임라인 tab ajax 요청
 	$('#timeline-tab').click(function(){
+		databoo = $(this).attr('dataBoo');
 		var investmenttab = $.ajax({ // ajax실행부분
 	        type: 'get',
 	        url : '/pineapple/investortimeline.timeline',
 	        success : function success(msg){
 	        	$('#investortimeline').html(msg);
-  	    		var investmenttab = $.ajax({ // ajax실행부분
-	    	        type: 'get',
-	    	        url : '/pineapple/investortimelinelog.timeline',
-	    	        success : function success(msg){ 	
-	    	        	console.log(msg.daycount)
- 	    	        	google.charts.load('current', {'packages':['line']});
-						google.charts.setOnLoadCallback(drawChart);
-						
-						function drawChart() {
-							
-						var data = new google.visualization.DataTable();
-						data.addColumn('number', 'Day');
-						data.addColumn('number', 'UserTimelinelog');
-						
-						data.addRows([
-						  [0,   msg.daycount],
-						  [-7,  msg.oneweekcount],
-						  [-14, msg.twoweekcount],
-						  [-21, msg.threeweekcount],
-						  [-28, msg.fourweekcount],
-						  [-30, msg.onemonthcount]
-						]);
-						
-						var options = {
-							legend: {position: 'none'},
-							forceIFrame: true
-						};
-						
-						var chart = new google.charts.Line(document.getElementById('linechart_material'));
-						
-						chart.draw(data,options);
-						}
-	    	        },
-	    	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
-	    	        error : function error(){
-	    	        	alert('2실패')
-	            	}
-	    		});	
+	        	$('#timelinereservebtn').click(function(){
+	        		$('#timelineform').submit();
+	        	});
+	        	$('.timelinereservebtn').click(function(){
+	        		var tldata = $(this).attr('dataCode');
+	        		$('#timelineform'+tldata+'').submit();
+	        	});
+	        	$('.timereply').click(function(){
+	        		var dataCode = $(this).attr('dataCode');
+	        		var investortimelinereply = $.ajax({ // ajax실행부분
+	        	        type: 'get',
+	        	        url : '/pineapple/investortimelinereply.timeline',
+	        	        data : {tlCode : dataCode},
+	        	        success : function success(msg2){
+	        	   				$('#timelinereplylist'+dataCode+'').html(msg2);
+	        	   				$('.timelinereplyinsertbtn').click(function(){
+	        	   					var tlCode = $(this).attr('dataCode')
+	        	   					$('#timelinereplyform'+tlCode+'').submit();
+	        	   				});
+	        	        },
+	        	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+	        	        error : function error(){
+	        	        	alert('1실패')
+	                	}
+	        		});
+	        	});
 	        },
 	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
 	        error : function error(){
@@ -147,6 +131,19 @@ $(document).ready(function(){
         	}
 		});
 	});
+	//메세지 tab 클릭시 ajax 요청
+	$('#message-tab').click(function(){
+		var investmenttab = $.ajax({ // ajax실행부분
+	        type: 'get',
+	        url : '#',
+	        success : function success(msg){
+	        },
+	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+	        error : function error(){
+        	}
+		});
+	});
+	
 });
 </script>
 </head>
@@ -164,7 +161,7 @@ $(document).ready(function(){
 			<a data-target="#investorinfo" id="investorinfo-tab" role="tab" data-toggle="tab" aria-controls="investorinfo" aria-expanded="true">내정보</a>
 		</li> 
 		<li role="presentation" class="">
-			<a data-target="#timeline" role="tab" id="timeline-tab" data-toggle="tab" aria-controls="timeline" aria-expanded="false">타임라인</a>
+			<a data-target="#timeline" role="tab" id="timeline-tab" data-toggle="tab" aria-controls="timeline" aria-expanded="false" dataBoo="false">타임라인</a>
 		</li>
 		<li role="presentation" class="">
 			<a data-target="#fundingqna" role="tab" id="fundingqna-tab" data-toggle="tab" aria-controls="fundingqna" aria-expanded="false">펀딩Q&A</a>
@@ -320,7 +317,18 @@ $(document).ready(function(){
 		</div>
 		<div role="tabpanel" class="tab-pane fade" id="timeline" aria-labelledby="timeline-tab"> 
 			<h1 style="text-align: center;">MY TIMELINE LIST</h1> 
-			<div class="col-xs-12" id="investortimeline"></div> 
+			<div class="col-xs-12" style="text-align: center; border: 1px solid #d7d7d7; padding: 0px; margin: 0px 0px 20px 0px">
+				<div class="col-xs-6" id="googletimelinelog" style="padding: 0px">
+					<div class="col-xs-12">
+						<h2>총 타임라인 글수</h2>
+						<h3 id="timelinetotalcount"></h3>
+					</div>
+				</div>
+				<div class="col-xs-6" id="timelinelogcheck" dataCode="on" style="padding: 0px 20px; margin: 20px 0px; border-left: 1px solid #d7d7d7;">
+					<div id="linechart_material" style="width: 100%; height: 200px;"></div>
+				</div>
+			</div>
+			<div class="col-xs-12" id="investortimeline" style="padding: 0px"></div> 
 		</div>
 		<div role="tabpanel" class="tab-pane fade" id="fundingqna" aria-labelledby="fundingqna-tab"> 
 			<h1 style="text-align: center;">MY FUNDING Q&A LIST</h1>

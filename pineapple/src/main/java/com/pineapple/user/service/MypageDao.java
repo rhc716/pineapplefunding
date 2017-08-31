@@ -16,6 +16,20 @@ public class MypageDao implements MypageDaoInterface {
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
 	
+	//경영진으로 속한 회사이름을 조회하기 위해 employee 정보 조회(ID로)
+	@Override
+	public List<Employee> selectEmployeeMngById(String emUserId) {
+		log.debug("MypageDao selectEmployeeMngById 호출 "+emUserId);
+		return sqlSessionTemplate.selectList("com.pineapple.user.service.MypageMapper.selectEmployeeMngById", emUserId);
+	}
+	
+	//경영진 마이페이지에서 사원요청목록 조회
+	@Override
+	public List<Employee> selectEmployeeRequestList(String comName) {
+		log.debug("MypageDao selectEmployeeRequestList 호출 "+comName);
+		return sqlSessionTemplate.selectList("com.pineapple.user.service.MypageMapper.selectEmployeeRequestByComName", comName);
+	}
+	
 	//사원정보 조회 메서드 선언(사원정보 수정페이지 요청을 위해)
 	@Override
 	public Employee selectEmployeeByEmCode(int emCode) {
@@ -117,6 +131,9 @@ public class MypageDao implements MypageDaoInterface {
 		log.debug("MypageDao selectInvestorBasic 메서드 호출 결과"+sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAllInvestorInfo", userId));
 		return sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAllInvestorInfo", userId);
 	}
+
+	
+
 	
 	
 }

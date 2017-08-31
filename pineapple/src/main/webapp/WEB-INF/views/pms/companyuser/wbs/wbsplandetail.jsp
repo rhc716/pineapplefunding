@@ -38,12 +38,21 @@
 			<c:import url="/resources/module/pmsleftmenu.jsp"/>
 		</div>
 		<div class="col-md-9">
+			<form action="/pineapple/wbsmsview.pms" method="post">	
+				<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
+				<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
+				<button type="submit" class="btn btn-sm btn-primary">펀딩명 :  ${fdTitle}</button>
+			</form><br>
+			<form action="/pineapple/wbsform.pms" method="post">	
+				<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
+				<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
+				<input type="hidden" readonly="readonly"  name="milestoneCode" value="${milestoneCode}">
+				<input type="hidden" readonly="readonly"  name="milestoneName" value="${milestoneName}">
+				<input type="hidden" readonly="readonly"  name="msComCode" value="${msComCode}">
+				<button type="submit" class="btn btn-sm btn-primary" name="btn" value="wbslist">마일스톤명 : ${milestoneName}</button>
+			</form><br>
 			<div class="col-md-7">
 				<label for="wbsplan">WBS예상계획</label><br>
-				펀딩명:
-				<input type="text" class="form-control" name="wbsPlanFdCode" value="${wbsplandetail.fdTitle}" readonly>
-				마일스톤명:
-				<input type="text" class="form-control" name="wbsPlanMsCode" value="${wbsplandetail.milestoneName}" readonly>
 				WBS코드:
 				<input type="text" class="form-control" name="wbsPlanCode" value="${wbsplandetail.wbsPlanCode}" readonly>
 				WBS순서:

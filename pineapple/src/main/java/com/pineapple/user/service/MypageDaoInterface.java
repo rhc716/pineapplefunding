@@ -5,6 +5,13 @@ import java.util.List;
 import com.pineapple.invest.service.InvestorInvestList;
 
 public interface MypageDaoInterface {
+	
+	//경영진으로 속한 회사이름을 조회하기 위해 employee 정보 조회(ID로)
+	List<Employee> selectEmployeeMngById(String emUserId);
+	
+	//경영진 마이페이지에서 사원요청목록 조회
+	List<Employee> selectEmployeeRequestList(String comName);
+	
 	//사원등록정보 확인 모달에서 부서명 수정하기 요청 처리
 	int updateEmployeeInfo(Employee employee);
 	

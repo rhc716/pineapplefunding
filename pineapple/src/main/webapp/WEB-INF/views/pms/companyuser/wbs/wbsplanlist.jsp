@@ -98,7 +98,7 @@ $(document).ready(function(){
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-md-9" id ="wbsplanlist">
-	<!-- 리스트부분  -->
+		<!-- 리스트부분  -->
 	</div>
 </div>
 <!-- 풋터 -->

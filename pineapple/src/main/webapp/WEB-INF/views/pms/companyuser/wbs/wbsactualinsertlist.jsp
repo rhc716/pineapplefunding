@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>Insert title here</title>
 
 <!-- jqeury -->
@@ -24,6 +23,8 @@
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
 
+
+ 
 </head>
 <body>
 
@@ -37,46 +38,46 @@
 	<div class="col-md-3">
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
-	<div class="col-md-9">	
+	<div class="col-md-9">
 		<form action="/pineapple/wbsmsview.pms" method="post">	
 			<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
 			<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
 			<button type="submit" class="btn btn-sm btn-primary">펀딩명 :  ${fdTitle}</button>
 		</form><br>
-		<form action="/pineapple/wbsplaninsertform.pms" method="post">	
-			<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
-			<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
-			<input type="hidden" readonly="readonly"  name="milestoneCode" value="${milestoneCode}">
-			<input type="hidden" readonly="readonly"  name="milestoneName" value="${milestoneName}">
-			<input type="hidden" readonly="readonly"  name="msComCode" value="${msComCode}">
-			<button type="submit" class="btn btn-sm btn-primary">마일스톤명 :  ${milestoneName}</button>
+		<form action="/pineapple/wbsform.pms" method="post">	
+				<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
+				<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
+				<input type="hidden" readonly="readonly"  name="milestoneCode" value="${milestoneCode}">
+				<input type="hidden" readonly="readonly"  name="milestoneName" value="${milestoneName}">
+				<input type="hidden" readonly="readonly"  name="msComCode" value="${msComCode}">
+				<button type="submit" class="btn btn-sm btn-primary" name="btn" value="wbsainsert">마일스톤명 : ${milestoneName}</button>
 		</form><br>
 			<div class="col-md-1"></div>
 				<div class="col-md-7">
-					<form action="/pineapple/wbsplaninsert.pms" method="post">
-						<label for="wbsplan">WBS예상계획</label><br>
-						WBS순서:
-						<input type="number" class="form-control" name="wbsPlanOrder">
-						작업명:
-						<input type="text" class="form-control" name="wbsPlanName">
-						선행작업:
-						<input type="number" class="form-control" name="wbsPlanDependency">
-						작업기간:
-						<input type="number" class="form-control" name="wbsPlanDuration">
-						시작일:<br>
-						<input type="date" name="wbsPlanStartDate"><br>
-						담당자ID:
-						<input type="text" class="form-control" name="wbsPlanManager">
-						<!-- 회사코드 펀딩코드 마일스톤 코드 받아와서 입력 -->
-						<input type="hidden" class="form-control" name="wbsPlanComCode" value="${msComCode}">
-						<input type="hidden" class="form-control" name="wbsPlanFdCode" value="${fdCode}">
-						<input type="hidden" class="form-control" name="wbsPlanMsCode" value="${milestoneCode}">
-						<button type="hidden" class="btn btn-success">입력완료</button>
-					</form>
+					<c:forEach var="list" items="${wbsplan}">
+			 			<div class="col-lg-4 well">
+				 				<div>				 				
+					 				wbs순서:${list.wbsPlanOrder}<br>
+					 				wbs이름 :${list.wbsPlanName}<br>
+				 				<form action="/pineapple/insertwbsactual.pms" method="post">
+				 					<input type="hidden" name="wbsActualFdCode" value="${list.wbsPlanFdCode}"/>
+									<input type="hidden" name="wbsActualMsCode" value="${list.wbsPlanMsCode}"/>
+									<input type="hidden" name="wbsPlanAcCode" value="${list.wbsPlanCode}"/>
+									<input type="hidden" name="wbsActualComCode" value="${list.wbsPlanComCode}"/>
+									<input type="hidden" name="wbsActualName" value="${list.wbsPlanName}"/>
+									<input type="hidden" name="wbsActualWriteManager" value="${list.wbsPlanManager}"/>
+									wbs순서:${list.wbsPlanOrder}
+									wbs이름 :${list.wbsPlanName}<br>
+				 					<button type="submit" class="btn btn-primary btn-sm" name="btn" value="detail">실제wbs 입력</button>		
+								</form>	
+							</div>
+						</div>
+					</c:forEach>
 				</div>
 			<div class="col-md-1"></div>
+		</div>
 	</div>
-</div>
+
 <!-- 풋터 -->
 <div>
 	<c:import url="/resources/module/footer.jsp"/>

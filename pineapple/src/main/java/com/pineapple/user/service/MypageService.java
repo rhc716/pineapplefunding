@@ -15,6 +15,20 @@ public class MypageService implements MypageServiceInterface {
 	@Autowired
 	private MypageDaoInterface mypagedao;
 	
+	//경영진으로 속한 회사이름을 조회하기 위해 employee 정보 조회(ID로)
+	@Override
+	public List<Employee> getEmployeeMngById(String emUserId) {
+		log.debug("MypageService getEmployeeMngById 호출 결과: "+mypagedao.selectEmployeeMngById(emUserId));
+		return mypagedao.selectEmployeeMngById(emUserId);
+	}
+	
+	//경영진 마이페이지에서 사원요청목록 조회
+	@Override
+	public List<Employee> getEmployeeRequestList(String comName) {
+		log.debug("MypageService getEmployeeRequestList 호출 결과: "+mypagedao.selectEmployeeRequestList(comName));
+		return mypagedao.selectEmployeeRequestList(comName);
+	}
+	
 	//사원정보 조회 메서드 선언(사원정보 수정페이지 요청을 위해)
 	@Override
 	public Employee getEmployeeByEmCode(int emCode) {
@@ -116,5 +130,6 @@ public class MypageService implements MypageServiceInterface {
 	}
 
 	
+
 	
 }
