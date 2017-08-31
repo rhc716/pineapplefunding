@@ -204,15 +204,15 @@ public class FundingDao implements FundingDaoInterface {
 	
 	// pmsmain.jsp 에서 권한별로 필요한 정보의 리스트를 가져옴
 	@Override
-	public ArrayList<Object> selectProjectInfoList(String userId,
+	public List<Object> selectProjectInfoList(String userId,
 			String level) {
 		log.debug("FundingDao의 selectProjectInfoList호출 성공");
 		if(level.equals("관리자")){
-			return sqlSessionTemplate.selectOne("com.pineapple.funding.service.FundingMapper.selectProjectInfoListAdmin", userId);
+			return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListAdmin", userId);
 		} else if(level.equals("기업회원")){
-			return sqlSessionTemplate.selectOne("com.pineapple.funding.service.FundingMapper.selectProjectInfoListComUser", userId);
+			return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListComUser", userId);
 		} else {//투자자
-			return sqlSessionTemplate.selectOne("com.pineapple.funding.service.FundingMapper.selectProjectInfoListInvestor", userId);
+			return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListInvestor", userId);
 		}
 	}
 }

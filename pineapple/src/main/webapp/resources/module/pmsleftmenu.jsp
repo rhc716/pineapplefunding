@@ -50,7 +50,12 @@
 					<li><a href="/pineapple/fundingfilelistpage.pms">보고서조회</a></li>
 				</ul>
 			</li>
-			<li><a>배당하기</a></li>
+			<li><a>배당관리</a>
+				<ul>
+					<li><a>배당하기</a></li>
+					<li><a>배당내역조회</a></li>
+				</ul>
+			</li>
 			<li><a>펀딩내권한부여</a></li>
 		</ul>
 	</nav>

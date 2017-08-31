@@ -34,5 +34,5 @@ public interface FundingServiceInterface {
 	void modifyFundingImage(Model model);
 	Funding fdtitleCheck(String fdTitle);
 	Funding getMyFunding(int fdCode);
-	ArrayList<Object> getProjectInfoList(String userId, String level);
+	List<Object> getProjectInfoList(String userId, String level);
 }

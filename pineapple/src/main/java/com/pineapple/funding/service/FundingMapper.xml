@@ -3,7 +3,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.pineapple.funding.service.FundingMapper">
-<!-- 각각의 권한별로 pmsmain에서 보여줄 정보들을 담는 객체 -->
+	<!-- 각각의 권한별로 pmsmain에서 보여줄 정보들을 담는 객체 -->
 	<!-- 관리자 -->
 	<resultMap type="com.pineapple.funding.service.InfomationForPmsMainViewOfAdminUser" 
 	id="InfomationForPmsMainViewOfAdminUser">
@@ -19,27 +19,111 @@
 		<result property="totalCommissionRevenue" column="totalCommissionRevenue"/>
 		<result property="todayCommissionRevenue" column="todayCommissionRevenue"/>
 	</resultMap>
+	
 	<!-- 기업회원 -->
-	<!-- <resultMap type="com.pineapple.funding.service.InfomationForPmsMainViewOfCompanyUser" 
-	id="InfomationForPmsMainViewOfCompanyUser">
-		<collection property="comNameList" javaType="ArrayList" ofType="String">
-            <id `></id>
-            <result property="comName" column="comName"/>
-        </collection>
-		<collection property="FdList" javaType="ArrayList" ofType="com.pineapple.funding.service.Funding">
-			<result property="fdTitle" column="fdTitle"/>
-			<result property="fdStatus" column="fdStatus"/>
-			<result property="fdCode" column="fdCode"/>
-		</collection>
+	<resultMap type="com.pineapple.funding.service.InfomationForPmsMainViewOfCompanyUser" 
+	id="InfomationForPmsMainViewOfCompanyUser">	
 		<result property="fdTotalCount" column="fdTotalCount"/>
 		<result property="fdRecruitingCount" column="fdRecruitingCount"/>
 		<result property="fdProceedingCount" column="fdProceedingCount"/>
-	</resultMap> -->
-	<!-- <resultMap type="com.pineapple.funding.service.InfomationForPmsMainViewOfInvestorUser" 
+		<collection property="comList" ofType="com.pineapple.user.service.Company">
+        	<id property="comCode" column="comCode"/>
+        	<result property="comName" column="comName"/>
+        	<result property="comNumber" column="comNumber"/>
+        	<result property="comHomePage" column="comHomePage"/>
+        	<result property="comCeoName" column="comCeoName"/>
+        	<result property="comEstablishYear" column="comEstablishYear"/>
+        	<result property="comInfo" column="comInfo"/>
+        	<result property="comLogoServerName" column="comLogoServerName"/>
+        	<result property="comLogoHeight" column="comLogoHeight"/>
+        	<result property="comLogoWidth" column="comLogoWidth"/>
+        	<result property="comLogoSize" column="comLogoSize"/>
+        	<result property="comLogoExtension" column="comLogoExtension"/>
+        	<result property="comSummary" column="comSummary"/>
+        	<result property="comActivitySummary" column="comActivitySummary"/>
+        	<result property="comOpenUserId" column="comOpenUserId"/>
+        	<result property="comAdminApproval" column="comAdminApproval"/>
+        	<result property="comApprovalDate" column="comApprovalDate"/>
+        	<result property="comApprovalId" column="comApprovalId"/>
+        	<result property="comDelRequestId" column="comDelRequestId"/>
+        	<result property="comDelTime" column="comDelTime"/>
+        	<result property="comDelApprovalId" column="comDelApprovalId"/>
+        </collection>
+        <collection property="FdList" ofType="com.pineapple.funding.service.Funding">
+			<id property="fdCode" column="fdCode"/>
+			<result property="fdComCode" column="fdComCode"/>
+			<result property="fdTitle" column="fdTitle"/>
+			<result property="minInvestMoney" column="minInvestMoney"/>
+			<result property="numberOfShares" column="numberOfShares"/>
+			<result property="issuePrice" column="issuePrice"/>
+			<result property="openDate" column="openDate"/>
+			<result property="closeDate" column="closeDate"/>
+			<result property="minInterestRate" column="minInterestRate"/>
+			<result property="fdType" column="fdType"/>
+			<result property="fdStatus" column="fdStatus"/>
+			<result property="projectStartDate" column="projectStartDate"/>
+			<result property="projectEndDate" column="projectEndDate"/>
+			<result property="posterImg" column="posterImg"/>
+			<result property="fdPublisher" column="fdPublisher"/>
+			<result property="adminApproval" column="adminApproval"/>
+			<result property="fdApprovalDate" column="fdApprovalDate"/>
+			<result property="fdApprovalId" column="fdApprovalId"/>
+			<result property="fdDate" column="fdDate"/>
+		</collection>
+	</resultMap>
+	
+	<!-- 투자자회원 -->
+	<resultMap type="com.pineapple.funding.service.InfomationForPmsMainViewOfInvestorUser" 
 	id="InfomationForPmsMainViewOfInvestorUser">
-	
-	
-	</resultMap> -->
+		<result property="totalInvestMoney" column="totalInvestMoney"/>
+		<result property="totalDevidendMoney" column="totalDevidendMoney"/>
+		<result property="totalInvestmentCount" column="totalInvestmentCount"/>
+		<result property="proceedingInvestmentCount" column="proceedingInvestmentCount"/>
+		<result property="proceedingFdInvestMoney" column="proceedingFdInvestMoney"/>
+		<result property="proceedingFdDevidendMoney" column="proceedingFdDevidendMoney"/>
+		<collection property="fdBookingList" ofType="com.pineapple.funding.service.Funding">
+			<id property="fdCode" column="fdCode"/>
+			<result property="fdComCode" column="fdComCode"/>
+			<result property="fdTitle" column="fdTitle"/>
+			<result property="minInvestMoney" column="minInvestMoney"/>
+			<result property="numberOfShares" column="numberOfShares"/>
+			<result property="issuePrice" column="issuePrice"/>
+			<result property="openDate" column="openDate"/>
+			<result property="closeDate" column="closeDate"/>
+			<result property="minInterestRate" column="minInterestRate"/>
+			<result property="fdType" column="fdType"/>
+			<result property="fdStatus" column="fdStatus"/>
+			<result property="projectStartDate" column="projectStartDate"/>
+			<result property="projectEndDate" column="projectEndDate"/>
+			<result property="posterImg" column="posterImg"/>
+			<result property="fdPublisher" column="fdPublisher"/>
+			<result property="adminApproval" column="adminApproval"/>
+			<result property="fdApprovalDate" column="fdApprovalDate"/>
+			<result property="fdApprovalId" column="fdApprovalId"/>
+			<result property="fdDate" column="fdDate"/>
+		</collection>
+		<collection property="fdInvestingList" ofType="com.pineapple.funding.service.Funding">
+			<id property="fdCode" column="fdCode"/>
+			<result property="fdComCode" column="fdComCode"/>
+			<result property="fdTitle" column="fdTitle"/>
+			<result property="minInvestMoney" column="minInvestMoney"/>
+			<result property="numberOfShares" column="numberOfShares"/>
+			<result property="issuePrice" column="issuePrice"/>
+			<result property="openDate" column="openDate"/>
+			<result property="closeDate" column="closeDate"/>
+			<result property="minInterestRate" column="minInterestRate"/>
+			<result property="fdType" column="fdType"/>
+			<result property="fdStatus" column="fdStatus"/>
+			<result property="projectStartDate" column="projectStartDate"/>
+			<result property="projectEndDate" column="projectEndDate"/>
+			<result property="posterImg" column="posterImg"/>
+			<result property="fdPublisher" column="fdPublisher"/>
+			<result property="adminApproval" column="adminApproval"/>
+			<result property="fdApprovalDate" column="fdApprovalDate"/>
+			<result property="fdApprovalId" column="fdApprovalId"/>
+			<result property="fdDate" column="fdDate"/>
+		</collection>
+	</resultMap>
 	
 	
 	
@@ -293,6 +377,20 @@
 		SELECT * 
 		FROM funding
 		WHERE fdTitle = #{fdTitle}
+	</select>
+	
+	<!-- pmsmain.jsp 에서 권한별로 필요한 정보의 리스트를 가져옴 -->
+	<!-- 관리자 -->
+	<select id="selectProjectInfoListAdmin" resultMap="InfomationForPmsMainViewOfAdminUser" parameterType="String">
+		
+	</select>
+	<!-- 기업회원 -->
+	<select id="selectProjectInfoListComUser" resultMap="InfomationForPmsMainViewOfCompanyUser" parameterType="String">
+		
+	</select>
+	<!-- 투자자 -->
+	<select id="selectProjectInfoListInvestor" resultMap="InfomationForPmsMainViewOfInvestorUser" parameterType="String">
+		
 	</select>
 </mapper>
 

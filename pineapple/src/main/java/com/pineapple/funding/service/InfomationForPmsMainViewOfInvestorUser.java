@@ -4,9 +4,9 @@ import java.util.List;
 
 public class InfomationForPmsMainViewOfInvestorUser {
 	//사전예약중인 펀딩리스트
-	private List<String> fdBookingList;
+	private List<Funding> fdBookingList;
 	//투자중인 펀딩리스트 
-	private List<String> fdInvestingList;
+	private List<Funding> fdInvestingList;
 	//투자총액
 	private int totalInvestMoney;
 	//배당총액
@@ -22,16 +22,16 @@ public class InfomationForPmsMainViewOfInvestorUser {
 	
 	
 	
-	public List<String> getFdBookingList() {
+	public List<Funding> getFdBookingList() {
 		return fdBookingList;
 	}
-	public void setFdBookingList(List<String> fdBookingList) {
+	public void setFdBookingList(List<Funding> fdBookingList) {
 		this.fdBookingList = fdBookingList;
 	}
-	public List<String> getFdInvestingList() {
+	public List<Funding> getFdInvestingList() {
 		return fdInvestingList;
 	}
-	public void setFdInvestingList(List<String> fdInvestingList) {
+	public void setFdInvestingList(List<Funding> fdInvestingList) {
 		this.fdInvestingList = fdInvestingList;
 	}
 	public int getTotalInvestMoney() {
@@ -85,4 +85,8 @@ public class InfomationForPmsMainViewOfInvestorUser {
 				+ ", proceedingFdDevidendMoney=" + proceedingFdDevidendMoney
 				+ "]";
 	}
+	
+	
+	
+	
 }

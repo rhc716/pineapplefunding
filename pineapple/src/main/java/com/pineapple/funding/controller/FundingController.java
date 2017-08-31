@@ -392,7 +392,7 @@ public class FundingController {
 		log.debug("userId : " + userId);
 		log.debug("level : " + level);
 		
-		ArrayList<Object> list = service.getProjectInfoList(userId, level);
+		List<Object> list = service.getProjectInfoList(userId, level);
 		
 		
 		return model;

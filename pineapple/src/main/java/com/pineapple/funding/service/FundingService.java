@@ -199,7 +199,7 @@ public class FundingService implements FundingServiceInterface {
 	
 	// pmsmain.jsp 에서 권한별로 필요한 정보의 리스트를 가져옴
 	@Override
-	public ArrayList<Object> getProjectInfoList(String userId, String level) {
+	public List<Object> getProjectInfoList(String userId, String level) {
 		log.debug("FundingService의 getprojectinfolist호출 성공");
 		return fundingdao.selectProjectInfoList(userId, level);
 	}

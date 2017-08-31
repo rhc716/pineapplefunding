@@ -15,7 +15,7 @@
 			<ul class="navbar_menuleft"><a href="/pineapple/timelinemain.timeline">타임라인</a></ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/investmain.invest">투자하기</a></ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/pmsmain.pms">프로젝트관리</a></ul>
-			<ul class="navbar_menuright">이용안내</ul>
+			<ul class="navbar_menuright">이용안내(개발중)</ul>
 			<ul class="navbar_menuright"><a href="/pineapple/mypage.user?level=${level}">Mypage</a></ul>
 		</div>
 	</c:when>
@@ -24,12 +24,11 @@
 			<ul class="navbar_pine"><a href="/pineapple">PineApple</a></ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/timelinemain.timeline">타임라인</a></ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/investmain.invest">투자하기</a></ul>
-			<ul class="navbar_menuleft"><a href="/pineapple/pmsmain.pms">프로젝트관리</a></ul>
-			<ul class="navbar_menuright">이용안내</ul>
+			<ul class="navbar_menuleft"><a href="/pineapple/pmsmain.pms" class="gologin">프로젝트관리</a></ul>
+			<ul class="navbar_menuright">이용안내(개발중)</ul>
 			<ul class="navbar_menuright"><a href="/pineapple/userinsert.user">회원가입</a></ul>
 		</div>
 	</c:otherwise>
 </c:choose>
-
 </body>
 </html>

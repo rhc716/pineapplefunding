@@ -2,9 +2,11 @@ package com.pineapple.funding.service;
 
 import java.util.ArrayList;
 
+import com.pineapple.user.service.Company;
+
 public class InfomationForPmsMainViewOfCompanyUser {
 	//소속된 회사리스트
-	private ArrayList<String> comNameList;
+	private ArrayList<Company> comList;
 	//펀딩상태가 모집중 or 결제모집중 or 진행중 펀딩 (개설요청, 마감이 아닌 것)
 	private ArrayList<Funding> FdList;
 	private int fdTotalCount;
@@ -12,11 +14,11 @@ public class InfomationForPmsMainViewOfCompanyUser {
 	private int fdProceedingCount;
 	
 	
-	public ArrayList<String> getComNameList() {
-		return comNameList;
+	public ArrayList<Company> getComList() {
+		return comList;
 	}
-	public void setComNameList(ArrayList<String> comNameList) {
-		this.comNameList = comNameList;
+	public void setComList(ArrayList<Company> comList) {
+		this.comList = comList;
 	}
 	public ArrayList<Funding> getFdList() {
 		return FdList;
@@ -44,11 +46,12 @@ public class InfomationForPmsMainViewOfCompanyUser {
 	}
 	@Override
 	public String toString() {
-		return "InfomationForPmsMainViewOfCompanyUser [comNameList="
-				+ comNameList + ", FdList=" + FdList + ", fdTotalCount="
-				+ fdTotalCount + ", fdRecruitingCount=" + fdRecruitingCount
+		return "InfomationForPmsMainViewOfCompanyUser [comList=" + comList
+				+ ", FdList=" + FdList + ", fdTotalCount=" + fdTotalCount
+				+ ", fdRecruitingCount=" + fdRecruitingCount
 				+ ", fdProceedingCount=" + fdProceedingCount + "]";
 	}
+	
 	
 	
 	
