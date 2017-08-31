@@ -23,8 +23,6 @@
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
 
-<!-- css rhc -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lsk.css" />
 
  
 </head>
@@ -45,29 +43,40 @@
 			<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
 			<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
 			<button type="submit" class="btn btn-sm btn-primary">펀딩명 :  ${fdTitle}</button>
-		</form>
-		<div class="col-md-7">
-			<c:forEach var="list" items="${mslist}">
-				<form action="/pineapple/wbsform.pms" method="post">
-					<div  class="container-fluid boxs">
-						<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
-						<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
-						<input type="hidden" readonly="readonly"  name="milestoneCode" value="${list.milestoneCode}">
-						<input type="hidden" readonly="readonly"  name="milestoneName" value="${list.milestoneName}">
-						<input type="hidden" readonly="readonly"  name="msComCode" value="${list.msComCode}">
-						마일스톤 단계 = ${list.milestoneStep}<br>
-						마일스톤 이름 = ${list.milestoneName}<br>
-						마일스톤 요약 = ${list.milestoneSummary}<br>
-						<button type="submit" class="btn btn-sm btn-primary" name="btn" value="wbsinsert">WBS예상입력</button>
-						<button type="submit" class="btn btn-sm btn-primary" name="btn" value="wbslist">WBS예상보기</button><br>
-						<button type="submit" class="btn btn-sm btn-primary" name="btn" value="wbsainsert">WBS실제입력</button>
-						<button type="submit" class="btn btn-sm btn-primary" name="btn" value="wbsalist">WBS실제보기</button>
-					</div>
-				</form>
-			</c:forEach>
-		</div>	
+		</form><br>
+		<form action="/pineapple/wbsform.pms" method="post">	
+				<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
+				<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
+				<input type="hidden" readonly="readonly"  name="milestoneCode" value="${milestoneCode}">
+				<input type="hidden" readonly="readonly"  name="milestoneName" value="${milestoneName}">
+				<input type="hidden" readonly="readonly"  name="msComCode" value="${msComCode}">
+				<button type="submit" class="btn btn-sm btn-primary" name="btn" value="wbsainsert">마일스톤명 : ${milestoneName}</button>
+		</form><br>
+			<div class="col-md-1"></div>
+				<div class="col-md-7">
+					<c:forEach var="list" items="${wbsplan}">
+			 			<div class="col-lg-4 well">
+				 				<div>				 				
+					 				wbs순서:${list.wbsPlanOrder}<br>
+					 				wbs이름 :${list.wbsPlanName}<br>
+				 				<form action="/pineapple/insertwbsactual.pms" method="post">
+				 					<input type="hidden" name="wbsActualFdCode" value="${list.wbsPlanFdCode}"/>
+									<input type="hidden" name="wbsActualMsCode" value="${list.wbsPlanMsCode}"/>
+									<input type="hidden" name="wbsPlanAcCode" value="${list.wbsPlanCode}"/>
+									<input type="hidden" name="wbsActualComCode" value="${list.wbsPlanComCode}"/>
+									<input type="hidden" name="wbsActualName" value="${list.wbsPlanName}"/>
+									<input type="hidden" name="wbsActualWriteManager" value="${list.wbsPlanManager}"/>
+									wbs순서:${list.wbsPlanOrder}
+									wbs이름 :${list.wbsPlanName}<br>
+				 					<button type="submit" class="btn btn-primary btn-sm" name="btn" value="detail">실제wbs 입력</button>		
+								</form>	
+							</div>
+						</div>
+					</c:forEach>
+				</div>
+			<div class="col-md-1"></div>
+		</div>
 	</div>
-</div>
 
 <!-- 풋터 -->
 <div>

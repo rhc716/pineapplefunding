@@ -94,7 +94,7 @@ public class PmsDao implements PmsDaoInterface {
 	 * @see com.pineapple.pms.service.PmsDaoInterface#getMyWbsPlanDetail(java.lang.String)
 	 */
 	@Override
-	public WbsPlanView getMyWbsPlanDetail(String wbsplancode){
+	public WbsPlan getMyWbsPlanDetail(String wbsplancode){
 		log.debug("PmsDao의 selectWbsPlandetail호출 성공");
 		return sqlSessionTemplate.selectOne("com.pineapple.pms.service.PmsMapper.selectdetail",wbsplancode);
 	}

@@ -126,15 +126,10 @@
 		from wbsplanincome where wpiWpCode = #{wbsplancode}
 	</select>
 	
-	<select id="selectdetail" parameterType="String" resultType="com.pineapple.pms.service.WbsPlanView">
-		SELECT w.wbsPlanCode, w.wbsPlanOrder,
-				w.wbsPlanName, w.wbsPlanDependency,
-				w.wbsPlanStartDate, w.wbsPlanDuration, w.wbsPlanComCode,
-				w.wbsPlanManager, w.wbsPlanFdCode, w.wbsPlanMsCode,
-				f.fdTitle, m.milestoneName
-		FROM wbsplan w LEFT JOIN funding f ON w.wbsPlanFdCode = f.fdCode 
-		LEFT JOIN milestone m ON w.wbsPlanMsCode = m.milestoneCode 
-		where wbsPlanCode=#{wbsplancode};
+	<select id="selectdetail" parameterType="String" resultType="com.pineapple.pms.service.WbsPlan">
+		SELECT *
+		FROM wbsplan 
+		where wbsPlanStatus =1  and wbsPlanCode=#{wbsplancode};
 	</select>
 	<delete id="deletewbsplan" parameterType="String">
 		DELETE FROM wbsplan WHERE wbsPlanCode= #{wbsplancode}

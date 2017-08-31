@@ -23,8 +23,6 @@
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
 
-<!-- css rhc -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
 
  
 </head>
@@ -57,15 +55,15 @@
 			<div class="col-md-1"></div>
 				<div class="col-md-7">
 					<c:forEach var="list" items="${wbsplan}">
-		 				<form action="/pineapple/wbsplandetail.pms" method="post">
-			 				<div class="col-xs-4 well">
+			 			<div class="col-lg-4 well">
 				 				<div>
-				 				<input type="hidden" name="wbsPlanCode" value="${list.wbsPlanCode}"/>
+				 				
 				 				wbs순서:${list.wbsPlanOrder}<br>
 				 				wbs이름 :${list.wbsPlanName}<br>
-				 				<button type="submit" class="btn btn-primary btn-sm" name="btn" value="detail">상세정보</button>
-				 				<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="${list.wbsPlanCode}">수정</button>
-				 				<button type="submit" class="btn btn-danger btn-sm" name="btn" value="delete">삭제</button>
+				 				<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#${list.wbsPlanCode}">수정</button>
+				 				<form action="/pineapple/wbsplandetail.pms" method="post">
+				 					<button type="submit" class="btn btn-danger btn-sm" name="btn" value="delete">삭제</button>
+				 					<button type="submit" class="btn btn-primary btn-sm" name="btn" value="detail">상세정보</button>				 				
 					 				<div class="modal fade" id="${list.wbsPlanCode}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 										<div class="modal-dialog" role="document">
 											<div class="modal-content">
@@ -80,20 +78,26 @@
 													시작일:<br>
 													<input type="date" name="wbsPlanStartDate" value="${list.wbsPlanStartDate}"/><br>
 													담당자ID:
-													<input type="hidden" class="form-control" name="wbsPlanManager" value="${list.wbsPlanManager}"/><br>
+													<input type="text" class="form-control" name="wbsPlanManager" value="${list.wbsPlanManager}"/><br>
+													<input type="hidden" name="wbsPlanCode" value="${list.wbsPlanCode}"/>
 													<input type="hidden" class="form-control" name="wbsPlanComCode" value="${list.wbsPlanComCode}">
 													<input type="hidden" class="form-control" name="wbsPlanFdCode" value="${list.wbsPlanFdCode}">
 													<input type="hidden" class="form-control" name="wbsPlanOrder" value="${list.wbsPlanOrder}">
 													<input type="hidden" class="form-control" name="wbsPlanMsCode" value="${list.wbsPlanMsCode}">
 													<input type="hidden" class="form-control" name="wbsPlanChange" value="${list.wbsPlanChange}">
+													<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
+													<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
+													<input type="hidden" readonly="readonly"  name="milestoneCode" value="${milestoneCode}">
+													<input type="hidden" readonly="readonly"  name="milestoneName" value="${milestoneName}">
+													<input type="hidden" readonly="readonly"  name="msComCode" value="${msComCode}">
 													<button type="submit" name="btn" value="update">입력완료</button>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
+								</form>	
 							</div>
-						</form>	
+						</div>
 					</c:forEach>
 				</div>
 			<div class="col-md-1"></div>
