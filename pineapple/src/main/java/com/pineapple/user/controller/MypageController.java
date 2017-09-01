@@ -28,6 +28,33 @@ public class MypageController {
 	private MypageServiceInterface mypageservice;
 	
 	//사원등록정보 확인 모달에서 사원정보(주로 부서명) 수정하기 요청 처리
+	@RequestMapping(value="/deleterequestcompany.user", method = RequestMethod.POST)
+    public String deleteCompanyRequest(HttpSession session, Company company) { //커맨드 객체
+        log.debug("deleteCompanyRequest 사원정보 삭제 요청 : "+company);
+        int result = mypageservice.removeCompany(company);
+        if(result == 1){
+        	log.debug(session.getAttribute("nickname")+"님의 기업삭제요청 성공");
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님의 기업삭제요청 실패");
+        }
+        return "redirect:/mypage.user"; // 글입력후 "/"로 리다이렉트(재요청)
+    }
+		
+	//경영진의 개별 기업 삭제요청 페이지 구성
+		@RequestMapping(value="/companydeletepage.user", method=RequestMethod.GET)
+		public @ResponseBody Company deleteCompanyPage(Model model, @RequestParam("comCode") int comCode){
+			log.debug("MypageController deleteCompanyPage 기업정보삭제요청 페이지 요청");
+			Company company = mypageservice.getCompanyByComCode(comCode);
+			if(company != null){
+				log.debug("MypageController deleteCompanyPage 기업삭제 페이지 요청 성공");
+				model.addAttribute("company", company);
+			} else {
+				log.debug("MypageController deleteCompanyPage 기업삭제 페이지 요청 실패");
+			}
+			return company;
+		}
+	
+	//사원등록정보 확인 모달에서 사원정보(주로 부서명) 수정하기 요청 처리
 	@RequestMapping(value="/deleterequestemployee.user", method = RequestMethod.POST)
     public String deleteEmployeeRequest(HttpSession session, Employee employee) { //커맨드 객체
         log.debug("deleteEmployeeRequest 사원정보 삭제 요청 : "+employee);

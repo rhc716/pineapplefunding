@@ -15,6 +15,13 @@ public class MypageService implements MypageServiceInterface {
 	@Autowired
 	private MypageDaoInterface mypagedao;
 	
+	//기업삭제요청
+	@Override
+	public int removeCompany(Company company) {
+		log.debug("MypageService removeCompany 호출 결과: "+mypagedao.deleteCompany(company));
+		return mypagedao.deleteCompany(company);
+	}
+	
 	//경영진으로 속한 회사이름을 조회하기 위해 employee 정보 조회(ID로)
 	@Override
 	public List<Employee> getEmployeeMngById(String emUserId) {
@@ -128,6 +135,8 @@ public class MypageService implements MypageServiceInterface {
 		log.debug("MypageService selectInvestorBasic 메서드 호출 "+userId);
 		return mypagedao.selectInvestorBasic(userId);
 	}
+
+	
 
 	
 

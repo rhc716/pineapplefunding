@@ -114,6 +114,42 @@
 			});
 			
 		});
+		//기업삭제요청하기 - 여러개의 개설한 기업정보별로 삭제요청하는 모달 내용 변화 기능 구현
+		$('.deletecompanyinfo').click(function(){
+			var in_companyCode = $(this).attr('value');
+			var deleteCompanyAjax = $.ajax({ // ajax실행부분
+								        type: "get",
+								        url : "/pineapple/companydeletepage.user",
+								        data : {comCode : in_companyCode},
+								        success : function success(){
+								        	alert('삭제할 기업코드 : '+ in_companyCode);
+								        },
+								        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+								        error : function error(){
+							        		alert('기업정보 불러오기 오류');
+							        	}
+									});
+			//ajax를 통해 조회한 계좌 정보를 모달창 수정페이지 각 입력값으로 넣어준다
+			deleteCompanyAjax.done(function(dc){
+				$('#comAdminApprovalDel').val(dc.comAdminApproval);
+				$('#comCodeDel').val(dc.comCode);
+	    		$('#comOpenUserIdDel').val(dc.comOpenUserId);
+	    		$('#comLogoServerNameDel').val(dc.comLogoServerName);
+	    		$('#comLogoHeightDel').val(dc.comLogoHeight);
+	    		$('#comLogoWidthDel').val(dc.comLogoWidth);
+	    		$('#comLogoSizeDel').val(dc.comLogoSize);
+	    		$('#comLogoExtensionDel').val(dc.comLogoExtension);
+	    		$('#comNameDel').val(dc.comName);
+				$('#comNumberDel').val(dc.comNumber);
+	    		$('#comHomePageDel').val(dc.comHomePage);
+	    		$('#comCeoNameDel').val(dc.comCeoName);
+	    		$('#comEstablishYearDel').val(dc.comEstablishYear);
+	    		$('#comInfoDel').val(dc.comInfo);
+	    		$('#comSummaryDel').val(dc.comSummary);
+	    		$('#comActivitySummaryDel').val(dc.comActivitySummary);
+			});
+			
+		});
 		//사원정보수정하기 - 여러개의 사원정보별로 수정하는 모달 내용 변화 기능 구현
 		$('.changeemployeeinfo').click(function(){
 			var in_employeeCode = $(this).attr('value');
@@ -285,7 +321,7 @@
 				<a data-target="#managerinfo" id="managerinfo-tab" role="tab" data-toggle="tab" aria-controls="managerinfo" aria-expanded="true">내정보</a>
 			</li> 
 			<li role="presentation" class="">
-				<a data-target="#insertCompany" role="tab" id="insertCompany-tab" data-toggle="tab" aria-controls="insertCompany" aria-expanded="false">기업등록요청</a>
+				<a data-target="#insertCompany" role="tab" id="insertCompany-tab" data-toggle="tab" aria-controls="insertCompany" aria-expanded="false">기업등록/삭제요청</a>
 			</li>
 			<li role="presentation" class="">
 				<a data-target="#insertEmployee" role="tab" id="#insertEmployee-tab" data-toggle="tab" aria-controls="#insertEmployee" aria-expanded="false">사원등록/탈퇴요청</a>
@@ -567,8 +603,118 @@
 	
 					</div>
 				</div>
+				<!-- 두번째탭 두번째row 시작(기업삭제요청버튼)-->
+				<div class="row">
+					<div class="col-xs-2">
+						<br>
+						<p>기업삭제요청</p>
+					</div>
+					<div class="col-xs-10">
+					<br>
+					<c:forEach var="companyOpenedByMyIdforDel" items="${companyOpen}">
+						<a class="btn btn-danger btn-block deletecompanyinfo" data-toggle="modal" value="${companyOpenedByMyIdforDel.comCode}" href="#CompanyDelRequest">${companyOpenedByMyIdforDel.comName} 삭제요청</a>
+						<p id="explain">본인의 아이디로 개설한 모든 기업에 대해 삭제요청 할 수 있습니다</p>
+						<!-- 개설한 기업의 승인여부 및 세부사항 확인 을 위한 모달 내부 구현 -->
+						<div class="modal fade" id="CompanyDelRequest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						  <div class="modal-dialog">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						        <h4 class="modal-title" id="myModalLabel">${nickname}님의 기업삭제요청</h4>
+						      </div>
+						      <div class="modal-body">
+						      <!-- 회사정보확인 및 수정 모달 -->
+						        <form action="/pineapple/deletecompanyinfo.user" method="post">
+						        	<div class="container_insert">
+										<div>
+											<input id="comAdminApprovalDel" type="hidden" class="form-control" name="comAdminApproval">
+									    	<input id="comCodeDel" type="hidden" class="form-control" name="comCode">
+									    	<input id="comDelRequestIdDel" type="hidden" class="form-control" name="comDelRequestId" value="${id}">
+									    	<input id="comDelTimeDel" type="hidden" class="form-control" name="comDelTime">
+									    </div>
+									    <div id="comOpenEmail" class="form-group has-success has-feedback">
+											<label class="control-label" for="inputSuccess2">기업등록요청아이디</label>
+											<input id="comOpenUserIdDel" name="comOpenUserId" type="text" class="form-control" varia-describedby="inputSuccess2Status" readonly>
+											<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+											<span id="inputSuccess2Status" class="sr-only">(success)</span>
+										</div>
+										<br>
+										<div>
+									    	<label for="comLogoFileInput">기업로고업로드</label>
+										    <input id="comLogoServerNameDel" type="text" name="comLogoServerName">
+										     <p class="help-block">기업로고 이미지 파일업로드</p>
+										    <input id="comLogoHeightDel" name="comLogoHeight" type="hidden">
+										    <input id="comLogoWidthDel" name="comLogoWidth" type="hidden">
+										    <input id="comLogoSizeDel" name="comLogoSize" type="hidden">
+										    <input id="comLogoExtensionDel" name="comLogoExtension" type="hidden">
+										</div>
+										<br>
+										<div id="comnameChModal" class="form-group">
+										    <label class="control-label" for="comNameInput">*기업이름</label>
+										    <p id="explain"> (정확한 기업이름을 입력해주시기 바랍니다. 이미 등록된 기업이 존재하는 경우 기업을 등록할 수 없습니다.)</p>
+										    <input id="comNameDel" name="comName" type="text" class="form-control" placeholder="Enter Company Name">
+									  		<span id="comnamech"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
+										<br>
+									  	</div>
+									  	<div class="form-group">
+										    <label for="exampleInputPassword1">*사업자번호</label>
+										    <p id="explain">(-없이 사업자번호 10자리를 정확히 입력해주시기 바랍니다)</p>
+										    <input id="comNumberDel" name="comNumber" type="text" class="form-control" maxlength="10" placeholder="Enter Company Number">
+										    <span id="pwch"></span>
+									  	</div>
+									  	<br>
+									  	<div>
+									  		<label for="comHomePageInput">기업웹사이트주소</label>
+										    <input id="comHomePageDel" name="comHomePage" type="text" class="form-control" placeholder="Enter Company Web Site Address">
+										</div>
+										<br>
+										<div>
+									    	<label for="comCeoNameInput">기업대표이름</label>
+										    <p id="explain">(현재 기업 대표의 실명을 입력해주시기 바랍니다)</p>
+										    <input id="comCeoNameDel" name="comCeoName" type="text" class="form-control" placeholder="Enter Company CEO Name">
+										</div>
+										<br>
+										<div>
+									    	<label for="comEstablishYearInupt">기업설립연도</label>
+										    <p id="explain">(기업의 설립연도를 입력해주시기 바랍니다)</p>
+										    <input id="comEstablishYearDel" name="comEstablishYear" type="text" class="form-control" maxlength="4" placeholder="Enter Company Establish Year">
+										</div>
+										<br>
+										<div>
+									    	<label for="comInfoInupt">기업정보</label>
+										    <p id="explain">(기업에 대한 전반적인 정보를 입력해주시기 바랍니다)</p>
+										    <textarea id="comInfoDel" name="comInfo" class="form-control" rows="4">${companyOpenedByMyId.comInfo}</textarea>
+										</div>
+										<br>
+										<div>
+									    	<label for="comSummaryInupt">기업간략소개</label>
+										    <p id="explain">(기업에 대한 소개글을 입력해주시기 바랍니다)</p>
+										    <textarea id="comSummaryDel" name="comSummary" class="form-control" rows="4">${companyOpenedByMyId.comSummary}</textarea>
+										</div>
+										<br>
+										<div>
+									    	<label for="comActivitySummaryInupt">기업활동정보</label>
+										    <p id="explain">(기업의 활동분야에 대한 정보를 입력해주시기 바랍니다)</p>
+										    <textarea id="comActivitySummaryDel" name="comActivitySummary" class="form-control" rows="4">${companyOpenedByMyId.comActivitySummary}</textarea>
+										</div>
+									</div>
+									<br>
+									<div class="modal-footer">
+										<button type="submit" class="btn btn-info">삭제요청</button>
+										<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+									</div>
+								</form>
+					        </div>
+					    </div>
+					  </div>
+					</div>
+				</c:forEach>
+	
+				</div>
+			</div>
+				
 				<br>
-				<!-- 두번째탭 두번째row 시작-->
+				<!-- 두번째탭 세번째row 시작-->
 				<!-- 기업등록요청하기 입력폼; 기업을 등록하는 경영진과 등록하지 않는 경영진 여부에 따라 페이지 구분 기능 구현 -->
 				<div class="row">
 					<div class="col-xs-2">

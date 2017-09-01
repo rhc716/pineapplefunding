@@ -16,6 +16,13 @@ public class MypageDao implements MypageDaoInterface {
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
 	
+	//기업삭제요청
+	@Override
+	public int deleteCompany(Company company) {
+		log.debug("MypageDao deleteCompany 호출 "+company);
+		return sqlSessionTemplate.update("com.pineapple.user.service.MypageMapper.delRequestCompany", company);
+	}
+	
 	//경영진으로 속한 회사이름을 조회하기 위해 employee 정보 조회(ID로)
 	@Override
 	public List<Employee> selectEmployeeMngById(String emUserId) {
@@ -131,6 +138,8 @@ public class MypageDao implements MypageDaoInterface {
 		log.debug("MypageDao selectInvestorBasic 메서드 호출 결과"+sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAllInvestorInfo", userId));
 		return sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAllInvestorInfo", userId);
 	}
+
+	
 
 	
 

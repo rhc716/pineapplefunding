@@ -106,6 +106,34 @@
 		comDelApprovalId=#{comDelApprovalId}
 		WHERE comCode=#{comCode}
 	</update>
+	
+<!-- 경영진 마이페이지 기업삭제 -->
+	<update id="delRequestCompany" parameterType="com.pineapple.user.service.Company">
+		UPDATE company
+		SET
+		comCode=#{comCode},
+		comName=#{comName},
+		comNumber=#{comNumber},
+		comHomePage=#{comHomePage},
+		comCeoName=#{comCeoName},
+		comEstablishYear=#{comEstablishYear},
+		comInfo=#{comInfo},
+		comLogoServerName=#{comLogoServerName},
+		comLogoHeight=#{comLogoHeight},
+		comLogoWidth=#{comLogoWidth},
+		comLogoSize=#{comLogoSize},
+		comLogoExtension=#{comLogoExtension},    
+		comSummary=#{comSummary},
+		comActivitySummary=#{comActivitySummary},
+		comOpenUserId=#{comOpenUserId},
+		comAdminApproval=#{comAdminApproval},
+		comApprovalDate=#{comApprovalDate},
+		comApprovalId=#{comApprovalId},
+		comDelRequestId=#{comDelRequestId},
+		comDelTime=now(),
+		comDelApprovalId=#{comDelApprovalId}
+		WHERE comCode=#{comCode}
+	</update>	
 
 <!-- 기업회원 중 경영진 마이페이지 분기시 자신이 등록요청한 회사정보 조회 -->
 	<select id="selectCompanyInfoByOpenId" parameterType="String" resultMap="selectCompanyInfoByOpenId">

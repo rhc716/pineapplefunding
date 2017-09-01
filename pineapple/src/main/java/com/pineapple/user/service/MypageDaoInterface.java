@@ -5,6 +5,8 @@ import java.util.List;
 import com.pineapple.invest.service.InvestorInvestList;
 
 public interface MypageDaoInterface {
+	//기업삭제요청을 위한 메서드
+	int deleteCompany(Company company);
 	
 	//경영진으로 속한 회사이름을 조회하기 위해 employee 정보 조회(ID로)
 	List<Employee> selectEmployeeMngById(String emUserId);
