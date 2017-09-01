@@ -7,86 +7,36 @@
 <title>경영진 MyPage</title>
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!-- css -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
-
-<!-- css lbr -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lbr.css" />
 <script type="text/javascript">
 	$(document).ready(function(){
-		//사원요청 승인탭에서 기업명별 사원요청목록 데이터 불러오는 함수
+		//사원요청 승인탭을 클릭하면 사원요청목록 데이터를 각 기업별로 이미 로딩된 상태로 갖고 있게 됨 
 	    $('#approveEmployee-tab').click(function(){
-	    	 var comobject = document.getElementsByClassName("emapproveBtn");
-	    	 console.log(comobject);
-	    	 var comlength = document.getElementsByClassName("emapproveBtn").length;
-	    	 console.log(comlength);
-	    	 var approvebtnId;
-	    	 var idselector;
-	    	 var in_emComName;
-	    	 var thishref;
-	    	 for(var i=0; i<comlength; i++){
-	    		 approvebtnId = "a"+i;
-	    		 $(comobject[i]).attr('id', approvebtnId);
-	    		 idselector = "#"+ approvebtnId;
-	    		 console.log($('.emapproveBtn').attr('id'));
-	    		 in_emComName = $(idselector).attr('value');
-		    	 console.log(in_emComName);
-		    	 thishref = "#"+approvebtnId;
-		    	 console.log(thishref);
-		    	 $(idselector).attr('href', idselector);
-		    	 $(idselector).attr('aria-controls', approvebtnId);
-		    	 console.log($(idselector).attr('aria-controls'));
-		    	 $('.collapseid').attr('id', approvebtnId);
-		    	 console.log($('.collapseid').attr('id'));
-		    	 $(idselector).click(function(){
-				     var emRequestListByComNameAjax = $.ajax({ // ajax실행부분
-					        type: "get",
-					        url : "/pineapple/getemrequestlist.user",
-					        data : {comName : in_emComName},
-					        success : function success(emlistres){
-					        	$('#employeelistimport').html(emlistres);
-					        	//각 사원요청별 승인 처리
-					    	    $('.approveemployee').click(function(){
-					    			var in_employeeCode = $(this).attr('value');
-					    			var approveEmployeeAjax = $.ajax({ // ajax실행부분
-					    								        type: "get",
-					    								        url : "/pineapple/approveemployeepage.user",
-					    								        data : {emCode : in_employeeCode},
-					    								        success : function success(){
-					    								        	alert('승인할 사원코드 : '+ in_employeeCode);
-					    								        },
-					    								        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
-					    								        error : function error(){
-					    							        		alert('사원정보 불러오기 오류');
-					    							        	}
-					    									});
-					    			//ajax를 통해 조회한 계좌 정보를 모달창 수정페이지 각 입력값으로 넣어준다
-					    			/*
-					    			approveEmployeeAjax.done(function(aec){
-					    				$('#emCodeCheck').val(aec.emCode);
-					    				$('#emComCodeCheck').val(aec.emComCode);
-					    				$('#emComNameCheck').val(aec.emComName);
-					    				$('#emUserIdCheck').val(aec.emUserId);
-					    				$('#emRankCodeCheck').val(aec.emRankCode);
-					    				$('#emDepartmentCheck').val(aec.emDepartment);
-					    			});
-					    			*/
-					    		});
-					        },
-					        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
-					        error : function error(){
-				        		alert('사원등록요청 사원리스트 불러오기 오류');
-				        	}
-						});
-	    	 	});
-	    	 };
-
-	    	
-
+   	    	var collapseIds = $.each($('.comCollapseBtn'), function(index, items) {
+ 			    var collapseIds = $(items).attr('id', index);
+   			    //console.log(collapseIds);
+   			    var in_emComName = $(collapseIds).attr('value');
+   	    		console.log(in_emComName);
+   	    		//각 기업별 버튼 클릭시 사원요청목록 불러오는 ajax 실행
+		        var emRequestListByComNameAjax = $.ajax({ // ajax실행부분
+			        type: "get",
+			        url : "/pineapple/getemrequestlist.user",
+			        data : {comName : in_emComName},
+			        success : function success(emlistres){
+			        	//기업별 collapse 부분에 기업에 속한 사원요청목록을 개별적으로 한번에 출력함.
+			        	var tbodyId =  "#employeelistimport"+index;
+			        	//console.log(tbodyId);
+		        		$(tbodyId).html(emlistres);
+			        },
+			        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+			        error : function error(){
+		        		alert('사원등록요청 사원리스트 불러오기 오류');
+		        	}
+				});
+   			    
+   			});
+   	    	
+	   	   
 	     });
-		
 	}); 
 	$(document).ready(function(){
 		$('#newAccountSubmitBtn').click(function(){
@@ -877,13 +827,13 @@
 						<br>
 						<p id="explanation">경영진으로 속한 기업에 사원등록 요청을 한 사원의 리스트를 보고 승인 또는 삭제 처리를 할 수 있습니다.</p>
 						<!-- 경영진 직급으로 소속된 기업에 사원등록요청한 사원의 목록 보기(부트스트랩 드롭다운 사용) -->
-						 <c:forEach var="comMngRankList" items="${comMngRank}" varStatus="status">
-						  	<a class="btn btn-info btn-block emapproveBtn" id="" value="${comMngRankList.emComName}" data-toggle="collapse" href="#"  aria-expanded="false" aria-controls="">
-							  ${comMngRankList.emComName}
+						 <c:forEach var="comMngRankList" items="${comMngRank}" varStatus="numberofcom">
+						  	<a class="btn btn-info btn-block comCollapseBtn" id="${numberofcom.index}" value="${comMngRankList.emComName}" data-toggle="collapse" href="#collapse${numberofcom.count}"  aria-expanded="false" aria-controls="collapse${numberofcom.count}">
+							  ${numberofcom.count} ${comMngRankList.emComName}
 							</a>
 							<br>
 							<!-- collapse 본문부분 id는 javascript로 지정 -->
-							<div class="collapse collapseid" id="">
+							<div class="collapse collapseid" id="collapse${numberofcom.count}">
 								<div>
 									<table class="table table-striped table-bordered table-hover">
 										<thead>
@@ -896,7 +846,7 @@
 											</tr>
 										 </thead>
 										 <!-- 각 기업별 사원등록요청 목록 import -->
-										 <tbody id="employeelistimport">
+										 <tbody id="employeelistimport${numberofcom.index}">
 										 </tbody>
 										 <tfoot>
 											 <div>
