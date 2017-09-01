@@ -169,24 +169,6 @@ public class TimelineController {
 		log.debug(myinvestormessage+"<-----TimelineController[myinvestormessage 값 출력]");
 		return "user/investormypageajax/investormessage";
 	}
-	@RequestMapping(value="/investormessagesend.timeline",method=RequestMethod.GET)
-	public String investorMessageSend(Locale locale,Model model,HttpSession session){
-		log.debug("<----- TimelineController[investorMessageSend호출]----->");
-
-		return "user/investormypageajax/investormessagesend";
-	}
-	@RequestMapping(value="/investormyreceivelist.timeline",method=RequestMethod.GET)
-	public String investorSendList(Locale locale,Model model,HttpSession session){
-		log.debug("<----- TimelineController[investorSendList호출]----->");
-
-		return "user/investormypageajax/investorreceivelist";
-	}
-	@RequestMapping(value="/investormysendlist.timeline",method=RequestMethod.GET)
-	public String investorReceiveList(Locale locale,Model model,HttpSession session){
-		log.debug("<----- TimelineController[investorReceiveList호출]----->");
-
-		return "user/investormypageajax/investorsendlist";
-	}
 	
 	
 	
