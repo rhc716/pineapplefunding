@@ -24,6 +24,7 @@
 			  		<li><a href="/pineapple/fundinginsert.pms">펀딩개설</a></li>
 			  		<li><a href="/pineapple/myfundinglistpage.pms">펀딩조회</a></li>
 			  		<li><a href="/pineapple/myfundingdetaillist.pms">펀딩상세관리</a></li>
+			  		<li><a href="">펀딩사업분야관리(개발중)</a></li>
 			  		<li><a href="/pineapple/myfundingposterimgpage.pms">펀딩포스터이미지관리</a></li>
 			  		<li><a href="/pineapple/myfundingdividendplan.pms">펀딩배당계획관리</a></li>
 			  		<li><a href="/pineapple/myfundinginvestorlistpage.pms">펀딩투자자조회</a></li>

@@ -208,9 +208,15 @@ public class FundingDao implements FundingDaoInterface {
 			String level) {
 		log.debug("FundingDao의 selectProjectInfoList호출 성공");
 		if(level.equals("관리자")){
-			return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListAdmin", userId);
+			// 총회원수, 총기업회원수, 총투자자회원수, 총회사수를 가져옴
+			List<Object> list = sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListAdminFirst");
+			// 총펀딩수, 모집중인 펀딩수, 개설요청중인 펀딩수, 진행중인 펀딩수를 가져옴
+			list.addAll(1, sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListAdminSecond"));
+			return list;
 		} else if(level.equals("기업회원")){
-			return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListComUser", userId);
+			// 기업회원이 소속된 회사명과 직급 리스트를 가져옴
+			List<Object> list = sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListComUserFirst", userId);
+			return list;
 		} else {//투자자
 			return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListInvestor", userId);
 		}

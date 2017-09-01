@@ -5,17 +5,21 @@ public class InfomationForPmsMainViewOfAdminUser {
 	private int totalComCount;
 	private int totalInvestorUserCount;
 	private int totalComUserCount;
+	private int totalFundingCount;
+	//모집중, 결제모집중인 총펀딩수
+	private int totalRecruitingFundingCount;
+	//개설요청중인 총펀딩수
+	private int totalRequestFundingCount;
+	//진행중인 총펀딩수
+	private int totalProceedingFundingCount;
+	
 	private int totalVisitCount;
 	private int todayVisitCount;
-	private int totalFundingCount;
-	//모집중인 총펀딩수
-	private int totalRecruitingFundingCount;
-	//진행중인 총펀딩수  
-	private int totalProceedingFundingCount;
 	//총수수료수익금
 	private int totalCommissionRevenue;
 	//오늘 발생한 수수료수익금
 	private int todayCommissionRevenue;
+	
 	
 	
 	
@@ -67,6 +71,12 @@ public class InfomationForPmsMainViewOfAdminUser {
 	public void setTotalRecruitingFundingCount(int totalRecruitingFundingCount) {
 		this.totalRecruitingFundingCount = totalRecruitingFundingCount;
 	}
+	public int getTotalRequestFundingCount() {
+		return totalRequestFundingCount;
+	}
+	public void setTotalRequestFundingCount(int totalRequestFundingCount) {
+		this.totalRequestFundingCount = totalRequestFundingCount;
+	}
 	public int getTotalProceedingFundingCount() {
 		return totalProceedingFundingCount;
 	}
@@ -85,8 +95,6 @@ public class InfomationForPmsMainViewOfAdminUser {
 	public void setTodayCommissionRevenue(int todayCommissionRevenue) {
 		this.todayCommissionRevenue = todayCommissionRevenue;
 	}
-	
-	
 	@Override
 	public String toString() {
 		return "InfomationForPmsMainViewOfAdminUser [totalUserCount="
@@ -96,8 +104,13 @@ public class InfomationForPmsMainViewOfAdminUser {
 				+ ", totalVisitCount=" + totalVisitCount + ", todayVisitCount="
 				+ todayVisitCount + ", totalFundingCount=" + totalFundingCount
 				+ ", totalRecruitingFundingCount=" + totalRecruitingFundingCount
+				+ ", totalRequestFundingCount=" + totalRequestFundingCount
 				+ ", totalProceedingFundingCount=" + totalProceedingFundingCount
 				+ ", totalCommissionRevenue=" + totalCommissionRevenue
 				+ ", todayCommissionRevenue=" + todayCommissionRevenue + "]";
-	}   
+	}
+	
+	
+	
+	
 }

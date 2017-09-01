@@ -11,9 +11,10 @@
 		<result property="totalComCount" column="totalComCount"/>
 		<result property="totalInvestorUserCount" column="totalInvestorUserCount"/>
 		<result property="totalComUserCount" column="totalComUserCount"/>
-		<result property="totalVisitCount" column="totalComUserCount"/>
+		<result property="totalVisitCount" column="totalVisitCount"/>
 		<result property="todayVisitCount" column="todayVisitCount"/>
 		<result property="totalFundingCount" column="totalFundingCount"/>
+		<result property="totalRequestFundingCount" column="totalRequestFundingCount"/>
 		<result property="totalRecruitingFundingCount" column="totalRecruitingFundingCount"/>
 		<result property="totalProceedingFundingCount" column="totalProceedingFundingCount"/>
 		<result property="totalCommissionRevenue" column="totalCommissionRevenue"/>
@@ -26,28 +27,10 @@
 		<result property="fdTotalCount" column="fdTotalCount"/>
 		<result property="fdRecruitingCount" column="fdRecruitingCount"/>
 		<result property="fdProceedingCount" column="fdProceedingCount"/>
-		<collection property="comList" ofType="com.pineapple.user.service.Company">
-        	<id property="comCode" column="comCode"/>
+		<collection property="comList" ofType="com.pineapple.user.service.CompanyAndRank">
+        	<result property="ComCode" column="ComCode"/>
         	<result property="comName" column="comName"/>
-        	<result property="comNumber" column="comNumber"/>
-        	<result property="comHomePage" column="comHomePage"/>
-        	<result property="comCeoName" column="comCeoName"/>
-        	<result property="comEstablishYear" column="comEstablishYear"/>
-        	<result property="comInfo" column="comInfo"/>
-        	<result property="comLogoServerName" column="comLogoServerName"/>
-        	<result property="comLogoHeight" column="comLogoHeight"/>
-        	<result property="comLogoWidth" column="comLogoWidth"/>
-        	<result property="comLogoSize" column="comLogoSize"/>
-        	<result property="comLogoExtension" column="comLogoExtension"/>
-        	<result property="comSummary" column="comSummary"/>
-        	<result property="comActivitySummary" column="comActivitySummary"/>
-        	<result property="comOpenUserId" column="comOpenUserId"/>
-        	<result property="comAdminApproval" column="comAdminApproval"/>
-        	<result property="comApprovalDate" column="comApprovalDate"/>
-        	<result property="comApprovalId" column="comApprovalId"/>
-        	<result property="comDelRequestId" column="comDelRequestId"/>
-        	<result property="comDelTime" column="comDelTime"/>
-        	<result property="comDelApprovalId" column="comDelApprovalId"/>
+        	<result property="rankName" column="rankName"/>
         </collection>
         <collection property="FdList" ofType="com.pineapple.funding.service.Funding">
 			<id property="fdCode" column="fdCode"/>
@@ -69,6 +52,12 @@
 			<result property="fdApprovalDate" column="fdApprovalDate"/>
 			<result property="fdApprovalId" column="fdApprovalId"/>
 			<result property="fdDate" column="fdDate"/>
+		</collection>
+		<collection property="FundingAndFdAuthList" ofType="com.pineapple.funding.service.FundingAndFdAuth">
+			<result property="fdCode" column="fdCode"/>
+			<result property="fdComCode" column="fdComCode"/>
+			<result property="fdTitle" column="fdTitle"/>
+			<result property="authLevelName" column="authLevelName"/>
 		</collection>
 	</resultMap>
 	
@@ -380,13 +369,32 @@
 	</select>
 	
 	<!-- pmsmain.jsp 에서 권한별로 필요한 정보의 리스트를 가져옴 -->
-	<!-- 관리자 -->
-	<select id="selectProjectInfoListAdmin" resultMap="InfomationForPmsMainViewOfAdminUser" parameterType="String">
-		
+	<!-- 관리자 첫번째 -->
+	<select id="selectProjectInfoListAdminFirst" resultMap="InfomationForPmsMainViewOfAdminUser">
+		<!-- 총회원수 총기업회원수 총투자자회원수 총회사수를 가져옴 -->
+		SELECT u.totalUserCount, u.totalComUserCount, u.totalInvestorUserCount, count(c.comCode) totalComCount
+		FROM
+		(SELECT COUNT(*) totalUserCount
+		, COUNT(case when levelCode ='2' then 1 end) totalComUserCount
+		, COUNT(case when levelCode ='3' then 1 end) totalInvestorUserCount
+		FROM user) u INNER JOIN company c
+	</select>
+	<!-- 관리자 두번째 -->
+	<select id="selectProjectInfoListAdminSecond" resultMap="InfomationForPmsMainViewOfAdminUser">
+		<!-- 총 펀딩수, 모집중인 펀딩수, 개설요청중인 펀딩수, 진행중인 펀딩수를 가져옴 -->
+		SELECT 
+		COUNT(*) totalFundingCount
+		, COUNT(CASE when fdStatus="모집중" OR fdStatus="결제모집중"  then 1 end) totalRecruitingFundingCount
+		, COUNT(CASE when fdStatus="개설요청" then 1 end) totalRequestFundingCount
+		, COUNT(CASE when fdStatus="진행중" then 1 end) totalProceedingFundingCount
+		FROM funding
 	</select>
 	<!-- 기업회원 -->
-	<select id="selectProjectInfoListComUser" resultMap="InfomationForPmsMainViewOfCompanyUser" parameterType="String">
-		
+	<select id="selectProjectInfoListComUserFirst" resultMap="InfomationForPmsMainViewOfCompanyUser" parameterType="String">
+		SELECT e.emComCode, c.comName, r.rankName
+		FROM employee e INNER JOIN company c INNER JOIN rankcode r
+		ON e.emComCode = c.comCode AND e.emRankCode = r.rankCode
+		WHERE e.emUserId = #{userId}
 	</select>
 	<!-- 투자자 -->
 	<select id="selectProjectInfoListInvestor" resultMap="InfomationForPmsMainViewOfInvestorUser" parameterType="String">

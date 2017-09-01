@@ -25,6 +25,11 @@
 
 <!-- css rhc -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
+
+<!-- chart.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+
 <script>
 $(document).ready(function(){
 	
@@ -40,12 +45,64 @@ $(document).ready(function(){
 	//성공시
 	getprojectinfolist.done(function(msg){
 		console.log(msg);
+		// ajax통신에서 불러온 리스트의 값이 관리자권한의 경우에만 있는 값(totalUserCount) => 관리자 권한
+		if(msg[0].totalUserCount!=null){
+			$('#totalUserCount').append(msg[0].totalUserCount+'명');
+			$('#totalComCount').append(msg[0].totalComCount+'명');
+			$('#totalInvestorUserCount').append(msg[0].totalInvestorUserCount+'명');
+			$('#totalComUserCount').append(msg[0].totalComUserCount+'명');
+			
+			$('#totalFundingCount').append(msg[1].totalFundingCount);
+			$('#totalRecruitingFundingCount').append(msg[1].totalRecruitingFundingCount);
+			$('#totalRequestFundingCount').append(msg[1].totalRequestFundingCount);
+			$('#totalProceedingFundingCount').append(msg[1].totalProceedingFundingCount);
+		
+			// 도넛차트 
+			var Canvas = document.getElementById("donut");
+			// 차트위에 색상목록 글씨 폰트사이즈
+			Chart.defaults.global.defaultFontSize = 25;
+			var colors = [
+				  ['rgba(101, 187, 166, 1)', 'rgba(101, 187, 166, 0.4)'],
+				  ['rgba(108, 185, 189, 1)', 'rgba(108, 185, 189, 0.4)']
+				  ];
+			
+			var pieColors = [
+				  colors[0][0],
+				  colors[1][0]
+				  ];
+			
+			var chartData = {
+			    labels: ["투자자회원", "기업회원"]
+				, datasets: [{
+			            data: [msg[0].totalInvestorUserCount, msg[0].totalComUserCount],
+			            borderWidth: 2,
+			            hoverBorderWidth: 10,
+			            hoverBackgroundColor: pieColors,
+			            hoverBorderColor: pieColors,
+			            backgroundColor: ["#5b6777", "#fac513"]
+			        		}]
+			};
+
+			var pieChart = new Chart(Canvas, {
+			  type: 'pie',
+			  data: chartData
+			});
+			
+		// ajax통신에서 불러온 리스트의 값이 기업회원 권한의 경우에만 있는 값(totalUserCount) => 관리자 권한
+		} else if(msg[0].comList!=null){
+			for(var i=0; i<msg.length; i++){
+				$('#comName').append(msg[i].comList[0].comName+"사의 "
+						+msg[i].comList[0].rankName+"<br>");
+				
+			}
+		}
 	});
 	
 	//실패시
-	/* getprojectinfolist.fail(function(){
+	getprojectinfolist.fail(function(){
 		alert('ajax통신 실패');
-	}); */
+	});
+
 });
 </script>
 </head>
@@ -61,32 +118,30 @@ $(document).ready(function(){
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-md-9">
-	로그인 안할시 페이지 접근 막을것
 		<c:if test="${level eq '기업회원'}">
 			<div class="pagetitleandexplainbox">
 				<h2>기업회원용 프로젝트관리</h2>
 			</div> 
-            <div class="col-sm-12">
+            <div class="col-sm-12 pmsmainpagecontent">
                 <div class="col-xs-12 col-sm-8"><br>
                     <h2>${nickname}</h2>
-                    <p><strong>직급 :</strong> ${rank} </p>
-                    <p><strong>회사 : </strong> Read</p>
-                    <p><strong>모집 & 진행중인 펀딩 : </strong>
-                        <span class="tags">html5</span> 
-                    </p>
+                    <p><strong>회사 및 직급</strong><br><b id="comName"></b></p>
+                    <p><strong>펀딩내 권한 : </strong><b>준비중</b></p>
+                    <p><strong>모집중인 펀딩 : </strong><b>준비중</b></p>
+                    <p><strong>진행중인 펀딩 : </strong><b>준비중</b></p>
                 </div>
             </div>            
             <div class="col-xs-12 divider text-center pmsmainboxbottom">
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong> 20,7K </strong></h2>                    
+                    <h2><strong> 준비중 </strong></h2>                    
                     <p><small>총 펀딩수</small></p>
                 </div>
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>245</strong></h2>                    
+                    <h2><strong>준비중</strong></h2>                    
                     <p><small>모집중인 펀딩수</small></p>
                 </div>
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>43</strong></h2>                    
+                    <h2><strong>준비중</strong></h2>                    
                     <p><small>진행중인 펀딩수</small></p>
                 </div>
             </div>
@@ -96,39 +151,39 @@ $(document).ready(function(){
 				<h2>투자자용 프로젝트관리</h2>
 			</div> 
             <div class="col-sm-12">
-                <div class="col-xs-12 col-sm-8"><br>
+                <div class="col-xs-12 col-sm-8 pmsmainpagecontent"><br>
                     <h2>${nickname}</h2>
                     <p><strong>사전예약중 펀딩 : </strong>
-                        <span class="tags">html5</span> 
+                        <span class="tags"><b>준비중</b></span> 
                     </p>
                     <p><strong>투자중인 펀딩 : </strong>
-                        <span class="tags">html5</span> 
+                        <span class="tags"><b>준비중</b></span> 
                     </p>
                 </div>
             </div>            
             <div class="col-xs-12 divider text-center pmsmainboxbottom">
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong> 20,7K </strong></h2>                    
+                    <h2><strong> 준비중 </strong></h2>                    
                     <p><small>총투자금액</small></p>
                 </div>
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>245</strong></h2>                    
+                    <h2><strong>준비중</strong></h2>                    
                     <p><small>총배당금액</small></p>
                 </div>
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>43</strong></h2>                    
+                    <h2><strong>준비중</strong></h2>                    
                     <p><small>총투자건수</small></p>
                 </div>
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>43</strong></h2>                    
+                    <h2><strong>준비중</strong></h2>                    
                     <p><small>진행중인투자건수</small></p>
                 </div>
                  <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>43</strong></h2>                    
+                    <h2><strong>준비중</strong></h2>                    
                     <p><small>진행중인펀딩의투자금액</small></p>
                 </div>
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>43</strong></h2>                    
+                    <h2><strong>준비중</strong></h2>                    
                     <p><small>진행중인펀딩의배당금액</small></p>
                 </div>
             </div>
@@ -138,41 +193,46 @@ $(document).ready(function(){
 				<h2>관리자용 프로젝트관리</h2>
 			</div> 
 			<div class="col-sm-12">
-                <div class="col-xs-12 col-sm-8"><br>
+                <div class="col-xs-6 col-sm-6 pmsmainpagecontent"><br>
                     <h2>${nickname}</h2>
-                    <p><strong>총 회원수</strong>  </p>
-                    <p><strong>총 회사수</strong>  </p>
-                    <p><strong>총 투자자수</strong>  </p>
-                    <p><strong>총 기업회원수</strong>  </p>
-                    <p><strong>총 방문자수</strong>  </p>
-                    <p><strong>오늘 방문자수</strong>  </p>
+                    <p><strong>총 회원수 : </strong><b id="totalUserCount"></b></p>
+                    <p><strong>총 투자회원수 : </strong><b id="totalInvestorUserCount"></b></p>
+                    <p><strong>총 기업회원수 : </strong><b id="totalComUserCount"></b></p>
+                    <p><strong>총 회사수 : </strong><b id="totalComCount"></b></p>
+                    <p><strong>총 방문자수 : </strong><b>준비중</b></p>
+                    <p><strong>오늘 방문자수 : </strong><b>준비중</b></p>
                 </div>
-              
-              <br><br>
-              <br><br>
-                회원 권한 비율 그래프 들어갈 곳<br><br>
-                
-                방문객 추이 그래프 들어갈 곳
-            </div>            
+              	<div class="col-xs-6 col-sm-6 pmsmainpagecontent"><br>
+               		<!-- 도넛차트 -->
+               		<canvas id="donut" width="250" height="250" style="padding:80px 80px; margin-top:-70px;"></canvas>
+               		<br>
+	               		 방문객 추이 그래프 들어갈 곳
+	                <br>
+               	</div>
+            </div>   
             <div class="col-xs-12 divider text-center pmsmainboxbottom">
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong> 20,7K </strong></h2>                    
+                    <h2><strong id="totalFundingCount"></strong></h2>                    
                     <p><small>총펀딩수</small></p>
                 </div>
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>245</strong></h2>                    
+                    <h2><strong id="totalRecruitingFundingCount"></strong></h2>                    
                     <p><small>모집중인 펀딩수</small></p>
                 </div>
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>43</strong></h2>                    
+                    <h2><strong id="totalRequestFundingCount"></strong></h2>                    
+                    <p><small>개설요청중인 펀딩수</small></p>
+                </div>
+                <div class="col-xs-12 col-sm-4 emphasis">
+                    <h2><strong id="totalProceedingFundingCount"></strong></h2>                    
                     <p><small>진행중인 펀딩수</small></p>
                 </div>
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>43</strong></h2>                    
+                    <h2><strong>준비중</strong></h2>                    
                     <p><small>총수수료수익금</small></p>
                 </div>
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>43</strong></h2>                    
+                    <h2><strong>준비중</strong></h2>                    
                     <p><small>오늘발생수수료수익금</small></p>
                 </div>
             </div>

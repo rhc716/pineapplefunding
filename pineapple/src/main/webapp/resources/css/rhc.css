@@ -11,6 +11,9 @@
 	font-size: 15px;
 	background-color: #f5f5f5;
 }
+.pmsmainpagecontent b{
+	color : #337ab7;
+}
 
 .pmsmainboxbottom {
 	background-color: #01022c;

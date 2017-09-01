@@ -385,7 +385,7 @@ public class FundingController {
 	
 	// pmsmain.jsp 에서 권한별로 필요한 정보의 리스트를 ajax요청
 	@RequestMapping(value = "/getprojectinfolist.pms", method = RequestMethod.GET)
-	public @ResponseBody Model getprojectinfolist(Model model, Locale locale
+	public @ResponseBody List<Object> getprojectinfolist(Model model, Locale locale
 			, @RequestParam("userId") String userId, @RequestParam("userLevel") String level) {
 		
 		log.debug("FundingController의 getprojectinfolist호출 성공");
@@ -394,8 +394,7 @@ public class FundingController {
 		
 		List<Object> list = service.getProjectInfoList(userId, level);
 		
-		
-		return model;
+		return list;
 	}
 	
 }
