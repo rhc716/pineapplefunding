@@ -27,6 +27,33 @@ public class MypageController {
 	@Autowired
 	private MypageServiceInterface mypageservice;
 	
+	//사원등록정보 확인 모달에서 사원정보(주로 부서명) 수정하기 요청 처리
+	@RequestMapping(value="/deleterequestemployee.user", method = RequestMethod.POST)
+    public String deleteEmployeeRequest(HttpSession session, Employee employee) { //커맨드 객체
+        log.debug("deleteEmployeeRequest 사원정보 삭제 요청 : "+employee);
+        int result = mypageservice.modifyEmployeeInfo(employee);
+        if(result == 1){
+        	log.debug(session.getAttribute("nickname")+"님의 사원삭제요청 성공");
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님의 사원삭제요청 실패");
+        }
+        return "redirect:/mypage.user"; // 글입력후 "/"로 리다이렉트(재요청)
+    }
+	
+	//경영진의 개별 사원등록요청별 승인 페이지 구성
+	@RequestMapping(value="/deleterequestemployeepage.user", method=RequestMethod.GET)
+	public @ResponseBody Employee deleteEmployeePage(Model model, @RequestParam("emCode") int emCode){
+		log.debug("MypageController deleteEmployeePage 사원정보 삭제 페이지 요청");
+		Employee employee = mypageservice.getEmployeeByEmCode(emCode);
+		if(employee != null){
+			log.debug("MypageController deleteEmployeePage 삭제할 사원정보 조회 성공");
+			model.addAttribute("employee", employee);
+		} else {
+			log.debug("MypageController deleteEmployeePage 삭제할 사원정보 조회 실패");
+		}
+		return employee;
+	}
+	
 	//경영진의 사원등록요청 승인 처리
 	@RequestMapping(value="/approveemployee.user", method = RequestMethod.POST)
     public String approveEmployee(HttpSession session, Employee employee) { //커맨드 객체

@@ -7,86 +7,36 @@
 <title>경영진 MyPage</title>
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!-- css -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
-
-<!-- css lbr -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lbr.css" />
 <script type="text/javascript">
 	$(document).ready(function(){
-		//사원요청 승인탭에서 기업명별 사원요청목록 데이터 불러오는 함수
+		//사원요청 승인탭을 클릭하면 사원요청목록 데이터를 각 기업별로 이미 로딩된 상태로 갖고 있게 됨 
 	    $('#approveEmployee-tab').click(function(){
-	    	 var comobject = document.getElementsByClassName("emapproveBtn");
-	    	 console.log(comobject);
-	    	 var comlength = document.getElementsByClassName("emapproveBtn").length;
-	    	 console.log(comlength);
-	    	 var approvebtnId;
-	    	 var idselector;
-	    	 var in_emComName;
-	    	 var thishref;
-	    	 for(var i=0; i<comlength; i++){
-	    		 approvebtnId = "a"+i;
-	    		 $(comobject[i]).attr('id', approvebtnId);
-	    		 idselector = "#"+ approvebtnId;
-	    		 console.log($('.emapproveBtn').attr('id'));
-	    		 in_emComName = $(idselector).attr('value');
-		    	 console.log(in_emComName);
-		    	 thishref = "#"+approvebtnId;
-		    	 console.log(thishref);
-		    	 $(idselector).attr('href', idselector);
-		    	 $(idselector).attr('aria-controls', approvebtnId);
-		    	 console.log($(idselector).attr('aria-controls'));
-		    	 $('.collapseid').attr('id', approvebtnId);
-		    	 console.log($('.collapseid').attr('id'));
-		    	 $(idselector).click(function(){
-				     var emRequestListByComNameAjax = $.ajax({ // ajax실행부분
-					        type: "get",
-					        url : "/pineapple/getemrequestlist.user",
-					        data : {comName : in_emComName},
-					        success : function success(emlistres){
-					        	$('#employeelistimport').html(emlistres);
-					        	//각 사원요청별 승인 처리
-					    	    $('.approveemployee').click(function(){
-					    			var in_employeeCode = $(this).attr('value');
-					    			var approveEmployeeAjax = $.ajax({ // ajax실행부분
-					    								        type: "get",
-					    								        url : "/pineapple/approveemployeepage.user",
-					    								        data : {emCode : in_employeeCode},
-					    								        success : function success(){
-					    								        	alert('승인할 사원코드 : '+ in_employeeCode);
-					    								        },
-					    								        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
-					    								        error : function error(){
-					    							        		alert('사원정보 불러오기 오류');
-					    							        	}
-					    									});
-					    			//ajax를 통해 조회한 계좌 정보를 모달창 수정페이지 각 입력값으로 넣어준다
-					    			/*
-					    			approveEmployeeAjax.done(function(aec){
-					    				$('#emCodeCheck').val(aec.emCode);
-					    				$('#emComCodeCheck').val(aec.emComCode);
-					    				$('#emComNameCheck').val(aec.emComName);
-					    				$('#emUserIdCheck').val(aec.emUserId);
-					    				$('#emRankCodeCheck').val(aec.emRankCode);
-					    				$('#emDepartmentCheck').val(aec.emDepartment);
-					    			});
-					    			*/
-					    		});
-					        },
-					        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
-					        error : function error(){
-				        		alert('사원등록요청 사원리스트 불러오기 오류');
-				        	}
-						});
-	    	 	});
-	    	 };
-
-	    	
-
+   	    	var collapseIds = $.each($('.comCollapseBtn'), function(index, items) {
+ 			    var collapseIds = $(items).attr('id', index);
+   			    //console.log(collapseIds);
+   			    var in_emComName = $(collapseIds).attr('value');
+   	    		console.log(in_emComName);
+   	    		//각 기업별 버튼 클릭시 사원요청목록 불러오는 ajax 실행
+		        var emRequestListByComNameAjax = $.ajax({ // ajax실행부분
+			        type: "get",
+			        url : "/pineapple/getemrequestlist.user",
+			        data : {comName : in_emComName},
+			        success : function success(emlistres){
+			        	//기업별 collapse 부분에 기업에 속한 사원요청목록을 각 테이블의 tbody 부분(id를 각각 지정)에 개별적으로 한번에 출력함.
+			        	var tbodyId =  "#employeelistimport"+index;
+			        	//console.log(tbodyId);
+		        		$(tbodyId).html(emlistres);
+			        },
+			        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+			        error : function error(){
+		        		alert('사원등록요청 사원리스트 불러오기 오류');
+		        	}
+				});
+   			    
+   			});
+   	    	
+	   	   
 	     });
-		
 	}); 
 	$(document).ready(function(){
 		$('#newAccountSubmitBtn').click(function(){
@@ -190,7 +140,7 @@
 					$('#emApprovalDonePart').hide();
 					$('#emApprovalNotPart').show();
 					$('#emApprovalNot').val('사원승인대기중');
-				}
+				};
 				$('#emCodeChange').val(ec.emCode);
 				$('#emComCodeChange').val(ec.emComCode);
 	    		$('#emComNameChange').val(ec.emComName);
@@ -198,6 +148,42 @@
 	    		$('#emRankCodeChange').val(ec.emRankCode);
 	    		$('#emDepartmentChange').val(ec.emDepartment);
 	    		$('#emDelRequestChange').val(ec.emDelRequest);
+	    		if(ec.emDelRequest == 1){
+	    			$('#emDeleteNotPart').hide();
+					$('#emDeleteDonePart').show();
+					$('#emDeleteDone').val('사원삭제요청완료');
+	    		} else {
+	    			$('#emDeleteDonePart').hide();
+					$('#emDeleteNotPart').show();
+					$('#emdelbtnCanSee').hide();
+					$('#emDeleteNot').val('사원삭제요청없음');
+	    		};
+			});
+		});
+		//사원탈퇴요청하기(탈퇴요청모달 확인 후 삭제요청 제출)
+		$('.deleteemployeeinfo').click(function(){
+			var in_employeeCode = $(this).attr('value');
+			var deleteEmployeeAjax = $.ajax({ // ajax실행부분
+								        type: "get",
+								        url : "/pineapple/deleterequestemployeepage.user",
+								        data : {emCode : in_employeeCode},
+								        success : function success(){
+								        	alert('삭제할 사원코드 : '+ in_employeeCode);
+								        },
+								        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+								        error : function error(){
+							        		alert('사원정보 불러오기 오류');
+							        	}
+									});
+			//ajax를 통해 조회한 계좌 정보를 모달창 수정페이지 각 입력값으로 넣어준다
+			deleteEmployeeAjax.done(function(de){
+				$('#emCodeDel').val(de.emCode);
+				$('#emComCodeDel').val(de.emComCode);
+	    		$('#emComNameDel').val(de.emComName);
+	    		$('#emUserIdDel').val(de.emUserId);
+	    		$('#emRankCodeDel').val(de.emRankCode);
+	    		$('#emDepartmentDel').val(de.emDepartment);
+	    		$('#emCheckDel').val(de.emCheck);
 			});
 		});
 	});
@@ -302,10 +288,10 @@
 				<a data-target="#insertCompany" role="tab" id="insertCompany-tab" data-toggle="tab" aria-controls="insertCompany" aria-expanded="false">기업등록요청</a>
 			</li>
 			<li role="presentation" class="">
-				<a data-target="#insertEmployee" role="tab" id="#insertEmployee-tab" data-toggle="tab" aria-controls="#insertEmployee" aria-expanded="false">사원등록요청</a>
+				<a data-target="#insertEmployee" role="tab" id="#insertEmployee-tab" data-toggle="tab" aria-controls="#insertEmployee" aria-expanded="false">사원등록/탈퇴요청</a>
 			</li>
 			<li role="presentation" class="">
-				<a data-target="#approveEmployee" role="tab" id="approveEmployee-tab" data-toggle="tab" aria-controls="approveEmployee" aria-expanded="false">사원요청승인</a>
+				<a data-target="#approveEmployee" role="tab" id="approveEmployee-tab" data-toggle="tab" aria-controls="approveEmployee" aria-expanded="false">사원등록요청승인</a>
 			</li>
 			<li role="presentation" class="">
 				<a data-target="#employeeList" role="tab" id="employeeList-tab" data-toggle="tab" aria-controls="employeeList" aria-expanded="false">사원리스트</a>
@@ -760,7 +746,20 @@
 										    <span id="emrankch1"></span>
 									  	</div>
 									  	<div>
-									  		<input id="emDelRequestChange" name="emDelRequest" type="hidden" class="form-control">
+									  		<input id="emDelRequestChange" name="emDelRequest" type="hidden" class="form-control" >
+									  		<div id="emDeleteDonePart" class="form-group has-success has-feedback" hidden>
+											    <label class="control-label" for="inputSuccess4">사원탈퇴요청여부</label>
+											    <input type="text" class="form-control" id="emDeleteDone" name="emDeleteRequestDone aria-describedby="inputSuccess4Status" readonly>
+											    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+											    <span id="comApprovedStatus" class="sr-only">(success)</span>
+											</div>
+											<div id="emDeleteNotPart" class="form-group has-error has-feedback" hidden>
+											    <label class="control-label" for="inputError2">사원탈퇴요청여부</label>
+											    <input type="text" class="form-control" id="emDeleteNot" name="emDeleteRequestNot"aria-describedby="inputError2Status" readonly>
+											    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+											    <span id="inputError2Status" class="sr-only">(error)</span>
+											</div>
+											<br>
 									  	</div>
 									  	<div>
 											<button type="submit" class="btn btn-info">수정</button>&nbsp
@@ -774,8 +773,88 @@
 				    	</c:forEach>
 					</div>
 				</div>
+				<!-- 세번째탭 두번째 row; 사원삭제요청 버튼-->
+				<div class="row">
+					<div class="col-xs-2">
+						<br>
+						<p>사원삭제요청</p>
+					</div>
+					<div class="col-xs-10">
+						<br>
+						<c:forEach var="employeeOneIdforDel" items="${employeeOneId}" varStatus="index">
+							<a href="#deleteEmployee" class="btn btn-danger btn-block deleteemployeeinfo" data-toggle="modal" value="${employeeOneIdforDel.emCode}">${employeeOneIdforDel.emComName} 사원탈퇴요청</a>
+							<p id="explain">${employeeOneIdforDel.emComName}에서 사원탈퇴 요청을 할 수 있습니다. 경영진이 사원탈퇴요청을 승인할 경우 사원에서 탈퇴하게 됩니다.</p>
+							<!-- 사원등록 정보 확인 모달창 -->
+							<div class="modal fade" id="deleteEmployee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							        <h4 class="modal-title" id="myModalLabel">${nickname}님의 사원탈퇴요청</h4>
+							      </div>
+					      		  <div class="modal-body">
+							        <form action="/pineapple/deleterequestemployee.user" method="post">
+							        	<input id="emCodeDel" name="emCode" type="hidden" class="form-control">
+							        	<input id="emComCodeDel" name="emComCode" type="hidden" class="form-control">
+										<div class="form-group has-success has-feedback">
+										    <label class="control-label" for="inputSuccess4">소속기업명</label>
+										    <input id="emComNameDel" name="emComName" type="text" class="focus form-control" readonly>
+										    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+										    <span id="comApprovedStatus" class="sr-only">(success)</span>
+									    </div>
+										<br>
+									    <div id="emUserIdEmail" class="form-group has-success has-feedback">
+											<label class="control-label" for="inputSuccess2">사원탈퇴요청아이디</label>
+											<input id="emUserIdDel" name="emUserId" type="text" class="form-control" varia-describedby="inputSuccess2Status" readonly>
+											<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+											<span id="inputSuccess2Status" class="sr-only">(success)</span>
+											<p id="explain">(사원으로 등록하려고 하는 분의 아이디입니다)</p>
+										</div>
+										<br>
+										<div class="form-group">
+										    <label for="emRankCodeInput">직급선택</label>
+										    <p id="explain">(경영진과 일반사원 중 하나를 선택해주시기 바랍니다)</p>
+									        ${rank}  <input id="emRankCodeDel" name="emRankCode" type="radio" checked>
+										    <span id="emrankch1"></span>
+									  	</div>
+									  	<br>
+									  	<div class="form-group">
+										    <label for="employeeDepInput1">부서선택</label>
+										    <p id="explain">(기업내의 소속 부서를 입력해주시기 바랍니다)</p>
+										    <input id="emDepartmentDel" name="emDepartment" type="text" class="form-control">
+									  	</div>
+									  	<br>
+									 	<!-- 기업을 최초로 등록한 경영진은 자동적으로 사원요청승인처리됨 -->
+									  	<div class="form-group">
+										    <label for="emRankCodeInput">기업개설자 여부</label>
+										    <c:choose>
+										    	<c:when test="${not empty companyOpen}">
+										    		<p>기업 최초 개설자 입니다</p>
+										    	</c:when>
+										    	<c:otherwise>
+										    		<p>일반 경영진 입니다</p>
+										    	</c:otherwise>
+										    </c:choose>
+										    <input id="emCheckDel" name="emCheck" type="hidden">
+										    <span id="emrankch1"></span>
+									  	</div>
+									  	<div>
+									  		<input id="emDelRequestDel" name="emDelRequest" type="hidden" value="1" class="form-control">
+									  	</div>
+									  	<div>
+											<button type="submit" class="btn btn-info">사원탈퇴요청</button>&nbsp
+											<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+										</div>
+									</form>
+							     </div>
+							   </div>
+						     </div>
+					      </div>
+						</c:forEach>
+					</div>
+				</div>
 				<br>
-				<!-- 세번째탭 두번째 row; 사원등록요청 양식 -->
+				<!-- 세번째탭 세번째 row; 사원등록요청 양식 -->
 				<div class="row">
 					<div class="col-xs-2">
 						<br>
@@ -877,13 +956,13 @@
 						<br>
 						<p id="explanation">경영진으로 속한 기업에 사원등록 요청을 한 사원의 리스트를 보고 승인 또는 삭제 처리를 할 수 있습니다.</p>
 						<!-- 경영진 직급으로 소속된 기업에 사원등록요청한 사원의 목록 보기(부트스트랩 드롭다운 사용) -->
-						 <c:forEach var="comMngRankList" items="${comMngRank}" varStatus="status">
-						  	<a class="btn btn-info btn-block emapproveBtn" id="" value="${comMngRankList.emComName}" data-toggle="collapse" href="#"  aria-expanded="false" aria-controls="">
-							  ${comMngRankList.emComName}
+						 <c:forEach var="comMngRankList" items="${comMngRank}" varStatus="numberofcom">
+						  	<a class="btn btn-info btn-block comCollapseBtn" id="${numberofcom.index}" value="${comMngRankList.emComName}" data-toggle="collapse" href="#collapse${numberofcom.count}"  aria-expanded="false" aria-controls="collapse${numberofcom.count}">
+							  ${numberofcom.count} ${comMngRankList.emComName}
 							</a>
 							<br>
 							<!-- collapse 본문부분 id는 javascript로 지정 -->
-							<div class="collapse collapseid" id="">
+							<div class="collapse collapseid" id="collapse${numberofcom.count}">
 								<div>
 									<table class="table table-striped table-bordered table-hover">
 										<thead>
@@ -896,7 +975,9 @@
 											</tr>
 										 </thead>
 										 <!-- 각 기업별 사원등록요청 목록 import -->
-										 <tbody id="employeelistimport">
+										 <tbody id="employeelistimport${numberofcom.index}">
+										 
+										  
 										 </tbody>
 										 <tfoot>
 											 <div>
@@ -919,7 +1000,7 @@
 					+'<input type="hidden" name="emCode" class="td6" value="'+item.emCode+'">'
 					+'<button type="submit" class="btn btn-info btn-block">삭제</button></form></td>
 						 -->
-							
+					
 				         
 					</div>
 					<!-- 새로운 계좌등록을위한 모달 내부 구현 -->

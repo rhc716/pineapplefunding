@@ -23,7 +23,7 @@
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
 
-<!-- css rhc -->
+<!-- css lsk -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lsk.css" />
 
  
@@ -41,11 +41,24 @@
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-md-9">
-		<form action="/pineapple/wbsmsview.pms" method="post">	
-			<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
-			<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
-			<button type="submit" class="btn btn-sm btn-primary">펀딩명 :  ${fdTitle}</button>
-		</form>
+			<div class="col-md-3">
+				<div id="sidetree">
+		   			<div class="treeheader">
+					</div>
+		    		<ul id="tree">
+			    		<div id="sidetreecontrol">
+		    			</div>
+		        		<li>
+		            		<strong><a href="/pineapple/wbsplanlistpage.pms">펀딩</a></strong>
+		            			<form action="/pineapple/wbsmsview.pms" method="post">	
+									<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
+									<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
+			            			<input type=submit value="${fdTitle}" class="submitLink">
+			               		</form>
+				       	</li>
+				 	</ul>
+				</div>
+			</div>
 		<div class="col-md-7">
 			<c:forEach var="list" items="${mslist}">
 				<form action="/pineapple/wbsform.pms" method="post">
@@ -58,10 +71,10 @@
 						마일스톤 단계 = ${list.milestoneStep}<br>
 						마일스톤 이름 = ${list.milestoneName}<br>
 						마일스톤 요약 = ${list.milestoneSummary}<br>
-						<button type="submit" class="btn btn-sm btn-primary" name="btn" value="wbsinsert">WBS예상입력</button>
-						<button type="submit" class="btn btn-sm btn-primary" name="btn" value="wbslist">WBS예상보기</button><br>
-						<button type="submit" class="btn btn-sm btn-primary" name="btn" value="wbsainsert">WBS실제입력</button>
-						<button type="submit" class="btn btn-sm btn-primary" name="btn" value="wbsalist">WBS실제보기</button>
+						<button type="submit" class="btn btn-sm btn-primary" name="btn" value="WBS예상입력">WBS예상입력</button>
+						<button type="submit" class="btn btn-sm btn-primary" name="btn" value="WBS예상리스트">WBS예상리스트</button><br><br>
+						<button type="submit" class="btn btn-sm btn-primary" name="btn" value="WBS실제입력">WBS실제입력</button>
+						<button type="submit" class="btn btn-sm btn-primary" name="btn" value="WBS실제리스트">WBS실제리스트</button>
 					</div>
 				</form>
 			</c:forEach>

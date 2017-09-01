@@ -5,25 +5,46 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>경영진 사원요청 목록</title>
+<script>
+$(document).ready(function(){
+	$('.approveemployee').click(function(){
+		var in_employeeCode = $('.approveemployee').attr('value');
+		console.log(in_employeeCode);
+		var approveEmployeeAjax = $.ajax({ // ajax실행부분
+							        type: "get",
+							        url : "/pineapple/approveemployeepage.user",
+							        data : {emCode : in_employeeCode},
+							        success : function success(){
+							        	alert('승인할 사원코드 : '+ in_employeeCode);
+							        },
+							        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+							        error : function error(){
+						        		alert('사원정보 불러오기 오류');
+						        	}
+								});
+		
+	});
+});
+</script>
 </head>
 <body>
-	<c:forEach var="employeeRequestList" items="${employeeRequestList}">
+	<c:forEach var="employeeRequestList" items="${employeeRequestList}" varStatus="status">
 	 	<tr>
-	 		<td>${employeeRequestList.emCode}</td>
-	 		<td>${employeeRequestList.emUserId}</td>
-	 		<td>${employeeRequestList.emComName}</td>
-	 		<td>${employeeRequestList.emDepartment}</td>
+	 		<td class="emCode">${employeeRequestList.emCode}</td>
+	 		<td class="emUserId">${employeeRequestList.emUserId}</td>
+	 		<td class="emComName">${employeeRequestList.emComName}</td>
+	 		<td class="emDepartment">${employeeRequestList.emDepartment}</td>
 	 		<td>
-	 			<a href="#approveEmployeePage" class="btn btn-success btn-block approveemployee" data-toggle="modal" value="${employeeRequestList.emCode}">승인화면</a>
+	 			<a href="#approveEmployeePage${status.index}" class="btn btn-success btn-block approveemployee" data-toggle="modal" value="${employeeRequestList.emCode}">승인화면</a>
 	 		</td>
 	 	</tr>
-	 	 <!-- 사원등록요청 승인처리를 위한 사원정보확인 모달 내부 구현 (승인까지 가능)-->
-		<div class="modal fade" id="approveEmployeePage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	 	<!-- 사원등록요청 승인처리를 위한 사원정보확인 모달 내부 구현 (승인까지 가능)-->
+		<div class="modal fade" id="approveEmployeePage${status.index}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">${employeeRequestList.emComName} 사원요청에 대한 사원승인</h4>
+		        <h4 class="modal-title" id="myModalLabel">${employeeRequestList.emComName}사원요청에 대한 사원승인</h4>
 		      </div>
 		      <div class="modal-body">
 		        <form action="/pineapple/approveemployee.user" method="post">
@@ -69,7 +90,8 @@
 		      </div>
 		    </div>
 		  </div>
-		</div>		
+		</div>				
 	</c:forEach>
+	
 </body>
 </html>

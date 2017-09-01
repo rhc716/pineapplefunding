@@ -46,7 +46,7 @@ public class PmsController {
 		String milestoneName = request.getParameter("milestoneName");
 		String msComCode = request.getParameter("msComCode");
 		String btn = request.getParameter("btn");
-		if(btn.equals("wbsinsert")){
+		if(btn.equals("WBS예상입력")){
 			model.addAttribute("fdCode", fdCode);
 			model.addAttribute("fdTitle", fdTitle);
 			model.addAttribute("milestoneCode", milestoneCode);
@@ -54,8 +54,7 @@ public class PmsController {
 			model.addAttribute("msComCode", msComCode);
 			log.debug("펀딩코드"+fdCode+"펀딩명"+fdTitle+"마일스톤코드"+milestoneCode+"마일스톤명"+milestoneName+"회사코드"+msComCode);
 			return "pms/companyuser/wbs/wbsplaninsert";
-		}else if(btn.equals("wbslist")){
-			log.debug("PmsController의 wbsplanlistpage호출 성공");
+		}else if(btn.equals("WBS예상리스트")){
 			List<WbsPlan> wbsplan = service.wbsplanlist(milestoneCode);
 			log.debug("wbsplan리스트  = "+wbsplan);
 			model.addAttribute("wbsplan", wbsplan);
@@ -65,8 +64,7 @@ public class PmsController {
 			model.addAttribute("milestoneName", milestoneName);
 			model.addAttribute("msComCode", msComCode);
 			return "pms/companyuser/wbs/wbsplanlist2";
-		}else if(btn.equals("wbsainsert")){
-			log.debug("PmsController의 wbsplanlistpage호출 성공");
+		}else if(btn.equals("WBS실제입력")){
 			List<WbsPlan> wbsplan = service.wbsplanlist(milestoneCode);
 			log.debug("wbsplan리스트  = "+wbsplan);
 			model.addAttribute("wbsplan", wbsplan);
@@ -102,7 +100,19 @@ public class PmsController {
 	@RequestMapping(value = "/insertwbsactual.pms", method = {RequestMethod.GET, RequestMethod.POST})
 	public String wbsactualinsertfrom(WbsActual wbsactual,Locale locale, Model model, HttpServletRequest request) {
 		log.debug("PmsController의 wbsactualinsertfrom호출 성공");
+		String wbsplancode = request.getParameter("wbsPlanCode");
+		String fdCode = request.getParameter("fdCode");
+		String fdTitle = request.getParameter("fdTitle");
+		String milestoneCode = request.getParameter("milestoneCode");
+		String milestoneName = request.getParameter("milestoneName");
+		String msComCode = request.getParameter("msComCode");
 		model.addAttribute("wbsactual", wbsactual);
+		model.addAttribute("fdCode", fdCode);
+		model.addAttribute("fdTitle", fdTitle);
+		model.addAttribute("milestoneCode", milestoneCode);
+		model.addAttribute("milestoneName", milestoneName);
+		model.addAttribute("msComCode", msComCode);
+		model.addAttribute("wbsplancode", wbsplancode);
 		log.debug("WbsActual값"+wbsactual);
 		return "pms/companyuser/wbs/wbsactualinsertform";
 	}
@@ -240,6 +250,17 @@ public class PmsController {
 		log.debug("wbs코드" + wbsplancode);
 		List<WbsPlanHuman> wbsplanhumanlist = new ArrayList<WbsPlanHuman>();
 		wbsplanhumanlist = service.getMyWbsPlanHumanList(wbsplancode);
+		String fdCode = request.getParameter("fdCode");
+		String fdTitle = request.getParameter("fdTitle");
+		String milestoneCode = request.getParameter("milestoneCode");
+		String milestoneName = request.getParameter("milestoneName");
+		String msComCode = request.getParameter("msComCode");
+		model.addAttribute("fdCode", fdCode);
+		model.addAttribute("fdTitle", fdTitle);
+		model.addAttribute("milestoneCode", milestoneCode);
+		model.addAttribute("milestoneName", milestoneName);
+		model.addAttribute("msComCode", msComCode);
+		model.addAttribute("wbsplancode", wbsplancode);
 		model.addAttribute("wbsplanhumanlist", wbsplanhumanlist);
 		return "pms/companyuser/wbs/wbsplanhumanlist";
 	}
@@ -251,6 +272,17 @@ public class PmsController {
 		log.debug("wbs코드" + wbsplancode);
 		List<WbsPlanMaterial> wbsplanmateriallist = new ArrayList<WbsPlanMaterial>();
 		wbsplanmateriallist = service.getMyWbsPlanMaterialList(wbsplancode);
+		String fdCode = request.getParameter("fdCode");
+		String fdTitle = request.getParameter("fdTitle");
+		String milestoneCode = request.getParameter("milestoneCode");
+		String milestoneName = request.getParameter("milestoneName");
+		String msComCode = request.getParameter("msComCode");
+		model.addAttribute("fdCode", fdCode);
+		model.addAttribute("fdTitle", fdTitle);
+		model.addAttribute("milestoneCode", milestoneCode);
+		model.addAttribute("milestoneName", milestoneName);
+		model.addAttribute("msComCode", msComCode);
+		model.addAttribute("wbsplancode", wbsplancode);
 		model.addAttribute("wbsplanmateriallist", wbsplanmateriallist);
 		return "pms/companyuser/wbs/wbsplanmateriallist";
 	}
@@ -263,6 +295,17 @@ public class PmsController {
 		log.debug("wbs코드" + wbsplancode);
 		List<WbsPlanFacility> wbsplanfacilityllist = new ArrayList<WbsPlanFacility>();
 		wbsplanfacilityllist = service.getMyWbsPlanFacilityList(wbsplancode);
+		String fdCode = request.getParameter("fdCode");
+		String fdTitle = request.getParameter("fdTitle");
+		String milestoneCode = request.getParameter("milestoneCode");
+		String milestoneName = request.getParameter("milestoneName");
+		String msComCode = request.getParameter("msComCode");
+		model.addAttribute("fdCode", fdCode);
+		model.addAttribute("fdTitle", fdTitle);
+		model.addAttribute("milestoneCode", milestoneCode);
+		model.addAttribute("milestoneName", milestoneName);
+		model.addAttribute("msComCode", msComCode);
+		model.addAttribute("wbsplancode", wbsplancode);
 		model.addAttribute("wbsplanfacilityllist", wbsplanfacilityllist);
 		return "pms/companyuser/wbs/wbsplanfacilitylist";
 	}
@@ -276,7 +319,18 @@ public class PmsController {
 		log.debug("wbs코드" + wbsplancode);
 		List<WbsPlanOut> wbsplanoutlist = new ArrayList<WbsPlanOut>();
 		wbsplanoutlist = service.getMyWbsPlanOutList(wbsplancode);
-		model.addAttribute("wbsplanoutlist", wbsplanoutlist);
+		String fdCode = request.getParameter("fdCode");
+		String fdTitle = request.getParameter("fdTitle");
+		String milestoneCode = request.getParameter("milestoneCode");
+		String milestoneName = request.getParameter("milestoneName");
+		String msComCode = request.getParameter("msComCode");
+		model.addAttribute("fdCode", fdCode);
+		model.addAttribute("fdTitle", fdTitle);
+		model.addAttribute("milestoneCode", milestoneCode);
+		model.addAttribute("milestoneName", milestoneName);
+		model.addAttribute("msComCode", msComCode);
+		model.addAttribute("wbsplancode", wbsplancode);
+		model.addAttribute("wbsplanoutlist", wbsplanoutlist);		
 		return "pms/companyuser/wbs/wbsplanoutlist";
 	}
 	
@@ -288,6 +342,17 @@ public class PmsController {
 		log.debug("wbs코드" + wbsplancode);
 		List<WbsPlanEtc> wbsplanetclist = new ArrayList<WbsPlanEtc>();
 		wbsplanetclist = service.getMyWbsPlanEtcList(wbsplancode);
+		String fdCode = request.getParameter("fdCode");
+		String fdTitle = request.getParameter("fdTitle");
+		String milestoneCode = request.getParameter("milestoneCode");
+		String milestoneName = request.getParameter("milestoneName");
+		String msComCode = request.getParameter("msComCode");
+		model.addAttribute("fdCode", fdCode);
+		model.addAttribute("fdTitle", fdTitle);
+		model.addAttribute("milestoneCode", milestoneCode);
+		model.addAttribute("milestoneName", milestoneName);
+		model.addAttribute("msComCode", msComCode);
+		model.addAttribute("wbsplancode", wbsplancode);
 		model.addAttribute("wbsplanetclist", wbsplanetclist);
 		return "pms/companyuser/wbs/wbsplanetclist";
 	}
@@ -299,6 +364,17 @@ public class PmsController {
 		log.debug("wbs코드" + wbsplancode);
 		List<WbsPlanIncome> wbsplanincomelist = new ArrayList<WbsPlanIncome>();
 		wbsplanincomelist = service.getMyWbsPlanIncomeyList(wbsplancode);
+		String fdCode = request.getParameter("fdCode");
+		String fdTitle = request.getParameter("fdTitle");
+		String milestoneCode = request.getParameter("milestoneCode");
+		String milestoneName = request.getParameter("milestoneName");
+		String msComCode = request.getParameter("msComCode");
+		model.addAttribute("fdCode", fdCode);
+		model.addAttribute("fdTitle", fdTitle);
+		model.addAttribute("milestoneCode", milestoneCode);
+		model.addAttribute("milestoneName", milestoneName);
+		model.addAttribute("msComCode", msComCode);
+		model.addAttribute("wbsplancode", wbsplancode);
 		model.addAttribute("wbsplanincomelist", wbsplanincomelist);
 		return "pms/companyuser/wbs/wbsplanincomelist";
 	}
