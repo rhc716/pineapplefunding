@@ -24,6 +24,10 @@
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
 
+
+<!-- css lsk -->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lsk.css" />
+
 </head>
 <body>
 
@@ -38,20 +42,47 @@
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-md-9">	
-		<form action="/pineapple/wbsmsview.pms" method="post">	
-			<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
-			<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
-			<button type="submit" class="btn btn-sm btn-primary">펀딩명 :  ${fdTitle}</button>
-		</form><br>
-		<form action="/pineapple/wbsplaninsertform.pms" method="post">	
-			<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
-			<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
-			<input type="hidden" readonly="readonly"  name="milestoneCode" value="${milestoneCode}">
-			<input type="hidden" readonly="readonly"  name="milestoneName" value="${milestoneName}">
-			<input type="hidden" readonly="readonly"  name="msComCode" value="${msComCode}">
-			<button type="submit" class="btn btn-sm btn-primary">마일스톤명 :  ${milestoneName}</button>
-		</form><br>
-			<div class="col-md-1"></div>
+		<div class="col-md-3">
+			<div id="sidetree">
+	   			<div class="treeheader">
+				</div>
+		    		<ul id="tree">
+			    		<div id="sidetreecontrol">
+		    			</div>
+		        		<li>	        		
+		            		<strong><a href="/pineapple/wbsplanlistpage.pms">펀딩</a></strong>	   
+		            			<form action="/pineapple/wbsmsview.pms" method="post">	
+									<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
+									<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
+			            			<input type=submit value="${fdTitle}" class="submitLink">
+			               		</form>
+		            		</ul>
+				       	</li>
+				       	<li>
+				       	<strong>마일스톤:${milestoneName}</strong>
+				       		<form action="/pineapple/wbsform.pms" method="post">	
+								<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
+								<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
+								<input type="hidden" readonly="readonly"  name="milestoneCode" value="${milestoneCode}">
+								<input type="hidden" readonly="readonly"  name="milestoneName" value="${milestoneName}">
+								<input type="hidden" readonly="readonly"  name="msComCode" value="${msComCode}">
+								<ul>
+					       		<input type=submit value="WBS예상입력" name="btn" class="submitLink">
+					       		</ul>
+					       		<ul>
+					       		<input type=submit value="WBS예상리스트" name="btn" class="submitLink">
+					       		</ul>
+					       		<ul>
+					       		<input type=submit value="WBS실제입력" name="btn" class="submitLink">
+					       		</ul>
+					       		<ul>
+					       		<input type=submit value="WBS실제리스트" name="btn" class="submitLink">
+					       		</ul>
+					       	</form>
+				       	</li>
+				    </ul>
+				</div>
+			</div>
 				<div class="col-md-7">
 					<form action="/pineapple/wbsplaninsert.pms" method="post">
 						<label for="wbsplan">WBS예상계획</label><br>
