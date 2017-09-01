@@ -120,7 +120,8 @@
 			/* 펀딩Q&A */
 				/* 펀딩Q&A */
 					.funding-qna{margin-top: 20px;
-								 border: 1px solid #d7d7d7;}
+								 border: 1.5px solid #009442;
+								 border-radius: 5px;}
 					.funding-qnaid{margin-top: 10px;
 								   padding-left: 0px;
 								   font-size: 12px;
@@ -189,7 +190,8 @@
 			/* 타임라인 list */
 				.timelinelist{padding: 0px; 
 							  margin-bottom: 20px;
-							  border: 1px solid #d7d7d7;}
+							  border: 1.5px solid #009442;
+							  border-radius: 5px;}
 				.timelinenameandtime{padding: 0px;
 									 font-size: 12px;
 									 margin: 10px 0px 5px 0px;}
@@ -197,11 +199,11 @@
 				.timeupanddelspan{opacity: 0.8;}
 				.timelinetitle{padding: 0px 0px 10px 0px;
 							   margin: 0px;
-							   border-bottom: 1px solid;
+							   border-bottom: 1.5px solid;
 							   border-bottom-color: #d7d7d7;}
 				.timelinecontent{padding: 10px 0px 10px 10px;
 								 font-size: 20px;
-								 border-bottom: 1px solid;
+								 border-bottom: 1.5px solid;
 								 border-bottom-color: #d7d7d7}
 				.timelinefooter{padding: 10px 0px;
 								font-size: 14px;}
@@ -238,6 +240,55 @@
 	/* 타임라인 */
 	/* My Page */
 		/* My Page Q&A*/
+			/* My Page Invest */
+				.investorinvestmain{padding: 10px;
+									border: solid #009442;
+									border-radius: 5px;
+									margin-bottom: 20px;}
+				.investorinvestpadding0{padding: 0px}
+				.investoridandtime{padding: 0px 10px 0px 0px;
+								   border-bottom: 1.5px solid #d7d7d7;
+								   margin-bottom: 5px;}
+				.investorid{font-size: 25px;
+							padding: 0px;}
+				.investortime{opacity: 0.5}
+				.investmymoney{font-size: 20px;
+							   margin-bottom: 10px;}
+				.investorpandg{padding: 10px;
+							   line-height: 60px;
+							   text-align: center;
+							   border-left: 1.5px solid #d7d7d7;}
+				.investorp{font-size: 20px;}
+				.investorg{margin: 0px;
+						   border: 1px solid #d7d7d7;
+						   height: 40px;}
+				.investorgtext{line-height: 40px;
+							   font-size: 15px}
+							   
+							   
+				.investorinvestpay0main{padding: 10px;
+									border:solid #009442;
+									border-radius: 5px;
+									margin-bottom: 20px;}
+				.investorpay0idandtime{padding: 0px 10px 0px 0px;
+								   border-bottom: 1.5px solid #d7d7d7;
+								   margin-bottom: 5px;}
+				.investorpay0id{font-size: 25px;
+							padding: 0px;}
+				.investorpay0time{opacity: 0.5}
+				.investpay0mymoney{font-size: 20px;
+							   margin-bottom: 10px;}
+				.investorpay0pandg{padding: 10px;
+							   line-height: 60px;
+							   text-align: center;
+							   border-left: 1.5px solid #d7d7d7;}
+				.investorpay0p{font-size: 20px;}
+				.investorpay0g{margin: 0px;
+						   border: 1px solid #d7d7d7;
+						   height: 40px;}
+				.investorpay0gtext{line-height: 40px;
+							       font-size: 15px}
+			/* My Page Invest */
 			/* My Page Q&A List*/
 				.mypageqnatop{padding: 0px;}
 				.mypageqnatitle{margin: 0px;
@@ -253,14 +304,27 @@
 							   padding-bottom: 10px;
 							   font-size: 12px;
 							   text-align: left;
-							   border-bottom: 1px solid #d7d7d7;}
+							   border-bottom: 1.5px solid #d7d7d7;}
 				.mypageqnacontent{margin: 10px 0px 0px 0px;
 								 font-size: 17px;
 								 padding: 0px 0px 10px 0px;
 								 text-align: left;
-								 border-bottom: 1px solid #d7d7d7;}
+								 border-bottom: 1.5px solid #d7d7d7;
+								 }
 			/* My Page Q&A List*/
 		/* My Page Q&A*/
+		/* My Page Message */
+			/* My Page Message Nav */
+				.messagenav:HOVER{background-color: #d7d7d7;}
+				.messagenav1:HOVER{text-decoration: none;}
+				.messagenav{margin-top: 10px;}
+			/* My Page Message Nav */
+			/* My Page Message List */
+				.msgcheckno:link{color: black;
+								 text-decoration: none;}
+				.messagedisplynone{display: none;}
+			/* My Page Message List */
+		/* My Page Message */
 	/* My Page */
 /* CLASS and TAG CSS */
 
@@ -286,5 +350,5 @@
    					padding: 11px 10px 9px;}
 	.fdlist-data{width: 303px;
    				 height: 88px;
-   				 border-top: 1px solid #d7d7d7;}
+   				 border-top: 1px solid #009442;}
  /* invest main 투자하기 main */

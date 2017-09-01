@@ -86,4 +86,16 @@ public class TimelineService implements TimelineServiceInterface{
 		MyInvestorTimelineLog timelinelog = timelinedaointerface.mypageTimelineLogSelect(tlId);
 		return timelinelog;
 	}
+	
+	
+	
+	
+	/////////////////My Page Message//////////////////////
+	//자신에게 온 메세지 list 조회
+	@Override
+	public List<Message> getMypageMessageList(String tlId) {
+		log.debug("------------------TimelineService-----------------getMypageMessageList()");
+		List<Message> messagelist = timelinedaointerface.mypageMessageListSelect(tlId);
+		return messagelist;
+	}
 }

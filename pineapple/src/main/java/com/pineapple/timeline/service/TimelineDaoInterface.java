@@ -29,4 +29,9 @@ public interface TimelineDaoInterface {
 	List<MyInvestorTimeline> mypageTimelineListSelect(String tlId);
 	//자신의 한달간의 활동기록 조회
 	MyInvestorTimelineLog mypageTimelineLogSelect(String tlId);
+	
+	
+	//////////////////////////My Page Message ////////////////////////////
+	//자신에게 온 메세지 list 조회
+	List<Message> mypageMessageListSelect(String tlId);
 }

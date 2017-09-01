@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pineapple.timeline.service.Message;
 import com.pineapple.timeline.service.MyInvestorTimeline;
 import com.pineapple.timeline.service.MyInvestorTimelineLog;
 import com.pineapple.timeline.service.Timeline;
@@ -156,6 +157,38 @@ public class TimelineController {
 		log.debug(timelinereplydelete+"<-----TimelineController[timelinereplydelete 값 출력]");
 		return "redirect:/investormypage.user";
 	}
+	
+	
+	/////////////////////My Page Message///////////////////////////
+	//자신에게 온 메세지 list 조회
+	@RequestMapping(value="/investormessagelist.timeline",method=RequestMethod.GET)
+	public String investorMessagelist(Locale locale,Model model,HttpSession session){
+		log.debug("<----- TimelineController[timelineMain호출]----->");
+		List<Message> myinvestormessage = timelineserviceinterface.getMypageMessageList(session.getAttribute("id").toString());
+		model.addAttribute("myinvestormessage",myinvestormessage);
+		log.debug(myinvestormessage+"<-----TimelineController[myinvestormessage 값 출력]");
+		return "user/investormypageajax/investormessage";
+	}
+	@RequestMapping(value="/investormessagesend.timeline",method=RequestMethod.GET)
+	public String investorMessageSend(Locale locale,Model model,HttpSession session){
+		log.debug("<----- TimelineController[investorMessageSend호출]----->");
+
+		return "user/investormypageajax/investormessagesend";
+	}
+	@RequestMapping(value="/investormyreceivelist.timeline",method=RequestMethod.GET)
+	public String investorSendList(Locale locale,Model model,HttpSession session){
+		log.debug("<----- TimelineController[investorSendList호출]----->");
+
+		return "user/investormypageajax/investorreceivelist";
+	}
+	@RequestMapping(value="/investormysendlist.timeline",method=RequestMethod.GET)
+	public String investorReceiveList(Locale locale,Model model,HttpSession session){
+		log.debug("<----- TimelineController[investorReceiveList호출]----->");
+
+		return "user/investormypageajax/investorsendlist";
+	}
+	
+	
 	
 	
 	

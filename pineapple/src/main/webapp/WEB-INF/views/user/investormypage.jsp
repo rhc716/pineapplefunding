@@ -135,8 +135,10 @@ $(document).ready(function(){
 	$('#message-tab').click(function(){
 		var investmenttab = $.ajax({ // ajax실행부분
 	        type: 'get',
-	        url : '#',
+	        url : '/pineapple/investormessagelist.timeline',
 	        success : function success(msg){
+	        	$('#investormessage').html(msg);
+	        	$('[data-toggle="popover"]').popover()
 	        },
 	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
 	        error : function error(){
@@ -317,7 +319,7 @@ $(document).ready(function(){
 		</div>
 		<div role="tabpanel" class="tab-pane fade" id="timeline" aria-labelledby="timeline-tab"> 
 			<h1 style="text-align: center;">MY TIMELINE LIST</h1> 
-			<div class="col-xs-12" style="text-align: center; border: 1px solid #d7d7d7; padding: 0px; margin: 0px 0px 20px 0px">
+			<div class="col-xs-12" style="text-align: center; border: 1.5px solid #009442 ;border-radius: 5px; padding: 0px; margin: 0px 0px 20px 0px">
 				<div class="col-xs-6" id="googletimelinelog" style="padding: 0px">
 					<div class="col-xs-12">
 						<h2>총 타임라인 글수</h2>

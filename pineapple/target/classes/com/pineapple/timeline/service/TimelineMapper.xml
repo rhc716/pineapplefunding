@@ -156,6 +156,7 @@
 		WHERE t.tlId = #{tlId}
 		ORDER BY t.tlTime DESC
 	</select>
+	<!-- 자신이 한달간 활동한 타임라인 조회 -->
 	<select id="selectMypageTimelinelog" parameterType="String" resultMap="selectMypageTimelinelogResultMapper">
 		SELECT (SELECT COUNT(tlCode) FROM timeline st where st.tlTime >= date_add(now(), interval -0 day) and st.tlId = #{tlId}) as daycount,
 			   (SELECT COUNT(tlCode) FROM timeline st where st.tlTime >= date_add(now(), interval -7 day) and st.tlId = #{tlId}) as oneweekcount,
@@ -163,6 +164,36 @@
 			   (SELECT COUNT(tlCode) FROM timeline st where st.tlTime >= date_add(now(), interval -21 day) and st.tlId = #{tlId}) as threeweekcount,
 			   (SELECT COUNT(tlCode) FROM timeline st where st.tlTime >= date_add(now(), interval -28 day) and st.tlId = #{tlId}) as fourweekcount,
 			   (SELECT COUNT(tlCode) FROM timeline st where st.tlTime >= date_add(now(), interval -30 day) and st.tlId = #{tlId}) as onemonthcount
+	</select>
+	
+	
+	<!-- Message -->
+	<resultMap type="com.pineapple.timeline.service.Message" id="selectMypageMessagelistResultMapper">
+		<id property="msgCode" column="msgCode"/>
+		<result property="msgTitle" column="msgTitle"/>
+		<result property="msgCheck" column="msgCheck"/>
+		<result property="msgSendId" column="msgSendId"/>
+		<result property="msgReceiveId" column="msgReceiveId"/>
+		<result property="msgTime" column="msgTime"/>
+		<result property="name" column="name"/>
+		<result property="nickname" column="nickname"/>
+	</resultMap>
+	<!-- 메세지 조회하기 -->
+	<select id="selectMypageMessagelist" parameterType="String" resultMap="selectMypageMessagelistResultMapper">
+		SELECT m.msgCode,
+			   m.msgTitle,
+			   m.msgContent,
+			   m.msgCheck,
+			   m.msgSendId,
+			   m.msgReceiveId,
+			   m.msgTime,
+			   u.name,
+			   u.nickname 
+		FROM message m 
+		INNER JOIN user u 
+		ON m.msgSendId = u.userId 
+		WHERE msgReceiveId = #{msgReceiveId}
+		ORDER BY m.msgTime DESC
 	</select>
 	
 </mapper>

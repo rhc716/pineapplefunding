@@ -135,12 +135,12 @@
 	<div>
 		<h2 style="text-align: center;">${Data.fdTitle}</h2>
 	</div>
-	<div class="col-xs-12 pd-a-20 bor-defult ma-b-20 font-j"> 
+	<div class="col-xs-12 pd-a-20 ma-b-20 font-j" style="border: 1.5px solid #009442 ;border-radius: 5px;"> 
 		
 		<div class="col-xs-7 funding-vedio pd-a-0">
 			<iframe width="620" height="349" src="https://www.youtube.com/embed/JGwWNGJdvx8" frameborder="0" allowfullscreen style="padding-right: 20px"></iframe>
 		</div>
-		<div class="col-xs-5 bor-defult text-lr-center" style="padding: 0px;">
+		<div class="col-xs-5 text-lr-center" style="padding: 0px; border: 1.5px solid #009442 ;border-radius: 5px;">
 			<div class="fundingdata1">
 				<div class="col-xs-4 topdata">
 					<h4>목표금액</h4>
