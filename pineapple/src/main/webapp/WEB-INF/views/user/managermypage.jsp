@@ -624,7 +624,7 @@
 						      </div>
 						      <div class="modal-body">
 						      <!-- 회사정보확인 및 수정 모달 -->
-						        <form action="/pineapple/deletecompanyinfo.user" method="post">
+						        <form action="/pineapple/deleterequestcompany.user" method="post">
 						        	<div class="container_insert">
 										<div>
 											<input id="comAdminApprovalDel" type="hidden" class="form-control" name="comAdminApproval">
