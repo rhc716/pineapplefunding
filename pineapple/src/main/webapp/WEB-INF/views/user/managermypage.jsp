@@ -8,8 +8,9 @@
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
-	$(document).ready(function(){
+		//동적쿼리 사용전 방법(비교용으로 코드 유지중)
 		//사원요청 승인탭을 클릭하면 사원요청목록 데이터를 각 기업별로 이미 로딩된 상태로 갖고 있게 됨 
+		/*
 	    $('#approveEmployee-tab').click(function(){
    	    	var collapseIds = $.each($('.comCollapseBtn'), function(index, items) {
  			    var collapseIds = $(items).attr('id', index);
@@ -37,7 +38,8 @@
    	    	
 	   	   
 	     });
-	}); 
+		*/
+		
 	$(document).ready(function(){
 		$('#newAccountSubmitBtn').click(function(){
 			$('#newaccountform').submit();
@@ -274,6 +276,7 @@
 			location.href = '/pineapple/mypage.user';
 		});
 	});
+	//소속기업검색
 	$(document).ready(function(){
 		$('#mycomSearchBtn').click(function(){
 			var in_comName = $("#comSearchModalBody").find('input[name="comName"]').val();
@@ -325,9 +328,6 @@
 			</li>
 			<li role="presentation" class="">
 				<a data-target="#insertEmployee" role="tab" id="#insertEmployee-tab" data-toggle="tab" aria-controls="#insertEmployee" aria-expanded="false">사원등록/탈퇴요청</a>
-			</li>
-			<li role="presentation" class="">
-				<a data-target="#approveEmployee" role="tab" id="approveEmployee-tab" data-toggle="tab" aria-controls="approveEmployee" aria-expanded="false">사원등록요청승인</a>
 			</li>
 			<li role="presentation" class="">
 				<a data-target="#employeeList" role="tab" id="employeeList-tab" data-toggle="tab" aria-controls="employeeList" aria-expanded="false">사원리스트</a>
@@ -1091,115 +1091,172 @@
 				  </div>
 				</div>
 			</div>
-			<!-- 네번째탭 시작(사원요청승인) -->
-			<div role="tabpanel" class="tab-pane fade" id="approveEmployee" aria-labelledby="approveEmployee-tab">
+			<!-- 네번째탭 시작(사원리스트 - 전체사원리스트, 승인요청사원조회, 삭제요청사원조회, 회사별조회,   -->
+			<div role="tabpanel" class="tab-pane fade" id="employeeList" aria-labelledby="employeeList-tab">
 				<div class="row">
 					<div class="col-md-2">
 						<br>
-						<p>사원요청목록</p>
+						<p>사원목록</p>
 					</div>
 					<div class="col-md-10">
 						<br>
-						<p id="explanation">경영진으로 속한 기업에 사원등록 요청을 한 사원의 리스트를 보고 승인 또는 삭제 처리를 할 수 있습니다.</p>
-						<!-- 경영진 직급으로 소속된 기업에 사원등록요청한 사원의 목록 보기(부트스트랩 드롭다운 사용) -->
-						 <c:forEach var="comMngRankList" items="${comMngRank}" varStatus="numberofcom">
-						  	<a class="btn btn-info btn-block comCollapseBtn" id="${numberofcom.index}" value="${comMngRankList.emComName}" data-toggle="collapse" href="#collapse${numberofcom.count}"  aria-expanded="false" aria-controls="collapse${numberofcom.count}">
-							  ${numberofcom.count} ${comMngRankList.emComName}
-							</a>
-							<br>
-							<!-- collapse 본문부분 id는 javascript로 지정 -->
-							<div class="collapse collapseid" id="collapse${numberofcom.count}">
-								<div>
-									<table class="table table-striped table-bordered table-hover">
-										<thead>
-											<tr class="info">
-												<td>사원코드</td>
-												<td>사원아이디</td>
-												<td>기업이름</td>
-												<td>부서</td>
-												<td>사원승인</td>
-											</tr>
-										 </thead>
-										 <!-- 각 기업별 사원등록요청 목록 import -->
-										 <tbody id="employeelistimport${numberofcom.index}">
-										 
-										  
-										 </tbody>
-										 <tfoot>
-											 <div>
-												 <p id="explanation">해당 사원요청에 대한 승인여부를 결정해주시기 바랍니다</p>
-											 </div>
-										 </tfoot>
-									 </table>
-							 	</div>
-							 	<div>
-									<button type="button" class="btn btn-danger" data-toggle="collapse">목록접기</button>
-								</div>
-							 </div>
-							 <br>
-						 </c:forEach>
-							
-						
-						 
-						<!-- 사원삭제버튼 참고
-						+'<td><form action="/pineapple/deleteemployee.user" method="post">'
-					+'<input type="hidden" name="emCode" class="td6" value="'+item.emCode+'">'
-					+'<button type="submit" class="btn btn-info btn-block">삭제</button></form></td>
-						 -->
-					
-				         
+						<p id="explanation">자신이 경영진으로 속한 기업의 전체사원리스트를 확인할 수 있습니다. 전체사원조회, 기업별, 등록요청사원별, 삭제요청사원별 조회를 할 수 있습니다.</p>
+						<br>
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr class="info">
+									<td>번호</td>
+									<td>사원코드</td>
+									<td>사원아이디</td>
+									<td>소속기업</td>
+									<td>사원직급</td>
+									<td>소속부서</td>
+									<td>등록승인</td>
+									<td>탈퇴승인</td>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="AllEmployee" items="${AllEmployeeListInMyCom}" varStatus="numberofemployee">
+									<tr>
+										<td>${numberofemployee.count}</td>
+										<td>${AllEmployee.emCode}</td>
+										<td>${AllEmployee.emUserId}</td>
+										<td>${AllEmployee.emComName}</td>
+										<td>${AllEmployee.emRankCode}</td>
+										<td>${AllEmployee.emDepartment}</td>
+										<td>
+											<c:choose>
+												<c:when test="${AllEmployee.emCheck == 0}">
+													<a class="btn btn-success btn-block approveEmployeeBtn" href="#approveEmployeePage${numberofemployee.count}" type="button" data-toggle="modal" value="${AllEmployee.emCode}">등록승인</a>
+													<!-- 사원등록요청 승인처리를 위한 사원정보확인 모달 내부 구현 (승인까지 가능)-->
+													<div class="modal fade" id="approveEmployeePage${numberofemployee.count}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+													  <div class="modal-dialog">
+													    <div class="modal-content">
+													      <div class="modal-header">
+													        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+													        <h4 class="modal-title" id="myModalLabel">${AllEmployee.emComName}사원등록요청 승인</h4>
+													      </div>
+													      <div class="modal-body">
+													        <form action="/pineapple/approveemployee.user" method="post">
+													        	<input id="emCodeCheck" name="emCode" value="${AllEmployee.emCode}" type="hidden" class="form-control">
+													        	<input id="emComCodeCheck" name="emComCode" value="${AllEmployee.emComCode}" type="hidden" class="form-control">
+																<div class="form-group has-success has-feedback">
+																    <label class="control-label" for="inputSuccess4">소속기업명</label>
+																    <input id="emComNameCheck" name="emComName" value="${AllEmployee.emComName}" type="text" class="focus form-control" readonly>
+																    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+																    <span id="comApprovedStatus" class="sr-only">(success)</span>
+															    </div>
+																<br>
+															    <div id="emUserIdEmail" class="form-group has-success has-feedback">
+																	<label class="control-label" for="inputSuccess2">사원등록요청아이디</label>
+																	<input id="emUserIdCheck" name="emUserId" value="${AllEmployee.emUserId}" type="text" class="form-control" varia-describedby="inputSuccess2Status" readonly>
+																	<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+																	<span id="inputSuccess2Status" class="sr-only">(success)</span>
+																	<p id="explain">(사원으로 등록하려고 하는 분의 아이디입니다)</p>
+																</div>
+																<br>
+																<div class="form-group">
+																    <label for="emRankCodeInput">직급</label>
+																    <p id="explain">(1:경영진/2:일반사원)</p>
+															        <input id="emRankCodeCheck" name="emRankCode" value="${AllEmployee.emRankCode}" type="text" readonly>
+																    <span id="emrankch1"></span>
+															  	</div>
+															  	<br>
+															  	<div class="form-group">
+																    <label for="employeeDepInput1">부서</label>
+																    <p id="explain">(사원등록요청한 사원의 기업내의 소속 부서)</p>
+																    <input id="emDepartmentCheck" name="emDepartment" value="${AllEmployee.emDepartment}" type="text" class="form-control" readonly>
+															  	</div>
+															  	<br>
+															  	<div>
+															  	 	<input id="emCheckCheck" name="emCheck" type="hidden" value="1">
+															  		<input id="emDelRequestCheck" name="emDelRequest" value="${AllEmployee.emDelRequest}" type="hidden" value="0" class="form-control">
+															  	</div>
+															  	<div>
+																	<button type="submit" class="btn btn-info">사원승인</button>&nbsp
+																	<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+																</div>
+													        </form>
+													      </div>
+													    </div>
+													  </div>
+													</div>				
+												</c:when>
+												<c:otherwise>
+													<a type="button" class="btn btn-warning btn-block disabled">승인완료</a>
+												</c:otherwise>
+											</c:choose>
+										</td>
+										<td>
+											<c:choose>
+												<c:when test="${AllEmployee.emDelRequest == 1}">
+													<a id="deleteEmployeeBtn" href="#deleteEmployeePage${numberofemployee.count}" type="button" class="btn btn-danger btn-block" data-toggle="modal" value="${AllEmployee.emCode}">탈퇴승인</a>
+													<!-- 사원등록요청 승인처리를 위한 사원정보확인 모달 내부 구현 (승인까지 가능)-->
+													<div class="modal fade" id="deleteEmployeePage${numberofemployee.count}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+													  <div class="modal-dialog">
+													    <div class="modal-content">
+													      <div class="modal-header">
+													        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+													        <h4 class="modal-title" id="myModalLabel">${AllEmployee.emComName}사원탈퇴요청승인</h4>
+													      </div>
+													      <div class="modal-body">
+													        <form action="/pineapple/deleteemployee.user" method="post">
+													        	<label>사원코드</label>
+													        	<input name="emCode" value="${AllEmployee.emCode}" class="form-control">
+													        	<input name="emComCode" value="${AllEmployee.emComCode}" type="hidden" class="form-control">
+																<div class="form-group has-success has-feedback">
+																    <label class="control-label" for="inputSuccess4">소속기업명</label>
+																    <input name="emComName" value="${AllEmployee.emComName}" type="text" class="focus form-control" readonly>
+																    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+																    <span id="comApprovedStatus" class="sr-only">(success)</span>
+															    </div>
+																<br>
+															    <div id="emUserIdEmail" class="form-group has-success has-feedback">
+																	<label class="control-label" for="inputSuccess2">사원등록요청아이디</label>
+																	<input name="emUserId" value="${AllEmployee.emUserId}" type="text" class="form-control" varia-describedby="inputSuccess2Status" readonly>
+																	<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+																	<span id="inputSuccess2Status" class="sr-only">(success)</span>
+																	<p id="explain">(사원으로 등록하려고 하는 분의 아이디입니다)</p>
+																</div>
+																<br>
+																<div class="form-group">
+																    <label for="emRankCodeInput">직급</label>
+																    <p id="explain">(1:경영진/2:일반사원)</p>
+															        <input name="emRankCode" value="${AllEmployee.emRankCode}" type="text" readonly>
+																    <span id="emrankch1"></span>
+															  	</div>
+															  	<br>
+															  	<div class="form-group">
+																    <label for="employeeDepInput1">부서</label>
+																    <p id="explain">(사원등록요청한 사원의 기업내의 소속 부서)</p>
+																    <input name="emDepartment" value="${AllEmployee.emDepartment}" type="text" class="form-control" readonly>
+															  	</div>
+															  	<br>
+															  	<div>
+															  	 	<input name="emCheck" type="hidden" value="${AllEmployee.emCheck}" class="form-control">
+															  		<input name="emDelRequest" type="hidden" value="${AllEmployee.emDelRequest}" class="form-control">
+															  	</div>
+															  	<div>
+																	<button type="submit" class="btn btn-info">탈퇴승인</button>&nbsp
+																	<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+																</div>
+													        </form>
+													      </div>
+													    </div>
+													  </div>
+													</div>				
+												</c:when>
+												<c:otherwise>
+													<a type="button" class="btn btn-success btn-block disabled">요청없음</a>
+												</c:otherwise>
+											</c:choose>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
 					</div>
-					<!-- 새로운 계좌등록을위한 모달 내부 구현 -->
-					<div class="modal fade" id="newaccountmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-					  <div class="modal-dialog">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					        <h4 class="modal-title" id="myModalLabel">${nickname}님의 새로운 계좌등록</h4>
-					      </div>
-					      <div class="modal-body">
-					        <form id="newaccountform" action="/pineapple/addnewaccount.user" method="post">
-					        	<div class="container_insert">
-								    <div id="accountHolerIdinput" class="form-group has-success has-feedback">
-										<label class="control-label" for="inputSuccess2">${nickname}님의 아이디</label>
-										<input type="text" class="form-control" id="accountId" name="accountId" value="${id}" varia-describedby="inputSuccess2Status" readonly="readonly">
-										<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-										<span id="inputSuccess2Status" class="sr-only">(success)</span>
-									</div>
-									<br>
-								  	<div class="form-group">
-									    <label for="secCompany">증권사</label>
-									    <p id="explain">(계좌를 만든 증권사 이름을 정확히 입력해주세요)</p>
-									    <p><input type="text" id="secCompany" name="secCompany" class="form-control"></p>
-								  	</div>
-								  	<br>
-								  	<div class="form-group">
-								  		<label for="accountNumber">계좌번호</label>
-									    <p id="explain">(계좌번호를 -없이 입력해주세요)</p>
-									    <p><input type="text" id="accountNumber" name="accountNumber" class="form-control"></p>
-								  	</div>
-									<br>
-									<div class="form-group">
-								  		<label for="accountNickname">계좌번호 별명</label>
-									    <p id="explain">(계좌번호의 별명을 등록해주세요. 필수사항이 아니므로 별명을 등록하지 않으셔도 됩니다.)</p>
-									    <p><input type="text" id="accountNickname" name="accountNickname" class="form-control"></p>
-								  	</div>
-									<br>
-							      </div>
-							      <div class="modal-footer">
-							        <button id="newAccountCancelBtn" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-							        <button id="newAccountSubmitBtn" type="button" class="btn btn-primary">추가하기</button>
-							      </div>
-					        </form>
-					      </div>
-					    </div>
-					  </div>
-					</div>
-				</div>
-			</div>
-			<!-- 다섯번째탭 시작 -->
-			<div role="tabpanel" class="tab-pane fade" id="employeeList" aria-labelledby="employeeList-tab"> 
-				<p>전체사원리스트</p> 
+				
 			</div>
 			<!-- 여섯번째탭 시작 -->
 			<div role="tabpanel" class="tab-pane fade" id="message" aria-labelledby="message-tab"> 

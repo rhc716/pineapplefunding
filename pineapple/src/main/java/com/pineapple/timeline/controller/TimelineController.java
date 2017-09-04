@@ -169,6 +169,14 @@ public class TimelineController {
 		log.debug(myinvestormessage+"<-----TimelineController[myinvestormessage 값 출력]");
 		return "user/investormypageajax/investormessage";
 	}
+	//자신에게 온 메세지 open 시 check 확인
+	@RequestMapping(value="/investormessageopen.timeline",method=RequestMethod.GET)
+	public @ResponseBody int investorMessageOpenCheckModify(Locale locale,Model model,@RequestParam(value="msgCode")int msgCode){
+		log.debug("<----- TimelineController[timelineMain호출]----->");
+		int myinvestormessageopencheck = timelineserviceinterface.modifyMypageMessageOpenCheck(msgCode);
+		log.debug(myinvestormessageopencheck+"<-----TimelineController[myinvestormessageopencheck 값 출력]");
+		return myinvestormessageopencheck;
+	}
 	
 	
 	

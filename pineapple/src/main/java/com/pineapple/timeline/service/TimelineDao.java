@@ -93,4 +93,9 @@ public class TimelineDao implements TimelineDaoInterface{
 		log.debug("TimelineDao-----mypageMessageListSelect");
 		return sqlSessionTemplate.selectList("com.pineapple.timeline.service.TimelineMapper.selectMypageMessagelist",tlId);
 	}
+	//자신에게 온 메세지 open 시 check 확인
+	public int mypageMessageOpenCheckUpdate(int msgCode) {
+		log.debug("TimelineDao-----mypageMessageListSelect");
+		return sqlSessionTemplate.update("com.pineapple.timeline.service.TimelineMapper.updateMypageMessageopencheck",msgCode);
+	}
 }

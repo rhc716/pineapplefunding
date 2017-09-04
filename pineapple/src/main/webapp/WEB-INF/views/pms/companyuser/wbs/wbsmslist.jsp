@@ -26,6 +26,63 @@
 <!-- css lsk -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lsk.css" />
 
+
+<script>
+/* 마일스톤 리스트 불러올 ajax */
+$(document).ready(function(){
+	var mslist = $.ajax({
+		type : "post",
+		url : "/pineapple/WbsMs.pms",
+		/* 아이디 세션에서 받아서 가져옴 */
+		data : { fdCode : "${fdCode}" }
+	});
+	// 성공시
+	mslist.done(function(msg){
+		console.log(msg);
+		
+		/* 날짜를 yyyy-mm-dd 형태로 바꿔주는 함수 */
+		function formatDate(date) {
+		    var d = new Date(date),
+		        month = '' + (d.getMonth() + 1),
+		        day = '' + d.getDate(),
+		        year = d.getFullYear();
+
+		    if (month.length < 2) month = '0' + month;
+		    if (day.length < 2) day = '0' + day;
+
+		    return [year, month, day].join('-');
+		}
+		
+		//alert(formatDate(msg[0].fdDate));
+		//펀딩리스트를 myfundinglist에 채워줌 // 수정버튼과 모달창, 삭제버튼을 만들어줌
+		for(var i = 0; i<msg.length; i++){
+			
+				$('#mymslist').append(
+					'<form action="/pineapple/wbsform.pms" method="post">'
+					+'<div  class="container-fluid boxs">'
+					+'<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">'
+					+'<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">'
+					+'<input type="hidden" readonly="readonly"  name="milestoneCode" value="'+msg[i].milestoneCode+'">'
+					+'<input type="hidden" readonly="readonly"  name="milestoneName" value="'+msg[i].milestoneName+'">'
+					+'<input type="hidden" readonly="readonly"  name="msComCode" value="'+msg[i].msComCode+'">'
+					+'마일스톤 단계 = '+msg[i].milestoneStep+'<br>'
+					+'마일스톤 이름 = '+msg[i].milestoneName+'<br>'
+					+'마일스톤 요약 = '+msg[i].milestoneSummary+'<br>'
+					+'<button type="submit" class="btn btn-sm btn-primary" name="btn" value="WBS예상입력">WBS예상입력</button>'
+					+'<button type="submit" class="btn btn-sm btn-primary" name="btn" value="WBS예상리스트">WBS예상리스트</button><br><br>'
+					+'<button type="submit" class="btn btn-sm btn-primary" name="btn" value="WBS실제입력">WBS실제입력</button>'
+					+'<button type="submit" class="btn btn-sm btn-primary" name="btn" value="WBS실제리스트">WBS실제리스트</button>'
+					+'</div>'
+					+'</form>'
+				);
+		}
+	});
+	// 실패시
+	mslist.fail(function(){
+		alert('ajax통신실패');
+	});
+});
+</script>
  
 </head>
 <body>
@@ -42,6 +99,7 @@
 	</div>
 	<div class="col-md-9">
 			<div class="col-md-3">
+				<!-- 트리 -->
 				<div id="sidetree">
 		   			<div class="treeheader">
 					</div>
@@ -59,25 +117,8 @@
 				 	</ul>
 				</div>
 			</div>
-		<div class="col-md-7">
-			<c:forEach var="list" items="${mslist}">
-				<form action="/pineapple/wbsform.pms" method="post">
-					<div  class="container-fluid boxs">
-						<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
-						<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
-						<input type="hidden" readonly="readonly"  name="milestoneCode" value="${list.milestoneCode}">
-						<input type="hidden" readonly="readonly"  name="milestoneName" value="${list.milestoneName}">
-						<input type="hidden" readonly="readonly"  name="msComCode" value="${list.msComCode}">
-						마일스톤 단계 = ${list.milestoneStep}<br>
-						마일스톤 이름 = ${list.milestoneName}<br>
-						마일스톤 요약 = ${list.milestoneSummary}<br>
-						<button type="submit" class="btn btn-sm btn-primary" name="btn" value="WBS예상입력">WBS예상입력</button>
-						<button type="submit" class="btn btn-sm btn-primary" name="btn" value="WBS예상리스트">WBS예상리스트</button><br><br>
-						<button type="submit" class="btn btn-sm btn-primary" name="btn" value="WBS실제입력">WBS실제입력</button>
-						<button type="submit" class="btn btn-sm btn-primary" name="btn" value="WBS실제리스트">WBS실제리스트</button>
-					</div>
-				</form>
-			</c:forEach>
+		<!-- 마일스톤 띄우는곳 -->
+		<div class="col-md-7"  id="mymslist">
 		</div>	
 	</div>
 </div>

@@ -7,8 +7,6 @@ public interface PmsDaoInterface {
 
 	void insertWbsPlan(WbsPlan wbsplan);
 
-	List<WbsPlanView> WbsPlanSelect(String userId);
-
 	WbsPlan getMyWbsPlanDetail(String wbsplancode);
 	
 	void addWbsplanhuman(WbsPlanHuman wbsplanhuman);
@@ -90,9 +88,6 @@ public interface PmsDaoInterface {
 	void wbsplanupdateout(HashMap map);
 
 	void wbsactualinsert(WbsActual wbsactual);
-
-	List<WbsActual> wbsactuallist(String userId);
-
 	WbsActual wbsactualdetail(String wbsactualcode);
 
 	List<WbsMs> wbsmsview(String fdcode);

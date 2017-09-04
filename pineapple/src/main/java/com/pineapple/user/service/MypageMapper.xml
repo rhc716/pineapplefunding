@@ -164,12 +164,38 @@
 		WHERE comCode=#{comCode}
 	</select>
 	
-<!-- 경영진으로 속한 회사이름을 조회하기 위해 employee 정보 조회(ID로)-->
+<!-- 승인완료된 경영진으로 속한 회사이름을 조회하기 위해 employee 정보 조회(ID로)-->
 	<select id="selectEmployeeMngById" parameterType="String" resultType="com.pineapple.user.service.Employee">
+		SELECT emComName
+		FROM employee
+		WHERE emUserId=#{emUserId} AND emRankCode=1 And emCheck=1
+	</select>	
+
+<!-- 경영진으로 속한 기업의 전체사원정보 조회(기업이름으로 조회하여 승인여부 상관없이 전체 사원 목록 조회 목적) -->
+	<select id="selectAllEmployeeByMyComNameList" parameterType="java.util.Map" resultMap="selectAllEmployeeByMyComNameList">
 		SELECT *
 		FROM employee
-		WHERE emUserId=#{emUserId} AND emRankCode=1
-	</select>	
+		<where> emComName in
+			<foreach collection="comNameList" item="comList" index="index" separator="," open="(" close=")">
+				 #{comList.emComName}
+			</foreach>
+		</where>
+	</select>
+	<resultMap type="com.pineapple.user.service.Employee" id="selectAllEmployeeByMyComNameList">
+		<result property="emCode" column="emCode"/>
+		<result property="emUserId" column="emUserId"/>
+		<result property="emComCode" column="emComCode"/>
+		<result property="emComName" column="emComName"/>
+		<result property="emRankCode" column="emRankCode"/>
+		<result property="emDepartment" column="emDepartment"/>
+		<result property="emCheck" column="emCheck"/>
+		<result property="emDelRequest" column="emDelRequest"/>
+	</resultMap>
+	
+<!-- 사원탈퇴처리 -->
+	<delete id="deleteEmployeebyEmCode" parameterType="int">
+		DELETE FROM employee WHERE emCode=#{emCode}
+	</delete>
 
 <!-- 사원정보 조회(기업이름으로 조회하여 사원등록요청 목록 조회 목적) -->
 	<select id="selectEmployeeRequestByComName" parameterType="String" resultMap="selectEmployeeRequestByComName">
@@ -288,30 +314,4 @@
   			nameCheck=#{nameCheck}
  		WHERE userDetailId=#{userDetailId}
 	</update>
-	
-<!-- resultMap 참고 
-	<resultMap type="naver.jjdev.board.service.Member"
-			   id="member">
-		<result property="memberNo" column="member_no"/>
-		<result property="memberName" column="member_name"/>
-		<result property="memberAddr" column="member_addr"/>
-	</resultMap>
-	
-	<resultMap type="naver.jjdev.board.service.Member"
-			   id="AllInvestorInfo">
-		<result property="memberNo" column="member_no"/>
-		<result property="memberName" column="member_name"/>
-		<result property="memberAddr" column="member_addr"/>
-		<collection property="boardList"
-					ofType="naver.jjdev.board.service.Board">
-			<id property="boardNo" column="board_no"/>
-			<result property="boardTitle" column="board_title"/>
-			<result property="boardContent" column="board_content"/>
-			<result property="boardUser" column="board_user"/>
-			<result property="boardDate" column="board_date"/>
-		</collection>
-		
-	</resultMap>
--->
-
 </mapper>

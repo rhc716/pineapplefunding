@@ -11,6 +11,9 @@
 	 	<result property="numberOfShares" column="numberOfShares"/>
 	 	<result property="comName" column="comName"/>
 	 	<result property="total" column="total"/>
+	 	<result property="posterImg" column="posterImg"/>
+	 	<result property="minInvestMoney" column="minInvestMoney"/>
+	 	<result property="days" column="days"/>
 	 </resultMap>
 	 <!-- InvestAndFdLikeAndFd -->
 	 <resultMap type="com.pineapple.invest.service.InvestAndFdLikeAndFd"
@@ -64,12 +67,15 @@
 	</resultMap>
 	
 	<!-- 투자하기 main 에서 사용하는 모집중인 펀딩 리스트 조회 쿼리 -->
-	<select id="selectInvestAndFd" parameterType="java.util.Map" resultType="com.pineapple.invest.service.InvestAndFd">
+	<select id="selectInvestAndFd" resultMap="selectInvestAndFd">
 		SELECT  f.fdCode,
 				f.fdTitle,
 				f.numberOfShares,
 				c.comName,
-				IFNULL(sum(i.purchaseShares),0) as total
+				IFNULL(sum(i.purchaseShares),0) as total,
+				f.posterImg,
+				f.minInvestMoney,
+				TO_DAYS(f.closeDate)-TO_DAYS(now()) as days
 		FROM funding f 
 		LEFT JOIN company c 
 		ON f.fdComCode = c.comCode 
@@ -79,7 +85,7 @@
 		GROUP BY f.fdCode 
 		ORDER BY f.fdDate DESC;
 	</select>
-	<!-- 투자하기 main 에서 사용하는 모집중인 펀딩 리스트 조회 쿼리 -->
+	<!-- 투자하기 펀딩안에서 사용하는 모집중인 펀딩 리스트 조회 쿼리 -->
 	<select id="selectInvestAndFdLikeAndFd" parameterType="INT" resultType="com.pineapple.invest.service.InvestAndFdLikeAndFd">
 		SELECT f.fdCode,
 			 f.numberOfShares, 

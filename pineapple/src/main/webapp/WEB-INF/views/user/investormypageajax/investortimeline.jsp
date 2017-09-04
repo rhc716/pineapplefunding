@@ -75,7 +75,7 @@ $(document).ready(function(){
 						<input id="timeinputbox" type="text" class="form-control box1" placeholder="타임라인을 등록해주세요"  data-toggle="modal" data-target="#myModal" readonly="readonly">
 					</div>
 					<div class="col-xs-3 timeinputbtn">
-						<button id="timeinputbotton" class="timeinputbotton" data-toggle="modal" data-target="#myModal">게시하기</button>
+						<button id="timeinputbotton" class="timeinputbotton btn btn-info" data-toggle="modal" data-target="#myModal">게시하기</button>
 					</div>
 				</div>
 				<!-- Time line input modal -->
@@ -145,7 +145,7 @@ $(document).ready(function(){
 												<textarea class="form-control" name="tlReContent" rows="3" style="width: 100%; height: 100px; resize: none;" placeholder="댓글을 입력해주세요"></textarea>
 											</div>
 											<div class="col-xs-4" style="text-align:left; padding:0px;">
-												<button class="timelinereplyinsertbtn" dataCode="${Data.tlCode}" style="width: 50%; height: 100px; padding:0px; border:1px solid; font-size:20px;">댓글등록하기</button>
+												<button class="timelinereplyinsertbtn btn btn-info" dataCode="${Data.tlCode}" style="width: 50%; height: 100px; padding:0px; font-size:20px;">댓글등록하기</button>
 											</div>
 										</form>
 									</div>

@@ -1,6 +1,7 @@
 package com.pineapple.user.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -15,6 +16,20 @@ public class MypageDao implements MypageDaoInterface {
 	
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
+	
+	//사원탈퇴처리
+	@Override
+	public int deleteEmployeeByEmCode(int emCode) {
+		log.debug("MypageDao deleteEmployeeByEmCode 호출 "+emCode);
+		return sqlSessionTemplate.delete("com.pineapple.user.service.MypageMapper.deleteEmployeebyEmCode", emCode);
+	}
+
+	//경영진 마이페이지 분기시 페이지 로딩하면서, 자신이 속한 기업의 모든 사원조회기능 구현을 위한 메서드 선언(입력값 - map)
+	@Override
+	public List<Employee> selectAllEmployeeInMyComList(Map<String, Object> map) {
+		log.debug("MypageDao selectAllEmployeeInMyComList 호출 "+map);
+		return sqlSessionTemplate.selectList("com.pineapple.user.service.MypageMapper.selectAllEmployeeByMyComNameList", map);
+	}
 	
 	//기업삭제요청
 	@Override
@@ -138,10 +153,6 @@ public class MypageDao implements MypageDaoInterface {
 		log.debug("MypageDao selectInvestorBasic 메서드 호출 결과"+sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAllInvestorInfo", userId));
 		return sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAllInvestorInfo", userId);
 	}
-
-	
-
-	
 
 	
 	

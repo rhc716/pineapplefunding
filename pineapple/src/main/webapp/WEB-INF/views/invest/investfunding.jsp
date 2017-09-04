@@ -192,7 +192,6 @@
 		</div>
 	</div>
 	</div>
-	<!-- 다른페이지에서 요청하는식으로 변경예정 -->
 	<!-- MODAL -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
  	  <div class="modal-dialog">
@@ -230,7 +229,6 @@
  	  </div>
  	</div>
  	</div>
-	<!-- 다른페이지에서 요청하는식으로 변경예정 -->
 	<!-- 펀딩 Tab -->
 	<div class="row">
 	<div> 
@@ -263,7 +261,7 @@
 					<textarea class="form-control" name="qnaFdContent" rows="3" style="width: 100%; height: 100px; resize: none;" placeholder="내용을 입력해주세요"></textarea>
 					</div>
 					<div class="col-xs-2" style="padding-left: 20px;padding-right: 0px;">
-					<button id="questionbtn" class="pd-a-0 bor-defult" style="width: 100%; height: 140px; font-size: 28px;">질문등록하기</button>
+					<button id="questionbtn" class="pd-a-0 btn btn-info" style="width: 100%; height: 140px; font-size: 28px;">질문등록하기</button>
 					</div>
 				</form>
 				</div>

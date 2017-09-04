@@ -34,4 +34,6 @@ public interface TimelineDaoInterface {
 	//////////////////////////My Page Message ////////////////////////////
 	//자신에게 온 메세지 list 조회
 	List<Message> mypageMessageListSelect(String tlId);
+	//자신에게 온 메세지 open 시 check 확인
+	int mypageMessageOpenCheckUpdate(int msgCode);
 }

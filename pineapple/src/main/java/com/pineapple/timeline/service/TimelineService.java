@@ -98,4 +98,11 @@ public class TimelineService implements TimelineServiceInterface{
 		List<Message> messagelist = timelinedaointerface.mypageMessageListSelect(tlId);
 		return messagelist;
 	}
+	//자신에게 온 메세지 open 시 check 확인
+	@Override
+	public int modifyMypageMessageOpenCheck(int msgCode) {
+		log.debug("------------------TimelineService-----------------modifyMypageMessageOpenCheck()");
+		int messageopencheck = timelinedaointerface.mypageMessageOpenCheckUpdate(msgCode);
+		return messageopencheck;
+	}
 }

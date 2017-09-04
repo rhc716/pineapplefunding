@@ -30,9 +30,9 @@
 $(document).ready(function(){
 	var getfundinglist = $.ajax({
 		type : "get",
-		url : "/pineapple/getmyfundinglist.pms",
+		url : "/pineapple/wbsfundinglist.pms",
 		/* 아이디 세션에서 받아서 가져옴 */
-		data : { userId : "id01@maver.com" }
+		data : { userId : "${id}" }
 	});
 	// 성공시
 	getfundinglist.done(function(msg){
@@ -75,7 +75,6 @@ $(document).ready(function(){
 	getfundinglist.fail(function(){
 		alert('ajax통신실패');
 	});
-	
 });
 </script>
 </head>

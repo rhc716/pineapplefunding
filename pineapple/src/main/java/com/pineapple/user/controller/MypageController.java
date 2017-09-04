@@ -7,8 +7,10 @@ import com.pineapple.user.service.MypageServiceInterface;
 import com.pineapple.user.service.User;
 import com.pineapple.user.service.UserDetail;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
@@ -27,10 +29,23 @@ public class MypageController {
 	@Autowired
 	private MypageServiceInterface mypageservice;
 	
-	//사원등록정보 확인 모달에서 사원정보(주로 부서명) 수정하기 요청 처리
+	//사원삭제처리
+	@RequestMapping(value="/deleteemployee.user", method = RequestMethod.POST)
+    public String removeEmployee(HttpSession session, @RequestParam("emCode") int emCode) { //커맨드 객체
+        log.debug("removeEmployee 사원삭제처리 : "+emCode);
+        int result = mypageservice.removeEmployeeByEmCode(emCode);
+        if(result == 1){
+        	log.debug(session.getAttribute("nickname")+"님의 사원삭제처리 성공");
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님의 사원삭제처리 실패");
+        }
+        return "redirect:/mypage.user"; // 글입력후 "/"로 리다이렉트(재요청)
+    }
+	
+	//기업등록정보 확인 모달에서 기업삭제 요청 처리
 	@RequestMapping(value="/deleterequestcompany.user", method = RequestMethod.POST)
     public String deleteCompanyRequest(HttpSession session, Company company) { //커맨드 객체
-        log.debug("deleteCompanyRequest 사원정보 삭제 요청 : "+company);
+        log.debug("deleteCompanyRequest 기업정보 삭제 요청 : "+company);
         int result = mypageservice.removeCompany(company);
         if(result == 1){
         	log.debug(session.getAttribute("nickname")+"님의 기업삭제요청 성공");
@@ -41,20 +56,20 @@ public class MypageController {
     }
 		
 	//경영진의 개별 기업 삭제요청 페이지 구성
-		@RequestMapping(value="/companydeletepage.user", method=RequestMethod.GET)
-		public @ResponseBody Company deleteCompanyPage(Model model, @RequestParam("comCode") int comCode){
-			log.debug("MypageController deleteCompanyPage 기업정보삭제요청 페이지 요청");
-			Company company = mypageservice.getCompanyByComCode(comCode);
-			if(company != null){
-				log.debug("MypageController deleteCompanyPage 기업삭제 페이지 요청 성공");
-				model.addAttribute("company", company);
-			} else {
-				log.debug("MypageController deleteCompanyPage 기업삭제 페이지 요청 실패");
-			}
-			return company;
+	@RequestMapping(value="/companydeletepage.user", method=RequestMethod.GET)
+	public @ResponseBody Company deleteCompanyPage(Model model, @RequestParam("comCode") int comCode){
+		log.debug("MypageController deleteCompanyPage 기업정보삭제요청 페이지 요청");
+		Company company = mypageservice.getCompanyByComCode(comCode);
+		if(company != null){
+			log.debug("MypageController deleteCompanyPage 기업삭제 페이지 요청 성공");
+			model.addAttribute("company", company);
+		} else {
+			log.debug("MypageController deleteCompanyPage 기업삭제 페이지 요청 실패");
 		}
+		return company;
+	}
 	
-	//사원등록정보 확인 모달에서 사원정보(주로 부서명) 수정하기 요청 처리
+	//사원등록정보 확인 모달에서 사원정보 삭제하기 요청 처리
 	@RequestMapping(value="/deleterequestemployee.user", method = RequestMethod.POST)
     public String deleteEmployeeRequest(HttpSession session, Employee employee) { //커맨드 객체
         log.debug("deleteEmployeeRequest 사원정보 삭제 요청 : "+employee);
@@ -67,7 +82,7 @@ public class MypageController {
         return "redirect:/mypage.user"; // 글입력후 "/"로 리다이렉트(재요청)
     }
 	
-	//경영진의 개별 사원등록요청별 승인 페이지 구성
+	//경영진의 개별 사원삭제요청별 승인 페이지 구성
 	@RequestMapping(value="/deleterequestemployeepage.user", method=RequestMethod.GET)
 	public @ResponseBody Employee deleteEmployeePage(Model model, @RequestParam("emCode") int emCode){
 		log.debug("MypageController deleteEmployeePage 사원정보 삭제 페이지 요청");
@@ -292,6 +307,14 @@ public class MypageController {
     	model.addAttribute("user", user);
     	UserDetail userdetail = mypageservice.getUserDetail(session.getAttribute("id").toString());
     	model.addAttribute("userdetail", userdetail);
+    	//기업회원 레벨의 회원이 마이페이지 분기 요청시, 페이지 로딩시 전체 회사 목록 조회(소속기업검색용)
+    	List<Company> allcompany = mypageservice.getAllCompany();
+        if(allcompany != null){
+        	log.debug(session.getAttribute("nickname")+"님의 전체회사조회 성공");
+         	model.addAttribute("allcompany", allcompany);
+         } else {
+         	log.debug(session.getAttribute("nickname")+"님의  전체회사조회 실패");
+         }
     	//경영진이 마이페이지 분기 요청시, 자신의 아이디로 개설한 회사정보조회(회사등록한 경영진만 객체 조회 가능)
     	List<Company> companyOpen = mypageservice.getCompanyByOpenId(session.getAttribute("id").toString());
     	if(companyOpen != null){
@@ -300,15 +323,7 @@ public class MypageController {
 		} else {
 			log.debug("getCompanyInfoByOpenId 회사개설정보 조회 실패");
 		}
-    	//경영진이 마이페이지 분기 요청시, 페이지 로딩하며 전체 회사 목록 조회
-    	List<Company> allcompany = mypageservice.getAllCompany();
-        if(allcompany != null){
-        	log.debug(session.getAttribute("nickname")+"님의 전체회사조회 성공");
-         	model.addAttribute("allcompany", allcompany);
-         } else {
-         	log.debug(session.getAttribute("nickname")+"님의  전체회사조회 실패");
-         }
-        //경영진이 마이페이지 분기 요청시, 페이지 로딩시하며 자신의 아이디로 사원등록여부와 사원승인여부 조회
+        //경영진이 마이페이지 분기 요청시, 페이지 로딩시하며 자신의 아이디로 자신의 사원등록여부와 사원승인여부 조회
         List<Employee> employeeOneId = mypageservice.getEmployeeById(session.getAttribute("id").toString());
         if(employeeOneId != null){
         	log.debug(session.getAttribute("nickname")+"님의 사원정보조회 성공");
@@ -321,6 +336,19 @@ public class MypageController {
         if(comMngRank != null){
         	log.debug(session.getAttribute("nickname")+"님의 사원정보조회 성공");
          	model.addAttribute("comMngRank", comMngRank);
+         	//경영진이 속한 모든 기업명을 조회한 뒤, 그 결과 조회한 기업명 리스트를 map에 입력값으로 담아 기업에 속한 모든 사원리스트를 조회하는 메서드 호출
+         	Map<String, Object> map = new HashMap<String, Object>();
+         	for(int i=0; i<comMngRank.size(); i++){
+         		List<Employee> comNameList = comMngRank;
+         		map.put("comNameList", comNameList);
+         		List<Employee> allEmployeeInMyCom = mypageservice.getAllEmployeeInMyComList(map);
+         		if(allEmployeeInMyCom != null){
+                   log.debug(session.getAttribute("nickname")+"님의 기업별 모든 사원정보조회 성공");
+                   model.addAttribute("AllEmployeeListInMyCom", allEmployeeInMyCom);
+                  } else {
+                  	log.debug(session.getAttribute("nickname")+"님의  기업별 모든 사원정보조회 실패");
+                  }
+         	}
          } else {
          	log.debug(session.getAttribute("nickname")+"님의  사원정보조회 실패");
          }
@@ -360,7 +388,7 @@ public class MypageController {
          }
 		return "user/employeemypage";
 	}
-	//관리자 마이페이지 분기(회원상세정보조회 기능 포함)
+	//관리자 마이페이지 분기(회원상세정보조회, 전체회사조회 포함)
 	@RequestMapping(value="/adminmypage.user", method=RequestMethod.GET)
 	public String adminmypage(Model model, HttpSession session){
 		log.debug(session.getAttribute("level")+" 권한으로 "+session.getAttribute("nickname")+"님의 adminmypage 페이지로 분기");
@@ -368,6 +396,14 @@ public class MypageController {
     	model.addAttribute("user", user);
     	UserDetail userdetail = mypageservice.getUserDetail(session.getAttribute("id").toString());
     	model.addAttribute("userdetail", userdetail);
+    	//관리자가 마이페이지 분기 요청시, 페이지 로딩하며 사이트에 등록요청/등록승인된 전체 회사 목록 조회
+    	List<Company> allcompany = mypageservice.getAllCompany();
+        if(allcompany != null){
+        	log.debug(session.getAttribute("nickname")+"님의 전체회사조회 성공");
+         	model.addAttribute("allcompany", allcompany);
+         } else {
+         	log.debug(session.getAttribute("nickname")+"님의  전체회사조회 실패");
+         }
 		return "user/adminmypage";
 	}	
 	//mypage main 페이지 요청 - 권한별 마이페이지 분기 시점에 필요한 객체 조회 기능 구현(처음 회원가입한 기업회원 레벨의 회원은 rank가 경영진이 아니므로 일반사원 마이페이지로 분기된다)

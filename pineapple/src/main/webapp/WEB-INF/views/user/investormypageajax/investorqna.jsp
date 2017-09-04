@@ -42,7 +42,7 @@
 							<textarea class="form-control" name="qnaReContent" style="width: 100%; height: 100px; resize: none;" rows="3" placeholder="답변을 입력해주세요"></textarea>
 						</div>
 						<div class="col-xs-4 collapsereply-btn">
-							<button class="collapsereplyanswerbtn" id="answerbtn">답변등록하기</button>
+							<button class="collapsereplyanswerbtn btn btn-info" id="answerbtn">답변등록하기</button>
 						</div>
 					</form>
 				</div>

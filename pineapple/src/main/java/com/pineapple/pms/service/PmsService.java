@@ -27,11 +27,6 @@ public class PmsService implements PmsServiceInterface{
 	/* (non-Javadoc)
 	 * @see com.pineapple.pms.service.PmsServiceInterface#getMyWbsPlanList(java.lang.String)
 	 */
-	@Override
-	public List<WbsPlanView> getMyWbsPlanList(String userId) {
-		log.debug("PmsService의 getMyWbsPlanList호출 성공");
-		return pmsdao.WbsPlanSelect(userId);
-	}
 	
 	@Override
 	public List<WbsPlan> wbsplanlist(String milestoneCode) {
@@ -43,12 +38,6 @@ public class PmsService implements PmsServiceInterface{
 	public List<WbsMs> wbsmsview(String fdcode) {
 		log.debug("PmsService의 wbsmsview호출 성공");
 		return pmsdao.wbsmsview(fdcode);
-	}
-	
-	@Override
-	public List<WbsActual> wbsactuallist(String userId) {
-		log.debug("PmsService의 wbsactuallist호출 성공");
-		return pmsdao.wbsactuallist(userId);
 	}
 	
 	@Override

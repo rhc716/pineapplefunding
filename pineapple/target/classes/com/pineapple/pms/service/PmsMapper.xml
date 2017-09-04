@@ -52,40 +52,6 @@
 			VALUES (NULL, #{wpiFdCode}, #{wpiMsCode}, #{wpiWpCode}, #{wpiReason}, #{wpiIncome}, #{wpiStartDate}, #{wpiEndDate}, #{wpiComCode})
 	</insert>
 	
-	
-	<!-- wbsplan 리스트 요청쿼리 -->
-	<select id="selectWbsPlan" resultType="com.pineapple.pms.service.WbsPlanView" parameterType="String">
-		SELECT w.wbsPlanCode, w.wbsPlanOrder,
-			w.wbsPlanName, w.wbsPlanDependency, max(w.wbsPlanChange) wbsPlanChange,
-			w.wbsPlanStartDate, w.wbsPlanDuration, w.wbsPlanComCode,
-			w.wbsPlanManager, w.wbsPlanFdCode, w.wbsPlanMsCode,
-			f.fdTitle, m.milestoneName
-		FROM wbsplan w LEFT JOIN funding f ON w.wbsPlanFdCode = f.fdCode 
-		LEFT JOIN milestone m ON w.wbsPlanMsCode = m.milestoneCode
-		where w.wbsPlanStatus =1 and w.wbsPlanComCode = ANY 
-		(SELECT e.emComCode 
-		FROM user u INNER JOIN employee e 
-		ON u.userId = e.emUserId
-		WHERE u.userId = #{userId}) group by w.wbsPlanOrder , w.wbsPlanMsCode
-	</select>
-	
-	<!-- wbsactual 리스트 요청쿼리 -->
-	<select id="wbsactuallist" resultType="com.pineapple.pms.service.WbsActual" parameterType="String">
-				SELECT w.wbsActualCode, w.wbsActualFdCode,
-			w.wbsActualMsCode, w.wbsPlanAcCode,
-			w.wbsActualName, w.wbsActualStartDate, w.wbsActualEndDate,
-			w.wbsActualDuration, w.wbsActualStatus, w.wbsActualProgress,
-			w.wbsActualWriteDate, w.wbsActualApprovalDate, w.wbsActualApprovalReason,
-			w.wbsActualWriteManager, w.wbsActualApprovalManager, w.wbsActualComCode,
-			f.fdTitle, m.milestoneName
-		FROM wbsactual w LEFT JOIN funding f ON w.wbsActualFdCode = f.fdCode 
-		LEFT JOIN milestone m ON w.wbsActualMsCode = m.milestoneCode
-		where w.wbsActualComCode = ANY 
-		(SELECT e.emCode 
-		FROM user u INNER JOIN employee e 
-		ON u.userId = e.emUserId
-		WHERE u.userId = #{userId})
-	</select>
 	<!-- wbsplanHuman 리스트 요청쿼리 -->
 	<select id="selectWbsPlanHuman" resultType="com.pineapple.pms.service.WbsPlanHuman" parameterType="String">
 		select *
