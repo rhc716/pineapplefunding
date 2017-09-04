@@ -32,5 +32,7 @@ public interface TimelineServiceInterface {
 	/////////////////My Page Message//////////////////////
 	//자신에게 온 메세지 list 조회
 	List<Message> getMypageMessageList(String tlId);
+	//자신에게 온 메세지 open 시 check 확인
+	int modifyMypageMessageOpenCheck(int msgCode);
 	
 }

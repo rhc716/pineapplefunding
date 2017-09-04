@@ -3,12 +3,20 @@ package com.pineapple.timeline.service;
 public class Message {
 	private int msgCode;
 	private String msgTitle;
+	private String msgContent;
 	private int msgCheck;
 	private String msgSendId;
 	private String msgReceiveId;
 	private String msgTime;
 	private String name;
 	private String nickname;
+	
+	public String getMsgContent() {
+		return msgContent;
+	}
+	public void setMsgContent(String msgContent) {
+		this.msgContent = msgContent;
+	}
 	public int getMsgCode() {
 		return msgCode;
 	}
@@ -59,9 +67,10 @@ public class Message {
 	}
 	@Override
 	public String toString() {
-		return "Message [msgCode=" + msgCode + ", msgTitle=" + msgTitle + ", msgCheck=" + msgCheck + ", msgSendId="
-				+ msgSendId + ", msgReceiveId=" + msgReceiveId + ", msgTime=" + msgTime + ", name=" + name
-				+ ", nickname=" + nickname + "]";
+		return "Message [msgCode=" + msgCode + ", msgTitle=" + msgTitle + ", msgContent=" + msgContent + ", msgCheck="
+				+ msgCheck + ", msgSendId=" + msgSendId + ", msgReceiveId=" + msgReceiveId + ", msgTime=" + msgTime
+				+ ", name=" + name + ", nickname=" + nickname + "]";
 	}
+
 	
 }

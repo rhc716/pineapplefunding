@@ -182,10 +182,10 @@
 				.timeinputbtn{width: 25%;
 							  height: 100%;
 							  font-size: 30px;
-							  border: 1px solid;
 							  padding: 0px}
 				.box1{height: 100%;}
-				.timeinputbotton{width: 100%}
+				.timeinputbotton{width: 100%;
+								 height: 46px;}
 			/* 타임라인 상단 input,btn */
 			/* 타임라인 list */
 				.timelinelist{padding: 0px; 
@@ -320,6 +320,7 @@
 				.messagenav{margin-top: 10px;}
 			/* My Page Message Nav */
 			/* My Page Message List */
+				.msgcheckno{color: black;}
 				.msgcheckno:link{color: black;
 								 text-decoration: none;}
 				.messagedisplynone{display: none;}
@@ -330,13 +331,13 @@
 
 /* invest main 투자하기 main */
 	.fdlist-main{padding: 0px 20px}
-	.fdlist-box{height: 328px;
-				width: 303px;
-				margin: 0 auto;
+	.fdlist-box{margin: 0 auto;
 				padding: 0px;}
-	.fdlist-title{padding: 12px 10px 2px;
+	.fdlist-title{padding: 12px 10px 10px;
+				  margin: 0px;
 				  font-size: 17px;
-				  font-weight: bold}
+				  font-weight: bold;
+				  border-bottom: 1px solid #d7d7d7;}
 	.fdlist-context{font-size : 11px;
 					line-height: 17px;
     				height: 68px;
@@ -348,7 +349,8 @@
 					font-weight: bold;
    					text-align: left;
    					padding: 11px 10px 9px;}
-	.fdlist-data{width: 303px;
-   				 height: 88px;
-   				 border-top: 1px solid #009442;}
+	.fdlist-data{line-height: 44px;
+   				 border-top: 1px solid #d7d7d7;}
+   	.positionfixed{position: fixed;
+   			       top: 0px}
  /* invest main 투자하기 main */

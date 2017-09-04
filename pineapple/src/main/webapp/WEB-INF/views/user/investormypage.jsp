@@ -138,7 +138,6 @@ $(document).ready(function(){
 	        url : '/pineapple/investormessagelist.timeline',
 	        success : function success(msg){
 	        	$('#investormessage').html(msg);
-	        	$('[data-toggle="popover"]').popover()
 	        },
 	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
 	        error : function error(){

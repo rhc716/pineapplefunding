@@ -6,7 +6,22 @@ public class InvestAndFd {
 	private int numberOfShares;
 	private String comName;
 	private int total;
-
+	private String posterImg;
+	private int minInvestMoney;
+	private int days;
+	
+	public int getDays() {
+		return days;
+	}
+	public void setDays(int days) {
+		this.days = days;
+	}
+	public int getMinInvestMoney() {
+		return minInvestMoney;
+	}
+	public void setMinInvestMoney(int minInvestMoney) {
+		this.minInvestMoney = minInvestMoney;
+	}
 	public int getFdCode() {
 		return fdCode;
 	}
@@ -37,12 +52,18 @@ public class InvestAndFd {
 	public void setTotal(int total) {
 		this.total = total;
 	}
+	public String getPosterImg() {
+		return posterImg;
+	}
+	public void setPosterImg(String posterImg) {
+		this.posterImg = posterImg;
+	}
 	@Override
 	public String toString() {
 		return "InvestAndFd [fdCode=" + fdCode + ", fdTitle=" + fdTitle + ", numberOfShares=" + numberOfShares
-				+ ", comName=" + comName + ", total=" + total + "]";
+				+ ", comName=" + comName + ", total=" + total + ", posterImg=" + posterImg + ", minInvestMoney="
+				+ minInvestMoney + ", days=" + days + "]";
 	}
-	
 
-	
+
 }

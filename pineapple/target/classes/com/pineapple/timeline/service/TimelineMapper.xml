@@ -171,6 +171,7 @@
 	<resultMap type="com.pineapple.timeline.service.Message" id="selectMypageMessagelistResultMapper">
 		<id property="msgCode" column="msgCode"/>
 		<result property="msgTitle" column="msgTitle"/>
+		<result property="msgContent" column="msgContent"/>
 		<result property="msgCheck" column="msgCheck"/>
 		<result property="msgSendId" column="msgSendId"/>
 		<result property="msgReceiveId" column="msgReceiveId"/>
@@ -188,12 +189,19 @@
 			   m.msgReceiveId,
 			   m.msgTime,
 			   u.name,
-			   u.nickname 
+			   u.nickname
 		FROM message m 
 		INNER JOIN user u 
 		ON m.msgSendId = u.userId 
 		WHERE msgReceiveId = #{msgReceiveId}
 		ORDER BY m.msgTime DESC
 	</select>
+	<!-- 메세지 연람시 check -->
+	<update id="updateMypageMessageopencheck" parameterType="INT">
+		UPDATE message
+			SET
+			msgCheck=1
+		WHERE msgCode = #{msgCode}
+	</update>
 	
 </mapper>

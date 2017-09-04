@@ -35,12 +35,33 @@
 	<c:import url="/resources/module/topmenu.jsp"/>
 <!-- 본문 -->
 <!-- 펀딩 리스트 -->
-<div class="row fdlist-main container text-center">
+<div class="row fdlist-main text-center" style="padding: 0px;">
+<div class="col-md-12" id="menubar" style="padding: 0px">
+	<div class="col-md-2" style="padding: 0px 0px 0px 0px; text-align: center; margin-left: auto; margin-right: auto;">
+			<ul style="font-size: 20px; list-style: none; height: 100%; width: 100%; border: 1.5px solid #009442; border-radius: 5px; padding: 10px; text-align: center;">
+				<li class="messagenav"><a class="messagenav1" dataCode="messagesend" href="#">메뉴</a></li>
+				<li class="messagenav"><a class="messagenav1" dataCode="receivelist" href="#">BAR</a></li>
+				<li class="messagenav"><a class="messagenav1" dataCode="sendlist" href="#">옴</a></li>
+			</ul>
+	</div>
+	<div class="col-md-10" style="padding: 0px;">
 	<c:forEach var="list" items="${fundingList}">
- 	<div class="col-xs-4 well fdlist-box">
-		<a href="/pineapple/investfunding.invest?fdCode=${list.fdCode}">
-			<img src="${pageContext.request.contextPath}/resources/img/invest/fundingone.jpg"width="303px" height="171px" >
+	<c:set var="poster" value="${list.posterImg}"></c:set>
+ 	<div class="col-md-4 fdlist-box" style="padding: 0px; margin: auto;">
+ 		<div class="col-md-12" style="padding: 0px 10px; margin-bottom: 20px;">
+ 		<div class="col-md-12" style="border: 1.5px solid #009442; padding: 0px;">
+ 		<c:choose>
+ 		<c:when test="${poster == null}">
+ 		<a href="/pineapple/investfunding.invest?fdCode=${list.fdCode}">
+			<img src="${pageContext.request.contextPath}/resources/files/insertnotsum.jpg"width="100%" style="padding: 0.75px;">
 		</a>
+ 		</c:when>
+ 		<c:otherwise>
+		<a href="/pineapple/investfunding.invest?fdCode=${list.fdCode}">
+			<img src="${pageContext.request.contextPath}/resources/files${poster.substring(poster.lastIndexOf('/'),poster.length())}"width="100%" style="padding: 0.75px;">
+		</a>
+		</c:otherwise>
+		</c:choose>
 		<div>
 		<h4 class="fdlist-title">
 			<div>${list.fdTitle}</div>
@@ -49,18 +70,24 @@
 		<div class="fdlist-comname">
 			${list.comName}
 		</div>
-		<div class="fdlist-data pd-a-10">
-			구입한 주식합 = ${list.total}
-			판매하는 주식 = ${list.numberOfShares}
-		<div class="progress bor-defult">
+		<div class="fdlist-data" style="width: 100%">
+		<div class="col-xs-12" style="padding: 0px 10px">
+			<div style="float: left;">${list.minInvestMoney*list.numberOfShares}원 달성</div><div style="float: right;">${list.days}남음</div>
+		</div>
+		<div class="col-md-12" style="padding: 0px 10px 0px 10px;">
+		<div class="progress bor-defult" style="margin-bottom: 10px;">
   				<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ${(list.total/list.numberOfShares)*100}%; min-width: 3em; max-width: 100%;">
     				${(list.total/list.numberOfShares)*100}%
   				</div>
 		</div>
-
+		</div>	
+		</div>
+	</div>
 	</div>
 	</div>
 	</c:forEach>
+	</div>
+	</div>
 </div>
 <!-- 풋터 -->
 	<c:import url="/resources/module/footer.jsp"/>
