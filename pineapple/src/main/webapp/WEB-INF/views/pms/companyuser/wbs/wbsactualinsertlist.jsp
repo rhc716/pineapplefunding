@@ -27,6 +27,70 @@
 <!-- css lsk -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lsk.css" />
  
+ 
+ <script>
+/* 마일스톤 리스트 불러올 ajax */
+$(document).ready(function(){
+	var wbsplanlist = $.ajax({
+		type : "post",
+		url : "/pineapple/Wbsplanlist.pms",
+		/* 아이디 세션에서 받아서 가져옴 */
+		data : { milestoneCode : "${milestoneCode}" }
+	});
+	// 성공시
+	wbsplanlist.done(function(msg){
+		console.log(msg);
+		
+		/* 날짜를 yyyy-mm-dd 형태로 바꿔주는 함수 */
+		function formatDate(date) {
+		    var d = new Date(date),
+		        month = '' + (d.getMonth() + 1),
+		        day = '' + d.getDate(),
+		        year = d.getFullYear();
+
+		    if (month.length < 2) month = '0' + month;
+		    if (day.length < 2) day = '0' + day;
+
+		    return [year, month, day].join('-');
+		}
+		
+		//alert(formatDate(msg[0].fdDate));
+		//펀딩리스트를 myfundinglist에 채워줌 // 수정버튼과 모달창, 삭제버튼을 만들어줌
+		for(var i = 0; i<msg.length; i++){
+			
+				$('#mywbsplanlist').append(
+						'<div class="col-lg-4 well">'
+		 				+'<div>'		
+		 				+'wbs순서:'+msg[i].wbsPlanOrder+'<br>'
+		 				+'wbs이름 :'+msg[i].wbsPlanName+'<br>'
+		 				+'<form action="/pineapple/insertwbsactual.pms" method="post">'
+		 				+'<input type="hidden" name="wbsActualFdCode" value="'+msg[i].wbsPlanFdCode+'"/>'
+		 				+'<input type="hidden" name="wbsActualMsCode" value="'+msg[i].wbsPlanMsCode+'"/>'
+		 				+'<input type="hidden" name="wbsPlanAcCode" value="'+msg[i].wbsPlanCode+'"/>'
+		 				+'<input type="hidden" name="wbsActualComCode" value="'+msg[i].wbsPlanComCode+'"/>'
+		 				+'<input type="hidden" name="wbsActualName" value="'+msg[i].wbsPlanName+'"/>'
+		 				+'<input type="hidden" name="wbsActualWriteManager" value="'+msg[i].wbsPlanManager+'"/>'
+		 				+'wbs순서:'+msg[i].wbsPlanOrder+'<br>'
+		 				+'wbs이름 :'+msg[i].wbsPlanName+'<br>'
+		 				+'<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">'
+		 				+'<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">'
+		 				+'<input type="hidden" readonly="readonly"  name="milestoneCode" value="${milestoneCode}">'
+		 				+'<input type="hidden" readonly="readonly"  name="milestoneName" value="${milestoneName}">'
+		 				+'<input type="hidden" readonly="readonly"  name="msComCode" value="${msComCode}">'
+		 				+'<button type="submit" class="btn btn-primary btn-sm" name="btn" value="detail">실제wbs 입력</button>'	
+		 				+'</form>'	
+		 				+'</div>'
+		 				+'</div>'
+				);
+		}
+	});
+	// 실패시
+	wbsplanlist.fail(function(){
+		alert('ajax통신실패');
+	});
+});
+</script>
+
 </head>
 <body>
 
@@ -82,8 +146,8 @@
 				    </ul>
 				</div>
 			</div>
-				<div class="col-md-7">
-					<c:forEach var="list" items="${wbsplan}">
+				<div class="col-md-7" id="mywbsplanlist">
+					<%-- <c:forEach var="list" items="${wbsplan}">
 			 			<div class="col-lg-4 well">
 				 				<div>				 				
 					 				wbs순서:${list.wbsPlanOrder}<br>
@@ -106,7 +170,7 @@
 								</form>	
 							</div>
 						</div>
-					</c:forEach>
+					</c:forEach> --%>
 				</div>
 			<div class="col-md-1"></div>
 		</div>

@@ -13,12 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.pineapple.pms.service.PmsService;
 import com.pineapple.pms.service.WbsActual;
-import com.pineapple.pms.service.WbsMs;
 import com.pineapple.pms.service.WbsPlan;
 import com.pineapple.pms.service.WbsPlanEtc;
 import com.pineapple.pms.service.WbsPlanFacility;
@@ -26,7 +22,6 @@ import com.pineapple.pms.service.WbsPlanHuman;
 import com.pineapple.pms.service.WbsPlanIncome;
 import com.pineapple.pms.service.WbsPlanMaterial;
 import com.pineapple.pms.service.WbsPlanOut;
-import com.pineapple.pms.service.WbsPlanView;
 import com.pineapple.pms.service.WbsPlanUpdate;
 
 @Controller
@@ -46,33 +41,23 @@ public class PmsController {
 		String milestoneName = request.getParameter("milestoneName");
 		String msComCode = request.getParameter("msComCode");
 		String btn = request.getParameter("btn");
+		model.addAttribute("fdCode", fdCode);
+		model.addAttribute("fdTitle", fdTitle);
+		model.addAttribute("milestoneCode", milestoneCode);
+		model.addAttribute("milestoneName", milestoneName);
+		model.addAttribute("msComCode", msComCode);
 		if(btn.equals("WBS예상입력")){
-			model.addAttribute("fdCode", fdCode);
-			model.addAttribute("fdTitle", fdTitle);
-			model.addAttribute("milestoneCode", milestoneCode);
-			model.addAttribute("milestoneName", milestoneName);
-			model.addAttribute("msComCode", msComCode);
 			log.debug("펀딩코드"+fdCode+"펀딩명"+fdTitle+"마일스톤코드"+milestoneCode+"마일스톤명"+milestoneName+"회사코드"+msComCode);
 			return "pms/companyuser/wbs/wbsplaninsert";
 		}else if(btn.equals("WBS예상리스트")){
-			List<WbsPlan> wbsplan = service.wbsplanlist(milestoneCode);
+			/*List<WbsPlan> wbsplan = service.wbsplanlist(milestoneCode);
 			log.debug("wbsplan리스트  = "+wbsplan);
-			model.addAttribute("wbsplan", wbsplan);
-			model.addAttribute("fdCode", fdCode);
-			model.addAttribute("fdTitle", fdTitle);
-			model.addAttribute("milestoneCode", milestoneCode);
-			model.addAttribute("milestoneName", milestoneName);
-			model.addAttribute("msComCode", msComCode);
+			model.addAttribute("wbsplan", wbsplan);*/
 			return "pms/companyuser/wbs/wbsplanlist2";
 		}else if(btn.equals("WBS실제입력")){
-			List<WbsPlan> wbsplan = service.wbsplanlist(milestoneCode);
+			/*List<WbsPlan> wbsplan = service.wbsplanlist(milestoneCode);
 			log.debug("wbsplan리스트  = "+wbsplan);
-			model.addAttribute("wbsplan", wbsplan);
-			model.addAttribute("fdCode", fdCode);
-			model.addAttribute("fdTitle", fdTitle);
-			model.addAttribute("milestoneCode", milestoneCode);
-			model.addAttribute("milestoneName", milestoneName);
-			model.addAttribute("msComCode", msComCode);
+			model.addAttribute("wbsplan", wbsplan);*/
 			return "pms/companyuser/wbs/wbsactualinsertlist";
 		}else{
 			return "";
@@ -210,36 +195,18 @@ public class PmsController {
 		String fdcode = request.getParameter("fdCode");
 		String fdtitle = request.getParameter("fdTitle");
 		log.debug("펀딩코드 "+fdcode);
-		List<WbsMs> mslist = service.wbsmsview(fdcode);
-		log.debug("마일스톤 "+mslist);
-		model.addAttribute("mslist", mslist );
+		//List<WbsMs> mslist = service.wbsmsview(fdcode);
+		//log.debug("마일스톤 "+mslist);
+		//model.addAttribute("mslist", mslist );
 		model.addAttribute("fdTitle", fdtitle );
 		model.addAttribute("fdCode", fdcode );;
 		return "pms/companyuser/wbs/wbsmslist";
 	}
-	//wbsplan 리스트내용 불러오기
-	@RequestMapping(value = "/wbsplanlist.pms", method = RequestMethod.GET)
-	public @ResponseBody List<WbsPlanView> getMyWbsPlanList(Locale locale, Model model, @RequestParam("userId") String userId) {
-		log.debug("userId : " + userId);
-		log.debug("PmsController의 wbsplanlist호출 성공");
-		log.debug("컨트롤러에서 받은 리턴값 : " + service.getMyWbsPlanList(userId));;
-		return service.getMyWbsPlanList(userId);
-	}
-	
 	//wbsactual 리스트페이지 불러오기
 	@RequestMapping(value = "/wbsactuallistform.pms", method = RequestMethod.GET)
 	public String wbsactuallistform(Locale locale, Model model) {
 		log.debug("PmsController의 wbsactuallistform호출 성공");
 		return "pms/companyuser/wbs/wbsactuallist";
-	}
-	
-	//wbsactual 리스트내용 불러오기
-	@RequestMapping(value = "/wbsactuallist.pms", method = RequestMethod.GET)
-	public @ResponseBody List<WbsActual> wbsactuallist(Locale locale, Model model, @RequestParam("userId") String userId) {
-		log.debug("userId : " + userId);
-		log.debug("PmsController의 wbsactuallist호출 성공");
-		log.debug("컨트롤러에서 받은 리턴값 : " + service.wbsactuallist(userId));;
-		return service.wbsactuallist(userId);
 	}
 	
 	// wbsplan 인원 상세보기 리스트 페이지
@@ -676,5 +643,4 @@ public class PmsController {
 			return "pms/companyuser/wbs/wbsplanincomelist";
 		}
 		
-
 }

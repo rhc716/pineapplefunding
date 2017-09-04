@@ -8,8 +8,6 @@ public interface PmsServiceInterface {
 	// wbsplan 생성 메서드
 	void addWbsplan(WbsPlan wbsplan);
 
-	List<WbsPlanView> getMyWbsPlanList(String userId);
-
 	WbsPlan getMyWbsPlanDetail(String wbsplancode);
 
 	void addWbsplanhuman(WbsPlanHuman wbsplanhuman);
@@ -69,8 +67,6 @@ public interface PmsServiceInterface {
 	void wbsplanupdateetc(HashMap map);
 
 	void wbsactualinsert(WbsActual wbsactual);
-
-	List<WbsActual> wbsactuallist(String userId);
 
 	WbsActual wbsactualdetail(String wbsplancode);
 

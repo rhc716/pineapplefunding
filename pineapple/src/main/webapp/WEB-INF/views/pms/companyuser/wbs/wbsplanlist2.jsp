@@ -26,6 +26,88 @@
 <!-- css lsk -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lsk.css" />
 
+ <script>
+/* 마일스톤 리스트 불러올 ajax */
+$(document).ready(function(){
+	var wbsplanlist = $.ajax({
+		type : "post",
+		url : "/pineapple/Wbsplanlist.pms",
+		/* 아이디 세션에서 받아서 가져옴 */
+		data : { milestoneCode : "${milestoneCode}" }
+	});
+	// 성공시
+	wbsplanlist.done(function(msg){
+		console.log(msg);
+		
+		/* 날짜를 yyyy-mm-dd 형태로 바꿔주는 함수 */
+		function formatDate(date) {
+		    var d = new Date(date),
+		        month = '' + (d.getMonth() + 1),
+		        day = '' + d.getDate(),
+		        year = d.getFullYear();
+
+		    if (month.length < 2) month = '0' + month;
+		    if (day.length < 2) day = '0' + day;
+
+		    return [year, month, day].join('-');
+		}
+		
+		//alert(formatDate(msg[0].fdDate));
+		//펀딩리스트를 myfundinglist에 채워줌 // 수정버튼과 모달창, 삭제버튼을 만들어줌
+		for(var i = 0; i<msg.length; i++){
+			
+				$('#mywbsplanlist').append(
+			 			'<div class="col-lg-4 well">'
+		 				+'<div>'
+		 				+'wbs순서:'+msg[i].wbsPlanOrder+'<br>'
+		 				+'wbs이름 :'+msg[i].wbsPlanName+'<br>'
+		 				+'<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#'+msg[i].wbsPlanCode+'">수정</button>'
+		 				+'<form action="/pineapple/wbsplandetail.pms" method="post">'
+		 				+'<button type="submit" class="btn btn-danger btn-sm" name="btn" value="delete">삭제</button>'
+		 				+'<button type="submit" class="btn btn-primary btn-sm" name="btn" value="detail">상세정보</button>'				 				
+		 				+'<div class="modal fade" id="'+msg[i].wbsPlanCode+'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">'
+		 				+'<div class="modal-dialog" role="document">'
+		 				+'<div class="modal-content">'
+		 				+'<div class="modal-body">'
+		 				+'<label for="wbsplan">WBS수정</label><br>'
+		 				+'작업명:'
+		 				+'<input type="text" class="form-control" name="wbsPlanName" value="'+msg[i].wbsPlanName+'"/>'
+		 				+'선행작업:'
+		 				+'<input type="number" class="form-control" name="wbsPlanDependency" value="'+msg[i].wbsPlanDependency+'"/>'
+		 				+'작업기간:'
+		 				+'<input type="number" class="form-control" name="wbsPlanDuration" value="'+msg[i].wbsPlanDuration+'"/>'
+		 				+'시작일:<br>'
+		 				+'<input type="date" name="wbsPlanStartDate" value="'+msg[i].wbsPlanStartDate+'"/><br>'
+		 				+'담당자ID:'
+		 				+'<input type="text" class="form-control" name="wbsPlanManager" value="'+msg[i].wbsPlanManager+'"/><br>'
+		 				+'<input type="hidden" name="wbsPlanCode" value="'+msg[i].wbsPlanCode+'"/>'
+		 				+'<input type="hidden" class="form-control" name="wbsPlanComCode" value="'+msg[i].wbsPlanComCode+'">'
+		 				+'<input type="hidden" class="form-control" name="wbsPlanFdCode" value="'+msg[i].wbsPlanFdCode+'">'
+		 				+'<input type="hidden" class="form-control" name="wbsPlanOrder" value="'+msg[i].wbsPlanOrder+'">'
+		 				+'<input type="hidden" class="form-control" name="wbsPlanMsCode" value="'+msg[i].wbsPlanMsCode+'">'
+		 				+'<input type="hidden" class="form-control" name="wbsPlanChange" value="'+msg[i].wbsPlanChange+'">'
+		 				+'<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">'
+		 				+'<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">'
+		 				+'<input type="hidden" readonly="readonly"  name="milestoneCode" value="${milestoneCode}">'
+		 				+'<input type="hidden" readonly="readonly"  name="milestoneName" value="${milestoneName}">'
+		 				+'<input type="hidden" readonly="readonly"  name="msComCode" value="${msComCode}">'
+		 				+'<button type="submit" name="btn" value="update">입력완료</button>'
+		 				+'</div>'
+		 				+'</div>'
+		 				+'</div>'
+		 				+'</div>'
+		 				+'</form>'
+		 				+'</div>'
+		 				+'</div>'
+				);
+		}
+	});
+	// 실패시
+	wbsplanlist.fail(function(){
+		alert('ajax통신실패');
+	});
+});
+</script>
  
 </head>
 <body>
@@ -82,52 +164,8 @@
 				    </ul>
 				</div>
 			</div>
-				<div class="col-md-7">
-					<c:forEach var="list" items="${wbsplan}">
-			 			<div class="col-lg-4 well">
-				 				<div>
-				 				
-				 				wbs순서:${list.wbsPlanOrder}<br>
-				 				wbs이름 :${list.wbsPlanName}<br>
-				 				<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#${list.wbsPlanCode}">수정</button>
-				 				<form action="/pineapple/wbsplandetail.pms" method="post">
-				 					<button type="submit" class="btn btn-danger btn-sm" name="btn" value="delete">삭제</button>
-				 					<button type="submit" class="btn btn-primary btn-sm" name="btn" value="detail">상세정보</button>				 				
-					 				<div class="modal fade" id="${list.wbsPlanCode}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-										<div class="modal-dialog" role="document">
-											<div class="modal-content">
-												<div class="modal-body">
-													<label for="wbsplan">WBS수정</label><br>
-													작업명:
-													<input type="text" class="form-control" name="wbsPlanName" value="${list.wbsPlanName}"/>
-													선행작업:
-													<input type="number" class="form-control" name="wbsPlanDependency" value="${list.wbsPlanDependency}"/>
-													작업기간:
-													<input type="number" class="form-control" name="wbsPlanDuration" value="${list.wbsPlanDuration}"/>
-													시작일:<br>
-													<input type="date" name="wbsPlanStartDate" value="${list.wbsPlanStartDate}"/><br>
-													담당자ID:
-													<input type="text" class="form-control" name="wbsPlanManager" value="${list.wbsPlanManager}"/><br>
-													<input type="hidden" name="wbsPlanCode" value="${list.wbsPlanCode}"/>
-													<input type="hidden" class="form-control" name="wbsPlanComCode" value="${list.wbsPlanComCode}">
-													<input type="hidden" class="form-control" name="wbsPlanFdCode" value="${list.wbsPlanFdCode}">
-													<input type="hidden" class="form-control" name="wbsPlanOrder" value="${list.wbsPlanOrder}">
-													<input type="hidden" class="form-control" name="wbsPlanMsCode" value="${list.wbsPlanMsCode}">
-													<input type="hidden" class="form-control" name="wbsPlanChange" value="${list.wbsPlanChange}">
-													<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
-													<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
-													<input type="hidden" readonly="readonly"  name="milestoneCode" value="${milestoneCode}">
-													<input type="hidden" readonly="readonly"  name="milestoneName" value="${milestoneName}">
-													<input type="hidden" readonly="readonly"  name="msComCode" value="${msComCode}">
-													<button type="submit" name="btn" value="update">입력완료</button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</form>	
-							</div>
-						</div>
-					</c:forEach>
+				<!-- wbs리스트 부분  -->
+				<div class="col-md-7" id="mywbsplanlist">
 				</div>
 			<div class="col-md-1"></div>
 		</div>
