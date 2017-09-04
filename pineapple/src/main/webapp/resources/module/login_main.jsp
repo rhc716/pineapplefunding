@@ -37,15 +37,15 @@
 	               <div class="clearfix"></div>
 	            </div>
 	            <a href="/pineapple/mypage.user" class="list-group-item">
-	               <i class="fa fa-user fa-lg pull-right"></i>
+	               <i class="fa fa-user fa-lg pull-right" style="color: #009442;"></i>
 	               <p class="list-group-item-text">${nickname}님의 마이페이지</p>
 	            </a>
 	            <a href="" class="list-group-item">
-	               <i class="fa fa-bar-chart-o fa-lg pull-right"></i>
+	               <i class="glyphicon glyphicon-envelope pull-right" style="color: #01619d;"></i>
 	               <p class="list-group-item-text">메세지</p>
 	            </a>
 	            <a href="/pineapple/logout.user" class="list-group-item">
-	               <i class="fa fa-wrench fa-lg pull-right"></i>
+	               <i class="glyphicon glyphicon-off pull-right logouttxt"></i>
 	               <p class="list-group-item-text">로그아웃</p>
 	            </a>
 			</div>
@@ -75,7 +75,7 @@
 	<button type="submit" class="btn btn-sm btn-success" style="float:left; padding:2px 2px;">관리자 로그인</button>
 	</form>
 	<form id="loginForm" action="/pineapple/login.user"  method="post">
-					<input type="hidden" name="id" value="investor@maver.com">
+					<input type="hidden" name="id" value="id02@maver.com">
 					<input type="hidden" name="pw" value="asdf1234">
 	<button type="submit" class="btn btn-sm btn-success" style="float:left; padding:2px 2px;">투자자 로그인</button>
 	</form>

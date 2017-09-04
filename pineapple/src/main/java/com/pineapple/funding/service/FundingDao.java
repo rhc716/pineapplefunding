@@ -204,21 +204,29 @@ public class FundingDao implements FundingDaoInterface {
 	
 	// pmsmain.jsp 에서 권한별로 필요한 정보의 리스트를 가져옴
 	@Override
-	public List<Object> selectProjectInfoList(String userId,
-			String level) {
+	public List<Object> selectProjectInfoList(String userId, String level) {
 		log.debug("FundingDao의 selectProjectInfoList호출 성공");
+		List<Object> list = new ArrayList<Object>();
 		if(level.equals("관리자")){
 			// 총회원수, 총기업회원수, 총투자자회원수, 총회사수를 가져옴
-			List<Object> list = sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListAdminFirst");
+			list.add(sqlSessionTemplate.selectOne("com.pineapple.funding.service.FundingMapper.selectProjectInfoListAdminFirst"));
 			// 총펀딩수, 모집중인 펀딩수, 개설요청중인 펀딩수, 진행중인 펀딩수를 가져옴
-			list.addAll(1, sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListAdminSecond"));
-			return list;
+			list.add(sqlSessionTemplate.selectOne("com.pineapple.funding.service.FundingMapper.selectProjectInfoListAdminSecond"));
 		} else if(level.equals("기업회원")){
+			// 자신이 속한 회사의 총 펀딩수, 모집중인 펀딩수, 진행중인 펀딩수를 가져옴
+			list.add(sqlSessionTemplate.selectOne("com.pineapple.funding.service.FundingMapper.selectProjectInfoListComUserFirst", userId));
 			// 기업회원이 소속된 회사명과 직급 리스트를 가져옴
-			List<Object> list = sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListComUserFirst", userId);
-			return list;
+			list.add(sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListComUserSecond", userId));
+			// 펀딩상태가 모집중 or 결제모집중 or 진행중 펀딩과 펀딩내 권한을 세트로 가져옴
+			list.add(sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListComUserThird", userId));
 		} else {//투자자
-			return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListInvestor", userId);
+			// 투자한 펀딩리스트중 마감이 아닌 펀딩리스트를 가져옴
+			list.add(sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListInvestorFirst", userId));
+			// 투자한 투자총액, 총투자건수, 진행중인 투자수, 진행중인 펀딩의 투자금액을 가져옴
+			list.add(sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListInvestorSecond", userId));
+			// 배당총액, 진행중인 펀딩의 현재까지 배당금액총액 가져옴
+			//list.add(sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListInvestorThird", userId));
 		}
+		return list;
 	}
 }

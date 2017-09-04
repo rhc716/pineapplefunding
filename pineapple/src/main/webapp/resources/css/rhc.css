@@ -14,7 +14,12 @@
 .pmsmainpagecontent b{
 	color : #337ab7;
 }
-
+.gold{
+	color:#d49e0a;
+}
+.green{
+	color: #009442;
+}
 .pmsmainboxbottom {
 	background-color: #01022c;
 	color: #1cd1bd;

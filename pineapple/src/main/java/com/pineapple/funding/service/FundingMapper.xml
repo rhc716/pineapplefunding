@@ -28,39 +28,20 @@
 		<result property="fdRecruitingCount" column="fdRecruitingCount"/>
 		<result property="fdProceedingCount" column="fdProceedingCount"/>
 		<collection property="comList" ofType="com.pineapple.user.service.CompanyAndRank">
-        	<result property="ComCode" column="ComCode"/>
+        	<result property="comCode" column="comCode"/>
         	<result property="comName" column="comName"/>
         	<result property="rankName" column="rankName"/>
+        	<result property="emDepartment" column="emDepartment"/> 
         </collection>
-        <collection property="FdList" ofType="com.pineapple.funding.service.Funding">
-			<id property="fdCode" column="fdCode"/>
-			<result property="fdComCode" column="fdComCode"/>
-			<result property="fdTitle" column="fdTitle"/>
-			<result property="minInvestMoney" column="minInvestMoney"/>
-			<result property="numberOfShares" column="numberOfShares"/>
-			<result property="issuePrice" column="issuePrice"/>
-			<result property="openDate" column="openDate"/>
-			<result property="closeDate" column="closeDate"/>
-			<result property="minInterestRate" column="minInterestRate"/>
-			<result property="fdType" column="fdType"/>
-			<result property="fdStatus" column="fdStatus"/>
-			<result property="projectStartDate" column="projectStartDate"/>
-			<result property="projectEndDate" column="projectEndDate"/>
-			<result property="posterImg" column="posterImg"/>
-			<result property="fdPublisher" column="fdPublisher"/>
-			<result property="adminApproval" column="adminApproval"/>
-			<result property="fdApprovalDate" column="fdApprovalDate"/>
-			<result property="fdApprovalId" column="fdApprovalId"/>
-			<result property="fdDate" column="fdDate"/>
-		</collection>
 		<collection property="FundingAndFdAuthList" ofType="com.pineapple.funding.service.FundingAndFdAuth">
 			<result property="fdCode" column="fdCode"/>
 			<result property="fdComCode" column="fdComCode"/>
+			<result property="emComName" column="emComName"/>
 			<result property="fdTitle" column="fdTitle"/>
+			<result property="fdStatus" column="fdStatus"/>
 			<result property="authLevelName" column="authLevelName"/>
 		</collection>
 	</resultMap>
-	
 	<!-- 투자자회원 -->
 	<resultMap type="com.pineapple.funding.service.InfomationForPmsMainViewOfInvestorUser" 
 	id="InfomationForPmsMainViewOfInvestorUser">
@@ -70,7 +51,7 @@
 		<result property="proceedingInvestmentCount" column="proceedingInvestmentCount"/>
 		<result property="proceedingFdInvestMoney" column="proceedingFdInvestMoney"/>
 		<result property="proceedingFdDevidendMoney" column="proceedingFdDevidendMoney"/>
-		<collection property="fdBookingList" ofType="com.pineapple.funding.service.Funding">
+		<collection property="fdList" ofType="com.pineapple.funding.service.FundingAndInvestment">
 			<id property="fdCode" column="fdCode"/>
 			<result property="fdComCode" column="fdComCode"/>
 			<result property="fdTitle" column="fdTitle"/>
@@ -90,27 +71,12 @@
 			<result property="fdApprovalDate" column="fdApprovalDate"/>
 			<result property="fdApprovalId" column="fdApprovalId"/>
 			<result property="fdDate" column="fdDate"/>
-		</collection>
-		<collection property="fdInvestingList" ofType="com.pineapple.funding.service.Funding">
-			<id property="fdCode" column="fdCode"/>
-			<result property="fdComCode" column="fdComCode"/>
-			<result property="fdTitle" column="fdTitle"/>
-			<result property="minInvestMoney" column="minInvestMoney"/>
-			<result property="numberOfShares" column="numberOfShares"/>
-			<result property="issuePrice" column="issuePrice"/>
-			<result property="openDate" column="openDate"/>
-			<result property="closeDate" column="closeDate"/>
-			<result property="minInterestRate" column="minInterestRate"/>
-			<result property="fdType" column="fdType"/>
-			<result property="fdStatus" column="fdStatus"/>
-			<result property="projectStartDate" column="projectStartDate"/>
-			<result property="projectEndDate" column="projectEndDate"/>
-			<result property="posterImg" column="posterImg"/>
-			<result property="fdPublisher" column="fdPublisher"/>
-			<result property="adminApproval" column="adminApproval"/>
-			<result property="fdApprovalDate" column="fdApprovalDate"/>
-			<result property="fdApprovalId" column="fdApprovalId"/>
-			<result property="fdDate" column="fdDate"/>
+			<result property="investCode" column="investCode"/>
+			<result property="investFdCode" column="investFdCode"/>
+			<result property="investId" column="investId"/>
+			<result property="purchaseShares" column="purchaseShares"/>
+			<result property="investTime" column="investTime"/>
+			<result property="payCheck" column="payCheck"/>
 		</collection>
 	</resultMap>
 	
@@ -389,17 +355,70 @@
 		, COUNT(CASE when fdStatus="진행중" then 1 end) totalProceedingFundingCount
 		FROM funding
 	</select>
-	<!-- 기업회원 -->
+	<!-- 기업회원 첫번째 -->
 	<select id="selectProjectInfoListComUserFirst" resultMap="InfomationForPmsMainViewOfCompanyUser" parameterType="String">
-		SELECT e.emComCode, c.comName, r.rankName
+		<!-- 자신이 속한 회사의 총 펀딩수, 모집중인 펀딩수, 진행중인 펀딩수를 가져옴 -->
+		SELECT 
+			COUNT(*) fdTotalCount
+			, COUNT(CASE WHEN fdStatus = '모집중' OR fdStatus = '결제모집중' then 1 end) fdRecruitingCount
+			, COUNT(CASE WHEN fdStatus = '진행중' then 1 end) fdProceedingCount
+		FROM
+			(SELECT *
+			FROM employee e INNER JOIN company c
+			ON e.emComCode = c.comCode
+			WHERE e.emUserId = #{userId}) g INNER JOIN funding f
+		ON g.emComCode = f.fdComCode
+	</select>
+	<!-- 기업회원 두번째 -->
+	<select id="selectProjectInfoListComUserSecond" resultMap="InfomationForPmsMainViewOfCompanyUser" parameterType="String">
+		<!-- 소속회사와 직급명 리스트를 가져옴 -->
+		SELECT e.emComCode, e.emDepartment, c.comName, r.rankName
 		FROM employee e INNER JOIN company c INNER JOIN rankcode r
 		ON e.emComCode = c.comCode AND e.emRankCode = r.rankCode
 		WHERE e.emUserId = #{userId}
 	</select>
-	<!-- 투자자 -->
-	<select id="selectProjectInfoListInvestor" resultMap="InfomationForPmsMainViewOfInvestorUser" parameterType="String">
-		
+	<!-- 기업회원 세번째 -->
+	<select id="selectProjectInfoListComUserThird" resultMap="InfomationForPmsMainViewOfCompanyUser" parameterType="String">
+		<!-- 펀딩상태가 모집중 or 결제모집중 or 진행중 펀딩과 펀딩내 권한을 세트로 가져옴 -->
+		SELECT bb.emComName, bb.fdCode, bb.fdTitle, bb.fdStatus, fal.authLevelName
+		FROM
+			(SELECT *
+			FROM
+				(SELECT  *
+				FROM
+					(SELECT *
+					FROM employee e INNER JOIN company c
+					ON e.emComCode = c.comCode
+					WHERE e.emUserId = #{userId}) g INNER JOIN funding f
+				ON g.emComCode = f.fdComCode
+				WHERE fdStatus != '개설요청' AND fdStatus != '마감') aa LEFT JOIN fundingauth fa
+			ON aa.emUserId = fa.authReceiver) bb LEFT JOIN fundingauthlevel fal
+		ON bb.fdAuthLevelCode = fal.authLevelCode
 	</select>
+	<!-- 투자자 첫번째 -->
+	<select id="selectProjectInfoListInvestorFirst" resultMap="InfomationForPmsMainViewOfInvestorUser" parameterType="String">
+		<!-- 투자한 펀딩리스트중 마감이 아닌 펀딩리스트와 투자정보를 가져옴 -->
+		SELECT *
+		FROM funding f INNER JOIN investment i
+		ON f.fdCode = i.investFdCode
+		WHERE i.investId = #{userId} AND f.fdStatus != '마감'
+	</select>
+	<!-- 투자자 두번째 -->
+	<select id="selectProjectInfoListInvestorSecond" resultMap="InfomationForPmsMainViewOfInvestorUser" parameterType="String">
+		<!-- 투자한 투자총액, 총투자건수, 진행중인 투자수, 진행중인 펀딩의 투자금액을 가져옴 -->
+		SELECT
+		SUM(i.purchaseShares*f.issuePrice) totalInvestMoney
+		,COUNT(*) totalInvestmentCount
+		,COUNT(CASE when f.fdStatus = '진행중' then 1 end ) proceedingInvestmentCount
+		,SUM(CASE when f.fdStatus = '진행중' then i.purchaseShares*f.issuePrice end) proceedingFdInvestMoney
+		FROM investment i INNER JOIN funding f
+		ON i.investFdCode = f.fdCode
+		WHERE i.investId = #{userId}
+	</select>
+	<!-- <select id="selectProjectInfoListInvestorThird" resultMap="InfomationForPmsMainViewOfInvestorUser" parameterType="String">
+		배당총액, 진행중인 펀딩의 현재까지 배당금액총액 가져옴
+	
+	</select> -->
 </mapper>
 
  

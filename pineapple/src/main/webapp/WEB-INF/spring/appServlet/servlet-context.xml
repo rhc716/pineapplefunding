@@ -4,7 +4,9 @@
 	xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
@@ -12,8 +14,12 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven  />
+	
 
+	<task:annotation-driven/>
+	
+	
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<!-- 리소스들은 서블릿요청에서 제외해준다. 이미지같은것 불러올때 사용하기 위해 리소스폴더에 넣어줌 -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
@@ -24,6 +30,8 @@
 		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	
+	
 	<!-- 객체를 스프링이 만들어줌 new연산자 없이, com.jjdev.mvc아래에 있는 클래스들은 객체를 만들어주겠다.
 	약속된 어노테이션을 붙여주면. -->
 	<context:component-scan base-package="com.pineapple"/>
@@ -97,6 +105,17 @@
 	<bean id="fileDownloadView" class="com.pineapple.util.FileDownloadView"/>
 	<bean id="fileViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
 	    <property name="order" value="0"/>
+	</bean>
+
+
+	<!-- 스케줄러설정 -->
+	
+	<task:scheduler id="scheduler" pool-size="3"/>
+	<task:scheduled-tasks scheduler="scheduler" >
+	    <task:scheduled ref="Scheduler" method="doJob" cron="0/4 * * * * ?" />
+	</task:scheduled-tasks>
+	
+	<bean id="Scheduler" class="com.pineapple.util.scheduler.Scheduler">
 	</bean>
 	
 </beans>

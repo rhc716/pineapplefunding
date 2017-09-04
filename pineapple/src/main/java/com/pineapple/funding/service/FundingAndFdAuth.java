@@ -6,8 +6,8 @@ public class FundingAndFdAuth {
 	private int fdComCode;
 	private String fdTitle;
 	private String authLevelName;
-	
-	
+	private String emComName;
+	private String fdStatus;
 	
 	
 	public int getFdCode() {
@@ -34,12 +34,27 @@ public class FundingAndFdAuth {
 	public void setAuthLevelName(String authLevelName) {
 		this.authLevelName = authLevelName;
 	}
+	public String getEmComName() {
+		return emComName;
+	}
+	public void setEmComName(String emComName) {
+		this.emComName = emComName;
+	}
+	public String getFdStatus() {
+		return fdStatus;
+	}
+	public void setFdStatus(String fdStatus) {
+		this.fdStatus = fdStatus;
+	}
 	@Override
 	public String toString() {
 		return "FundingAndFdAuth [fdCode=" + fdCode + ", fdComCode=" + fdComCode
 				+ ", fdTitle=" + fdTitle + ", authLevelName=" + authLevelName
-				+ "]";
+				+ ", emComName=" + emComName + ", fdStatus=" + fdStatus + "]";
 	}
+	
+	
+	
 	
 	
 }

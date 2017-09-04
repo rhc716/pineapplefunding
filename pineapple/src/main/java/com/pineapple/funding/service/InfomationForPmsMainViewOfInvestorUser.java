@@ -1,12 +1,11 @@
 package com.pineapple.funding.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InfomationForPmsMainViewOfInvestorUser {
 	//사전예약중인 펀딩리스트
-	private List<Funding> fdBookingList;
-	//투자중인 펀딩리스트 
-	private List<Funding> fdInvestingList;
+	private ArrayList<FundingAndInvestment> fdList;
 	//투자총액
 	private int totalInvestMoney;
 	//배당총액
@@ -22,17 +21,11 @@ public class InfomationForPmsMainViewOfInvestorUser {
 	
 	
 	
-	public List<Funding> getFdBookingList() {
-		return fdBookingList;
+	public List<FundingAndInvestment> getFdList() {
+		return fdList;
 	}
-	public void setFdBookingList(List<Funding> fdBookingList) {
-		this.fdBookingList = fdBookingList;
-	}
-	public List<Funding> getFdInvestingList() {
-		return fdInvestingList;
-	}
-	public void setFdInvestingList(List<Funding> fdInvestingList) {
-		this.fdInvestingList = fdInvestingList;
+	public void setFdList(ArrayList<FundingAndInvestment> fdList) {
+		this.fdList = fdList;
 	}
 	public int getTotalInvestMoney() {
 		return totalInvestMoney;
@@ -72,11 +65,9 @@ public class InfomationForPmsMainViewOfInvestorUser {
 	}
 	
 	
-	
 	@Override
 	public String toString() {
-		return "InfomationForPmsMainViewOfInvestorUser [fdBookingList="
-				+ fdBookingList + ", fdInvestingList=" + fdInvestingList
+		return "InfomationForPmsMainViewOfInvestorUser [fdList=" + fdList
 				+ ", totalInvestMoney=" + totalInvestMoney
 				+ ", totalDevidendMoney=" + totalDevidendMoney
 				+ ", totalInvestmentCount=" + totalInvestmentCount
@@ -85,8 +76,5 @@ public class InfomationForPmsMainViewOfInvestorUser {
 				+ ", proceedingFdDevidendMoney=" + proceedingFdDevidendMoney
 				+ "]";
 	}
-	
-	
-	
 	
 }

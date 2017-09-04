@@ -9,7 +9,6 @@ public class InfomationForPmsMainViewOfCompanyUser {
 	//소속된 회사리스트
 	private ArrayList<CompanyAndRank> comList;
 	//펀딩상태가 모집중 or 결제모집중 or 진행중 펀딩 (개설요청, 마감이 아닌 것)
-	private ArrayList<Funding> FdList;
 	private int fdTotalCount;
 	private int fdRecruitingCount;
 	private int fdProceedingCount;
@@ -30,12 +29,6 @@ public class InfomationForPmsMainViewOfCompanyUser {
 	}
 	public void setComList(ArrayList<CompanyAndRank> comList) {
 		this.comList = comList;
-	}
-	public ArrayList<Funding> getFdList() {
-		return FdList;
-	}
-	public void setFdList(ArrayList<Funding> fdList) {
-		FdList = fdList;
 	}
 	public int getFdTotalCount() {
 		return fdTotalCount;
@@ -58,7 +51,7 @@ public class InfomationForPmsMainViewOfCompanyUser {
 	@Override
 	public String toString() {
 		return "InfomationForPmsMainViewOfCompanyUser [comList=" + comList
-				+ ", FdList=" + FdList + ", fdTotalCount=" + fdTotalCount
+				+ ", fdTotalCount=" + fdTotalCount
 				+ ", fdRecruitingCount=" + fdRecruitingCount
 				+ ", fdProceedingCount=" + fdProceedingCount
 				+ ", FundingAndFdAuthList=" + FundingAndFdAuthList + "]";

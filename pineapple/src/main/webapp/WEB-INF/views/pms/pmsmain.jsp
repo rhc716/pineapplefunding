@@ -45,8 +45,8 @@ $(document).ready(function(){
 	//성공시
 	getprojectinfolist.done(function(msg){
 		console.log(msg);
-		// ajax통신에서 불러온 리스트의 값이 관리자권한의 경우에만 있는 값(totalUserCount) => 관리자 권한
-		if(msg[0].totalUserCount!=null){
+		// 관리자 권한
+		if($('#userlevel').val()=="관리자"){
 			$('#totalUserCount').append(msg[0].totalUserCount+'명');
 			$('#totalComCount').append(msg[0].totalComCount+'명');
 			$('#totalInvestorUserCount').append(msg[0].totalInvestorUserCount+'명');
@@ -88,13 +88,82 @@ $(document).ready(function(){
 			  data: chartData
 			});
 			
-		// ajax통신에서 불러온 리스트의 값이 기업회원 권한의 경우에만 있는 값(totalUserCount) => 관리자 권한
-		} else if(msg[0].comList!=null){
-			for(var i=0; i<msg.length; i++){
-				$('#comName').append(msg[i].comList[0].comName+"사의 "
-						+msg[i].comList[0].rankName+"<br>");
-				
+		// 기업회원 권한
+		} else if($('#userlevel').val()=="기업회원"){
+			for(var i=0; i<msg[1].length; i++){
+				$('#comName').append("<i class=\"glyphicon glyphicon-user green\"/> "
+									+msg[1][i].comList[0].comName+"사의 "
+									+msg[1][i].comList[0].emDepartment+"소속 "
+									+msg[1][i].comList[0].rankName+"<br>");
 			}
+			$('#fdTotalCount').append(msg[0].fdTotalCount);
+			$('#fdRecruitingCount').append(msg[0].fdRecruitingCount);
+			$('#fdProceedingCount').append(msg[0].fdProceedingCount);
+			
+			for(var j=0; j<msg[2].length; j++){
+				// 리스트가 어떻게 들어왔는지 출력해봄
+				// console.log(msg[2][j].fundingAndFdAuthList[0]);
+				var fdlist = msg[2][j].fundingAndFdAuthList[0];
+				
+				if(fdlist.authLevelName!=null){
+					// 펀딩내 권한부여가 있는 회원일때
+					$('#fdAuth').append("<i class=\"glyphicon glyphicon-briefcase\"/>"
+										+fdlist.emComName+"사의 "
+										+fdlist.fdTitle+"의 "
+										+fdlist.authLevelName+"권한<br>");
+				}
+				
+				if(fdlist.fdStatus=="모집중" 
+						|| fdlist.fdStatus=="결제모집중" ){
+					// 모집중인 펀딩
+					$('#recruitingFd').append("<i class=\"glyphicon glyphicon-piggy-bank gold\"/> "
+											+fdlist.emComName+"사의 "
+											+fdlist.fdTitle+"<br>");
+				} else {
+					// 진행중인 펀딩
+					$('#proceedingFd').append("<i class=\"glyphicon glyphicon-piggy-bank gold\"/> "
+											+fdlist.emComName+"사의 "
+											+fdlist.fdTitle+"<br>");
+				}
+			}
+		// 투자자 권한
+		} else if($('#userlevel').val()=="투자자") {
+			//console.log(msg[0][0].fdList[0])
+			for(var i=0; i<msg[0].length; i++){
+				var investFdList = msg[0][i].fdList[0];
+				
+				//결제전 펀딩목록
+				if(investFdList.fdStatus=="모집중" 
+						|| investFdList.fdStatus=="결제모집중") {
+					$('#bookingFd').append("<i class=\"glyphicon glyphicon-piggy-bank gold\"/> "
+											+investFdList.fdTitle
+											+" <i class=\"glyphicon glyphicon-menu-left\"/>"
+											+investFdList.fdType
+											+investFdList.purchaseShares
+											+"주 <i class=\"glyphicon glyphicon-menu-right\"/>"
+											+"<br>");
+					
+				//결제후 펀딩목록	
+				} else if(investFdList.fdStatus=="진행중") {
+					$('#investingFd').append("<i class=\"glyphicon glyphicon-piggy-bank gold\"/> "
+											+investFdList.fdTitle
+											+" <i class=\"glyphicon glyphicon-menu-left\"/>"
+											+investFdList.fdType
+											+investFdList.purchaseShares
+											+"주 <i class=\"glyphicon glyphicon-menu-right\"/>"
+											+"<br>");
+				}
+			}
+			
+			//금액에 콤마찍어주는 함수			
+			function numberWithCommas(x) {
+			    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			}
+
+			$('#totalInvestMoney').append(numberWithCommas(msg[1][0].totalInvestMoney)+"원");
+			$('#totalInvestmentCount').append(msg[1][0].totalInvestmentCount);
+			$('#proceedingInvestmentCount').append(msg[1][0].proceedingInvestmentCount);
+			$('#proceedingFdInvestMoney').append(numberWithCommas(msg[1][0].proceedingFdInvestMoney)+"원");
 		}
 	});
 	
@@ -118,53 +187,86 @@ $(document).ready(function(){
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-md-9">
+	<input type="hidden" id="userlevel" value="${level}">
+<!----------------------------------기업회원일때 ------------------------------------->	
 		<c:if test="${level eq '기업회원'}">
 			<div class="pagetitleandexplainbox">
 				<h2>기업회원용 프로젝트관리</h2>
 			</div> 
             <div class="col-sm-12 pmsmainpagecontent">
-                <div class="col-xs-12 col-sm-8"><br>
+                <div class="col-xs-12 col-sm-12"><br>
                     <h2>${nickname}</h2>
-                    <p><strong>회사 및 직급</strong><br><b id="comName"></b></p>
-                    <p><strong>펀딩내 권한 : </strong><b>준비중</b></p>
-                    <p><strong>모집중인 펀딩 : </strong><b>준비중</b></p>
-                    <p><strong>진행중인 펀딩 : </strong><b>준비중</b></p>
+                    <table class="table">
+						<tr>
+						  <td><p><strong>회사 직급 부서</strong></p></td>
+						  <td><b id="comName"></b></td>
+						</tr>
+						<tr>
+						  <td><p><strong>펀딩내 권한</strong></p></td>
+						  <td><b id="fdAuth"></b></td>
+						</tr>
+						<tr>
+						  <td><p><strong>모집중인 펀딩</strong></p></td>
+						  <td><b id="recruitingFd"></b></td>
+						</tr>
+						<tr>
+						  <td><p><strong>진행중인 펀딩</strong></p></td>
+						  <td><b id="proceedingFd"></b></td>
+						</tr>
+					</table>
                 </div>
             </div>            
             <div class="col-xs-12 divider text-center pmsmainboxbottom">
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong> 준비중 </strong></h2>                    
+                    <h2><strong id="fdTotalCount"></strong></h2>                    
                     <p><small>총 펀딩수</small></p>
                 </div>
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>준비중</strong></h2>                    
+                    <h2><strong id="fdRecruitingCount"></strong></h2>                    
                     <p><small>모집중인 펀딩수</small></p>
                 </div>
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>준비중</strong></h2>                    
+                    <h2><strong id="fdProceedingCount"></strong></h2>                    
                     <p><small>진행중인 펀딩수</small></p>
                 </div>
             </div>
 		</c:if>
+<!----------------------------------투자자일때 ------------------------------------->		
 		<c:if test="${level eq '투자자'}">
 			<div class="pagetitleandexplainbox">
 				<h2>투자자용 프로젝트관리</h2>
 			</div> 
             <div class="col-sm-12">
-                <div class="col-xs-12 col-sm-8 pmsmainpagecontent"><br>
+                <div class="col-xs-12 col-sm-12 pmsmainpagecontent"><br>
                     <h2>${nickname}</h2>
-                    <p><strong>사전예약중 펀딩 : </strong>
-                        <span class="tags"><b>준비중</b></span> 
-                    </p>
-                    <p><strong>투자중인 펀딩 : </strong>
-                        <span class="tags"><b>준비중</b></span> 
-                    </p>
+                    <table class="table">
+						<tr>
+						  <td><p><strong>사전예약중 펀딩(결제전)</strong></p></td>
+						  <td><b id="bookingFd"></b></td>
+						</tr>
+						<tr>
+						  <td><p><strong>진행중인 펀딩(결제후)</strong></p></td>
+						  <td><b id="investingFd"></b></td>
+						</tr>
+					</table>
                 </div>
             </div>            
             <div class="col-xs-12 divider text-center pmsmainboxbottom">
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong> 준비중 </strong></h2>                    
-                    <p><small>총투자금액</small></p>
+                    <h2><strong id="totalInvestMoney"></strong></h2>                    
+                    <p><small>총투자누적금액</small></p>
+                </div>
+                <div class="col-xs-12 col-sm-4 emphasis">
+                    <h2><strong id="totalInvestmentCount"></strong></h2>                    
+                    <p><small>총투자건수</small></p>
+                </div>
+                <div class="col-xs-12 col-sm-4 emphasis">
+                    <h2><strong id="proceedingInvestmentCount"></strong></h2>                    
+                    <p><small>진행중인투자건수</small></p>
+                </div>
+                 <div class="col-xs-12 col-sm-4 emphasis">
+                    <h2><strong id="proceedingFdInvestMoney"></strong></h2>                    
+                    <p><small>진행중인펀딩의투자금액</small></p>
                 </div>
                 <div class="col-xs-12 col-sm-4 emphasis">
                     <h2><strong>준비중</strong></h2>                    
@@ -172,22 +274,11 @@ $(document).ready(function(){
                 </div>
                 <div class="col-xs-12 col-sm-4 emphasis">
                     <h2><strong>준비중</strong></h2>                    
-                    <p><small>총투자건수</small></p>
-                </div>
-                <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>준비중</strong></h2>                    
-                    <p><small>진행중인투자건수</small></p>
-                </div>
-                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>준비중</strong></h2>                    
-                    <p><small>진행중인펀딩의투자금액</small></p>
-                </div>
-                <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>준비중</strong></h2>                    
                     <p><small>진행중인펀딩의배당금액</small></p>
                 </div>
             </div>
 		</c:if>
+<!----------------------------------관리자일때 ------------------------------------->				
 		<c:if test="${level eq '관리자'}">
 			<div class="pagetitleandexplainbox">
 				<h2>관리자용 프로젝트관리</h2>
@@ -195,12 +286,32 @@ $(document).ready(function(){
 			<div class="col-sm-12">
                 <div class="col-xs-6 col-sm-6 pmsmainpagecontent"><br>
                     <h2>${nickname}</h2>
-                    <p><strong>총 회원수 : </strong><b id="totalUserCount"></b></p>
-                    <p><strong>총 투자회원수 : </strong><b id="totalInvestorUserCount"></b></p>
-                    <p><strong>총 기업회원수 : </strong><b id="totalComUserCount"></b></p>
-                    <p><strong>총 회사수 : </strong><b id="totalComCount"></b></p>
-                    <p><strong>총 방문자수 : </strong><b>준비중</b></p>
-                    <p><strong>오늘 방문자수 : </strong><b>준비중</b></p>
+                    <table class="table">
+						<tr>
+						  <td><p><strong>총 회원수</strong></p></td>
+						  <td><b id="totalUserCount"></b></td>
+						</tr>
+						<tr>
+						  <td><p><strong>총 투자회원수</strong></p></td>
+						  <td><b id="totalInvestorUserCount"></b></td>
+						</tr>
+						<tr>
+						  <td><p><strong>총 기업회원수</strong></p></td>
+						  <td><b id="totalComUserCount"></b></td>
+						</tr>
+						<tr>
+						  <td><p><strong>총 회사수</strong></p></td>
+						  <td><b id="totalComCount"></b></td>
+						</tr>
+						<tr>
+						  <td><p><strong>총 방문자수</strong></p></td>
+						  <td><b id="">준비중</b></td>
+						</tr>
+						<tr>
+						  <td><p><strong>오늘 방문자수</strong></p></td>
+						  <td><b id="">준비중</b></td>
+						</tr>
+					</table>
                 </div>
               	<div class="col-xs-6 col-sm-6 pmsmainpagecontent"><br>
                		<!-- 도넛차트 -->
