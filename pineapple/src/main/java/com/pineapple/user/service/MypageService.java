@@ -1,6 +1,7 @@
 package com.pineapple.user.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,20 @@ public class MypageService implements MypageServiceInterface {
 	
 	@Autowired
 	private MypageDaoInterface mypagedao;
+	
+	//사원탈퇴처리
+	@Override
+	public int removeEmployeeByEmCode(int emCode) {
+		log.debug("MypageService removeEmployeeByEmCode 호출 결과: "+mypagedao.deleteEmployeeByEmCode(emCode));
+		return mypagedao.deleteEmployeeByEmCode(emCode);
+	}
+	
+	//경영진 마이페이지 분기시 페이지 로딩하면서, 자신이 속한 기업의 모든 사원조회기능 구현을 위한 메서드 선언(입력값 - map)
+	@Override
+	public List<Employee> getAllEmployeeInMyComList(Map<String, Object> map) {
+		log.debug("MypageService getAllEmployeeInMyComList 호출 결과: "+mypagedao.selectAllEmployeeInMyComList(map));
+		return mypagedao.selectAllEmployeeInMyComList(map);
+	}
 	
 	//기업삭제요청
 	@Override
@@ -135,8 +150,6 @@ public class MypageService implements MypageServiceInterface {
 		log.debug("MypageService selectInvestorBasic 메서드 호출 "+userId);
 		return mypagedao.selectInvestorBasic(userId);
 	}
-
-	
 
 	
 

@@ -1,10 +1,17 @@
 package com.pineapple.user.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pineapple.invest.service.InvestorInvestList;
 
 public interface MypageDaoInterface {
+	//사원탈퇴처리
+	int deleteEmployeeByEmCode(int emCode);
+	
+	//경영진 마이페이지 분기시 페이지 로딩하면서, 자신이 속한 기업의 모든 사원조회기능 구현을 위한 메서드 선언(입력값 - map)
+	List<Employee> selectAllEmployeeInMyComList(Map<String, Object> map);
+	
 	//기업삭제요청을 위한 메서드
 	int deleteCompany(Company company);
 	
