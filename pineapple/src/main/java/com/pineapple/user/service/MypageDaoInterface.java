@@ -6,6 +6,15 @@ import java.util.Map;
 import com.pineapple.invest.service.InvestorInvestList;
 
 public interface MypageDaoInterface {
+	//기업회원 펀딩내권한부여 페이지 요청시 부여자 id로 권한부여 정보 조회
+	List<FundingauthFundingAuthlevelCompany> selectAuthInfoByGiverId(String giverId);
+	
+	//기업회원 펀딩내권한부여 페이지 요청시 피부여자 id로 권한부여 정보 조회
+	List<FundingauthFundingAuthlevelCompany> selectAuthInfoByReceiverId(String receiverId);
+	
+	//관리자 전체회원리스트 조회
+	List<User> selectAllUserList();
+	
 	//경영진 기업삭제취소
 	int updateCompanyDeleteRequestCancle(Company company);
 	

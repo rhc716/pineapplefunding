@@ -3,6 +3,7 @@ import com.pineapple.invest.service.InvestorInvestList;
 import com.pineapple.user.service.Account;
 import com.pineapple.user.service.Company;
 import com.pineapple.user.service.Employee;
+import com.pineapple.user.service.FundingauthFundingAuthlevelCompany;
 import com.pineapple.user.service.MypageServiceInterface;
 import com.pineapple.user.service.User;
 import com.pineapple.user.service.UserDetail;
@@ -28,6 +29,30 @@ public class MypageController {
 	
 	@Autowired
 	private MypageServiceInterface mypageservice;
+	
+	//펀딩내 권한부여 페이지 요청
+	@RequestMapping(value="/fundingauth.user", method = RequestMethod.GET)
+    public String mngfundingauthpage(HttpSession session, Model model) { //커맨드 객체
+        log.debug("mngfundingauthpage 펀딩내권한부여 페이지 요청");
+        //자신이 부여자인 펀딩권한정보 조회
+        List<FundingauthFundingAuthlevelCompany> authgiverList = mypageservice.getAuthInfoByGiverId(session.getAttribute("id").toString());
+        if(authgiverList != null){
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 부여자인 펀딩내권한부여 정보조회 성공");
+        	model.addAttribute("authgiverList", authgiverList);
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 부여자인 펀딩내권한부여 정보조회 실패");
+        }
+        //자신이 피부여자인 펀딩권한정보 조회
+        List<FundingauthFundingAuthlevelCompany> authreceiverList = mypageservice.getAuthInfoByReceiverId(session.getAttribute("id").toString());
+        if(authreceiverList != null){
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 피부여자인 펀딩내권한부여 정보조회 성공");
+        	model.addAttribute("authreceiverList", authreceiverList);
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 피부여자인 펀딩내권한부여 정보조회 실패");
+        }
+        return "user/fundingauth"; // 글입력후 "/"로 리다이렉트(재요청)
+    }
+	
 	//경영진 기업삭제요청 취소처리
 	@RequestMapping(value="/cancledeletecompany.user", method = RequestMethod.POST)
     public String cancleDeleteCompany(HttpSession session, Company company) { //커맨드 객체
@@ -316,8 +341,8 @@ public class MypageController {
 	@RequestMapping(value="/userdetailmodify.user", method=RequestMethod.GET)
 	public @ResponseBody UserDetail userdetailmodify(Model model, @RequestParam("userId") String userId){
 		log.debug("userdetailmodify 회원정보수정 페이지 요청");
-		User user = mypageservice.getInvestorBasic(userId);
-    	model.addAttribute("user", user);
+		//User user = mypageservice.getInvestorBasic(userId);
+    	//model.addAttribute("user", user);
     	UserDetail userdetail = mypageservice.getUserDetail(userId);
     	if(userdetail != null){
     		log.debug("수정페이지 구현을 위한 회원상세정보 조회 성공");
@@ -441,6 +466,14 @@ public class MypageController {
          	model.addAttribute("allcompany", allcompany);
          } else {
          	log.debug(session.getAttribute("nickname")+"님의  전체회사조회 실패");
+         }
+        //관리자 마이페이지 분기 요청시, 페이지 로딩하며 사이트에 등록된 모든 회원리스트 조회
+        List<User> alluser = mypageservice.getAllUserList();
+        if(alluser != null){
+        	log.debug(session.getAttribute("nickname")+"님의 전체회원조회 성공");
+         	model.addAttribute("alluser", alluser);
+         } else {
+         	log.debug(session.getAttribute("nickname")+"님의  전체회원조회 실패");
          }
 		return "user/adminmypage";
 	}	

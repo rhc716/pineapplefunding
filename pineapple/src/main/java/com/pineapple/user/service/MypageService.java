@@ -15,6 +15,28 @@ public class MypageService implements MypageServiceInterface {
 	
 	@Autowired
 	private MypageDaoInterface mypagedao;
+	
+	//기업회원 펀딩내권한부여 페이지 요청시 부여자 id로 권한부여 정보 조회
+	@Override
+	public List<FundingauthFundingAuthlevelCompany> getAuthInfoByGiverId(String giverId) {
+		log.debug("MypageService getAuthInfoByGiverId 호출 결과: "+mypagedao.selectAuthInfoByGiverId(giverId));
+		return mypagedao.selectAuthInfoByGiverId(giverId);
+	}
+	
+	//기업회원 펀딩내권한부여 페이지 요청시 피부여자 id로 권한부여 정보 조회
+	@Override
+	public List<FundingauthFundingAuthlevelCompany> getAuthInfoByReceiverId(String receiverId) {
+		log.debug("MypageService getAuthInfoByGiverId 호출 결과: "+mypagedao.selectAuthInfoByReceiverId(receiverId));
+		return mypagedao.selectAuthInfoByReceiverId(receiverId);
+	}
+	
+	//관리자 전체회원리스트 조회
+	@Override
+	public List<User> getAllUserList() {
+		log.debug("MypageService getAllUserList 호출 결과: "+mypagedao.selectAllUserList());
+		return mypagedao.selectAllUserList();
+	}
+	
 	//경영진 기업삭제취소
 	@Override
 	public int modifyCompanyDeleteRequestCancle(Company company) {
@@ -161,7 +183,7 @@ public class MypageService implements MypageServiceInterface {
 	//회원상세정보조회를 위한 메서드 호출
 	@Override
 	public UserDetail getUserDetail(String userDetailId) {
-		log.debug("MypageService getUserDetail 호출 : "+userDetailId);
+		log.debug("MypageService getUserDetail 호출 : "+mypagedao.selectUserDetail(userDetailId));
 		return mypagedao.selectUserDetail(userDetailId);
 	}
 	//투자자 마이페이지 첫화면 구성을 위한 투자자 기본 정보와 계좌 정보 조회 메서드

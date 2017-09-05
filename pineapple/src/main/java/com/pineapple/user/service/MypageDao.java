@@ -16,6 +16,27 @@ public class MypageDao implements MypageDaoInterface {
 	
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
+	//기업회원 펀딩내권한부여 페이지 요청시 부여자 id로 권한부여 정보 조회
+	@Override
+	public List<FundingauthFundingAuthlevelCompany> selectAuthInfoByGiverId(String giverId) {
+		log.debug("MypageDao selectAuthInfoByGiverId 호출 : "+ giverId);
+		return sqlSessionTemplate.selectList("com.pineapple.user.service.MypageMapper.selectFundingauthByGiverId", giverId);
+	}
+
+	//기업회원 펀딩내권한부여 페이지 요청시 피부여자 id로 권한부여 정보 조회
+	@Override
+	public List<FundingauthFundingAuthlevelCompany> selectAuthInfoByReceiverId(String receiverId) {
+		log.debug("MypageDao selectAuthInfoByReceiverId 호출 : "+ receiverId);
+		return sqlSessionTemplate.selectList("com.pineapple.user.service.MypageMapper.selectFundingauthByReceiverId", receiverId);
+	}
+	
+	//관리자 전체회원리스트 조회
+	@Override
+	public List<User> selectAllUserList() {
+		log.debug("MypageDao selectAllUserList 호출");
+		return sqlSessionTemplate.selectList("com.pineapple.user.service.MypageMapper.selectAllUserList");
+	}
+	
 	//경영진 기업삭제취소
 	@Override
 	public int updateCompanyDeleteRequestCancle(Company company) {
@@ -173,8 +194,4 @@ public class MypageDao implements MypageDaoInterface {
 		log.debug("MypageDao selectInvestorBasic 메서드 호출 결과"+sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAllInvestorInfo", userId));
 		return sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAllInvestorInfo", userId);
 	}
-
-	
-
-	
 }

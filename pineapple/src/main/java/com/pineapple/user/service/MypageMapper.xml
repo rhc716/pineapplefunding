@@ -4,6 +4,58 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.pineapple.user.service.MypageMapper">
+<!-- 펀딩내 권한부여 페이지 로딩시 부여자ID로 권한부여정보 조회 -->
+<select id="selectFundingauthByGiverId" parameterType="String" resultMap="selectFundingauthByGiverId">
+	SELECT fa.authCode, fa.authFdCode, fa.authReceiver, fa.authGiver, fa.fdAuthLevelCode, f.fdComCode, f.fdTitle, f.fdStatus, fl.authLevelName, c.comName 
+	FROM fundingauth fa
+	INNER JOIN funding f
+	ON fa.authFdCode = f.fdCode
+	INNER JOIN company c
+	ON f.fdComCode = c.comCode
+	INNER JOIN fundingauthlevel fl
+	ON fa.fdAuthLevelCode = fl.authLevelCode
+	WHERE fa.authGiver=#{giverUserId}
+	ORDER BY c.comName asc
+</select>
+<resultMap type="com.pineapple.user.service.FundingauthFundingAuthlevelCompany" id="selectFundingauthByGiverId">
+	<result property="authCode" column="authCode"/>
+ 	<result property="authFdCode" column="authFdCode"/>
+ 	<result property="authReceiver" column="authReceiver"/>
+ 	<result property="authGiver" column="authGiver"/>
+ 	<result property="fdAuthLevelCode" column="fdAuthLevelCode"/>
+ 	<result property="fdComCode" column="fdComCode"/>
+ 	<result property="comName" column="comName"/>
+ 	<result property="fdTitle" column="fdTitle"/>
+ 	<result property="fdStatus" column="fdStatus"/>
+ 	<result property="authLevelName" column="authLevelName"/>
+</resultMap>
+
+<!-- 펀딩내 권한부여 페이지 로딩시 피부여자ID로 권한부여정보 조회 -->
+<select id="selectFundingauthByReceiverId" parameterType="String" resultMap="selectFundingauthByReceiverId">
+	SELECT fa.authCode, fa.authFdCode, fa.authReceiver, fa.authGiver, fa.fdAuthLevelCode, f.fdComCode, f.fdTitle, f.fdStatus, fl.authLevelName, c.comName 
+	FROM fundingauth fa
+	INNER JOIN funding f
+	ON fa.authFdCode = f.fdCode
+	INNER JOIN company c
+	ON f.fdComCode = c.comCode
+	INNER JOIN fundingauthlevel fl
+	ON fa.fdAuthLevelCode = fl.authLevelCode
+	WHERE fa.authReceiver=#{receiverUserId}
+	ORDER BY c.comName asc
+</select>
+<resultMap type="com.pineapple.user.service.FundingauthFundingAuthlevelCompany" id="selectFundingauthByReceiverId">
+	<result property="authCode" column="authCode"/>
+ 	<result property="authFdCode" column="authFdCode"/>
+ 	<result property="authReceiver" column="authReceiver"/>
+ 	<result property="authGiver" column="authGiver"/>
+ 	<result property="fdAuthLevelCode" column="fdAuthLevelCode"/>
+ 	<result property="fdComCode" column="fdComCode"/>
+ 	<result property="comName" column="comName"/>
+ 	<result property="fdTitle" column="fdTitle"/>
+ 	<result property="fdStatus" column="fdStatus"/>
+ 	<result property="authLevelName" column="authLevelName"/>
+</resultMap>
+
 <!-- 투자내역조회 -->
 <select id="selectInvest" parameterType="String" resultMap="selectInvest">
 	SELECT  i.investCode,
@@ -50,12 +102,14 @@
 		<result property="accountNumber" column="accountNumber"/>
 		<result property="accountNickname" column="accountNickname"/>
 	</resultMap>
+	
 <!-- 기업명 조회(기업명 중복체크 기능) -->
 	<select id="selectCompanyByComName" parameterType="String" resultType="com.pineapple.user.service.Company">
 		SELECT comName
 		FROM company
 		WHERE comName=#{comName}
 	</select>
+	
 <!-- 기업회원 레벨의 회원의 마이페이지 분기시 사원정보조회 -->
 	<select id="selectEmployeeById" parameterType="String" resultMap="selectEmployeeById">
 		SELECT *
@@ -79,6 +133,7 @@
 		(comCode, comName, comNumber, comHomePage, comCeoName, comEstablishYear, comInfo, comLogoServerName, comLogoHeight, comLogoWidth, comLogoSize, comLogoExtension, comSummary, comActivitySummary, comOpenUserId, comAdminApproval, comApprovalDate, comApprovalId, comDelRequestId, comDelTime, comDelApprovalId)
 		VALUES (null, #{comName}, #{comNumber}, #{comHomePage}, #{comCeoName}, #{comEstablishYear}, #{comInfo}, #{comLogoServerName}, #{comLogoHeight}, #{comLogoWidth}, #{comLogoSize}, #{comLogoExtension}, #{comSummary}, #{comActivitySummary}, #{comOpenUserId}, #{comAdminApproval}, null, null, null, null, null)
 	</insert>
+	
 <!-- 경영진 마이페이지 기업정보 수정 -->
 	<update id="updateCompanyInfo" parameterType="com.pineapple.user.service.Company">
 		UPDATE company
@@ -341,6 +396,7 @@
 		FROM userdetail 
 		WHERE userDetailId=#{userDetailId}
 	</select>
+	
 	<!--  마이페이지 공통모듈에서 회원상세정보수정 -->
 	<update id="updateUserDetailById" parameterType="com.pineapple.user.service.UserDetail">
 		UPDATE userdetail
@@ -354,4 +410,17 @@
   			nameCheck=#{nameCheck}
  		WHERE userDetailId=#{userDetailId}
 	</update>
+	
+	<!-- 관리자 마이페이지 전체회원리스트 조회 -->
+	<select id="selectAllUserList" resultMap="selectAllUserList">
+		SELECT *
+		FROM user
+	</select>
+	<resultMap type="com.pineapple.user.service.User" id="selectAllUserList">
+		<result property="userId" column="userId"/>
+		<result property="nickname" column="nickname"/>
+		<result property="name" column="name"/>
+		<result property="levelCode" column="levelCode"/>
+		<result property="uDelTime" column="uDelTime"/>
+	</resultMap>
 </mapper>
