@@ -1,7 +1,6 @@
 package com.pineapple.funding.controller;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -141,26 +140,6 @@ public class FundingController {
 		return "redirect:/myfundinglistpage.pms";
 	}
 	
-	// 내가 소속된 회사 펀딩 리스트 불러오기 ( 기업회원 )
-	@RequestMapping(value = "/getmyfundinglist.pms", method = RequestMethod.GET)
-	public @ResponseBody List<Funding> getMyFundingList(Model model, Locale locale, @RequestParam("userId") String userId) {
-		log.debug("FundingController의 getMyFundingList호출 성공");
-		log.debug("userId : " + userId);
-		log.debug("컨트롤러에서 받은 리턴값 : " + service.getMyFundinglist(userId));
-		return service.getMyFundinglist(userId);
-	}
-	
-	// 펀딩삭제 ( 기업회원 경영자 )
-	@RequestMapping(value = "/removefunding.pms", method = RequestMethod.GET)
-	public @ResponseBody int removeFunding(Model model, Locale locale, @RequestParam("delfdCode") int delfdCode) {
-		log.debug("FundingController의 removeFunding호출 성공");
-		log.debug("delfdCode : " + delfdCode);
-		int result = service.removeFunding(delfdCode);
-		log.debug("result : " + result);
-		return result;
-		
-	}
-	
 	// 펀딩수정 ( 기업회원 경영자 )
 	@RequestMapping(value = "/modifyfunding.pms", method = RequestMethod.POST)
 	public String modifyfunding(Model model, Locale locale, Funding funding, @RequestParam("fdCode") int fdCode) {
@@ -169,14 +148,6 @@ public class FundingController {
 		log.debug("funding : " + funding);
 		service.modifyFunding(funding, fdCode);
 		return "pms/companyuser/myfundinglist";
-	}
-	
-	// 내가 소속된 회사 펀딩, 펀딩상세 정보 담은 리스트 불러오기 ( 기업회원 )
-	@RequestMapping(value = "/getmyfundingdetaillist.pms", method = RequestMethod.GET)
-	public @ResponseBody List<FundingAndFdDetail> getMyFundingDetailList(Model model, Locale locale, @RequestParam("userId") String userId) {
-		log.debug("FundingController의 getMyFundingDetailList호출 성공");
-		log.debug("userId : " + userId);
-		return service.getMyFundingDetailList(userId);
 	}
 	
 	//펀딩상세수정 ( 기업회원 경영자 )
@@ -188,14 +159,6 @@ public class FundingController {
 		return "pms/companyuser/myfundingdetaillist";
 	}
 	
-	// 마일스톤 입력을 위한 조회 (회사코드,펀딩코드,펀딩명)
-	@RequestMapping(value = "/getfundingforinsertmilestone.pms", method = RequestMethod.GET)
-	public @ResponseBody List<Funding> getFundingForInsertMileStone(Model model, Locale locale, @RequestParam("userId") String userId) {
-		log.debug("FundingController의 getFundingForInsertMileStone호출 성공");
-		log.debug("userId : " + userId);
-		return service.getFundingForInsertMileStone(userId);
-	}
-	
 	// 마일스톤 입력 
 	@RequestMapping(value = "/addmilestone.pms", method = RequestMethod.POST)
 	public String addMileStone(MileStone milestone, Model model, Locale locale) {
@@ -203,22 +166,6 @@ public class FundingController {
 		log.debug("milestone : " + milestone);
 		service.addMileStone(milestone);
 		return "redirect:/mymilestonelist.pms";
-	}
-	
-	// 마일스톤 입력을 위한 사원조회
-	@RequestMapping(value = "/getemployeeforinsertmilestone.pms", method = RequestMethod.GET)
-	public @ResponseBody List<Employee> getEmployeeForInsertMileStone(Model model, Locale locale, @RequestParam("fdCode") int fdCode) {
-		log.debug("FundingController의 getEmployeeForInsertMileStone호출 성공");
-		log.debug("fdCode : " + fdCode);
-		return service.getEmployeeForInsertMileStone(fdCode);
-	}
-	
-	// 마일스톤조회 // 마일스톤 + 펀딩 리스트 가져오기
-	@RequestMapping(value = "/getmymilestonelist.pms", method = RequestMethod.GET)
-	public @ResponseBody List<FundingAndMileStone> getMyMileStoneList(Model model, Locale locale, @RequestParam("userId") String userId) {
-		log.debug("FundingController의 getMyMileStoneList호출 성공");
-		log.debug("userId : " + userId);
-		return service.getMyMileStoneList(userId);
 	}
 	
 	// 마일스톤 수정 
@@ -230,16 +177,6 @@ public class FundingController {
 		return "pms/companyuser/mymilestonelist";
 	}
 	
-	
-	// 마일스톤 삭제  
-	@RequestMapping(value = "/removemilestone.pms", method = RequestMethod.GET)
-	public @ResponseBody String removeMileStone(Model model, Locale locale, @RequestParam("delMsCode") int delMsCode) {
-		log.debug("FundingController의 removeMileStone호출 성공");
-		log.debug("delMsCode : " + delMsCode);
-		service.removeMileStone(delMsCode);
-		return "redirect:/mymilestonelist.pms";
-		
-	}
 	
 	// 펀딩 보고서 업로드 
 	@RequestMapping(value = "/addfundingfile.pms", method = RequestMethod.POST)
@@ -255,15 +192,6 @@ public class FundingController {
 		service.addFundingFile(uploadFile, result, fdCode);
 		return "redirect:/fundingfilelistpage.pms";
 	}
-	
-	// 펀딩파일 업로드 리스트 가져오기
-	@RequestMapping(value = "/getfundingfilelist.pms", method = RequestMethod.GET)
-	public @ResponseBody List<FundingAndFdFile> getFundingFileList(Model model, Locale locale, @RequestParam("userId") String userId) {
-		log.debug("FundingController의 getFundingFileList호출 성공");
-		log.debug("userId : " + userId);
-		return service.getFundingFileList(userId);
-	}
-	
 	
 	// 펀딩파일 다운로드 요청
 	@RequestMapping(value = "/calldownload.pms")
@@ -303,13 +231,6 @@ public class FundingController {
 		return "redirect:/myfundingdividendplan.pms";
 	}
 	
-	// 펀딩배당계획 리스트 가져오기
-	@RequestMapping(value = "/getfundingdividendpalnlist.pms", method = RequestMethod.GET)
-	public @ResponseBody List<FundingAndFdDividendPlan> getFundingDividendPalnList(Model model, Locale locale, @RequestParam("fdCode") int fdCode) {
-		log.debug("FundingController의 getFundingDividendPalnList호출 성공");
-		log.debug("fdCode : " + fdCode);
-		return service.getFundingDividendPalnList(fdCode);
-	}
 	
 	// 펀딩배당계획 삭제
 	@RequestMapping(value = "/removefundingdividendpaln.pms", method = RequestMethod.GET)
@@ -319,22 +240,6 @@ public class FundingController {
 		service.removeFundingDividendPaln(divCode);
 		return "redirect:/myfundingdividendplan.pms";
 		
-	}
-	
-	// 펀딩별 투자자 리스트 불러오기
-	@RequestMapping(value = "/getfundinginvestorlist.pms", method = RequestMethod.GET)
-	public @ResponseBody List<Investment> getFundingInvestorList(Model model, Locale locale, @RequestParam("fdCode") int fdCode) {
-		log.debug("FundingController의 getFundingInvestorList호출 성공");
-		log.debug("fdCode : " + fdCode);
-		return service.getFundingInvestorList(fdCode);
-	}
-	
-	// 펀딩생성에서 사용할 회사정보 가져오기
-	@RequestMapping(value = "/getcomlist.pms", method = RequestMethod.GET)
-	public @ResponseBody List<Company> getComList(Model model, Locale locale, @RequestParam("userId") String userId) {
-		log.debug("FundingController의 getComList호출 성공");
-		log.debug("userId : " + userId);
-		return service.getComList(userId);
 	}
 	
 	// 펀딩 포스터 이미지수정
@@ -354,8 +259,6 @@ public class FundingController {
 			fileutil.deleteFile(fundingresult.getPosterImg());
 		}
 		
-		
-		
 		// 새로운 이미지를 파일업로드하고 경로를 DB에서 수정해준다.
 		// 업로드되는 파일이 있을때
 		if(uploadimage.getSize()!=0){
@@ -374,27 +277,24 @@ public class FundingController {
 		return "redirect:/myfundingposterimgpage.pms";
 	}
 	
-	// 펀딩 insert ( 펀딩명 중복검사 )
-	@RequestMapping(value = "/fdtitlecheck.pms", method = RequestMethod.GET)
-	public @ResponseBody Funding fdtitleCheck(Model model, Locale locale, @RequestParam("fdTitle") String fdTitle) {
-		log.debug("FundingController의 fdtitleCheck호출 성공");
-		log.debug("fdTitle : " + fdTitle);
-		return service.fdtitleCheck(fdTitle);
+	// 마일스톤 삭제  
+	@RequestMapping(value = "/removemilestone.pms", method = RequestMethod.GET)
+	public String removeMileStone(Model model, Locale locale, @RequestParam("delMsCode") int delMsCode) {
+		log.debug("FundingController의 removeMileStone호출 성공");
+		log.debug("delMsCode : " + delMsCode);
+		service.removeMileStone(delMsCode);
+		return "redirect:/mymilestonelist.pms";
+		
 	}
 	
-	
-	// pmsmain.jsp 에서 권한별로 필요한 정보의 리스트를 ajax요청
-	@RequestMapping(value = "/getprojectinfolist.pms", method = RequestMethod.GET)
-	public @ResponseBody List<Object> getprojectinfolist(Model model, Locale locale
-			, @RequestParam("userId") String userId, @RequestParam("userLevel") String level) {
-		
-		log.debug("FundingController의 getprojectinfolist호출 성공");
-		log.debug("userId : " + userId);
-		log.debug("level : " + level);
-		
-		List<Object> list = service.getProjectInfoList(userId, level);
-		
-		return list;
+	// 펀딩삭제 ( 기업회원 경영자 )
+	@RequestMapping(value = "/removefunding.pms", method = RequestMethod.GET)
+	public int removeFunding(Model model, Locale locale, @RequestParam("delfdCode") int delfdCode) {
+		log.debug("FundingController의 removeFunding호출 성공");
+		log.debug("delfdCode : " + delfdCode);
+		int result = service.removeFunding(delfdCode);
+		log.debug("result : " + result);
+		return result;
 	}
 	
 }

@@ -174,6 +174,8 @@ $(document).ready(function(){
 
 });
 </script>
+<!-- css -->
+<style> p {margin: 0px;} small{  font-size: 15px; } </style>
 </head>
 <body>
 <div class="container">
@@ -312,13 +314,15 @@ $(document).ready(function(){
 						  <td><b id="">준비중</b></td>
 						</tr>
 					</table>
-                </div>
-              	<div class="col-xs-6 col-sm-6 pmsmainpagecontent"><br>
-               		<!-- 도넛차트 -->
-               		<canvas id="donut" width="250" height="250" style="padding:80px 80px; margin-top:-70px;"></canvas>
+					<!-- 도넛차트 -->
+               		<canvas class="donut" id="donut" width="250" height="250" style="padding:80px 80px; margin-top:-70px;"></canvas>
                		<br>
 	               		 방문객 추이 그래프 들어갈 곳
 	                <br>
+                </div>
+              	<div class="col-xs-6 col-sm-6 pmsmainpagecontent"><br>
+               		<!-- 펀딩목록 들어올 곳 -->
+               		
                	</div>
             </div>   
             <div class="col-xs-12 divider text-center pmsmainboxbottom">

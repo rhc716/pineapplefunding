@@ -11,6 +11,10 @@
 	font-size: 15px;
 	background-color: #f5f5f5;
 }
+.donut{
+	padding-left: 40px !important;
+	padding-right: 120px !important;
+}
 .pmsmainpagecontent b{
 	color : #337ab7;
 }

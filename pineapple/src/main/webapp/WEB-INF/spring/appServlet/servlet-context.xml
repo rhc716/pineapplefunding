@@ -112,7 +112,8 @@
 	
 	<task:scheduler id="scheduler" pool-size="3"/>
 	<task:scheduled-tasks scheduler="scheduler" >
-	    <task:scheduled ref="Scheduler" method="doJob" cron="0/4 * * * * ?" />
+		<!-- 매일 01시에 doJob 메서드 실행 -->
+	    <task:scheduled ref="Scheduler" method="doJob" cron="0 0 01 * * ?" />
 	</task:scheduled-tasks>
 	
 	<bean id="Scheduler" class="com.pineapple.util.scheduler.Scheduler">

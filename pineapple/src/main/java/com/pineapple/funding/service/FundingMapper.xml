@@ -391,17 +391,17 @@
 					ON e.emComCode = c.comCode
 					WHERE e.emUserId = #{userId}) g INNER JOIN funding f
 				ON g.emComCode = f.fdComCode
-				WHERE fdStatus != '개설요청' AND fdStatus != '마감') aa LEFT JOIN fundingauth fa
+				WHERE fdStatus = '모집중' OR fdStatus = '결제모집중' OR fdStatus = '진행중') aa LEFT JOIN fundingauth fa
 			ON aa.emUserId = fa.authReceiver) bb LEFT JOIN fundingauthlevel fal
 		ON bb.fdAuthLevelCode = fal.authLevelCode
 	</select>
 	<!-- 투자자 첫번째 -->
 	<select id="selectProjectInfoListInvestorFirst" resultMap="InfomationForPmsMainViewOfInvestorUser" parameterType="String">
-		<!-- 투자한 펀딩리스트중 마감이 아닌 펀딩리스트와 투자정보를 가져옴 -->
+		<!-- 투자한 펀딩리스트중 모집,결제모집, 진행중인 펀딩리스트와 투자정보를 가져옴 -->
 		SELECT *
 		FROM funding f INNER JOIN investment i
-		ON f.fdCode = i.investFdCode
-		WHERE i.investId = #{userId} AND f.fdStatus != '마감'
+		ON f.fdCode = i.investFdCode AND i.investId = #{userId}
+		WHERE f.fdStatus = '모집중' OR f.fdStatus = '결제모집중' OR f.fdStatus = '진행중'
 	</select>
 	<!-- 투자자 두번째 -->
 	<select id="selectProjectInfoListInvestorSecond" resultMap="InfomationForPmsMainViewOfInvestorUser" parameterType="String">
@@ -419,6 +419,101 @@
 		배당총액, 진행중인 펀딩의 현재까지 배당금액총액 가져옴
 	
 	</select> -->
+	
+	<!-- 스케줄러용 <펀딩상태변화> //설명은 Scheduler클래스에// 모집중 -> 결제모집중 -->
+	<update id="fundingUpdateScheduleOne" parameterType="String">
+		<![CDATA[ 
+		UPDATE funding
+		SET fdStatus='결제모집중'
+		WHERE fdCode=
+		ANY (SELECT fdCode 
+			  FROM(SELECT p.fdCode
+					 FROM
+						(SELECT f.fdCode, f.numberOfShares n, SUM(i.purchaseShares) s
+						 FROM funding f INNER JOIN investment i
+						 ON f.fdCode = i.investFdCode
+					    WHERE f.fdStatus = '모집중'
+						 GROUP BY f.fdCode) p
+						 WHERE p.n <= p.s
+					)tmp)
+		AND closeDate < #{getTime}
+		]]> 
+	</update>
+	<!-- 스케줄러용 <펀딩상태변화> //설명은 Scheduler클래스에// 결제모집중 -> 진행중 -->
+	<update id="fundingUpdateScheduleTwo" parameterType="String">
+		<![CDATA[ 
+		UPDATE funding
+		SET fdStatus='진행중'
+		WHERE fdCode=
+		ANY (SELECT fdCode 
+			  FROM(SELECT p.fdCode
+					 FROM
+						(SELECT f.fdCode, f.numberOfShares n, SUM(i.purchaseShares) s
+						 FROM funding f INNER JOIN investment i
+						 ON f.fdCode = i.investFdCode
+					    WHERE f.fdStatus = '결제모집중'
+					    AND i.payCheck = '1'
+						 GROUP BY f.fdCode) p
+						 WHERE p.n <= p.s
+					)tmp)
+		AND projectStartDate <= #{getTime}
+		]]> 
+	</update>
+	
+	<!-- 스케줄러용 <펀딩상태변화> //설명은 Scheduler클래스에// 진행중 -> 마감 -->
+	<update id="fundingUpdateScheduleThree" parameterType="String">
+		<![CDATA[ 
+		UPDATE funding
+		SET fdStatus='마감'
+		WHERE fdCode=
+		ANY (SELECT fdCode 
+			  FROM(SELECT fdCode
+					 FROM funding
+				  	 WHERE fdStatus = '진행중')tmp)
+		AND projectEndDate < #{getTime}
+		]]>
+	</update>
+	
+	<!-- 스케줄러용 <펀딩상태변화> //설명은 Scheduler클래스에// 모집중 -> 모집실패 -->
+	<update id="fundingUpdateScheduleFour" parameterType="String">
+		<![CDATA[ 
+		UPDATE funding
+		SET fdStatus='모집실패'
+		WHERE fdCode=
+		ANY (SELECT fdCode 
+			  FROM(SELECT p.fdCode
+					 FROM
+						(SELECT f.fdCode, f.numberOfShares n, SUM(i.purchaseShares) s
+						 FROM funding f INNER JOIN investment i
+						 ON f.fdCode = i.investFdCode
+					    WHERE f.fdStatus = '모집중'
+						 GROUP BY f.fdCode) p
+						 WHERE p.n > p.s
+					)tmp)
+		AND closeDate < #{getTime}
+		]]> 
+	</update>
+	
+	<!-- 스케줄러용 <펀딩상태변화> //설명은 Scheduler클래스에// 결제모집중 -> 모집실패 -->
+	<update id="fundingUpdateScheduleFive" parameterType="String">
+		<![CDATA[ 
+		UPDATE funding
+		SET fdStatus='모집실패'
+		WHERE fdCode=
+		ANY (SELECT fdCode 
+			  FROM(SELECT p.fdCode
+					 FROM
+						(SELECT f.fdCode, f.numberOfShares n, SUM(i.purchaseShares) s
+						 FROM funding f INNER JOIN investment i
+						 ON f.fdCode = i.investFdCode
+					    WHERE f.fdStatus = '결제모집중'
+					    AND i.payCheck = '1'
+						 GROUP BY f.fdCode) p
+						 WHERE p.n > p.s
+					)tmp)
+		AND projectStartDate <= #{getTime}
+		]]> 
+	</update>
 </mapper>
 
  
