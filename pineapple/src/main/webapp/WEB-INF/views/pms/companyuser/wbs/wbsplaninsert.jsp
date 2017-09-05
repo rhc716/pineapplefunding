@@ -85,6 +85,8 @@
 			</div>
 				<div class="col-md-7">
 					<form action="/pineapple/wbsplaninsert.pms" method="post">
+						<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
+						<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
 						<label for="wbsplan">WBS예상계획</label><br>
 						WBS순서:
 						<input type="number" class="form-control" name="wbsPlanOrder">

@@ -129,7 +129,13 @@ public class PmsController {
 			log.debug("PmsController의 wbsplandetail의 delete호출 성공");
 			log.debug("wbs코드" + wbsplancode);
 			service.deletewbsplan(wbsplancode);
-			return "redirect:/wbsplanlistpage.pms";
+			model.addAttribute("fdCode", fdCode);
+			model.addAttribute("fdTitle", fdTitle);
+			model.addAttribute("milestoneCode", milestoneCode);
+			model.addAttribute("milestoneName", milestoneName);
+			model.addAttribute("msComCode", msComCode);
+			model.addAttribute("btn", "WBS예상리스트");
+			return "redirect:/wbsform.pms";
 		}else{
 			log.debug("PmsController의 wbsplandetail의 update호출 성공");
 			log.debug("WbsPlan" + wbsplan);
@@ -147,7 +153,14 @@ public class PmsController {
 			map.put("changecode", changecode);
 			log.debug("map테스트" + map);
 			service.wbsplanupdateetc(map);
-			return "redirect:/wbsplanlistpage.pms";
+			model.addAttribute("fdCode", fdCode);
+			model.addAttribute("fdTitle", fdTitle);
+			model.addAttribute("milestoneCode", milestoneCode);
+			model.addAttribute("milestoneName", milestoneName);
+			model.addAttribute("msComCode", msComCode);
+			model.addAttribute("btn", "WBS예상리스트");
+			return "redirect:/wbsform.pms";
+			
 		}
 		
 	}
@@ -352,11 +365,15 @@ public class PmsController {
 	
 		// WbsPlan 생성
 		@RequestMapping(value = "/wbsplaninsert.pms", method = RequestMethod.POST)
-		public String addWbsplan(WbsPlan wbsplan, Model model, Locale locale) {
+		public String addWbsplan(WbsPlan wbsplan, Model model, Locale locale, HttpServletRequest request) {
 			log.debug("PmsController의 addWbsplan호출 성공");
 			log.debug("WbsPlan : " + wbsplan);
+			String fdCode = request.getParameter("fdCode");
+			String fdTitle = request.getParameter("fdTitle");
 			service.addWbsplan(wbsplan);
-			return "redirect:/pmsmain.pms";
+			model.addAttribute("fdTitle", fdTitle );
+			model.addAttribute("fdCode", fdCode );;
+			return "pms/companyuser/wbs/wbsmslist";
 		}
 		// WbsPlanhuman 입력
 		@RequestMapping(value = "/wbsplanhumaninsert.pms", method = RequestMethod.POST)

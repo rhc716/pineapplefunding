@@ -29,6 +29,7 @@
  <script>
 /* 마일스톤 리스트 불러올 ajax */
 $(document).ready(function(){
+	
 	var wbsplanlist = $.ajax({
 		type : "post",
 		url : "/pineapple/Wbsplanlist.pms",
@@ -37,7 +38,9 @@ $(document).ready(function(){
 	});
 	// 성공시
 	wbsplanlist.done(function(msg){
+	
 		console.log(msg);
+		
 		
 		/* 날짜를 yyyy-mm-dd 형태로 바꿔주는 함수 */
 		function formatDate(date) {
@@ -106,6 +109,7 @@ $(document).ready(function(){
 	wbsplanlist.fail(function(){
 		alert('ajax통신실패');
 	});
+
 });
 </script>
  
