@@ -58,6 +58,28 @@ $(document).ready(function(){
 			}
 		});
 	});
+	//회원전체리스트에서 각 회원의 상세정보 확인 모달
+	$('#userdetailBtn').click(function(){
+		var in_userId = $(this).attr('value');
+		var changeUserDetailAjax = $.ajax({ // ajax실행부분
+							        type: "get",
+							        url : "/pineapple/userdetailmodify.user",
+							        data : {userId : in_userId},
+							        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+							        error : function error(){
+							        		alert('회원상세정보 불러오기 오류');
+							        }
+								});
+		//ajax를 통해 조회한 계좌 정보를 모달창 수정페이지 각 입력값으로 넣어준다
+		changeUserDetailAjax.done(function(ud){
+			$('#userDetailIdChange').val(ud.userDetailId);
+			$('#phoneFront3Change').val(ud.phoneFront3);
+			$('#phoneRest8Change').val(ud.phoneRest8);
+    		$('#postalCodeChange').val(ud.postalCode);
+    		$('#addressChange').val(ud.address);
+    		$('#address2Change').val(ud.address2);
+		});
+	});
 });
 </script>
 </head>
@@ -446,11 +468,156 @@ $(document).ready(function(){
 							</tbody>
 						</table>
 					</div>
-				
-			</div> 
+				</div>
 			</div>
-			<div role="tabpanel" class="tab-pane fade" id="allUserList" aria-labelledby="allUserList-tab"> 
-				<p>전체회원보기</p> 
+			<!-- 세번째탭 시작(전체회원조회) -->
+			<div role="tabpanel" class="tab-pane fade" id="allUserList" aria-labelledby="allUserList-tab">
+				<div class="row">
+					<div class="col-md-2">
+						<br>
+						<p>전체회원조회</p>
+					</div>
+					<div class="col-md-10">
+						<br>
+						<p id="explanation">파인애플펀딩 사이트에 가입한 전체회원리스트를 확인할 수 있습니다.</p>
+						<br>
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr class="info">
+									<td>번호</td>
+									<td>회원아이디</td>
+									<td>닉네임</td>
+									<td>이름</td>
+									<td>권한</td>
+									<td>회원탈퇴요청시간</td>
+									<td>회원정보</td>
+									<td>회원삭제</td>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="alluser" items="${alluser}" varStatus="numberofuser">
+									<tr>
+										<td>${numberofuser.count}</td>
+										<td>${alluser.userId}</td>
+										<td>${alluser.nickname}</td>
+										<td>${alluser.name}</td>
+										<td>${alluser.levelCode}</td>
+										<c:choose>
+											<c:when test="${alluser.uDelTime != null}">
+												<td><a class="btn btn-block btn-warning disabled">${alluser.uDelTime}</a></td>
+											</c:when>
+											<c:otherwise>
+												<td><a class="btn btn-block btn-default disabled">탈퇴요청없음</a></td>
+											</c:otherwise>
+										</c:choose>
+										<td>
+											<a id="userdetailBtn" class="btn btn-info btn-block" data-toggle="modal" href="#userdetailcheckModal${numberofuser.count}" value="${alluser.userId}">회원정보</a>
+											<!-- 회원정보 수정하기(모달화면 교체를 통한 수정) -->
+											<div class="modal fade" id="userdetailcheckModal${numberofuser.count}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+											  <div class="modal-dialog">
+											    <div class="modal-content">
+											      <div class="modal-header">
+											        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+											        <h4 class="modal-title" id="myModalLabel">${alluser.nickname}님의 상세정보</h4>
+											      </div>
+											      <div class="modal-body">
+								      					<form action="#" method="post" style="border:1px solid #ccc">
+															<div class="container_insert">
+															    <div id="emailSuccess" class="form-group has-success has-feedback">
+																	<label class="control-label" for="inputSuccess2">${nickname}님의 아이디</label>
+																	<input type="text" class="form-control" id="userDetailIdChange" name="userDetailId" varia-describedby="inputSuccess2Status" readonly="readonly">
+																	<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+																	<span id="inputSuccess2Status" class="sr-only">(success)</span>
+																</div>
+																<br>
+															  	<div class="form-group">
+																    <label for="phoneFront3">전화번호앞3자리</label>
+																    <p id="explain">(전화번호 앞3자리는 3자리의 숫자로 입력해야합니다)</p>
+																    <p><input type="text" id="phoneFront3Change" name="phoneFront3" maxlength="3" class="form-control"></p>
+																    <span id="phch1Change"></span>
+															  	</div>
+															  	<div class="form-group">
+																    <p id="explain">(전화번호 뒤8자리는 -없이 8자리의 숫자로 입력해야합니다)</p>
+																    <p><input type="text" id="phoneRest8Change" name="phoneRest8" maxlength="8" class="form-control"></p>
+																    <span id="phch2Change"></span>
+															  	</div>
+																<br>
+																<div>
+															    	<label for="postalCodeInput">우편번호</label>
+																    <p id="explain">(주소를 정확히 입력해 주시기 바랍니다)</p>
+																    <input type="text" id="postalCodeChange" name="postalCode">
+																	<input type="button" id="findPostalCode" onclick="sample4_execDaumPostcode()" value="우편번호찾기"><br>
+																	<input type="text" id="addressChange" name="address">
+																	<input type="text" id="address2Change" name="address2" placeholder="나머지 주소">
+																	<span id="guide" style="color:#999"></span>
+																</div>
+																<br>
+														      </div>
+														      <div class="modal-footer">
+														        <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+														        <button type="button" class="btn btn-info">수정</button>
+														      </div>
+												      	</form>
+												    </div>
+												  </div>
+												</div>
+											</div>		
+										</td>
+										<td>
+											<a href="#deleteUserPage${numberofuser.count}" type="button" class="btn btn-danger btn-block disabled" data-toggle="modal" value="${alluser.userId}">삭제승인</a>
+											<!-- 사원등록요청 승인처리를 위한 사원정보확인 모달 내부 구현 (승인까지 가능)-->
+											<div class="modal fade" id="deleteUserPage${numberofuser.count}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+											  <div class="modal-dialog">
+											    <div class="modal-content">
+											      <div class="modal-header">
+											        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+											        <h4 class="modal-title" id="myModalLabel">${alluser.nickname}님의 상세정보</h4>
+											      </div>
+											      <div class="modal-body">
+								      					<form action="#" method="post" style="border:1px solid #ccc">
+															<div class="container_insert">
+															    <div id="emailSuccess" class="form-group has-success has-feedback">
+																	<label class="control-label" for="inputSuccess2">${nickname}님의 아이디</label>
+																	<input type="text" class="form-control" id="userDetailIdDel" name="userDetailId" value="${alluser.userId}" varia-describedby="inputSuccess2Status" readonly="readonly">
+																	<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+																	<span id="inputSuccess2Status" class="sr-only">(success)</span>
+																</div>
+																<br>
+															  	<div class="form-group">
+																    <label for="phoneFront3">전화번호앞3자리</label>
+																    <p><input type="text" id="phoneFront3Del" name="phoneFront3" maxlength="3" class="form-control"></p>
+															  	</div>
+															  	<div class="form-group">
+																    <p><input type="text" id="phoneRest8Del" name="phoneRest8" maxlength="8" class="form-control"></p>
+															  	</div>
+																<br>
+																<div>
+															    	<label for="postalCodeInput">우편번호</label>
+																    <p id="explain">(주소를 정확히 입력해 주시기 바랍니다)</p>
+																    <input type="text" id="postalCodeDel" name="postalCode">
+																	<input type="button" id="findPostalCode" onclick="sample4_execDaumPostcode()" value="우편번호찾기"><br>
+																	<input type="text" id="addressDel" name="address">
+																	<input type="text" id="address2Del" name="address2" placeholder="나머지 주소">
+																	<span id="guide" style="color:#999"></span>
+																</div>
+																<br>
+														      </div>
+														      <div class="modal-footer">
+														        <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+														        <button type="button" class="btn btn-info">수정</button>
+														      </div>
+												      	</form>
+												    </div>
+											    </div>
+											  </div>
+											</div>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+				</div>	
 			</div>
 			<div role="tabpanel" class="tab-pane fade" id="message" aria-labelledby="message-tab"> 
 				<p>메세지</p> 

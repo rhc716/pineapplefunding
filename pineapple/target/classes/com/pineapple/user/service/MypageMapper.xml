@@ -50,12 +50,14 @@
 		<result property="accountNumber" column="accountNumber"/>
 		<result property="accountNickname" column="accountNickname"/>
 	</resultMap>
+	
 <!-- 기업명 조회(기업명 중복체크 기능) -->
 	<select id="selectCompanyByComName" parameterType="String" resultType="com.pineapple.user.service.Company">
 		SELECT comName
 		FROM company
 		WHERE comName=#{comName}
 	</select>
+	
 <!-- 기업회원 레벨의 회원의 마이페이지 분기시 사원정보조회 -->
 	<select id="selectEmployeeById" parameterType="String" resultMap="selectEmployeeById">
 		SELECT *
@@ -79,6 +81,7 @@
 		(comCode, comName, comNumber, comHomePage, comCeoName, comEstablishYear, comInfo, comLogoServerName, comLogoHeight, comLogoWidth, comLogoSize, comLogoExtension, comSummary, comActivitySummary, comOpenUserId, comAdminApproval, comApprovalDate, comApprovalId, comDelRequestId, comDelTime, comDelApprovalId)
 		VALUES (null, #{comName}, #{comNumber}, #{comHomePage}, #{comCeoName}, #{comEstablishYear}, #{comInfo}, #{comLogoServerName}, #{comLogoHeight}, #{comLogoWidth}, #{comLogoSize}, #{comLogoExtension}, #{comSummary}, #{comActivitySummary}, #{comOpenUserId}, #{comAdminApproval}, null, null, null, null, null)
 	</insert>
+	
 <!-- 경영진 마이페이지 기업정보 수정 -->
 	<update id="updateCompanyInfo" parameterType="com.pineapple.user.service.Company">
 		UPDATE company
@@ -341,6 +344,7 @@
 		FROM userdetail 
 		WHERE userDetailId=#{userDetailId}
 	</select>
+	
 	<!--  마이페이지 공통모듈에서 회원상세정보수정 -->
 	<update id="updateUserDetailById" parameterType="com.pineapple.user.service.UserDetail">
 		UPDATE userdetail
@@ -354,4 +358,17 @@
   			nameCheck=#{nameCheck}
  		WHERE userDetailId=#{userDetailId}
 	</update>
+	
+	<!-- 관리자 마이페이지 전체회원리스트 조회 -->
+	<select id="selectAllUserList" resultMap="selectAllUserList">
+		SELECT *
+		FROM user
+	</select>
+	<resultMap type="com.pineapple.user.service.User" id="selectAllUserList">
+		<result property="userId" column="userId"/>
+		<result property="nickname" column="nickname"/>
+		<result property="name" column="name"/>
+		<result property="levelCode" column="levelCode"/>
+		<result property="uDelTime" column="uDelTime"/>
+	</resultMap>
 </mapper>

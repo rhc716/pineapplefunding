@@ -52,7 +52,8 @@
 				</ul>
 			</li>
 			<li><a>배당하기</a></li>
-			<li><a>펀딩내권한부여</a></li>
+			<li><a href="/pineapple/fundingauth.user">펀딩내권한부여</a></li>
+	
 		</ul>
 	</nav>
 </c:if>

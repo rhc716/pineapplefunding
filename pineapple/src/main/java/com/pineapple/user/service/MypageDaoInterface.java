@@ -6,6 +6,9 @@ import java.util.Map;
 import com.pineapple.invest.service.InvestorInvestList;
 
 public interface MypageDaoInterface {
+	//관리자 전체회원리스트 조회
+	List<User> selectAllUserList();
+	
 	//경영진 기업삭제취소
 	int updateCompanyDeleteRequestCancle(Company company);
 	
