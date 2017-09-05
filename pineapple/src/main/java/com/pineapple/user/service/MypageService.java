@@ -15,6 +15,26 @@ public class MypageService implements MypageServiceInterface {
 	
 	@Autowired
 	private MypageDaoInterface mypagedao;
+	//경영진 기업삭제취소
+	@Override
+	public int modifyCompanyDeleteRequestCancle(Company company) {
+		log.debug("MypageService modifyCompanyDeleteRequestCancle 호출 결과: "+mypagedao.updateCompanyDeleteRequestCancle(company));
+		return mypagedao.updateCompanyDeleteRequestCancle(company);
+	}
+	
+	//관리자의 기업삭제처리
+	@Override
+	public int modifyCompanyDelete(Company company) {
+		log.debug("MypageService modifyCompanyDelete 호출 결과: "+mypagedao.updateCompanyDelete(company));
+		return mypagedao.updateCompanyDelete(company);
+	}
+	
+	//관리자의 기업승인처리
+	@Override
+	public int modifyCompanyApproval(Company company) {
+		log.debug("MypageService modifyCompanyApproval 호출 결과: "+mypagedao.updateCompanyApproval(company));
+		return mypagedao.updateCompanyApproval(company);
+	}
 	
 	//사원탈퇴처리
 	@Override
@@ -150,8 +170,4 @@ public class MypageService implements MypageServiceInterface {
 		log.debug("MypageService selectInvestorBasic 메서드 호출 "+userId);
 		return mypagedao.selectInvestorBasic(userId);
 	}
-
-	
-
-	
 }

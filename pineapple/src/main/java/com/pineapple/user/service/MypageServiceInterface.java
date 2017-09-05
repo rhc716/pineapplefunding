@@ -6,6 +6,15 @@ import java.util.Map;
 import com.pineapple.invest.service.InvestorInvestList;
 
 public interface MypageServiceInterface {
+	//경영진 기업삭제취소
+	int modifyCompanyDeleteRequestCancle(Company company);
+	
+	//관리자의 기업삭제처리
+	int modifyCompanyDelete(Company company);
+	
+	//관리자의 기업승인처리
+	int modifyCompanyApproval(Company company);
+	
 	//사원탈퇴처리
 	int removeEmployeeByEmCode(int emCode);
 	

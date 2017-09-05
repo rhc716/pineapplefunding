@@ -7,47 +7,55 @@
 <title>관리자 MyPage</title>
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-<!-- 부가적인 테마 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-
-<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<!-- css -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
-
-<!-- css lbr -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lbr.css" />
 <script type="text/javascript">
 $(document).ready(function(){
-	$('#newAccountSubmitBtn').click(function(){
-		$('#newaccountform').submit();
-	});
-	$('#newAccountCancelBtn').click(function(){
-		location.href = '/pineapple/mypage.user';
-	});
-	$('#changeAccountModalBtn').click(function(){
-		var in_accountCode = $('#changeAccountModalBtn').val();
+	$('.changeaccount').click(function(){
+		var in_accountCode = $(this).attr('value');
 		var changeAccountAjax = $.ajax({ // ajax실행부분
 							        type: "get",
-							        url : "/pineapple/changeaccountpage.user",
+							        url : "/pineapple/accountchangepage.user",
 							        data : {accountCode : in_accountCode},
+							        success : function success(){
+							        		alert('수정할 계좌코드 : '+in_accountCode);
+							        },
 							        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
 							        error : function error(){
 							        		alert('계좌정보 불러오기 오류');
-							        	}
+						        	}
 								});
 		//ajax를 통해 조회한 계좌 정보를 모달창 수정페이지 각 입력값으로 넣어준다
 		changeAccountAjax.done(function(ic){
-			console.log(ic);
 			$('#accountCodeChange').val(ic.accountCode);
+			$('#accountIdChange').val(ic.accountId);
 			$('#secCompanyChange').val(ic.secCompany);
     		$('#accountNumberChange').val(ic.accountNumber);
     		$('#accountNicknameChange').val(ic.accountNickname);
+		});
+	});
+	//기업정보확인하기 - 기업정보 확인 후 승인 또는 삭제
+	$('.approveCompanyBtn').click(function(){
+		var in_companyCode = $(this).attr('value');
+		var changeCompanyAjax = $.ajax({ // ajax실행부분
+							        type: "get",
+							        url : "/pineapple/companychangepage.user",
+							        data : {comCode : in_companyCode},
+							        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+							        error : function error(){
+						        		alert('기업정보 불러오기 오류');
+						        	}
+								});
+		//ajax를 통해 조회한 계좌 정보를 모달창 수정페이지 각 입력값으로 넣어준다
+		changeCompanyAjax.done(function(cc){
+			$('#comAdminApprovalChange').val(cc.comAdminApproval);
+			if(cc.comAdminApproval == 1){
+				$('#comApprovalNotPart').hide();
+				$('#comApprovalDonePart').show();
+				$('#comApprovalDone').val('기업승인완료');
+			} else {
+				$('#comApprovalDonePart').hide();
+				$('#comApprovalNotPart').show();
+				$('#comApprovalNot').val('기업승인대기중');
+			}
 		});
 	});
 });
@@ -67,10 +75,10 @@ $(document).ready(function(){
 				<a data-target="#admininfo" id="admininfo-tab" role="tab" data-toggle="tab" aria-controls="admininfo" aria-expanded="true">내정보</a>
 			</li> 
 			<li role="presentation" class="">
-				<a data-target="#approveCompany" role="tab" id="approveCompany-tab" data-toggle="tab" aria-controls="approveCompany" aria-expanded="false">회사목록보기</a>
+				<a data-target="#allCompanyList" role="tab" id="allCompanyList-tab" data-toggle="tab" aria-controls="allCompanyList" aria-expanded="false">전체회사목록</a>
 			</li>
 			<li role="presentation" class="">
-				<a data-target="#allUserList" role="tab" id="allUserList-tab" data-toggle="tab" aria-controls="allUserList" aria-expanded="false">전체회원보기</a>
+				<a data-target="#allUserList" role="tab" id="allUserList-tab" data-toggle="tab" aria-controls="allUserList" aria-expanded="false">전체회원목록</a>
 			</li>
 			<li role="presentation" class="">
 				<a data-target="#message" role="tab" id="message-tab" data-toggle="tab" aria-controls="message" aria-expanded="false">메세지</a>
@@ -108,12 +116,12 @@ $(document).ready(function(){
 									<td> ${useraccount.accountNumber} </td>
 									<td> ${useraccount.accountNickname} </td>
 									<td>
-									<button id="changeAccountModalBtn" type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#changeAccountModal" value="${useraccount.accountCode}">수정</button>
+										<a type="button" class="btn btn-info btn-block changeaccount" data-toggle="modal" value="${useraccount.accountCode}" href="#changeAccountModal">수정</a>
 									</td>
 									<td>
 										<form action="/pineapple/deleteaccount.user" method="post">
-											<input type="hidden" id="accountCode" name="accountCode" value="${useraccount.accountCode}">
-											<button id="deleteAccountBtn" type="submit" class="btn btn-info btn-block">삭제</button>
+											<input type="hidden" name="accountCode" value="${useraccount.accountCode}">
+											<button type="submit" class="btn btn-info btn-block">삭제</button>
 										</form>
 									</td>
 								</tr>
@@ -121,7 +129,7 @@ $(document).ready(function(){
 						</tbody>
 						<tfoot>
 							<div>
-								<button type="button" class="btn btn-info" data-toggle="modal" data-target="#newaccountmodal">+ 새로운 계좌등록</button>
+								<a type="button" class="btn btn-info" data-toggle="modal" href="#newaccountmodal">+ 새로운 계좌등록</a>
 							</div>
 						</tfoot>
 					</table>
@@ -135,11 +143,11 @@ $(document).ready(function(){
 					        <h4 class="modal-title" id="myModalLabel">${nickname}님의 새로운 계좌등록</h4>
 					      </div>
 					      <div class="modal-body">
-					        <form id="newaccountform" action="/pineapple/addnewaccount.user" method="post">
+					        <form action="/pineapple/addnewaccount.user" method="post">
 					        	<div class="container_insert">
 								    <div id="accountHolerIdinput" class="form-group has-success has-feedback">
 										<label class="control-label" for="inputSuccess2">${nickname}님의 아이디</label>
-										<input type="text" class="form-control" id="accountId" name="accountId" value="${id}" varia-describedby="inputSuccess2Status" readonly="readonly">
+										<input type="text" class="form-control" name="accountId" value="${id}" varia-describedby="inputSuccess2Status" readonly="readonly">
 										<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 										<span id="inputSuccess2Status" class="sr-only">(success)</span>
 									</div>
@@ -147,25 +155,25 @@ $(document).ready(function(){
 								  	<div class="form-group">
 									    <label for="secCompany">증권사</label>
 									    <p id="explain">(계좌를 만든 증권사 이름을 정확히 입력해주세요)</p>
-									    <p><input type="text" id="secCompany" name="secCompany" class="form-control"></p>
+									    <p><input type="text" name="secCompany" class="form-control"></p>
 								  	</div>
 								  	<br>
 								  	<div class="form-group">
 								  		<label for="accountNumber">계좌번호</label>
 									    <p id="explain">(계좌번호를 -없이 입력해주세요)</p>
-									    <p><input type="text" id="accountNumber" name="accountNumber" class="form-control"></p>
+									    <p><input type="text" name="accountNumber" class="form-control"></p>
 								  	</div>
 									<br>
 									<div class="form-group">
 								  		<label for="accountNickname">계좌번호 별명</label>
 									    <p id="explain">(계좌번호의 별명을 등록해주세요. 필수사항이 아니므로 별명을 등록하지 않으셔도 됩니다.)</p>
-									    <p><input type="text" id="accountNickname" name="accountNickname" class="form-control"></p>
+									    <p><input type="text" name="accountNickname" class="form-control"></p>
 								  	</div>
 									<br>
 							      </div>
 							      <div class="modal-footer">
-							        <button id="newAccountCancelBtn" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-							        <button id="newAccountSubmitBtn" type="button" class="btn btn-primary" href="/pineapple/userdetailmodify.user">추가하기</button>
+							        <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+							        <button type="submit" class="btn btn-info">추가하기</button>
 							      </div>
 					        </form>
 					      </div>
@@ -181,12 +189,12 @@ $(document).ready(function(){
 					        <h4 class="modal-title" id="myModalLabel">${nickname}님의 계좌정보수정</h4>
 					      </div>
 					      <div class="modal-body">
-					        <form id="changeaccountform" action="/pineapple/changeaccount.user" method="post">
+					        <form action="/pineapple/changeaccount.user" method="post">
 					        	<div class="container_insert">
 					        		<input type="hidden" id="accountCodeChange" name="accountCode">
 								    <div id="accountHolerIdinput" class="form-group has-success has-feedback">
 										<label class="control-label" for="inputSuccess2">${nickname}님의 아이디</label>
-										<input type="text" class="form-control" id="accountId" name="accountId" value="${id}" varia-describedby="inputSuccess2Status" readonly="readonly">
+										<input type="text" class="form-control" id="accountIdChange" name="accountId" varia-describedby="inputSuccess2Status" readonly>
 										<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 										<span id="inputSuccess2Status" class="sr-only">(success)</span>
 									</div>
@@ -209,10 +217,10 @@ $(document).ready(function(){
 									    <p><input type="text" id="accountNicknameChange" name="accountNickname" class="form-control"></p>
 								  	</div>
 									<br>
-							      </div>
-							      <div class="modal-footer">
-							        <button id="newAccountCancelBtn" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-							        <button type="submit" class="btn btn-primary">수정하기</button>
+							      	<div class="modal-footer">
+							        	<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+							        	<button type="submit" class="btn btn-info">수정하기</button>
+							      	</div>
 							      </div>
 					        </form>
 					      </div>
@@ -221,8 +229,225 @@ $(document).ready(function(){
 					</div>
 				</div>
 			</div>
-			<div role="tabpanel" class="tab-pane fade" id="approveCompany" aria-labelledby="approveCompany-tab"> 
-				<p>회사목록조회 및 회사등록/삭제요청승인</p> 
+			<!-- 두번째 탭(전체기업목록조회, 기업등록승인, 기업삭제승인) -->
+			<div role="tabpanel" class="tab-pane fade" id="allCompanyList" aria-labelledby="allCompanyList-tab"> 
+				<div class="row">
+					<div class="col-md-2">
+						<br>
+						<p>전체기업조회</p>
+					</div>
+					<div class="col-md-10">
+						<br>
+						<p id="explanation">파인애플펀딩 사이트에 등록요청/등록승인된 기업의 전체기업리스트를 확인할 수 있습니다. 
+											전체기업리스트 조회 후 바로 기업등록승인 또는 기업삭제승인 작업을 할 수 있습니다.</p>
+						<br>
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr class="info">
+									<td>번호</td>
+									<td>기업코드</td>
+									<td>기업명</td>
+									<td>사업자번호</td>
+									<td>기업대표명</td>
+									<td>개설자아이디</td>
+									<td>등록승인</td>
+									<td>삭제승인</td>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="allcompany" items="${allcompany}" varStatus="numberofcompany">
+									<tr>
+										<td>${numberofcompany.count}</td>
+										<td>${allcompany.comCode}</td>
+										<td>${allcompany.comName}</td>
+										<td>${allcompany.comNumber}</td>
+										<td>${allcompany.comCeoName}</td>
+										<td>${allcompany.comOpenUserId}</td>
+										<td>
+											<c:choose>
+												<c:when test="${allcompany.comAdminApproval == 0}">
+													<a class="btn btn-success btn-block approveCompanyBtn" href="#approveCompanyPage${numberofcompany.count}" type="button" data-toggle="modal" value="${allcompany.comCode}">등록승인</a>
+													<!-- 기업등록요청 승인처리를 위한 기업정보확인 모달 내부 구현 (승인까지 가능)-->
+													<div class="modal fade" id="approveCompanyPage${numberofcompany.count}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+													  <div class="modal-dialog">
+													    <div class="modal-content">
+													      <div class="modal-header">
+													        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+													        <h4 class="modal-title" id="myModalLabel">${nickname}님의 기업등록정보</h4>
+													      </div>
+													      <div class="modal-body">
+													      <!-- 회사정보확인 및 수정 모달 -->
+													        <form action="/pineapple/approvecompany.user" method="post">
+													        	<div class="container_insert">
+																	<div id="comApprovalDonePart" class="form-group has-success has-feedback" hidden>
+																	    <label class="control-label" for="inputSuccess4">기업승인여부</label>
+																	    <input type="text" class="form-control" id="comApprovalDone" name="comAdminApproved" aria-describedby="inputSuccess4Status" readonly>
+																	    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+																	    <span id="comApprovedStatus" class="sr-only">(success)</span>
+																	</div>
+																	<div id="comApprovalNotPart" class="form-group has-error has-feedback" hidden>
+																	    <label class="control-label" for="inputError2">기업승인여부</label>
+																	    <input type="text" class="form-control" id="comApprovalNot" name="comAdminNotApproved"aria-describedby="inputError2Status" readonly>
+																	    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+																	    <span id="inputError2Status" class="sr-only">(error)</span>
+																	</div>
+																	<br>
+																	<div>
+																		<input type="hidden" class="form-control" name="comAdminApproval" value="1">
+																    	<input type="hidden" class="form-control" name="comCode" value="${allcompany.comCode}">
+																    	<input type="hidden" class="form-control" name="comApprovalDate">
+																    	<input type="hidden" class="form-control" name="comApprovalId" value="${id}">
+																    </div>
+																    <div id="comOpenEmail" class="form-group has-success has-feedback">
+																		<label class="control-label" for="inputSuccess2">기업등록요청아이디</label>
+																		<input name="comOpenUserId" value="${allcompany.comOpenUserId}" type="text" class="form-control" varia-describedby="inputSuccess2Status" readonly>
+																		<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+																		<span id="inputSuccess2Status" class="sr-only">(success)</span>
+																	</div>
+																	<br>
+																	<div id="comnameChModal" class="form-group">
+																	    <label class="control-label" for="comNameInput">*기업이름</label>
+																	    <input name="comName" value="${allcompany.comName}" type="text" class="form-control">
+																	<br>
+																  	</div>
+																  	<div class="form-group">
+																	    <label for="exampleInputPassword1">*사업자번호</label>
+																	    <input name="comNumber" value="${allcompany.comNumber}" type="text" class="form-control" maxlength="10">
+																  	</div>
+																  	<br>
+																  	<div>
+																  		<label for="comHomePageInput">기업웹사이트주소</label>
+																	    <input name="comHomePage" value="${allcompany.comHomePage}" type="text" class="form-control">
+																	</div>
+																	<br>
+																	<div>
+																    	<label for="comCeoNameInput">기업대표이름</label>
+																	    <p id="explain">(현재 기업 대표의 실명을 입력해주시기 바랍니다)</p>
+																	    <input name="comCeoName" value="${allcompany.comHomePage}" type="text" class="form-control">
+																	</div>
+																	<br>
+																	<div>
+																    	<label for="comInfoInupt">기업정보</label>
+																	    <p id="explain">(기업에 대한 전반적인 정보를 입력해주시기 바랍니다)</p>
+																	    <textarea name="comInfo" class="form-control" rows="4">${allcompany.comInfo}</textarea>
+																	</div>
+																	<br>
+																	<div class="modal-footer">
+																		<button type="submit" class="btn btn-info">기업승인</button>
+																		<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+																	</div>
+																  </div>
+																</form>
+													        </div>
+													    </div>
+													  </div>
+													</div>				
+												</c:when>
+												<c:otherwise>
+													<a type="button" class="btn btn-warning btn-block disabled">승인완료</a>
+												</c:otherwise>
+											</c:choose>
+										</td>
+										<td>
+											<c:choose>
+												<c:when test="${allcompany.comDelRequestId != null and allcompany.comDelApprovalId == null}">
+													<a href="#deleteCompanyPage${numberofcompany.count}" type="button" class="btn btn-danger btn-block" data-toggle="modal" value="${allcompany.comCode}">삭제승인</a>
+													<!-- 사원등록요청 승인처리를 위한 사원정보확인 모달 내부 구현 (승인까지 가능)-->
+													<div class="modal fade" id="deleteCompanyPage${numberofcompany.count}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+													  <div class="modal-dialog">
+													    <div class="modal-content">
+													      <div class="modal-header">
+													        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+													        <h4 class="modal-title" id="myModalLabel">${allcompany.comName}삭제요청 승인</h4>
+													      </div>
+													      <div class="modal-body">
+													        <form action="/pineapple/deletecompany.user" method="post">
+													        	<div class="container_insert">
+																	<div id="comApprovalDonePart" class="form-group has-success has-feedback" hidden>
+																	    <label class="control-label" for="inputSuccess4">기업승인여부</label>
+																	    <input type="text" class="form-control" id="comApprovalDone" name="comAdminApproved" aria-describedby="inputSuccess4Status" readonly>
+																	    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+																	    <span id="comApprovedStatus" class="sr-only">(success)</span>
+																	</div>
+																	<div id="comApprovalNotPart" class="form-group has-error has-feedback" hidden>
+																	    <label class="control-label" for="inputError2">기업승인여부</label>
+																	    <input type="text" class="form-control" id="comApprovalNot" name="comAdminNotApproved"aria-describedby="inputError2Status" readonly>
+																	    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+																	    <span id="inputError2Status" class="sr-only">(error)</span>
+																	</div>
+																	<br>
+																	<div>
+																    	<input type="hidden" class="form-control" name="comCode" value="${allcompany.comCode}">
+																    	<input type="hidden" class="form-control" name="comDelTime" value="${allcompany.comDelTime}">
+																    	<input type="hidden" class="form-control" name="comDelApprovalId" value="${id}">
+																    </div>
+																    <div id="comOpenEmail" class="form-group has-success has-feedback">
+																		<label class="control-label" for="inputSuccess2">기업등록요청아이디</label>
+																		<input name="comOpenUserId" value="${allcompany.comOpenUserId}" type="text" class="form-control" varia-describedby="inputSuccess2Status" readonly>
+																		<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+																		<span id="inputSuccess2Status" class="sr-only">(success)</span>
+																	</div>
+																	<br>
+																	 <div id="comOpenEmail" class="form-group has-success has-feedback">
+																		<label class="control-label" for="inputSuccess2">기업삭제요청아이디</label>
+																		<input name="comDelRequestId" value="${allcompany.comDelRequestId}" type="text" class="form-control" varia-describedby="inputSuccess2Status" readonly>
+																		<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+																		<span id="inputSuccess2Status" class="sr-only">(success)</span>
+																	</div>
+																	<br>
+																	<div id="comnameChModal" class="form-group">
+																	    <label class="control-label" for="comNameInput">*기업이름</label>
+																	    <input name="comName" value="${allcompany.comName}" type="text" class="form-control">
+																	<br>
+																  	</div>
+																  	<div class="form-group">
+																	    <label for="exampleInputPassword1">*사업자번호</label>
+																	    <input name="comNumber" value="${allcompany.comNumber}" type="text" class="form-control" maxlength="10">
+																  	</div>
+																  	<br>
+																  	<div>
+																  		<label for="comHomePageInput">기업웹사이트주소</label>
+																	    <input name="comHomePage" value="${allcompany.comHomePage}" type="text" class="form-control">
+																	</div>
+																	<br>
+																	<div>
+																    	<label for="comCeoNameInput">기업대표이름</label>
+																	    <p id="explain">(현재 기업 대표의 실명을 입력해주시기 바랍니다)</p>
+																	    <input name="comCeoName" value="${allcompany.comCeoName}" type="text" class="form-control">
+																	</div>
+																	<br>
+																	<div>
+																    	<label for="comInfoInupt">기업정보</label>
+																	    <p id="explain">(기업에 대한 전반적인 정보를 입력해주시기 바랍니다)</p>
+																	    <textarea name="comInfo" class="form-control" rows="4">${allcompany.comInfo}</textarea>
+																	</div>
+																	<br>
+																	<div class="modal-footer">
+																		<button type="submit" class="btn btn-info">삭제승인</button>
+																		<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+																	</div>
+																</div>
+													        </form>
+													      </div>
+													    </div>
+													  </div>
+													</div>				
+												</c:when>
+												<c:when test="${allcompany.comDelRequestId != null and allcompany.comDelApprovalId != null}">
+													<a type="button" class="btn btn-success btn-block disabled">삭제완료</a>
+												</c:when>
+												<c:otherwise>
+													<a type="button" class="btn btn-default btn-block disabled">요청없음</a>
+												</c:otherwise>
+											</c:choose>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+				
+			</div> 
 			</div>
 			<div role="tabpanel" class="tab-pane fade" id="allUserList" aria-labelledby="allUserList-tab"> 
 				<p>전체회원보기</p> 

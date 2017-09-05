@@ -16,6 +16,26 @@ public class MypageDao implements MypageDaoInterface {
 	
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
+	//경영진 기업삭제취소
+	@Override
+	public int updateCompanyDeleteRequestCancle(Company company) {
+		log.debug("MypageDao updateCompanyDeleteRequestCancle 호출 "+company);
+		return sqlSessionTemplate.update("com.pineapple.user.service.MypageMapper.cancleDeleteCompany", company);
+	}
+	
+	//관리자의 기업삭제처리
+	@Override
+	public int updateCompanyDelete(Company company) {
+		log.debug("MypageDao updateCompanyDelete 호출 "+company);
+		return sqlSessionTemplate.update("com.pineapple.user.service.MypageMapper.deleteCompany", company);
+	}
+	
+	//관리자의 기업승인처리
+	@Override
+	public int updateCompanyApproval(Company company) {
+		log.debug("MypageDao updateCompanyApproval 호출 "+company);
+		return sqlSessionTemplate.update("com.pineapple.user.service.MypageMapper.approveCompany", company);
+	}
 	
 	//사원탈퇴처리
 	@Override
@@ -155,5 +175,6 @@ public class MypageDao implements MypageDaoInterface {
 	}
 
 	
+
 	
 }

@@ -28,6 +28,44 @@ public class MypageController {
 	
 	@Autowired
 	private MypageServiceInterface mypageservice;
+	//경영진 기업삭제요청 취소처리
+	@RequestMapping(value="/cancledeletecompany.user", method = RequestMethod.POST)
+    public String cancleDeleteCompany(HttpSession session, Company company) { //커맨드 객체
+        log.debug("approveCompany 경영진 기업삭제취소 요청 : "+company);
+        int result = mypageservice.modifyCompanyDeleteRequestCancle(company);
+        if(result == 1){
+        	log.debug(session.getAttribute("nickname")+"님의 기업삭제취소 성공");
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님의 기업삭제취소 실패");
+        }
+        return "redirect:/mypage.user"; // 글입력후 "/"로 리다이렉트(재요청)
+    }
+	
+	//관리자 마이페이지 기업삭제처리
+	@RequestMapping(value="/deletecompany.user", method = RequestMethod.POST)
+    public String deleteCompany(HttpSession session, Company company) { //커맨드 객체
+        log.debug("approveCompany 관리자의 기업삭제승인 요청 : "+company);
+        int result = mypageservice.modifyCompanyDelete(company);
+        if(result == 1){
+        	log.debug(session.getAttribute("nickname")+"님의 기업삭제요청 성공");
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님의 기업삭제요청 실패");
+        }
+        return "redirect:/mypage.user"; // 글입력후 "/"로 리다이렉트(재요청)
+    }
+	
+	//관리자 마이페이지 기업승인처리
+	@RequestMapping(value="/approvecompany.user", method = RequestMethod.POST)
+    public String approveCompany(HttpSession session, Company company) { //커맨드 객체
+        log.debug("approveCompany 관리자의 기업승인 요청 : "+company);
+        int result = mypageservice.modifyCompanyApproval(company);
+        if(result == 1){
+        	log.debug(session.getAttribute("nickname")+"님의 기업승인요청 성공");
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님의 기업승인요청 실패");
+        }
+        return "redirect:/mypage.user"; // 글입력후 "/"로 리다이렉트(재요청)
+    }
 	
 	//사원삭제처리
 	@RequestMapping(value="/deleteemployee.user", method = RequestMethod.POST)
@@ -54,7 +92,7 @@ public class MypageController {
         }
         return "redirect:/mypage.user"; // 글입력후 "/"로 리다이렉트(재요청)
     }
-		
+	
 	//경영진의 개별 기업 삭제요청 페이지 구성
 	@RequestMapping(value="/companydeletepage.user", method=RequestMethod.GET)
 	public @ResponseBody Company deleteCompanyPage(Model model, @RequestParam("comCode") int comCode){

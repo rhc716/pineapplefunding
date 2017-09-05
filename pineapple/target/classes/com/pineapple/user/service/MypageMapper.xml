@@ -107,7 +107,7 @@
 		WHERE comCode=#{comCode}
 	</update>
 	
-<!-- 경영진 마이페이지 기업삭제 -->
+<!-- 경영진 마이페이지 기업삭제요청 -->
 	<update id="delRequestCompany" parameterType="com.pineapple.user.service.Company">
 		UPDATE company
 		SET
@@ -180,6 +180,7 @@
 				 #{comList.emComName}
 			</foreach>
 		</where>
+		ORDER BY emComName, emCode asc
 	</select>
 	<resultMap type="com.pineapple.user.service.Employee" id="selectAllEmployeeByMyComNameList">
 		<result property="emCode" column="emCode"/>
@@ -231,15 +232,54 @@
 		<result property="emDelRequest" column="emDelRequest"/>
 	</resultMap>
 	
-<!-- 사원등록요청시 등록할 전체회사정보 조회(검색기능) -->
+<!-- 전체회사정보 조회(관리자 전체회사조회, 일반사원&경영진은 사원등록요청시 검색기능) -->
 	<select id="selectAllCompany" resultMap="selectAllCompany">
-		SELECT comCode, comName
+		SELECT comCode, comName, comNumber, comHomePage, comCeoName, comInfo, comOpenUserId, comAdminApproval, comApprovalDate, comApprovalId, comDelRequestId, comDelTime, comDelApprovalId
 		FROM company
+		ORDER BY comOpenUserId asc
 	</select>
 	<resultMap type="com.pineapple.user.service.Company" id="selectAllCompany">
 		<result property="comCode" column="comCode"/>
 		<result property="comName" column="comName"/>
+		<result property="comNumber" column="comNumber"/>
+		<result property="comHomePage" column="comHomePage"/>
+		<result property="comCeoName" column="comCeoName"/>
+		<result property="comInfo" column="comInfo"/>
+		<result property="comOpenUserId" column="comOpenUserId"/>
+		<result property="comAdminApproval" column="comAdminApproval"/>
+		<result property="comApprovalDate" column="comApprovalDate"/>
+		<result property="comApprovalId" column="comApprovalId"/>
+		<result property="comDelRequestId" column="comDelRequestId"/>
+		<result property="comDelTime" column="comDelTime"/>
+		<result property="comDelApprovalId" column="comDelApprovalId"/>
 	</resultMap>
+
+<!-- 관리자의 기업승인처리 -->
+	<update id="approveCompany" parameterType="com.pineapple.user.service.Company">
+		UPDATE company
+		SET
+		comAdminApproval=#{comAdminApproval},
+		comApprovalDate=NOW(),
+		comApprovalId=#{comApprovalId}
+		WHERE comCode=#{comCode}
+	</update>
+	
+<!-- 관리자의 기업삭제처리 -->
+	<update id="deleteCompany" parameterType="com.pineapple.user.service.Company">
+		UPDATE company
+		SET
+		comDelApprovalId=#{comDelApprovalId}
+		WHERE comCode=#{comCode}
+	</update>
+	
+<!-- 경영진의 기업삭제취소처리 -->
+	<update id="cancleDeleteCompany" parameterType="com.pineapple.user.service.Company">
+		UPDATE company
+		SET
+		comDelRequestId=null,
+		comDelTime=null
+		WHERE comCode=#{comCode}
+	</update>			
 	
 <!-- 사원요청시 등록할 특정회사정보 조회 -->
 	<select id="selectCompanyByName" parameterType="String" resultType="com.pineapple.user.service.Company">

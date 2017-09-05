@@ -7,21 +7,12 @@
 <title>투자자 MyPage</title>
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
 <script type="text/javascript">
 $(document).ready(function(){
-	$('#newAccountSubmitBtn').click(function(){
-		$('#newaccountform').submit();
-	});
-	$('#newAccountCancelBtn').click(function(){
-		location.href = '/pineapple/mypage.user';
-	});
 	$('.changeaccount').click(function(){
 		var in_accountCode = $(this).attr('value');
 		var changeAccountAjax = $.ajax({ // ajax실행부분
-							        type: "post",
+							        type: "get",
 							        url : "/pineapple/accountchangepage.user",
 							        data : {accountCode : in_accountCode},
 							        success : function success(){
@@ -35,6 +26,7 @@ $(document).ready(function(){
 		//ajax를 통해 조회한 계좌 정보를 모달창 수정페이지 각 입력값으로 넣어준다
 		changeAccountAjax.done(function(ic){
 			$('#accountCodeChange').val(ic.accountCode);
+			$('#accountIdChange').val(ic.accountId);
 			$('#secCompanyChange').val(ic.secCompany);
     		$('#accountNumberChange').val(ic.accountNumber);
     		$('#accountNicknameChange').val(ic.accountNickname);
@@ -208,7 +200,7 @@ $(document).ready(function(){
 								<td>
 									<form action="/pineapple/deleteaccount.user" method="post">
 										<input type="hidden" id="accountCode" name="accountCode" value="${useraccount.accountCode}">
-										<button id="deleteAccountBtn" type="submit" class="btn btn-info btn-block">삭제</button>
+										<button type="submit" class="btn btn-info btn-block">삭제</button>
 									</form>
 								</td>
 							</tr>
@@ -259,8 +251,8 @@ $(document).ready(function(){
 								<br>
 						      </div>
 						      <div class="modal-footer">
-						        <button id="newAccountCancelBtn" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-						        <button id="newAccountSubmitBtn" type="button" class="btn btn-primary">추가하기</button>
+						        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+						        <button type="button" class="btn btn-primary">추가하기</button>
 						      </div>
 				        </form>
 				      </div>
@@ -281,7 +273,7 @@ $(document).ready(function(){
 				        		<input type="hidden" id="accountCodeChange" name="accountCode">
 							    <div id="accountHolerIdinput" class="form-group has-success has-feedback">
 									<label class="control-label" for="inputSuccess2">${nickname}님의 아이디</label>
-									<input type="text" class="form-control" id="accountId" name="accountId" value="${id}" varia-describedby="inputSuccess2Status" readonly="readonly">
+									<input type="text" class="form-control" id="accountIdChange" name="accountId" value="${id}" varia-describedby="inputSuccess2Status" readonly="readonly">
 									<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 									<span id="inputSuccess2Status" class="sr-only">(success)</span>
 								</div>
@@ -306,7 +298,7 @@ $(document).ready(function(){
 								<br>
 						      </div>
 						      <div class="modal-footer">
-						        <button id="newAccountCancelBtn" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+						        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 						        <button type="submit" class="btn btn-primary">수정하기</button>
 						      </div>
 				        </form>

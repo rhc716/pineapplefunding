@@ -33,20 +33,10 @@
 		        		alert('사원등록요청 사원리스트 불러오기 오류');
 		        	}
 				});
-   			    
    			});
-   	    	
-	   	   
 	     });
 		*/
-		
 	$(document).ready(function(){
-		$('#newAccountSubmitBtn').click(function(){
-			$('#newaccountform').submit();
-		});
-		$('#newAccountCancelBtn').click(function(){
-			location.href = '/pineapple/mypage.user';
-		});
 		//계좌정보수정하기 - 여러개의 계좌별로 수정하는 모달 내용 변화 기능 구현
 		$('.changeaccount').click(function(){
 			var in_accountCode = $(this).attr('value');
@@ -114,7 +104,6 @@
 	    		$('#comSummaryChange').val(cc.comSummary);
 	    		$('#comActivitySummaryChange').val(cc.comActivitySummary);
 			});
-			
 		});
 		//기업삭제요청하기 - 여러개의 개설한 기업정보별로 삭제요청하는 모달 내용 변화 기능 구현
 		$('.deletecompanyinfo').click(function(){
@@ -370,8 +359,8 @@
 								</td>
 								<td>
 									<form action="/pineapple/deleteaccount.user" method="post">
-										<input type="hidden" id="accountCode" name="accountCode" value="${useraccount.accountCode}">
-										<button id="deleteAccountBtn" type="submit" class="btn btn-info btn-block">삭제</button>
+										<input type="hidden" name="accountCode" value="${useraccount.accountCode}">
+										<button type="submit" class="btn btn-info btn-block">삭제</button>
 									</form>
 								</td>
 							</tr>
@@ -469,8 +458,8 @@
 									<br>
 							      </div>
 							      <div class="modal-footer">
-							        <button id="newAccountCancelBtn" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-							        <button id="newAccountSubmitBtn" type="button" class="btn btn-primary">추가하기</button>
+							        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+							        <button type="submit" class="btn btn-primary">추가하기</button>
 							      </div>
 					        </form>
 					      </div>
@@ -492,113 +481,229 @@
 						<!-- 기업을 등록지않은 경영진은 기존의 기업들 중 자신이 소속된 기업을 검색하여 사원정보를 입력한다 -->
 					<br>
 					<c:forEach var="companyOpenedByMyId" items="${companyOpen}">
-						<a class="btn btn-info btn-block changecompanyinfo" data-toggle="modal" value="${companyOpenedByMyId.comCode}" href="#getCompanyOpenInfo">${companyOpenedByMyId.comName} 정보확인</a>
-						<p id="explain">본인의 아이디로 개설한 모든 기업정보를 확인할 수 있습니다</p>
-						<!-- 개설한 기업의 승인여부 및 세부사항 확인 을 위한 모달 내부 구현 -->
-						<div class="modal fade" id="getCompanyOpenInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						  <div class="modal-dialog">
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						        <h4 class="modal-title" id="myModalLabel">${nickname}님의 기업등록정보</h4>
-						      </div>
-						      <div class="modal-body">
-						      <!-- 회사정보확인 및 수정 모달 -->
-						        <form action="/pineapple/changecompanyinfo.user" method="post">
-						        	<div class="container_insert">
-										<div id="comApprovalDonePart" class="form-group has-success has-feedback" hidden>
-										    <label class="control-label" for="inputSuccess4">기업승인여부</label>
-										    <input type="text" class="form-control" id="comApprovalDone" name="comAdminApproved" aria-describedby="inputSuccess4Status" readonly>
-										    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-										    <span id="comApprovedStatus" class="sr-only">(success)</span>
-										</div>
-										<div id="comApprovalNotPart" class="form-group has-error has-feedback" hidden>
-										    <label class="control-label" for="inputError2">기업승인여부</label>
-										    <input type="text" class="form-control" id="comApprovalNot" name="comAdminNotApproved"aria-describedby="inputError2Status" readonly>
-										    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-										    <span id="inputError2Status" class="sr-only">(error)</span>
-										</div>
-										<br>
-										<div>
-											<input id="comAdminApprovalChange" type="hidden" class="form-control" name="comAdminApproval">
-									    	<input id="comCodeChange" type="hidden" class="form-control" name="comCode">
-									    </div>
-									    <div id="comOpenEmail" class="form-group has-success has-feedback">
-											<label class="control-label" for="inputSuccess2">기업등록요청아이디</label>
-											<input id="comOpenUserIdChange" name="comOpenUserId" type="text" class="form-control" varia-describedby="inputSuccess2Status" readonly>
-											<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-											<span id="inputSuccess2Status" class="sr-only">(success)</span>
-										</div>
-										<br>
-										<div>
-									    	<label for="comLogoFileInput">기업로고업로드</label>
-										    <input id="comLogoServerNameChange" type="text" name="comLogoServerName">
-										     <p class="help-block">기업로고 이미지 파일업로드</p>
-										    <input id="comLogoHeightChange" name="comLogoHeight" type="hidden">
-										    <input id="comLogoWidthChange" name="comLogoWidth" type="hidden">
-										    <input id="comLogoSizeChange" name="comLogoSize" type="hidden">
-										    <input id="comLogoExtensionChange" name="comLogoExtension" type="hidden">
-										</div>
-										<br>
-										<div id="comnameChModal" class="form-group">
-										    <label class="control-label" for="comNameInput">*기업이름</label>
-										    <p id="explain"> (정확한 기업이름을 입력해주시기 바랍니다. 이미 등록된 기업이 존재하는 경우 기업을 등록할 수 없습니다.)</p>
-										    <input id="comNameChange" name="comName" type="text" class="form-control" placeholder="Enter Company Name">
-									  		<span id="comnamech"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
-										<br>
-									  	</div>
-									  	<div class="form-group">
-										    <label for="exampleInputPassword1">*사업자번호</label>
-										    <p id="explain">(-없이 사업자번호 10자리를 정확히 입력해주시기 바랍니다)</p>
-										    <input id="comNumberChange" name="comNumber" type="text" class="form-control" maxlength="10" placeholder="Enter Company Number">
-										    <span id="pwch"></span>
-									  	</div>
-									  	<br>
-									  	<div>
-									  		<label for="comHomePageInput">기업웹사이트주소</label>
-										    <input id="comHomePageChange" name="comHomePage" type="text" class="form-control" placeholder="Enter Company Web Site Address">
-										</div>
-										<br>
-										<div>
-									    	<label for="comCeoNameInput">기업대표이름</label>
-										    <p id="explain">(현재 기업 대표의 실명을 입력해주시기 바랍니다)</p>
-										    <input id="comCeoNameChange" name="comCeoName" type="text" class="form-control" placeholder="Enter Company CEO Name">
-										</div>
-										<br>
-										<div>
-									    	<label for="comEstablishYearInupt">기업설립연도</label>
-										    <p id="explain">(기업의 설립연도를 입력해주시기 바랍니다)</p>
-										    <input id="comEstablishYearChange" name="comEstablishYear" type="text" class="form-control" maxlength="4" placeholder="Enter Company Establish Year">
-										</div>
-										<br>
-										<div>
-									    	<label for="comInfoInupt">기업정보</label>
-										    <p id="explain">(기업에 대한 전반적인 정보를 입력해주시기 바랍니다)</p>
-										    <textarea id="comInfoChange" name="comInfo" class="form-control" rows="4">${companyOpenedByMyId.comInfo}</textarea>
-										</div>
-										<br>
-										<div>
-									    	<label for="comSummaryInupt">기업간략소개</label>
-										    <p id="explain">(기업에 대한 소개글을 입력해주시기 바랍니다)</p>
-										    <textarea id="comSummaryChange" name="comSummary" class="form-control" rows="4">${companyOpenedByMyId.comSummary}</textarea>
-										</div>
-										<br>
-										<div>
-									    	<label for="comActivitySummaryInupt">기업활동정보</label>
-										    <p id="explain">(기업의 활동분야에 대한 정보를 입력해주시기 바랍니다)</p>
-										    <textarea id="comActivitySummaryChange" name="comActivitySummary" class="form-control" rows="4">${companyOpenedByMyId.comActivitySummary}</textarea>
-										</div>
-										</div>
-										<br>
-										<div class="modal-footer">
-											<button type="submit" class="btn btn-info">수정</button>
-											<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
-										</div>
-									</form>
-						        </div>
-						    </div>
-						  </div>
-						</div>
+						<c:choose>
+							<c:when test="${companyOpenedByMyId.comDelRequestId != null and companyOpenedByMyId.comDelApprovalId != null}">
+								<a type="button" class="btn btn-danger btn-block disabled">${companyOpenedByMyId.comName}삭제처리완료</a>
+							</c:when>
+							<c:when test="${companyOpenedByMyId.comDelRequestId != null and companyOpenedByMyId.comDelApprovalId == null}">
+								<a class="btn btn-warning btn-block changecompanyinfo" data-toggle="modal" value="${companyOpenedByMyId.comCode}" href="#getCompanyOpenInfo">${companyOpenedByMyId.comName} 삭제승인대기중</a>
+								<p id="explain">기업삭제요청을 취소할 수 있습니다.</p>
+								<!-- 개설한 기업의 승인여부 및 세부사항 확인 을 위한 모달 내부 구현 -->
+								<div class="modal fade" id="getCompanyOpenInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								  <div class="modal-dialog">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								        <h4 class="modal-title" id="myModalLabel">${nickname}님의 기업등록정보</h4>
+								      </div>
+								      <div class="modal-body">
+								      <!-- 회사정보확인 및 수정 모달 -->
+								        <form action="/pineapple/cancledeletecompany.user" method="post">
+								        	<div class="container_insert">
+												<div id="comApprovalDonePart" class="form-group has-success has-feedback" hidden>
+												    <label class="control-label" for="inputSuccess4">기업승인여부</label>
+												    <input type="text" class="form-control" id="comApprovalDone" name="comAdminApproved" aria-describedby="inputSuccess4Status" readonly>
+												    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+												    <span id="comApprovedStatus" class="sr-only">(success)</span>
+												</div>
+												<div id="comApprovalNotPart" class="form-group has-error has-feedback" hidden>
+												    <label class="control-label" for="inputError2">기업승인여부</label>
+												    <input type="text" class="form-control" id="comApprovalNot" name="comAdminNotApproved"aria-describedby="inputError2Status" readonly>
+												    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+												    <span id="inputError2Status" class="sr-only">(error)</span>
+												</div>
+												<br>
+												<div>
+													<input id="comAdminApprovalChange" type="hidden" class="form-control" name="comAdminApproval">
+											    	<input id="comCodeChange" type="hidden" class="form-control" name="comCode">
+											    </div>
+											    <div id="comOpenEmail" class="form-group has-success has-feedback">
+													<label class="control-label" for="inputSuccess2">기업등록요청아이디</label>
+													<input id="comOpenUserIdChange" name="comOpenUserId" type="text" class="form-control" varia-describedby="inputSuccess2Status" readonly>
+													<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+													<span id="inputSuccess2Status" class="sr-only">(success)</span>
+												</div>
+												<br>
+												<div>
+											    	<label for="comLogoFileInput">기업로고업로드</label>
+												    <input id="comLogoServerNameChange" type="text" name="comLogoServerName">
+												     <p class="help-block">기업로고 이미지 파일업로드</p>
+												    <input id="comLogoHeightChange" name="comLogoHeight" type="hidden">
+												    <input id="comLogoWidthChange" name="comLogoWidth" type="hidden">
+												    <input id="comLogoSizeChange" name="comLogoSize" type="hidden">
+												    <input id="comLogoExtensionChange" name="comLogoExtension" type="hidden">
+												</div>
+												<br>
+												<div id="comnameChModal" class="form-group">
+												    <label class="control-label" for="comNameInput">*기업이름</label>
+												    <p id="explain"> (정확한 기업이름을 입력해주시기 바랍니다. 이미 등록된 기업이 존재하는 경우 기업을 등록할 수 없습니다.)</p>
+												    <input id="comNameChange" name="comName" type="text" class="form-control" placeholder="Enter Company Name">
+											  		<span id="comnamech"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
+												<br>
+											  	</div>
+											  	<div class="form-group">
+												    <label for="exampleInputPassword1">*사업자번호</label>
+												    <p id="explain">(-없이 사업자번호 10자리를 정확히 입력해주시기 바랍니다)</p>
+												    <input id="comNumberChange" name="comNumber" type="text" class="form-control" maxlength="10" placeholder="Enter Company Number">
+												    <span id="pwch"></span>
+											  	</div>
+											  	<br>
+											  	<div>
+											  		<label for="comHomePageInput">기업웹사이트주소</label>
+												    <input id="comHomePageChange" name="comHomePage" type="text" class="form-control" placeholder="Enter Company Web Site Address">
+												</div>
+												<br>
+												<div>
+											    	<label for="comCeoNameInput">기업대표이름</label>
+												    <p id="explain">(현재 기업 대표의 실명을 입력해주시기 바랍니다)</p>
+												    <input id="comCeoNameChange" name="comCeoName" type="text" class="form-control" placeholder="Enter Company CEO Name">
+												</div>
+												<br>
+												<div>
+											    	<label for="comEstablishYearInupt">기업설립연도</label>
+												    <p id="explain">(기업의 설립연도를 입력해주시기 바랍니다)</p>
+												    <input id="comEstablishYearChange" name="comEstablishYear" type="text" class="form-control" maxlength="4" placeholder="Enter Company Establish Year">
+												</div>
+												<br>
+												<div>
+											    	<label for="comInfoInupt">기업정보</label>
+												    <p id="explain">(기업에 대한 전반적인 정보를 입력해주시기 바랍니다)</p>
+												    <textarea id="comInfoChange" name="comInfo" class="form-control" rows="4">${companyOpenedByMyId.comInfo}</textarea>
+												</div>
+												<br>
+												<div>
+											    	<label for="comSummaryInupt">기업간략소개</label>
+												    <p id="explain">(기업에 대한 소개글을 입력해주시기 바랍니다)</p>
+												    <textarea id="comSummaryChange" name="comSummary" class="form-control" rows="4">${companyOpenedByMyId.comSummary}</textarea>
+												</div>
+												<br>
+												<div>
+											    	<label for="comActivitySummaryInupt">기업활동정보</label>
+												    <p id="explain">(기업의 활동분야에 대한 정보를 입력해주시기 바랍니다)</p>
+												    <textarea id="comActivitySummaryChange" name="comActivitySummary" class="form-control" rows="4">${companyOpenedByMyId.comActivitySummary}</textarea>
+												</div>
+												</div>
+												<br>
+												<div class="modal-footer">
+													<button type="submit" class="btn btn-info">삭제요청취소</button>
+													<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+												</div>
+											</form>
+								        </div>
+								    </div>
+								  </div>
+								</div>
+							</c:when>
+							<c:when test="${companyOpenedByMyId.comDelRequestId == null and companyOpenedByMyId.comDelApprovalId == null}">
+								<a class="btn btn-info btn-block changecompanyinfo" data-toggle="modal" value="${companyOpenedByMyId.comCode}" href="#getCompanyOpenInfo">${companyOpenedByMyId.comName} 정보확인</a>
+								<p id="explain">본인의 아이디로 개설한 모든 기업정보를 확인할 수 있습니다</p>
+								<!-- 개설한 기업의 승인여부 및 세부사항 확인 을 위한 모달 내부 구현 -->
+								<div class="modal fade" id="getCompanyOpenInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								  <div class="modal-dialog">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								        <h4 class="modal-title" id="myModalLabel">${nickname}님의 기업등록정보</h4>
+								      </div>
+								      <div class="modal-body">
+								      <!-- 회사정보확인 및 수정 모달 -->
+								        <form action="/pineapple/changecompanyinfo.user" method="post">
+								        	<div class="container_insert">
+												<div id="comApprovalDonePart" class="form-group has-success has-feedback" hidden>
+												    <label class="control-label" for="inputSuccess4">기업승인여부</label>
+												    <input type="text" class="form-control" id="comApprovalDone" name="comAdminApproved" aria-describedby="inputSuccess4Status" readonly>
+												    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+												    <span id="comApprovedStatus" class="sr-only">(success)</span>
+												</div>
+												<div id="comApprovalNotPart" class="form-group has-error has-feedback" hidden>
+												    <label class="control-label" for="inputError2">기업승인여부</label>
+												    <input type="text" class="form-control" id="comApprovalNot" name="comAdminNotApproved"aria-describedby="inputError2Status" readonly>
+												    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+												    <span id="inputError2Status" class="sr-only">(error)</span>
+												</div>
+												<br>
+												<div>
+													<input id="comAdminApprovalChange" type="hidden" class="form-control" name="comAdminApproval">
+											    	<input id="comCodeChange" type="hidden" class="form-control" name="comCode">
+											    </div>
+											    <div id="comOpenEmail" class="form-group has-success has-feedback">
+													<label class="control-label" for="inputSuccess2">기업등록요청아이디</label>
+													<input id="comOpenUserIdChange" name="comOpenUserId" type="text" class="form-control" varia-describedby="inputSuccess2Status" readonly>
+													<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+													<span id="inputSuccess2Status" class="sr-only">(success)</span>
+												</div>
+												<br>
+												<div>
+											    	<label for="comLogoFileInput">기업로고업로드</label>
+												    <input id="comLogoServerNameChange" type="text" name="comLogoServerName">
+												     <p class="help-block">기업로고 이미지 파일업로드</p>
+												    <input id="comLogoHeightChange" name="comLogoHeight" type="hidden">
+												    <input id="comLogoWidthChange" name="comLogoWidth" type="hidden">
+												    <input id="comLogoSizeChange" name="comLogoSize" type="hidden">
+												    <input id="comLogoExtensionChange" name="comLogoExtension" type="hidden">
+												</div>
+												<br>
+												<div id="comnameChModal" class="form-group">
+												    <label class="control-label" for="comNameInput">*기업이름</label>
+												    <p id="explain"> (정확한 기업이름을 입력해주시기 바랍니다. 이미 등록된 기업이 존재하는 경우 기업을 등록할 수 없습니다.)</p>
+												    <input id="comNameChange" name="comName" type="text" class="form-control" placeholder="Enter Company Name">
+											  		<span id="comnamech"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
+												<br>
+											  	</div>
+											  	<div class="form-group">
+												    <label for="exampleInputPassword1">*사업자번호</label>
+												    <p id="explain">(-없이 사업자번호 10자리를 정확히 입력해주시기 바랍니다)</p>
+												    <input id="comNumberChange" name="comNumber" type="text" class="form-control" maxlength="10" placeholder="Enter Company Number">
+												    <span id="pwch"></span>
+											  	</div>
+											  	<br>
+											  	<div>
+											  		<label for="comHomePageInput">기업웹사이트주소</label>
+												    <input id="comHomePageChange" name="comHomePage" type="text" class="form-control" placeholder="Enter Company Web Site Address">
+												</div>
+												<br>
+												<div>
+											    	<label for="comCeoNameInput">기업대표이름</label>
+												    <p id="explain">(현재 기업 대표의 실명을 입력해주시기 바랍니다)</p>
+												    <input id="comCeoNameChange" name="comCeoName" type="text" class="form-control" placeholder="Enter Company CEO Name">
+												</div>
+												<br>
+												<div>
+											    	<label for="comEstablishYearInupt">기업설립연도</label>
+												    <p id="explain">(기업의 설립연도를 입력해주시기 바랍니다)</p>
+												    <input id="comEstablishYearChange" name="comEstablishYear" type="text" class="form-control" maxlength="4" placeholder="Enter Company Establish Year">
+												</div>
+												<br>
+												<div>
+											    	<label for="comInfoInupt">기업정보</label>
+												    <p id="explain">(기업에 대한 전반적인 정보를 입력해주시기 바랍니다)</p>
+												    <textarea id="comInfoChange" name="comInfo" class="form-control" rows="4">${companyOpenedByMyId.comInfo}</textarea>
+												</div>
+												<br>
+												<div>
+											    	<label for="comSummaryInupt">기업간략소개</label>
+												    <p id="explain">(기업에 대한 소개글을 입력해주시기 바랍니다)</p>
+												    <textarea id="comSummaryChange" name="comSummary" class="form-control" rows="4">${companyOpenedByMyId.comSummary}</textarea>
+												</div>
+												<br>
+												<div>
+											    	<label for="comActivitySummaryInupt">기업활동정보</label>
+												    <p id="explain">(기업의 활동분야에 대한 정보를 입력해주시기 바랍니다)</p>
+												    <textarea id="comActivitySummaryChange" name="comActivitySummary" class="form-control" rows="4">${companyOpenedByMyId.comActivitySummary}</textarea>
+												</div>
+												</div>
+												<br>
+												<div class="modal-footer">
+													<button type="submit" class="btn btn-info">수정</button>
+													<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+												</div>
+											</form>
+								        </div>
+								    </div>
+								  </div>
+								</div>
+							</c:when>
+						</c:choose>
 					</c:forEach>
 	
 					</div>
@@ -612,102 +717,113 @@
 					<div class="col-xs-10">
 					<br>
 					<c:forEach var="companyOpenedByMyIdforDel" items="${companyOpen}">
-						<a class="btn btn-danger btn-block deletecompanyinfo" data-toggle="modal" value="${companyOpenedByMyIdforDel.comCode}" href="#CompanyDelRequest">${companyOpenedByMyIdforDel.comName} 삭제요청</a>
-						<p id="explain">본인의 아이디로 개설한 모든 기업에 대해 삭제요청 할 수 있습니다</p>
-						<!-- 개설한 기업의 승인여부 및 세부사항 확인 을 위한 모달 내부 구현 -->
-						<div class="modal fade" id="CompanyDelRequest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						  <div class="modal-dialog">
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						        <h4 class="modal-title" id="myModalLabel">${nickname}님의 기업삭제요청</h4>
-						      </div>
-						      <div class="modal-body">
-						      <!-- 회사정보확인 및 수정 모달 -->
-						        <form action="/pineapple/deleterequestcompany.user" method="post">
-						        	<div class="container_insert">
-										<div>
-											<input id="comAdminApprovalDel" type="hidden" class="form-control" name="comAdminApproval">
-									    	<input id="comCodeDel" type="hidden" class="form-control" name="comCode">
-									    	<input id="comDelRequestIdDel" type="hidden" class="form-control" name="comDelRequestId" value="${id}">
-									    	<input id="comDelTimeDel" type="hidden" class="form-control" name="comDelTime">
-									    </div>
-									    <div id="comOpenEmail" class="form-group has-success has-feedback">
-											<label class="control-label" for="inputSuccess2">기업등록요청아이디</label>
-											<input id="comOpenUserIdDel" name="comOpenUserId" type="text" class="form-control" varia-describedby="inputSuccess2Status" readonly>
-											<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-											<span id="inputSuccess2Status" class="sr-only">(success)</span>
-										</div>
-										<br>
-										<div>
-									    	<label for="comLogoFileInput">기업로고업로드</label>
-										    <input id="comLogoServerNameDel" type="text" name="comLogoServerName">
-										     <p class="help-block">기업로고 이미지 파일업로드</p>
-										    <input id="comLogoHeightDel" name="comLogoHeight" type="hidden">
-										    <input id="comLogoWidthDel" name="comLogoWidth" type="hidden">
-										    <input id="comLogoSizeDel" name="comLogoSize" type="hidden">
-										    <input id="comLogoExtensionDel" name="comLogoExtension" type="hidden">
-										</div>
-										<br>
-										<div id="comnameChModal" class="form-group">
-										    <label class="control-label" for="comNameInput">*기업이름</label>
-										    <p id="explain"> (정확한 기업이름을 입력해주시기 바랍니다. 이미 등록된 기업이 존재하는 경우 기업을 등록할 수 없습니다.)</p>
-										    <input id="comNameDel" name="comName" type="text" class="form-control" placeholder="Enter Company Name">
-									  		<span id="comnamech"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
-										<br>
-									  	</div>
-									  	<div class="form-group">
-										    <label for="exampleInputPassword1">*사업자번호</label>
-										    <p id="explain">(-없이 사업자번호 10자리를 정확히 입력해주시기 바랍니다)</p>
-										    <input id="comNumberDel" name="comNumber" type="text" class="form-control" maxlength="10" placeholder="Enter Company Number">
-										    <span id="pwch"></span>
-									  	</div>
-									  	<br>
-									  	<div>
-									  		<label for="comHomePageInput">기업웹사이트주소</label>
-										    <input id="comHomePageDel" name="comHomePage" type="text" class="form-control" placeholder="Enter Company Web Site Address">
-										</div>
-										<br>
-										<div>
-									    	<label for="comCeoNameInput">기업대표이름</label>
-										    <p id="explain">(현재 기업 대표의 실명을 입력해주시기 바랍니다)</p>
-										    <input id="comCeoNameDel" name="comCeoName" type="text" class="form-control" placeholder="Enter Company CEO Name">
-										</div>
-										<br>
-										<div>
-									    	<label for="comEstablishYearInupt">기업설립연도</label>
-										    <p id="explain">(기업의 설립연도를 입력해주시기 바랍니다)</p>
-										    <input id="comEstablishYearDel" name="comEstablishYear" type="text" class="form-control" maxlength="4" placeholder="Enter Company Establish Year">
-										</div>
-										<br>
-										<div>
-									    	<label for="comInfoInupt">기업정보</label>
-										    <p id="explain">(기업에 대한 전반적인 정보를 입력해주시기 바랍니다)</p>
-										    <textarea id="comInfoDel" name="comInfo" class="form-control" rows="4">${companyOpenedByMyId.comInfo}</textarea>
-										</div>
-										<br>
-										<div>
-									    	<label for="comSummaryInupt">기업간략소개</label>
-										    <p id="explain">(기업에 대한 소개글을 입력해주시기 바랍니다)</p>
-										    <textarea id="comSummaryDel" name="comSummary" class="form-control" rows="4">${companyOpenedByMyId.comSummary}</textarea>
-										</div>
-										<br>
-										<div>
-									    	<label for="comActivitySummaryInupt">기업활동정보</label>
-										    <p id="explain">(기업의 활동분야에 대한 정보를 입력해주시기 바랍니다)</p>
-										    <textarea id="comActivitySummaryDel" name="comActivitySummary" class="form-control" rows="4">${companyOpenedByMyId.comActivitySummary}</textarea>
-										</div>
-									</div>
-									<br>
-									<div class="modal-footer">
-										<button type="submit" class="btn btn-info">삭제요청</button>
-										<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
-									</div>
-								</form>
-					        </div>
-					    </div>
-					  </div>
-					</div>
+						<c:choose>
+							<c:when test="${companyOpenedByMyIdforDel.comDelRequestId == null}">
+								<a class="btn btn-danger btn-block deletecompanyinfo" data-toggle="modal" value="${companyOpenedByMyIdforDel.comCode}" href="#CompanyDelRequest">${companyOpenedByMyIdforDel.comName} 삭제요청</a>
+									<p id="explain">본인의 아이디로 개설한 모든 기업에 대해 삭제요청 할 수 있습니다</p>
+									<!-- 개설한 기업의 승인여부 및 세부사항 확인 을 위한 모달 내부 구현 -->
+									<div class="modal fade" id="CompanyDelRequest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									  <div class="modal-dialog">
+									    <div class="modal-content">
+									      <div class="modal-header">
+									        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									        <h4 class="modal-title" id="myModalLabel">${nickname}님의 기업삭제요청</h4>
+									      </div>
+									      <div class="modal-body">
+									      <!-- 회사정보확인 및 수정 모달 -->
+									        <form action="/pineapple/deleterequestcompany.user" method="post">
+									        	<div class="container_insert">
+													<div>
+														<input id="comAdminApprovalDel" type="hidden" class="form-control" name="comAdminApproval">
+												    	<input id="comCodeDel" type="hidden" class="form-control" name="comCode">
+												    	<input id="comDelRequestIdDel" type="hidden" class="form-control" name="comDelRequestId" value="${id}">
+												    	<input id="comDelTimeDel" type="hidden" class="form-control" name="comDelTime">
+												    </div>
+												    <div id="comOpenEmail" class="form-group has-success has-feedback">
+														<label class="control-label" for="inputSuccess2">기업등록요청아이디</label>
+														<input id="comOpenUserIdDel" name="comOpenUserId" type="text" class="form-control" varia-describedby="inputSuccess2Status" readonly>
+														<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+														<span id="inputSuccess2Status" class="sr-only">(success)</span>
+													</div>
+													<br>
+													<div>
+												    	<label for="comLogoFileInput">기업로고업로드</label>
+													    <input id="comLogoServerNameDel" type="text" name="comLogoServerName">
+													     <p class="help-block">기업로고 이미지 파일업로드</p>
+													    <input id="comLogoHeightDel" name="comLogoHeight" type="hidden">
+													    <input id="comLogoWidthDel" name="comLogoWidth" type="hidden">
+													    <input id="comLogoSizeDel" name="comLogoSize" type="hidden">
+													    <input id="comLogoExtensionDel" name="comLogoExtension" type="hidden">
+													</div>
+													<br>
+													<div id="comnameChModal" class="form-group">
+													    <label class="control-label" for="comNameInput">*기업이름</label>
+													    <p id="explain"> (정확한 기업이름을 입력해주시기 바랍니다. 이미 등록된 기업이 존재하는 경우 기업을 등록할 수 없습니다.)</p>
+													    <input id="comNameDel" name="comName" type="text" class="form-control" placeholder="Enter Company Name">
+												  		<span id="comnamech"><input type="hidden" value="0" id="comNameValue0" name="comNameValue0"/></span>
+													<br>
+												  	</div>
+												  	<div class="form-group">
+													    <label for="exampleInputPassword1">*사업자번호</label>
+													    <p id="explain">(-없이 사업자번호 10자리를 정확히 입력해주시기 바랍니다)</p>
+													    <input id="comNumberDel" name="comNumber" type="text" class="form-control" maxlength="10" placeholder="Enter Company Number">
+													    <span id="pwch"></span>
+												  	</div>
+												  	<br>
+												  	<div>
+												  		<label for="comHomePageInput">기업웹사이트주소</label>
+													    <input id="comHomePageDel" name="comHomePage" type="text" class="form-control" placeholder="Enter Company Web Site Address">
+													</div>
+													<br>
+													<div>
+												    	<label for="comCeoNameInput">기업대표이름</label>
+													    <p id="explain">(현재 기업 대표의 실명을 입력해주시기 바랍니다)</p>
+													    <input id="comCeoNameDel" name="comCeoName" type="text" class="form-control" placeholder="Enter Company CEO Name">
+													</div>
+													<br>
+													<div>
+												    	<label for="comEstablishYearInupt">기업설립연도</label>
+													    <p id="explain">(기업의 설립연도를 입력해주시기 바랍니다)</p>
+													    <input id="comEstablishYearDel" name="comEstablishYear" type="text" class="form-control" maxlength="4" placeholder="Enter Company Establish Year">
+													</div>
+													<br>
+													<div>
+												    	<label for="comInfoInupt">기업정보</label>
+													    <p id="explain">(기업에 대한 전반적인 정보를 입력해주시기 바랍니다)</p>
+													    <textarea id="comInfoDel" name="comInfo" class="form-control" rows="4">${companyOpenedByMyId.comInfo}</textarea>
+													</div>
+													<br>
+													<div>
+												    	<label for="comSummaryInupt">기업간략소개</label>
+													    <p id="explain">(기업에 대한 소개글을 입력해주시기 바랍니다)</p>
+													    <textarea id="comSummaryDel" name="comSummary" class="form-control" rows="4">${companyOpenedByMyId.comSummary}</textarea>
+													</div>
+													<br>
+													<div>
+												    	<label for="comActivitySummaryInupt">기업활동정보</label>
+													    <p id="explain">(기업의 활동분야에 대한 정보를 입력해주시기 바랍니다)</p>
+													    <textarea id="comActivitySummaryDel" name="comActivitySummary" class="form-control" rows="4">${companyOpenedByMyId.comActivitySummary}</textarea>
+													</div>
+												</div>
+												<br>
+												<div class="modal-footer">
+													<button type="submit" class="btn btn-info">삭제요청</button>
+													<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+												</div>
+											</form>
+								        </div>
+								    </div>
+								  </div>
+								</div>
+							</c:when>
+							<c:when test="${companyOpenedByMyIdforDel.comDelRequestId != null and companyOpenedByMyIdforDel.comDelApprovalId == null}">
+								<a type="button" class="btn btn-warning btn-block disabled">삭제승인대기중</a>
+							</c:when>
+							<c:when test="${companyOpenedByMyIdforDel.comDelRequestId != null and companyOpenedByMyIdforDel.comDelApprovalId != null}">
+								<a type="button" class="btn btn-default btn-block disabled">${companyOpenedByMyIdforDel.comName}삭제처리완료</a>
+							</c:when>
+						</c:choose>
+						
 				</c:forEach>
 	
 				</div>
@@ -1256,7 +1372,6 @@
 							</tbody>
 						</table>
 					</div>
-				
 			</div>
 			<!-- 여섯번째탭 시작 -->
 			<div role="tabpanel" class="tab-pane fade" id="message" aria-labelledby="message-tab"> 
