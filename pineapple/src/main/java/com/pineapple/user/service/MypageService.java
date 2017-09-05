@@ -15,6 +15,21 @@ public class MypageService implements MypageServiceInterface {
 	
 	@Autowired
 	private MypageDaoInterface mypagedao;
+	
+	//기업회원 펀딩내권한부여 페이지 요청시 부여자 id로 권한부여 정보 조회
+	@Override
+	public List<FundingauthFundingAuthlevelCompany> getAuthInfoByGiverId(String giverId) {
+		log.debug("MypageService getAuthInfoByGiverId 호출 결과: "+mypagedao.selectAuthInfoByGiverId(giverId));
+		return mypagedao.selectAuthInfoByGiverId(giverId);
+	}
+	
+	//기업회원 펀딩내권한부여 페이지 요청시 피부여자 id로 권한부여 정보 조회
+	@Override
+	public List<FundingauthFundingAuthlevelCompany> getAuthInfoByReceiverId(String receiverId) {
+		log.debug("MypageService getAuthInfoByGiverId 호출 결과: "+mypagedao.selectAuthInfoByReceiverId(receiverId));
+		return mypagedao.selectAuthInfoByReceiverId(receiverId);
+	}
+	
 	//관리자 전체회원리스트 조회
 	@Override
 	public List<User> getAllUserList() {

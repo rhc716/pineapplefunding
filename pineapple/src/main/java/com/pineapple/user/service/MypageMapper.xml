@@ -4,6 +4,58 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.pineapple.user.service.MypageMapper">
+<!-- 펀딩내 권한부여 페이지 로딩시 부여자ID로 권한부여정보 조회 -->
+<select id="selectFundingauthByGiverId" parameterType="String" resultMap="selectFundingauthByGiverId">
+	SELECT fa.authCode, fa.authFdCode, fa.authReceiver, fa.authGiver, fa.fdAuthLevelCode, f.fdComCode, f.fdTitle, f.fdStatus, fl.authLevelName, c.comName 
+	FROM fundingauth fa
+	INNER JOIN funding f
+	ON fa.authFdCode = f.fdCode
+	INNER JOIN company c
+	ON f.fdComCode = c.comCode
+	INNER JOIN fundingauthlevel fl
+	ON fa.fdAuthLevelCode = fl.authLevelCode
+	WHERE fa.authGiver=#{giverUserId}
+	ORDER BY c.comName asc
+</select>
+<resultMap type="com.pineapple.user.service.FundingauthFundingAuthlevelCompany" id="selectFundingauthByGiverId">
+	<result property="authCode" column="authCode"/>
+ 	<result property="authFdCode" column="authFdCode"/>
+ 	<result property="authReceiver" column="authReceiver"/>
+ 	<result property="authGiver" column="authGiver"/>
+ 	<result property="fdAuthLevelCode" column="fdAuthLevelCode"/>
+ 	<result property="fdComCode" column="fdComCode"/>
+ 	<result property="comName" column="comName"/>
+ 	<result property="fdTitle" column="fdTitle"/>
+ 	<result property="fdStatus" column="fdStatus"/>
+ 	<result property="authLevelName" column="authLevelName"/>
+</resultMap>
+
+<!-- 펀딩내 권한부여 페이지 로딩시 피부여자ID로 권한부여정보 조회 -->
+<select id="selectFundingauthByReceiverId" parameterType="String" resultMap="selectFundingauthByReceiverId">
+	SELECT fa.authCode, fa.authFdCode, fa.authReceiver, fa.authGiver, fa.fdAuthLevelCode, f.fdComCode, f.fdTitle, f.fdStatus, fl.authLevelName, c.comName 
+	FROM fundingauth fa
+	INNER JOIN funding f
+	ON fa.authFdCode = f.fdCode
+	INNER JOIN company c
+	ON f.fdComCode = c.comCode
+	INNER JOIN fundingauthlevel fl
+	ON fa.fdAuthLevelCode = fl.authLevelCode
+	WHERE fa.authReceiver=#{receiverUserId}
+	ORDER BY c.comName asc
+</select>
+<resultMap type="com.pineapple.user.service.FundingauthFundingAuthlevelCompany" id="selectFundingauthByReceiverId">
+	<result property="authCode" column="authCode"/>
+ 	<result property="authFdCode" column="authFdCode"/>
+ 	<result property="authReceiver" column="authReceiver"/>
+ 	<result property="authGiver" column="authGiver"/>
+ 	<result property="fdAuthLevelCode" column="fdAuthLevelCode"/>
+ 	<result property="fdComCode" column="fdComCode"/>
+ 	<result property="comName" column="comName"/>
+ 	<result property="fdTitle" column="fdTitle"/>
+ 	<result property="fdStatus" column="fdStatus"/>
+ 	<result property="authLevelName" column="authLevelName"/>
+</resultMap>
+
 <!-- 투자내역조회 -->
 <select id="selectInvest" parameterType="String" resultMap="selectInvest">
 	SELECT  i.investCode,

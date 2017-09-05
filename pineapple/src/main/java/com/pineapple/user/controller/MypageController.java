@@ -3,6 +3,7 @@ import com.pineapple.invest.service.InvestorInvestList;
 import com.pineapple.user.service.Account;
 import com.pineapple.user.service.Company;
 import com.pineapple.user.service.Employee;
+import com.pineapple.user.service.FundingauthFundingAuthlevelCompany;
 import com.pineapple.user.service.MypageServiceInterface;
 import com.pineapple.user.service.User;
 import com.pineapple.user.service.UserDetail;
@@ -29,10 +30,26 @@ public class MypageController {
 	@Autowired
 	private MypageServiceInterface mypageservice;
 	
-	//펀딩내 권한부여 - 경영진 페이지 요청
+	//펀딩내 권한부여 페이지 요청
 	@RequestMapping(value="/fundingauth.user", method = RequestMethod.GET)
-    public String mngfundingauthpage(HttpSession session) { //커맨드 객체
-        log.debug("mngfundingauthpage 경영진 펀딩내권한부여 페이지 요청");
+    public String mngfundingauthpage(HttpSession session, Model model) { //커맨드 객체
+        log.debug("mngfundingauthpage 펀딩내권한부여 페이지 요청");
+        //자신이 부여자인 펀딩권한정보 조회
+        List<FundingauthFundingAuthlevelCompany> authgiverList = mypageservice.getAuthInfoByGiverId(session.getAttribute("id").toString());
+        if(authgiverList != null){
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 부여자인 펀딩내권한부여 정보조회 성공");
+        	model.addAttribute("authgiverList", authgiverList);
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 부여자인 펀딩내권한부여 정보조회 실패");
+        }
+        //자신이 피부여자인 펀딩권한정보 조회
+        List<FundingauthFundingAuthlevelCompany> authreceiverList = mypageservice.getAuthInfoByReceiverId(session.getAttribute("id").toString());
+        if(authreceiverList != null){
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 피부여자인 펀딩내권한부여 정보조회 성공");
+        	model.addAttribute("authreceiverList", authreceiverList);
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 피부여자인 펀딩내권한부여 정보조회 실패");
+        }
         return "user/fundingauth"; // 글입력후 "/"로 리다이렉트(재요청)
     }
 	
