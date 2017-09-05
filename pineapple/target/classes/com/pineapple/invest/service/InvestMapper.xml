@@ -13,6 +13,7 @@
 	 	<result property="total" column="total"/>
 	 	<result property="posterImg" column="posterImg"/>
 	 	<result property="minInvestMoney" column="minInvestMoney"/>
+	 	<result property="issuePrice" column="issuePrice"/>
 	 	<result property="days" column="days"/>
 	 </resultMap>
 	 <!-- InvestAndFdLikeAndFd -->
@@ -75,6 +76,7 @@
 				IFNULL(sum(i.purchaseShares),0) as total,
 				f.posterImg,
 				f.minInvestMoney,
+				f.issuePrice,
 				TO_DAYS(f.closeDate)-TO_DAYS(now()) as days
 		FROM funding f 
 		LEFT JOIN company c 

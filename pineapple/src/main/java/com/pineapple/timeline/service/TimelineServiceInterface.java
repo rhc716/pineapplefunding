@@ -3,6 +3,8 @@ package com.pineapple.timeline.service;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
+
+import com.pineapple.user.service.User;
 @Transactional
 public interface TimelineServiceInterface {
 	//타임라인 클릭시 타임라인 list Service
@@ -34,5 +36,10 @@ public interface TimelineServiceInterface {
 	List<Message> getMypageMessageList(String tlId);
 	//자신에게 온 메세지 open 시 check 확인
 	int modifyMypageMessageOpenCheck(int msgCode);
-	
+	//receive 검색용 nickname
+	List<User> getMypageMessageSendReceiveId(String receiveid);
+	//메세지 보내기
+	int addMypageMessageSend(Message message);
+	//자신이 보낸 메세지 list 조회
+	List<Message> getMypageMessageSendList(String tlId);
 }

@@ -6,6 +6,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pineapple.user.service.User;
+
 @Service
 public class TimelineService implements TimelineServiceInterface{
 	private Logger log = Logger.getLogger(this.getClass());
@@ -104,5 +106,26 @@ public class TimelineService implements TimelineServiceInterface{
 		log.debug("------------------TimelineService-----------------modifyMypageMessageOpenCheck()");
 		int messageopencheck = timelinedaointerface.mypageMessageOpenCheckUpdate(msgCode);
 		return messageopencheck;
+	}
+	//receive 검색용 nickname
+	@Override
+	public List<User> getMypageMessageSendReceiveId(String receiveid) {
+		log.debug("------------------TimelineService-----------------getMypageMessageSendReceiveId()");
+		List<User> messagesendreceiveid = timelinedaointerface.mypageMessageSendReceiveIdSelect(receiveid);
+		return messagesendreceiveid;
+	}
+	//메세지 보내기
+	@Override
+	public int addMypageMessageSend(Message message) {
+		log.debug("------------------TimelineService-----------------addMypageMessageSend()");
+		int messagesendinsert = timelinedaointerface.mypageMessageSend(message);
+		return messagesendinsert;
+	}
+	//자신이 보낸 메세지 list 조회
+	@Override
+	public List<Message> getMypageMessageSendList(String tlId) {
+		log.debug("------------------TimelineService-----------------getMypageMessageSendList()");
+		List<Message> messagesendlist = timelinedaointerface.mypageMessageSendListSelect(tlId);
+		return messagesendlist;
 	}
 }

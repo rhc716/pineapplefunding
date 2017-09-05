@@ -64,7 +64,7 @@
 		</c:choose>
 		<div>
 		<h4 class="fdlist-title">
-			<div>${list.fdTitle}</div>
+			${list.fdTitle}
 		</h4>
 		</div>
 		<div class="fdlist-comname">
@@ -72,7 +72,7 @@
 		</div>
 		<div class="fdlist-data" style="width: 100%">
 		<div class="col-xs-12" style="padding: 0px 10px">
-			<div style="float: left;">${list.minInvestMoney*list.numberOfShares}원 달성</div><div style="float: right;">${list.days}남음</div>
+			<div style="float: left;">${list.issuePrice*list.total}원 달성</div><div style="float: right;">${list.days}남음</div>
 		</div>
 		<div class="col-md-12" style="padding: 0px 10px 0px 10px;">
 		<div class="progress bor-defult" style="margin-bottom: 10px;">

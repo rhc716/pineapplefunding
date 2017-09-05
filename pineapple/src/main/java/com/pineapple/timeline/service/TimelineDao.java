@@ -7,6 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.pineapple.user.service.User;
+
 @Repository
 public class TimelineDao implements TimelineDaoInterface{
 	private Logger log = Logger.getLogger(this.getClass());
@@ -97,5 +99,23 @@ public class TimelineDao implements TimelineDaoInterface{
 	public int mypageMessageOpenCheckUpdate(int msgCode) {
 		log.debug("TimelineDao-----mypageMessageListSelect");
 		return sqlSessionTemplate.update("com.pineapple.timeline.service.TimelineMapper.updateMypageMessageopencheck",msgCode);
+	}
+	//receive 검색용 nickname
+	@Override
+	public List<User> mypageMessageSendReceiveIdSelect(String receiveid) {
+		log.debug("TimelineDao-----mypageMessageSendReceiveIdSelect");
+		return sqlSessionTemplate.selectList("com.pineapple.timeline.service.TimelineMapper.selectUserNickname",receiveid);
+	}
+	//메세지 보내기
+	@Override
+	public int mypageMessageSend(Message message) {
+		log.debug("TimelineDao-----mypageMessageSend");
+		return sqlSessionTemplate.insert("com.pineapple.timeline.service.TimelineMapper.insertMypageMessage",message);
+	}
+	//자신이 보낸 메세지 list 조회
+	@Override
+	public List<Message> mypageMessageSendListSelect(String tlId) {
+		log.debug("TimelineDao-----mypageMessageSendListSelect");
+		return sqlSessionTemplate.selectList("com.pineapple.timeline.service.TimelineMapper.selectMypageMessagesendlist",tlId);
 	}
 }

@@ -179,7 +179,11 @@
 		<result property="name" column="name"/>
 		<result property="nickname" column="nickname"/>
 	</resultMap>
-	<!-- 메세지 조회하기 -->
+	<resultMap type="com.pineapple.timeline.service.UserIdAndCount" id="selectUserNicknameresultmapper">
+		<id property="userId" column="userId"/>
+		<result property="usertotalcount" column="usertotalcount"/>
+	</resultMap>
+	<!-- 받은 메세지 조회하기 -->
 	<select id="selectMypageMessagelist" parameterType="String" resultMap="selectMypageMessagelistResultMapper">
 		SELECT m.msgCode,
 			   m.msgTitle,
@@ -196,6 +200,23 @@
 		WHERE msgReceiveId = #{msgReceiveId}
 		ORDER BY m.msgTime DESC
 	</select>
+	<!-- 보낸 메세지 조회하기 -->
+	<select id="selectMypageMessagesendlist" parameterType="String" resultMap="selectMypageMessagelistResultMapper">
+		SELECT m.msgCode,
+			   m.msgTitle,
+			   m.msgContent,
+			   m.msgCheck,
+			   m.msgSendId,
+			   m.msgReceiveId,
+			   m.msgTime,
+			   u.name,
+			   u.nickname
+		FROM message m 
+		INNER JOIN user u 
+		ON m.msgReceiveId = u.userId 
+		WHERE m.msgSendId = #{msgSendId}
+		ORDER BY m.msgTime DESC
+	</select>
 	<!-- 메세지 연람시 check -->
 	<update id="updateMypageMessageopencheck" parameterType="INT">
 		UPDATE message
@@ -203,5 +224,18 @@
 			msgCheck=1
 		WHERE msgCode = #{msgCode}
 	</update>
-	
+	<!-- 메세지 보낼때 닉네임 검색 -->
+	<select id="selectUserNickname" parameterType="java.util.Map" resultMap="selectUserNicknameresultmapper">
+		SELECT u.userId,
+			   (SELECT COUNT(su.userId) 
+			    FROM user su) as usertotalcount 
+		FROM user u 
+		WHERE u.userId LIKE CONCAT(#{receiveid},'%')
+	</select>
+	<!-- 메세지보내기 -->
+	<insert id="insertMypageMessage" parameterType="com.pineapple.timeline.service.Message">
+		INSERT INTO message
+			(msgTitle, msgContent, msgCheck, msgSendId, msgReceiveId, msgTime)
+		VALUES ( #{msgTitle}, #{msgContent}, 0, #{msgSendId}, #{msgReceiveId}, NOW())
+	</insert>
 </mapper>

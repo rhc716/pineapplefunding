@@ -8,9 +8,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Investor Time Line List</title>
 
-<!-- jqeury -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/ehj.css" />
 
@@ -26,7 +23,7 @@ $(document).ready(function(){
 		    type: 'get',
 		    url : '/pineapple/investortimelinelog.timeline',
 		    success : function success(msg){ 	
-		    	console.log(msg.daycount)
+		    	console.log(msg)
 		        google.charts.load('current', {'packages':['line']});
 				google.charts.setOnLoadCallback(drawChart);
 				

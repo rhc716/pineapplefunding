@@ -354,3 +354,8 @@
    	.positionfixed{position: fixed;
    			       top: 0px}
  /* invest main 투자하기 main */
+ /* test */
+ 	.backcolor{background-color: #d7d7d7;}
+ 	.backcolorresult{background-color: white;}
+ 	.receiveidclick:HOVER {background-color: #d7d7d7}
+ /* test */

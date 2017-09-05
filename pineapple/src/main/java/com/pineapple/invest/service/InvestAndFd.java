@@ -8,8 +8,16 @@ public class InvestAndFd {
 	private int total;
 	private String posterImg;
 	private int minInvestMoney;
+	private int issuePrice;
 	private int days;
 	
+	
+	public int getIssuePrice() {
+		return issuePrice;
+	}
+	public void setIssuePrice(int issuePrice) {
+		this.issuePrice = issuePrice;
+	}
 	public int getDays() {
 		return days;
 	}
@@ -62,7 +70,7 @@ public class InvestAndFd {
 	public String toString() {
 		return "InvestAndFd [fdCode=" + fdCode + ", fdTitle=" + fdTitle + ", numberOfShares=" + numberOfShares
 				+ ", comName=" + comName + ", total=" + total + ", posterImg=" + posterImg + ", minInvestMoney="
-				+ minInvestMoney + ", days=" + days + "]";
+				+ minInvestMoney + ", issuePrice=" + issuePrice + ", days=" + days + "]";
 	}
 
 

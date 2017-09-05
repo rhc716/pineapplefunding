@@ -2,6 +2,8 @@ package com.pineapple.timeline.service;
 
 import java.util.List;
 
+import com.pineapple.user.service.User;
+
 public interface TimelineDaoInterface {
 	//타임라인 main 에서 타임라인 list Dao
 	List<TimelineAndUserAndEmployeeAndTimelineLike> timelineListSelect();
@@ -36,4 +38,10 @@ public interface TimelineDaoInterface {
 	List<Message> mypageMessageListSelect(String tlId);
 	//자신에게 온 메세지 open 시 check 확인
 	int mypageMessageOpenCheckUpdate(int msgCode);
+	//receive 검색용 nickname
+	List<User> mypageMessageSendReceiveIdSelect(String receiveid);
+	//메세지 보내기
+	int mypageMessageSend(Message message);
+	//자신이 보낸 메세지 list 조회
+	List<Message> mypageMessageSendListSelect(String tlId);
 }

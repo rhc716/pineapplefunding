@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.pineapple.timeline.service.Message;
 import com.pineapple.timeline.service.MyInvestorTimeline;
@@ -23,6 +25,7 @@ import com.pineapple.timeline.service.Timeline;
 import com.pineapple.timeline.service.TimelineAndUserAndEmployeeAndTimelineLike;
 import com.pineapple.timeline.service.TimelineReply;
 import com.pineapple.timeline.service.TimelineServiceInterface;
+import com.pineapple.user.service.User;
 
 
 @Controller
@@ -163,7 +166,7 @@ public class TimelineController {
 	//자신에게 온 메세지 list 조회
 	@RequestMapping(value="/investormessagelist.timeline",method=RequestMethod.GET)
 	public String investorMessagelist(Locale locale,Model model,HttpSession session){
-		log.debug("<----- TimelineController[timelineMain호출]----->");
+		log.debug("<----- TimelineController[investorMessagelist호출]----->");
 		List<Message> myinvestormessage = timelineserviceinterface.getMypageMessageList(session.getAttribute("id").toString());
 		model.addAttribute("myinvestormessage",myinvestormessage);
 		log.debug(myinvestormessage+"<-----TimelineController[myinvestormessage 값 출력]");
@@ -172,10 +175,38 @@ public class TimelineController {
 	//자신에게 온 메세지 open 시 check 확인
 	@RequestMapping(value="/investormessageopen.timeline",method=RequestMethod.GET)
 	public @ResponseBody int investorMessageOpenCheckModify(Locale locale,Model model,@RequestParam(value="msgCode")int msgCode){
-		log.debug("<----- TimelineController[timelineMain호출]----->");
+		log.debug("<----- TimelineController[investorMessageOpenCheckModify호출]----->");
 		int myinvestormessageopencheck = timelineserviceinterface.modifyMypageMessageOpenCheck(msgCode);
 		log.debug(myinvestormessageopencheck+"<-----TimelineController[myinvestormessageopencheck 값 출력]");
 		return myinvestormessageopencheck;
+	}
+	//receive 검색용 nickname
+	@RequestMapping(value="/investormessagesendreceiveid.timeline",method=RequestMethod.GET)
+	public String investorMessageSendReceiveIdGet(Locale locale,Model model,@RequestParam(value="receiveid")String receiveid){
+		log.debug("<----- TimelineController[investorMessageSendReceiveIdGet호출]----->");
+		log.debug(receiveid+"<----- TimelineController[receiveid호출]----->");
+		List<User> myinvestormessagesendreceiveid = timelineserviceinterface.getMypageMessageSendReceiveId(receiveid);
+		log.debug(myinvestormessagesendreceiveid+"<-----TimelineController[myinvestormessagesendreceiveid 값 출력]");
+		model.addAttribute("myinvestormessagesendreceiveid",myinvestormessagesendreceiveid);
+		log.debug(myinvestormessagesendreceiveid.size()+"<-----TimelineController[timelinereplylist 값 출력]");
+		return "user/investormypageajax/investormessagesendreceiveid";
+	}
+	//메세지 보내기
+	@RequestMapping(value = "/investormessagesend.timeline", method = RequestMethod.POST)
+	public String investorMessageSendAdd(Locale locale,Model model,Message message) {
+		log.debug("<----- TimelineController[investorMessageSendAdd호출]----->");
+		int messageinsert = timelineserviceinterface.addMypageMessageSend(message);
+		log.debug(messageinsert+"<-----TimelineController[messageinsert 값 출력]");
+		return "redirect:/investormypage.user";
+	}
+	//자신이 보낸 메세지 list 조회
+	@RequestMapping(value="/investorsendmessage.timeline",method=RequestMethod.GET)
+	public String investorMessageSendlist(Locale locale,Model model,HttpSession session){
+		log.debug("<----- TimelineController[investorMessageSendlist호출]----->");
+		List<Message> myinvestormessagesend = timelineserviceinterface.getMypageMessageSendList(session.getAttribute("id").toString());
+		model.addAttribute("myinvestormessagesend",myinvestormessagesend);
+		log.debug(myinvestormessagesend+"<-----TimelineController[myinvestormessagesend 값 출력]");
+		return "user/investormypageajax/investormessagesend";
 	}
 	
 	
@@ -203,4 +234,5 @@ public class TimelineController {
 		log.debug(timelinereplylist.size()+"<-----TimelineController[timelinereplylist 값 출력]");
 		return "timeline/timelineajax/timelineReply";
 	}
+	
 }

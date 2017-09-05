@@ -18,6 +18,18 @@ $(document).ready(function(){
 	$('#receivelist').show();
 	$('.messagenav1').click(function(){
 		var dataCode = $(this).attr('dataCode');
+		if(dataCode == 'sendlist'){
+			var investmenttab = $.ajax({ // ajax실행부분
+		        type: 'get',
+		        url : '/pineapple/investorsendmessage.timeline',
+		        success : function success(msg){
+		        	$('#sendlist').html(msg);
+		        },
+		        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+		        error : function error(){
+	        	}
+			});
+		}
 		$('.resultresult').hide();
 		$('#'+dataCode+'').show();
 	});
@@ -34,6 +46,29 @@ $(document).ready(function(){
 	        error : function error(){
         	}
 		});
+	});
+	$('#messagereceiveidinput').keyup(function(){
+		var receiveidselect = $(this).val();
+		var receiveidtandd = $(this).attr('dataCode');
+		if(receiveidselect == ''){
+			console.log('미실행')
+			$('#sendreceiveidlist').empty();
+		}else{
+			var investmenttab = $.ajax({ // ajax실행부분
+		        type: 'get',
+		        url : '/pineapple/investormessagesendreceiveid.timeline',
+		        data : {receiveid : receiveidselect},
+		        success : function success(msg){
+		        	$('#sendreceiveidlist').html(msg);
+		        	$('.receiveidclick').click(function(){
+		        		$('#sendreceiveidlist').empty();
+		        	});
+		        },
+		        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+		        error : function error(){
+	        	}
+			});
+		}
 	});
 });
 </script>
@@ -73,13 +108,32 @@ $(document).ready(function(){
 		
 		<!-- 보낸 메세지함 리스트 -->
 		<div class="col-md-10 resultresult" id="sendlist" style="border: 1.5px solid #009442; border-radius: 5px;">
-			보낸 메세지함
+			
 		</div>
 		
 		
 		<!-- 메세지 보내기 -->
 		<div class="col-md-10 resultresult" id="messagesend" style="border: 1.5px solid #009442; border-radius: 5px;">
-			메세지 보내기
+			<form id="newmessageform" action="/pineapple/investormessagesend.timeline" method="post" style="padding: 30px 15px;">
+				<div style="margin: 20px 0px;">
+				<input type="hidden" name="msgSendId" value="${id}">
+				<label for="messagereceiveidinput">받는 사람</label>
+				<input id="messagereceiveidinput" name="msgReceiveId" type="text" class="form-control box1" placeholder="받는사람을 정해주세요" dataCode="false">
+				<div id="sendreceiveidlist">
+				</div>
+				</div>
+				<div style="margin: 20px 0px;">
+				<label for="messagetitleinput">메세지 제목</label>
+				<input id="messagetitleinput" name="msgTitle" type="text" class="form-control box1" placeholder="메세지 제목을 입력해 주세요">
+				</div>
+				<div style="margin: 20px 0px;">
+				<label for="messagecontentinput">메세지 내용</label>
+				<textarea id="messagecontentinput" name="msgContent" type="text" class="form-control box1" placeholder="메세지 내용을 입력해 주세요" style="height: 200px; resize: none;"></textarea>
+				</div>
+				<div>
+				<button class="btn btn-info" type="submit">입력</button>
+				</div>
+	        </form>
 		</div>
 		
 		
