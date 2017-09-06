@@ -14,14 +14,18 @@ public class InvestService implements InvestServiceInterface {
 	private InvestDaoInterface investdaointerface;
 	
 	//전체 펀딩 리스트 조회하기
-	/* (non-Javadoc)
-	 * @see com.pineapple.invest.service.InvestServiceInterface#getInvestFunding()
-	 */
 	@Override
 	public List<InvestAndFd> getInvestFunding(){
 		log.debug("------------------InvestService-----------------getinvestFunding()");
 		List<InvestAndFd> fdlist =  investdaointerface.investFundingSelect();
 		return fdlist;
+	}
+	//title 검색으로 펀딩리스트 조회 Service
+	@Override
+	public List<InvestAndFd> getInvestFundingTitle(String fdTitle) {
+		log.debug("------------------InvestService-----------------getInvestFundingTitle()");
+		List<InvestAndFd> fdTitlelist =  investdaointerface.investFundingTitleSelect(fdTitle);
+		return fdTitlelist;
 	}
 	//투자하기에서 펀딩클릭시 하나의 펀딩 정보 열람
 	@Override

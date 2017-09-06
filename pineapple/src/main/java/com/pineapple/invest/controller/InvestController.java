@@ -1,7 +1,9 @@
 package com.pineapple.invest.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pineapple.funding.service.FundingDetail;
 import com.pineapple.invest.service.FundingQna;
 import com.pineapple.invest.service.FundingQnaReply;
@@ -36,6 +40,31 @@ public class InvestController {
 		model.addAttribute("fundingList", fundingList);
 		log.debug(fundingList+"<-----InvestController[fundingList 값 출력]");
 		return "invest/investmain";
+	}
+	/*title 검색으로 펀딩리스트 조회*/
+	@RequestMapping(value="/investfdtitlemain.invest" , method=RequestMethod.POST)
+	public String investFdTitleMain(Locale locale, Model model,@RequestParam(value="fdTitle")String fdTitle){
+		log.debug("<----- InvestController[investFdTitleMain호출]----->");
+		List<InvestAndFd> fundingListTitle = investserviceinterface.getInvestFundingTitle(fdTitle);
+		model.addAttribute("fundingListTitle", fundingListTitle);
+		log.debug(fundingListTitle+"<-----InvestController[fundingListTitle 값 출력]");
+		return "invest/investfdtitlemain";
+	}
+	/*펀딩리스트 조건 검색*/ 
+	@RequestMapping(value="/investfdchoosemain.invest" , method=RequestMethod.GET)
+	public String investFdChooseMain(Locale locale, Model model,@RequestParam(value="fdarea")String fdarea,@RequestParam(value="fdtype")String fdtype,@RequestParam(value="fddividend")String fddividend){
+		log.debug("<----- InvestController[investFdTitleMain호출]----->");
+		log.debug(fdarea.length()+"<-----[fdarea호출]");
+		log.debug(fdtype.length()+"<-----[fdtype호출]");
+		log.debug(fddividend.length()+"<-----[fddividend호출]");
+		log.debug(fdarea+"<-----[fdarea호출]");
+		log.debug(fdtype+"<-----[fdtype호출]");
+		log.debug(fddividend+"<-----[fddividend호출]");
+
+/*		List<InvestAndFd> fundingListTitle = investserviceinterface.getInvestFundingTitle(fdTitle);
+		model.addAttribute("fundingListTitle", fundingListTitle);
+		log.debug(fundingListTitle+"<-----InvestController[fundingListTitle 값 출력]");*/
+		return "#";
 	}
 	//투자하기 페이지에서 펀딩페이지 오픈 investfunding.jsp
 	@RequestMapping(value="/investfunding.invest",method=RequestMethod.GET)

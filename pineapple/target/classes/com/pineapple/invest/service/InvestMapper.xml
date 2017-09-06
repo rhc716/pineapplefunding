@@ -87,7 +87,28 @@
 		GROUP BY f.fdCode 
 		ORDER BY f.fdDate DESC;
 	</select>
-	<!-- 투자하기 펀딩안에서 사용하는 모집중인 펀딩 리스트 조회 쿼리 -->
+	<!-- 투자하기 main 에서 사용하는 펀딩제목 검색 조회 쿼리 -->
+	<select id="selectInvestFundingListName" parameterType="String" resultMap="selectInvestAndFd">
+		SELECT  f.fdCode,
+				f.fdTitle,
+				f.numberOfShares,
+				c.comName,
+				IFNULL(sum(i.purchaseShares),0) as total,
+				f.posterImg,
+				f.minInvestMoney,
+				f.issuePrice,
+				TO_DAYS(f.closeDate)-TO_DAYS(now()) as days
+		FROM funding f 
+		LEFT JOIN company c 
+		ON f.fdComCode = c.comCode 
+		LEFT JOIN investment i 
+		ON f.fdCode = i.investFdCode 
+		WHERE (f.fdStatus = '모집중' OR f.fdStatus = '결제모집중')
+		AND f.fdTitle LIKE CONCAT('%',#{fdTitle},'%')
+		GROUP BY f.fdCode 
+		ORDER BY f.fdDate DESC;
+	</select>
+	<!-- 투자하기 펀딩안에서 사용하는 모집중인 펀딩 조회 쿼리 -->
 	<select id="selectInvestAndFdLikeAndFd" parameterType="INT" resultType="com.pineapple.invest.service.InvestAndFdLikeAndFd">
 		SELECT f.fdCode,
 			 f.numberOfShares, 
