@@ -16,6 +16,21 @@ public class MypageDao implements MypageDaoInterface {
 	
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
+	
+	//펀딩승인요청 처리
+	@Override
+	public int updateFundingApproval(Map<String, Object> map) {
+		log.debug("MypageDao updateFundingApproval 호출 : "+map);
+		return sqlSessionTemplate.update("com.pineapple.user.service.MypageMapper.approveFunding", map);
+	}
+
+	//관리자 펀딩리스트 전체 조회
+	@Override
+	public List<FundingAndCompany> selectAllFundingList() {
+		log.debug("MypageDao selectAllFundingList 호출");
+		return sqlSessionTemplate.selectList("com.pineapple.user.service.MypageMapper.fundinglistAll");
+	}
+	
 	//기업회원 펀딩내권한부여 페이지 요청시 부여자 id로 권한부여 정보 조회
 	@Override
 	public List<FundingauthFundingAuthlevelCompany> selectAuthInfoByGiverId(String giverId) {
@@ -194,4 +209,7 @@ public class MypageDao implements MypageDaoInterface {
 		log.debug("MypageDao selectInvestorBasic 메서드 호출 결과"+sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAllInvestorInfo", userId));
 		return sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAllInvestorInfo", userId);
 	}
+
+	
+	
 }

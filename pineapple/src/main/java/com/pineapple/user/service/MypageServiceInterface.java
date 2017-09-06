@@ -6,6 +6,13 @@ import java.util.Map;
 import com.pineapple.invest.service.InvestorInvestList;
 
 public interface MypageServiceInterface {
+	
+	//펀딩승인요청 처리
+	int modifyFundingApproval(Map<String, Object> map);
+		
+	//관리자 펀딩리스트 전체 조회
+	List<FundingAndCompany> getAllFundingList();
+	
 	//기업회원 펀딩내권한부여 페이지 요청시 부여자 id로 권한부여 정보 조회
 	List<FundingauthFundingAuthlevelCompany> getAuthInfoByGiverId(String giverId);
 	

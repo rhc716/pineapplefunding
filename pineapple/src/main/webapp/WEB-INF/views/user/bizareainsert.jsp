@@ -16,7 +16,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
 <!-- css rhc -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
-<title>펀딩내 권한부여</title>
+<title>사업분야등록</title>
 </head>
 <body>
 <div class="container">

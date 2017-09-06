@@ -16,6 +16,20 @@ public class MypageService implements MypageServiceInterface {
 	@Autowired
 	private MypageDaoInterface mypagedao;
 	
+	//펀딩승인요청 처리
+	@Override
+	public int modifyFundingApproval(Map<String, Object> map) {
+		log.debug("MypageService modifyFundingApproval 호출 결과: "+mypagedao.updateFundingApproval(map));
+		return mypagedao.updateFundingApproval(map);
+	}
+	
+	//관리자 펀딩리스트 전체 조회
+	@Override
+	public List<FundingAndCompany> getAllFundingList() {
+		log.debug("MypageService getAllFundingList 호출 결과: "+mypagedao.selectAllFundingList());
+		return mypagedao.selectAllFundingList();
+	}
+	
 	//기업회원 펀딩내권한부여 페이지 요청시 부여자 id로 권한부여 정보 조회
 	@Override
 	public List<FundingauthFundingAuthlevelCompany> getAuthInfoByGiverId(String giverId) {
@@ -192,4 +206,8 @@ public class MypageService implements MypageServiceInterface {
 		log.debug("MypageService selectInvestorBasic 메서드 호출 "+userId);
 		return mypagedao.selectInvestorBasic(userId);
 	}
+
+
+
+	
 }

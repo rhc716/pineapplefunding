@@ -4,6 +4,45 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.pineapple.user.service.MypageMapper">
+<!-- 관리자 펀딩전체 조회(회사명 조인) -->
+<select id="fundinglistAll" resultMap="fundinglistAll">
+	SELECT f.fdCode, f.fdTitle, f.openDate, f.closeDate, f.minInterestRate, f.fdType, f.fdStatus, f.projectStartDate, f.projectEndDate, f.fdPublisher, f.adminApproval, f.fdApprovalDate, f.fdApprovalId, f.fdDate, c.comName 
+	FROM funding f
+	INNER JOIN company c
+	ON f.fdComCode = c.comCode
+	ORDER BY f.fdDate asc
+</select>
+<resultMap type="com.pineapple.user.service.FundingAndCompany" id="fundinglistAll">
+		<result property="fdCode" column="fdCode"/>
+		<result property="fdTitle" column="fdTitle"/>
+		<result property="openDate" column="openDate"/>
+		<result property="closeDate" column="closeDate"/>
+		<result property="minInterestRate" column="minInterestRate"/>
+		<result property="fdType" column="fdType"/>
+		<result property="fdStatus" column="fdStatus"/>
+		<result property="projectStartDate" column="projectStartDate"/>
+		<result property="projectEndDate" column="projectEndDate"/>
+		<result property="fdPublisher" column="fdPublisher"/>
+		<result property="adminApproval" column="adminApproval"/>
+		<result property="fdApprovalDate" column="fdApprovalDate"/>
+		<result property="fdDate" column="fdDate"/>
+		<result property="comName" column="comName"/>
+</resultMap>
+
+<!-- 펀딩승인요청 처리 -->
+<update id="approveFunding" parameterMap="approvalIdFdCode">
+	UPDATE funding
+	SET
+		adminApproval=1,
+		fdApprovalDate=NOW(),
+		fdApprovalId=#{fdApprovalId}
+	WHERE fdCode=#{fdCode}
+</update>
+<parameterMap type="java.util.Map" id="approvalIdFdCode">
+   	<parameter property="fdCode"/>
+   	<parameter property="fdApprovalId"/>
+</parameterMap>
+
 <!-- 펀딩내 권한부여 페이지 로딩시 부여자ID로 권한부여정보 조회 -->
 <select id="selectFundingauthByGiverId" parameterType="String" resultMap="selectFundingauthByGiverId">
 	SELECT fa.authCode, fa.authFdCode, fa.authReceiver, fa.authGiver, fa.fdAuthLevelCode, f.fdComCode, f.fdTitle, f.fdStatus, fl.authLevelName, c.comName 
