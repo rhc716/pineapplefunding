@@ -27,7 +27,7 @@ public class PmsRestController {
 	
 	// 내가 소속된 회사 펀딩 리스트 불러오기 ( 기업회원 )
 	@RequestMapping(value = "/wbsfundinglist.pms", method = RequestMethod.GET)
-	public List<Funding> Wbsfunding(@RequestParam("userId") String userId) {
+	public List<Funding> Wbsfunding(String userId) {
 		log.debug("RestPmsController의 Wbsfunding호출 성공");
 		log.debug("userId : " + userId);
 		List<Funding> fdlist = fservice.getMyFundinglist(userId);
@@ -37,7 +37,7 @@ public class PmsRestController {
 	
 	//마일스톤리스트 확인
 	@RequestMapping(value = "/WbsMs.pms", method = {RequestMethod.GET, RequestMethod.POST})
-	public List<WbsMs> WbsMs(@RequestParam("fdCode") String fdCode) {
+	public List<WbsMs> WbsMs(String fdCode) {
 		log.debug("펀딩코드"+fdCode);
 		log.debug("RestPmsController의 WbsMs호출 성공");
 		List<WbsMs> mslist = service.wbsmsview(fdCode);
@@ -47,7 +47,7 @@ public class PmsRestController {
 	
 	//wbs플랜리스트 확인
 	@RequestMapping(value = "/Wbsplanlist.pms", method = {RequestMethod.GET, RequestMethod.POST})
-	public List<WbsPlan> Wbsplan(@RequestParam("milestoneCode") String milestoneCode) {
+	public List<WbsPlan> Wbsplan(String milestoneCode) {
 		log.debug("마일스톤코드"+milestoneCode);
 		log.debug("RestPmsController의 Wbsplan호출 성공");
 		List<WbsPlan> wbsplan = service.wbsplanlist(milestoneCode);

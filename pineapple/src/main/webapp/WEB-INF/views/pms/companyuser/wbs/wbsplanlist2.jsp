@@ -26,9 +26,15 @@
 <!-- css lsk -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lsk.css" />
 
+<!-- 구글차트  -->
+ <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+ 
  <script>
+ 
 /* 마일스톤 리스트 불러올 ajax */
 $(document).ready(function(){
+	var message = "${message}";
+		if(message!="") alert(message);
 	
 	var wbsplanlist = $.ajax({
 		type : "post",
@@ -52,7 +58,7 @@ $(document).ready(function(){
 		    if (month.length < 2) month = '0' + month;
 		    if (day.length < 2) day = '0' + day;
 
-		    return [year, month, day].join('-');
+		    return [year, month, day].join(',');
 		}
 		
 		//alert(formatDate(msg[0].fdDate));
@@ -62,7 +68,6 @@ $(document).ready(function(){
 				$('#mywbsplanlist').append(
 			 			'<div class="col-lg-4 well">'
 		 				+'<div>'
-		 				+'wbs순서:'+msg[i].wbsPlanOrder+'<br>'
 		 				+'wbs이름 :'+msg[i].wbsPlanName+'<br>'
 		 				+'<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#'+msg[i].wbsPlanCode+'">수정</button>'
 		 				+'<form action="/pineapple/wbsplandetail.pms" method="post">'
@@ -74,14 +79,19 @@ $(document).ready(function(){
 		 				+'<div class="modal-body">'
 		 				+'<label for="wbsplan">WBS수정</label><br>'
 		 				+'작업명:'
+		 				+'<input type="text" class="form-control" name="wbsPlanName2" value="'+msg[i].wbsPlanName+'" readonly/>'
 		 				+'<input type="text" class="form-control" name="wbsPlanName" value="'+msg[i].wbsPlanName+'"/>'
 		 				+'선행작업:'
-		 				+'<input type="number" class="form-control" name="wbsPlanDependency" value="'+msg[i].wbsPlanDependency+'"/>'
+		 				+'<input type="text" class="form-control" name="wbsPlanDependency2" value="'+msg[i].wbsPlanDependency+'"readonly/>'
+		 				+'<input type="text" class="form-control" name="wbsPlanDependency" value="'+msg[i].wbsPlanDependency+'"/>'
 		 				+'작업기간:'
+		 				+'<input type="number" class="form-control" name="wbsPlanDuration2" value="'+msg[i].wbsPlanDuration+'"readonly/>'
 		 				+'<input type="number" class="form-control" name="wbsPlanDuration" value="'+msg[i].wbsPlanDuration+'"/>'
 		 				+'시작일:<br>'
+		 				+'<input type="date" name="wbsPlanStartDate2" value="'+msg[i].wbsPlanStartDate+'"readonly/><br>'
 		 				+'<input type="date" name="wbsPlanStartDate" value="'+msg[i].wbsPlanStartDate+'"/><br>'
 		 				+'담당자ID:'
+		 				+'<input type="text" class="form-control" name="wbsPlanManager2" value="'+msg[i].wbsPlanManager+'"readonly/><br>'
 		 				+'<input type="text" class="form-control" name="wbsPlanManager" value="'+msg[i].wbsPlanManager+'"/><br>'
 		 				+'<input type="hidden" name="wbsPlanCode" value="'+msg[i].wbsPlanCode+'"/>'
 		 				+'<input type="hidden" class="form-control" name="wbsPlanComCode" value="'+msg[i].wbsPlanComCode+'">'
@@ -104,6 +114,44 @@ $(document).ready(function(){
 		 				+'</div>'
 				);
 		}
+		 	google.charts.load('current', {'packages':['gantt']});
+		    google.charts.setOnLoadCallback(drawChart);
+
+		    function daysToMilliseconds(days) {
+		      return days * 24 * 60 * 60 * 1000;
+		    }
+
+		    function drawChart() {
+
+		      var data = new google.visualization.DataTable();
+		      data.addColumn('string', 'Task ID');
+		      data.addColumn('string', 'Task Name');
+		      data.addColumn('date', 'Start Date');
+		      data.addColumn('date', 'End Date');
+		      data.addColumn('number', 'Duration');
+		      data.addColumn('number', 'Percent Complete');
+		      data.addColumn('string', 'Dependencies');
+		      for(var s = 0; s<msg.length; s++){
+		      	if(msg[s].wbsPlanStartDate!=null){
+			    	 data.addRows([
+			    		 [msg[s].wbsPlanName, msg[s].wbsPlanName,
+					         new Date(msg[s].wbsPlanStartDate), null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, msg[s].wbsPlanDependency],
+			     	 ]);
+		      	}else{
+		      		data.addRows([
+			    		 [msg[s].wbsPlanName, msg[s].wbsPlanName,
+					         null, null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, msg[s].wbsPlanDependency],
+			     	 ]);
+		      	}
+		      }
+		      var options = {
+		        height: 275
+		      };
+
+		      var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+		      chart.draw(data, options);
+		    } 
 	});
 	// 실패시
 	wbsplanlist.fail(function(){
@@ -111,8 +159,8 @@ $(document).ready(function(){
 	});
 
 });
+	
 </script>
- 
 </head>
 <body>
 
@@ -174,7 +222,7 @@ $(document).ready(function(){
 			<div class="col-md-1"></div>
 		</div>
 	</div>
-
+	 <div id="chart_div"></div>
 <!-- 풋터 -->
 <div>
 	<c:import url="/resources/module/footer.jsp"/>

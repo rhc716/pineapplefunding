@@ -40,7 +40,9 @@ public class PmsController {
 		String milestoneCode = request.getParameter("milestoneCode");
 		String milestoneName = request.getParameter("milestoneName");
 		String msComCode = request.getParameter("msComCode");
+		String message = request.getParameter("message");
 		String btn = request.getParameter("btn");
+		model.addAttribute("message", message);
 		model.addAttribute("fdCode", fdCode);
 		model.addAttribute("fdTitle", fdTitle);
 		model.addAttribute("milestoneCode", milestoneCode);
@@ -48,16 +50,12 @@ public class PmsController {
 		model.addAttribute("msComCode", msComCode);
 		if(btn.equals("WBS예상입력")){
 			log.debug("펀딩코드"+fdCode+"펀딩명"+fdTitle+"마일스톤코드"+milestoneCode+"마일스톤명"+milestoneName+"회사코드"+msComCode);
+			List<WbsPlan> wbsplan = service.wbsplanlist(milestoneCode);
+			model.addAttribute("wbsplan", wbsplan);
 			return "pms/companyuser/wbs/wbsplaninsert";
 		}else if(btn.equals("WBS예상리스트")){
-			/*List<WbsPlan> wbsplan = service.wbsplanlist(milestoneCode);
-			log.debug("wbsplan리스트  = "+wbsplan);
-			model.addAttribute("wbsplan", wbsplan);*/
 			return "pms/companyuser/wbs/wbsplanlist2";
 		}else if(btn.equals("WBS실제입력")){
-			/*List<WbsPlan> wbsplan = service.wbsplanlist(milestoneCode);
-			log.debug("wbsplan리스트  = "+wbsplan);
-			model.addAttribute("wbsplan", wbsplan);*/
 			return "pms/companyuser/wbs/wbsactualinsertlist";
 		}else{
 			return "";
@@ -137,29 +135,57 @@ public class PmsController {
 			model.addAttribute("btn", "WBS예상리스트");
 			return "redirect:/wbsform.pms";
 		}else{
-			log.debug("PmsController의 wbsplandetail의 update호출 성공");
-			log.debug("WbsPlan" + wbsplan);
-			//수정한 데이터 새로 삽입
-			service.addWbsplan(wbsplan);
-			//이전 데이터의 상태를 0으로 만듬
-			service.updatewbsplan(wbsplancode);
-			WbsPlanUpdate wbsplanupdate;
-			//기타항목들에 들어갈 wbsplancode를 바뀐데이터로 바꾸기 위해서 코드를 가져옴
-			wbsplanupdate = service.wbsplanupdate(wbsplan);
-			log.debug("wbsplanupdate" + wbsplanupdate);
-			HashMap map = new HashMap<String, Object>();
-			map.put("wbsplancode", wbsplancode);
-			String changecode = wbsplanupdate.getWbsPlanCode();
-			map.put("changecode", changecode);
-			log.debug("map테스트" + map);
-			service.wbsplanupdateetc(map);
-			model.addAttribute("fdCode", fdCode);
-			model.addAttribute("fdTitle", fdTitle);
-			model.addAttribute("milestoneCode", milestoneCode);
-			model.addAttribute("milestoneName", milestoneName);
-			model.addAttribute("msComCode", msComCode);
-			model.addAttribute("btn", "WBS예상리스트");
-			return "redirect:/wbsform.pms";
+			String wbsPlanName = request.getParameter("wbsPlanName");
+			String wbsPlanDependency = request.getParameter("wbsPlanDependency");
+			String wbsPlanDuration = request.getParameter("wbsPlanDuration");
+			String wbsPlanStartDate = request.getParameter("wbsPlanStartDate");
+			String wbsPlanManager = request.getParameter("wbsPlanManager");
+			String wbsPlanName2 = request.getParameter("wbsPlanName2");
+			String wbsPlanDependency2 = request.getParameter("wbsPlanDependency2");
+			String wbsPlanDuration2 = request.getParameter("wbsPlanDuration2");
+			String wbsPlanStartDate2 = request.getParameter("wbsPlanStartDate2");
+			String wbsPlanManager2 = request.getParameter("wbsPlanManager2");
+			log.debug("첫번쨰 데이터 "+wbsPlanName+" "+wbsPlanDependency+" "+wbsPlanDuration+" "+wbsPlanStartDate+" "+wbsPlanManager);
+			log.debug("두번쨰 데이터 "+wbsPlanName2+" "+wbsPlanDependency2+" "+wbsPlanDuration2+" "+wbsPlanStartDate2+" "+wbsPlanManager2);
+			if(wbsPlanName.equals(wbsPlanName2)&&wbsPlanDependency.equals(wbsPlanDependency2)&&wbsPlanDuration.equals(wbsPlanDuration2)
+					&&wbsPlanStartDate.equals(wbsPlanStartDate2)&&wbsPlanManager.equals(wbsPlanManager2)){
+				log.debug("테스트.실패시");
+				model.addAttribute("message", "변경사항없음");
+				model.addAttribute("fdCode", fdCode);
+				model.addAttribute("fdTitle", fdTitle);
+				model.addAttribute("milestoneCode", milestoneCode);
+				model.addAttribute("milestoneName", milestoneName);
+				model.addAttribute("msComCode", msComCode);
+				model.addAttribute("btn", "WBS예상리스트");
+				return "redirect:/wbsform.pms";
+			}else{
+				log.debug("테스트.성공시");
+				log.debug("PmsController의 wbsplandetail의 update호출 성공");
+				log.debug("WbsPlan" + wbsplan);
+				//수정한 데이터 새로 삽입
+				service.addWbsplan(wbsplan);
+				//이전 데이터의 상태를 0으로 만듬
+				service.updatewbsplan(wbsplancode);
+				WbsPlanUpdate wbsplanupdate;
+				//기타항목들에 들어갈 wbsplancode를 바뀐데이터로 바꾸기 위해서 코드를 가져옴
+				wbsplanupdate = service.wbsplanupdate(wbsplan);
+				log.debug("wbsplanupdate" + wbsplanupdate);
+				HashMap map = new HashMap<String, Object>();
+				map.put("wbsplancode", wbsplancode);
+				String changecode = wbsplanupdate.getWbsPlanCode();
+				map.put("changecode", changecode);
+				log.debug("map테스트" + map);
+				service.wbsplanupdateetc(map);
+				model.addAttribute("message", "수정완료");
+				model.addAttribute("fdCode", fdCode);
+				model.addAttribute("fdTitle", fdTitle);
+				model.addAttribute("milestoneCode", milestoneCode);
+				model.addAttribute("milestoneName", milestoneName);
+				model.addAttribute("msComCode", msComCode);
+				model.addAttribute("btn", "WBS예상리스트");
+				return "redirect:/wbsform.pms";
+			}
+		
 			
 		}
 		
@@ -370,6 +396,8 @@ public class PmsController {
 			log.debug("WbsPlan : " + wbsplan);
 			String fdCode = request.getParameter("fdCode");
 			String fdTitle = request.getParameter("fdTitle");
+			String wbsPlanDependency = request.getParameter("wbsPlanDependency");
+			log.debug("wbsPlanDependency"+wbsPlanDependency);
 			service.addWbsplan(wbsplan);
 			model.addAttribute("fdTitle", fdTitle );
 			model.addAttribute("fdCode", fdCode );;
