@@ -37,4 +37,5 @@ public interface FundingDaoInterface {
 	Funding fdtitleCheck(String fdTitle);
 	Funding selectMyFunding(int fdCode);
 	List<Object> selectProjectInfoList(String userId, String level);
+	List<Object> selectMoreFdList(int numberOfRequests);
 }

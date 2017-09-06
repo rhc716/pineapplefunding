@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
 
 <!-- jqeury -->
@@ -29,7 +28,15 @@
 <!-- chart.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
-
+<style>
+.progress{
+margin-bottom:5px; height:18px; width: 100%;
+border:1px solid #5b6777; 
+}
+.progress-bar{
+color:#009442;
+}
+</style>
 <script>
 $(document).ready(function(){
 	
@@ -87,6 +94,40 @@ $(document).ready(function(){
 			  type: 'pie',
 			  data: chartData
 			});
+			
+			// 펀딩리스트 뿌려줌
+			for(var i=0; i<msg[2].length; i++){
+				$('#adminFdList').append(
+						'<tr>'
+							+'<td>'+msg[2][i].fdCode+'</td>'
+							+'<td>'+msg[2][i].fdStatus+'</td>'
+	       					+'<td>'+msg[2][i].fdTitle+'</td>'
+	       					+'<td>'
+	       						+'<div class="progress">'
+								+'<div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="60"'
+								+'aria-valuemin="0" aria-valuemax="100" style="width:'
+								+msg[2][i].total/msg[2][i].numberOfShares*100+'%;">'
+								+msg[2][i].total/msg[2][i].numberOfShares*100+'%'
+								+'</div>'
+								+'</div>'
+							+'</td>'
+	       					+'<td><button type="button" class="btn btn-sm btn-warning btn-block">정보보기</button></td>'
+       					+'</tr>'
+				);
+				
+				// 마지막에 더보기 버튼을 추가함
+				if(i==msg[2].length-1){
+					$('#adminFdList').append(
+						'<tr id="addlistbtnarea">'
+						+'<td colspan="5">'
+						+'<div class="btns">'
+						+'<button id="addlistbtn" onclick="javascript:moreList(this);" value="1" class="btn btn-primary btn-block">더보기</button>'
+						+'</div>'
+						+'</td>'
+						+'</tr>'
+     				);
+				}
+			}
 			
 		// 기업회원 권한
 		} else if($('#userlevel').val()=="기업회원"){
@@ -171,6 +212,9 @@ $(document).ready(function(){
 	getprojectinfolist.fail(function(){
 		alert('ajax통신 실패');
 	});
+	
+	
+
 
 });
 </script>
@@ -185,17 +229,17 @@ $(document).ready(function(){
 	<c:import url="/resources/module/topmenu.jsp"/>
 <!-- 본문 -->
 <div class="row">
-	<div class="col-md-3">
+	<div class="col-xs-3 col-md-3">
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
-	<div class="col-md-9">
+	<div class="col-xs-9 col-md-9">
 	<input type="hidden" id="userlevel" value="${level}">
 <!----------------------------------기업회원일때 ------------------------------------->	
 		<c:if test="${level eq '기업회원'}">
 			<div class="pagetitleandexplainbox">
 				<h2>기업회원용 프로젝트관리</h2>
 			</div> 
-            <div class="col-sm-12 pmsmainpagecontent">
+            <div class="col-xs-12 col-sm-12 pmsmainpagecontent">
                 <div class="col-xs-12 col-sm-12"><br>
                     <h2>${nickname}</h2>
                     <table class="table">
@@ -219,15 +263,15 @@ $(document).ready(function(){
                 </div>
             </div>            
             <div class="col-xs-12 divider text-center pmsmainboxbottom">
-                <div class="col-xs-12 col-sm-4 emphasis">
+                <div class="col-xs-4 col-sm-4 emphasis">
                     <h2><strong id="fdTotalCount"></strong></h2>                    
                     <p><small>총 펀딩수</small></p>
                 </div>
-                <div class="col-xs-12 col-sm-4 emphasis">
+                <div class="col-xs-4 col-sm-4 emphasis">
                     <h2><strong id="fdRecruitingCount"></strong></h2>                    
                     <p><small>모집중인 펀딩수</small></p>
                 </div>
-                <div class="col-xs-12 col-sm-4 emphasis">
+                <div class="col-xs-4 col-sm-4 emphasis">
                     <h2><strong id="fdProceedingCount"></strong></h2>                    
                     <p><small>진행중인 펀딩수</small></p>
                 </div>
@@ -238,7 +282,7 @@ $(document).ready(function(){
 			<div class="pagetitleandexplainbox">
 				<h2>투자자용 프로젝트관리</h2>
 			</div> 
-            <div class="col-sm-12">
+            <div class="col-xs-12 col-sm-12">
                 <div class="col-xs-12 col-sm-12 pmsmainpagecontent"><br>
                     <h2>${nickname}</h2>
                     <table class="table">
@@ -258,23 +302,23 @@ $(document).ready(function(){
                     <h2><strong id="totalInvestMoney"></strong></h2>                    
                     <p><small>총투자누적금액</small></p>
                 </div>
-                <div class="col-xs-12 col-sm-4 emphasis">
+                <div class="col-xs-4 col-sm-4 emphasis">
                     <h2><strong id="totalInvestmentCount"></strong></h2>                    
                     <p><small>총투자건수</small></p>
                 </div>
-                <div class="col-xs-12 col-sm-4 emphasis">
+                <div class="col-xs-4 col-sm-4 emphasis">
                     <h2><strong id="proceedingInvestmentCount"></strong></h2>                    
                     <p><small>진행중인투자건수</small></p>
                 </div>
-                 <div class="col-xs-12 col-sm-4 emphasis">
+                 <div class="col-xs-4 col-sm-4 emphasis">
                     <h2><strong id="proceedingFdInvestMoney"></strong></h2>                    
                     <p><small>진행중인펀딩의투자금액</small></p>
                 </div>
-                <div class="col-xs-12 col-sm-4 emphasis">
+                <div class="col-xs-4 col-sm-4 emphasis">
                     <h2><strong>준비중</strong></h2>                    
                     <p><small>총배당금액</small></p>
                 </div>
-                <div class="col-xs-12 col-sm-4 emphasis">
+                <div class="col-xs-4 col-sm-4 emphasis">
                     <h2><strong>준비중</strong></h2>                    
                     <p><small>진행중인펀딩의배당금액</small></p>
                 </div>
@@ -285,9 +329,9 @@ $(document).ready(function(){
 			<div class="pagetitleandexplainbox">
 				<h2>관리자용 프로젝트관리</h2>
 			</div> 
-			<div class="col-sm-12">
-                <div class="col-xs-6 col-sm-6 pmsmainpagecontent"><br>
-                    <h2>${nickname}</h2>
+			<div class="col-xs-12 col-sm-12">
+                <div class="col-xs-4 col-sm-4 pmsmainpagecontent"><br>
+                    <h2>${nickname}님</h2>
                     <table class="table">
 						<tr>
 						  <td><p><strong>총 회원수</strong></p></td>
@@ -315,13 +359,28 @@ $(document).ready(function(){
 						</tr>
 					</table>
 					<!-- 도넛차트 -->
-               		<canvas class="donut" id="donut" width="250" height="250" style="padding:80px 80px; margin-top:-70px;"></canvas>
+               		<canvas class="donut" id="donut" ></canvas>
                		<br>
 	               		 방문객 추이 그래프 들어갈 곳
 	                <br>
                 </div>
-              	<div class="col-xs-6 col-sm-6 pmsmainpagecontent"><br>
-               		<!-- 펀딩목록 들어올 곳 -->
+              	<div class="col-xs-8 col-sm-8 pmsmainpagecontent"><br>
+              	<h2>펀딩목록(마감,모집실패 제외)</h2>
+               		<table class="table table-striped table-bordered table-hover">
+               			<thead>
+               				<tr>
+               					<td>펀딩코드</td>
+               					<td>펀딩상태</td>
+               					<td>펀딩명</td>
+               					<td>모집률</td>
+               					<td>정보보기</td>
+               				</tr>
+               			</thead>
+               			<tbody id="adminFdList">
+               			<!-- 펀딩목록 들어올 곳 -->
+               			
+               			</tbody>
+               		</table>
                		
                	</div>
             </div>   
@@ -330,23 +389,23 @@ $(document).ready(function(){
                     <h2><strong id="totalFundingCount"></strong></h2>                    
                     <p><small>총펀딩수</small></p>
                 </div>
-                <div class="col-xs-12 col-sm-4 emphasis">
+                <div class="col-xs-4 col-sm-4 emphasis">
                     <h2><strong id="totalRecruitingFundingCount"></strong></h2>                    
                     <p><small>모집중인 펀딩수</small></p>
                 </div>
-                <div class="col-xs-12 col-sm-4 emphasis">
+                <div class="col-xs-4 col-sm-4 emphasis">
                     <h2><strong id="totalRequestFundingCount"></strong></h2>                    
                     <p><small>개설요청중인 펀딩수</small></p>
                 </div>
-                <div class="col-xs-12 col-sm-4 emphasis">
+                <div class="col-xs-4 col-sm-4 emphasis">
                     <h2><strong id="totalProceedingFundingCount"></strong></h2>                    
                     <p><small>진행중인 펀딩수</small></p>
                 </div>
-                <div class="col-xs-12 col-sm-4 emphasis">
+                <div class="col-xs-4 col-sm-4 emphasis">
                     <h2><strong>준비중</strong></h2>                    
                     <p><small>총수수료수익금</small></p>
                 </div>
-                <div class="col-xs-12 col-sm-4 emphasis">
+                <div class="col-xs-4 col-sm-4 emphasis">
                     <h2><strong>준비중</strong></h2>                    
                     <p><small>오늘발생수수료수익금</small></p>
                 </div>
@@ -356,6 +415,66 @@ $(document).ready(function(){
 		    	
 	</div>
 	
+<script>
+	// 더보기버튼 실행 함수 (ajax 요청)
+	function moreList(btn){
+		console.log("moreList에서 받은 매개변수 : "+btn);
+		console.log("moreList 매개변수로 들어온 (버튼객체)의 value = 페이징 "+btn.value);
+	    $.ajax({
+	        url : "/pineapple/getmorefdlist.pms",
+	        type : "get",
+	        cache : false,
+	        dataType: 'json',
+	        data : {numberOfRequests : btn.value },
+	        success : function(data){
+	            console.log(data);
+	            
+	            if(data.length==0){
+	            	// 더 불러올 펀딩 목록이 없는 경우
+	            	$('#addlistbtn').attr("class","btn btn-primary btn-block disabled");
+	            	$('#addlistbtn').text("더 불러올 펀딩목록이 없습니다");
+	            } else {
+	            	// 불러올 펀딩 목록이 있는 경우
+	            	var content="";
+	            	for(var i=0; i<data.length; i++){
+		                content +=
+		                '<tr>'
+		                	+'<td>'+data[i].fdCode+'</td>'
+		                    +'<td>'+data[i].fdStatus+'</td>'
+		                    +'<td>'+data[i].fdTitle+'</td>'
+		                    +'<td>'
+	   						+'<div class="progress">'
+							+'<div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="60"'
+							+'aria-valuemin="0" aria-valuemax="100" style="width:'
+							+data[i].total/data[i].numberOfShares*100+'%;">'
+							+data[i].total/data[i].numberOfShares*100+'%'
+							+'</div>'
+							+'</div>'
+							+'</td>'
+							+'<td><button type="button" class="btn btn-sm btn-warning btn-block">정보보기</button></td>'
+		                +'</tr>';
+	           		}
+	            
+	            	// 기존 버튼을 지우고 새로 만들어줄때 value 값을 1 증가시켜서 다음 10개를 불러올 페이징넘버를 기억하게함.
+	            	var pagingNum = Number(btn.value) + 1; 
+		            content += '<tr id="addlistbtnarea">'
+		            	+'<td colspan="5"><div class="btns">'
+		            	+'<button type="button" id="addlistbtn" onclick="javascript:moreList(this);"'
+		            	+'value="'+pagingNum+'" class="btn btn-primary btn-block">'
+		            	+'더보기</button></div></td></tr>"';
+		            //console.log("content : "+content);
+		            $('#addlistbtnarea').remove();
+		            $('#adminFdList').append(content);
+		       }
+	            
+	        }, 
+	        error : function(){
+	           alert('ajax 통신 실패');
+	        }
+	   
+	});
+}
+</script>
 	
 </div>
 <!-- 풋터 -->

@@ -17,6 +17,7 @@ import com.pineapple.funding.service.FundingAndFdDividendPlan;
 import com.pineapple.funding.service.FundingAndFdFile;
 import com.pineapple.funding.service.FundingAndMileStone;
 import com.pineapple.funding.service.FundingService;
+import com.pineapple.funding.service.FundingServiceInterface;
 import com.pineapple.invest.service.Investment;
 import com.pineapple.user.service.Company;
 import com.pineapple.user.service.Employee;
@@ -26,7 +27,7 @@ public class FundingRestController {
 	private Logger log = Logger.getLogger(this.getClass());
 	
 	@Autowired
-    private FundingService service;
+    private FundingServiceInterface service;
 		
 		// 내가 소속된 회사 펀딩 리스트 불러오기 ( 기업회원 )
 		@RequestMapping(value = "/getmyfundinglist.pms", method = RequestMethod.GET)
@@ -123,4 +124,14 @@ public class FundingRestController {
 			
 			return list;
 		}
+		
+		// pmsmain.jsp 에서 관리자가 펀딩 더보기 버튼을 눌렀을때 추가로 펀딩리스트 10개를 가져옴
+		@RequestMapping(value = "/getmorefdlist.pms", method = RequestMethod.GET)
+		public List<Object> getMoreFdList(Model model, Locale locale, @RequestParam("numberOfRequests") int numberOfRequests) {
+			log.debug("FundingController의 getMoreFdList호출 성공");
+			log.debug("numberOfRequests : "+numberOfRequests);
+			List<Object> list = service.getMoreFdList(numberOfRequests);
+			return list;
+		}
+		
 }

@@ -107,7 +107,8 @@ $(document).ready(function(){
 							+'<td>'+msg[i].minMargin+'원</td>'
 							+'<td>'+msg[i].maxMargin+'원</td>'
 							+'<td>'+msg[i].dividendRate+'%</td>'
-							+'<td><a href="/pineapple/removefundingdividendpaln.pms?divCode='+msg[i].divCode+'">'
+							+'<td>'
+							+'<button type="button" class="btn btn-sm btn-danger disabled">삭제</button></td>'
 							+'</tr>'
 						);
 					break;

@@ -212,6 +212,8 @@ public class FundingDao implements FundingDaoInterface {
 			list.add(sqlSessionTemplate.selectOne("com.pineapple.funding.service.FundingMapper.selectProjectInfoListAdminFirst"));
 			// 총펀딩수, 모집중인 펀딩수, 개설요청중인 펀딩수, 진행중인 펀딩수를 가져옴
 			list.add(sqlSessionTemplate.selectOne("com.pineapple.funding.service.FundingMapper.selectProjectInfoListAdminSecond"));
+			// 마감, 모집실패로 끝난 펀딩을 제외한 모든 펀딩 목록을 가져옴
+			list.add(sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListAdminThird"));
 		} else if(level.equals("기업회원")){
 			// 자신이 속한 회사의 총 펀딩수, 모집중인 펀딩수, 진행중인 펀딩수를 가져옴
 			list.add(sqlSessionTemplate.selectOne("com.pineapple.funding.service.FundingMapper.selectProjectInfoListComUserFirst", userId));
@@ -228,5 +230,16 @@ public class FundingDao implements FundingDaoInterface {
 			//list.add(sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListInvestorThird", userId));
 		}
 		return list;
+	}
+	
+	// pmsmain.jsp 에서 관리자가 펀딩 더보기 버튼을 눌렀을때 추가로 펀딩리스트 10개를 가져옴
+	@Override
+	public List<Object> selectMoreFdList(int numberOfRequests) {
+		log.debug("FundingDao의 selectMoreFdList호출 성공");
+		log.debug("DAO 에서 받은 numberOfRequests : "+ numberOfRequests);
+		// 1페이지당 10개씩이니 numberOfRequests에 10을 곱해서 넘겨줌
+		numberOfRequests = numberOfRequests*10;
+		//log.debug("selectMoreFdList 쿼리 실행 결과 : "+ sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListAdminThird", numberOfRequests));
+		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListAdminThird", numberOfRequests);
 	}
 }

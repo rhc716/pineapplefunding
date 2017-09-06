@@ -9,13 +9,13 @@
 <body>
 <!-- 풋터 -->
 <div class="row footer">
-	<div class="col-md-2">
+	<div class="col-xs-2 col-md-2">
 		회사명
 	</div>
-	<div class="col-md-8">
+	<div class="col-xs-8 col-md-8">
 		회사주소
 	</div>
-	<div class="col-md-2">
+	<div class="col-xs-2 col-md-2">
 		전화번호
 	</div>
 </div>

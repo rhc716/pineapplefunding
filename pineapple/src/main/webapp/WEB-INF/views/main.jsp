@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
 
 <!-- jqeury -->
@@ -27,23 +26,23 @@
 <div class="container">
 <!--로고 및 검색 -->
 	<div class="row">
-		<div class="col-md-3"></div>
-		<div class="col-md-6 logoandsearch">
+		<div class="col-xs-3 col-md-3"></div>
+		<div class="col-xs-6 col-md-6 logoandsearch">
 			<img src="${pageContext.request.contextPath}/resources/img/logo.jpg">
 			<i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;<input type="text">&nbsp;
 			<button type="button" class="btn btnpine">검색</button>
 		</div>
-		<div class="col-md-3"></div>
+		<div class="col-xs-3 col-md-3"></div>
 	</div>
 <!-- 상단메뉴 -->
 	<c:import url="/resources/module/topmenu.jsp"/>
 <!-- 본문 -->
 <div class="row">
 	<!-- 본문 좌측 -->
-	<div class="col-md-3">
+	<div class="col-xs-3 col-md-3">
 	</div>
 	<!-- 본문 중앙부분 -->
-	<div class="col-md-6">
+	<div class="col-xs-6 col-md-6">
 			<!-- carousel : 회전하면서 이미지를 보여주는 것 -->
 			<div id="myCarousel" class="carousel slide" data-ride="carousel">
 			    <!-- Indicators -->
@@ -86,7 +85,7 @@
 		
 	<!-- 본문 우측 부분 -->
 	<!-- 로그인 모듈 -->
-	<div class="col-md-3">
+	<div class="col-xs-3 col-md-3">
 		<c:import url="/resources/module/login_main.jsp"/>
 	</div>
 	

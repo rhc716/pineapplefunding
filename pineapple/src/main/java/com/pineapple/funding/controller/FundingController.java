@@ -27,6 +27,7 @@ import com.pineapple.funding.service.FundingDetail;
 import com.pineapple.funding.service.FundingDividendPlan;
 import com.pineapple.funding.service.FundingAndFdFile;
 import com.pineapple.funding.service.FundingService;
+import com.pineapple.funding.service.FundingServiceInterface;
 import com.pineapple.funding.service.MileStone;
 import com.pineapple.invest.service.Investment;
 import com.pineapple.user.service.Company;
@@ -42,7 +43,7 @@ public class FundingController {
 	// 컨트롤러 ~ 서비스쪽까지 네이밍규칙 add, modify, remove, get
 	// 입력, 수정인지 단순 페이지요청인지는 Get, Post로 구분함
 	@Autowired
-    private FundingService service;
+    private FundingServiceInterface service;
 	
 	@Autowired
 	private FileUtil fileutil;

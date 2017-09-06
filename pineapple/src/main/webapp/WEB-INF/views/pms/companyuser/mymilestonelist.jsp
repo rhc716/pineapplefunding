@@ -89,7 +89,7 @@ $(document).ready(function(){
 				    	+'<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>'
 				    	+'</div></div></div></div>'
 				);
-			} else { // 펀딩개설요청이 지난 상태는 -> 수정버튼만 나오게 함
+			} else { // 펀딩개설요청이 지난 상태는 -> 수정버튼만 사용하게 함
 				$('#mymilestonelist').append(
 					'<tr>'
 						+'<td><a>'+msg[i].fdTitle+'</a></td>'
@@ -97,7 +97,7 @@ $(document).ready(function(){
 						+'<td>'+msg[i].pm+'</td>'
 						+'<td>'+msg[i].milestoneStep+'</td>'
 						+'<td><button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal'+i+'">수정</button></td>'
-						+'<td></td>'
+						+'<td><button type="button" class="btn btn-sm btn-danger disabled">삭제</button></td>'
 					+'</tr>'
 					
 				

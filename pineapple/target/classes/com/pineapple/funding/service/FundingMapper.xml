@@ -355,6 +355,37 @@
 		, COUNT(CASE when fdStatus="진행중" then 1 end) totalProceedingFundingCount
 		FROM funding
 	</select>
+	<!-- 관리자 세번째 -->
+	<select id="selectProjectInfoListAdminThird" resultType="java.util.HashMap" parameterType="int">
+		<!-- 마감, 모집실패로 끝난 펀딩을 제외한 모든 펀딩 목록 10개를 가져옴 -->
+		SELECT  f.fdCode,
+				f.fdTitle,
+				f.numberOfShares,
+				c.comName,
+				IFNULL(sum(i.purchaseShares),0) as total,
+				f.posterImg,
+				f.minInvestMoney,
+				f.issuePrice,
+				f.fdStatus,
+				TO_DAYS(f.closeDate)-TO_DAYS(now()) as days
+		FROM funding f 
+		LEFT JOIN company c 
+		ON f.fdComCode = c.comCode 
+		LEFT JOIN investment i 
+		ON f.fdCode = i.investFdCode 
+		WHERE f.fdStatus != '마감' OR f.fdStatus != '모집실패'
+		GROUP BY f.fdCode 
+		ORDER BY f.fdDate DESC
+		<choose>
+		<when test="_parameter != null">
+			limit #{numberOfRequests},10;
+		</when>
+		<otherwise>
+			limit 0,10;
+		</otherwise>
+		</choose>
+	</select>
+	
 	<!-- 기업회원 첫번째 -->
 	<select id="selectProjectInfoListComUserFirst" resultMap="InfomationForPmsMainViewOfCompanyUser" parameterType="String">
 		<!-- 자신이 속한 회사의 총 펀딩수, 모집중인 펀딩수, 진행중인 펀딩수를 가져옴 -->
@@ -514,6 +545,8 @@
 		AND projectStartDate <= #{getTime}
 		]]> 
 	</update>
+	
+	
 </mapper>
 
  

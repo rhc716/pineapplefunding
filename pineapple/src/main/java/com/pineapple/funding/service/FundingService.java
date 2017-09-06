@@ -203,5 +203,11 @@ public class FundingService implements FundingServiceInterface {
 		log.debug("FundingService의 getprojectinfolist호출 성공");
 		return fundingdao.selectProjectInfoList(userId, level);
 	}
+	// pmsmain.jsp 에서 관리자가 펀딩 더보기 버튼을 눌렀을때 추가로 펀딩리스트 10개를 가져옴
+	@Override
+	public List<Object> getMoreFdList(int numberOfRequests) {
+		log.debug("FundingService의 getMoreFdList호출 성공");
+		return fundingdao.selectMoreFdList(numberOfRequests);
+	}
 }
  

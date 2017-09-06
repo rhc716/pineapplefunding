@@ -112,7 +112,7 @@ $(document).ready(function(){
 				    	+'<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>'
 				    	+'</div></div></div></div></div>'
 				);
-			} else { // 모집중 혹은 그 이상 -> 버튼없음
+			} else { // 모집중 혹은 그 이상 -> 버튼사용불능
 				$('#myfundinglist').append(
 						'<div class="container-fluid fundinglistbox">'
 						+'<div class="fundinglistboxtop">'
@@ -120,6 +120,10 @@ $(document).ready(function(){
 						+'<b>펀딩상태 : '+msg[i].fdStatus+'</b><br>펀딩개설자 : '+msg[i].fdPublisher
 						+'개설요청일 : '+formatDate(msg[i].fdDate)+'</div>'
 						+'<div class="fundinglistboxbottom">'
+						+'<button type="button" class="btn btn-sm btn-primary disabled">'
+						+'수정</button>'
+						+'<button type="button" class="btn btn-sm btn-danger disabled">'
+						+'삭제</button>'
 						+'</div></div>'
 				);
 			}

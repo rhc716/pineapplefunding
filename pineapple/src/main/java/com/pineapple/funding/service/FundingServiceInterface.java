@@ -35,4 +35,5 @@ public interface FundingServiceInterface {
 	Funding fdtitleCheck(String fdTitle);
 	Funding getMyFunding(int fdCode);
 	List<Object> getProjectInfoList(String userId, String level);
+	List<Object> getMoreFdList(int numberOfRequests);
 }
