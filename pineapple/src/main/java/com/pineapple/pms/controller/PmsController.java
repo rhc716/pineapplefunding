@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.pineapple.pms.service.PmsService;
+import com.pineapple.pms.service.PmsServiceInterface;
 import com.pineapple.pms.service.WbsActual;
 import com.pineapple.pms.service.WbsPlan;
 import com.pineapple.pms.service.WbsPlanEtc;
@@ -29,7 +30,7 @@ public class PmsController {
 	private Logger log = Logger.getLogger(this.getClass());
 	
 	@Autowired
-    private PmsService service;
+    private PmsServiceInterface service;
 	
 	// wbsplan입력 페이지 요청
 	@RequestMapping(value = "/wbsform.pms", method = {RequestMethod.GET, RequestMethod.POST})
