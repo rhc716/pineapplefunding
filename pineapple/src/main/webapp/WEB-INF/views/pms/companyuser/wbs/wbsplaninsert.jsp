@@ -88,13 +88,18 @@
 						<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
 						<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
 						<label for="wbsplan">WBS예상계획</label><br>
-						WBS순서:
-						<input type="number" class="form-control" name="wbsPlanOrder">
 						작업명:
 						<input type="text" class="form-control" name="wbsPlanName">
-						선행작업:
-						<input type="number" class="form-control" name="wbsPlanDependency">
+						선행작업:<br>
+						<select name="wbsPlanDependency">
+							<option  value=0> 없음</option>
+							<c:forEach var="list" items="${wbsplan}">
+								<option value="${list.wbsPlanName}">"${list.wbsPlanName}"</option>
+							</c:forEach>
+						</select><br>
+						
 						작업기간:
+						
 						<input type="number" class="form-control" name="wbsPlanDuration">
 						시작일:<br>
 						<input type="date" name="wbsPlanStartDate"><br>

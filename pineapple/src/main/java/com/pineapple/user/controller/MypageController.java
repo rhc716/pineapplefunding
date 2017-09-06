@@ -3,6 +3,7 @@ import com.pineapple.invest.service.InvestorInvestList;
 import com.pineapple.user.service.Account;
 import com.pineapple.user.service.Company;
 import com.pineapple.user.service.Employee;
+import com.pineapple.user.service.FundingAndCompany;
 import com.pineapple.user.service.FundingauthFundingAuthlevelCompany;
 import com.pineapple.user.service.MypageServiceInterface;
 import com.pineapple.user.service.User;
@@ -29,6 +30,115 @@ public class MypageController {
 	
 	@Autowired
 	private MypageServiceInterface mypageservice;
+	
+	//관리자 마이페이지 펀딩승인요청 처리
+	@RequestMapping(value="/approvefunding.user", method=RequestMethod.POST)
+	public String approvefunding(HttpSession session, @RequestParam("fdCode") int fdCode){
+		log.debug("approvefunding 펀딩승인 처리 요청");
+		Map<String,Object> map = new HashMap<String, Object>();
+        map.put("fdCode", fdCode);
+        map.put("fdApprovalId", session.getAttribute("id").toString());
+		int result = mypageservice.modifyFundingApproval(map);
+		if(result != 0){
+			log.debug(session.getAttribute("nincname")+"님의 펀딩승인요청 처리 성공");
+		} else {
+			log.debug(session.getAttribute("nincname")+"님의 펀딩승인요청 처리 실패");
+		}
+		return "redirect:/mypage.user";
+	}
+	
+	//관리자 마이페이지 두번째탭(펀딩현황조회) - 탭 포함된 메뉴별 페이지 분기
+	//마일스톤리스트 페이지 요청
+	@RequestMapping(value="/milestonelist.user", method = RequestMethod.GET)
+    public String adminmilestonelistpage(HttpSession session, Model model) { //커맨드 객체
+        log.debug("adminmilestonelistpage 관리자 마일스톤리스트 조회 페이지 요청");
+        //출력할 데이터를 호출하여 변수에 담기
+        List<FundingauthFundingAuthlevelCompany> authgiverList = mypageservice.getAuthInfoByGiverId(session.getAttribute("id").toString());
+        if(authgiverList != null){
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 부여자인 펀딩내권한부여 정보조회 성공");
+        	model.addAttribute("authgiverList", authgiverList);
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 부여자인 펀딩내권한부여 정보조회 실패");
+        }
+        //자신이 피부여자인 펀딩권한정보 조회
+        List<FundingauthFundingAuthlevelCompany> authreceiverList = mypageservice.getAuthInfoByReceiverId(session.getAttribute("id").toString());
+        if(authreceiverList != null){
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 피부여자인 펀딩내권한부여 정보조회 성공");
+        	model.addAttribute("authreceiverList", authreceiverList);
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 피부여자인 펀딩내권한부여 정보조회 실패");
+        }
+        return "user/adminmypage/milestonelist"; // 글입력후 "/"로 리다이렉트(재요청)
+    }
+		
+	//wbs리스트 페이지 요청
+	@RequestMapping(value="/wbslist.user", method = RequestMethod.GET)
+    public String adminwbslistpage(HttpSession session, Model model) { //커맨드 객체
+        log.debug("adminwbslistpage 관리자 wbs리스트 조회 페이지 요청");
+        //출력할 데이터를 호출하여 변수에 담기
+        List<FundingauthFundingAuthlevelCompany> authgiverList = mypageservice.getAuthInfoByGiverId(session.getAttribute("id").toString());
+        if(authgiverList != null){
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 부여자인 펀딩내권한부여 정보조회 성공");
+        	model.addAttribute("authgiverList", authgiverList);
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 부여자인 펀딩내권한부여 정보조회 실패");
+        }
+        //자신이 피부여자인 펀딩권한정보 조회
+        List<FundingauthFundingAuthlevelCompany> authreceiverList = mypageservice.getAuthInfoByReceiverId(session.getAttribute("id").toString());
+        if(authreceiverList != null){
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 피부여자인 펀딩내권한부여 정보조회 성공");
+        	model.addAttribute("authreceiverList", authreceiverList);
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 피부여자인 펀딩내권한부여 정보조회 실패");
+        }
+        return "user/adminmypage/wbslist"; // 글입력후 "/"로 리다이렉트(재요청)
+    }
+		
+	//투자자 리스트 페이지 요청
+	@RequestMapping(value="/investorlist.user", method = RequestMethod.GET)
+    public String admininvestorlistpage(HttpSession session, Model model) { //커맨드 객체
+        log.debug("admininvestorlistpage 관리자 투자자리스트 조회 페이지 요청");
+        //출력할 데이터를 호출하여 변수에 담기
+        List<FundingauthFundingAuthlevelCompany> authgiverList = mypageservice.getAuthInfoByGiverId(session.getAttribute("id").toString());
+        if(authgiverList != null){
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 부여자인 펀딩내권한부여 정보조회 성공");
+        	model.addAttribute("authgiverList", authgiverList);
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 부여자인 펀딩내권한부여 정보조회 실패");
+        }
+        //자신이 피부여자인 펀딩권한정보 조회
+        List<FundingauthFundingAuthlevelCompany> authreceiverList = mypageservice.getAuthInfoByReceiverId(session.getAttribute("id").toString());
+        if(authreceiverList != null){
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 피부여자인 펀딩내권한부여 정보조회 성공");
+        	model.addAttribute("authreceiverList", authreceiverList);
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 피부여자인 펀딩내권한부여 정보조회 실패");
+        }
+        return "user/adminmypage/investorlist"; // 글입력후 "/"로 리다이렉트(재요청)
+    }
+		
+	//배당지급리스트 페이지 요청
+	@RequestMapping(value="/dividendlist.user", method = RequestMethod.GET)
+    public String admindividendlistpage(HttpSession session, Model model) { //커맨드 객체
+        log.debug("admindividendlistpage 관리자 배당지급 리스트 조회 페이지 요청");
+        //출력할 데이터를 호출하여 변수에 담기
+        List<FundingauthFundingAuthlevelCompany> authgiverList = mypageservice.getAuthInfoByGiverId(session.getAttribute("id").toString());
+        if(authgiverList != null){
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 부여자인 펀딩내권한부여 정보조회 성공");
+        	model.addAttribute("authgiverList", authgiverList);
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 부여자인 펀딩내권한부여 정보조회 실패");
+        }
+        //자신이 피부여자인 펀딩권한정보 조회
+        List<FundingauthFundingAuthlevelCompany> authreceiverList = mypageservice.getAuthInfoByReceiverId(session.getAttribute("id").toString());
+        if(authreceiverList != null){
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 피부여자인 펀딩내권한부여 정보조회 성공");
+        	model.addAttribute("authreceiverList", authreceiverList);
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 피부여자인 펀딩내권한부여 정보조회 실패");
+        }
+        return "user/adminmypage/dividendlist"; // 글입력후 "/"로 리다이렉트(재요청)
+    }
 	
 	//펀딩내 권한부여 페이지 요청
 	@RequestMapping(value="/fundingauth.user", method = RequestMethod.GET)
@@ -475,6 +585,14 @@ public class MypageController {
          } else {
          	log.debug(session.getAttribute("nickname")+"님의  전체회원조회 실패");
          }
+        //출력할 데이터를 호출하여 변수에 담기 - 전체 펀딩리스트
+        List<FundingAndCompany> allfdList = mypageservice.getAllFundingList();
+        if(allfdList != null){
+        	log.debug(session.getAttribute("nickname")+"님이 전체 펀딩리스트 조회 성공");
+        	model.addAttribute("allfdList", allfdList);
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님이 전체 펀딩리스트 조회 실패");
+        }
 		return "user/adminmypage";
 	}	
 	//mypage main 페이지 요청 - 권한별 마이페이지 분기 시점에 필요한 객체 조회 기능 구현(처음 회원가입한 기업회원 레벨의 회원은 rank가 경영진이 아니므로 일반사원 마이페이지로 분기된다)

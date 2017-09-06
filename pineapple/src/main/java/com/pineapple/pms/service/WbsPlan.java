@@ -4,10 +4,9 @@ public class WbsPlan {
 	private int wbsPlanCode;
 	private int wbsPlanFdCode;
 	private int wbsPlanMsCode;
-	private int wbsPlanOrder;
 	private int wbsPlanChange;
 	private String wbsPlanName;
-	private int wbsPlanDependency;
+	private String wbsPlanDependency;
 	private String wbsPlanStartDate;
 	private int wbsPlanDuration;
 	private String wbsPlanWriteDate;
@@ -35,13 +34,7 @@ public class WbsPlan {
 	public void setWbsPlanMsCode(int wbsPlanMsCode) {
 		this.wbsPlanMsCode = wbsPlanMsCode;
 	}
-	public int getWbsPlanOrder() {
-		//System.out.println("wbsPlanOrder get"+wbsPlanOrder);
-		return wbsPlanOrder;
-	}
-	public void setWbsPlanOrder(int wbsPlanOrder) {
-		this.wbsPlanOrder = wbsPlanOrder;
-	}
+
 	public int getWbsPlanChange() {
 		//System.out.println("wbsPlanChange get"+wbsPlanChange);
 		return wbsPlanChange;
@@ -56,11 +49,11 @@ public class WbsPlan {
 	public void setWbsPlanName(String wbsPlanName) {
 		this.wbsPlanName = wbsPlanName;
 	}
-	public int getWbsPlanDependency() {
+	public String getWbsPlanDependency() {
 		//System.out.println("wbsPlanDependency get"+wbsPlanDependency);
 		return wbsPlanDependency;
 	}
-	public void setWbsPlanDependency(int wbsPlanDependency) {
+	public void setWbsPlanDependency(String wbsPlanDependency) {
 		this.wbsPlanDependency = wbsPlanDependency;
 	}
 	public String getWbsPlanStartDate() {
@@ -109,7 +102,7 @@ public class WbsPlan {
 	public String toString() {
 		return "WbsPlan [wbsPlanCode=" + wbsPlanCode + ", wbsPlanFdCode="
 				+ wbsPlanFdCode + ", wbsPlanMsCode=" + wbsPlanMsCode
-				+ ", wbsPlanOrder=" + wbsPlanOrder + ", wbsPlanChange="
+				+  ", wbsPlanChange="
 				+ wbsPlanChange + ", wbsPlanName=" + wbsPlanName
 				+ ", wbsPlanDependency=" + wbsPlanDependency
 				+ ", wbsPlanStartDate=" + wbsPlanStartDate

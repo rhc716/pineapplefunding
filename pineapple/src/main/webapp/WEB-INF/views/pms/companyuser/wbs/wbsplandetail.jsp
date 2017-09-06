@@ -86,8 +86,6 @@
 				<label for="wbsplan">WBS예상계획</label><br>
 				WBS코드:
 				<input type="text" class="form-control" name="wbsPlanCode" value="${wbsplandetail.wbsPlanCode}" readonly>
-				WBS순서:
-				<input type="text" class="form-control" name="wbsPlanOrder" value="${wbsplandetail.wbsPlanOrder}" readonly>
 				작업명:
 				<input type="text" class="form-control" name="wbsPlanName" value="${wbsplandetail.wbsPlanName}" readonly>
 				선행작업:

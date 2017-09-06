@@ -6,10 +6,10 @@
 	<!-- wbsplan 생성 요청 쿼리 -->
 	<insert id="insertWbsPlan" parameterType="com.pineapple.pms.service.WbsPlan">
 		INSERT INTO wbsplan
-		(wbsPlanCode, wbsPlanFdCode, wbsPlanMsCode, wbsPlanOrder, wbsPlanChange, wbsPlanName,
+		(wbsPlanCode, wbsPlanFdCode, wbsPlanMsCode,  wbsPlanChange, wbsPlanName,
 		 wbsPlanDependency, wbsPlanStartDate, wbsPlanDuration, wbsPlanWriteDate, wbsPlanManager, wbsPlanComCode)
 		 
-		VALUES (NULL, #{wbsPlanFdCode}, #{wbsPlanMsCode}, #{wbsPlanOrder}, #{wbsPlanChange}+1, #{wbsPlanName}, #{wbsPlanDependency},
+		VALUES (NULL, #{wbsPlanFdCode}, #{wbsPlanMsCode}, #{wbsPlanChange}+1, #{wbsPlanName}, #{wbsPlanDependency},
 				#{wbsPlanStartDate}, #{wbsPlanDuration}, NOW(), #{wbsPlanManager}, #{wbsPlanComCode});
 	</insert>
 	<insert id="insertWbsPlanHuman" parameterType="com.pineapple.pms.service.WbsPlanHuman">
@@ -73,7 +73,7 @@
 		select  
 			max(wbsPlanChange) wbsPlanChange, max(wbsPlanCode) wbsPlanCode 
 			from wbsplan
-		where wbsPlanMsCode=#{wbsPlanMsCode} and wbsPlanOrder=#{wbsPlanOrder}
+		where wbsPlanMsCode=#{wbsPlanMsCode}<!--  and wbsPlanOrder=#{wbsPlanOrder} -->
 	</select>
 	<select id="selectWbsPlanFacility" resultType="com.pineapple.pms.service.WbsPlanFacility" parameterType="String">
 		select *
