@@ -16,6 +16,27 @@ public class MypageService implements MypageServiceInterface {
 	@Autowired
 	private MypageDaoInterface mypagedao;
 	
+	//사업분야 등록
+	@Override
+	public int addBizArea(Businessarea bizarea) {
+		log.debug("MypageService addBizArea 호출 결과: "+mypagedao.insertBizArea(bizarea));
+		return mypagedao.insertBizArea(bizarea);
+	}
+	
+	//사업분야 삭제 
+	@Override
+	public int removeBizAreaByAreaCode(int areaCode) {
+		log.debug("MypageService removeBizAreaByAreaCode 호출 결과: "+mypagedao.deleteBizAreaByAreaCode(areaCode));
+		return mypagedao.deleteBizAreaByAreaCode(areaCode);
+	}
+	
+	//기업별 사업분야 조회
+	@Override
+	public List<BizareaAndFundingAndCompany> getBizareaList(Map<String, Object> map) {
+		log.debug("MypageService getBizareaList 호출 결과: "+mypagedao.selectBizareaList(map));
+		return mypagedao.selectBizareaList(map);
+	}
+	
 	//펀딩승인요청 처리
 	@Override
 	public int modifyFundingApproval(Map<String, Object> map) {
@@ -208,6 +229,4 @@ public class MypageService implements MypageServiceInterface {
 	}
 
 
-
-	
 }

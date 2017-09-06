@@ -17,6 +17,27 @@ public class MypageDao implements MypageDaoInterface {
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
 	
+	//사업분야 등록
+	@Override
+	public int insertBizArea(Businessarea bizarea) {
+		log.debug("MypageDao insertBizArea 호출 : "+bizarea);
+		return sqlSessionTemplate.insert("com.pineapple.user.service.MypageMapper.insertBizarea", bizarea);
+	}
+	
+	//사업분야 삭제 
+	@Override
+	public int deleteBizAreaByAreaCode(int areaCode) {
+		log.debug("MypageDao deleteBizAreaByAreaCode 호출 : "+areaCode);
+		return sqlSessionTemplate.delete("com.pineapple.user.service.MypageMapper.deleteBizAreaByAreaCode", areaCode);
+	}
+	
+	//기업별 사업분야 조회
+	@Override
+	public List<BizareaAndFundingAndCompany> selectBizareaList(Map<String, Object> map) {
+		log.debug("MypageDao selectBizareaList 호출 : "+map);
+		return sqlSessionTemplate.selectList("com.pineapple.user.service.MypageMapper.selectBizArea", map);
+	}
+	
 	//펀딩승인요청 처리
 	@Override
 	public int updateFundingApproval(Map<String, Object> map) {
@@ -211,5 +232,5 @@ public class MypageDao implements MypageDaoInterface {
 	}
 
 	
-	
+
 }

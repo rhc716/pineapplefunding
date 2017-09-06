@@ -4,6 +4,43 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.pineapple.user.service.MypageMapper">
+
+<!-- 사업분야 등록 -->
+<insert id="insertBizarea" parameterType="com.pineapple.user.service.Businessarea">
+	INSERT INTO businessarea
+	(areaCode, areaName, areaFdCode)
+	VALUES (NULL, #{areaName}, #{areaFdCode})
+</insert>
+
+<!-- 경영진 펀딩 사업분야 조회 -->
+<select id="selectBizArea" resultMap="selectBizArea">
+	SELECT b.areaCode, b.areaName, f.fdTitle, c.comName
+	FROM businessarea b
+	INNER JOIN funding f
+	ON b.areaFdCode = f.fdCode
+	INNER JOIN company c
+	ON f.fdComCode = c.comCode
+	<where> c.comName in
+		<foreach collection="comNameList" item="comList" index="index" separator="," open="(" close=")">
+			 #{comList.emComName}
+		</foreach>
+	</where>
+	ORDER BY c.comName, b.areaCode asc
+</select>
+<resultMap type="com.pineapple.user.service.BizareaAndFundingAndCompany" id="selectBizArea">
+	<result property="areaCode" column="areaCode"/>
+	<result property="areaName" column="areaName"/>
+	<result property="fdTitle" column="fdTitle"/>
+	<result property="comName" column="comName"/>
+</resultMap>
+
+<!-- 경영진 사업분야 삭제 -->
+<delete id="deleteBizAreaByAreaCode" parameterType="int">
+	DELETE 
+	FROM businessarea 
+	WHERE areaCode=#{areaCode}
+</delete>
+
 <!-- 관리자 펀딩전체 조회(회사명 조인) -->
 <select id="fundinglistAll" resultMap="fundinglistAll">
 	SELECT f.fdCode, f.fdTitle, f.openDate, f.closeDate, f.minInterestRate, f.fdType, f.fdStatus, f.projectStartDate, f.projectEndDate, f.fdPublisher, f.adminApproval, f.fdApprovalDate, f.fdApprovalId, f.fdDate, c.comName 

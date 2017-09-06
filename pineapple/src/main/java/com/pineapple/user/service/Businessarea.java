@@ -2,7 +2,7 @@ package com.pineapple.user.service;
 
 public class Businessarea {
 	private int areaCode;
-	private int areaComCode;
+	private int areaFdCode;
 	private int areaName;
 	
 	public int getAreaCode() {
@@ -11,11 +11,11 @@ public class Businessarea {
 	public void setAreaCode(int areaCode) {
 		this.areaCode = areaCode;
 	}
-	public int getAreaComCode() {
-		return areaComCode;
+	public int getAreaFdCode() {
+		return areaFdCode;
 	}
-	public void setAreaComCode(int areaComCode) {
-		this.areaComCode = areaComCode;
+	public void setAreaFdCode(int areaFdCode) {
+		this.areaFdCode = areaFdCode;
 	}
 	public int getAreaName() {
 		return areaName;
@@ -23,11 +23,9 @@ public class Businessarea {
 	public void setAreaName(int areaName) {
 		this.areaName = areaName;
 	}
-	
 	@Override
 	public String toString() {
-		return "Businessarea [areaCode=" + areaCode + ", areaComCode=" + areaComCode + ", areaName=" + areaName + "]";
+		return "Businessarea [areaCode=" + areaCode + ", areaFdCode=" + areaFdCode + ", areaName=" + areaName + "]";
 	}
-	
 	
 }

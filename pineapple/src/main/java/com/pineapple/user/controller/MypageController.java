@@ -1,6 +1,8 @@
 package com.pineapple.user.controller;
 import com.pineapple.invest.service.InvestorInvestList;
 import com.pineapple.user.service.Account;
+import com.pineapple.user.service.BizareaAndFundingAndCompany;
+import com.pineapple.user.service.Businessarea;
 import com.pineapple.user.service.Company;
 import com.pineapple.user.service.Employee;
 import com.pineapple.user.service.FundingAndCompany;
@@ -30,6 +32,61 @@ public class MypageController {
 	
 	@Autowired
 	private MypageServiceInterface mypageservice;
+	
+	//사업분야 입력 요청 처리
+	@RequestMapping(value="/insertbizarea.user", method=RequestMethod.POST)
+	public String insertBizArea(HttpSession session, Businessarea bizarea){
+		log.debug("insertBizArea 사업분야 등록 요청");
+		int result = mypageservice.addBizArea(bizarea);
+		if(result != 0){
+			log.debug(session.getAttribute("nincname")+"님의 사업분야 등록 요청 처리 성공");
+		} else {
+			log.debug(session.getAttribute("nincname")+"님의 사업분야 등록 요청 처리 실패");
+		}
+		return "redirect:/getbizareapage.user";
+	}
+	
+	//사업분야 삭제 요청 처리
+	@RequestMapping(value="/deletebizarea.user", method=RequestMethod.POST)
+	public String deleteBizArea(HttpSession session, @RequestParam("areaCode") int areaCode){
+		log.debug("deleteBizArea 사업분야 삭제 요청");
+		int result = mypageservice.removeBizAreaByAreaCode(areaCode);
+		if(result != 0){
+			log.debug(session.getAttribute("nincname")+"님의 사업분야삭제 처리 성공");
+		} else {
+			log.debug(session.getAttribute("nincname")+"님의 사업분야삭제 처리 실패");
+		}
+		return "redirect:/getbizareapage.user";
+	}
+	
+	//경영진 펀딩 사업분야 페이지 요청(자신의 기업별 모든 사업분야 리스트 조회, )
+	@RequestMapping(value="/getbizareapage.user", method = RequestMethod.GET)
+    public String getBizareaPage(HttpSession session, Model model) { //커맨드 객체
+        log.debug("getBizareaPage 경영진 사업분야등록/조회 페이지 요청");
+        //출력할 데이터를 호출하여 변수에 담기
+        //자신의 아이디로 자신이 속한 기업명 리스트를 조회 -> 기업명 결과값을 다시 입력하여 자신이 경영진으로 속한 각 기업별 사업분야 리스트를 조회
+        List<Employee> comMngRank = mypageservice.getEmployeeMngById(session.getAttribute("id").toString());
+        if(comMngRank != null){
+        	log.debug(session.getAttribute("nickname")+"님의 사원정보조회 성공");
+         	model.addAttribute("comMngRank", comMngRank);
+         	//경영진이 속한 모든 기업명을 조회한 뒤, 그 결과 조회한 기업명 리스트를 map에 입력값으로 담아 기업에 속한 모든 사원리스트를 조회하는 메서드 호출
+         	Map<String, Object> map = new HashMap<String, Object>();
+         	for(int i=0; i<comMngRank.size(); i++){
+         		List<Employee> comNameList = comMngRank;
+         		map.put("comNameList", comNameList);
+         		List<BizareaAndFundingAndCompany> allbizarea = mypageservice.getBizareaList(map);
+ 				if(allbizarea != null){
+                    log.debug(session.getAttribute("nickname")+"님의 기업별 모든 사업분야정보조회 성공");
+                    model.addAttribute("allbizarea", allbizarea);
+                   } else {
+                   	log.debug(session.getAttribute("nickname")+"님의  기업별 모든 사업분야정보조회 실패");
+                   }
+         	}
+         } else {
+         	log.debug(session.getAttribute("nickname")+"님의  사원정보조회 실패");
+         }
+        return "user/bizareainsert"; // 글입력후 "/"로 리다이렉트(재요청)
+    }
 	
 	//관리자 마이페이지 펀딩승인요청 처리
 	@RequestMapping(value="/approvefunding.user", method=RequestMethod.POST)
@@ -496,7 +553,7 @@ public class MypageController {
 		} else {
 			log.debug("getCompanyInfoByOpenId 회사개설정보 조회 실패");
 		}
-        //경영진이 마이페이지 분기 요청시, 페이지 로딩시하며 자신의 아이디로 자신의 사원등록여부와 사원승인여부 조회
+        //경영진이 마이페이지 분기 요청시, 페이지 로딩하며 자신의 아이디로 자신의 사원등록여부와 사원승인여부 조회
         List<Employee> employeeOneId = mypageservice.getEmployeeById(session.getAttribute("id").toString());
         if(employeeOneId != null){
         	log.debug(session.getAttribute("nickname")+"님의 사원정보조회 성공");
@@ -504,7 +561,7 @@ public class MypageController {
          } else {
          	log.debug(session.getAttribute("nickname")+"님의  사원정보조회 실패");
          }
-        //경영진이 마이페이지 분기 요청시, 페이지 로딩시하며 자신의 아이디로 사원등록여부와 사원승인여부 조회
+        //경영진이 마이페이지 분기 요청시, 페이지 로딩하며 자신의 아이디로 소속된 기업별 기업명 조회 -> 기업명들을 입력값으로 다시 원하는 결과값 조회
         List<Employee> comMngRank = mypageservice.getEmployeeMngById(session.getAttribute("id").toString());
         if(comMngRank != null){
         	log.debug(session.getAttribute("nickname")+"님의 사원정보조회 성공");
@@ -520,7 +577,7 @@ public class MypageController {
                    model.addAttribute("AllEmployeeListInMyCom", allEmployeeInMyCom);
                   } else {
                   	log.debug(session.getAttribute("nickname")+"님의  기업별 모든 사원정보조회 실패");
-                  }
+                  }	
          	}
          } else {
          	log.debug(session.getAttribute("nickname")+"님의  사원정보조회 실패");

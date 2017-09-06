@@ -6,6 +6,15 @@ import java.util.Map;
 import com.pineapple.invest.service.InvestorInvestList;
 
 public interface MypageDaoInterface {
+	//사업분야 등록
+	int insertBizArea(Businessarea bizarea);
+	
+	//사업분야 삭제 
+	int deleteBizAreaByAreaCode(int areaCode);
+	
+	//기업별 사업분야 조회
+	List<BizareaAndFundingAndCompany> selectBizareaList(Map<String, Object> map);
+	
 	//펀딩승인요청 처리
 	int updateFundingApproval(Map<String, Object> map);
 	
