@@ -9,39 +9,41 @@
 <body>
 <div class="row">
 	<div class="col-md-3"></div>
-	<div class="col-md-3 logoandsearch">
+	<div class="col-md-6 logoandsearch">
 		<a href="/pineapple"><img src="${pageContext.request.contextPath}/resources/img/logo.jpg"></a>
+		<i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;<input type="text">&nbsp;
+		<button type="button" class="btn btnpine">검색</button>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-3">
 		<br>
 			<c:choose>
 				<c:when test="${not empty sessionScope.userLogin}">
-					<div class="col-md-3" style="float: right">
+					<div class="col-md-6" style="float: right; display:block;">
 						<a href="/pineapple/logout.user">
-							<button type="button" class="btn btn-danger" aria-label="left Align">
+							<button type="button" class="btn btn-danger " aria-label="left Align">
 							  <span class="glyphicon glyphicon-off" aria-hidden="true"> 로그아웃</span>
 							</button>
 						 </a>
 					 </div>
-					 <div class="col-md-3" style="float: right">
+					 <div class="col-md-6" style="float: right; display:block;">
 						 <a href="/pineapple/mypage.user">
-							<button type="button" class="btn btn-danger" aria-label="left Align">
+							<button type="button" class="btn btn-danger " aria-label="left Align">
 							  <span class="glyphicon glyphicon-user" aria-hidden="true"> 마이페이지</span>
 							</button>
 						 </a>
 					</div> 
 				</c:when>
 				<c:otherwise>
-					<div class="col-md-3" style="float: right">
+					<div class="col-md-6" style="float: right; display:block;">
 						<a href="/pineapple/login.user">
-							<button type="button" class="btn btn-success" aria-label="left Align">
+							<button type="button" class="btn btn-success " aria-label="left Align">
 							  <span class="glyphicon glyphicon-globe" aria-hidden="true"> 로그인</span>
 							</button>
 						</a>
 					</div>
-					 <div class="col-md-3" style="float: right">
+					 <div class="col-md-6" style="float: right; display:block;">
 						<a href="/pineapple/userinsert.user">
-							<button type="button" class="btn btn-success" aria-label="left Align">
+							<button type="button" class="btn btn-success " aria-label="left Align">
 							  <span class="glyphicon glyphicon-globe" aria-hidden="true"> 회원가입</span>
 							</button>
 						</a>

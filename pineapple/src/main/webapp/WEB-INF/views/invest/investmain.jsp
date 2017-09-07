@@ -31,13 +31,26 @@ $(document).ready(function(){
 	var fundinglist = $.ajax({
 		type: 'get',
 		url : '/pineapple/investfdlistmain.invest',
-		success : function success(msg){
-			$('#fdlist').html(msg)
-		},
-		error : function error(){
-			
-		}
 	});
+	
+	// 성공시
+	fundinglist.done(function(msg){
+		$('#fdlist').html(msg);
+		/* 이미지 경로가 잘못되어 404일때 보여줄 이미지 설정 */
+
+		$('img').each(function(n){
+			   console.log($(this));
+			   
+			   $(this).on( "error", function(){
+				   $(this).attr("src", "${pageContext.request.contextPath}/resources/img/404alternateimage.jpg");
+		    });
+		});
+	});
+	// 실패시
+	fundinglist.fail(function(){
+		
+	});
+	
 	$('#fundinglistnameselectbtn').click(function(){
 		var fundinglistnameselecttext = $('#fundinglistnameselecttext').val();
 		var fundinglistnameselectajax = $.ajax({
