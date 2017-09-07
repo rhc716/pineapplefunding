@@ -36,6 +36,7 @@ $(document).ready(function(){
 	$('.contentopen').click(function(){
 		var msgCode = $(this).attr('dataCode');
 		$('#'+msgCode+'').find('a').addClass('msgcheckno').removeClass('msgcheckok')
+		$('#'+msgCode+'').find('.checkcheck').addClass('glyphicon glyphicon-ok').removeClass('checkcheck')
 		var investmenttab = $.ajax({ // ajax실행부분
 	        type: 'get',
 	        url : '/pineapple/investormessageopen.timeline',
@@ -70,6 +71,92 @@ $(document).ready(function(){
 			});
 		}
 	});
+	$('#checkall').click(function(){
+		if($('#checkall').prop('checked')){
+			$('input[name=messagechecked]').prop('checked',true)
+		}else{
+			$('input[name=messagechecked]').prop('checked',false)
+		}
+	});
+	
+	
+	
+	/* 메세지 삭제 읽은 메세지 */
+	$('#messagedelete').click(function(){
+		$('#checkall').prop('checked',false)
+		var messagecount = 0;
+		var messagecheckedlength = $('input[name=messagechecked]').length
+		var messagechecklist = new Array();
+		for(i = 0 ; i < messagecheckedlength ; i++){
+			if(document.getElementsByName("messagechecked")[i].checked == true){
+				messagechecklist[messagecount] = document.getElementsByName("messagechecked")[i].value;
+				messagecount++
+			}
+		}
+		$.ajaxSettings.traditional = true;
+		var investmenttab = $.ajax({ // ajax실행부분
+	        type: 'get',
+	        url : '/pineapple/investormessagelistdelete.timeline',
+	        data : {messagechecklist : messagechecklist},
+	        success : function success(msg){
+	        	$('#messagesendlist').html(msg)
+	        },
+	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+	        error : function error(){
+        	}
+		});
+	
+	});
+	$('#messagereadok').click(function(){
+		$('#checkall').prop('checked',false)
+		var messagecount = 0;
+		var messagecheckedlength = $('input[name=messagechecked]').length
+		var messagechecklist = new Array();
+		for(i = 0 ; i < messagecheckedlength ; i++){
+			if(document.getElementsByName("messagechecked")[i].checked == true){
+				messagechecklist[messagecount] = document.getElementsByName("messagechecked")[i].value;
+				messagecount++
+			}
+		}
+		$.ajaxSettings.traditional = true;
+		var investmenttab = $.ajax({ // ajax실행부분
+	        type: 'get',
+	        url : '/pineapple/investormessagecheckok.timeline',
+	        data : {messagechecklist : messagechecklist},
+	        success : function success(msg){
+	        	$('#messagesendlist').html(msg)
+	        },
+	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+	        error : function error(){
+        	}
+		});
+	
+	});	
+	$('#messagereadno').click(function(){
+		$('#checkall').prop('checked',false)
+		var messagecount = 0;
+		var messagecheckedlength = $('input[name=messagechecked]').length
+		var messagechecklist = new Array();
+		for(i = 0 ; i < messagecheckedlength ; i++){
+			if(document.getElementsByName("messagechecked")[i].checked == true){
+				messagechecklist[messagecount] = document.getElementsByName("messagechecked")[i].value;
+				messagecount++
+			}
+		}
+		$.ajaxSettings.traditional = true;
+		var investmenttab = $.ajax({ // ajax실행부분
+	        type: 'get',
+	        url : '/pineapple/investormessagecheckno.timeline',
+	        data : {messagechecklist : messagechecklist},
+	        success : function success(msg){
+	        	$('#messagesendlist').html(msg)
+	        },
+	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+	        error : function error(){
+        	}
+		});
+	
+	});	
 });
 </script>
 <body>
@@ -83,27 +170,48 @@ $(document).ready(function(){
 		</div>
 		
 		<!-- 받은 메세지함 리스트 -->
-		<div class="col-md-10 resultresult" id="receivelist" style="border: 1.5px solid #009442; border-radius: 5px;">
-		<table class="table" style="margin: 0px;">
-			<c:forEach var="myinvestormessage" items="${myinvestormessage}">
-			<tbody id="${myinvestormessage.msgCode}" style="text-align: center;">
-	 			 	<tr>
-	 			 	<td><input type="checkbox" name="${myinvestormessage.msgCode}"></td>
-	 			 	<c:choose>
-	 			 	<c:when test="${myinvestormessage.msgCheck == 0}">
-	 			 	<td><a class="msgcheckok"  href="#" data-toggle="popover" data-html="true" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<a>메세지보내기</a><br><a>보낸사람으로 검색</a><br><a>받은사람으로 검색</a>">보낸 사람 : ${myinvestormessage.name}</a></td>
-	 			 	<td><a class="msgcheckok contentopen"  href="#" data-toggle="modal" data-target="#myqna${myinvestormessage.msgCode}" qna-title="${myinvestormessage.msgCode}"  dataCode="${myinvestormessage.msgCode}">${myinvestormessage.msgTitle}</a></td>
-	 			 	</c:when>
-	 			 	<c:otherwise>
-	 			 	<td><a class="msgcheckno" style="color: black;" href="#" data-toggle="popover" data-html="true" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<a>메세지보내기</a><br><a>보낸사람으로 검색</a><br><a>받은사람으로 검색</a>">보낸 사람 : ${myinvestormessage.name}</a></td>
-	 			 	<td><a class="msgcheckno contentopen" style="color: black;" href="#" data-toggle="modal" data-target="#myqna${myinvestormessage.msgCode}" qna-title="${myinvestormessage.msgCode}" dataCode="${myinvestormessage.msgCode}">${myinvestormessage.msgTitle}</a></td>
-	 			 	</c:otherwise>
-	 			 	</c:choose>
-	 			 	<td><span style="opacity: 0.5">${myinvestormessage.msgTime}</span></td>
-	 			 	</tr>
-			</tbody>
-			</c:forEach>
-		</table>
+		<div class="col-md-10 resultresult" id="receivelist" style="padding: 0px;">
+			<div class="col-md-12" style="border: 1.5px solid #009442; border-radius: 5px; margin-bottom: 10px">
+				<table class="table" style="margin: 0px; text-align: center;">
+				<tr>
+				<td style="width: 42px"><input id="checkall" type="checkbox"></td>
+				<td><a id="messagedelete" style="color: black;"><span class="glyphicon glyphicon-trash"></span>체크된 메세지삭제</a></td>
+				<td><a id="messagereadok" style="color: black;"><span class="glyphicon glyphicon-eye-open"></span>읽은 메세지로</a></td>
+				<td><a id="messagereadno" style="color: black;"><span class="glyphicon glyphicon-eye-close"></span>읽지않은 메세지로</a></td>
+				<td></td>
+				</tr>
+				</table>
+			</div>
+			<div class="col-md-12" id="messagesendlist" style="border: 1.5px solid #009442; border-radius: 5px;">
+			<table class="table" style="margin: 0px;">
+				<c:forEach var="myinvestormessage" items="${myinvestormessage}">
+				<tbody id="${myinvestormessage.msgCode}" style="text-align: center;">
+		 			 	<tr>
+		 			 	<td><input type="checkbox" name="messagechecked" value="${myinvestormessage.msgCode}"></td>
+		 			 	<c:choose>
+		 			 	<c:when test="${myinvestormessage.msgCheck == 0}">
+		 			 	<td><a class="msgcheckok"  href="#" data-toggle="popover" data-html="true" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<a>메세지보내기</a><br><a>보낸사람으로 검색</a><br><a>받은사람으로 검색</a>">보낸 사람 : ${myinvestormessage.name}</a></td>
+		 			 	<td><a class="msgcheckok contentopen"  href="#" data-toggle="modal" data-target="#myqna${myinvestormessage.msgCode}" qna-title="${myinvestormessage.msgCode}"  dataCode="${myinvestormessage.msgCode}">${myinvestormessage.msgTitle}</a></td>
+		 			 	</c:when>
+		 			 	<c:otherwise>
+		 			 	<td><a class="msgcheckno" style="color: black;" href="#" data-toggle="popover" data-html="true" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<a>메세지보내기</a><br><a>보낸사람으로 검색</a><br><a>받은사람으로 검색</a>">보낸 사람 : ${myinvestormessage.name}</a></td>
+		 			 	<td><a class="msgcheckno contentopen" style="color: black;" href="#" data-toggle="modal" data-target="#myqna${myinvestormessage.msgCode}" qna-title="${myinvestormessage.msgCode}" dataCode="${myinvestormessage.msgCode}">${myinvestormessage.msgTitle}</a></td>
+		 			 	</c:otherwise>
+		 			 	</c:choose>
+		 			 	<td><span style="opacity: 0.5">${myinvestormessage.msgTime}</span></td>
+		 			 	<c:choose>
+		 			 	<c:when test="${myinvestormessage.msgCheck == 0}">
+						<td><span class="checkcheck"></span></td>	 		
+		 			 	</c:when>
+		 			 	<c:otherwise>
+						<td><span class="glyphicon glyphicon-ok"></span></td>	 			 	
+						</c:otherwise>
+		 			 	</c:choose>
+		 			 	</tr>
+				</tbody>
+				</c:forEach>
+			</table>
+			</div>
 		</div>
 		
 		<!-- 보낸 메세지함 리스트 -->

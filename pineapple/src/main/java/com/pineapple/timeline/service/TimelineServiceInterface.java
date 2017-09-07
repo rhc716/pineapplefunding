@@ -1,5 +1,6 @@
 package com.pineapple.timeline.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -42,4 +43,10 @@ public interface TimelineServiceInterface {
 	int addMypageMessageSend(Message message);
 	//자신이 보낸 메세지 list 조회
 	List<Message> getMypageMessageSendList(String tlId);
+	//받은 메세지 삭제
+	List<Message> removeMypageMessageList(HashMap<String, String[]> msgCodemap,String userid);
+	//선택 메세지 읽은 메세지로
+	List<Message> updateMypageMessageCheckOkList(HashMap<String, String[]> msgCodemap,String userid);
+	//선택 메세지 읽지않은 메세지로
+	List<Message> updateMypageMessageCheckNoList(HashMap<String, String[]> msgCodemap,String userid);
 }

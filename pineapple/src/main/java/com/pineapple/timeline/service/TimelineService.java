@@ -1,5 +1,6 @@
 package com.pineapple.timeline.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -127,5 +128,29 @@ public class TimelineService implements TimelineServiceInterface{
 		log.debug("------------------TimelineService-----------------getMypageMessageSendList()");
 		List<Message> messagesendlist = timelinedaointerface.mypageMessageSendListSelect(tlId);
 		return messagesendlist;
+	}
+	//받은 메세지 삭제 
+	@Override
+	public List<Message> removeMypageMessageList(HashMap<String, String[]> msgCodemap,String userid) {
+		log.debug("------------------TimelineService-----------------removeMypageMessageList()");
+		timelinedaointerface.mypageMessageDelete(msgCodemap);
+		List<Message> messagereselect = timelinedaointerface.mypageMessageListSelect(userid);
+		return messagereselect;
+	}
+	//선택 메세지 읽은 메세지로
+	@Override
+	public List<Message> updateMypageMessageCheckOkList(HashMap<String, String[]> msgCodemap, String userid) {
+		log.debug("------------------TimelineService-----------------updateMypageMessageCheckOkList()");
+		timelinedaointerface.mypageMessageCheckOkUpdate(msgCodemap);
+		List<Message> messagereselect = timelinedaointerface.mypageMessageListSelect(userid);
+		return messagereselect;
+	}
+	//선택 메세지 읽지않은 메세지로
+	@Override
+	public List<Message> updateMypageMessageCheckNoList(HashMap<String, String[]> msgCodemap, String userid) {
+		log.debug("------------------TimelineService-----------------updateMypageMessageCheckNoList()");
+		timelinedaointerface.mypageMessageCheckNkUpdate(msgCodemap);
+		List<Message> messagereselect = timelinedaointerface.mypageMessageListSelect(userid);
+		return messagereselect;
 	}
 }

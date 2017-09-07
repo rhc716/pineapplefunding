@@ -1,5 +1,6 @@
 package com.pineapple.timeline.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -117,5 +118,36 @@ public class TimelineDao implements TimelineDaoInterface{
 	public List<Message> mypageMessageSendListSelect(String tlId) {
 		log.debug("TimelineDao-----mypageMessageSendListSelect");
 		return sqlSessionTemplate.selectList("com.pineapple.timeline.service.TimelineMapper.selectMypageMessagesendlist",tlId);
+	}
+	//받은 메세지 삭제 
+	@Override
+	public int mypageMessageDelete(HashMap<String, String[]> msgCodemap) {
+		log.debug("TimelineDao-----mypageMessageDelete");
+		int sucount = 0;
+		for(int i = 0 ; i < msgCodemap.get("msgCodelist").length ; i ++){
+			sqlSessionTemplate.delete("com.pineapple.timeline.service.TimelineMapper.deleteMypageMessage",msgCodemap.get("msgCodelist")[i]);
+			sucount++;
+		}
+		return sucount;
+	}
+	//선택 메세지 읽은 메세지로
+	@Override
+	public int mypageMessageCheckOkUpdate(HashMap<String, String[]> msgCodemap) {
+		log.debug("TimelineDao-----mypageMessageCheckOkUpdate");
+		int sucount = 0;
+		for(int i = 0 ; i < msgCodemap.get("msgCodelist").length ; i ++){
+			sqlSessionTemplate.update("com.pineapple.timeline.service.TimelineMapper.updateMypageMessageCheckOk",msgCodemap.get("msgCodelist")[i]);
+			sucount++;}
+		return sucount;
+	}
+	//선택 메세지 읽지않은 메세지로
+	@Override
+	public int mypageMessageCheckNkUpdate(HashMap<String, String[]> msgCodemap) {
+		log.debug("TimelineDao-----mypageMessageCheckNkUpdate");
+		int sucount = 0;
+		for(int i = 0 ; i < msgCodemap.get("msgCodelist").length ; i ++){
+			sqlSessionTemplate.update("com.pineapple.timeline.service.TimelineMapper.updateMypageMessageCheckNo",msgCodemap.get("msgCodelist")[i]);
+			sucount++;}
+		return sucount;
 	}
 }

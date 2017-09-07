@@ -15,6 +15,7 @@
 	 	<result property="minInvestMoney" column="minInvestMoney"/>
 	 	<result property="issuePrice" column="issuePrice"/>
 	 	<result property="days" column="days"/>
+	 	<result property="fdStatus" column="fdStatus"/>
 	 </resultMap>
 	 <!-- InvestAndFdLikeAndFd -->
 	 <resultMap type="com.pineapple.invest.service.InvestAndFdLikeAndFd"
@@ -77,34 +78,14 @@
 				f.posterImg,
 				f.minInvestMoney,
 				f.issuePrice,
-				TO_DAYS(f.closeDate)-TO_DAYS(now()) as days
+				TO_DAYS(f.closeDate)-TO_DAYS(now()) as days,
+				f.fdStatus
 		FROM funding f 
 		LEFT JOIN company c 
 		ON f.fdComCode = c.comCode 
 		LEFT JOIN investment i 
 		ON f.fdCode = i.investFdCode 
 		WHERE f.fdStatus = '모집중' OR f.fdStatus = '결제모집중'
-		GROUP BY f.fdCode 
-		ORDER BY f.fdDate DESC;
-	</select>
-	<!-- 투자하기 main 에서 사용하는 펀딩제목 검색 조회 쿼리 -->
-	<select id="selectInvestFundingListName" parameterType="String" resultMap="selectInvestAndFd">
-		SELECT  f.fdCode,
-				f.fdTitle,
-				f.numberOfShares,
-				c.comName,
-				IFNULL(sum(i.purchaseShares),0) as total,
-				f.posterImg,
-				f.minInvestMoney,
-				f.issuePrice,
-				TO_DAYS(f.closeDate)-TO_DAYS(now()) as days
-		FROM funding f 
-		LEFT JOIN company c 
-		ON f.fdComCode = c.comCode 
-		LEFT JOIN investment i 
-		ON f.fdCode = i.investFdCode 
-		WHERE (f.fdStatus = '모집중' OR f.fdStatus = '결제모집중')
-		AND f.fdTitle LIKE CONCAT('%',#{fdTitle},'%')
 		GROUP BY f.fdCode 
 		ORDER BY f.fdDate DESC;
 	</select>
@@ -118,7 +99,8 @@
 				f.posterImg,
 				f.minInvestMoney,
 				f.issuePrice,
-				TO_DAYS(f.closeDate)-TO_DAYS(now()) as days
+				TO_DAYS(f.closeDate)-TO_DAYS(now()) as days,
+				f.fdStatus
 		FROM funding f 
 		LEFT JOIN company c 
 		ON f.fdComCode = c.comCode 

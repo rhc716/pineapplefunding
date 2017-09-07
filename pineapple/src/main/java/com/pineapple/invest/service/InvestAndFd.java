@@ -10,8 +10,14 @@ public class InvestAndFd {
 	private int minInvestMoney;
 	private int issuePrice;
 	private int days;
+	private String fdStatus;
 	
-	
+	public String getFdStatus() {
+		return fdStatus;
+	}
+	public void setFdStatus(String fdStatus) {
+		this.fdStatus = fdStatus;
+	}
 	public int getIssuePrice() {
 		return issuePrice;
 	}
@@ -70,7 +76,7 @@ public class InvestAndFd {
 	public String toString() {
 		return "InvestAndFd [fdCode=" + fdCode + ", fdTitle=" + fdTitle + ", numberOfShares=" + numberOfShares
 				+ ", comName=" + comName + ", total=" + total + ", posterImg=" + posterImg + ", minInvestMoney="
-				+ minInvestMoney + ", issuePrice=" + issuePrice + ", days=" + days + "]";
+				+ minInvestMoney + ", issuePrice=" + issuePrice + ", days=" + days + ", fdStatus=" + fdStatus + "]";
 	}
 
 

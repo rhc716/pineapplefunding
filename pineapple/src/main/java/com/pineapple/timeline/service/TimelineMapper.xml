@@ -238,4 +238,22 @@
 			(msgTitle, msgContent, msgCheck, msgSendId, msgReceiveId, msgTime)
 		VALUES ( #{msgTitle}, #{msgContent}, 0, #{msgSendId}, #{msgReceiveId}, NOW())
 	</insert>
+	<!--받은 메세지 삭제하기 -->
+ 	<delete id="deleteMypageMessage" parameterType="String">
+			DELETE FROM message WHERE msgCode=#{msgCode}
+	</delete>
+	<!-- 선택 메세지 읽은 메세지로 -->
+	<update id="updateMypageMessageCheckOk" parameterType="String">
+		UPDATE message
+			SET
+				msgCheck=1
+		WHERE msgCode = #{msgCode}
+	</update>
+	<!-- 선택 메세지 읽지않은 메세지로 -->
+	<update id="updateMypageMessageCheckNo" parameterType="String">
+		UPDATE message
+			SET
+				msgCheck=0
+		WHERE msgCode = #{msgCode}
+	</update>
 </mapper>

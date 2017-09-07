@@ -21,13 +21,6 @@ public class InvestService implements InvestServiceInterface {
 		List<InvestAndFd> fdlist =  investdaointerface.investFundingSelect();
 		return fdlist;
 	}
-	//title 검색으로 펀딩리스트 조회 Service
-	@Override
-	public List<InvestAndFd> getInvestFundingTitle(String fdTitle) {
-		log.debug("------------------InvestService-----------------getInvestFundingTitle()");
-		List<InvestAndFd> fdTitlelist =  investdaointerface.investFundingTitleSelect(fdTitle);
-		return fdTitlelist;
-	}
 	//조건 검색으로 펀딩 리스트 조회 Service
 	@Override
 	public List<InvestAndFd> getInvestFundingChoose(HashMap<String, String[]> map) {

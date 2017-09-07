@@ -49,16 +49,7 @@ public class InvestController {
 		log.debug(fundingList+"<-----InvestController[fundingList 값 출력]");
 		return "invest/investfdlistmain";
 	}
-	/*title 검색으로 펀딩리스트 조회*/
-	@RequestMapping(value="/investfdtitlemain.invest" , method=RequestMethod.POST)
-	public String investFdTitleMain(Locale locale, Model model,@RequestParam(value="fdTitle")String fdTitle){
-		log.debug("<----- InvestController[investFdTitleMain호출]----->");
-		List<InvestAndFd> fundingListTitle = investserviceinterface.getInvestFundingTitle(fdTitle);
-		model.addAttribute("fundingListTitle", fundingListTitle);
-		log.debug(fundingListTitle+"<-----InvestController[fundingListTitle 값 출력]");
-		return "invest/investfdtitlemain";
-	}
-	/*펀딩리스트 조건 검색*/ 
+	//펀딩리스트 조건 검색
 	@RequestMapping(value="/investfdchoosemain.invest" , method=RequestMethod.GET)
 	public String investFdChooseMain(Locale locale, Model model,HttpServletRequest request){
 		log.debug("<----- InvestController[investFdTitleMain호출]----->");

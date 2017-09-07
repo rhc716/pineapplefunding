@@ -1,8 +1,10 @@
 package com.pineapple.timeline.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -207,6 +209,45 @@ public class TimelineController {
 		model.addAttribute("myinvestormessagesend",myinvestormessagesend);
 		log.debug(myinvestormessagesend+"<-----TimelineController[myinvestormessagesend 값 출력]");
 		return "user/investormypageajax/investormessagesend";
+	}
+	//받은 메세지 list 삭제
+	@RequestMapping(value="/investormessagelistdelete.timeline",method=RequestMethod.GET)
+	public String investorMessagelistRemove(Locale locale,Model model,HttpServletRequest request,HttpSession session){
+		log.debug("<----- TimelineController[investorMessageSendlist호출]----->");
+		String[] msgCodelist = request.getParameterValues("messagechecklist");
+		HashMap<String, String[]> msgCodemap = new HashMap<>();
+		msgCodemap.put("msgCodelist", msgCodelist);
+		log.debug(msgCodemap.get("msgCodelist").length+"<----- TimelineController[msgCodemap.get('msgCodelist').length호출]----->");
+		List<Message> myinvestormessagedelete= timelineserviceinterface.removeMypageMessageList(msgCodemap,session.getAttribute("id").toString());
+		log.debug(myinvestormessagedelete+"<-----TimelineController[myinvestormessagedelete 값 출력]");
+		model.addAttribute("myinvestormessage",myinvestormessagedelete);
+		return "user/investormypageajax/investormessagesendlist";
+	}
+	//선택 메세지 읽은 메세지로
+	@RequestMapping(value="/investormessagecheckok.timeline",method=RequestMethod.GET)
+	public String investorMessageCheckOkUpdate(Locale locale,Model model,HttpServletRequest request,HttpSession session){
+		log.debug("<----- TimelineController[investorMessageSendlist호출]----->");
+		String[] msgCodelist = request.getParameterValues("messagechecklist");
+		HashMap<String, String[]> msgCodemap = new HashMap<>();
+		msgCodemap.put("msgCodelist", msgCodelist);
+		log.debug(msgCodemap.get("msgCodelist").length+"<----- TimelineController[msgCodemap.get('msgCodelist').length호출]----->");
+		List<Message> myinvestormessagecheckok= timelineserviceinterface.updateMypageMessageCheckOkList(msgCodemap,session.getAttribute("id").toString());
+		log.debug(myinvestormessagecheckok+"<-----TimelineController[myinvestormessagedelete 값 출력]");
+		model.addAttribute("myinvestormessage",myinvestormessagecheckok);
+		return "user/investormypageajax/investormessagesendlist";
+	}
+	//선택 메세지 읽지않은 메세지로
+	@RequestMapping(value="/investormessagecheckno.timeline",method=RequestMethod.GET)
+	public String investorMessageCheckNoUpdate(Locale locale,Model model,HttpServletRequest request,HttpSession session){
+		log.debug("<----- TimelineController[investorMessageSendlist호출]----->");
+		String[] msgCodelist = request.getParameterValues("messagechecklist");
+		HashMap<String, String[]> msgCodemap = new HashMap<>();
+		msgCodemap.put("msgCodelist", msgCodelist);
+		log.debug(msgCodemap.get("msgCodelist").length+"<----- TimelineController[msgCodemap.get('msgCodelist').length호출]----->");
+		List<Message> myinvestormessagecheckno= timelineserviceinterface.updateMypageMessageCheckNoList(msgCodemap,session.getAttribute("id").toString());
+		log.debug(myinvestormessagecheckno+"<-----TimelineController[myinvestormessagecheckno 값 출력]");
+		model.addAttribute("myinvestormessage",myinvestormessagecheckno);
+		return "user/investormypageajax/investormessagesendlist";
 	}
 	
 	

@@ -37,10 +37,8 @@ $(document).ready(function(){
 	fundinglist.done(function(msg){
 		$('#fdlist').html(msg);
 		/* 이미지 경로가 잘못되어 404일때 보여줄 이미지 설정 */
-
 		$('img').each(function(n){
-			   console.log($(this));
-			   
+			   console.log($(this)); 
 			   $(this).on( "error", function(){
 				   $(this).attr("src", "${pageContext.request.contextPath}/resources/img/404alternateimage.jpg");
 		    });
@@ -50,28 +48,12 @@ $(document).ready(function(){
 	fundinglist.fail(function(){
 		
 	});
-	
-	$('#fundinglistnameselectbtn').click(function(){
-		var fundinglistnameselecttext = $('#fundinglistnameselecttext').val();
-		var fundinglistnameselectajax = $.ajax({
-			type: 'post',
-			url : '/pineapple/investfdtitlemain.invest',
-			data: {fdTitle : fundinglistnameselecttext},
-			success : function success(msg){
-				$('#fdlist').html(msg)
-			},
-			error : function error(){
-				
-			}
-		});
-	});
-	$('.category').click(function(){
-		console.log($('#menuchecklist :checked').length)
-		console.log('checkedfdarea -> '+document.getElementsByName("category").length)
+	//ajax 검색 function 선언
+	var ajaxfunction = function(){
 		var areacount = 0;
 		var checkedfdarea = document.getElementsByName("category").length
 		var fdarea = new Array();
-		for(i = 0 ; i < checkedfdarea ; i++){
+ 		for(i = 0 ; i < checkedfdarea ; i++){
 			if(document.getElementsByName("category")[i].checked == true){
 				fdarea[areacount] = document.getElementsByName("category")[i].value;
 				areacount++
@@ -95,28 +77,32 @@ $(document).ready(function(){
 				dividendcount++
 			}
 		}
-		console.log('fdarea-> '+fdarea)
-		console.log('fdtype-> '+fdtype)
-		console.log('fddividend-> '+fddividend)
 		var fundingtitlename = $('#fundinglistnameselecttext').val();
 		$.ajaxSettings.traditional = true;
-		var fundinglistnameselectajax = $.ajax({
-			type: 'get',
-			url : '/pineapple/investfdchoosemain.invest',
-			data: {
-				fundingtitlename : fundingtitlename,
-				fdarea : fdarea,
-				fdtype : fdtype,
-				fddividend : fddividend
-			},
-			success : function success(msg){
-				console.log(msg)
-				$('#fdlist').html(msg)
-			},
-			error : function error(){
-				
-			}
-		});
+			var fundinglistnameselectajax = $.ajax({
+				type: 'get',
+				url : '/pineapple/investfdchoosemain.invest',
+				data: {
+					fundingtitlename : fundingtitlename,
+					fdarea : fdarea,
+					fdtype : fdtype,
+					fddividend : fddividend
+				},
+				success : function success(msg){
+					$('#fdlist').html(msg)
+				},
+				error : function error(){
+					
+				}
+			});
+	}
+	//검색버튼 클릭시 ajax function 실행
+	$('#fundinglistnameselectbtn').click(function(){
+		ajaxfunction()
+	});
+	//검색조건 클릭시 ajax function 실행
+	$('.category').click(function(){
+		ajaxfunction()
 	});
 });
 </script>
@@ -131,49 +117,86 @@ $(document).ready(function(){
 <!-- 본문 -->
 <!-- 펀딩 리스트 -->
 <div class="row fdlist-main text-center" style="padding: 0px;">
-<div class="col-md-12" id="menubar" style="padding: 0px">
-	<div class="col-md-2" style="padding: 0px; text-align: center; margin-left: auto; margin-right: auto;">
-		<div class="col-md-12" style="padding: 0px;  border: 1.5px solid #009442; border-radius: 5px; margin-bottom: 20px;">
-			<div class="input-group">
-      			<input type="text" class="form-control" id="fundinglistnameselecttext" placeholder="펀딩명 검색하기" style="margin-left: 0.75px 0px 0.75px 0.75px;">
-      				<span class="input-group-btn" style="padding: 0px;">
-        				<button class="btn btn-default" id="fundinglistnameselectbtn" type="button" style="height: 34px;"><span class="glyphicon glyphicon-search"></span></button>
-      				</span>
-    		</div>
-		</div>
+	<div class="col-md-12" id="menubar" style="padding: 0px">
+		<div class="col-md-2" style="padding: 0px; text-align: center; margin-left: auto; margin-right: auto;">
+			<div class="col-md-12" style="padding: 0px;  border: 1.5px solid #009442; border-radius: 5px; margin-bottom: 20px;">
+				<div class="input-group">
+	      			<input type="text" class="form-control" id="fundinglistnameselecttext" placeholder="펀딩명 검색하기" style="margin-left: 0.75px 0px 0.75px 0.75px;">
+	      				<span class="input-group-btn" style="padding: 0px;">
+	        				<button class="btn btn-default" id="fundinglistnameselectbtn" type="button" style="height: 34px;"><span class="glyphicon glyphicon-search"></span></button>
+	      				</span>
+	    		</div>
+			</div>
 		
-		<div class="col-md-12" id="menuchecklist" style="padding: 0px;  border: 1.5px solid #009442; border-radius: 5px;">
-		<form>
-			<ul style="font-size:15px; list-style: none; height: 100%; width: 100%; padding: 10px; text-align: left; margin: 0px; border-bottom: 1px solid #d7d7d7;">
-				<label style="font-size: 20px;">카테고리</label>
-				<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="인터넷서비스"></span><span>인터넷서비스</span></li>
-				<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="문화"></span><span>문화</span></li>
-				<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="디자인"></span><span>디자인</span></li>
-				<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="뷰티"></span><span>뷰티</span></li>
-				<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="의료"></span><span>의료</span></li>
-				<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="제조"></span><span>제조</span></li>
-				<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="유통"></span><span>유통</span></li>
-				<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="농수산"></span><span>농수산</span></li>
-			</ul>
- 			<ul style="font-size: 15px; list-style: none; height: 100%; width: 100%; padding: 10px; text-align: left; margin: 0px; border-bottom: 1px solid #d7d7d7;">
-				<label style="font-size: 20px;">투자형태</label>
-				<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="type" type="checkbox" value="주식"></span><span>주식</span></li>
-				<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="type" type="checkbox" value="채권"></span><span>채권</span></li>
-			</ul>
-			<ul style="font-size: 15px; list-style: none; height: 100%; width: 100%; padding: 10px; text-align: left; margin: 0px;">
-				<label style="font-size: 20px;">배당수익률</label>
-				<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="dividend" type="checkbox" value="1"></span><span>10% 미만</span></li>
-				<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="dividend" type="checkbox" value="2"></span><span>10%~15%</span></li>
-				<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="dividend" type="checkbox" value="3"></span><span>15% 이상</span></li>
-			</ul>
-			</form>
+			<div class="col-md-12" id="menuchecklist" style="padding: 0px;  border: 1.5px solid #009442; border-radius: 5px;">
+				<form>
+					<ul style="font-size:15px; list-style: none; height: 100%; width: 100%; padding: 10px; text-align: left; margin: 0px; border-bottom: 1px solid #d7d7d7;">
+						<label style="font-size: 20px;">카테고리</label>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="인터넷서비스"></span><span>인터넷서비스</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="문화"></span><span>문화</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="디자인"></span><span>디자인</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="뷰티"></span><span>뷰티</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="의료"></span><span>의료</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="제조"></span><span>제조</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="유통"></span><span>유통</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="농수산"></span><span>농수산</span></li>
+					</ul>
+		 			<ul style="font-size: 15px; list-style: none; height: 100%; width: 100%; padding: 10px; text-align: left; margin: 0px; border-bottom: 1px solid #d7d7d7;">
+						<label style="font-size: 20px;">투자형태</label>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="type" type="checkbox" value="주식"></span><span>주식</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="type" type="checkbox" value="채권"></span><span>채권</span></li>
+					</ul>
+					<ul style="font-size: 15px; list-style: none; height: 100%; width: 100%; padding: 10px; text-align: left; margin: 0px;">
+						<label style="font-size: 20px;">배당수익률</label>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="dividend" type="checkbox" value="1"></span><span>10% 미만</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="dividend" type="checkbox" value="2"></span><span>10%~15%</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="dividend" type="checkbox" value="3"></span><span>15% 이상</span></li>
+					</ul>
+				</form>
+			</div>
 		</div>
-		
-	</div>
-	<div class="col-md-10" style="padding: 0px 10px 0px 10px;">
-	<div id="fdlist">
-	</div>
-	</div>
+		<div class="col-md-10" style="padding: 0px 20px; margin-bottom: 20px;">
+			<!-- carousel : 회전하면서 이미지를 보여주는 것 -->
+			<div id="myCarousel" class="carousel slide" data-ride="carousel" style="border: 1.5px solid #009442; padding: 0.75px;">
+			    <!-- Indicators -->
+			    <ol class="carousel-indicators">
+			      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+			      <li data-target="#myCarousel" data-slide-to="1"></li>
+			      <li data-target="#myCarousel" data-slide-to="2"></li>
+			    </ol>
+			
+			    <!-- 화면에 보여줄 아이템 들어갈 곳 -->
+			    <div class="carousel-inner">
+			      <div class="item active">
+			        <img src="${pageContext.request.contextPath}/resources/img/main/photo1.jpg" alt="Los Angeles" style="width:100%; height:450px;">
+			      </div>
+			
+			      <div class="item">
+			        <img src="${pageContext.request.contextPath}/resources/img/main/photo2.jpg" alt="Chicago" style="width:100%; height:450px;">
+			      </div>
+			    	
+			    	<!-- 아이템 추가 가능 -->
+			     <!--  <div class="item">
+			        <img src="https://www.w3schools.com/bootstrap/ny.jpg" alt="New york" style="width:100%;">
+			      </div> -->
+			    </div>
+			
+			    <!-- Left and right controls -->
+			    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+			      <span class="glyphicon glyphicon-chevron-left"></span>
+			      <span class="sr-only">Previous</span>
+			    </a>
+			    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+			      <span class="glyphicon glyphicon-chevron-right"></span>
+			      <span class="sr-only">Next</span>
+			    </a>
+		  	</div>
+		 	<!-- carousel 끝 -->
+		</div>
+		<div class="col-md-10" style="padding: 0px 10px 0px 10px;">
+			<div id="fdlist">
+			</div>
+		</div>
 	</div>
 </div>
 <!-- 풋터 -->
