@@ -242,6 +242,7 @@ $(document).ready(function(){
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-xs-9">
+		
 		<div class="row">
 			<div class="col-xs-4">
 			<!-- 펀딩목록이 뿌려질곳 -->
@@ -272,6 +273,8 @@ $(document).ready(function(){
 			    </ul>
 			</div>
 		</div>
+		
+		
 		<div class="row">
 				<div class="col-xs-12">
 					<div class="col-xs-8">

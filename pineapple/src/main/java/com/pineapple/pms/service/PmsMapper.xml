@@ -58,22 +58,22 @@
 		from wbsplanhuman where wphWpCode = #{wbsplancode}
 	</select>
 	<select id="getincom" resultType="int" parameterType="String">
-		select sum(wpiIncome) from wbsplanincome where wpiWpCode=#{wbsplancode}
+		select IFNULL(sum(wpiIncome),0) from wbsplanincome where wpiWpCode=#{wbsplancode}
 	</select>
 	<select id="gethumancost" resultType="int" parameterType="String">
-		select sum(wphIncome) from wbsplanhuman where wphWpCode=#{wbsplancode}
+		select IFNULL(sum(wphCost),0) from wbsplanhuman where wphWpCode=#{wbsplancode}
 	</select>
 	<select id="getfacilitycost" resultType="int" parameterType="String">
-		select sum(wpfIncome) from wbsplanfacility where wpfWpCode=#{wbsplancode}
+		select IFNULL(sum(wpfCost),0) from wbsplanfacility where wpfWpCode=#{wbsplancode}
 	</select>
 	<select id="getetccost" resultType="int" parameterType="String">
-		select sum(wpeIncome) from wbsplanetc where wpeWpCode=#{wbsplancode}
+		select IFNULL(sum(wpeCost),0) from wbsplanetc where wpeWpCode=#{wbsplancode}
 	</select>
 	<select id="getmaterialcost" resultType="int" parameterType="String">
-		select sum(wpmIncome) from wbsplanmaterial where wpmWpCode=#{wbsplancode}
+		select IFNULL(sum(wpmCost),0) from wbsplanmaterial where wpmWpCode=#{wbsplancode}
 	</select>
 	<select id="getoutcost" resultType="int" parameterType="String">
-		select sum(wpoIncome) from wbsplanout where wpoWpCode=#{wbsplancode}
+		select IFNULL(sum(wpoCost),0) from wbsplanout where wpoWpCode=#{wbsplancode}
 	</select>
 		<select id="wbsplanlist" resultType="com.pineapple.pms.service.WbsPlan" parameterType="String">
 		SELECT * FROM wbsplan 
@@ -190,6 +190,8 @@
 			WHERE wpfCode = #{wpfCode}
 	</update>
 	
+	
+	
 	<update id="wbsplanoutupdate" parameterType="com.pineapple.pms.service.WbsPlanOut">
 		UPDATE wbsplanout
 			SET
@@ -212,6 +214,12 @@
 		SET
 			wphWpCode=#{changecode}
 		WHERE wphWpCode=#{wbsplancode}
+	</update>
+	<update id="wbsmargin" parameterType="HashMap">
+		UPDATE wbsplan
+		SET
+			wbsMargin=#{margin}
+		WHERE wbsPlanCode=#{wbsplancode}
 	</update>
 		<update id="wbsplanupdatefacility" parameterType="HashMap">
 		UPDATE wbsplanfacility

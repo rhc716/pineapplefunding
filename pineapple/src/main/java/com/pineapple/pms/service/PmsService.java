@@ -22,6 +22,8 @@ public class PmsService implements PmsServiceInterface{
 		log.debug("PmsService의 addWbsplan호출 성공");
 		pmsdao.insertWbsPlan(wbsplan);
 	}
+	
+	
 
 	
 	/* (non-Javadoc)
@@ -280,7 +282,11 @@ public class PmsService implements PmsServiceInterface{
 	}
 	
 	
-	
+	@Override
+	public void wbsmargin(HashMap map){
+		log.debug("PmsService의 addWbsplanhuman호출 성공");
+		pmsdao.wbsmargin(map);
+	}
 	
  
 }

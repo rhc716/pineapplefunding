@@ -189,6 +189,12 @@
 				        <form action="/pineapple/wbsplanhumaninsert.pms" method="post">
 				        <!-- 기본적으로 들어가는 wbs예상코드 펀딩코드 마일스톤코드 회사코드를 입력되는곳 -->
 				        	<label for="wbsplanhuman">WBS예상인원 지출</label><br>
+				        	<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
+							<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
+							<input type="hidden" readonly="readonly"  name="milestoneCode" value="${milestoneCode}">
+							<input type="hidden" readonly="readonly"  name="milestoneName" value="${milestoneName}">
+							<input type="hidden" readonly="readonly"  name="msComCode" value="${msComCode}">
+							<input type="hidden"name="wbsPlanCode" value="${wbsplandetail.wbsPlanCode}">
 				        	<input type="hidden" class="form-control" name="wphWpCode" value="${wbsplandetail.wbsPlanCode}">
 				        	<input type="hidden" class="form-control" name="wphFdCode" value="${wbsplandetail.wbsPlanFdCode}">
 				        	<input type="hidden" class="form-control" name="wphMsCode" value="${wbsplandetail.wbsPlanMsCode}">

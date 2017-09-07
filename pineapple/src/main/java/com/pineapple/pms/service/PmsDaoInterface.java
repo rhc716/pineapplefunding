@@ -102,4 +102,6 @@ public interface PmsDaoInterface {
 	int getmaterialcost(String wbsplancode);
 	int getoutcost(String wbsplancode);
 
+	void wbsmargin(HashMap map);
+
 }
