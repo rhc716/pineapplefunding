@@ -101,9 +101,10 @@ $(document).ready(function(){
 			     	 	]);
 		      		}
 		      	
-		      	
+               
+
 		     
-			 			'<div class="col-lg-4 well">'
+			 	/* 		'<div class="col-lg-4 well">'
 		 				+'<div>'
 		 				+'wbs이름 :'+msg[i].wbsPlanName+'<br>'
 		 				+'<button type="button" class="btn btn-info btn-sm" >수정</button>'
@@ -151,7 +152,7 @@ $(document).ready(function(){
 		 				+'</form>'
 		 				+'</div>'
 		 				+'</div>'
-				);
+				); */
 		      	
 		      	
 		      	
@@ -160,12 +161,53 @@ $(document).ready(function(){
 		      	
 		      /* 차트를 그릴때에 버튼도 함께 그려넣어줌  */
 		      $('#chart_btnarea').append(
-		    		  '<div style="height:42px; padding-top:6px;">'
-		    		  +msg[s].wbsPlanName
-		    		  +' <button class="btn btn-sm btn-success">상세정보</button>'
-		    		  +'<button class="btn btn-sm btn-warning data-toggle="modal" data-target="#'+msg[i].wbsPlanCode+'"">수정</button>'
-		    		  +'<button class="btn btn-sm btn-danger">삭제</button>'
-		    		  +'</div>'
+	    		 	'<div style="height:42px; padding-top:6px;">'
+	    		 	+msg[s].wbsPlanName
+	    		 	+'<form action="/pineapple/wbsplandetail.pms" method="post">'
+	    		  	+'<button type="submit" class="btn btn-primary btn-sm" name="btn" value="detail">상세정보</button>'		
+	    		  	+'<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#'+msg[s].wbsPlanCode+'">수정</button>'
+	    		  	+'<button type="submit" class="btn btn-danger btn-sm" name="btn" value="delete">삭제</button>'
+	 				+'<div class="modal fade" id="'+msg[s].wbsPlanCode+'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">'
+	 				+'<div class="modal-dialog" role="document">'
+	 				+'<div class="modal-content">'
+	 				+'<div class="modal-body">'
+	 				+'<label for="wbsplan">WBS수정</label><br>'
+	 				+'작업명:'
+	 				+'<input type="text" class="form-control" name="wbsPlanName2" value="'+msg[s].wbsPlanName+'" readonly/>'
+	 				+'<input type="text" class="form-control" name="wbsPlanName" value="'+msg[s].wbsPlanName+'"/>'
+	 				+'선행작업:'
+	 				+'<input type="text" class="form-control" name="wbsPlanDependency2" value="'+msg[s].wbsPlanDependency+'" readonly/>'
+	 				+'<select name="wbsPlanDependency" class="wbsdc">'
+	 				+'<option value="없음"> 없음</option>'
+	 				+'</select><br>'
+	 				+'작업기간:'
+	 				+'<input type="number" class="form-control" name="wbsPlanDuration2" value="'+msg[s].wbsPlanDuration+'"readonly/>'
+	 				+'<input type="number" class="form-control" name="wbsPlanDuration" value="'+msg[s].wbsPlanDuration+'"/>'
+	 				+'시작일:<br>'
+	 				+'<input type="date" name="wbsPlanStartDate2" value="'+msg[s].wbsPlanStartDate+'"readonly/><br>'
+	 				+'<input type="date" name="wbsPlanStartDate" value="'+msg[s].wbsPlanStartDate+'"/><br>'
+	 				+'담당자ID:'
+	 				+'<input type="text" class="form-control" name="wbsPlanManager2" value="'+msg[s].wbsPlanManager+'"readonly/><br>'
+	 				+'<input type="text" class="form-control" name="wbsPlanManager" value="'+msg[s].wbsPlanManager+'"/><br>'
+	 				+'<input type="hidden" name="wbsPlanCode" value="'+msg[s].wbsPlanCode+'"/>'
+	 				+'<input type="hidden" class="form-control" name="wbsPlanComCode" value="'+msg[s].wbsPlanComCode+'">'
+	 				+'<input type="hidden" class="form-control" name="wbsPlanFdCode" value="'+msg[s].wbsPlanFdCode+'">'
+	 				+'<input type="hidden" class="form-control" name="wbsPlanOrder" value="'+msg[s].wbsPlanOrder+'">'
+	 				+'<input type="hidden" class="form-control" name="wbsPlanMsCode" value="'+msg[s].wbsPlanMsCode+'">'
+	 				+'<input type="hidden" class="form-control" name="wbsPlanChange" value="'+msg[s].wbsPlanChange+'">'
+	 				+'<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">'
+	 				+'<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">'
+	 				+'<input type="hidden" readonly="readonly"  name="milestoneCode" value="${milestoneCode}">'
+	 				+'<input type="hidden" readonly="readonly"  name="milestoneName" value="${milestoneName}">'
+	 				+'<input type="hidden" readonly="readonly"  name="msComCode" value="${msComCode}">'
+	 				+'<button type="submit" name="btn" value="update">입력완료</button>'
+	 				+'</div>'
+	 				+'</div>'
+	 				+'</div>'
+	 				+'</div>'
+	 				+'</form>'
+	    		  	+'</div>'
+		    		 
 		      );
 		      
 		      }

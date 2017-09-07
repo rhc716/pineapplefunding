@@ -60,6 +60,21 @@
 	<select id="getincom" resultType="int" parameterType="String">
 		select sum(wpiIncome) from wbsplanincome where wpiWpCode=#{wbsplancode}
 	</select>
+	<select id="gethumancost" resultType="int" parameterType="String">
+		select sum(wphIncome) from wbsplanhuman where wphWpCode=#{wbsplancode}
+	</select>
+	<select id="getfacilitycost" resultType="int" parameterType="String">
+		select sum(wpfIncome) from wbsplanfacility where wpfWpCode=#{wbsplancode}
+	</select>
+	<select id="getetccost" resultType="int" parameterType="String">
+		select sum(wpeIncome) from wbsplanetc where wpeWpCode=#{wbsplancode}
+	</select>
+	<select id="getmaterialcost" resultType="int" parameterType="String">
+		select sum(wpmIncome) from wbsplanmaterial where wpmWpCode=#{wbsplancode}
+	</select>
+	<select id="getoutcost" resultType="int" parameterType="String">
+		select sum(wpoIncome) from wbsplanout where wpoWpCode=#{wbsplancode}
+	</select>
 		<select id="wbsplanlist" resultType="com.pineapple.pms.service.WbsPlan" parameterType="String">
 		SELECT * FROM wbsplan 
 		where wbsPlanStatus =1 and wbsPlanMsCode = #{milestoneCode}

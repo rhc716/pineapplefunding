@@ -412,7 +412,13 @@ public class PmsController {
 			service.addWbsplanhuman(wbsplanhuman);
 			String wbsplancode = request.getParameter("wphWpCode");
 			int income = service.getincome(wbsplancode);
-			log.debug("income합" + income);
+			int wbsplanhumancost = service.gethumancost(wbsplancode);
+			int wbsplanfacilitycost = service.getfacilitycost(wbsplancode);
+			int wbsplanetccost = service.getetccost(wbsplancode);
+			int wbsplanmaterialcost = service.getmaterialcost(wbsplancode);
+			int wbsplanoutcost = service.getoutcost(wbsplancode);
+			int margin = income-wbsplanhumancost-wbsplanfacilitycost-wbsplanetccost-wbsplanmaterialcost-wbsplanoutcost;
+			log.debug("margin" + margin);
 			//원래 페이지로 돌아가는 코드
 			log.debug("wbs코드" + wbsplancode);
 			WbsPlan wbsplandetail;
@@ -430,6 +436,13 @@ public class PmsController {
 			service.addWbsplanMaterial(wbsplanmaterial);
 			//원래 페이지로 돌아가는 코드
 			String wbsplancode = request.getParameter("wpmWpCode");
+			int income = service.getincome(wbsplancode);
+			int wbsplanhumancost = service.gethumancost(wbsplancode);
+			int wbsplanfacilitycost = service.getfacilitycost(wbsplancode);
+			int wbsplanetccost = service.getetccost(wbsplancode);
+			int wbsplanmaterialcost = service.getmaterialcost(wbsplancode);
+			int wbsplanoutcost = service.getoutcost(wbsplancode);
+			int margin = income-wbsplanhumancost-wbsplanfacilitycost-wbsplanetccost-wbsplanmaterialcost-wbsplanoutcost;
 			log.debug("wbs코드" + wbsplancode);
 			WbsPlan wbsplandetail;
 			wbsplandetail = service.getMyWbsPlanDetail(wbsplancode);
@@ -445,6 +458,13 @@ public class PmsController {
 			service.wbsplanfacilityinsert(wbsplanfacility);
 			//원래 페이지로 돌아가는 코드
 			String wbsplancode = request.getParameter("wpfWpCode");
+			int income = service.getincome(wbsplancode);
+			int wbsplanhumancost = service.gethumancost(wbsplancode);
+			int wbsplanfacilitycost = service.getfacilitycost(wbsplancode);
+			int wbsplanetccost = service.getetccost(wbsplancode);
+			int wbsplanmaterialcost = service.getmaterialcost(wbsplancode);
+			int wbsplanoutcost = service.getoutcost(wbsplancode);
+			int margin = income-wbsplanhumancost-wbsplanfacilitycost-wbsplanetccost-wbsplanmaterialcost-wbsplanoutcost;
 			log.debug("wbs코드" + wbsplancode);
 			WbsPlan wbsplandetail;
 			wbsplandetail = service.getMyWbsPlanDetail(wbsplancode);
@@ -460,6 +480,13 @@ public class PmsController {
 			service.wbsplanoutinsert(wbsplanout);
 			//원래 페이지로 돌아가는 코드
 			String wbsplancode = request.getParameter("wpoWpCode");
+			int income = service.getincome(wbsplancode);
+			int wbsplanhumancost = service.gethumancost(wbsplancode);
+			int wbsplanfacilitycost = service.getfacilitycost(wbsplancode);
+			int wbsplanetccost = service.getetccost(wbsplancode);
+			int wbsplanmaterialcost = service.getmaterialcost(wbsplancode);
+			int wbsplanoutcost = service.getoutcost(wbsplancode);
+			int margin = income-wbsplanhumancost-wbsplanfacilitycost-wbsplanetccost-wbsplanmaterialcost-wbsplanoutcost;
 			log.debug("wbs코드" + wbsplancode);
 			WbsPlan wbsplandetail;
 			wbsplandetail = service.getMyWbsPlanDetail(wbsplancode);
@@ -475,6 +502,13 @@ public class PmsController {
 			service.wbsplanetcinser(wbsplanetc);
 			//원래 페이지로 돌아가는 코드
 			String wbsplancode = request.getParameter("wpeWpCode");
+			int income = service.getincome(wbsplancode);
+			int wbsplanhumancost = service.gethumancost(wbsplancode);
+			int wbsplanfacilitycost = service.getfacilitycost(wbsplancode);
+			int wbsplanetccost = service.getetccost(wbsplancode);
+			int wbsplanmaterialcost = service.getmaterialcost(wbsplancode);
+			int wbsplanoutcost = service.getoutcost(wbsplancode);
+			int margin = income-wbsplanhumancost-wbsplanfacilitycost-wbsplanetccost-wbsplanmaterialcost-wbsplanoutcost;
 			log.debug("wbs코드" + wbsplancode);
 			WbsPlan wbsplandetail;
 			wbsplandetail = service.getMyWbsPlanDetail(wbsplancode);
@@ -492,6 +526,13 @@ public class PmsController {
 			service.wbsplanincomeinsert(wbsplanincome);
 			//원래 페이지로 돌아가는 코드
 			String wbsplancode = request.getParameter("wpiWpCode");
+			int income = service.getincome(wbsplancode);
+			int wbsplanhumancost = service.gethumancost(wbsplancode);
+			int wbsplanfacilitycost = service.getfacilitycost(wbsplancode);
+			int wbsplanetccost = service.getetccost(wbsplancode);
+			int wbsplanmaterialcost = service.getmaterialcost(wbsplancode);
+			int wbsplanoutcost = service.getoutcost(wbsplancode);
+			int margin = income-wbsplanhumancost-wbsplanfacilitycost-wbsplanetccost-wbsplanmaterialcost-wbsplanoutcost;
 			log.debug("wbs코드" + wbsplancode);
 			WbsPlan wbsplandetail;
 			wbsplandetail = service.getMyWbsPlanDetail(wbsplancode);

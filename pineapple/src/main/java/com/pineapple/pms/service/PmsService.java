@@ -81,6 +81,32 @@ public class PmsService implements PmsServiceInterface{
 		return pmsdao.getincome(wbsplancode);
 	}
 	
+	@Override
+	public int gethumancost(String wbsplancode) {
+		log.debug("PmsService의 getincome호출 성공");
+		return pmsdao.gethumancost(wbsplancode);
+	}
+	@Override
+	public int getfacilitycost(String wbsplancode) {
+		log.debug("PmsService의 getincome호출 성공");
+		return pmsdao.getfacilitycost(wbsplancode);
+	}
+	@Override
+	public int getetccost(String wbsplancode) {
+		log.debug("PmsService의 getincome호출 성공");
+		return pmsdao.getetccost(wbsplancode);
+	}
+	@Override
+	public int getmaterialcost(String wbsplancode) {
+		log.debug("PmsService의 getincome호출 성공");
+		return pmsdao.getmaterialcost(wbsplancode);
+	}
+	@Override
+	public int getoutcost(String wbsplancode) {
+		log.debug("PmsService의 getincome호출 성공");
+		return pmsdao.getoutcost(wbsplancode);
+	}
+	
 	
 	/* (non-Javadoc)
 	 * @see com.pineapple.pms.service.PmsServiceInterface#getMyWbsPlanDetail(java.lang.String)

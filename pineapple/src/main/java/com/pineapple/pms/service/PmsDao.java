@@ -281,4 +281,30 @@ public class PmsDao implements PmsDaoInterface {
 		log.debug("PmsDao의 getMyWbsPlanIncomeyList호출 성공");
 		return sqlSessionTemplate.selectOne("com.pineapple.pms.service.PmsMapper.getincom", wbsplancode);
 	}
+	
+	@Override
+	public int gethumancost(String wbsplancode) {
+		log.debug("PmsDao의 getMyWbsPlanIncomeyList호출 성공");
+		return sqlSessionTemplate.selectOne("com.pineapple.pms.service.PmsMapper.gethumancost", wbsplancode);
+	}
+	@Override
+	public int getfacilitycost(String wbsplancode) {
+		log.debug("PmsDao의 getMyWbsPlanIncomeyList호출 성공");
+		return sqlSessionTemplate.selectOne("com.pineapple.pms.service.PmsMapper.getfacilitycost", wbsplancode);
+	}
+	@Override
+	public int getetccost(String wbsplancode) {
+		log.debug("PmsDao의 getMyWbsPlanIncomeyList호출 성공");
+		return sqlSessionTemplate.selectOne("com.pineapple.pms.service.PmsMapper.getetccost", wbsplancode);
+	}
+	@Override
+	public int getmaterialcost(String wbsplancode) {
+		log.debug("PmsDao의 getMyWbsPlanIncomeyList호출 성공");
+		return sqlSessionTemplate.selectOne("com.pineapple.pms.service.PmsMapper.getmaterialcost", wbsplancode);
+	}
+	@Override
+	public int getoutcost(String wbsplancode) {
+		log.debug("PmsDao의 getMyWbsPlanIncomeyList호출 성공");
+		return sqlSessionTemplate.selectOne("com.pineapple.pms.service.PmsMapper.getoutcost", wbsplancode);
+	}
 }

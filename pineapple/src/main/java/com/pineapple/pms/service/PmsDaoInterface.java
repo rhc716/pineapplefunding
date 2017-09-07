@@ -95,5 +95,11 @@ public interface PmsDaoInterface {
 	List<WbsPlan> wbsplanlist(String milestoneCode);
 
 	int getincome(String wbsplancode);
+	
+	int gethumancost(String wbsplancode);
+	int getfacilitycost(String wbsplancode);
+	int getetccost(String wbsplancode);
+	int getmaterialcost(String wbsplancode);
+	int getoutcost(String wbsplancode);
 
 }
