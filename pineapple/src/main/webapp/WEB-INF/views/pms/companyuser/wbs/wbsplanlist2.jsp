@@ -74,13 +74,13 @@ $(document).ready(function(){
 		    function drawChart() {
 
 		      var data = new google.visualization.DataTable();
-		      data.addColumn('string', 'Task ID');
-		      data.addColumn('string', 'Task Name');
-		      data.addColumn('date', 'Start Date');
-		      data.addColumn('date', 'End Date');
-		      data.addColumn('number', 'Duration');
-		      data.addColumn('number', 'Percent Complete');
-		      data.addColumn('string', 'Dependencies');
+		      data.addColumn('string', '작업번호');
+		      data.addColumn('string', '작업명');
+		      data.addColumn('date', '시작일');
+		      data.addColumn('date', '종료일');
+		      data.addColumn('number', '작업기간');
+		      data.addColumn('number', '진행도');
+		      data.addColumn('string', '선행작업');
 		      for(var s = 0; s<msg.length; s++){
 		      	if(msg[s].wbsPlanStartDate!=null){
 		      		if(msg[s].wbsPlanDependency=="없음"){
@@ -162,8 +162,8 @@ $(document).ready(function(){
 		      /* 차트를 그릴때에 버튼도 함께 그려넣어줌  */
 		      $('#chart_btnarea').append(
 	    		 	'<div style="height:42px; padding-top:6px;">'
-	    		 	+msg[s].wbsPlanName
-	    		 	+'<form action="/pineapple/wbsplandetail.pms" method="post">'
+	    		 	+'<span>작업명 : </span>'+msg[s].wbsPlanName
+	    		 	+' <form action="/pineapple/wbsplandetail.pms" method="post" style="display:inline;">'
 	    		  	+'<button type="submit" class="btn btn-primary btn-sm" name="btn" value="detail">상세정보</button>'		
 	    		  	+'<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#'+msg[s].wbsPlanCode+'">수정</button>'
 	    		  	+'<button type="submit" class="btn btn-danger btn-sm" name="btn" value="delete">삭제</button>'
@@ -243,48 +243,37 @@ $(document).ready(function(){
 	</div>
 	<div class="col-xs-9">
 		<div class="row">
-			<div class="col-xs-3">
-				<div id="sidetree">
-		   			<div class="treeheader">
-					</div>
-			    		<ul id="tree">
-				    		<div id="sidetreecontrol">
-			    			</div>
-			        		<li>	        		
-			            		<strong><a href="/pineapple/wbsplanlistpage.pms">펀딩</a></strong>	   
-			            			<form action="/pineapple/wbsmsview.pms" method="post">	
-										<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
-										<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
-				            			<input type=submit value="${fdTitle}" class="submitLink">
-				               		</form>
-			            		</ul>
-					       	</li>
-					       	<li>
-					       	<strong>마일스톤:${milestoneName}</strong>
-					       		<form action="/pineapple/wbsform.pms" method="post">	
-									<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
-									<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
-									<input type="hidden" readonly="readonly"  name="milestoneCode" value="${milestoneCode}">
-									<input type="hidden" readonly="readonly"  name="milestoneName" value="${milestoneName}">
-									<input type="hidden" readonly="readonly"  name="msComCode" value="${msComCode}">
-									<ul>
-						       		<input type=submit value="WBS예상입력" name="btn" class="submitLink">
-						       		</ul>
-						       		<ul>
-						       		<input type=submit value="WBS예상리스트" name="btn" class="submitLink">
-						       		</ul>
-						       		<ul>
-						       		<input type=submit value="WBS실제입력" name="btn" class="submitLink">
-						       		</ul>
-						       		<ul>
-						       		<input type=submit value="WBS실제리스트" name="btn" class="submitLink">
-						       		</ul>
-						       	</form>
-					       	</li>
-					    </ul>
-					</div>
-				</div>
-				<div class="col-xs-9">
+			<div class="col-xs-4">
+			<!-- 펀딩목록이 뿌려질곳 -->
+				<ul>
+	        		<li>	        		
+            			<strong><a href="/pineapple/wbsplanlistpage.pms">펀딩</a></strong>	   
+            			<form action="/pineapple/wbsmsview.pms" method="post">	
+							<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
+							<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
+	            			<input type=submit value="${fdTitle}" class="submitLink">
+	               		</form>
+			       	</li>
+				</ul>
+			</div>	
+			<div class="col-xs-8">
+			<!-- 마일스톤 목록이 뿌려질곳 -->
+			     <ul>  	
+			       	<li>
+			       	<strong>마일스톤명 : ${milestoneName}</strong>
+			       		<form action="/pineapple/wbsform.pms" method="post">	
+							<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
+							<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
+							<input type="hidden" readonly="readonly"  name="milestoneCode" value="${milestoneCode}">
+							<input type="hidden" readonly="readonly"  name="milestoneName" value="${milestoneName}">
+							<input type="hidden" readonly="readonly"  name="msComCode" value="${msComCode}">
+				       	</form>
+			       	</li>
+			    </ul>
+			</div>
+		</div>
+		<div class="row">
+				<div class="col-xs-12">
 					<div class="col-xs-8">
 						<!-- wbs리스트 부분  -->
 						<div class="row" id="mywbsplanlist">
@@ -297,8 +286,8 @@ $(document).ready(function(){
 					<!-- 차트에 맞는 버튼이 들어올 곳 -->
 					</div>
 				</div>
-			</div>
 		</div>
+	</div>
 </div>
 <!-- 풋터 -->
 <div>
