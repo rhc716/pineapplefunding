@@ -28,7 +28,7 @@ a#myAdLink {
 
 #myAd .myAd_Img {
   position: absolute;
-  background: url(https://s15.postimg.org/o2fkjjr8b/ad_image.png) no-repeat 0px 0px;
+  background: url("../img/main/bannerimg.png") no-repeat 0px 0px;
 }
 
 #myAd #adBg {
@@ -39,9 +39,9 @@ a#myAdLink {
 }
 
 #myAd #myAd_head {
-  width: 110px;
+  width: 130px;
   height: 140px;
-  background-position: 0px -464px;
+  background-position: -448px -470px;
   top: 250px;
   left: 30px;
   opacity: 0;
