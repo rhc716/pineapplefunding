@@ -61,6 +61,7 @@ $(document).ready(function(){
 		    return [year, month, day].join(',');
 		}
 		
+		
 		//alert(formatDate(msg[0].fdDate));
 		//펀딩리스트를 myfundinglist에 채워줌 // 수정버튼과 모달창, 삭제버튼을 만들어줌
 		for(var i = 0; i<msg.length; i++){
@@ -82,8 +83,10 @@ $(document).ready(function(){
 		 				+'<input type="text" class="form-control" name="wbsPlanName2" value="'+msg[i].wbsPlanName+'" readonly/>'
 		 				+'<input type="text" class="form-control" name="wbsPlanName" value="'+msg[i].wbsPlanName+'"/>'
 		 				+'선행작업:'
-		 				+'<input type="text" class="form-control" name="wbsPlanDependency2" value="'+msg[i].wbsPlanDependency+'"readonly/>'
-		 				+'<input type="text" class="form-control" name="wbsPlanDependency" value="'+msg[i].wbsPlanDependency+'"/>'
+		 				+'<input type="text" class="form-control" name="wbsPlanDependency2" value="'+msg[i].wbsPlanDependency+'" readonly/>'
+		 				+'<select name="wbsPlanDependency" class="wbsdc">'
+		 				+'<option value="없음"> 없음</option>'
+		 				+'</select><br>'
 		 				+'작업기간:'
 		 				+'<input type="number" class="form-control" name="wbsPlanDuration2" value="'+msg[i].wbsPlanDuration+'"readonly/>'
 		 				+'<input type="number" class="form-control" name="wbsPlanDuration" value="'+msg[i].wbsPlanDuration+'"/>'
@@ -113,7 +116,13 @@ $(document).ready(function(){
 		 				+'</div>'
 		 				+'</div>'
 				);
+				
 		}
+		/* for(var l = 0; l<msg.length; l++){
+			$('.wbsdc').append(
+			'<option value="'+msg[l].wbsPlanName+'">'+msg[l].wbsPlanName+'</option>'
+			)
+		} */
 		 	google.charts.load('current', {'packages':['gantt']});
 		    google.charts.setOnLoadCallback(drawChart);
 
@@ -133,14 +142,28 @@ $(document).ready(function(){
 		      data.addColumn('string', 'Dependencies');
 		      for(var s = 0; s<msg.length; s++){
 		      	if(msg[s].wbsPlanStartDate!=null){
-			    	 data.addRows([
-			    		 [msg[s].wbsPlanName, msg[s].wbsPlanName,
-					         new Date(msg[s].wbsPlanStartDate), null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, msg[s].wbsPlanDependency],
-			     	 ]);
+		      		if(msg[s].wbsPlanDependency=="없음"){
+		      			data.addRows([
+			      			[msg[s].wbsPlanName, msg[s].wbsPlanName,
+						         new Date(msg[s].wbsPlanStartDate), null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, null],
+				     	 	]);
+		      		}else{
+				    	 data.addRows([
+				    		 [msg[s].wbsPlanName, msg[s].wbsPlanName,
+						         new Date(msg[s].wbsPlanStartDate), null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, msg[s].wbsPlanDependency],
+				     	 	]);
+		      		}
 		      	}else{
+		      		if(msg[s].wbsPlanDependency=="없음"){
+		      			data.addRows([
+				    		 [msg[s].wbsPlanName, msg[s].wbsPlanName,
+						         null, null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100,  100, null],
+				     	 ]);
+		      			
+		      		}else
 		      		data.addRows([
 			    		 [msg[s].wbsPlanName, msg[s].wbsPlanName,
-					         null, null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, msg[s].wbsPlanDependency],
+					         null, null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100,  100, msg[s].wbsPlanDependency],
 			     	 ]);
 		      	}
 		      }

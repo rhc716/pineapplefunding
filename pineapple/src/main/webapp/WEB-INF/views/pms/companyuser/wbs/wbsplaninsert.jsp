@@ -92,7 +92,7 @@
 						<input type="text" class="form-control" name="wbsPlanName">
 						선행작업:<br>
 						<select name="wbsPlanDependency">
-							<option  value=0> 없음</option>
+							<option value="없음"> 없음</option>
 							<c:forEach var="list" items="${wbsplan}">
 								<option value="${list.wbsPlanName}">"${list.wbsPlanName}"</option>
 							</c:forEach>

@@ -54,6 +54,9 @@ public class WbsPlan {
 		return wbsPlanDependency;
 	}
 	public void setWbsPlanDependency(String wbsPlanDependency) {
+		if(wbsPlanDependency==""){
+			wbsPlanDependency=null;
+		}
 		this.wbsPlanDependency = wbsPlanDependency;
 	}
 	public String getWbsPlanStartDate() {

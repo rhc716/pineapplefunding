@@ -137,7 +137,7 @@ public class PmsController {
 			return "redirect:/wbsform.pms";
 		}else{
 			String wbsPlanName = request.getParameter("wbsPlanName");
-			String wbsPlanDependency = request.getParameter("wbsPlanDependency");
+			String wbsPlanDependency=request.getParameter("wbsPlanDependency");
 			String wbsPlanDuration = request.getParameter("wbsPlanDuration");
 			String wbsPlanStartDate = request.getParameter("wbsPlanStartDate");
 			String wbsPlanManager = request.getParameter("wbsPlanManager");
