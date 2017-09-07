@@ -57,6 +57,9 @@
 		select *
 		from wbsplanhuman where wphWpCode = #{wbsplancode}
 	</select>
+	<select id="getincom" resultType="int" parameterType="String">
+		select sum(wpiIncome) from wbsplanincome where wpiWpCode=#{wbsplancode}
+	</select>
 		<select id="wbsplanlist" resultType="com.pineapple.pms.service.WbsPlan" parameterType="String">
 		SELECT * FROM wbsplan 
 		where wbsPlanStatus =1 and wbsPlanMsCode = #{milestoneCode}

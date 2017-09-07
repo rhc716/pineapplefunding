@@ -75,6 +75,12 @@ public class PmsService implements PmsServiceInterface{
 		return pmsdao.getMyWbsPlanIncomeyList(wbsplancode);
 	}
 	
+	@Override
+	public int getincome(String wbsplancode) {
+		log.debug("PmsService의 getincome호출 성공");
+		return pmsdao.getincome(wbsplancode);
+	}
+	
 	
 	/* (non-Javadoc)
 	 * @see com.pineapple.pms.service.PmsServiceInterface#getMyWbsPlanDetail(java.lang.String)

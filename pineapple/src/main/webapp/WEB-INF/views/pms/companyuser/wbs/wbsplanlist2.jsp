@@ -154,19 +154,12 @@ $(document).ready(function(){
 				     	 	]);
 		      		}
 		      	}else{
-		      		if(msg[s].wbsPlanDependency=="없음"){
-		      			data.addRows([
-				    		 [msg[s].wbsPlanName, msg[s].wbsPlanName,
-						         null, null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100,  100, null],
-				     	 ]);
-		      			
-		      		}else
-		      		data.addRows([
+		      		 data.addRows([
 			    		 [msg[s].wbsPlanName, msg[s].wbsPlanName,
-					         null, null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100,  100, msg[s].wbsPlanDependency],
-			     	 ]);
+					         null, null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, msg[s].wbsPlanDependency],
+			     	 	]);
+		      		}
 		      	}
-		      }
 		      var options = {
 		        height: 275
 		      };

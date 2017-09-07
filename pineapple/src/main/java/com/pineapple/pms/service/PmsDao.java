@@ -275,4 +275,10 @@ public class PmsDao implements PmsDaoInterface {
 		log.debug("PmsDao의 getMyWbsPlanIncomeyList호출 성공");
 		return sqlSessionTemplate.selectList("com.pineapple.pms.service.PmsMapper.selectWbsPlanIncome", wbsplancode);
 	}
+	
+	@Override
+	public int getincome(String wbsplancode) {
+		log.debug("PmsDao의 getMyWbsPlanIncomeyList호출 성공");
+		return sqlSessionTemplate.selectOne("com.pineapple.pms.service.PmsMapper.getincom", wbsplancode);
+	}
 }

@@ -94,4 +94,6 @@ public interface PmsDaoInterface {
 
 	List<WbsPlan> wbsplanlist(String milestoneCode);
 
+	int getincome(String wbsplancode);
+
 }

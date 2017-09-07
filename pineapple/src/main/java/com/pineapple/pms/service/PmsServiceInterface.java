@@ -74,4 +74,6 @@ public interface PmsServiceInterface {
 
 	List<WbsPlan> wbsplanlist(String milestoneCode);
 
+	int getincome(String wbsplancode);
+
 }

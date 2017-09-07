@@ -410,8 +410,10 @@ public class PmsController {
 			log.debug("PmsController의 addWbsplanHuman호출 성공");
 			log.debug("wbsplanhuman : " + wbsplanhuman);
 			service.addWbsplanhuman(wbsplanhuman);
-			//원래 페이지로 돌아가는 코드
 			String wbsplancode = request.getParameter("wphWpCode");
+			int income = service.getincome(wbsplancode);
+			log.debug("income합" + income);
+			//원래 페이지로 돌아가는 코드
 			log.debug("wbs코드" + wbsplancode);
 			WbsPlan wbsplandetail;
 			wbsplandetail = service.getMyWbsPlanDetail(wbsplancode);
