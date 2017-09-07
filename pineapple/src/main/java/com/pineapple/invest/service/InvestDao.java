@@ -31,6 +31,12 @@ public class InvestDao implements InvestDaoInterface {
 		log.debug("InvestDao-----investFundingTitleSelect");
 		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.selectInvestFundingListName",fdTitle);
 	}
+	//조건 검색으로 펀딩 리스트 조회 Dao
+	@Override
+	public List<InvestAndFd> investFundingChooseSelect(HashMap<String, String[]> map) {
+		log.debug("InvestDao-----investFundingChooseSelect");
+		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.selectInvestFundingListChoose",map);
+	}
 	//하나의 펀딩 정보 열람
 	@Override
 	public InvestAndFdLikeAndFd investFundingDataSelect(int fdCode){

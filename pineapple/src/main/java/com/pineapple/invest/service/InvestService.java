@@ -1,5 +1,6 @@
 package com.pineapple.invest.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -26,6 +27,13 @@ public class InvestService implements InvestServiceInterface {
 		log.debug("------------------InvestService-----------------getInvestFundingTitle()");
 		List<InvestAndFd> fdTitlelist =  investdaointerface.investFundingTitleSelect(fdTitle);
 		return fdTitlelist;
+	}
+	//조건 검색으로 펀딩 리스트 조회 Service
+	@Override
+	public List<InvestAndFd> getInvestFundingChoose(HashMap<String, String[]> map) {
+		log.debug("------------------InvestService-----------------getInvestFundingChoose()");
+		List<InvestAndFd> fdchooselist =  investdaointerface.investFundingChooseSelect(map);
+		return fdchooselist;
 	}
 	//투자하기에서 펀딩클릭시 하나의 펀딩 정보 열람
 	@Override

@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.connector.Request;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,10 +38,16 @@ public class InvestController {
 	@RequestMapping(value="/investmain.invest" , method=RequestMethod.GET)
 	public String investMain(Locale locale, Model model){
 		log.debug("<----- InvestController[investMain호출]----->");
+		return "invest/investmain";
+	}
+	//투자하기 main 요청시 전체리스트 ajax 요청
+	@RequestMapping(value="/investfdlistmain.invest" , method=RequestMethod.GET)
+	public String investfdlistMain(Locale locale, Model model){
+		log.debug("<----- InvestController[investfdlistMain호출]----->");
 		List<InvestAndFd> fundingList = investserviceinterface.getInvestFunding();
 		model.addAttribute("fundingList", fundingList);
 		log.debug(fundingList+"<-----InvestController[fundingList 값 출력]");
-		return "invest/investmain";
+		return "invest/investfdlistmain";
 	}
 	/*title 검색으로 펀딩리스트 조회*/
 	@RequestMapping(value="/investfdtitlemain.invest" , method=RequestMethod.POST)
@@ -52,19 +60,21 @@ public class InvestController {
 	}
 	/*펀딩리스트 조건 검색*/ 
 	@RequestMapping(value="/investfdchoosemain.invest" , method=RequestMethod.GET)
-	public String investFdChooseMain(Locale locale, Model model,@RequestParam(value="fdarea")String fdarea,@RequestParam(value="fdtype")String fdtype,@RequestParam(value="fddividend")String fddividend){
+	public String investFdChooseMain(Locale locale, Model model,HttpServletRequest request){
 		log.debug("<----- InvestController[investFdTitleMain호출]----->");
-		log.debug(fdarea.length()+"<-----[fdarea호출]");
-		log.debug(fdtype.length()+"<-----[fdtype호출]");
-		log.debug(fddividend.length()+"<-----[fddividend호출]");
-		log.debug(fdarea+"<-----[fdarea호출]");
-		log.debug(fdtype+"<-----[fdtype호출]");
-		log.debug(fddividend+"<-----[fddividend호출]");
-
-/*		List<InvestAndFd> fundingListTitle = investserviceinterface.getInvestFundingTitle(fdTitle);
-		model.addAttribute("fundingListTitle", fundingListTitle);
-		log.debug(fundingListTitle+"<-----InvestController[fundingListTitle 값 출력]");*/
-		return "#";
+		String[] fundingtitlename = request.getParameterValues("fundingtitlename");
+		String[] fdarea = request.getParameterValues("fdarea");
+		String[] fdtype = request.getParameterValues("fdtype");
+		String[] fddividend = request.getParameterValues("fddividend");
+		HashMap<String, String[]> map = new HashMap<>();
+		map.put("fundingtitlename", fundingtitlename);
+		map.put("fdarea", fdarea);
+		map.put("fdtype", fdtype);
+		map.put("fddividend", fddividend);
+		List<InvestAndFd> fundingListChoose = investserviceinterface.getInvestFundingChoose(map);
+		model.addAttribute("fundingListChoose", fundingListChoose);
+		log.debug(fundingListChoose+"<-----InvestController[fundingListChoose 값 출력]");
+		return "invest/investfdchoosemain";
 	}
 	//투자하기 페이지에서 펀딩페이지 오픈 investfunding.jsp
 	@RequestMapping(value="/investfunding.invest",method=RequestMethod.GET)

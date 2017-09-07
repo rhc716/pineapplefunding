@@ -28,6 +28,16 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
+	var fundinglist = $.ajax({
+		type: 'get',
+		url : '/pineapple/investfdlistmain.invest',
+		success : function success(msg){
+			$('#fdlist').html(msg)
+		},
+		error : function error(){
+			
+		}
+	});
 	$('#fundinglistnameselectbtn').click(function(){
 		var fundinglistnameselecttext = $('#fundinglistnameselecttext').val();
 		var fundinglistnameselectajax = $.ajax({
@@ -75,17 +85,20 @@ $(document).ready(function(){
 		console.log('fdarea-> '+fdarea)
 		console.log('fdtype-> '+fdtype)
 		console.log('fddividend-> '+fddividend)
+		var fundingtitlename = $('#fundinglistnameselecttext').val();
+		$.ajaxSettings.traditional = true;
 		var fundinglistnameselectajax = $.ajax({
 			type: 'get',
 			url : '/pineapple/investfdchoosemain.invest',
 			data: {
-				fdarea : JSON.stringify(fdarea),
-				fdtype : JSON.stringify(fdtype),
-				fddividend : JSON.stringify(fddividend)
+				fundingtitlename : fundingtitlename,
+				fdarea : fdarea,
+				fdtype : fdtype,
+				fddividend : fddividend
 			},
-			dataType: 'json',
 			success : function success(msg){
-				/* $('#fdlist').html(msg) */
+				console.log(msg)
+				$('#fdlist').html(msg)
 			},
 			error : function error(){
 				
@@ -146,47 +159,6 @@ $(document).ready(function(){
 	</div>
 	<div class="col-md-10" style="padding: 0px 10px 0px 10px;">
 	<div id="fdlist">
-	<c:forEach var="list" items="${fundingList}">
-	<c:set var="poster" value="${list.posterImg}"></c:set>
- 	<div class="col-md-4 fdlist-box" style="padding: 0px; margin: auto;">
- 		<div class="col-md-12" style="padding: 0px 10px; margin-bottom: 20px;">
- 		<div class="col-md-12" style="border: 1.5px solid #009442; padding: 0px;">
- 		<c:choose>
- 		<c:when test="${poster == null}">
- 		<a href="/pineapple/investfunding.invest?fdCode=${list.fdCode}">
-			<img src="${pageContext.request.contextPath}/resources/files/insertnotsum.jpg"width="100%" style="padding: 0.75px;">
-		</a>
- 		</c:when>
- 		<c:otherwise>
-		<a href="/pineapple/investfunding.invest?fdCode=${list.fdCode}">
-			<img src="${pageContext.request.contextPath}/resources/files${poster.substring(poster.lastIndexOf('/'),poster.length())}"width="100%" style="padding: 0.75px;">
-		</a>
-		</c:otherwise>
-		</c:choose>
-		<div>
-		<h4 class="fdlist-title">
-			${list.fdTitle}
-		</h4>
-		</div>
-		<div class="fdlist-comname">
-			${list.comName}
-		</div>
-		<div class="fdlist-data" style="width: 100%">
-		<div class="col-xs-12" style="padding: 0px 10px">
-			<div style="float: left;">${list.issuePrice*list.total}원 달성</div><div style="float: right;">${list.days}남음</div>
-		</div>
-		<div class="col-md-12" style="padding: 0px 10px 0px 10px;">
-		<div class="progress bor-defult" style="margin-bottom: 10px;">
-  				<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ${(list.total/list.numberOfShares)*100}%; min-width: 3em; max-width: 100%;">
-    				${(list.total/list.numberOfShares)*100}%
-  				</div>
-		</div>
-		</div>	
-		</div>
-	</div>
-	</div>
-	</div>
-	</c:forEach>
 	</div>
 	</div>
 	</div>

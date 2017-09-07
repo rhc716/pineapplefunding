@@ -1,5 +1,6 @@
 package com.pineapple.invest.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.pineapple.funding.service.FundingDetail;
@@ -9,6 +10,8 @@ public interface InvestDaoInterface {
 	List<InvestAndFd> investFundingSelect();
 	//title 검색으로 펀딩리스트 조회 Dao
 	List<InvestAndFd> investFundingTitleSelect(String fdTitle);
+	//조건 검색으로 펀딩 리스트 조회 Dao
+	List<InvestAndFd> investFundingChooseSelect(HashMap<String, String[]> map);
 	//하나의 펀딩 data 불러오는 Dao
 	InvestAndFdLikeAndFd investFundingDataSelect(int fdCode);
 	//하나의 펀딩 Detail 불러오는 Dao

@@ -108,6 +108,64 @@
 		GROUP BY f.fdCode 
 		ORDER BY f.fdDate DESC;
 	</select>
+	<!-- 투자하기 main 에서 사용하는 펀딩조건 검색 조회 쿼리 -->
+	<select id="selectInvestFundingListChoose" parameterType="hashmap" resultMap="selectInvestAndFd">
+		SELECT  f.fdCode,
+				f.fdTitle,
+				f.numberOfShares,
+				c.comName,
+				IFNULL(sum(i.purchaseShares),0) as total,
+				f.posterImg,
+				f.minInvestMoney,
+				f.issuePrice,
+				TO_DAYS(f.closeDate)-TO_DAYS(now()) as days
+		FROM funding f 
+		LEFT JOIN company c 
+		ON f.fdComCode = c.comCode 
+		LEFT JOIN investment i 
+		ON f.fdCode = i.investFdCode 
+		LEFT JOIN businessarea b
+		ON f.fdCode = b.areaFdCode
+		LEFT JOIN dividendplan d
+		ON f.fdCode = d.divFdCode
+		<where>
+		(f.fdStatus = '모집중' OR f.fdStatus = '결제모집중')
+		<if test="fundingtitlename != null">
+			AND
+			<foreach collection="fundingtitlename" item="title" open="(" close=")" separator="or">
+				f.fdTitle LIKE CONCAT('%',#{title},'%')
+			</foreach>
+		</if>
+		<if test="fdtype != null">
+			AND
+			<foreach collection="fdtype" item="type" open="(" close=")" separator="or">
+				f.fdType = #{type}
+			</foreach>
+		</if>
+		<if test="fdarea != null">
+			AND 
+			<foreach collection="fdarea" item="area" open="(" close=")" separator="or">
+				b.areaName = #{area}
+			</foreach>
+		</if>
+		<if test="fddividend != null">
+			AND
+			<foreach collection="fddividend" item="dividend" open="(" close=")" separator="or">
+				<if test="dividend == 1">
+					d.dividendRate &lt; 10
+				</if>
+				<if test="dividend == 2">
+					d.dividendRate &gt;= 10 and d.dividendRate &lt; 15
+				</if>
+				<if test="dividend == 3">
+					d.dividendRate &gt;= 15
+				</if>
+			</foreach>
+		</if>
+		</where>
+		GROUP BY f.fdCode 
+		ORDER BY f.fdDate DESC;
+	</select>
 	<!-- 투자하기 펀딩안에서 사용하는 모집중인 펀딩 조회 쿼리 -->
 	<select id="selectInvestAndFdLikeAndFd" parameterType="INT" resultType="com.pineapple.invest.service.InvestAndFdLikeAndFd">
 		SELECT f.fdCode,
