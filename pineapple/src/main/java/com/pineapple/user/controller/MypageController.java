@@ -1,4 +1,5 @@
 package com.pineapple.user.controller;
+import com.pineapple.funding.service.Funding;
 import com.pineapple.invest.service.InvestorInvestList;
 import com.pineapple.user.service.Account;
 import com.pineapple.user.service.BizareaAndFundingAndCompany;
@@ -6,7 +7,9 @@ import com.pineapple.user.service.Businessarea;
 import com.pineapple.user.service.Company;
 import com.pineapple.user.service.Employee;
 import com.pineapple.user.service.FundingAndCompany;
+import com.pineapple.user.service.Fundingauth;
 import com.pineapple.user.service.FundingauthFundingAuthlevelCompany;
+import com.pineapple.user.service.Fundingauthlevel;
 import com.pineapple.user.service.MypageServiceInterface;
 import com.pineapple.user.service.User;
 import com.pineapple.user.service.UserDetail;
@@ -32,6 +35,32 @@ public class MypageController {
 	
 	@Autowired
 	private MypageServiceInterface mypageservice;
+	
+	//펀딩내 권한부여 삭제 처리
+	@RequestMapping(value="/deletefundingauth.user", method=RequestMethod.POST)
+	public String deleteFundingAuth(HttpSession session, @RequestParam("authCode") int authCode){
+		log.debug("deleteFundingAuth 펀딩내 권한부여 삭제 요청");
+		int result = mypageservice.removeFundingAuth(authCode);
+		if(result != 0){
+			log.debug(session.getAttribute("nincname")+"님의 펀딩내 권한부여 삭제 처리 성공");
+		} else {
+			log.debug(session.getAttribute("nincname")+"님의 펀딩내 권한부여 삭제 처리 실패");
+		}
+		return "redirect:/fundingauth.user";
+	}
+	
+	//새로운 펀딩내 권한부여 입력 요청 처리
+	@RequestMapping(value="/addnewfundingauth.user", method=RequestMethod.POST)
+	public String insertFundingAuth(HttpSession session, Fundingauth fundingauth){
+		log.debug("insertFundingAuth 새로운 펀딩내 권한부여 등록 요청");
+		int result = mypageservice.addFundingAuth(fundingauth);
+		if(result != 0){
+			log.debug(session.getAttribute("nincname")+"님의 새로운 펀딩내 권한부여 등록 성공");
+		} else {
+			log.debug(session.getAttribute("nincname")+"님의 새로운 펀딩내 권한부여 등록 실패");
+		}
+		return "redirect:/fundingauth.user";
+	}
 	
 	//사업분야 입력 요청 처리
 	@RequestMapping(value="/insertbizarea.user", method=RequestMethod.POST)
@@ -199,7 +228,7 @@ public class MypageController {
 	
 	//펀딩내 권한부여 페이지 요청
 	@RequestMapping(value="/fundingauth.user", method = RequestMethod.GET)
-    public String mngfundingauthpage(HttpSession session, Model model) { //커맨드 객체
+    public String mngfundingauthpage(HttpSession session, Locale locale,Model model) { //커맨드 객체
         log.debug("mngfundingauthpage 펀딩내권한부여 페이지 요청");
         //자신이 부여자인 펀딩권한정보 조회
         List<FundingauthFundingAuthlevelCompany> authgiverList = mypageservice.getAuthInfoByGiverId(session.getAttribute("id").toString());
@@ -217,6 +246,65 @@ public class MypageController {
         } else {
         	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 피부여자인 펀딩내권한부여 정보조회 실패");
         }
+        //펀딩선택용 소속 기업의 펀딩목록 조회
+        List<Funding> fundinglistById = mypageservice.getFundingListOfMyCompany(session.getAttribute("id").toString());
+        if(fundinglistById != null){
+            log.debug(session.getAttribute("nickname")+"님의 내가 속한 기업의 펀딩리스트 조회 성공");
+            model.addAttribute("fundinglistById", fundinglistById);
+        } else {
+           	log.debug(session.getAttribute("nickname")+"님의 내가 속한 기업의 펀딩리스트 조회 실패");
+        }
+        //사원목록 조회
+        //일반사원이 마이페이지 분기 요청시, 페이지 로딩하며 자신의 아이디로 소속된 기업별 기업명 조회 -> 기업명들을 입력값으로 다시 원하는 결과값 조회
+        List<Employee> comEmployeeRank = mypageservice.getEmployeeComNameById(session.getAttribute("id").toString());
+        if(comEmployeeRank != null){
+        	log.debug(session.getAttribute("nickname")+"님의 사원정보조회 성공");
+         	model.addAttribute("comEmployeeRank", comEmployeeRank);
+         	//경영진이 속한 모든 기업명을 조회한 뒤, 그 결과 조회한 기업명 리스트를 map에 입력값으로 담아 기업에 속한 모든 사원리스트를 조회하는 메서드 호출
+         	Map<String, Object> map = new HashMap<String, Object>();
+         	for(int i=0; i<comEmployeeRank.size(); i++){
+         		List<Employee> comNameList = comEmployeeRank;
+         		map.put("comNameList", comNameList);
+         		List<Employee> allEmployeeInMyCom = mypageservice.getAllEmployeeInMyComList(map);
+         		if(allEmployeeInMyCom != null){
+                   log.debug(session.getAttribute("nickname")+"님의 기업별 모든 사원정보조회 성공");
+                   model.addAttribute("allEmployeeInMyCom", allEmployeeInMyCom);
+                 } else {
+                   log.debug(session.getAttribute("nickname")+"님의  기업별 모든 사원정보조회 실패");
+                 }	
+         	}
+        } else {
+         	log.debug(session.getAttribute("nickname")+"님의  사원정보조회 실패");
+        }
+        //경영진이 마이페이지 분기 요청시, 페이지 로딩하며 자신의 아이디로 소속된 기업별 기업명 조회 -> 기업명들을 입력값으로 다시 소속기업의 사원목록 조회
+        List<Employee> comMngRank = mypageservice.getEmployeeMngById(session.getAttribute("id").toString());
+        if(comMngRank != null){
+        	log.debug(session.getAttribute("nickname")+"님의 사원정보조회 성공");
+         	model.addAttribute("comMngRank", comMngRank);
+         	//경영진이 속한 모든 기업명을 조회한 뒤, 그 결과 조회한 기업명 리스트를 map에 입력값으로 담아 기업에 속한 모든 사원리스트를 조회하는 메서드 호출
+         	Map<String, Object> map = new HashMap<String, Object>();
+         	for(int i=0; i<comMngRank.size(); i++){
+         		List<Employee> comNameList = comMngRank;
+         		map.put("comNameList", comNameList);
+         		List<Employee> allEmployeeInMyCom = mypageservice.getAllEmployeeInMyComList(map);
+         		if(allEmployeeInMyCom != null){
+                   log.debug(session.getAttribute("nickname")+"님의 기업별 모든 사원정보조회 성공");
+                   model.addAttribute("allEmployeeInMyCom", allEmployeeInMyCom);
+                  } else {
+                  	log.debug(session.getAttribute("nickname")+"님의  기업별 모든 사원정보조회 실패");
+                  }	
+         	}
+         } else {
+         	log.debug(session.getAttribute("nickname")+"님의  사원정보조회 실패");
+         }
+        //펀딩권한옵션 불러오기
+        List<Fundingauthlevel> fundingauthlevel = mypageservice.getFundingauthlevel();
+		if(fundingauthlevel != null){
+            log.debug(session.getAttribute("nickname")+"님의 기업별 모든 사원정보조회 성공");
+            model.addAttribute("fundingauthlevel", fundingauthlevel);
+           } else {
+           	log.debug(session.getAttribute("nickname")+"님의  기업별 모든 사원정보조회 실패");
+           }	
         return "user/fundingauth"; // 글입력후 "/"로 리다이렉트(재요청)
     }
 	
@@ -561,7 +649,7 @@ public class MypageController {
          } else {
          	log.debug(session.getAttribute("nickname")+"님의  사원정보조회 실패");
          }
-        //경영진이 마이페이지 분기 요청시, 페이지 로딩하며 자신의 아이디로 소속된 기업별 기업명 조회 -> 기업명들을 입력값으로 다시 원하는 결과값 조회
+        //경영진이 마이페이지 분기 요청시, 페이지 로딩하며 자신의 아이디로 소속된 기업별 기업명 조회 -> 기업명들을 입력값으로 다시 소속기업의 사원목록 조회
         List<Employee> comMngRank = mypageservice.getEmployeeMngById(session.getAttribute("id").toString());
         if(comMngRank != null){
         	log.debug(session.getAttribute("nickname")+"님의 사원정보조회 성공");
@@ -613,6 +701,27 @@ public class MypageController {
         if(employeeOneId != null){
         	log.debug(session.getAttribute("nickname")+"님의 사원정보조회 성공");
          	model.addAttribute("employeeOneId", employeeOneId);
+         } else {
+         	log.debug(session.getAttribute("nickname")+"님의  사원정보조회 실패");
+         }
+        //일반사원이 마이페이지 분기 요청시, 페이지 로딩하며 자신의 아이디로 소속된 기업별 기업명 조회 -> 기업명들을 입력값으로 다시 원하는 결과값 조회
+        List<Employee> comEmployeeRank = mypageservice.getEmployeeComNameById(session.getAttribute("id").toString());
+        if(comEmployeeRank != null){
+        	log.debug(session.getAttribute("nickname")+"님의 사원정보조회 성공");
+         	model.addAttribute("comEmployeeRank", comEmployeeRank);
+         	//경영진이 속한 모든 기업명을 조회한 뒤, 그 결과 조회한 기업명 리스트를 map에 입력값으로 담아 기업에 속한 모든 사원리스트를 조회하는 메서드 호출
+         	Map<String, Object> map = new HashMap<String, Object>();
+         	for(int i=0; i<comEmployeeRank.size(); i++){
+         		List<Employee> comNameList = comEmployeeRank;
+         		map.put("comNameList", comNameList);
+         		List<Employee> allEmployeeInMyCom = mypageservice.getAllEmployeeInMyComList(map);
+         		if(allEmployeeInMyCom != null){
+                   log.debug(session.getAttribute("nickname")+"님의 기업별 모든 사원정보조회 성공");
+                   model.addAttribute("AllEmployeeListInMyCom", allEmployeeInMyCom);
+                  } else {
+                  	log.debug(session.getAttribute("nickname")+"님의  기업별 모든 사원정보조회 실패");
+                  }	
+         	}
          } else {
          	log.debug(session.getAttribute("nickname")+"님의  사원정보조회 실패");
          }

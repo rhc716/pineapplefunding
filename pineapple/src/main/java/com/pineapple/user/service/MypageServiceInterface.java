@@ -3,9 +3,24 @@ package com.pineapple.user.service;
 import java.util.List;
 import java.util.Map;
 
+import com.pineapple.funding.service.Funding;
 import com.pineapple.invest.service.InvestorInvestList;
 
 public interface MypageServiceInterface {
+	//펀딩내 권한부여 삭제
+	int removeFundingAuth(int authCode);
+	
+	//펀딩내 권한부여 입력요청
+	int addFundingAuth(Fundingauth fundingauth);
+		
+	//소속 기업의 펀딩리스트 조회(ID로)
+	List<Funding> getFundingListOfMyCompany(String userId);
+	
+	//하나의 기업에 소속된 사원목록 조회(comCode 입력값)
+	List<Employee> getEmployeeByComCode(int comCode);
+	
+	//펀딩권한명 옵션선택용 조회
+	List<Fundingauthlevel> getFundingauthlevel();
 	
 	//사업분야 등록
 	int addBizArea(Businessarea bizarea);
@@ -51,6 +66,9 @@ public interface MypageServiceInterface {
 	
 	//경영진으로 속한 회사이름을 조회하기 위해 employee 정보 조회(ID로)
 	List<Employee> getEmployeeMngById(String emUserId);
+	
+	//일반사원으로 속한 기업이름을 조회(ID로)
+	List<Employee> getEmployeeComNameById(String emUserId);
 	
 	//경영진 마이페이지에서 사원요청목록 조회
 	List<Employee> getEmployeeRequestList(String comName);

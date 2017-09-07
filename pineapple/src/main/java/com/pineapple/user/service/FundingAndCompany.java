@@ -2,6 +2,7 @@ package com.pineapple.user.service;
 
 public class FundingAndCompany {
 	private int fdCode;
+	private int fdComCode;
 	private String fdTitle;
 	private String openDate;
 	private String closeDate; 
@@ -139,14 +140,22 @@ public class FundingAndCompany {
 		this.fdPublisher = fdPublisher;
 	}
 
+	public int getFdComCode() {
+		return fdComCode;
+	}
+
+	public void setFdComCode(int fdComCode) {
+		this.fdComCode = fdComCode;
+	}
+
 	@Override
 	public String toString() {
-		return "FundingAndCompany [fdCode=" + fdCode + ", fdTitle=" + fdTitle + ", openDate=" + openDate
-				+ ", closeDate=" + closeDate + ", minInterestRate=" + minInterestRate + ", fdType=" + fdType
-				+ ", fdStatus=" + fdStatus + ", projectStartDate=" + projectStartDate + ", projectEndDate="
-				+ projectEndDate + ", fdPublisher=" + fdPublisher + ", adminApproval=" + adminApproval
-				+ ", fdApprovalDate=" + fdApprovalDate + ", fdApprovalId=" + fdApprovalId + ", fdDate=" + fdDate
-				+ ", comName=" + comName + "]";
+		return "FundingAndCompany [fdCode=" + fdCode + ", fdComCode=" + fdComCode + ", fdTitle=" + fdTitle
+				+ ", openDate=" + openDate + ", closeDate=" + closeDate + ", minInterestRate=" + minInterestRate
+				+ ", fdType=" + fdType + ", fdStatus=" + fdStatus + ", projectStartDate=" + projectStartDate
+				+ ", projectEndDate=" + projectEndDate + ", fdPublisher=" + fdPublisher + ", adminApproval="
+				+ adminApproval + ", fdApprovalDate=" + fdApprovalDate + ", fdApprovalId=" + fdApprovalId + ", fdDate="
+				+ fdDate + ", comName=" + comName + "]";
 	}
 	
 }

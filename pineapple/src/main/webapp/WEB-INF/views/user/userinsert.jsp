@@ -224,8 +224,8 @@ $(document).ready(function(){
 <!-- 본문 -->
 	<span class="topnamebar" ><h2>회원가입</h2></span>
 	<div class="row">
-		<div class="col-xs-2"></div>
-		<div class="col-xs-10">
+		<div class="col-xs-3"></div>
+		<div class="col-xs-6">
 			<form id="form" action="/pineapple/userinsert.user" name="userinput" method="post" style="border:1px solid #ccc">
 				<div class="container_insert">
 				    <label for="levelCodeChoice">권한</label>
@@ -283,6 +283,7 @@ $(document).ready(function(){
 				</div>
 			</form>
 		</div>
+		<div class="col-xs-3"></div>
 	</div>
 	
 <!-- 풋터 -->

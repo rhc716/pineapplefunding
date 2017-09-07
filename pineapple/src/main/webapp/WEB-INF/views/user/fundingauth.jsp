@@ -40,13 +40,14 @@
 					<thead>
 						<tr class="info">
 							<td>번호</td>
-							<td>권한부여코드</td>
+							<td>권한코드</td>
 							<td>회사명</td>
 							<td>펀딩명</td>
-							<td>펀딩진행상황</td>
+							<td>펀딩상황</td>
 							<td>부여자ID</td>
 							<td>피부여자ID</td>
 							<td>권한명</td>
+							<td>삭제</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -60,15 +61,87 @@
 								<td><a type="button" class="btn btn-block btn-success disabled">${authgiverList.authGiver}</a></td>
 								<td> ${authgiverList.authReceiver} </td>
 								<td><a type="button" class="btn btn-block btn-danger disabled">${authgiverList.authLevelName}</a></td>
+								<td>
+									<form action="/pineapple/deletefundingauth.user" method="post">
+										<input type="hidden" name="authCode" value="${authgiverList.authCode}">
+										<button type="submit" class="btn btn-block btn-danger">삭제</button>
+									</form>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
 					<tfoot>
 						<div>
-							<a type="button" class="btn btn-info" data-toggle="modal" href="#newfdauthmodal">+ 새로운 펀딩내 권한부여하기</a>
+							<a type="button" class="btn btn-info" data-toggle="modal" href="#newfdauthmodal${numberofauthgive.count}">+ 새로운 펀딩내 권한부여하기</a>
+							<!-- 새로운 권한부여 모달 화면 -->
+							<div class="modal fade" id="newfdauthmodal${numberofauthgive.count}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							        <h4 class="modal-title" id="myModalLabel">${nickname}님의 새로운 권한부여</h4>
+							      </div>
+							      <div class="modal-body">
+							        <form action="/pineapple/addnewfundingauth.user" method="post">
+							        	<div class="container_insert">
+										  	<div class="form-group">
+											    <label for="authFdName">펀딩명</label>
+											    <p id="explain">(권한을 부여할 펀딩 이름을 정확히 선택해주세요)</p>
+											    <select id="fdselectlist" name="authFdCode" class="form-control">
+													<optgroup label="펀딩명">
+													    <c:forEach var="fundinglist" items="${fundinglistById}">
+													    	<option value="${fundinglist.fdCode}" comCode="${fundinglist.fdComCode}">${fundinglist.fdTitle}</option>
+													    </c:forEach>
+												    </optgroup>
+												</select>
+										  	</div>
+										  	<br>
+										  	<div id="authGiverIdinput" class="form-group has-success has-feedback">
+												<label class="control-label" for="inputSuccess2">권한부여자ID</label>
+												<input type="text" class="form-control" name="authGiver" value="${id}" varia-describedby="inputSuccess2Status" readonly>
+												<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+												<span id="inputSuccess2Status" class="sr-only">(success)</span>
+											</div>
+										  	<br>
+										  	<div class="form-group">
+										  		<label for="authReceiver">권한피부여자ID</label>
+											    <p id="explain">(권한을 부여받을 사원의 ID를 선택해주세요)</p>
+											    <select name="authReceiver" id="employeelistonecompany">
+												    <c:forEach var="employeelist" items="${allEmployeeInMyCom}" varStatus="emNumber">
+										    			<optgroup label="${employeelist.emComName}">
+										    				<option value="${employeelist.emUserId}">${employeelist.emUserId}</option>
+										    			
+										    			</optgroup>
+												    </c:forEach>
+											    </select>
+										  	</div>
+											<br>
+											<div class="form-group">
+										  		<label for="fdAuthLevelCode">펀딩내 권한명</label>
+											    <p id="explain">(펀딩내에서 부여할 권한명을 선택해주시기 바랍니다)</p>
+											    <select name="fdAuthLevelCode">
+											     	<optgroup label="권한명">
+													    <c:forEach var="fdauthlevel" items="${fundingauthlevel}">
+													    	<option value="${fdauthlevel.authLevelCode}">${fdauthlevel.authLevelName}</option>
+													    </c:forEach>
+												    </optgroup>
+											    </select>
+										  	</div>
+											<br>
+									      </div>
+									      <div class="modal-footer">
+									        <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+									        <button type="submit" class="btn btn-info">권한부여</button>
+									      </div>
+							        </form>
+							      </div>
+							    </div>
+							  </div>
+							</div>
 						</div>
 					</tfoot>
 				</table>
+				
 			</div>
 			<!-- 권한 피부여자인 권한부여정보 조회 -->
 			<div class="pagetitleandexplainbox">

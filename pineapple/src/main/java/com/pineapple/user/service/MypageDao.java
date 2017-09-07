@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.pineapple.funding.service.Funding;
 import com.pineapple.invest.service.InvestorInvestList;
 
 @Repository
@@ -16,6 +17,48 @@ public class MypageDao implements MypageDaoInterface {
 	
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
+	
+	//펀딩내 권한부여 삭제
+	@Override
+	public int deleteFundingAuth(int authCode) {
+		log.debug("MypageDao deleteFundingAuth 호출 : "+authCode);
+		return sqlSessionTemplate.delete("com.pineapple.user.service.MypageMapper.deleteFundingAuth", authCode);
+	}
+	
+	//펀딩내 권한부여 입력요청
+	@Override
+	public int insertFundingAuth(Fundingauth fundingauth) {
+		log.debug("MypageDao insertFundingAuth 호출 : "+fundingauth);
+		return sqlSessionTemplate.insert("com.pineapple.user.service.MypageMapper.insertFundingAuth", fundingauth);
+	}
+	
+	//소속 기업의 펀딩리스트 조회(ID로)
+	@Override
+	public List<Funding> selectFundingListOfMyCompany(String userId) {
+		log.debug("MypageDao selectFundingListOfMyCompany 호출 : "+userId);
+		return sqlSessionTemplate.selectList("com.pineapple.user.service.MypageMapper.selectMyFundingList", userId);
+	}
+	
+	//일반사원으로 속한 기업이름을 조회(ID로)
+	@Override
+	public List<Employee> selectEmployeeComNameById(String emUserId) {
+		log.debug("MypageDao getEmployeeComNameById 호출 : "+emUserId);
+		return sqlSessionTemplate.selectList("com.pineapple.user.service.MypageMapper.selectEmployeeCommonById", emUserId);
+	}
+	
+	//하나의 기업에 소속된 사원목록 조회(comCode 입력값)
+	@Override
+	public List<Employee> selectEmployeeByComCode(int comCode) {
+		log.debug("MypageDao selectEmployeeByComCode 호출 : "+comCode);
+		return sqlSessionTemplate.selectList("com.pineapple.user.service.MypageMapper.selectEmployeeByComCode", comCode);
+	}
+	
+	//펀딩권한명 옵션선택용 조회
+	@Override
+	public List<Fundingauthlevel> selectFundingauthlevel() {
+		log.debug("MypageDao selectFundingauthlevel 호출");
+		return sqlSessionTemplate.selectList("com.pineapple.user.service.MypageMapper.selectFundingAuthLevelName");
+	}
 	
 	//사업분야 등록
 	@Override
@@ -230,7 +273,4 @@ public class MypageDao implements MypageDaoInterface {
 		log.debug("MypageDao selectInvestorBasic 메서드 호출 결과"+sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAllInvestorInfo", userId));
 		return sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAllInvestorInfo", userId);
 	}
-
-	
-
 }

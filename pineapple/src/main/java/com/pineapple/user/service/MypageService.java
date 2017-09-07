@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pineapple.funding.service.Funding;
 import com.pineapple.invest.service.InvestorInvestList;
 
 @Service
@@ -15,6 +16,48 @@ public class MypageService implements MypageServiceInterface {
 	
 	@Autowired
 	private MypageDaoInterface mypagedao;
+	
+	//펀딩내 권한부여 삭제
+	@Override
+	public int removeFundingAuth(int authCode) {
+		log.debug("MypageService removeFundingAuth 호출 결과: "+mypagedao.deleteFundingAuth(authCode));
+		return mypagedao.deleteFundingAuth(authCode);
+	}
+	
+	//펀딩내 권한부여 입력요청
+	@Override
+	public int addFundingAuth(Fundingauth fundingauth) {
+		log.debug("MypageService addFundingAuth 호출 결과: "+fundingauth);
+		return mypagedao.insertFundingAuth(fundingauth);
+	}
+	
+	//소속 기업의 펀딩리스트 조회(ID로)
+	@Override
+	public List<Funding> getFundingListOfMyCompany(String userId) {
+		log.debug("MypageService getFundingListOfMyCompany 호출 결과: "+mypagedao.selectFundingListOfMyCompany(userId));
+		return mypagedao.selectFundingListOfMyCompany(userId);
+	}
+	
+	//일반사원으로 속한 기업이름을 조회(ID로)
+	@Override
+	public List<Employee> getEmployeeComNameById(String emUserId) {
+		log.debug("MypageService getEmployeeComNameById 호출 결과: "+mypagedao.selectEmployeeComNameById(emUserId));
+		return mypagedao.selectEmployeeComNameById(emUserId);
+	}
+	
+	//하나의 기업에 소속된 사원목록 조회(comCode 입력값)
+	@Override
+	public List<Employee> getEmployeeByComCode(int comCode) {
+		log.debug("MypageService getEmployeeByComCode 호출 결과: "+mypagedao.selectEmployeeByComCode(comCode));
+		return mypagedao.selectEmployeeByComCode(comCode);
+	}
+	
+	//펀딩권한명 옵션선택용 조회
+	@Override
+	public List<Fundingauthlevel> getFundingauthlevel() {
+		log.debug("MypageService getFundingauthlevel 호출 결과: "+mypagedao.selectFundingauthlevel());
+		return mypagedao.selectFundingauthlevel();
+	}
 	
 	//사업분야 등록
 	@Override
@@ -227,6 +270,4 @@ public class MypageService implements MypageServiceInterface {
 		log.debug("MypageService selectInvestorBasic 메서드 호출 "+userId);
 		return mypagedao.selectInvestorBasic(userId);
 	}
-
-
 }

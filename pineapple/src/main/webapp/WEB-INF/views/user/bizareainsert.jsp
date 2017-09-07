@@ -32,19 +32,19 @@ $(document).ready(function(){
 		//펀딩을 선택하는 select option 채워주는 코드 
 		for(var i = 0; i<msg.length; i++){
 			$('#fdselectlist').append(
-				'<option value='+msg[i].fdCode+'>'+msg[i].fdTitle+'</option>'
+				'<option value="'+msg[i].fdCode+'">'+msg[i].fdTitle+'</option>'
 			);
-			
-		};	
-			
-	});	
-			
-
+		};
+	});
 	// 실패시
 	getfundinglist.fail(function(){
 		alert('ajax통신실패');
 	});
 	
+	function OnDropDownChange(dropDown) {
+        var selectedValue = dropDown.options[dropDown.selectedIndex].value;
+        document.getElementById("txtSelectedfd").value = selectedValue;
+    }
 });
 </script>
 </head>
@@ -68,10 +68,11 @@ $(document).ready(function(){
 				펀딩별 다양한 사업분야를 등록할 수 있습니다.
 			</p>
 			<div>
-				<form action="/pineapple/insertbizarea.user" method="post">
-					<select id="fdselectlist" name="areaFdCode">
+				<form action="/pineapple/insertbizarea.user" method="post" name="bizarea" id="bizareaform">
+					<select id="fdselectlist" name="areaFdCodeSelect" form="bizareaform" onChange="OnDropDownChange(this)">
+						<!-- ajax요청으로 목록을 채워줌 -->
 					</select>
-					<select name="areaName">
+					<select name="areaName" form="bizareaform">
 						<option value="it">it</option>
 						<option value="핀테크">핀테크</option>
 						<option value="인터넷서비스">인터넷서비스</option>
@@ -83,7 +84,7 @@ $(document).ready(function(){
 						<option value="유통">유통</option>
 						<option value="농수산">농수산</option>
 					</select>
-					<input type="hidden" name="areaCode">
+					<input type="hidden" id="txtSelectedfd" name="areaFdCode" value="" />
 					<button type="submit" class="btn btn-lg btn-success">등록</button>
 				</form>
 			</div>
