@@ -61,16 +61,52 @@ $(document).ready(function(){
 		    return [year, month, day].join(',');
 		}
 		
-		
-		//alert(formatDate(msg[0].fdDate));
-		//펀딩리스트를 myfundinglist에 채워줌 // 수정버튼과 모달창, 삭제버튼을 만들어줌
-		for(var i = 0; i<msg.length; i++){
-			
-				$('#mywbsplanlist').append(
+	
+		/* for(var l = 0; l<msg.length; l++){
+			$('.wbsdc').append(
+			'<option value="'+msg[l].wbsPlanName+'">'+msg[l].wbsPlanName+'</option>'
+			)
+		} */
+		 	google.charts.load('current', {'packages':['gantt']});
+		    google.charts.setOnLoadCallback(drawChart);
+
+
+		    function drawChart() {
+
+		      var data = new google.visualization.DataTable();
+		      data.addColumn('string', 'Task ID');
+		      data.addColumn('string', 'Task Name');
+		      data.addColumn('date', 'Start Date');
+		      data.addColumn('date', 'End Date');
+		      data.addColumn('number', 'Duration');
+		      data.addColumn('number', 'Percent Complete');
+		      data.addColumn('string', 'Dependencies');
+		      for(var s = 0; s<msg.length; s++){
+		      	if(msg[s].wbsPlanStartDate!=null){
+		      		if(msg[s].wbsPlanDependency=="없음"){
+		      			data.addRows([
+			      			[msg[s].wbsPlanName, msg[s].wbsPlanName,
+						         new Date(msg[s].wbsPlanStartDate), null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, null],
+				     	 	]);
+		      		}else{
+				    	 data.addRows([
+				    		 [msg[s].wbsPlanName, msg[s].wbsPlanName,
+						         new Date(msg[s].wbsPlanStartDate), null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, msg[s].wbsPlanDependency],
+				     	 	]);
+		      		}
+		      	}else{
+		      		 data.addRows([
+			    		 [msg[s].wbsPlanName, msg[s].wbsPlanName,
+					         null, null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, msg[s].wbsPlanDependency],
+			     	 	]);
+		      		}
+		      	
+		      	
+		     
 			 			'<div class="col-lg-4 well">'
 		 				+'<div>'
 		 				+'wbs이름 :'+msg[i].wbsPlanName+'<br>'
-		 				+'<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#'+msg[i].wbsPlanCode+'">수정</button>'
+		 				+'<button type="button" class="btn btn-info btn-sm" >수정</button>'
 		 				+'<form action="/pineapple/wbsplandetail.pms" method="post">'
 		 				+'<button type="submit" class="btn btn-danger btn-sm" name="btn" value="delete">삭제</button>'
 		 				+'<button type="submit" class="btn btn-primary btn-sm" name="btn" value="detail">상세정보</button>'				 				
@@ -116,50 +152,23 @@ $(document).ready(function(){
 		 				+'</div>'
 		 				+'</div>'
 				);
-				
-		}
-		/* for(var l = 0; l<msg.length; l++){
-			$('.wbsdc').append(
-			'<option value="'+msg[l].wbsPlanName+'">'+msg[l].wbsPlanName+'</option>'
-			)
-		} */
-		 	google.charts.load('current', {'packages':['gantt']});
-		    google.charts.setOnLoadCallback(drawChart);
-
-		    function daysToMilliseconds(days) {
-		      return days * 24 * 60 * 60 * 1000;
-		    }
-
-		    function drawChart() {
-
-		      var data = new google.visualization.DataTable();
-		      data.addColumn('string', 'Task ID');
-		      data.addColumn('string', 'Task Name');
-		      data.addColumn('date', 'Start Date');
-		      data.addColumn('date', 'End Date');
-		      data.addColumn('number', 'Duration');
-		      data.addColumn('number', 'Percent Complete');
-		      data.addColumn('string', 'Dependencies');
-		      for(var s = 0; s<msg.length; s++){
-		      	if(msg[s].wbsPlanStartDate!=null){
-		      		if(msg[s].wbsPlanDependency=="없음"){
-		      			data.addRows([
-			      			[msg[s].wbsPlanName, msg[s].wbsPlanName,
-						         new Date(msg[s].wbsPlanStartDate), null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, null],
-				     	 	]);
-		      		}else{
-				    	 data.addRows([
-				    		 [msg[s].wbsPlanName, msg[s].wbsPlanName,
-						         new Date(msg[s].wbsPlanStartDate), null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, msg[s].wbsPlanDependency],
-				     	 	]);
-		      		}
-		      	}else{
-		      		 data.addRows([
-			    		 [msg[s].wbsPlanName, msg[s].wbsPlanName,
-					         null, null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, msg[s].wbsPlanDependency],
-			     	 	]);
-		      		}
-		      	}
+		      	
+		      	
+		      	
+		      	
+		      	
+		      	
+		      /* 차트를 그릴때에 버튼도 함께 그려넣어줌  */
+		      $('#chart_btnarea').append(
+		    		  '<div style="height:42px; padding-top:6px;">'
+		    		  +msg[s].wbsPlanName
+		    		  +' <button class="btn btn-sm btn-success">상세정보</button>'
+		    		  +'<button class="btn btn-sm btn-warning data-toggle="modal" data-target="#'+msg[i].wbsPlanCode+'"">수정</button>'
+		    		  +'<button class="btn btn-sm btn-danger">삭제</button>'
+		    		  +'</div>'
+		      );
+		      
+		      }
 		      var options = {
 		        height: 275
 		      };
@@ -187,58 +196,68 @@ $(document).ready(function(){
 	<c:import url="/resources/module/topmenu.jsp"/>
 <!-- 본문 -->
 <div class="row">
-	<div class="col-md-3">
+	<div class="col-xs-3">
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
-	<div class="col-md-9">
-		<div class="col-md-3">
-			<div id="sidetree">
-	   			<div class="treeheader">
-				</div>
-		    		<ul id="tree">
-			    		<div id="sidetreecontrol">
-		    			</div>
-		        		<li>	        		
-		            		<strong><a href="/pineapple/wbsplanlistpage.pms">펀딩</a></strong>	   
-		            			<form action="/pineapple/wbsmsview.pms" method="post">	
+	<div class="col-xs-9">
+		<div class="row">
+			<div class="col-xs-3">
+				<div id="sidetree">
+		   			<div class="treeheader">
+					</div>
+			    		<ul id="tree">
+				    		<div id="sidetreecontrol">
+			    			</div>
+			        		<li>	        		
+			            		<strong><a href="/pineapple/wbsplanlistpage.pms">펀딩</a></strong>	   
+			            			<form action="/pineapple/wbsmsview.pms" method="post">	
+										<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
+										<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
+				            			<input type=submit value="${fdTitle}" class="submitLink">
+				               		</form>
+			            		</ul>
+					       	</li>
+					       	<li>
+					       	<strong>마일스톤:${milestoneName}</strong>
+					       		<form action="/pineapple/wbsform.pms" method="post">	
 									<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
 									<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
-			            			<input type=submit value="${fdTitle}" class="submitLink">
-			               		</form>
-		            		</ul>
-				       	</li>
-				       	<li>
-				       	<strong>마일스톤:${milestoneName}</strong>
-				       		<form action="/pineapple/wbsform.pms" method="post">	
-								<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
-								<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
-								<input type="hidden" readonly="readonly"  name="milestoneCode" value="${milestoneCode}">
-								<input type="hidden" readonly="readonly"  name="milestoneName" value="${milestoneName}">
-								<input type="hidden" readonly="readonly"  name="msComCode" value="${msComCode}">
-								<ul>
-					       		<input type=submit value="WBS예상입력" name="btn" class="submitLink">
-					       		</ul>
-					       		<ul>
-					       		<input type=submit value="WBS예상리스트" name="btn" class="submitLink">
-					       		</ul>
-					       		<ul>
-					       		<input type=submit value="WBS실제입력" name="btn" class="submitLink">
-					       		</ul>
-					       		<ul>
-					       		<input type=submit value="WBS실제리스트" name="btn" class="submitLink">
-					       		</ul>
-					       	</form>
-				       	</li>
-				    </ul>
+									<input type="hidden" readonly="readonly"  name="milestoneCode" value="${milestoneCode}">
+									<input type="hidden" readonly="readonly"  name="milestoneName" value="${milestoneName}">
+									<input type="hidden" readonly="readonly"  name="msComCode" value="${msComCode}">
+									<ul>
+						       		<input type=submit value="WBS예상입력" name="btn" class="submitLink">
+						       		</ul>
+						       		<ul>
+						       		<input type=submit value="WBS예상리스트" name="btn" class="submitLink">
+						       		</ul>
+						       		<ul>
+						       		<input type=submit value="WBS실제입력" name="btn" class="submitLink">
+						       		</ul>
+						       		<ul>
+						       		<input type=submit value="WBS실제리스트" name="btn" class="submitLink">
+						       		</ul>
+						       	</form>
+					       	</li>
+					    </ul>
+					</div>
+				</div>
+				<div class="col-xs-9">
+					<div class="col-xs-8">
+						<!-- wbs리스트 부분  -->
+						<div class="row" id="mywbsplanlist">
+						</div>
+						<!-- 차트뿌려지는곳 -->
+						<div class="row" id="chart_div">
+						</div>
+					</div>
+					<div class="col-xs-4" id="chart_btnarea">
+					<!-- 차트에 맞는 버튼이 들어올 곳 -->
+					</div>
 				</div>
 			</div>
-				<!-- wbs리스트 부분  -->
-				<div class="col-md-7" id="mywbsplanlist">
-				</div>
-			<div class="col-md-1"></div>
 		</div>
-	</div>
-	 <div id="chart_div"></div>
+</div>
 <!-- 풋터 -->
 <div>
 	<c:import url="/resources/module/footer.jsp"/>

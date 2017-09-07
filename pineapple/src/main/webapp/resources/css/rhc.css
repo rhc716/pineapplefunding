@@ -2,6 +2,99 @@
 @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
 
 /* 수정중 */
+
+#maintitlearea{
+	background-color: #f2ce00;
+}
+/* 메인화면 배너 */
+
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+body {
+  padding: 30px;
+  font-family: 'Monsterrat', sans-serif;
+}
+
+a#myAdLink {
+  display: inline-block;
+}
+
+#myAd { 
+  width: 238px;
+  height: 450px;
+  position: relative;
+  overflow: hidden;
+  background-color: #f2ce00;
+}
+
+#myAd .myAd_Img {
+  position: absolute;
+  background: url(https://s15.postimg.org/o2fkjjr8b/ad_image.png) no-repeat 0px 0px;
+}
+
+#myAd #adBg {
+  width: inherit;
+  height: 500px;
+  top: 0px;
+  left: 0px;
+}
+
+#myAd #myAd_head {
+  width: 110px;
+  height: 140px;
+  background-position: 0px -464px;
+  top: 250px;
+  left: 30px;
+  opacity: 0;
+}
+
+
+#myAd #myAd_txt1,
+#myAd #myAd_txt2,
+#myAd #myAd_txt3,
+#myAd #myAd_txt4,
+#myAd #myAd_txt5 {
+  position: absolute;
+  top: -300px;
+  width: inherit;
+  text-align: center;
+  color: #000;
+  font-size: 15px;
+  font-weight: 700;
+  text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.3);
+}
+/* 메인화면 배너 */
+
+
+
+
+/* 색상변경 타이틀 */
+.colorchangetitle {
+    -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+    animation-name: examplecolorchange;
+    animation-duration: 7s;
+    animation-iteration-count: infinite;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes examplecolorchange {
+    0%   {color: #e84c3d;}
+    25%  {color: #3787fe;}
+    50%  {color: #01022c;}
+    75%  {color: #3787fe;}
+    100% {color: #e84c3d;}
+}
+
+/* Standard syntax */
+@keyframes examplecolorchange {
+     0%  {color: #e84c3d;}
+    25%  {color: #3787fe;}
+    50%  {color: #01022c;}
+    75%  {color: #3787fe;}
+    100% {color: #e84c3d;}
+}
+/* 색상변경 타이틀 */
+
 .pagetitleandexplainbox {
 	border: 1.5px solid #009442;
 	border-radius: 5px;
