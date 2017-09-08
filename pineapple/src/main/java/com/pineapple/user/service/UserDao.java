@@ -15,6 +15,20 @@ public class UserDao implements UserDaoInterface {
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
 	
+	//회원탈퇴요청 취소 처리
+	@Override
+	public int updateUserCancleDelTime(String userId) {
+		log.debug("UserDao updateUserCancleDelTime : "+userId);
+		return sqlSessionTemplate.update("com.pineapple.user.service.UserMapper.updateUserCancleDelTime", userId);
+	}
+	
+	//회원탈퇴요청 처리
+	@Override
+	public int updateUserDelTime(String userId) {
+		log.debug("UserDao updateUserDelTime : "+userId);
+		return sqlSessionTemplate.update("com.pineapple.user.service.UserMapper.updateUserDelTime", userId);
+	}
+	
 	//투자자, 사이트관리자의 계좌수정 메서드 선언
 	@Override
 	public int updateAccountByAccountCode(Account account) {
@@ -101,6 +115,4 @@ public class UserDao implements UserDaoInterface {
     	log.debug("UserDao insertUser : "+row);
         return row;
     }
-
-
 }

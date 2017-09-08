@@ -7,24 +7,51 @@
 <title>Mypage 공통모듈</title>
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
 <!-- 부가적인 테마 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
-
 <!-- css lbr -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lbr.css" />
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
 	$(document).ready(function(){
+		//회원탈퇴요청시, 다시한번 의사 확인 후 요청 처리
+		$('#useroutrequestBtn').click(function(){
+			confirm('탈퇴요청을 하시겠습니까?');
+		});
+		$('#useroutCancleBtn').click(function(){
+			confirm('탈퇴요청을 취소 하시겠습니까?');
+		});
+		//탈퇴시 비밀번호 확인 ajax 요청
+		$('#submitpwcheckBtn').click(function(){
+			if($('#inputpw').val() != ''){
+				var inputuserpw = $('#inputpw').val();
+				var changeUserDetailAjax = $.ajax({ // ajax실행부분
+									        type: "get",
+									        url : "/pineapple/useroutpwcheck.user",
+									        data : {useroutpw : inputuserpw},
+									        success : function success(op){
+								        		if(op == 1){
+								        			$('#useroutPwCheck').hide();
+								        			$('#useroutRequest').show();
+								        		} else {
+								        			$('#useroutch').css('color', '#FF0000');
+								        			$('#useroutch').text('비밀번호가 일치하지 않습니다. 다시 한번 입력해주시기 바랍니다.')
+								        		}
+									        },
+									        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+									        error : function error(){
+									        		alert('비밀번호 확인 오류');
+									        }
+										});
+			};
+		});
+		
 		//회원상세정보 보기 모달에서 회원상세정보 수정하기를 클릭할 경우, 상세정보를 수정하는 모달을 보여줘서 수정 처리(모달 교체 코드)
 		$('#userdetailmodifyBtn').click(function(){
 			$('#userdetailcheckModal').modal("hide");
@@ -33,7 +60,7 @@
 			var in_userId = $('#userDetailIdChange').val();
 			var changeUserDetailAjax = $.ajax({ // ajax실행부분
 								        type: "get",
-								        url : "/pineapple/userdetailmodify.user",
+								        url : "/pineapple/.user",
 								        data : {userId : in_userId},
 								        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
 								        error : function error(){
@@ -50,7 +77,7 @@
 	    		$('#address2Change').val(ic.address2);
 			});
 		});
-		
+	
 		//회원상세정보 수정하기 모달 화면에서 수정하기 버튼을 클릭할 경우 발생할 이벤트 설정(회원상세정보 수정 form 유효성 검사 후 수동 submit)
 		$('#userDetailChangeSubmitBtn').click(function(){	// submit 버튼을 누르면 유효성 검사후 수동으로 submit 해준다
 			if($('#phoneFront3Change').val() != ''){  
@@ -240,7 +267,7 @@
 			</div>
 			<!-- 상세정보 입력한 경우는 더이상 입력 불가(마이페이지메인으로 리다이렉트됨), 확인만 가능 -->
 			<div>
-				<button type="submit" class="btn btn-info btn-block" data-toggle="modal" data-target="#userdetailcheckModal">회원상세정보보기</button>
+				<a type="submit" class="btn btn-info btn-block" data-toggle="modal" href="#userdetailcheckModal">회원상세정보보기</a>
 				<p id="explain">(회원상세정보를 확인하려면 클릭해주시기 바랍니다)</p>
 			</div>
 			<!-- 회원상세정보 보기 모달 화면 구현 -->
@@ -358,11 +385,48 @@
 				<p id="explain">새로운 비밀번호를 입력해주세요. 비밀번호는 6~20자의 영,숫자,특수문자가 모두 포함되어야 합니다</p>
 				<form id="newpwform" action="/pineapple/changepw.user" method="post">
 					<input type="password" id="newpw1" name="newpw1" class="form-control" placeholder="새로운 비밀번호">
-					<span id="newpwch1"></span><br><br>
+					<span id="newpwch1"></span><br>
 					<input type="password" id="newpw2" name="newpw2" class="form-control" placeholder="새로운 비밀번호 재입력">
 					<span id="newpwch2"></span><br>
 					<input id="submitnewpwBtn" type="button" class="button_insert signupbtn btn-block" value="변경">
 				</form>
+			</div>
+		</div>
+	</div>
+	<!-- 회원탈퇴요청 -->
+	<br>
+	<div>
+		<div class="row">
+			<div class="col-md-2">
+				<p>회원탈퇴요청</p>
+			</div>
+			<div class="col-md-10">
+				<br>
+				<c:choose>
+					<c:when test="${empty userLogin.uDelTime}">
+						<div id="useroutPwCheck">
+							<p id="explain">비밀번호 확인 후 회원탈퇴요청을 할 수 있습니다.</p>
+							<input type="password" id="inputpw" name="inputpw" class="form-control" placeholder="Enter Password Correctly">
+							<span id="useroutch"></span><br>
+							<input id="submitpwcheckBtn" type="button" class="button_insert signupbtn btn-block" value="비밀번호 확인">
+						</div>
+						<div id="useroutRequest" hidden>
+							<p id="explain">비밀번호 확인이 완료되었습니다. 회원탈퇴요청을 하시려면 아래 회원탈퇴버튼을 클릭해 주시기 바랍니다.</p>
+							<form action="/pineapple/useroutrequest.user" method="get">
+								<button id="useroutrequestBtn" type="submit" class="btn btn-danger btn-block">회원탈퇴</button>
+							</form>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div>
+							<a class="btn btn-block btn-warning disabled">탈퇴요청완료</a><br>
+							<p id="explain">회원탈퇴요청 취소는 탈퇴요청 후 6개월 동안만 가능합니다.</p>
+							<form action="/pineapple/useroutCancel.user" method="get">
+								<button id="useroutCancleBtn" type="submit" class="btn btn-warning btn-block">회원탈퇴취소</button>
+							</form>
+						</div>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 	</div>		

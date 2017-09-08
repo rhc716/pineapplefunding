@@ -14,6 +14,20 @@ public class UserService implements UserServiceInterface {
 	@Autowired
 	private UserDaoInterface dao;
 	
+	//회원탈퇴요청 취소 처리
+	@Override
+	public int modifyUserCancleDelTime(String userId) {
+		log.debug("service modifyUserCancleDelTime 호출 : "+userId);
+		return dao.updateUserCancleDelTime(userId);
+	}
+	
+	//회원탈퇴요청 처리
+	@Override
+	public int modifyUserDelTime(String userId) {
+		log.debug("service modifyUserDelTime 호출 : "+userId);
+		return dao.updateUserDelTime(userId);
+	}
+	
 	//투자자, 사이트관리자의 계좌수정 메서드 선언
 	@Override
 	public int changeAccountByAccountCode(Account account) {
@@ -99,6 +113,4 @@ public class UserService implements UserServiceInterface {
 		log.debug("service addUser 호출");
 		return dao.insertUser(user);
 	}
-
-	
 }

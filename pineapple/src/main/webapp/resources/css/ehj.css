@@ -74,8 +74,7 @@
 /* CLASS and TAG CSS */
 	/* 투자하기 */
 		/* 펀딩 동영상 부분 */
-			.funding-vedio{line-height: 329px;
-						   text-align: center;}
+			.funding-vedio{text-align: center;}
 		/* 펀딩 동영상 부분 */
 		/* 펀딩Data 동영상 옆 */
 			/* 모집,투자자,달성률 */
@@ -84,7 +83,7 @@
 				div.fundingdata1 h4{margin: 0px;}
 				.fundingdata .topdata{padding-top: 10;
 									  border: 1px solid;
-									  height: 80px;}
+									  }
 			/* 모집,투자자,달성률 */
 			/* 차트바 */
 				.chart-bar{height: 85px;
@@ -99,20 +98,16 @@
 			/* 펀딩좋아요,마감일자 */
 			/* 투자하기,투자방법안내 btn */
 				.investbtn-all{padding: 0px;
-							   height: 160px;
 							   border: 1px solid;}
 				.investbtn-invest{padding: 0px;
-						   height: 100px;
 						   font-size: 30px;
 						   border: 1px solid;}
 				.investbtn-investguide{padding: 0px;
-									   height: 60px;
 									   font-size: 20px;
 									   border: 1px solid;}
 			/* 투자하기,투자방법안내 btn */
 			/* 펀딩형태,판매주식수,주당발행가,최소신청금액 */
 				.funding-investdata{line-height: 40px;
-									height: 160px;
 									border: 1px solid;}
 			/* 펀딩형태,판매주식수,최소신청금액 */
 		/* 펀딩Data 동영상 옆 */

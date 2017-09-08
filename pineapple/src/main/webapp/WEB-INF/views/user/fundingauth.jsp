@@ -88,11 +88,11 @@
 											    <label for="authFdName">펀딩명</label>
 											    <p id="explain">(권한을 부여할 펀딩 이름을 정확히 선택해주세요)</p>
 											    <select id="fdselectlist" name="authFdCode" class="form-control">
-													<optgroup label="펀딩명">
-													    <c:forEach var="fundinglist" items="${fundinglistById}">
-													    	<option value="${fundinglist.fdCode}" comCode="${fundinglist.fdComCode}">${fundinglist.fdTitle}</option>
-													    </c:forEach>
-												    </optgroup>
+												    <c:forEach var="fundinglist" items="${fundinglistById}">
+												    	<optgroup label="${fundinglist.comName}">
+												    		<option value="${fundinglist.fdCode}">${fundinglist.fdTitle}</option>
+												    	</optgroup>
+												    </c:forEach>
 												</select>
 										  	</div>
 										  	<br>
@@ -106,7 +106,7 @@
 										  	<div class="form-group">
 										  		<label for="authReceiver">권한피부여자ID</label>
 											    <p id="explain">(권한을 부여받을 사원의 ID를 선택해주세요)</p>
-											    <select name="authReceiver" id="employeelistonecompany">
+											    <select name="authReceiver" id="employeelistonecompany" class="form-control">
 												    <c:forEach var="employeelist" items="${allEmployeeInMyCom}" varStatus="emNumber">
 										    			<optgroup label="${employeelist.emComName}">
 										    				<option value="${employeelist.emUserId}">${employeelist.emUserId}</option>
@@ -119,7 +119,7 @@
 											<div class="form-group">
 										  		<label for="fdAuthLevelCode">펀딩내 권한명</label>
 											    <p id="explain">(펀딩내에서 부여할 권한명을 선택해주시기 바랍니다)</p>
-											    <select name="fdAuthLevelCode">
+											    <select name="fdAuthLevelCode" class="form-control">
 											     	<optgroup label="권한명">
 													    <c:forEach var="fdauthlevel" items="${fundingauthlevel}">
 													    	<option value="${fdauthlevel.authLevelCode}">${fdauthlevel.authLevelName}</option>

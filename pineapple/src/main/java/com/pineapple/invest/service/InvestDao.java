@@ -2,7 +2,6 @@ package com.pineapple.invest.service;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -17,14 +16,6 @@ public class InvestDao implements InvestDaoInterface {
 	private Logger log = Logger.getLogger(this.getClass());
     @Autowired
     private SqlSessionTemplate sqlSessionTemplate;
-    
-    //전체펀딩리스트 조회
-	@Override
-	public List<InvestAndFd> investFundingSelect(){
-		log.debug("InvestDao-----investFundingSelect");
-		Map<String, Integer> map = new HashMap<String, Integer>();
-		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.selectInvestAndFd",map);
-	}
 	//조건 검색으로 펀딩 리스트 조회 Dao
 	@Override
 	public List<InvestAndFd> investFundingChooseSelect(HashMap<String, String[]> map) {
@@ -112,6 +103,12 @@ public class InvestDao implements InvestDaoInterface {
 	public List<MyInvestorFundingQna> investorQnaSelect(String qnaFdId){
 		log.debug("InvestDao-----investorQnaSelect");
 		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.selectMypageFundingQna", qnaFdId);
+	}
+	//자신의 투자 list 조회
+	@Override
+	public List<InvestorInvestList> investorInvestListSelect(String id) {
+		log.debug("InvestDao-----investorQnaSelect");
+		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.selectMpageinvestment", id);
 	}
 }
 

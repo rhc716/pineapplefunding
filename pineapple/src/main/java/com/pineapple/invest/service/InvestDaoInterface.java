@@ -6,8 +6,6 @@ import java.util.List;
 import com.pineapple.funding.service.FundingDetail;
 
 public interface InvestDaoInterface {
-	//전체펀딩리스트 조회Dao
-	List<InvestAndFd> investFundingSelect();
 	//조건 검색으로 펀딩 리스트 조회 Dao
 	List<InvestAndFd> investFundingChooseSelect(HashMap<String, String[]> map);
 	//하나의 펀딩 data 불러오는 Dao
@@ -39,4 +37,6 @@ public interface InvestDaoInterface {
 	/////////MY Page Investor/////////
 	//자신의 펀딩 Q&A 글 조회
 	List<MyInvestorFundingQna> investorQnaSelect(String qnaFdId);
+	//자신의 투자 list 조회
+	List<InvestorInvestList> investorInvestListSelect(String id);
 }

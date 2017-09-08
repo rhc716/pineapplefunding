@@ -9,6 +9,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+	//부트스트랩 새로고침할 때 페이지 유지
+	$('#myTab a').click(function(e) {
+	  e.preventDefault();
+	  $(this).tab('show');
+	});
+	
+	//hash value에 현재 선택된 탭을 저장한다
+	$("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
+	  var id = $(e.target).attr("href").substr(1);
+	  window.location.hash = id;
+	});
+	
+	// 페이지 로드할 때 : 현재 선택된 탭으로 전환
+	var hash = window.location.hash;
+	$('#myTab a[href="' + hash + '"]').tab('show');
 	//기업등록시 기업명 존재여부 검사
 	$('#comName1').blur(function(){
 			$.ajax({ // ajax실행부분
@@ -75,22 +90,22 @@ $(document).ready(function(){
 		<!-- 일반사원마이페이지 Tab bar -->
 		<ul id="myTab" class="nav nav-tabs" role="tablist"> 
 			<li role="presentation" class="active">
-				<a data-target="#employeeinfo" id="employeeinfo-tab" role="tab" data-toggle="tab" aria-controls="employeeinfo" aria-expanded="true">내정보</a>
+				<a href="#employeeinfo" id="employeeinfo-tab" role="tab" data-toggle="tab" aria-controls="employeeinfo" aria-expanded="true">내정보</a>
 			</li> 
 			<li role="presentation" class="">
-				<a data-target="#insertEmployee" role="tab" id="#insertEmployee-tab" data-toggle="tab" aria-controls="#insertEmployee" aria-expanded="false">사원등록/탈퇴요청</a>
+				<a href="#insertEmployee" role="tab" id="#insertEmployee-tab" data-toggle="tab" aria-controls="#insertEmployee" aria-expanded="false">사원등록/탈퇴요청</a>
 			</li>
 			<li role="presentation" class="">
-				<a data-target="#insertCompany" role="tab" id="#insertCompany-tab" data-toggle="tab" aria-controls="#insertCompany" aria-expanded="false">기업등록요청</a>
+				<a href="#insertCompany" role="tab" id="#insertCompany-tab" data-toggle="tab" aria-controls="#insertCompany" aria-expanded="false">기업등록요청</a>
 			</li>
 			<li role="presentation" class="">
-				<a data-target="#fundingqna" role="tab" id="fundingqna-tab" data-toggle="tab" aria-controls="fundingqna" aria-expanded="false">펀딩Q&A</a>
+				<a href="#fundingqna" role="tab" id="fundingqna-tab" data-toggle="tab" aria-controls="fundingqna" aria-expanded="false">펀딩Q&A</a>
 			</li>
 			<li role="presentation" class="">
-				<a data-target="#message" role="tab" id="message-tab" data-toggle="tab" aria-controls="message" aria-expanded="false">메세지</a>
+				<a href="#message" role="tab" id="message-tab" data-toggle="tab" aria-controls="message" aria-expanded="false">메세지</a>
 			</li>  
 			<li role="presentation" class="">
-				<a data-target="#investmemt" role="tab" id="investmemt-tab" data-toggle="tab" aria-controls="investmemt" aria-expanded="false">투자내역</a>
+				<a href="#investmemt" role="tab" id="investmemt-tab" data-toggle="tab" aria-controls="investmemt" aria-expanded="false">투자내역</a>
 			</li>  
 		</ul>
 		<div id="myTabContent" class="tab-content">

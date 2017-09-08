@@ -7,8 +7,26 @@
 <title>투자자 MyPage</title>
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function(){
+	//부트스트랩 새로고침할 때 페이지 유지
+	$('#myTab a').click(function(e) {
+	  e.preventDefault();
+	  $(this).tab('show');
+	});
+	
+	//hash value에 현재 선택된 탭을 저장한다
+	$("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
+	  var id = $(e.target).attr("href").substr(1);
+	  window.location.hash = id;
+	});
+	
+	// 페이지 로드할 때 : 현재 선택된 탭으로 전환
+	var hash = window.location.hash;
+	$('#myTab a[href="' + hash + '"]').tab('show');
+	
+	//버튼 클릭시 실행
 	$('.changeaccount').click(function(){
 		var in_accountCode = $(this).attr('value');
 		var changeAccountAjax = $.ajax({ // ajax실행부분
@@ -33,110 +51,101 @@ $(document).ready(function(){
 		});
 	});
 	//투자내역 tab ajax 요청
-	$('#investmemt-tab').click(function(){
-		var investmenttab = $.ajax({ // ajax실행부분
-	        type: 'get',
-	        url : '/pineapple/investorinvestment.user',
-	        success : function success(msg){
-	        	$('#investorinvest').html(msg);
-	        },
-	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
-	        error : function error(){
-        	}
-		});
+	var investmenttab = $.ajax({ // ajax실행부분
+        type: 'get',
+        url : '/pineapple/investorinvestment.invest',
+        success : function success(msg){
+        	$('#investorinvest').html(msg);
+        },
+        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+        error : function error(){
+       	}
 	});
  	//Q&A tab ajax 요청
-	$('#fundingqna-tab').click(function(){
-		var investorqnatab = $.ajax({ // ajax실행부분
-	        type: "get",
-	        url : "/pineapple/investorfundingqna.invest",
-	        success : function success(msg){
-	        	$('#investorfundingqna').empty();
-	        	$('#investorfundingqna').html(msg);
-	         	//수정 버튼 click 이벤트
-	         	$('.qnaupdateform').click(function(){
-	         		var qnaCode = $(this).attr('dataCode');
-	         		$('#qnaform'+qnaCode+'').submit();
-	         	});
-	        	$('.reply-main').click(function(){
-	        		var qnaCode = $(this).attr('dataCode');
-	        		var investorqnatab = $.ajax({ // ajax실행부분
-	        	        type: "get",
-	        	        url : "/pineapple/investorfundingqnareply.invest",
-	        	        data : {qnaCode : qnaCode},
-	        	        success : function success(msg){
-	        	        	$('#qnaCode_'+qnaCode+'').html(msg);
-	        	        	$('.qnareupdateform').click(function(){
-	        	        		var qnaReCode = $(this).attr('id');
-	        	        		$('#qnareform'+qnaReCode+'').submit();
-	        	        	});
-	        	        },
-	        	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
-	        	        error : function error(){
-	                	}
-	        		});
-	        	});
-	        },
-	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
-	        error : function error(){
-        	}
-		});
+	var investorqnatab = $.ajax({ // ajax실행부분
+        type: "get",
+        url : "/pineapple/investorfundingqna.invest",
+        success : function success(msg){
+        	$('#investorfundingqna').empty();
+        	$('#investorfundingqna').html(msg);
+         	//수정 버튼 click 이벤트
+         	$('.qnaupdateform').click(function(){
+         		var qnaCode = $(this).attr('dataCode');
+         		$('#qnaform'+qnaCode+'').submit();
+         	});
+        	$('.reply-main').click(function(){
+        		var qnaCode = $(this).attr('dataCode');
+        		var investorqnatab = $.ajax({ // ajax실행부분
+        	        type: "get",
+        	        url : "/pineapple/investorfundingqnareply.invest",
+        	        data : {qnaCode : qnaCode},
+        	        success : function success(msg){
+        	        	$('#qnaCode_'+qnaCode+'').html(msg);
+        	        	$('.qnareupdateform').click(function(){
+        	        		var qnaReCode = $(this).attr('id');
+        	        		$('#qnareform'+qnaReCode+'').submit();
+        	        	});
+        	        },
+        	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+        	        error : function error(){
+                	}
+        		});
+        	});
+        },
+        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+        error : function error(){
+       	}
 	});
 	//타임라인 tab ajax 요청
-	$('#timeline-tab').click(function(){
-		databoo = $(this).attr('dataBoo');
-		var investmenttab = $.ajax({ // ajax실행부분
-	        type: 'get',
-	        url : '/pineapple/investortimeline.timeline',
-	        success : function success(msg){
-	        	$('#investortimeline').html(msg);
-	        	$('#timelinereservebtn').click(function(){
-	        		$('#timelineform').submit();
-	        	});
-	        	$('.timelinereservebtn').click(function(){
-	        		var tldata = $(this).attr('dataCode');
-	        		$('#timelineform'+tldata+'').submit();
-	        	});
-	        	$('.timereply').click(function(){
-	        		var dataCode = $(this).attr('dataCode');
-	        		var investortimelinereply = $.ajax({ // ajax실행부분
-	        	        type: 'get',
-	        	        url : '/pineapple/investortimelinereply.timeline',
-	        	        data : {tlCode : dataCode},
-	        	        success : function success(msg2){
-	        	   				$('#timelinereplylist'+dataCode+'').html(msg2);
-	        	   				$('.timelinereplyinsertbtn').click(function(){
-	        	   					var tlCode = $(this).attr('dataCode')
-	        	   					$('#timelinereplyform'+tlCode+'').submit();
-	        	   				});
-	        	        },
-	        	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
-	        	        error : function error(){
-	        	        	alert('1실패')
-	                	}
-	        		});
-	        	});
-	        },
-	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
-	        error : function error(){
-	        	alert('1실패')
-        	}
-		});
+	databoo = $(this).attr('dataBoo');
+	var timelinetab = $.ajax({ // ajax실행부분
+        type: 'get',
+        url : '/pineapple/investortimeline.timeline',
+        success : function success(msg){
+        	$('#investortimeline').html(msg);
+        	$('#timelinereservebtn').click(function(){
+        		$('#timelineform').submit();
+        	});
+        	$('.timelinereservebtn').click(function(){
+        		var tldata = $(this).attr('dataCode');
+        		$('#timelineform'+tldata+'').submit();
+        	});
+        	$('.timereply').click(function(){
+        		var dataCode = $(this).attr('dataCode');
+        		var investortimelinereply = $.ajax({ // ajax실행부분
+        	        type: 'get',
+        	        url : '/pineapple/investortimelinereply.timeline',
+        	        data : {tlCode : dataCode},
+        	        success : function success(msg2){
+        	   				$('#timelinereplylist'+dataCode+'').html(msg2);
+        	   				$('.timelinereplyinsertbtn').click(function(){
+        	   					var tlCode = $(this).attr('dataCode')
+        	   					$('#timelinereplyform'+tlCode+'').submit();
+        	   				});
+        	        },
+        	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+        	        error : function error(){
+        	        	alert('1실패')
+                	}
+        		});
+        	});
+        },
+        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+        error : function error(){
+        	alert('1실패')
+       	}
 	});
 	//메세지 tab 클릭시 ajax 요청
-	$('#message-tab').click(function(){
-		var investmenttab = $.ajax({ // ajax실행부분
-	        type: 'get',
-	        url : '/pineapple/investormessagelist.timeline',
-	        success : function success(msg){
-	        	$('#investormessage').html(msg);
-	        },
-	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
-	        error : function error(){
-        	}
-		});
+	var messagetab = $.ajax({ // ajax실행부분
+        type: 'get',
+        url : '/pineapple/investormessagelist.timeline',
+        success : function success(msg){
+        	$('#investormessage').html(msg);
+        },
+        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+        error : function error(){
+       	}
 	});
-	
 });
 </script>
 </head>
@@ -151,19 +160,19 @@ $(document).ready(function(){
 <div class="container"> 
 	<ul id="myTab" class="nav nav-tabs" role="tablist"> 
 		<li role="presentation" class="active">
-			<a data-target="#investorinfo" id="investorinfo-tab" role="tab" data-toggle="tab" aria-controls="investorinfo" aria-expanded="true">내정보</a>
+			<a href="#investorinfo" id="investorinfo-tab" role="tab" data-toggle="tab" aria-controls="investorinfo" aria-expanded="true">내정보</a>
 		</li> 
 		<li role="presentation" class="">
-			<a data-target="#timeline" role="tab" id="timeline-tab" data-toggle="tab" aria-controls="timeline" aria-expanded="false" dataBoo="false">타임라인</a>
+			<a href="#timeline" role="tab" id="timeline-tab" data-toggle="tab" aria-controls="timeline" aria-expanded="false" dataBoo="false">타임라인</a>
 		</li>
 		<li role="presentation" class="">
-			<a data-target="#fundingqna" role="tab" id="fundingqna-tab" data-toggle="tab" aria-controls="fundingqna" aria-expanded="false">펀딩Q&A</a>
+			<a href="#fundingqna" role="tab" id="fundingqna-tab" data-toggle="tab" aria-controls="fundingqna" aria-expanded="false">펀딩Q&A</a>
 		</li>
 		<li role="presentation" class="">
-			<a data-target="#message" role="tab" id="message-tab" data-toggle="tab" aria-controls="message" aria-expanded="false">메세지</a>
+			<a href="#message" role="tab" id="message-tab" data-toggle="tab" aria-controls="message" aria-expanded="false">메세지</a>
 		</li>  
 		<li role="presentation" class="">
-			<a data-target="#investmemt" role="tab" id="investmemt-tab" data-toggle="tab" aria-controls="investmemt" aria-expanded="false">투자내역</a>
+			<a href="#investmemt" role="tab" id="investmemt-tab" data-toggle="tab" aria-controls="investmemt" aria-expanded="false">투자내역</a>
 		</li>  
 	</ul>
 	<div id="myTabContent" class="tab-content">

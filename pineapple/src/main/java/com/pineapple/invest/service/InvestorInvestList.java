@@ -6,6 +6,7 @@ public class InvestorInvestList {
 	private String investId;
 	private String investTime;
 	private int payCheck;
+	private int purchaseShares;
 	private int fdCode;
 	private String fdType;
 	private String fdStatus;
@@ -13,6 +14,13 @@ public class InvestorInvestList {
 	private int numberOfShares;
 	private int investtotal;
 	private int issuePrice;
+	
+	public int getPurchaseShares() {
+		return purchaseShares;
+	}
+	public void setPurchaseShares(int purchaseShares) {
+		this.purchaseShares = purchaseShares;
+	}
 	public int getInvestCode() {
 		return investCode;
 	}
@@ -88,9 +96,11 @@ public class InvestorInvestList {
 	@Override
 	public String toString() {
 		return "InvestorInvestList [investCode=" + investCode + ", investFdCode=" + investFdCode + ", investId="
-				+ investId + ", investTime=" + investTime + ", payCheck=" + payCheck + ", fdCode=" + fdCode
-				+ ", fdType=" + fdType + ", fdStatus=" + fdStatus + ", fdTitle=" + fdTitle + ", numberOfShares="
-				+ numberOfShares + ", investtotal=" + investtotal + ", issuePrice=" + issuePrice + "]";
+				+ investId + ", investTime=" + investTime + ", payCheck=" + payCheck + ", purchaseShares="
+				+ purchaseShares + ", fdCode=" + fdCode + ", fdType=" + fdType + ", fdStatus=" + fdStatus + ", fdTitle="
+				+ fdTitle + ", numberOfShares=" + numberOfShares + ", investtotal=" + investtotal + ", issuePrice="
+				+ issuePrice + "]";
 	}
+
 
 }

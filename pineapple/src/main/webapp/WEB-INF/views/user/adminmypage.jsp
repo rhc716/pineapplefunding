@@ -9,6 +9,23 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+	//부트스트랩 새로고침할 때 페이지 유지
+	$('#myTab a').click(function(e) {
+	  e.preventDefault();
+	  $(this).tab('show');
+	});
+	
+	//hash value에 현재 선택된 탭을 저장한다
+	$("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
+	  var id = $(e.target).attr("href").substr(1);
+	  window.location.hash = id;
+	});
+	
+	// 페이지 로드할 때 : 현재 선택된 탭으로 전환
+	var hash = window.location.hash;
+	$('#myTab a[href="' + hash + '"]').tab('show');
+	
+	//
 	$('.changeaccount').click(function(){
 		var in_accountCode = $(this).attr('value');
 		var changeAccountAjax = $.ajax({ // ajax실행부분
@@ -93,19 +110,19 @@ $(document).ready(function(){
 <!-- 사이트관리자마이페이지 Tab bar -->
 		<ul id="myTab" class="nav nav-tabs" role="tablist"> 
 			<li role="presentation" class="active">
-				<a data-target="#admininfo" id="admininfo-tab" role="tab" data-toggle="tab" aria-controls="admininfo" aria-expanded="true">내정보</a>
+				<a href="#admininfo" id="admininfo-tab" role="tab" data-toggle="tab" aria-controls="admininfo" aria-expanded="true">내정보</a>
 			</li>
 			<li role="presentation" class="">
-				<a data-target="#fundinginfo" role="tab" id="fundinginfo-tab" data-toggle="tab" aria-controls="fundinginfo" aria-expanded="false">펀딩현황조회</a>
+				<a href="#fundinginfo" role="tab" id="fundinginfo-tab" data-toggle="tab" aria-controls="fundinginfo" aria-expanded="false">펀딩현황조회</a>
 			</li>
 			<li role="presentation" class="">
-				<a data-target="#allCompanyList" role="tab" id="allCompanyList-tab" data-toggle="tab" aria-controls="allCompanyList" aria-expanded="false">전체회사목록</a>
+				<a href="#allCompanyList" role="tab" id="allCompanyList-tab" data-toggle="tab" aria-controls="allCompanyList" aria-expanded="false">전체회사목록</a>
 			</li>
 			<li role="presentation" class="">
-				<a data-target="#allUserList" role="tab" id="allUserList-tab" data-toggle="tab" aria-controls="allUserList" aria-expanded="false">전체회원목록</a>
+				<a href="#allUserList" role="tab" id="allUserList-tab" data-toggle="tab" aria-controls="allUserList" aria-expanded="false">전체회원목록</a>
 			</li>
 			<li role="presentation" class="">
-				<a data-target="#message" role="tab" id="message-tab" data-toggle="tab" aria-controls="message" aria-expanded="false">메세지</a>
+				<a href="#message" role="tab" id="message-tab" data-toggle="tab" aria-controls="message" aria-expanded="false">메세지</a>
 			</li>
 		</ul>
 		<!-- 첫번째 탭 시작(관리자 정보 보기) -->

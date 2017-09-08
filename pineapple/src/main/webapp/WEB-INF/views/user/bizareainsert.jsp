@@ -17,36 +17,6 @@
 <!-- css rhc -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
 <title>사업분야등록</title>
-<script>
-$(document).ready(function(){
-	// 펀딩을 선택하는 select option 채워줄 ajax
-	var getfundinglist = $.ajax({
-		type : "get",
-		url : "/pineapple/getmyfundinglist.pms",
-		/* 아이디 세션에서 받아서 가져옴 */
-		data : { userId : "${id}"}
-	});
-	// 성공시
-	getfundinglist.done(function(msg){
-		console.log(msg);
-		//펀딩을 선택하는 select option 채워주는 코드 
-		for(var i = 0; i<msg.length; i++){
-			$('#fdselectlist').append(
-				'<option value="'+msg[i].fdCode+'">'+msg[i].fdTitle+'</option>'
-			);
-		};
-	});
-	// 실패시
-	getfundinglist.fail(function(){
-		alert('ajax통신실패');
-	});
-	
-	function OnDropDownChange(dropDown) {
-        var selectedValue = dropDown.options[dropDown.selectedIndex].value;
-        document.getElementById("txtSelectedfd").value = selectedValue;
-    }
-});
-</script>
 </head>
 <body>
 <div class="container">
@@ -68,11 +38,16 @@ $(document).ready(function(){
 				펀딩별 다양한 사업분야를 등록할 수 있습니다.
 			</p>
 			<div>
-				<form action="/pineapple/insertbizarea.user" method="post" name="bizarea" id="bizareaform">
-					<select id="fdselectlist" name="areaFdCodeSelect" form="bizareaform" onChange="OnDropDownChange(this)">
-						<!-- ajax요청으로 목록을 채워줌 -->
+				<form action="/pineapple/insertbizarea.user" method="post">
+					<select name="areaFdCode" class="form-control">
+					    <c:forEach var="fundinglist" items="${fundinglistById}">
+					    	<optgroup label="${fundinglist.comName}">
+					    		<option value="${fundinglist.fdCode}">${fundinglist.fdTitle}</option>
+					    	</optgroup>
+					    </c:forEach>
 					</select>
-					<select name="areaName" form="bizareaform">
+					<br>
+					<select name="areaName" class="form-control">
 						<option value="it">it</option>
 						<option value="핀테크">핀테크</option>
 						<option value="인터넷서비스">인터넷서비스</option>
@@ -84,8 +59,8 @@ $(document).ready(function(){
 						<option value="유통">유통</option>
 						<option value="농수산">농수산</option>
 					</select>
-					<input type="hidden" id="txtSelectedfd" name="areaFdCode" value="" />
-					<button type="submit" class="btn btn-lg btn-success">등록</button>
+					<br>
+					<button type="submit" class="btn btn-block btn-success">등록</button>
 				</form>
 			</div>
 			<br>

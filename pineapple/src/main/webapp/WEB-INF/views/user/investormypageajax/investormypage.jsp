@@ -23,7 +23,7 @@
 			</div>
 			<div class="col-xs-12 investorinvestpadding0">
 				<div class="col-xs-6 investorinvestpadding0">
-				<div class="investmymoney">투자 결제 금액</div><div>새로운 쿼리문으로 적용</div>
+				<div class="investmymoney">투자 결제 금액</div><div style="font-size: 17px;">${investorData.purchaseShares*investorData.issuePrice}원</div>
 				</div>
 			</div>
 		</div>
@@ -46,6 +46,11 @@
 				<div class="investorpay0id">${investorData.fdTitle}</div>
 				<span class="investorpay0time">${investorData.investTime}</span>
 			<c:choose>
+				<c:when test="${investorData.fdStatus == '모집중'}">
+				<a href="#">예약취소</a>
+				</c:when>
+			</c:choose>
+			<c:choose>
 				<c:when test="${investorData.fdStatus == '결제모집중'}">
 				<a href="#">결제하기</a>
 				</c:when>
@@ -53,7 +58,7 @@
 			</div>
 			<div class="col-xs-12 investorinvestpadding0">
 				<div class="col-xs-6 investorinvestpadding0">
-				<div class="investpay0mymoney">투자 예약 금액</div><div>새로운 쿼리문으로 적용</div>
+				<div class="investpay0mymoney">투자 예약 금액</div><div style="font-size: 17px;">${investorData.purchaseShares*investorData.issuePrice}원</div>
 				</div>
 			</div>
 		</div>

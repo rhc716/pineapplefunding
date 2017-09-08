@@ -14,7 +14,7 @@ public interface MypageDaoInterface {
 	int insertFundingAuth(Fundingauth fundingauth);
 	
 	//소속 기업의 펀딩리스트 조회(ID로)
-	List<Funding> selectFundingListOfMyCompany(String userId);
+	List<FundingAndCompany> selectFundingListOfMyCompany(String userId);
 	
 	//하나의 기업에 소속된 사원목록 조회(comCode 입력값)
 	List<Employee> selectEmployeeByComCode(int comCode);

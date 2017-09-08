@@ -28,68 +28,87 @@
 
 
 <script> 
-	
 	//펀딩 Tab Content
-	$(document).ready(function() { 
+	$(document).ready(function() {
+		$('#myTab a').click(function(e) {
+			  e.preventDefault();
+			  $(this).tab('show');
+			});
+			
+			//hash value에 현재 선택된 탭을 저장한다
+			$("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
+			  var id = $(e.target).attr("href").substr(1);
+			  window.location.hash = id;
+			});
+			
+			// 페이지 로드할 때 : 현재 선택된 탭으로 전환
+			var hash = window.location.hash;
+			$('#myTab a[href="' + hash + '"]').tab('show');
+			
+ 		//펀딩Q&A클릭시
+		$('#fundingqnalist').empty();
+		var getfundingqna = $.ajax({
+			type : "get",
+			url : "/pineapple/investfundingqna.invest",
+			data : {fdCode : ${param.fdCode}}
+		});
+		//성공
+		getfundingqna.done(function(msg){
+			$('#fundingqnalist').html(msg)
+			$('.qnaupdateform').click(function(){
+				var qnaupdate = $(this).attr("id")
+				console.log(qnaupdate)
+				$('#qnaform'+qnaupdate+'').submit();
+			});
+	 		//답글보기 클릭시
+	 		$('.reply-main').click(function(){
+	 			var turefalse = $(this).attr('aria-expanded')
+	 			var qnaCode = $(this).attr('id')
+					var getfundingqnareply = $.ajax({
+						type : 'get',
+						url : '/pineapple/investfundingqnareply.invest',
+						data : {qnaCode : qnaCode}
+					});
+					getfundingqnareply.done(function(msg){
+						$('.qnaCode_'+qnaCode+'').html(msg)
+						$('.qnareupdateform').click(function(){
+							var qnareupdate = $(this).attr("id");
+							console.log(qnareupdate);
+							$('#qnareform'+qnareupdate+'').submit();
+						});
+					});
+					getfundingqnareply.fail(function(){
+						alert("실패");
+					});
+			});
+	 		
+		});
+		//실패
+		getfundingqna.fail(function(){
+			alert('두번째 ajax통신실패');
+		});
 		var getfundingdata = $.ajax({
 			type : "get",
 			url : "/pineapple/investfundingdetail.invest",
 			data : {fdCode : ${param.fdCode}}
-		});
-		//펀딩Q&A클릭시
-		$('#fundingqna-tab').click(function(param){
-			$('#fundingqnalist').empty();
-			var getfundingqna = $.ajax({
-				type : "get",
-				url : "/pineapple/investfundingqna.invest",
-				data : {fdCode : ${param.fdCode}}
-			});
-			//성공
-			getfundingqna.done(function(msg){
-				$('#fundingqnalist').html(msg)
-				$('.qnaupdateform').click(function(){
-					var qnaupdate = $(this).attr("id")
-					console.log(qnaupdate)
-					$('#qnaform'+qnaupdate+'').submit();
-				});
-		 		//답글보기 클릭시
-		 		$('.reply-main').click(function(){
-		 			var turefalse = $(this).attr('aria-expanded')
-		 			var qnaCode = $(this).attr('id')
-						var getfundingqnareply = $.ajax({
-							type : 'get',
-							url : '/pineapple/investfundingqnareply.invest',
-							data : {qnaCode : qnaCode}
-						});
-						getfundingqnareply.done(function(msg){
-							$('.qnaCode_'+qnaCode+'').html(msg)
-							$('.qnareupdateform').click(function(){
-								var qnareupdate = $(this).attr("id");
-								console.log(qnareupdate);
-								$('#qnareform'+qnareupdate+'').submit();
-							});
-						});
-						getfundingqnareply.fail(function(){
-							alert("실패");
-						});
-				});
-		 		
-			});
-			//실패
-			getfundingqna.fail(function(){
-				alert('두번째 ajax통신실패');
-			});
 		});
 		// 성공시
 		getfundingdata.done(function(msg){
 			console.log(msg)
 			$('#openstoryContent').html(msg.openstory);
 			$('#comValueContent').text(msg.comValue);
+			$('img').each(function(n){
+				   console.log($(this));
+				   
+				   $(this).on( "error", function(){
+					   $(this).attr("src", "${pageContext.request.contextPath}/resources/img/404alternateimage.jpg");
+			    });
+			});
 		});
 		// 실패시
 		getfundingdata.fail(function(){
 			alert('첫번째 ajax통신실패');
-		});
+		}); 
 		//TAB 메뉴
 		$('a[data-toggle="tab"]').on('hidden.bs.tab', function(e){
 		}); 
@@ -108,16 +127,17 @@
 		var check = "";
 		$('#investbtn').click(function () {
 		      $('#myModal').modal('show',function(){
-		      });
-		    })
+			  });
+		})
 		//모달창 열때
 		$('#myModal').on('shown.bs.modal', function () {
 		      //alert('호출되었습니다.')
-		    })
+		})
 		//모달창 닫을때
 		$('#myModal').on('hidden.bs.modal', function () {
 		      //alert('호출되었습니다.')
-		    })
+		})
+		
 	});
 </script>
 </head>
@@ -129,60 +149,69 @@
 	<c:import url="/resources/module/topmenu.jsp"/>
 <!-- 본문 -->
 	
-<div>
+<div class="col-md-12" style="padding: 0px;">
 	<!-- 펀딩제목 -->
 	<c:set var="Data" value="${fundingData}" />
 	<div>
 		<h2 style="text-align: center;">${Data.fdTitle}</h2>
 	</div>
-	<div class="col-xs-12 pd-a-20 ma-b-20 font-j" style="border: 1.5px solid #009442 ;border-radius: 5px;"> 
-		
-		<div class="col-xs-7 funding-vedio pd-a-0">
-			<iframe width="620" height="349" src="https://www.youtube.com/embed/JGwWNGJdvx8" frameborder="0" allowfullscreen style="padding-right: 20px"></iframe>
+	<div class="col-md-12" style="padding: 0px;">
+	<div class="col-md-7" style="padding: 0px 10px;margin-bottom: 20px;"> 
+		<c:set var="poster" value="${Data.posterImg}"></c:set>
+		<div class="col-md-12" style="padding: 0.3px;border: 1.5px solid #009442 ; text-align: center;">
+			<c:choose>
+	 		<c:when test="${poster == null}">
+				<img src="${pageContext.request.contextPath}/resources/files/insertnotsum.jpg"width="100%" style="padding: 0.75px;">
+	 		</c:when>
+	 		<c:otherwise>
+				<img src="${pageContext.request.contextPath}/resources/files${poster.substring(poster.lastIndexOf('/'),poster.length())}"width="100%" style="padding: 0.75px;">
+			</c:otherwise>
+			</c:choose>
 		</div>
-		<div class="col-xs-5 text-lr-center" style="padding: 0px; border: 1.5px solid #009442 ;border-radius: 5px;">
-			<div class="fundingdata1">
-				<div class="col-xs-4 topdata">
+	</div>
+	<div class="col-md-5" style="padding: 0px 10px; margin-bottom: 20px; height: 430px;">
+		<div class="col-xs-12" style="padding: 0px; border: 1.5px solid #009442 ;border-radius: 5px; text-align: center;height: 100%">
+			<div class="col-xs-12" style="padding: 0px; border-bottom: 1px solid #d7d7d7; height: 20%;">
+				<div class="col-xs-4" style="padding: 0px; border-right: 1px solid #d7d7d7; height: 100%;">
 					<h4>목표금액</h4>
 					<div>${Data.numberOfShares*Data.issuePrice}</div>
 				</div>
-				<div class="col-xs-4 topdata">
+				<div class="col-xs-4" style="padding: 0px; height: 100%">
 					<h4>투자자</h4>
 					<div>${Data.investcount}명</div>
 				</div>
-				<div class="col-xs-4 topdata">
+				<div class="col-xs-4" style="padding: 0px; border-left: 1px solid #d7d7d7; height: 100%">
 					<h4>달성률</h4>
 					<div>${(Data.investtotal/Data.numberOfShares)*100}%</div>
 				</div>
 			</div>
-			<div class="col-xs-12 chart-bar">
-				<div>
+			<div class="col-xs-12" style="padding: 0px; border-bottom: 1px solid #d7d7d7; height: 30%">
+				<div class="col-xs-12">
 					모집 금액 : ${Data.investtotal*Data.issuePrice}
 				</div>
-				<div class="progress bor-defult">
-  					<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ${(Data.investtotal/Data.numberOfShares)*100}%; min-width: 3em; max-width: 100%;">
-    					${(Data.investtotal/Data.numberOfShares)*100}%
-  				</div>
-			</div>
-			</div>
-			<div class="fundingdata2">
-				<div class="col-xs-6">
-					<span class="glyphicon glyphicon-thumbs-up"></span> : ${Data.liketotal}
-				</div>
-				<div class="col-xs-6">
-					${Data.closeDate}
+				<div class="col-xs-12">
+					<div class="progress bor-defult">
+  						<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ${(Data.investtotal/Data.numberOfShares)*100}%; min-width: 3em; max-width: 100%;">
+    						${(Data.investtotal/Data.numberOfShares)*100}%
+  						</div>
+  					</div>
 				</div>
 			</div>
-			<div class="col-xs-12 investbtn-all"style="padding: 0px">
-				<div class="col-xs-6 bor-defult" style="height: 160px;padding: 0px" >
-					<button id="investbtn" type="button" class="col-xs-12 investbtn-invest" data-toggle="modal" data-target="#mymodal" style="padding: 0px">
-					투자하기
-					</button>
-					<button id="investguide" type="button" class="col-xs-12 investbtn-investguide" data-toggle="modal" data-target="#guide" style="padding: 0px">
-					투자방법안내
-					</button>
+			<div class="col-xs-12" style="padding: 0px; border-bottom: 1px solid #d7d7d7; height: 20%">
+			<div class="col-xs-6">
+				<span class="glyphicon glyphicon-thumbs-up"></span> : ${Data.liketotal}
+			</div>
+			<div class="col-xs-6" style="border-left: 1px solid #d7d7d7; height: 30%">
+				<h4>마감일</h4>
+				<div>${Data.closeDate}</div>
+			</div>
+			</div>
+			<div class="col-xs-12" style="padding: 0px;">
+				<div class="col-xs-6" style="padding: 0px;">
+					<div class="col-xs-12" style="border-bottom: 1px solid #d7d7d7; padding: 0px; height: 70%">버튼1</div>
+					<div class="col-xs-12" style="height: 30%">버튼1</div>
 				</div>
-				<div class="col-xs-6 funding-investdata"  style="padding: 0px">
+				<div class="col-xs-6"  style="border-left: 1px solid #d7d7d7; padding: 0px; height: 100%">
 					펀딩형태 : ${Data.fdType}형 <br>
 					판매 주식수 : ${Data.numberOfShares} <br>
 					주당 발행가 : ${Data.issuePrice} <br>
@@ -190,6 +219,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 	</div>
 	<!-- MODAL -->
@@ -234,13 +264,13 @@
 	<div> 
 		<ul id="myTab" class="nav nav-tabs font-j" role="tablist"> 
 			<li role="presentation" class="active">
-				<a data-target="#openstory" id="openstory-tab" role="tab" data-toggle="tab" aria-controls="openstory" aria-expanded="true">오픈스토리</a>
+				<a href="#openstory" id="openstory-tab" role="tab" data-toggle="tab" aria-controls="openstory" aria-expanded="true">오픈스토리</a>
 			</li> 
 			<li role="presentation" class="">
-				<a data-target="#comValue" role="tab" id="comValue-tab" data-toggle="tab" aria-controls="comValue" aria-expanded="false">기업가치</a>
+				<a href="#comValue" role="tab" id="comValue-tab" data-toggle="tab" aria-controls="comValue" aria-expanded="false">기업가치</a>
 			</li> 
 			<li role="presentation" class="">
-				<a data-target="#fundingqna" role="tab" id="fundingqna-tab" data-toggle="tab" aria-controls="fundingqna" aria-expanded="false">펀딩Q&A</a>
+				<a href="#fundingqna" role="tab" id="fundingqna-tab" data-toggle="tab" aria-controls="fundingqna" aria-expanded="false">펀딩Q&A</a>
 			</li>
 		</ul>
 		<div id="myTabContent" class="tab-content font-j" style="text-align: center;">
@@ -252,15 +282,15 @@
 			</div> 
 			<div role="tabpanel" class="tab-pane fade pd-a-0" id="fundingqna" aria-labelledby="fundingqna-tab"> 
 				<h2>펀딩 Q&A</h2>
-				<div class="col-xs-12"style="text-align: center;padding: 0px">
+				<div class="col-md-12"style="text-align: center;padding: 0px">
 				<form id="questionform" action="/pineapple/investquestion.invest" method="post">
-					<div class="col-xs-10 " style="padding: 0px">
+					<div class="col-md-10 " style="padding: 0px">
 					<input type="hidden" name="qnaFdId" value="${id}">
 					<input type="hidden" name="qnaFdCode" value="${Data.fdCode}">
 					<input name="qnaFdTitle" type="text" class="form-control" placeholder="제목을 입력해주세요" style="width: 100%; height: 30px; margin-bottom: 10px;">
 					<textarea class="form-control" name="qnaFdContent" rows="3" style="width: 100%; height: 100px; resize: none;" placeholder="내용을 입력해주세요"></textarea>
 					</div>
-					<div class="col-xs-2" style="padding-left: 20px;padding-right: 0px;">
+					<div class="col-md-2" style="padding-left: 20px;padding-right: 0px;">
 					<button id="questionbtn" class="pd-a-0 btn btn-info" style="width: 100%; height: 140px; font-size: 28px;">질문등록하기</button>
 					</div>
 				</form>
