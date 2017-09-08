@@ -4,6 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserDaoInterface {
+	//회원탈퇴요청 취소 처리
+	int updateUserCancleDelTime(String userId);
+	
+	//회원탈퇴요청 처리
+	int updateUserDelTime(String userId);
+	
 	//투자자, 사이트관리자의 계좌수정 메서드 선언
 	int updateAccountByAccountCode(Account account);
 	

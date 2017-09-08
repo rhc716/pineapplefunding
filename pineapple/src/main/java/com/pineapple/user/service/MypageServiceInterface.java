@@ -14,7 +14,7 @@ public interface MypageServiceInterface {
 	int addFundingAuth(Fundingauth fundingauth);
 		
 	//소속 기업의 펀딩리스트 조회(ID로)
-	List<Funding> getFundingListOfMyCompany(String userId);
+	List<FundingAndCompany> getFundingListOfMyCompany(String userId);
 	
 	//하나의 기업에 소속된 사원목록 조회(comCode 입력값)
 	List<Employee> getEmployeeByComCode(int comCode);

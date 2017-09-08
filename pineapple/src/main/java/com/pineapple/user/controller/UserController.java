@@ -24,13 +24,54 @@ import com.pineapple.user.service.UserDetail;
 import com.pineapple.user.service.UserServiceInterface;
 
 @Controller
-@SessionAttributes({"id", "nickname", "level", "rank"})
+@SessionAttributes({"id", "pw", "nickname", "level", "rank"})
 //id, nickname, level키로 저장된 attribute는 세션객체에 저장 됨
 public class UserController {
 	private Logger log = Logger.getLogger(this.getClass());
 	
 	@Autowired
     private UserServiceInterface service;
+	
+	//회원탈퇴 요청 취소 처리
+	@RequestMapping(value="/useroutCancel.user", method = RequestMethod.GET)
+    public String useroutCancle(HttpSession session) { 
+        log.debug("UserController useroutRequest 회원탈퇴 취소 요청");
+        int result = service.modifyUserCancleDelTime(session.getAttribute("id").toString());
+        if(result == 1){
+        	log.debug(session.getAttribute("nickname")+"님의 회원탈퇴요청 취소 성공");
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님의 회원탈퇴요청 취소 실패");
+        }
+        return "redirect:/mypage.user"; // 글입력후 "/mypage.user"로 리다이렉트(재요청)
+    }
+	
+	//회원탈퇴 요청 처리
+	@RequestMapping(value="/useroutrequest.user", method = RequestMethod.GET)
+    public String useroutRequest(HttpSession session) { 
+        log.debug("UserController useroutRequest 회원탈퇴 요청");
+        int result = service.modifyUserDelTime(session.getAttribute("id").toString());
+        if(result == 1){
+        	log.debug(session.getAttribute("nickname")+"님의 회원탈퇴요청 성공");
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님의 회원탈퇴요청 실패");
+        }
+        return "redirect:/mypage.user"; // 글입력후 "/mypage.user"로 리다이렉트(재요청)
+    }
+	
+	//회원탈퇴 비밀번호 확인
+	@RequestMapping(value="/useroutpwcheck.user", method = RequestMethod.GET)
+    public @ResponseBody int useroutRequestPwCheck(HttpSession session, @RequestParam("useroutpw") String useroutpw) { 
+        log.debug("UserController useroutRequestPwCheck 회원탈퇴 전 비밀번호 확인 요청");
+        int result;
+        if(useroutpw.equals(session.getAttribute("pw").toString())){
+        	log.debug(session.getAttribute("nickname")+"님의 비밀번호 확인 결과 : 일치");
+        	result = 1;
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님의 비밀번호 확인 결과 : 불일치");
+        	result = 0;
+        }
+        return result; // 글입력후 페이지에 결과 전송
+    }
 	
 	//계좌 수정 요청 처리
 	@RequestMapping(value="/changeaccount.user", method = RequestMethod.POST)
@@ -134,6 +175,7 @@ public class UserController {
 		//session 종료 처리
 		session.setAttribute("userLogin", null);
 		model.addAttribute("id", null);
+		model.addAttribute("pw", null);
 		model.addAttribute("nickname", null);
 		model.addAttribute("level", null);
 		model.addAttribute("rank", null);
@@ -167,6 +209,7 @@ public class UserController {
 					//아이디, 비밀번호 일치할 경우 세션값 설정, @SessionAttributes를 통해 세션 객체에 담을 변수와 값 설정
 					session.setAttribute("userLogin", loginUser);
 					model.addAttribute("id", loginUser.getUserId());
+					model.addAttribute("pw", loginUser.getPw());
 					model.addAttribute("nickname", loginUser.getNickname());
 					model.addAttribute("level", loginUser.getUserlevel().getUserLevelName());
 					if(loginUser.getRankcode()!=null){

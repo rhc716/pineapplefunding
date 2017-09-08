@@ -18,17 +18,19 @@
 	VALUES (#{authFdCode}, #{authReceiver}, #{authGiver}, #{fdAuthLevelCode})
 </insert>
 
-<!-- 내가 소속된 회사의 펀딩 리스트 가져오기 -->
-	<select id="selectMyFundingList" resultType="com.pineapple.user.service.FundingAndCompany" parameterType="String">
-		SELECT *
-			FROM funding
-			WHERE fdComCode = ANY 
-				(SELECT e.emComCode 
-				FROM user u INNER JOIN employee e 
-				ON u.userId = e.emUserId
-				WHERE u.userId = #{userId})
-		ORDER BY fdStatus
-	</select>
+<!-- 내가 소속된 회사의 펀딩 리스트 가져오기(회사명 조인 조회) -->
+<select id="selectMyFundingList" resultType="com.pineapple.user.service.FundingAndCompany" parameterType="String">
+	SELECT f.fdCode, f.fdTitle, f.fdPublisher, f.fdApprovalId, f.adminApproval, f.fdType, c.comName, c.comCode
+	FROM funding f
+	INNER JOIN company c
+	ON f.fdComCode=c.comCode
+	WHERE fdComCode = ANY 
+	(SELECT e.emComCode 
+	FROM user u INNER JOIN employee e 
+	ON u.userId = e.emUserId
+	WHERE u.userId = #{userId})
+	ORDER BY comName
+</select>
 
 <!-- 펀딩 권한 옵션 선택용 조회 -->
 <select id="selectFundingAuthLevelName" resultType="com.pineapple.user.service.Fundingauthlevel">

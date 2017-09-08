@@ -33,7 +33,7 @@ public class MypageService implements MypageServiceInterface {
 	
 	//소속 기업의 펀딩리스트 조회(ID로)
 	@Override
-	public List<Funding> getFundingListOfMyCompany(String userId) {
+	public List<FundingAndCompany> getFundingListOfMyCompany(String userId) {
 		log.debug("MypageService getFundingListOfMyCompany 호출 결과: "+mypagedao.selectFundingListOfMyCompany(userId));
 		return mypagedao.selectFundingListOfMyCompany(userId);
 	}

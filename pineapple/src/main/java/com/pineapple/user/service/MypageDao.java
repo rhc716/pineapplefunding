@@ -34,7 +34,7 @@ public class MypageDao implements MypageDaoInterface {
 	
 	//소속 기업의 펀딩리스트 조회(ID로)
 	@Override
-	public List<Funding> selectFundingListOfMyCompany(String userId) {
+	public List<FundingAndCompany> selectFundingListOfMyCompany(String userId) {
 		log.debug("MypageDao selectFundingListOfMyCompany 호출 : "+userId);
 		return sqlSessionTemplate.selectList("com.pineapple.user.service.MypageMapper.selectMyFundingList", userId);
 	}

@@ -3,7 +3,7 @@ package com.pineapple.user.service;
 public class Businessarea {
 	private int areaCode;
 	private int areaFdCode;
-	private int areaName;
+	private String areaName;
 	
 	public int getAreaCode() {
 		return areaCode;
@@ -17,10 +17,10 @@ public class Businessarea {
 	public void setAreaFdCode(int areaFdCode) {
 		this.areaFdCode = areaFdCode;
 	}
-	public int getAreaName() {
+	public String getAreaName() {
 		return areaName;
 	}
-	public void setAreaName(int areaName) {
+	public void setAreaName(String areaName) {
 		this.areaName = areaName;
 	}
 	@Override

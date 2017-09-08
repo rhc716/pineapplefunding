@@ -1,5 +1,4 @@
 package com.pineapple.user.controller;
-import com.pineapple.funding.service.Funding;
 import com.pineapple.invest.service.InvestorInvestList;
 import com.pineapple.user.service.Account;
 import com.pineapple.user.service.BizareaAndFundingAndCompany;
@@ -114,6 +113,14 @@ public class MypageController {
          } else {
          	log.debug(session.getAttribute("nickname")+"님의  사원정보조회 실패");
          }
+        //펀딩선택용 소속 기업의 펀딩목록 조회
+        List<FundingAndCompany> fundinglistById = mypageservice.getFundingListOfMyCompany(session.getAttribute("id").toString());
+        if(fundinglistById != null){
+            log.debug(session.getAttribute("nickname")+"님의 내가 속한 기업의 펀딩리스트 조회 성공");
+            model.addAttribute("fundinglistById", fundinglistById);
+        } else {
+           	log.debug(session.getAttribute("nickname")+"님의 내가 속한 기업의 펀딩리스트 조회 실패");
+        }
         return "user/bizareainsert"; // 글입력후 "/"로 리다이렉트(재요청)
     }
 	
@@ -247,7 +254,7 @@ public class MypageController {
         	log.debug(session.getAttribute("nickname")+"님이 펀딩내 권한 피부여자인 펀딩내권한부여 정보조회 실패");
         }
         //펀딩선택용 소속 기업의 펀딩목록 조회
-        List<Funding> fundinglistById = mypageservice.getFundingListOfMyCompany(session.getAttribute("id").toString());
+        List<FundingAndCompany> fundinglistById = mypageservice.getFundingListOfMyCompany(session.getAttribute("id").toString());
         if(fundinglistById != null){
             log.debug(session.getAttribute("nickname")+"님의 내가 속한 기업의 펀딩리스트 조회 성공");
             model.addAttribute("fundinglistById", fundinglistById);

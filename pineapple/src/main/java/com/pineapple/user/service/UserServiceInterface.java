@@ -7,6 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public interface UserServiceInterface {
+	//회원탈퇴요청 취소 처리
+	int modifyUserCancleDelTime(String userId);
+	
+	//회원탈퇴요청 처리
+	int modifyUserDelTime(String userId);
+	
 	//투자자, 사이트관리자의 계좌수정 메서드 선언
 	int changeAccountByAccountCode(Account account);
 	

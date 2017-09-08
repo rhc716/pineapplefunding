@@ -9,6 +9,23 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+	//부트스트랩 새로고침할 때 페이지 유지
+	$('#myTab a').click(function(e) {
+	  e.preventDefault();
+	  $(this).tab('show');
+	});
+	
+	//hash value에 현재 선택된 탭을 저장한다
+	$("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
+	  var id = $(e.target).attr("href").substr(1);
+	  window.location.hash = id;
+	});
+	
+	// 페이지 로드할 때 : 현재 선택된 탭으로 전환
+	var hash = window.location.hash;
+	$('#myTab a[href="' + hash + '"]').tab('show');
+	
+	//버튼 클릭시 실행
 	$('.changeaccount').click(function(){
 		var in_accountCode = $(this).attr('value');
 		var changeAccountAjax = $.ajax({ // ajax실행부분
@@ -151,19 +168,19 @@ $(document).ready(function(){
 <div class="container"> 
 	<ul id="myTab" class="nav nav-tabs" role="tablist"> 
 		<li role="presentation" class="active">
-			<a data-target="#investorinfo" id="investorinfo-tab" role="tab" data-toggle="tab" aria-controls="investorinfo" aria-expanded="true">내정보</a>
+			<a href="#investorinfo" id="investorinfo-tab" role="tab" data-toggle="tab" aria-controls="investorinfo" aria-expanded="true">내정보</a>
 		</li> 
 		<li role="presentation" class="">
-			<a data-target="#timeline" role="tab" id="timeline-tab" data-toggle="tab" aria-controls="timeline" aria-expanded="false" dataBoo="false">타임라인</a>
+			<a href="#timeline" role="tab" id="timeline-tab" data-toggle="tab" aria-controls="timeline" aria-expanded="false" dataBoo="false">타임라인</a>
 		</li>
 		<li role="presentation" class="">
-			<a data-target="#fundingqna" role="tab" id="fundingqna-tab" data-toggle="tab" aria-controls="fundingqna" aria-expanded="false">펀딩Q&A</a>
+			<a href="#fundingqna" role="tab" id="fundingqna-tab" data-toggle="tab" aria-controls="fundingqna" aria-expanded="false">펀딩Q&A</a>
 		</li>
 		<li role="presentation" class="">
-			<a data-target="#message" role="tab" id="message-tab" data-toggle="tab" aria-controls="message" aria-expanded="false">메세지</a>
+			<a href="#message" role="tab" id="message-tab" data-toggle="tab" aria-controls="message" aria-expanded="false">메세지</a>
 		</li>  
 		<li role="presentation" class="">
-			<a data-target="#investmemt" role="tab" id="investmemt-tab" data-toggle="tab" aria-controls="investmemt" aria-expanded="false">투자내역</a>
+			<a href="#investmemt" role="tab" id="investmemt-tab" data-toggle="tab" aria-controls="investmemt" aria-expanded="false">투자내역</a>
 		</li>  
 	</ul>
 	<div id="myTabContent" class="tab-content">
