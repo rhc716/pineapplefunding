@@ -50,110 +50,101 @@ $(document).ready(function(){
 		});
 	});
 	//투자내역 tab ajax 요청
-	$('#investmemt-tab').click(function(){
-		var investmenttab = $.ajax({ // ajax실행부분
-	        type: 'get',
-	        url : '/pineapple/investorinvestment.user',
-	        success : function success(msg){
-	        	$('#investorinvest').html(msg);
-	        },
-	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
-	        error : function error(){
-        	}
-		});
+	var investmenttab = $.ajax({ // ajax실행부분
+        type: 'get',
+        url : '/pineapple/investorinvestment.invest',
+        success : function success(msg){
+        	$('#investorinvest').html(msg);
+        },
+        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+        error : function error(){
+       	}
 	});
  	//Q&A tab ajax 요청
-	$('#fundingqna-tab').click(function(){
-		var investorqnatab = $.ajax({ // ajax실행부분
-	        type: "get",
-	        url : "/pineapple/investorfundingqna.invest",
-	        success : function success(msg){
-	        	$('#investorfundingqna').empty();
-	        	$('#investorfundingqna').html(msg);
-	         	//수정 버튼 click 이벤트
-	         	$('.qnaupdateform').click(function(){
-	         		var qnaCode = $(this).attr('dataCode');
-	         		$('#qnaform'+qnaCode+'').submit();
-	         	});
-	        	$('.reply-main').click(function(){
-	        		var qnaCode = $(this).attr('dataCode');
-	        		var investorqnatab = $.ajax({ // ajax실행부분
-	        	        type: "get",
-	        	        url : "/pineapple/investorfundingqnareply.invest",
-	        	        data : {qnaCode : qnaCode},
-	        	        success : function success(msg){
-	        	        	$('#qnaCode_'+qnaCode+'').html(msg);
-	        	        	$('.qnareupdateform').click(function(){
-	        	        		var qnaReCode = $(this).attr('id');
-	        	        		$('#qnareform'+qnaReCode+'').submit();
-	        	        	});
-	        	        },
-	        	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
-	        	        error : function error(){
-	                	}
-	        		});
-	        	});
-	        },
-	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
-	        error : function error(){
-        	}
-		});
+	var investorqnatab = $.ajax({ // ajax실행부분
+        type: "get",
+        url : "/pineapple/investorfundingqna.invest",
+        success : function success(msg){
+        	$('#investorfundingqna').empty();
+        	$('#investorfundingqna').html(msg);
+         	//수정 버튼 click 이벤트
+         	$('.qnaupdateform').click(function(){
+         		var qnaCode = $(this).attr('dataCode');
+         		$('#qnaform'+qnaCode+'').submit();
+         	});
+        	$('.reply-main').click(function(){
+        		var qnaCode = $(this).attr('dataCode');
+        		var investorqnatab = $.ajax({ // ajax실행부분
+        	        type: "get",
+        	        url : "/pineapple/investorfundingqnareply.invest",
+        	        data : {qnaCode : qnaCode},
+        	        success : function success(msg){
+        	        	$('#qnaCode_'+qnaCode+'').html(msg);
+        	        	$('.qnareupdateform').click(function(){
+        	        		var qnaReCode = $(this).attr('id');
+        	        		$('#qnareform'+qnaReCode+'').submit();
+        	        	});
+        	        },
+        	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+        	        error : function error(){
+                	}
+        		});
+        	});
+        },
+        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+        error : function error(){
+       	}
 	});
 	//타임라인 tab ajax 요청
-	$('#timeline-tab').click(function(){
-		databoo = $(this).attr('dataBoo');
-		var investmenttab = $.ajax({ // ajax실행부분
-	        type: 'get',
-	        url : '/pineapple/investortimeline.timeline',
-	        success : function success(msg){
-	        	$('#investortimeline').html(msg);
-	        	$('#timelinereservebtn').click(function(){
-	        		$('#timelineform').submit();
-	        	});
-	        	$('.timelinereservebtn').click(function(){
-	        		var tldata = $(this).attr('dataCode');
-	        		$('#timelineform'+tldata+'').submit();
-	        	});
-	        	$('.timereply').click(function(){
-	        		var dataCode = $(this).attr('dataCode');
-	        		var investortimelinereply = $.ajax({ // ajax실행부분
-	        	        type: 'get',
-	        	        url : '/pineapple/investortimelinereply.timeline',
-	        	        data : {tlCode : dataCode},
-	        	        success : function success(msg2){
-	        	   				$('#timelinereplylist'+dataCode+'').html(msg2);
-	        	   				$('.timelinereplyinsertbtn').click(function(){
-	        	   					var tlCode = $(this).attr('dataCode')
-	        	   					$('#timelinereplyform'+tlCode+'').submit();
-	        	   				});
-	        	        },
-	        	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
-	        	        error : function error(){
-	        	        	alert('1실패')
-	                	}
-	        		});
-	        	});
-	        },
-	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
-	        error : function error(){
-	        	alert('1실패')
-        	}
-		});
+	databoo = $(this).attr('dataBoo');
+	var timelinetab = $.ajax({ // ajax실행부분
+        type: 'get',
+        url : '/pineapple/investortimeline.timeline',
+        success : function success(msg){
+        	$('#investortimeline').html(msg);
+        	$('#timelinereservebtn').click(function(){
+        		$('#timelineform').submit();
+        	});
+        	$('.timelinereservebtn').click(function(){
+        		var tldata = $(this).attr('dataCode');
+        		$('#timelineform'+tldata+'').submit();
+        	});
+        	$('.timereply').click(function(){
+        		var dataCode = $(this).attr('dataCode');
+        		var investortimelinereply = $.ajax({ // ajax실행부분
+        	        type: 'get',
+        	        url : '/pineapple/investortimelinereply.timeline',
+        	        data : {tlCode : dataCode},
+        	        success : function success(msg2){
+        	   				$('#timelinereplylist'+dataCode+'').html(msg2);
+        	   				$('.timelinereplyinsertbtn').click(function(){
+        	   					var tlCode = $(this).attr('dataCode')
+        	   					$('#timelinereplyform'+tlCode+'').submit();
+        	   				});
+        	        },
+        	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+        	        error : function error(){
+        	        	alert('1실패')
+                	}
+        		});
+        	});
+        },
+        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+        error : function error(){
+        	alert('1실패')
+       	}
 	});
 	//메세지 tab 클릭시 ajax 요청
-	$('#message-tab').click(function(){
-		var investmenttab = $.ajax({ // ajax실행부분
-	        type: 'get',
-	        url : '/pineapple/investormessagelist.timeline',
-	        success : function success(msg){
-	        	$('#investormessage').html(msg);
-	        },
-	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
-	        error : function error(){
-        	}
-		});
+	var messagetab = $.ajax({ // ajax실행부분
+        type: 'get',
+        url : '/pineapple/investormessagelist.timeline',
+        success : function success(msg){
+        	$('#investormessage').html(msg);
+        },
+        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+        error : function error(){
+       	}
 	});
-	
 });
 </script>
 </head>
