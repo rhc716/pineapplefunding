@@ -10,9 +10,13 @@
 <div class="row">
 	<div class="col-md-3"></div>
 	<div class="col-md-6 logoandsearch">
-		<a href="/pineapple"><img src="${pageContext.request.contextPath}/resources/img/logo.jpg"></a>
-		<i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;<input type="text">&nbsp;
-		<button type="button" class="btn btnpine">검색</button>
+		<form action="/pineapple" method="get" class="row">
+		    <a href="/pineapple" style="display: inline;"><img src="${pageContext.request.contextPath}/resources/img/logo.jpg"></a>
+		    <input style="width: 40%; display: inline;"  type="text" class="form-control">
+		    <button type="submit" class="btn btnpine" style="display: inline;">
+		    	<i class="glyphicon glyphicon-search" style="display: inline;"></i>
+		    </button>
+	    </form>
 	</div>
 	<div class="col-md-3">
 		<br>

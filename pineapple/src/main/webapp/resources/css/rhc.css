@@ -9,10 +9,6 @@
 /* 메인화면 배너 */
 
 @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
-body {
-  padding: 30px;
-  font-family: 'Monsterrat', sans-serif;
-}
 
 a#myAdLink {
   display: inline-block;

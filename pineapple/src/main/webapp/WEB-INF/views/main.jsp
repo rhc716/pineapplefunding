@@ -47,9 +47,13 @@
 	<div class="row">
 		<div class="col-xs-3 col-md-3"></div>
 		<div class="col-xs-6 col-md-6 logoandsearch">
-			<img src="${pageContext.request.contextPath}/resources/img/logo.jpg">
-			<i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;<input type="text">&nbsp;
-			<button type="button" class="btn btnpine">검색</button>
+			<form action="/pineapple" method="get" class="row">
+			    <img src="${pageContext.request.contextPath}/resources/img/logo.jpg" style="display: inline;">
+			    <input style="width: 40%; display: inline;"  type="text" class="form-control">
+			    <button type="submit" class="btn btnpine btn-sm" style="display: inline;">
+			    	<i class="glyphicon glyphicon-search" style="display: inline;"></i>
+			    </button>
+		   	</form>
 		</div>
 		<div class="col-xs-3 col-md-3"></div>
 	</div>
