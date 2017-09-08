@@ -41,7 +41,9 @@
 								        			$('#useroutRequest').show();
 								        		} else {
 								        			$('#useroutch').css('color', '#FF0000');
-								        			$('#useroutch').text('비밀번호가 일치하지 않습니다. 다시 한번 입력해주시기 바랍니다.')
+								        			$('#useroutch').text('비밀번호가 일치하지 않습니다. 다시 한번 입력해주시기 바랍니다.');
+								        			$('#inputpw').val('');
+								        			$('#inputpw').focus();
 								        		}
 									        },
 									        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력

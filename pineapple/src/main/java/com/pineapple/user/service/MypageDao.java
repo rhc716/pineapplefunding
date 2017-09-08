@@ -111,7 +111,7 @@ public class MypageDao implements MypageDaoInterface {
 	
 	//관리자 전체회원리스트 조회
 	@Override
-	public List<User> selectAllUserList() {
+	public List<UserAndUserdetail> selectAllUserList() {
 		log.debug("MypageDao selectAllUserList 호출");
 		return sqlSessionTemplate.selectList("com.pineapple.user.service.MypageMapper.selectAllUserList");
 	}

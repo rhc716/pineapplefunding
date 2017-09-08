@@ -152,10 +152,10 @@
 					<thead>
 						<tr class="info">
 							<td>번호</td>
-							<td>권한부여코드</td>
+							<td>권한코드</td>
 							<td>회사명</td>
 							<td>펀딩명</td>
-							<td>펀딩진행상황</td>
+							<td>펀딩상황</td>
 							<td>부여자ID</td>
 							<td>피부여자ID</td>
 							<td>권한명</td>

@@ -481,7 +481,7 @@ $(document).ready(function(){
 							      </div>
 							      <div class="modal-body">
 							      <!-- 회사정보확인 및 수정 모달 -->
-							        <form action="/pineapple/cancledeletecompany.user" method="post">
+							        <form action="/pineapple/cancledeletecompany.user#insertCompany" method="post">
 							        	<div class="container_insert">
 											<div id="comApprovalDonePart" class="form-group has-success has-feedback" hidden>
 											    <label class="control-label" for="inputSuccess4">기업승인여부</label>
@@ -590,7 +590,7 @@ $(document).ready(function(){
 							      </div>
 							      <div class="modal-body">
 							      <!-- 회사정보확인 및 수정 모달 -->
-							        <form action="/pineapple/changecompanyinfo.user" method="post">
+							        <form action="/pineapple/changecompanyinfo.user#insertCompany" method="post">
 							        	<div class="container_insert">
 											<div id="comApprovalDonePart" class="form-group has-success has-feedback" hidden>
 											    <label class="control-label" for="inputSuccess4">기업승인여부</label>
@@ -714,7 +714,7 @@ $(document).ready(function(){
 								      </div>
 								      <div class="modal-body">
 								      <!-- 회사정보확인 및 수정 모달 -->
-								        <form action="/pineapple/deleterequestcompany.user" method="post">
+								        <form action="/pineapple/deleterequestcompany.user#insertCompany" method="post">
 								        	<div class="container_insert">
 												<div>
 													<input id="comAdminApprovalDel" type="hidden" class="form-control" name="comAdminApproval">
@@ -823,7 +823,7 @@ $(document).ready(function(){
 				<div class="col-xs-10">
 					<br>
 					<p id="explanation">기존에 존재하지 않는 새로운 기업을 등록할 수 있습니다. 새로운 기업을 최초로 등록하면 사원등록시 개설한 기업 소속 [경영진] 직급 [최초개설자]로 사원등록신청을 해주시면 됩니다.</p>
-					<form action="/pineapple/addnewcompany.user" name="company" method="post">
+					<form action="/pineapple/addnewcompany.user#insertCompany" name="company" method="post">
 					    <div id="comOpenEmail" class="form-group has-success has-feedback">
 							<label class="control-label" for="inputSuccess2">기업등록요청아이디</label>
 							<input name="comOpenUserId" type="text" class="form-control" value="${id}" varia-describedby="inputSuccess2Status" readonly>
@@ -931,7 +931,7 @@ $(document).ready(function(){
 						      </div>
 						      <!-- 기업을 최초로 개설신청한 경영진은 사원등록시 기업검색없이 기업명 데이터를 입력시켜준다 -->
 				      		  <div class="modal-body">
-						        <form action="/pineapple/changeemployeeinfo.user" method="post">
+						        <form action="/pineapple/changeemployeeinfo.user#insertEmployee" method="post">
 						        	<input id="emCodeChange" name="emCode" type="hidden" class="form-control">
 						        	<input id="emComCodeChange" name="emComCode" type="hidden" class="form-control">
 						        	<!-- 사원등록 승인여부에 따라 둘 중 하나의 부분만 화면에 나타난다 -->
@@ -1038,7 +1038,7 @@ $(document).ready(function(){
 						        <h4 class="modal-title" id="myModalLabel">${nickname}님의 사원탈퇴요청</h4>
 						      </div>
 				      		  <div class="modal-body">
-						        <form action="/pineapple/deleterequestemployee.user" method="post">
+						        <form action="/pineapple/deleterequestemployee.user#insertEmployee" method="post">
 						        	<input id="emCodeDel" name="emCode" type="hidden" class="form-control">
 						        	<input id="emComCodeDel" name="emComCode" type="hidden" class="form-control">
 									<div class="form-group has-success has-feedback">
@@ -1112,7 +1112,7 @@ $(document).ready(function(){
 			        <p id="explanation">소속된 기업이 있다면 사원으로 등록 요청을 해주시기 바랍니다. 경영진이 사원승인을 할 경우 사원으로 등록 완료됩니다.</p>
 			        <p id="explanation">기업을 최초로 개설한 경영진이 사원등록하는 경우, [최초개설자]를 선택하면 승인없이 사원등록이 완료됩니다.</p>
 					<br>
-			        <form action="/pineapple/addemployee.user" name="employee" method="post">
+			        <form action="/pineapple/addemployee.user#insertEmployee" name="employee" method="post">
 						<div id="comNameSearch" class="form-group">
 						    <label class="control-label" for="comNameInput">기업검색</label>
 						    <p id="explain">(소속한 기업을 검색하여 입력해주시기 바랍니다)</p>
@@ -1236,7 +1236,7 @@ $(document).ready(function(){
 												        <h4 class="modal-title" id="myModalLabel">${AllEmployee.emComName}사원등록요청 승인</h4>
 												      </div>
 												      <div class="modal-body">
-												        <form action="/pineapple/approveemployee.user" method="post">
+												        <form action="/pineapple/approveemployee.user#employeeList" method="post">
 												        	<input id="emCodeCheck" name="emCode" value="${AllEmployee.emCode}" type="hidden" class="form-control">
 												        	<input id="emComCodeCheck" name="emComCode" value="${AllEmployee.emComCode}" type="hidden" class="form-control">
 															<div class="form-group has-success has-feedback">
@@ -1299,7 +1299,7 @@ $(document).ready(function(){
 												        <h4 class="modal-title" id="myModalLabel">${AllEmployee.emComName}사원탈퇴요청승인</h4>
 												      </div>
 												      <div class="modal-body">
-												        <form action="/pineapple/deleteemployee.user" method="post">
+												        <form action="/pineapple/deleteemployee.user#employeeList" method="post">
 												        	<label>사원코드</label>
 												        	<input name="emCode" value="${AllEmployee.emCode}" class="form-control">
 												        	<input name="emComCode" value="${AllEmployee.emComCode}" type="hidden" class="form-control">

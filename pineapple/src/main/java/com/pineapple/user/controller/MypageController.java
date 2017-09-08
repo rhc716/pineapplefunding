@@ -11,6 +11,7 @@ import com.pineapple.user.service.FundingauthFundingAuthlevelCompany;
 import com.pineapple.user.service.Fundingauthlevel;
 import com.pineapple.user.service.MypageServiceInterface;
 import com.pineapple.user.service.User;
+import com.pineapple.user.service.UserAndUserdetail;
 import com.pineapple.user.service.UserDetail;
 
 import java.util.HashMap;
@@ -751,10 +752,10 @@ public class MypageController {
          	log.debug(session.getAttribute("nickname")+"님의  전체회사조회 실패");
          }
         //관리자 마이페이지 분기 요청시, 페이지 로딩하며 사이트에 등록된 모든 회원리스트 조회
-        List<User> alluser = mypageservice.getAllUserList();
-        if(alluser != null){
+        List<UserAndUserdetail> alluserwithdetail = mypageservice.getAllUserList();
+        if(alluserwithdetail != null){
         	log.debug(session.getAttribute("nickname")+"님의 전체회원조회 성공");
-         	model.addAttribute("alluser", alluser);
+         	model.addAttribute("alluserwithdetail", alluserwithdetail);
          } else {
          	log.debug(session.getAttribute("nickname")+"님의  전체회원조회 실패");
          }

@@ -35,7 +35,7 @@
 			<nav id="mysidebarmenu" class="amazonmenu">
 				<ul>
 					<li><a href="/pineapple/mypage.user">MY PAGE 돌아가기</a></li>
-					<li><a href="/pineapple/fundinglist.user">펀딩현황</a></li>
+					<li><a href="/pineapple/adminmypage.user#fundinginfo">펀딩현황</a></li>
 					<li><a href="/pineapple/milestonelist.user">마일스톤리스트</a></li>
 					<li><a href="/pineapple/wbslist.user">WBS비교리스트</a></li>
 					<li><a href="/pineapple/investorlist.user">투자자현황</a></li>

@@ -44,7 +44,7 @@ public interface MypageServiceInterface {
 	List<FundingauthFundingAuthlevelCompany> getAuthInfoByReceiverId(String receiverId);
 	
 	//관리자 전체회원리스트 조회
-	List<User> getAllUserList();
+	List<UserAndUserdetail> getAllUserList();
 	
 	//경영진 기업삭제취소
 	int modifyCompanyDeleteRequestCancle(Company company);

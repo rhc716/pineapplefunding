@@ -62,14 +62,14 @@ public class MypageService implements MypageServiceInterface {
 	//사업분야 등록
 	@Override
 	public int addBizArea(Businessarea bizarea) {
-		log.debug("MypageService addBizArea 호출 결과: "+mypagedao.insertBizArea(bizarea));
+		log.debug("MypageService addBizArea 호출 결과: "+bizarea);
 		return mypagedao.insertBizArea(bizarea);
 	}
 	
 	//사업분야 삭제 
 	@Override
 	public int removeBizAreaByAreaCode(int areaCode) {
-		log.debug("MypageService removeBizAreaByAreaCode 호출 결과: "+mypagedao.deleteBizAreaByAreaCode(areaCode));
+		log.debug("MypageService removeBizAreaByAreaCode 호출 결과: "+areaCode);
 		return mypagedao.deleteBizAreaByAreaCode(areaCode);
 	}
 	
@@ -110,7 +110,7 @@ public class MypageService implements MypageServiceInterface {
 	
 	//관리자 전체회원리스트 조회
 	@Override
-	public List<User> getAllUserList() {
+	public List<UserAndUserdetail> getAllUserList() {
 		log.debug("MypageService getAllUserList 호출 결과: "+mypagedao.selectAllUserList());
 		return mypagedao.selectAllUserList();
 	}

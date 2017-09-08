@@ -79,4 +79,5 @@ public class UserAndLevelAndEmployeeAndCompanyAndRank {
 				+ userlevel + ", employee=" + employee + ", company=" + company + ", rankcode=" + rankcode + "]";
 	}
 	
+	
 }

@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.pineapple.user.service.UserMapper">
-
+	
 	<!-- 회원탈퇴요청 취소(회원탈퇴시간 null 업데이트)  -->
 	<update id="updateUserCancleDelTime" parameterType="String">
 		UPDATE user
