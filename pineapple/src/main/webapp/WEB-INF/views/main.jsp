@@ -77,6 +77,14 @@
 <div class="row">
 	<!-- 본문 좌측 -->
 	<div class="col-xs-2 col-md-2">
+		<div class="list-group">
+		  <a class="list-group-item active">기업순위</a>
+		  <a href="#" class="list-group-item list-group-item-action"></a>
+		  <a href="#" class="list-group-item list-group-item-action list-group-item-success"></a>
+		  <a href="#" class="list-group-item list-group-item-action list-group-item-info"></a>
+		  <a href="#" class="list-group-item list-group-item-action list-group-item-warning"></a>
+		  <a href="#" class="list-group-item list-group-item-action list-group-item-danger"></a>
+		</div>
 	</div>
 	<!-- 본문 중앙부분 -->
 	<div class="col-xs-7 col-md-7">

@@ -559,7 +559,7 @@
 		SELECT *
 		FROM milestone
 		WHERE msFdCode = #{msFdCode} 
-		AND milestoneCode = #{milestoneStep}
+		AND milestoneStep = #{milestoneStep}
 	</select>
 </mapper>
 

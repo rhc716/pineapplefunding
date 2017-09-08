@@ -146,6 +146,7 @@ $(document).ready(function(){
             		console.log("사용불가능");
             		$('#existmilestone').css("color", "red");
             		$('#existmilestone').val("사용 불가능한 마일스톤단계입니다");
+            		$('#milestoneStep').val('');
             		$('#checkresult').val("no");
             	}		
             	
@@ -240,7 +241,7 @@ $(document).ready(function(){
 	                   	</div>
 						
 						<div class="form-group">
-							<label for="description" class="col-sm-3 control-label">현재 생성된 마일스톤 단계 : </label>
+							<label for="description" class="col-sm-3 control-label">현재 생성된 마일스톤 단계</label>
 									<div class="col-sm-9">
 										<input type="text" id="existmilestone" class="form-control" readonly>
 									</div>	

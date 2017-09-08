@@ -2,7 +2,6 @@
 @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
 
 /* 수정중 */
-
 #maintitlearea{
 	
 }
@@ -19,7 +18,8 @@ a#myAdLink {
   height: 450px;
   position: relative;
   overflow: hidden;
-  background-color: #f2ce00;
+  background-color: #1ec545;
+  /* border: 1px solid #1ec545; */
 }
 
 #myAd .myAd_Img {
@@ -27,12 +27,12 @@ a#myAdLink {
   background: url("../img/main/bannerimg.png") no-repeat 0px 0px;
 }
 
-#myAd #adBg {
+/* #myAd #adBg {
   width: inherit;
   height: 500px;
   top: 0px;
   left: 0px;
-}
+} */
 
 #myAd #myAd_head {
   width: 130px;
