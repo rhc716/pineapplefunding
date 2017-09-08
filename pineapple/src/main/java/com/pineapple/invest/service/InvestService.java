@@ -14,13 +14,6 @@ public class InvestService implements InvestServiceInterface {
 	@Autowired
 	private InvestDaoInterface investdaointerface;
 	
-	//전체 펀딩 리스트 조회하기
-	@Override
-	public List<InvestAndFd> getInvestFunding(){
-		log.debug("------------------InvestService-----------------getinvestFunding()");
-		List<InvestAndFd> fdlist =  investdaointerface.investFundingSelect();
-		return fdlist;
-	}
 	//조건 검색으로 펀딩 리스트 조회 Service
 	@Override
 	public List<InvestAndFd> getInvestFundingChoose(HashMap<String, String[]> map) {
@@ -122,5 +115,12 @@ public class InvestService implements InvestServiceInterface {
 		log.debug("------------------InvestService-----------------getInvestFundingQnaReply()");
 		List<FundingQnaReply> fdlistqnareply = investdaointerface.investFundingQnaReplySelect(qnaCode);
 		return fdlistqnareply;
+	}
+	//자신의 투자 list 조회
+	@Override
+	public List<InvestorInvestList> getInvestorInvestMentList(String id) {
+		log.debug("------------------InvestService-----------------getInvestorInvestMentList()");
+		List<InvestorInvestList> investorinvestment = investdaointerface.investorInvestListSelect(id);
+		return investorinvestment;
 	}
 }

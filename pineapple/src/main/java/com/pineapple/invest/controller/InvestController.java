@@ -27,6 +27,7 @@ import com.pineapple.invest.service.InvestAndFd;
 import com.pineapple.invest.service.InvestAndFdLikeAndFd;
 import com.pineapple.invest.service.InvestServiceInterface;
 import com.pineapple.invest.service.Investment;
+import com.pineapple.invest.service.InvestorInvestList;
 import com.pineapple.invest.service.MyInvestorFundingQna;
 
 @Controller
@@ -39,15 +40,6 @@ public class InvestController {
 	public String investMain(Locale locale, Model model){
 		log.debug("<----- InvestController[investMain호출]----->");
 		return "invest/investmain";
-	}
-	//투자하기 main 요청시 전체리스트 ajax 요청
-	@RequestMapping(value="/investfdlistmain.invest" , method=RequestMethod.GET)
-	public String investfdlistMain(Locale locale, Model model){
-		log.debug("<----- InvestController[investfdlistMain호출]----->");
-		List<InvestAndFd> fundingList = investserviceinterface.getInvestFunding();
-		model.addAttribute("fundingList", fundingList);
-		log.debug(fundingList+"<-----InvestController[fundingList 값 출력]");
-		return "invest/investfdlistmain";
 	}
 	//펀딩리스트 조건 검색
 	@RequestMapping(value="/investfdchoosemain.invest" , method=RequestMethod.GET)
@@ -222,12 +214,21 @@ public class InvestController {
 	}
 	//자신의 펀딩 Q&A 댓글 삭제
 	@RequestMapping(value="/investorqnareplydelete.invest",method=RequestMethod.GET)
-	public String investorQnaReplyDelete(Locale locale,Model model,@RequestParam(value="qnaReCode")int qnaReCode){
+	public String investorQnaReplyRemove(Locale locale,Model model,@RequestParam(value="qnaReCode")int qnaReCode){
 		log.debug("<-----InvestController[investorQnaReplyDelete호출]----->");
 		log.debug(qnaReCode+"<-----InvestController[qnaReCode 값 출력]");
 		int qnareplydelete = investserviceinterface.removeInvestFundingQnaReply(qnaReCode);
 		log.debug(qnareplydelete+"<-----InvestController[qnareplydelete 값 출력]");
 		return "redirect:/investormypage.user";
+	}
+	//자신의 투자 list 조회
+	@RequestMapping(value="/investorinvestment.invest", method=RequestMethod.GET)
+	public String getInvestorInvestMentList(Model model, HttpSession session){
+		log.debug("<-----InvestController[getInvestorInvestMentList호출]----->");
+		List<InvestorInvestList> investorinvest = investserviceinterface.getInvestorInvestMentList(session.getAttribute("id").toString());
+		model.addAttribute("investorinvest", investorinvest);
+		log.debug(investorinvest+"<-----InvestController[investorinvest 값 출력]");
+		return "user/investormypageajax/investormypage";
 	}
 	
 
@@ -245,5 +246,6 @@ public class InvestController {
 		log.debug(fundingdetail+"<-----InvestController[fundingdetail 값 출력]");
 		return fundingdetail;
 	}
+
 
 }

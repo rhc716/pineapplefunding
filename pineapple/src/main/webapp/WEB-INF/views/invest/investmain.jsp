@@ -28,26 +28,6 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	var fundinglist = $.ajax({
-		type: 'get',
-		url : '/pineapple/investfdlistmain.invest',
-	});
-	
-	// 성공시
-	fundinglist.done(function(msg){
-		$('#fdlist').html(msg);
-		/* 이미지 경로가 잘못되어 404일때 보여줄 이미지 설정 */
-		$('img').each(function(n){
-			   console.log($(this)); 
-			   $(this).on( "error", function(){
-				   $(this).attr("src", "${pageContext.request.contextPath}/resources/img/404alternateimage.jpg");
-		    });
-		});
-	});
-	// 실패시
-	fundinglist.fail(function(){
-		
-	});
 	//ajax 검색 function 선언
 	var ajaxfunction = function(){
 		var areacount = 0;
@@ -96,6 +76,7 @@ $(document).ready(function(){
 				}
 			});
 	}
+	ajaxfunction()
 	//검색버튼 클릭시 ajax function 실행
 	$('#fundinglistnameselectbtn').click(function(){
 		ajaxfunction()
@@ -132,6 +113,8 @@ $(document).ready(function(){
 				<form>
 					<ul style="font-size:15px; list-style: none; height: 100%; width: 100%; padding: 10px; text-align: left; margin: 0px; border-bottom: 1px solid #d7d7d7;">
 						<label style="font-size: 20px;">카테고리</label>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="it"></span><span>it</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="핀테크"></span><span>핀테크</span></li>
 						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="인터넷서비스"></span><span>인터넷서비스</span></li>
 						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="문화"></span><span>문화</span></li>
 						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="디자인"></span><span>디자인</span></li>

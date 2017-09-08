@@ -30,6 +30,7 @@
 		<result property="liketotal" column="liketotal"/>
 		<result property="investtotal" column="investtotal"/>
 		<result property="investcount" column="investcount"/>
+		<result property="posterImg" column="posterImg"/>
 	</resultMap>
 	<!-- FundingDetail -->
 	<resultMap type="com.pineapple.funding.service.Funding"
@@ -67,35 +68,13 @@
 		<result property="qnaReTime" column="qnaReTime"/>
 		<result property="qnaFdCode" column="qnaFdCode"/>
 	</resultMap>
-	
-	<!-- 투자하기 main 에서 사용하는 모집중인 펀딩 리스트 조회 쿼리 -->
-	<select id="selectInvestAndFd" resultMap="selectInvestAndFd">
-		SELECT  f.fdCode,
-				f.fdTitle,
-				f.numberOfShares,
-				c.comName,
-				IFNULL(sum(i.purchaseShares),0) as total,
-				f.posterImg,
-				f.minInvestMoney,
-				f.issuePrice,
-				TO_DAYS(f.closeDate)-TO_DAYS(now()) as days,
-				f.fdStatus
-		FROM funding f 
-		LEFT JOIN company c 
-		ON f.fdComCode = c.comCode 
-		LEFT JOIN investment i 
-		ON f.fdCode = i.investFdCode 
-		WHERE f.fdStatus = '모집중' OR f.fdStatus = '결제모집중'
-		GROUP BY f.fdCode 
-		ORDER BY f.fdDate DESC;
-	</select>
 	<!-- 투자하기 main 에서 사용하는 펀딩조건 검색 조회 쿼리 -->
 	<select id="selectInvestFundingListChoose" parameterType="hashmap" resultMap="selectInvestAndFd">
 		SELECT  f.fdCode,
 				f.fdTitle,
 				f.numberOfShares,
 				c.comName,
-				IFNULL(sum(i.purchaseShares),0) as total,
+				IFNULL((SELECT sum(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode GROUP BY si.investFdCode),0) as total,
 				f.posterImg,
 				f.minInvestMoney,
 				f.issuePrice,
@@ -103,9 +82,7 @@
 				f.fdStatus
 		FROM funding f 
 		LEFT JOIN company c 
-		ON f.fdComCode = c.comCode 
-		LEFT JOIN investment i 
-		ON f.fdCode = i.investFdCode 
+		ON f.fdComCode = c.comCode
 		LEFT JOIN businessarea b
 		ON f.fdCode = b.areaFdCode
 		LEFT JOIN dividendplan d
@@ -161,7 +138,8 @@
 			 IFNULL(SUM(i.purchaseShares),0) as investtotal,
 			 COUNT(i.investId) as investcount,
 			 IFNULL(fd.openstory,'정보없음') as openstory,
-			 IFNULL(fd.comValue,'정보없음') as comValue
+			 IFNULL(fd.comValue,'정보없음') as comValue,
+			 f.posterImg
 		FROM funding f 
 		LEFT JOIN investment i 
 		ON f.fdCode = i.investFdCode 
@@ -266,6 +244,19 @@
 		<result property="fdTitle" column="fdTitle"/>
 		<result property="fdType" column="fdType"/>
 	</resultMap>
+	<!-- InvestorInvestList -->
+	<resultMap type="com.pineapple.invest.service.InvestorInvestList" id="selectInvestresultmap">
+		<id property="investCode" column="investCode"/>
+	 	<result property="investFdCode" column="investFdCode"/>
+	 	<result property="investId" column="investId"/>
+	 	<result property="investTime" column="investTime"/>
+	 	<result property="payCheck" column="payCheck"/>
+	 	<result property="purchaseShares" column="purchaseShares"/>
+	 	<result property="fdCode" column="fdCode"/>
+	 	<result property="fdType" column="fdType"/>
+	 	<result property="fdStatus" column="fdStatus"/>
+	 	<result property="investtotal" column="investtotal"/>	
+</resultMap>
 	<!-- 자신의 펀딩 Q&A 글 조회 -->
 	<select id="selectMypageFundingQna" resultMap="selectMypageFundingQnaResultMap">
 		SELECT fq.qnaCode,
@@ -283,5 +274,26 @@
 		ON c.comCode = f.fdComCode 
 		WHERE fq.qnaFdId = #{qnaFdId} 
 		ORDER BY fq.qnaFdTime DESC
+	</select>
+	<!-- 자신의 투자 list 조회 -->
+	<select id="selectMpageinvestment" parameterType="String" resultMap="selectInvestresultmap">
+		SELECT  i.investCode,
+			i.investFdCode,
+			i.investId,
+			i.investTime,
+			i.payCheck,
+			i.purchaseShares,
+			f.fdCode,
+			f.fdType,
+			f.fdStatus,
+			f.numberOfShares,
+			f.fdTitle,
+			f.issuePrice,
+			CASE f.fdStatus WHEN '모집중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode GROUP BY si.investFdCode ) WHEN '결제모집중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode AND si.payCheck = 1 GROUP BY si.investFdCode) WHEN '진행중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode GROUP BY si.investFdCode) END investtotal 
+		FROM investment i 
+		INNER JOIN funding f 
+		ON i.investFdCode = f.fdCode  
+		WHERE i.investId = #{id}
+		GROUP BY i.investCode
 	</select>
 </mapper>
