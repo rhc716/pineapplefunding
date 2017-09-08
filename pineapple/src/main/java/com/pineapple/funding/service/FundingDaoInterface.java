@@ -38,4 +38,6 @@ public interface FundingDaoInterface {
 	Funding selectMyFunding(int fdCode);
 	List<Object> selectProjectInfoList(String userId, String level);
 	List<Object> selectMoreFdList(int numberOfRequests);
+	List<Object> selectMilestoneListOfFunding(int fdCode);
+	MileStone milestoneStepCheck(int msFdCode, int milestoneStep);
 }

@@ -28,14 +28,14 @@
 <script>
 /* 펀딩 리스트 불러올 ajax */
 $(document).ready(function(){
-	var getfundinglist = $.ajax({
+	var getmymilestonelist = $.ajax({
 		type : "get",
 		url : "/pineapple/getmymilestonelist.pms",
 		/* 아이디 세션에서 받아서 가져옴 */
 		data : { userId : "${id}"}
 	});
 	// 성공시
-	getfundinglist.done(function(msg){
+	getmymilestonelist.done(function(msg){
 		console.log(msg);
 		
 		//alert(formatDate(msg[0].fdDate));
@@ -218,7 +218,7 @@ $(document).ready(function(){
 	});
 	
 	// 실패시
-	getfundinglist.fail(function(){
+	getmymilestonelist.fail(function(){
 		alert('ajax통신실패');
 	});
 	

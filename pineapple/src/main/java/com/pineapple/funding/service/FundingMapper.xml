@@ -547,6 +547,20 @@
 	</update>
 	
 	
+	<!-- 펀딩코드에 따른 마일스톤 리스트 가져오기 -->
+	<select id="selectMilestoneListOfFunding" parameterType="int" resultType="com.pineapple.funding.service.MileStone">
+		SELECT *
+		FROM milestone
+		WHERE msFdCode = #{fdCode}
+	</select>
+	
+	<!-- 마일스톤단계 중복검사를 위해 select -->
+	<select id="milestoneStepCheck" parameterType="java.util.HashMap" resultType="com.pineapple.funding.service.MileStone">
+		SELECT *
+		FROM milestone
+		WHERE msFdCode = #{msFdCode} 
+		AND milestoneCode = #{milestoneStep}
+	</select>
 </mapper>
 
  

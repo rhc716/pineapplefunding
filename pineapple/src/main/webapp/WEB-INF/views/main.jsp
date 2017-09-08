@@ -37,28 +37,42 @@
 		
 	});
  </script>
-
+ 
+<style type="text/css">
+#toptitlearea{
+	padding: 20px 20px;
+}
+</style>
 </head>
 <body>
 <div class="container">
+<!-- 상단메뉴 -->
+	<c:import url="/resources/module/topmenu.jsp"/>
 
 
-<!--로고 및 검색 -->
-	<div class="row">
-		<div class="col-xs-3 col-md-3"></div>
-		<div class="col-xs-6 col-md-6 logoandsearch">
-			<form action="/pineapple" method="get" class="row">
-			    <img src="${pageContext.request.contextPath}/resources/img/logo.jpg" style="display: inline;">
-			    <input style="width: 40%; display: inline;"  type="text" class="form-control">
+	<div class="row" id="toptitlearea">
+		<!-- 로고 및 검색 -->
+		<div class="col-xs-2 col-md-2 logoandsearch">
+			<form action="/pineapple" method="get" class="row" align="left">
+			    <input style="width: 70%; display: inline;"  type="text" class="form-control">
 			    <button type="submit" class="btn btnpine btn-sm" style="display: inline;">
 			    	<i class="glyphicon glyphicon-search" style="display: inline;"></i>
 			    </button>
 		   	</form>
 		</div>
-		<div class="col-xs-3 col-md-3"></div>
-	</div>
-<!-- 상단메뉴 -->
-	<c:import url="/resources/module/topmenu.jsp"/>
+		<div class="col-xs-7 col-md-7">
+		<!-- 타이틀영역 -->
+			<div class="row" id="maintitlearea" align="left">
+				<h2 class="colorchangetitle" align="center">프로젝트관리(PMS)가 가능한 크라우드펀딩사이트</h2>
+				<h1 class="colorchangetitle" align="center"><b>PineApple</b></h1>
+			</div>
+		</div>
+		<div class="col-xs-3 col-md-3">
+		<!-- 로그인폼 -->
+			<c:import url="/resources/module/login_main.jsp"/>
+		</div>
+	</div><br>
+
 <!-- 본문 -->
 <div class="row">
 	<!-- 본문 좌측 -->
@@ -66,12 +80,6 @@
 	</div>
 	<!-- 본문 중앙부분 -->
 	<div class="col-xs-7 col-md-7">
-	<!-- 타이틀영역 -->
-		<div class="row" id="maintitlearea"">
-			<h3 class="colorchangetitle" align="center">프로젝트관리(PMS)가 가능한 크라우드펀딩사이트</h3>
-			<h2 class="colorchangetitle" align="center">파인애플펀딩</h2>
-		</div>
-		<br><br>
 		<!-- 가장 큰 carousel1번 영역 -->
 		<div class="row">
 			<!-- carousel : 회전하면서 이미지를 보여주는 것 -->
@@ -181,11 +189,6 @@
 		
 	<!-- 본문 우측 부분 -->
 	<div class="col-xs-3 col-md-3" style="padding-left: 30px;">
-		<!-- 로그인 모듈 -->
-		<div class="row">
-			<c:import url="/resources/module/login_main.jsp"/>
-		</div>
-		<br>
 		<!-- 우측 배너 -->
 		<div class="row">
 			<a id="myAdLink" href="">

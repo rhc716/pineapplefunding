@@ -3,6 +3,7 @@ package com.pineapple.funding.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -241,5 +242,23 @@ public class FundingDao implements FundingDaoInterface {
 		numberOfRequests = numberOfRequests*10;
 		//log.debug("selectMoreFdList 쿼리 실행 결과 : "+ sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListAdminThird", numberOfRequests));
 		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListAdminThird", numberOfRequests);
+	}
+	
+	
+	// 펀딩코드에 따른 마일스톤 리스트 가져오기
+	@Override
+	public List<Object> selectMilestoneListOfFunding(int fdCode) {
+		log.debug("FundingDao의 selectMoreFdList호출 성공");
+		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectMilestoneListOfFunding", fdCode);
+	}
+	
+	// 마일스톤입력에서 사용할 마일스톤 단계 중복검사
+	@Override
+	public MileStone milestoneStepCheck(int msFdCode, int milestoneStep) {
+		log.debug("FundingDao의 milestoneStepCheck호출 성공");
+		Map<String, Object> map = new HashMap<>();
+		map.put("msFdCode", msFdCode);
+		map.put("milestoneStep", milestoneStep);
+		return sqlSessionTemplate.selectOne("com.pineapple.funding.service.FundingMapper.milestoneStepCheck", map);
 	}
 }

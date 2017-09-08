@@ -98,6 +98,96 @@ $(document).ready(function(){
 	
 	
 	
+	
+	// 현재 있는 마일스톤 단계를 보기 위해 펀딩선택시 해당 펀딩의 마일스톤 리스트를 가져옴
+	$('#fdselectlist').change(function(){
+		// console.log($("#fdselectlist option:selected").val());
+		// 옵션이 바뀌면 값도 지워줌
+		$('#milestoneStep').val("");
+		$('#existmilestone').val("");
+		var getmilestonelistoffunding = $.ajax({
+			type : "get",
+			url : "/pineapple/getmilestonelistoffunding.pms",
+		 	/* 선택한 옵션에서 펀딩코드를 가져와서 보내줌 */
+			data : { fdCode : $("#fdselectlist option:selected").val()}
+		});
+		
+			// 이미 존재하는 마일스톤단계를 existmilestone에 채워줌
+			getmilestonelistoffunding.done(function(msg){
+				var content = "";
+				for(var i=0; i<msg.length; i++){
+					content += msg[i].milestoneStep+", ";
+				}
+				$('#existmilestone').val(content);
+			});
+	})
+	
+	
+//	마일스톤 단계 중복검사 ajax요청
+	$('#milestoneStep').blur(function(){
+		$.ajax({ 
+            type: "get",
+            url : "/pineapple/milestonestepcheck.pms",
+            data : {milestoneStep : $('#milestoneStep').val()
+            	, msFdCode : $("#fdselectlist option:selected").val()
+            	
+            },
+            success : function(ic){ 
+            	console.log(ic);
+            	
+            	// 공백일때 -> 마일스톤단계 중복검사 결과가 없을때 -> 사용가능
+            	if (ic=='') {
+            		console.log("사용가능");
+            		$('#existmilestone').css("color", "#008000");
+            		$('#existmilestone').val("사용 가능한 마일스톤단계입니다");
+            		$('#checkresult').val("yes");
+            	// 공백이 아닐때 -> 마일스톤단계 중복검사 결과가 있을때 -> 사용불가능
+            	} else {
+            		console.log("사용불가능");
+            		$('#existmilestone').css("color", "red");
+            		$('#existmilestone').val("사용 불가능한 마일스톤단계입니다");
+            		$('#checkresult').val("no");
+            	}		
+            	
+            }, 
+            error : function error(){
+            	alert('펀딩명과 마일스톤단계를 입력해주세요');	
+            }
+    	});
+	});
+				
+	
+	
+	// submit 버튼을 누를때 유효성 검사
+	
+	$('#submitbtn').click(function(){
+		console.log($("#fdselectlist option:selected").val());
+		if($("#fdselectlist option:selected").val()=="null"){
+			alert('펀딩을 선택해주세요');
+		}else{
+			if($('#milestoneStep').val()==""){
+				alert('마일스톤 단계를 입력해주세요');
+			}else{
+				if($('#checkresult').val()=="yes"){
+					if($('#pmid').val()!=""){
+						if($('#milestoneName').val()!=""){
+								$('#mileform').submit();
+						}else{
+							alert('마일스톤명을 입력해주세요');
+						}
+					}else{
+						alert('담당사원을 선택해야합니다');
+					}
+				}else{
+					alert('마일스톤단계의 중복검사를 통과해야 합니다');
+				}
+				
+			}
+		}
+			
+		
+	});
+
 });
 
 	
@@ -143,9 +233,18 @@ $(document).ready(function(){
 	                    <div class="form-group">
 	                        <label for="description" class="col-sm-3 control-label">마일스톤 단계</label>
 		                        <div class="col-sm-9">
-									<input type="number" class="form-control" name="milestoneStep" min="1" max="100">
+									<input type="number" id="milestoneStep" class="form-control" name="milestoneStep" min="1" max="100">
+									<input type="hidden" id="checkresult" value="no">
 								</div>
+								
 	                   	</div>
+						
+						<div class="form-group">
+							<label for="description" class="col-sm-3 control-label">현재 생성된 마일스톤 단계 : </label>
+									<div class="col-sm-9">
+										<input type="text" id="existmilestone" class="form-control" readonly>
+									</div>	
+						</div>
 						
 						<div class="form-group">
 	                        <label for="description" class="col-sm-3 control-label">마일스톤 담당자 아이디</label>
@@ -163,19 +262,19 @@ $(document).ready(function(){
 						<div class="form-group">
 	                        <label for="description" class="col-sm-3 control-label">마일스톤 이름</label>
 		                        <div class="col-sm-9">
-						<input type="text" class="form-control" name="milestoneName">
+						<input type="text" class="form-control" id="milestoneName" name="milestoneName">
 								</div>
 	                   	</div>
 						<div class="form-group">
 	                        <label for="description" class="col-sm-3 control-label">마일스톤 요약</label>
 		                        <div class="col-sm-9">
-						<textarea class="form-control" rows="5" name="milestoneSummary"></textarea>
+						<textarea class="form-control" rows="5" id="milestoneSummary" name="milestoneSummary"></textarea>
 								</div>
 	                   	</div>
 						<input type="hidden" id="msComCode" name="msComCode" value="">
 						<div class="form-group">
 		                        <div class="col-sm-12 text-right">
-		                            <button type="submit" class="btn btn-success preview-add-button">
+		                            <button type="button" id="submitbtn" class="btn btn-success preview-add-button">
 		                            	입력완료
 		                            </button>
 	                            </div>

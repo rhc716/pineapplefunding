@@ -40,40 +40,49 @@ body:active {
 Integer status_code = (Integer)request.getAttribute("javax.servlet.error.status_code");
 request.setAttribute("status_code", status_code);
 %>
-<c:if test="${status_code eq 400}">
-	<div class="error">
-	   <h2 class="emoji">&#x25D5; &#xFE35; &#x25D5;</h2>
-	   <h2>요청이 잘못되었습니다</h2>
-	   <h1>${status_code}</h1>
-	</div>
-</c:if>
-<c:if test="${status_code eq 404}">
-	<div class="error">
-	   <h2 class="emoji">&#x25D5; &#xFE35; &#x25D5;</h2>
-	   <h2>요청하신 페이지가 없습니다</h2>
-	   <h1>${status_code}</h1>
-	</div>
-</c:if>
-<c:if test="${status_code eq 405}">
-	<div class="error">
-	   <h2 class="emoji">&#x25D5; &#xFE35; &#x25D5;</h2>
-	   <h2>요청이 잘못되었습니다</h2>
-	   <h1>${status_code}</h1>
-	</div>
-</c:if>
-<c:if test="${status_code eq 500}">
-	<div class="error">
-	   <h2 class="emoji">&#x25D5; &#xFE35; &#x25D5;</h2>
-	   <h2>서버 내부에 에러가 발생해서 처리중입니다</h2>
-	   <h1>${status_code}</h1>
-	</div>
-</c:if>
-<c:if test="${status_code eq 503}">
-	<div class="error">
-	   <h2 class="emoji">&#x25D5; &#xFE35; &#x25D5;</h2>
-	   <h2>서버가 일시적으로 서비스 제공할 수 없습니다</h2>
-	   <h1>${status_code}</h1>
-	</div>
-</c:if>
+<c:choose>
+	<c:when test="${status_code eq 400}">
+		<div class="error">
+		   <h2 class="emoji">&#x25D5; &#xFE35; &#x25D5;</h2>
+		   <h2>요청이 잘못되었습니다</h2>
+		   <h1>${status_code}</h1>
+		</div>
+	</c:when>
+	<c:when test="${status_code eq 404}">
+		<div class="error">
+		   <h2 class="emoji">&#x25D5; &#xFE35; &#x25D5;</h2>
+		   <h2>요청하신 페이지가 없습니다</h2>
+		   <h1>${status_code}</h1>
+		</div>	
+	</c:when>
+	<c:when test="${status_code eq 405}">
+		<div class="error">
+		   <h2 class="emoji">&#x25D5; &#xFE35; &#x25D5;</h2>
+		   <h2>요청이 잘못되었습니다</h2>
+		   <h1>${status_code}</h1>
+		</div>
+	</c:when>
+	<c:when test="${status_code eq 500}">
+		<div class="error">
+		   <h2 class="emoji">&#x25D5; &#xFE35; &#x25D5;</h2>
+		   <h2>서버 내부에 에러가 발생해서 처리중입니다</h2>
+		   <h1>${status_code}</h1>
+		</div>
+	</c:when>
+	<c:when test="${status_code eq 503}">
+		<div class="error">
+		   <h2 class="emoji">&#x25D5; &#xFE35; &#x25D5;</h2>
+		   <h2>서버가 일시적으로 서비스 제공할 수 없습니다</h2>
+		   <h1>${status_code}</h1>
+		</div>
+	</c:when>
+	<c:otherwise>
+		<div class="error">
+		   <h2 class="emoji">&#x25D5; &#xFE35; &#x25D5;</h2>
+		   <h2>에러로 페이지를 표시할 수 없습니다</h2>
+		   <h1>에러코드를 알 수 없음</h1>
+		</div>
+	</c:otherwise>
+</c:choose>
 </body>
 </html>

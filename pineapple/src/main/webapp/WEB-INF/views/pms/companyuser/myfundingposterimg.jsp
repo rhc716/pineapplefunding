@@ -42,7 +42,7 @@ $(document).ready(function(){
 	});
 	// 성공시
 	getfundinglist.done(function(msg){
-		console.log(msg);
+		//console.log(msg);
 		
 		//alert(formatDate(msg[0].fdDate));
 		for(var i = 0; i<msg.length; i++){
@@ -95,7 +95,17 @@ $(document).ready(function(){
 				    	+'<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>'
 				    	+'</div></div></div></div></div>'
 				);
-			}		
+			}	
+		
+			// 이미지 경로가 잘못되어 404일때 보여줄 이미지 설정
+			$('img').each(function(n){
+				$(this).on( "error", function(){
+					$(this).attr("src", "${pageContext.request.contextPath}/resources/img/404alternateimage.jpg");
+			    });
+			});
+			
+			
+			
 	
 			//이미지 업로드 전 미리보기 썸네일
 			$('.getfile').change(function(e){
@@ -146,7 +156,10 @@ $(document).ready(function(){
 			<div class="pagetitleandexplainbox" style="width: 670px;">
 				<h1>펀딩포스터이미지관리</h1>
 				<span>
-					<b> 펀딩기본정보 수정 및 삭제는 펀딩개설 승인 전까지 가능합니다.</b>
+					<b> 
+						펀딩 포스터는 투자하기에 가장 먼저 노출되는 가로 300px, 세로 245px의 이미지파일입니다<br>
+						용량 제한은 10MB 입니다
+					</b>
 				</span>
 			</div>
 <!-- 펀딩 리스트 뿌려질 곳 -->

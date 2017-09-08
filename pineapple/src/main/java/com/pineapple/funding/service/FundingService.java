@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pineapple.invest.service.Investment;
+import com.pineapple.pms.service.PmsService;
 import com.pineapple.user.service.Company;
 import com.pineapple.user.service.Employee;
 
@@ -104,7 +105,7 @@ public class FundingService implements FundingServiceInterface {
 		log.debug("FundingService의 modifyMileStone호출 성공");
 		fundingdao.updateMileStone(mileStone);
 	}
-	// 마일스톤 삭제 
+	// 마일스톤 삭제 // 삭제시 예상WBS와 투입요소들도 같이 삭제해주려(PmsService의 deletewbsplan를 호출)
 	@Override
 	public void removeMileStone(int delMsCode) {
 		log.debug("FundingService의 removeMileStone호출 성공");
@@ -208,6 +209,19 @@ public class FundingService implements FundingServiceInterface {
 	public List<Object> getMoreFdList(int numberOfRequests) {
 		log.debug("FundingService의 getMoreFdList호출 성공");
 		return fundingdao.selectMoreFdList(numberOfRequests);
+	}
+	
+	// 펀딩코드에 따른 마일스톤 리스트 가져오기
+	@Override
+	public List<Object> getMilestoneListOfFunding(int fdCode) {
+		log.debug("FundingService의 getMilestoneListOfFunding호출 성공");
+		return fundingdao.selectMilestoneListOfFunding(fdCode);
+	}
+	// 마일스톤입력에서 사용할 마일스톤 단계 중복검사
+	@Override
+	public MileStone milestoneStepCheck(int msFdCode, int milestoneStep) {
+		log.debug("FundingService의 milestoneStepCheck호출 성공");
+		return fundingdao.milestoneStepCheck(msFdCode, milestoneStep);
 	}
 }
  

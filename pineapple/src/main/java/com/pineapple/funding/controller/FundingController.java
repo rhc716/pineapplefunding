@@ -1,6 +1,8 @@
 package com.pineapple.funding.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Locale;
 
@@ -181,17 +183,35 @@ public class FundingController {
 	
 	// 펀딩 보고서 업로드 
 	@RequestMapping(value = "/addfundingfile.pms", method = RequestMethod.POST)
-	public String addFundingFile(Model model, Locale locale, MultipartHttpServletRequest request, MultipartFile uploadFile, @RequestParam("fileFdCode") int fdCode) {
+	public String addFundingFile(Model model, Locale locale, MultipartHttpServletRequest request
+			, MultipartFile uploadFile, @RequestParam("fileFdCode") int fdCode, HttpServletResponse response) throws IOException {
 		log.debug("FundingController의 addFundingFile호출 성공");
 		log.debug("fileFdCode : "+fdCode);
 		log.debug("filename : "+uploadFile.getOriginalFilename());
 		log.debug("filesize : "+uploadFile.getSize());
-		//리턴값으로 업로드된 경로+파일명을 가져온다.
-		String result = fileutil.fileUpload(request, uploadFile);
-		log.debug("result : "+result);
-		//업로드된 경로+파일명 그리고 나머지 정보를 DB에 저장해줌
-		service.addFundingFile(uploadFile, result, fdCode);
-		return "redirect:/fundingfilelistpage.pms";
+		
+		// 용량 제한을 10MB로 해줘서 튕겨낸다
+		if(uploadFile.getSize() > 83886080){
+    		// 10MB 이상
+			
+    		 response.setCharacterEncoding("UTF-8");
+             PrintWriter writer = response.getWriter();
+             writer.println("<script type='text/javascript'>");
+             writer.println("alert('용량이 10MB를 초과하였습니다');");
+             writer.println("history.back();");
+             writer.println("</script>");
+             writer.flush();
+    		 return "pms/companyuser/myfundingposterimg";
+		} else {
+			// 10MB 이하
+			
+			//리턴값으로 업로드된 경로+파일명을 가져온다.
+			String result = fileutil.fileUpload(request, uploadFile);
+			log.debug("result : "+result);
+			//업로드된 경로+파일명 그리고 나머지 정보를 DB에 저장해줌
+			service.addFundingFile(uploadFile, result, fdCode);
+			return "redirect:/fundingfilelistpage.pms";
+		}
 	}
 	
 	// 펀딩파일 다운로드 요청
@@ -245,37 +265,69 @@ public class FundingController {
 	
 	// 펀딩 포스터 이미지수정
 	@RequestMapping(value = "/modifyfundingimage.pms", method = RequestMethod.POST)
-	public String modifyFundingImage(Model model, Locale locale, Funding funding, MultipartFile uploadimage, MultipartHttpServletRequest request) {
+	public String modifyFundingImage(Model model, Locale locale, Funding funding, MultipartFile uploadimage, MultipartHttpServletRequest request, HttpServletResponse response) throws IOException {
 		log.debug("FundingController의 modifyFundingImage호출 성공");
 		log.debug("funding : " + funding);		
 		log.debug("upload image name : "+uploadimage.getOriginalFilename());
 		log.debug("upload image size : "+uploadimage.getSize());
 		log.debug("upload image ContentType : "+uploadimage.getContentType());
-		
-		// 이전에 올렸던 이미지 파일이 있으면 삭제
-		int fdCode = funding.getFdCode();
-		Funding fundingresult = service.getMyFunding(fdCode);
-		log.debug("이전의 펀딩 이미지경로 : " + fundingresult.getPosterImg());		
-		if(fundingresult.getPosterImg()!=null){
-			fileutil.deleteFile(fundingresult.getPosterImg());
-		}
-		
-		// 새로운 이미지를 파일업로드하고 경로를 DB에서 수정해준다.
-		// 업로드되는 파일이 있을때
-		if(uploadimage.getSize()!=0){
-			//리턴값으로 업로드된 경로+파일명을 가져온다.
-			String result = fileutil.fileUpload(request, uploadimage);
-			model.addAttribute("posterImg", result);
-			model.addAttribute("fdCode", funding.getFdCode());
-			service.modifyFundingImage(model);
-		}else{
-		// 파일을 안올린채 수정완료를 눌렀을때 DB의 이미지에 null값 넣어줌
-			model.addAttribute("posterImg", null);
-			model.addAttribute("fdCode", funding.getFdCode());
-			service.modifyFundingImage(model);
-		}
-		
-		return "redirect:/myfundingposterimgpage.pms";
+
+		// 업로드한 파일이 이미지가 아닐때 튕겨낸다
+		String[] filetype = uploadimage.getContentType().split("/");
+		log.debug("filetype : " + filetype[0]);
+        if(!filetype[0].equals("image")){
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter writer = response.getWriter();
+            writer.println("<script type='text/javascript'>");
+            writer.println("alert('이미지파일만 업로드가 가능합니다');");
+            writer.println("history.back();");
+            writer.println("</script>");
+            writer.flush();
+            return "pms/companyuser/myfundingposterimg";
+        
+        } else {
+        	// 업로드한 파일이 이미지일때
+        	
+        	// 10MB 용량제한을 둬서 튕겨낸다	
+        	if(uploadimage.getSize() > 83886080){
+        		// 10MB 이상
+        		 response.setCharacterEncoding("UTF-8");
+                 PrintWriter writer = response.getWriter();
+                 writer.println("<script type='text/javascript'>");
+                 writer.println("alert('용량이 10MB를 초과하였습니다');");
+                 writer.println("history.back();");
+                 writer.println("</script>");
+                 writer.flush();
+        		 return "pms/companyuser/myfundingposterimg";
+        	} else {
+        		// 10MB 이하
+        		
+				// 이전에 올렸던 이미지 파일이 있으면 삭제
+				int fdCode = funding.getFdCode();
+				Funding fundingresult = service.getMyFunding(fdCode);
+				log.debug("이전의 펀딩 이미지경로 : " + fundingresult.getPosterImg());		
+				if(fundingresult.getPosterImg()!=null){
+					fileutil.deleteFile(fundingresult.getPosterImg());
+				}
+				
+				// 새로운 이미지를 파일업로드하고 경로를 DB에서 수정해준다.
+				// 업로드되는 파일이 있을때
+				if(uploadimage.getSize()!=0){
+					//리턴값으로 업로드된 경로+파일명을 가져온다.
+					String result = fileutil.fileUpload(request, uploadimage);
+					model.addAttribute("posterImg", result);
+					model.addAttribute("fdCode", funding.getFdCode());
+					service.modifyFundingImage(model);
+				}else{
+				// 파일을 안올린채 수정완료를 눌렀을때 DB의 이미지에 null값 넣어줌
+					model.addAttribute("posterImg", null);
+					model.addAttribute("fdCode", funding.getFdCode());
+					service.modifyFundingImage(model);
+				}
+			
+				return "redirect:/myfundingposterimgpage.pms";
+        	}
+        }
 	}
 	
 	// 마일스톤 삭제  

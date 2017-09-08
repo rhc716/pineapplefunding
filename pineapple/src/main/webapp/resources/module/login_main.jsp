@@ -29,7 +29,6 @@
 		<c:when test="${not empty sessionScope.userLogin}">
 			<div id="user-widget" class="list-group">
 	            <div class="list-group-item heading">
-	               <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/ademilter/128.jpg">
 	               <div class="text-wrap">
 	                  <h4 class="list-group-item-heading">${userLogin.nickname}</h4>
 	                  <p class="list-group-item-text">${level} ${rank} 권한 로그인중</p>
@@ -67,22 +66,22 @@
 				<div class="login_down_two">ID/PW찾기</div>
 				</div>
 			</form>
-		</c:otherwise>
-	</c:choose>
-	<form id="loginForm" action="/pineapple/login.user" method="post">
+			<form id="loginForm" action="/pineapple/login.user" method="post">
 					<input type="hidden" name="id" value="admin">
 					<input type="hidden" name="pw" value="asdf1234">
-	<button type="submit" class="btn btn-sm btn-success" style="float:left; padding:2px 2px;">관리자 로그인</button>
-	</form>
-	<form id="loginForm" action="/pineapple/login.user"  method="post">
-					<input type="hidden" name="id" value="id02@maver.com">
-					<input type="hidden" name="pw" value="asdf1234">
-	<button type="submit" class="btn btn-sm btn-success" style="float:left; padding:2px 2px;">투자자 로그인</button>
-	</form>
-	<form id="loginForm" action="/pineapple/login.user"  method="post">
-					<input type="hidden" name="id" value="id01@maver.com">
-					<input type="hidden" name="pw" value="asdf1234">
-	<button type="submit" class="btn btn-sm btn-success" style="float:left; padding:2px 2px;">기업회원 로그인</button>
-	</form>
+			<button type="submit" class="btn btn-sm btn-success" style="float:left; padding:2px 2px;">관리자 로그인</button>
+			</form>
+			<form id="loginForm" action="/pineapple/login.user"  method="post">
+							<input type="hidden" name="id" value="id02@maver.com">
+							<input type="hidden" name="pw" value="asdf1234">
+			<button type="submit" class="btn btn-sm btn-success" style="float:left; padding:2px 2px;">투자자 로그인</button>
+			</form>
+			<form id="loginForm" action="/pineapple/login.user"  method="post">
+							<input type="hidden" name="id" value="id01@maver.com">
+							<input type="hidden" name="pw" value="asdf1234">
+			<button type="submit" class="btn btn-sm btn-success" style="float:left; padding:2px 2px;">기업회원 로그인</button>
+			</form>
+		</c:otherwise>
+	</c:choose>
 </body>
 </html>

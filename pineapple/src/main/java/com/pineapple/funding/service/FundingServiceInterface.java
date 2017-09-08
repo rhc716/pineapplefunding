@@ -36,4 +36,6 @@ public interface FundingServiceInterface {
 	Funding getMyFunding(int fdCode);
 	List<Object> getProjectInfoList(String userId, String level);
 	List<Object> getMoreFdList(int numberOfRequests);
+	List<Object> getMilestoneListOfFunding(int fdCode);
+	MileStone milestoneStepCheck(int msFdCode, int milestoneStep);
 }

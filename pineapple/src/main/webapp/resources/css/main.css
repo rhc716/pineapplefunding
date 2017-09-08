@@ -50,7 +50,7 @@ button{
 }
 
 .navbar { 
-	background-color:#009442;
+	border-bottom:1px solid #1ec545;
 	text-align : center;
 }
 .navbar_pine{
@@ -71,12 +71,12 @@ button{
 	line-height : 50px;	
 	margin:0px;
 	padding:0px 20px 0px 20px;
-	color:yellow;
 }
 .navbar a{
-	color:white;
+	color:#191116; 
 	text-decoration:none;
 	padding:0px 20px 0px 20px;
+	display: inline-block;
 }
 
 .navbar a:hover{
@@ -84,8 +84,8 @@ button{
 	line-height : 50px;	
 	margin:0px;
 	padding:0px 20px 0px 20px;
-	color:yellow;
 	text-decoration:none;
+	border-bottom:2px solid #1ec545; 
 }
 
 
@@ -97,7 +97,7 @@ button{
 
 .navbar_menuright{
 	float:right;
-	color:white;
+	color:#191116;
 	font-size:20px;
 }
 

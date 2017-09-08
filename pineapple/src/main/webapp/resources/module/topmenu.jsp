@@ -11,21 +11,21 @@
 <c:choose>
 	<c:when test="${not empty sessionScope.userLogin }">
 		<div class="row navbar">
-			<ul class="navbar_pine"><a href="/pineapple">PineApple</a></ul>
+			<ul class="navbar_pine"><a href="/pineapple"><b style="color: #1ec545">PineApple</b></a></ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/timelinemain.timeline">타임라인</a></ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/investmain.invest">투자하기</a></ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/pmsmain.pms">프로젝트관리(펀딩)</a></ul>
-			<ul class="navbar_menuright">이용안내(개발중)</ul>
+			<ul class="navbar_menuright"><a>이용안내(개발중)</a></ul>
 			<ul class="navbar_menuright"><a href="/pineapple/mypage.user?level=${level}">Mypage</a></ul>
 		</div>
 	</c:when>
 	<c:otherwise>
 		<div class="row navbar">
-			<ul class="navbar_pine"><a href="/pineapple">PineApple</a></ul>
+			<ul class="navbar_pine"><a href="/pineapple"><b style="color: #1ec545">PineApple</b></a></ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/timelinemain.timeline">타임라인</a></ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/investmain.invest">투자하기</a></ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/pmsmain.pms" class="gologin">프로젝트관리(펀딩)</a></ul>
-			<ul class="navbar_menuright">이용안내(개발중)</ul>
+			<ul class="navbar_menuright"><a>이용안내(개발중)</a></ul>
 			<ul class="navbar_menuright"><a href="/pineapple/userinsert.user">회원가입</a></ul>
 		</div>
 	</c:otherwise>
