@@ -23,8 +23,14 @@
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
 
-<!-- css rhc -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
+<!-- css lsk -->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lsk.css" />
+
+
+<!-- 구글차트  -->
+ <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+ 
+ 
 <script>
 /* 펀딩 리스트 불러올 ajax */
 $(document).ready(function(){
@@ -37,7 +43,14 @@ $(document).ready(function(){
 	// 성공시
 	getfundinglist.done(function(msg){
 		console.log(msg);
-		
+		$('#mymslistselect').html('')
+		$('#wbslistselect').html('')
+		$('#mymslistselect').append(
+				'<select name="mslist" id="mymslist">'
+				+'<option>마일스톤 선택</option>'
+				+'</select>'
+				
+			);
 		/* 날짜를 yyyy-mm-dd 형태로 바꿔주는 함수 */
 		function formatDate(date) {
 		    var d = new Date(date),
@@ -56,26 +69,117 @@ $(document).ready(function(){
 		for(var i = 0; i<msg.length; i++){
 			
 				$('#myfundinglist').append(
-						'<form action="/pineapple/wbsmsview.pms" method="post">' 
-						/* 펀딩리스트 폼, 모달 버튼  */
-						+'<div class="container-fluid fundinglistbox">'
-						+'<input type="hidden" readonly="readonly"  name="fdCode" value="'+msg[i].fdCode+'">'
-						+'<div class="fundinglistboxtop">'
-						+'<h3>'+msg[i].fdTitle+'</h3><br>'
-						+'<b>펀딩상태 : '+msg[i].fdStatus+'</b><br>펀딩개설자 : '+msg[i].fdPublisher
-						+'개설요청일 : '+formatDate(msg[i].fdDate)+'</div>'
-						+'<button type="submit" class="btn btn-sm btn-primary">마일스톤보기</button>'
-						+'<input type="hidden" class="form-control" name="fdCode" value="'+msg[i].fdCode+'"/><br>'
-						+'<input type="hidden" class="form-control" name="fdTitle" value="'+msg[i].fdTitle+'"/><br>'
-						+'</div></div></form>'
+						'<option value="'+msg[i].fdCode+'">'+msg[i].fdTitle+'</option><br>'
 				);
 		}
+			
 	});
 	// 실패시
 	getfundinglist.fail(function(){
 		alert('ajax통신실패');
 	});
+	
+	
+
 });
+
+//펀딩리스트에서 select 로 펀딩이 변경되면 마일스톤 리스트 변경하는 ajax
+$(document).on("change","select[name='fdlist']",function(){
+	var mslist = $.ajax({
+		type : "post",
+		url : "/pineapple/WbsMs.pms",
+		/* 아이디 세션에서 받아서 가져옴 */
+		data : { fdCode : $(this).val() }
+	
+	});
+	// 성공시
+	mslist.done(function(msg){
+		console.log(msg);
+		$('#mymslistselect').html('')
+		$('#wbslistselect').html('')
+		$('#mymslistselect').append(
+				'<select name="mslist" id="mymslist">'
+				+'<option>마일스톤 선택</option>'
+				+'</select>'
+				
+			);
+		
+		/* 날짜를 yyyy-mm-dd 형태로 바꿔주는 함수 */
+		function formatDate(date) {
+		    var d = new Date(date),
+		        month = '' + (d.getMonth() + 1),
+		        day = '' + d.getDate(),
+		        year = d.getFullYear();
+
+		    if (month.length < 2) month = '0' + month;
+		    if (day.length < 2) day = '0' + day;
+
+		    return [year, month, day].join('-');
+		}
+		
+		//alert(formatDate(msg[0].fdDate));
+		//펀딩리스트를 myfundinglist에 채워줌 // 수정버튼과 모달창, 삭제버튼을 만들어줌
+		for(var i = 0; i<msg.length; i++){
+			
+				$('#mymslist').append(
+					'<option value="'+msg[i].milestoneCode+'">'+msg[i].milestoneName+'</option><br>'
+				);
+		}
+	});
+	// 실패시
+	mslist.fail(function(){
+		alert('ajax통신실패');
+	});
+});
+
+$(document).on("change","select[name='mslist']",function(){
+		var wbsplanlist = $.ajax({
+			type : "post",
+			url : "/pineapple/Wbsplanlist.pms",
+			/* 아이디 세션에서 받아서 가져옴 */
+			data : { milestoneCode : $(this).val() }
+		});
+		// 성공시
+		wbsplanlist.done(function(msg){
+			console.log(msg);
+			$('#wbslistselect').html('')
+			$('#wbslistselect').append(
+					'<select name="wbslist" id="mywbslist">'
+					+'<option>wbs 선택</option>'
+					+'</select>'
+					
+				);
+			
+			/* 날짜를 yyyy-mm-dd 형태로 바꿔주는 함수 */
+			function formatDate(date) {
+			    var d = new Date(date),
+			        month = '' + (d.getMonth() + 1),
+			        day = '' + d.getDate(),
+			        year = d.getFullYear();
+
+			    if (month.length < 2) month = '0' + month;
+			    if (day.length < 2) day = '0' + day;
+
+			    return [year, month, day].join('-');
+			}
+			
+			//alert(formatDate(msg[0].fdDate));
+			//펀딩리스트를 myfundinglist에 채워줌 // 수정버튼과 모달창, 삭제버튼을 만들어줌
+			for(var i = 0; i<msg.length; i++){
+				
+					$('#mywbslist').append(
+						'<option value="'+msg[i].wbsPlanCode+'">'+msg[i].wbsPlanName+'</option><br>'
+					);
+			}
+		});
+		// 실패시
+		wbsplanlist.fail(function(){
+			alert('ajax통신실패');
+		});
+	});
+		
+
+
 </script>
 </head>
 <body>
@@ -90,9 +194,30 @@ $(document).ready(function(){
 	<div class="col-md-3">
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
-	<div class="col-md-9" id="myfundinglist">
-<!-- 펀딩 리스트 뿌려질 곳 -->
+	<div class="row">
+		<div class="col-md-2">
+			<h3>펀딩리스트</h3>
+			<div>
+				<select name="fdlist" id="myfundinglist">
+					<option>펀딩 선택</option>
+				</select>
+			</div>
+	<!-- 펀딩 리스트 뿌려질 곳 -->
+		</div>
+		<div class="col-md-2" >
+			<h3>마일스톤리스트</h3>
+				<div id="mymslistselect">
+				</div>
+	<!-- 마일스톤 리스트 뿌려질 곳 -->
+		</div>
+		<div class="col-md-2">
+			<h3>wbs리스트</h3>
+				<div id="wbslistselect">
+				</div>
+			<!-- wbs 리스트 뿌려질 곳 -->
+		</div>
 	</div>
+	
 
 </div>
 
