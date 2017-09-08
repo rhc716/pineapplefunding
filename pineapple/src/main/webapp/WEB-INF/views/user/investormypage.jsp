@@ -7,6 +7,7 @@
 <title>투자자 MyPage</title>
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function(){
 	//부트스트랩 새로고침할 때 페이지 유지

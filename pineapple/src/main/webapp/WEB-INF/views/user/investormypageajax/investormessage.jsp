@@ -222,7 +222,7 @@ $(document).ready(function(){
 		
 		<!-- 메세지 보내기 -->
 		<div class="col-md-10 resultresult" id="messagesend" style="border: 1.5px solid #009442; border-radius: 5px;">
-			<form id="newmessageform" action="/pineapple/investormessagesend.timeline" method="post" style="padding: 30px 15px;">
+			<form id="newmessageform" action="/pineapple/investormessagesend.timeline#message" method="post" style="padding: 30px 15px;">
 				<div style="margin: 20px 0px;">
 				<input type="hidden" name="msgSendId" value="${id}">
 				<label for="messagereceiveidinput">받는 사람</label>
