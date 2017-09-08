@@ -63,19 +63,19 @@ button{
 	height:50px;
 	line-height : 50px;	
 	margin:0px;
-	padding:0px 20px 0px 20px;
+	padding:0px 15px 0px 15px;
 }
 
 .navbar ul:hover{
 	height:50px;
 	line-height : 50px;	
 	margin:0px;
-	padding:0px 20px 0px 20px;
+	padding:0px 15px 0px 15px;
 }
 .navbar a{
 	color:#191116; 
 	text-decoration:none;
-	padding:0px 20px 0px 20px;
+	padding:0px 15px 0px 15px;
 	display: inline-block;
 }
 
@@ -83,7 +83,7 @@ button{
 	height:50px;
 	line-height : 50px;	
 	margin:0px;
-	padding:0px 20px 0px 20px;
+	padding:0px 15px 0px 15px;
 	text-decoration:none;
 	border-bottom:2px solid #1ec545; 
 }

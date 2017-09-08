@@ -5,13 +5,23 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+.logoimg{
+	display: inline;
+}
+</style>
 </head>
 <body>
 <!-- 상단메뉴 -->
 <c:choose>
 	<c:when test="${not empty sessionScope.userLogin }">
 		<div class="row navbar">
-			<ul class="navbar_pine"><a href="/pineapple"><b style="color: #1ec545">PineApple</b></a></ul>
+			<ul class="navbar_pine">
+				<a href="/pineapple">
+					<img src="${pageContext.request.contextPath}/resources/img/logo.jpg" class="logoimg">
+					<b style="color: #1ec545">PineApple</b>
+				</a>
+			</ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/timelinemain.timeline">타임라인</a></ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/investmain.invest">투자하기</a></ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/pmsmain.pms">프로젝트관리(펀딩)</a></ul>
@@ -21,7 +31,12 @@
 	</c:when>
 	<c:otherwise>
 		<div class="row navbar">
-			<ul class="navbar_pine"><a href="/pineapple"><b style="color: #1ec545">PineApple</b></a></ul>
+			<ul class="navbar_pine">
+				<a href="/pineapple">
+					<img src="${pageContext.request.contextPath}/resources/img/logo.jpg" class="logoimg">
+					<b style="color: #1ec545">PineApple</b>
+				</a>
+			</ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/timelinemain.timeline">타임라인</a></ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/investmain.invest">투자하기</a></ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/pmsmain.pms" class="gologin">프로젝트관리(펀딩)</a></ul>
