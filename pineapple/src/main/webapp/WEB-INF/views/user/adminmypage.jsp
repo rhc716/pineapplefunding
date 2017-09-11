@@ -277,7 +277,7 @@ $(document).ready(function(){
 		<!-- 두번째 탭; 사이트에서 개설한 펀딩 현황(마일스톤, 예상WBS, 실제WBS) 조회 및 검색 -->
 		<div role="tabpanel" class="tab-pane fade" id="fundinginfo" aria-labelledby="fundinginfo-tab">
 			<div class="row">
-				<div class="col-md-2">
+				<div class="col-md-3">
 					<br>
 					<p>펀딩 대시보드</p>
 					<br>
@@ -291,7 +291,7 @@ $(document).ready(function(){
 						</ul>
 					</nav> 
 				</div>
-				<div class="col-md-10">
+				<div class="col-md-9">
 					<br>
 					<p id="explanation">파인애플펀딩 사이트에서 활동중인 펀딩의 전체목록을 조회, 검색 할 수 있습니다. 
 										펀딩 진행중인 상황에 대한 대시보드로서 기능하며, 개별 펀딩에 포함된 프로젝트 관리 사항인 
@@ -302,7 +302,7 @@ $(document).ready(function(){
 					<div>
 						<table class="table table-striped table-bordered table-hover">
 							<tr class="info">
-								<th>번호</th>
+								<th>#</th>
 								<th>펀딩코드</th>
 								<th>기업명</th>
 								<th>펀딩</th>
@@ -310,7 +310,7 @@ $(document).ready(function(){
 								<th>상황</th>
 								<th>최저이율</th>
 								<th>개설ID</th>
-								<th>등록요청일</th>
+								<th>요청일</th>
 								<th>승인여부</th>
 								<th>승인일</th>
 								<th>승인ID</th>
@@ -365,12 +365,12 @@ $(document).ready(function(){
 					<table class="table table-striped table-bordered table-hover">
 						<thead>
 							<tr class="info">
-								<td>번호</td>
+								<td>#</td>
 								<td>기업코드</td>
 								<td>기업명</td>
 								<td>사업자번호</td>
-								<td>기업대표명</td>
-								<td>개설자아이디</td>
+								<td>기업대표</td>
+								<td>개설자ID</td>
 								<td>등록승인</td>
 								<td>삭제승인</td>
 							</tr>
@@ -658,7 +658,11 @@ $(document).ready(function(){
 													        <button type="submit" class="btn btn-info">수정</button>
 													      </div>
 											      	</form>
-											      	
+											      		<div class="form-group">
+														 <label for="userCompany">소속기업명</label>
+													    <p id="explain">(회원이 소속된 모든 기업 목록을 볼 수 있습니다)</p>
+													    <a href="#" class="btn btn-block btn-info"></a>
+												  	</div>
 											    </div>
 											  </div>
 											</div>
