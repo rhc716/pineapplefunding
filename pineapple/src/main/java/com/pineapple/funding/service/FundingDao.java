@@ -215,6 +215,8 @@ public class FundingDao implements FundingDaoInterface {
 			list.add(sqlSessionTemplate.selectOne("com.pineapple.funding.service.FundingMapper.selectProjectInfoListAdminSecond"));
 			// 마감, 모집실패로 끝난 펀딩을 제외한 모든 펀딩 목록을 가져옴
 			list.add(sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListAdminThird"));
+			// 수수료 수익 총액, 오늘 발생한 수수료 수익값을 가져옴
+			list.add(sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListAdminfourth"));		
 		} else if(level.equals("기업회원")){
 			// 자신이 속한 회사의 총 펀딩수, 모집중인 펀딩수, 진행중인 펀딩수를 가져옴
 			list.add(sqlSessionTemplate.selectOne("com.pineapple.funding.service.FundingMapper.selectProjectInfoListComUserFirst", userId));
@@ -228,7 +230,7 @@ public class FundingDao implements FundingDaoInterface {
 			// 투자한 투자총액, 총투자건수, 진행중인 투자수, 진행중인 펀딩의 투자금액을 가져옴
 			list.add(sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListInvestorSecond", userId));
 			// 배당총액, 진행중인 펀딩의 현재까지 배당금액총액 가져옴
-			//list.add(sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListInvestorThird", userId));
+			list.add(sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListInvestorThird", userId));
 		}
 		return list;
 	}
@@ -260,5 +262,14 @@ public class FundingDao implements FundingDaoInterface {
 		map.put("msFdCode", msFdCode);
 		map.put("milestoneStep", milestoneStep);
 		return sqlSessionTemplate.selectOne("com.pineapple.funding.service.FundingMapper.milestoneStepCheck", map);
+	}
+	
+	@Override
+	public void selectForfundingTotalViewPage(int fdCode, Model model) {
+		log.debug("FundingDao의 selectForfundingTotalViewPage호출 성공");
+
+		// 펀딩코드에 해당되는 회사정보와 펀딩정보를 가져옴
+		model.addAttribute("fundingAndComAndMile",sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectForfundingTotalViewPageOne", fdCode));
+		log.debug("model : "+model);
 	}
 }

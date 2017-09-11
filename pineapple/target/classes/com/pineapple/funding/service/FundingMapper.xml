@@ -79,6 +79,38 @@
 			<result property="payCheck" column="payCheck"/>
 		</collection>
 	</resultMap>
+	<resultMap type="com.pineapple.funding.service.FundingAndCompanyAndMileStone" id="FundingAndCompanyAndMileStone">
+		<result property="fdCode" column="fdCode"/>
+		<result property="fdComCode" column="fdComCode"/>
+		<result property="fdTitle" column="fdTitle"/>
+		<result property="minInvestMoney" column="minInvestMoney"/>
+		<result property="numberOfShares" column="numberOfShares"/>
+		<result property="issuePrice" column="issuePrice"/>
+		<result property="openDate" column="openDate"/>
+		<result property="closeDate" column="closeDate"/>
+		<result property="minInterestRate" column="minInterestRate"/>
+		<result property="fdType" column="fdType"/>
+		<result property="fdStatus" column="fdStatus"/>
+		<result property="projectStartDate" column="projectStartDate"/>
+		<result property="projectEndDate" column="projectEndDate"/>
+		<result property="posterImg" column="posterImg"/>
+		<result property="fdPublisher" column="fdPublisher"/>
+		<result property="adminApproval" column="adminApproval"/>
+		<result property="fdApprovalDate" column="fdApprovalDate"/>
+		<result property="fdApprovalId" column="fdApprovalId"/>
+		<result property="fdDate" column="fdDate"/>
+		<result property="comCode" column="comCode"/>
+		<result property="comName" column="comName"/>
+		<collection property="mileStoneList" ofType="com.pineapple.funding.service.MileStone">
+			<id property="milestoneCode" column="milestoneCode"/>
+			<result property="msFdCode" column="msFdCode"/>
+			<result property="milestoneStep" column="milestoneStep"/>
+			<result property="milestoneName" column="milestoneName"/>
+			<result property="milestoneSummary" column="milestoneSummary"/>
+			<result property="msComCode" column="msComCode"/>
+			<result property="pm" column="pm"/>
+		</collection>
+	</resultMap>
 	
 	
 	
@@ -385,7 +417,13 @@
 		</otherwise>
 		</choose>
 	</select>
-	
+	<!-- 관리자 네번째 -->
+	<select id="selectProjectInfoListAdminfourth" resultMap="InfomationForPmsMainViewOfAdminUser">
+		<!-- 수수료 발생 총액, 수수료 당일 발생금액 가져옴 -->
+		SELECT SUM(mfAmount) totalCommissionRevenue, SUM(CASE when DATE(mfDate) = curdate() then mfAmount end)todayCommissionRevenue
+			FROM moneyflow
+		WHERE mfCategory = '4';
+	</select>
 	<!-- 기업회원 첫번째 -->
 	<select id="selectProjectInfoListComUserFirst" resultMap="InfomationForPmsMainViewOfCompanyUser" parameterType="String">
 		<!-- 자신이 속한 회사의 총 펀딩수, 모집중인 펀딩수, 진행중인 펀딩수를 가져옴 -->
@@ -446,10 +484,12 @@
 		ON i.investFdCode = f.fdCode
 		WHERE i.investId = #{userId}
 	</select>
-	<!-- <select id="selectProjectInfoListInvestorThird" resultMap="InfomationForPmsMainViewOfInvestorUser" parameterType="String">
-		배당총액, 진행중인 펀딩의 현재까지 배당금액총액 가져옴
-	
-	</select> -->
+	<select id="selectProjectInfoListInvestorThird" resultMap="InfomationForPmsMainViewOfInvestorUser" parameterType="String">
+		<!-- 배당총액, 진행중인 펀딩의 현재까지 배당금액총액 가져옴 -->
+		SELECT SUM(d.divPayAmount) totalDevidendMoney, SUM(CASE when f.fdStatus = '진행중' then d.divPayAmount end) proceedingFdDevidendMoney
+		FROM dividendpay d INNER JOIN investment i INNER JOIN funding f
+		WHERE d.divPayInvestCode = i.investCode AND i.investFdCode = f.fdCode AND i.investId = #{userId}
+	</select>
 	
 	<!-- 스케줄러용 <펀딩상태변화> //설명은 Scheduler클래스에// 모집중 -> 결제모집중 -->
 	<update id="fundingUpdateScheduleOne" parameterType="String">
@@ -560,6 +600,16 @@
 		FROM milestone
 		WHERE msFdCode = #{msFdCode} 
 		AND milestoneStep = #{milestoneStep}
+	</select>
+	
+	<!-- 펀딩코드에 해당되는 회사정보와 펀딩정보 마일스톤 리스트를 가져옴 -->
+	<select id="selectForfundingTotalViewPageOne" resultMap="FundingAndCompanyAndMileStone" parameterType="int">
+		SELECT *
+		FROM
+			(SELECT *
+			FROM funding f INNER JOIN company c
+			WHERE f.fdCode = #{fdCode} AND f.fdComCode = c.comCode) fac LEFT JOIN milestone m 
+		ON fac.fdCode = m.msFdCode
 	</select>
 </mapper>
 

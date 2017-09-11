@@ -40,6 +40,12 @@ color:#009442;
 <script>
 $(document).ready(function(){
 	
+	//금액에 콤마찍어주는 함수			
+	function numberWithCommas(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+	
+	
 //	각각의 권한별로 프로젝트관리 메인화면에서 보여줄 대표정보를 가져오는 ajax요청
 	var getprojectinfolist = $.ajax({
 		type : "get",
@@ -64,6 +70,11 @@ $(document).ready(function(){
 			$('#totalRequestFundingCount').append(msg[1].totalRequestFundingCount);
 			$('#totalProceedingFundingCount').append(msg[1].totalProceedingFundingCount);
 		
+			// 수수료
+			$('#totalCommissionRevenue').append(numberWithCommas(msg[3][0].totalCommissionRevenue)+"원");
+			$('#todayCommissionRevenue').append(numberWithCommas(msg[3][0].todayCommissionRevenue)+"원");
+			
+			
 			// 도넛차트 
 			var Canvas = document.getElementById("donut");
 			// 차트위에 색상목록 글씨 폰트사이즈
@@ -111,7 +122,8 @@ $(document).ready(function(){
 								+'</div>'
 								+'</div>'
 							+'</td>'
-	       					+'<td><button type="button" class="btn btn-sm btn-warning btn-block">정보보기</button></td>'
+	       					+'<td><a href="/pineapple/fundingtotalview.pms?fdCode='+msg[2][i].fdCode+'">'
+	       					+'<button type="button" class="btn btn-sm btn-warning btn-block">정보보기</button></a></td>'
        					+'</tr>'
 				);
 				
@@ -128,6 +140,7 @@ $(document).ready(function(){
      				);
 				}
 			}
+
 			
 		// 기업회원 권한
 		} else if($('#userlevel').val()=="기업회원"){
@@ -196,16 +209,19 @@ $(document).ready(function(){
 				}
 			}
 			
-			//금액에 콤마찍어주는 함수			
-			function numberWithCommas(x) {
-			    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-			}
+
 
 			$('#totalInvestMoney').append(numberWithCommas(msg[1][0].totalInvestMoney)+"원");
 			$('#totalInvestmentCount').append(msg[1][0].totalInvestmentCount);
 			$('#proceedingInvestmentCount').append(msg[1][0].proceedingInvestmentCount);
 			$('#proceedingFdInvestMoney').append(numberWithCommas(msg[1][0].proceedingFdInvestMoney)+"원");
+			
+			// 배당금
+			$('#proceedingFdDevidendMoney').append(numberWithCommas(msg[2][0].proceedingFdDevidendMoney)+"원");
+			$('#totalDevidendMoney').append(numberWithCommas(msg[2][0].totalDevidendMoney)+"원");
 		}
+		
+		
 	});
 	
 	//실패시
@@ -315,11 +331,11 @@ $(document).ready(function(){
                     <p><small>진행중인펀딩의투자금액</small></p>
                 </div>
                 <div class="col-xs-4 col-sm-4 emphasis">
-                    <h2><strong>준비중</strong></h2>                    
+                    <h2><strong id="totalDevidendMoney"></strong></h2>                    
                     <p><small>총배당금액</small></p>
                 </div>
                 <div class="col-xs-4 col-sm-4 emphasis">
-                    <h2><strong>준비중</strong></h2>                    
+                    <h2><strong id="proceedingFdDevidendMoney"></strong></h2>                    
                     <p><small>진행중인펀딩의배당금액</small></p>
                 </div>
             </div>
@@ -402,11 +418,11 @@ $(document).ready(function(){
                     <p><small>진행중인 펀딩수</small></p>
                 </div>
                 <div class="col-xs-4 col-sm-4 emphasis">
-                    <h2><strong>준비중</strong></h2>                    
+                    <h2><strong id="totalCommissionRevenue"></strong></h2>                    
                     <p><small>총수수료수익금</small></p>
                 </div>
                 <div class="col-xs-4 col-sm-4 emphasis">
-                    <h2><strong>준비중</strong></h2>                    
+                    <h2><strong id="todayCommissionRevenue"></strong></h2>                    
                     <p><small>오늘발생수수료수익금</small></p>
                 </div>
             </div>
@@ -451,7 +467,8 @@ $(document).ready(function(){
 							+'</div>'
 							+'</div>'
 							+'</td>'
-							+'<td><button type="button" class="btn btn-sm btn-warning btn-block">정보보기</button></td>'
+							+'<td><a href="/pineapple/fundingtotalview.pms?fdCode='+data[i].fdCode+'">'
+							+'<button type="button" class="btn btn-sm btn-warning btn-block">정보보기</button></td>'
 		                +'</tr>';
 	           		}
 	            

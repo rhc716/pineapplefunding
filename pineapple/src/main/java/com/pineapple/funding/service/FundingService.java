@@ -223,5 +223,12 @@ public class FundingService implements FundingServiceInterface {
 		log.debug("FundingService의 milestoneStepCheck호출 성공");
 		return fundingdao.milestoneStepCheck(msFdCode, milestoneStep);
 	}
+	
+	//관리자권한 프로젝트관리 펀딩보기페이지 요청할때 펀딩코드로 펀딩에 대한 정보들을 가져옴
+	@Override
+	public void getForfundingTotalViewPage(int fdCode, Model model) {
+		log.debug("FundingService의 getForfundingTotalViewPage호출 성공");
+		fundingdao.selectForfundingTotalViewPage(fdCode, model);
+	}
 }
  
