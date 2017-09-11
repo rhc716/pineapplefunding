@@ -12,7 +12,21 @@ public class InvestAndFdLikeAndFd {
 	private int investtotal;
 	private int investcount;
 	private String posterImg;
+	private int idpaycheck;
+	private String fdStatus;
 	
+	public String getFdStatus() {
+		return fdStatus;
+	}
+	public void setFdStatus(String fdStatus) {
+		this.fdStatus = fdStatus;
+	}
+	public int getIdpaycheck() {
+		return idpaycheck;
+	}
+	public void setIdpaycheck(int idpaycheck) {
+		this.idpaycheck = idpaycheck;
+	}
 	public String getPosterImg() {
 		return posterImg;
 	}
@@ -85,7 +99,9 @@ public class InvestAndFdLikeAndFd {
 		return "InvestAndFdLikeAndFd [fdCode=" + fdCode + ", numberOfShares=" + numberOfShares + ", issuePrice="
 				+ issuePrice + ", closeDate=" + closeDate + ", fdTitle=" + fdTitle + ", fdType=" + fdType
 				+ ", minInvestMoney=" + minInvestMoney + ", liketotal=" + liketotal + ", investtotal=" + investtotal
-				+ ", investcount=" + investcount + ", posterImg=" + posterImg + "]";
+				+ ", investcount=" + investcount + ", posterImg=" + posterImg + ", idpaycheck=" + idpaycheck
+				+ ", fdStatus=" + fdStatus + "]";
 	}
+
 
 }

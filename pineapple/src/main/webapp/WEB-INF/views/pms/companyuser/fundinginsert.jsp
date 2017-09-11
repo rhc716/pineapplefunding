@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 
 <!-- jqeury -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -25,6 +25,17 @@
 
 <!-- css rhc -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
+
+<!-- 부트스트랩 dateTimePicker -->
+<!-- moment.js = 날짜형태에 관한api // locale/ko.js = 한글화 // jquery는 2.2.4버전 이상은 안될수도  -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/locale/ko.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/datetimepickerstyle.css" />
+
+
+
 
 <script>
 /*******************회사코드, 회사명 select option채워줄 ajax  ********************/
@@ -99,12 +110,89 @@ $(document).ready(function(){
         }
 	
 	});
+	
+	/////////////// 최소투자금액과 주당발행가 간의 유효성검사 /////////////////////////
+	$('#issuePrice').blur(function(){
+		if($('#minInvestMoney').val()!=""){
+			if($('#minInvestMoney').val()<$('#issuePrice').val()){
+				$('#minInvestMoneyCheck').val('최소투자금액이 주당발행가보다 작습니다')
+				$('#minInvestMoney').val("");
+			
+			}else if($('#minInvestMoney').val()%$('#issuePrice').val()!=0){
+				$('#minInvestMoneyCheck').val('최소투자금액이 주당발행가의 배수가 아닙니다')
+				$('#minInvestMoney').val("");
+			}else{
+				$('#minInvestMoneyCheck').val('가능한 최소투자금액입니다')
+			}
+		}
+	});
+	
+	
+	$('#minInvestMoney').blur(function(){
+		if($('#issuePrice').val()!=""){
+			if($('#minInvestMoney').val()<$('#issuePrice').val()){
+				$('#minInvestMoneyCheck').val('최소투자금액이 주당발행가보다 작습니다')
+				$('#minInvestMoney').val("");
+			}else if($('#minInvestMoney').val()%$('#issuePrice').val()!=0){
+				$('#minInvestMoneyCheck').val('최소투자금액이 주당발행가의 배수가 아닙니다')
+				$('#minInvestMoney').val("");
+			}else{
+				$('#minInvestMoneyCheck').val('가능한 최소투자금액입니다')
+			}
+		}
+		
+	});
+	/////////////// 최소투자금액과 주당발행가 간의 유효성검사 /////////////////////////
+
+	// 부트스트랩 datetimepicker 셋팅과 두개씩 링크
+	// minDate : 오늘 이후의 날짜값만 셋팅될 수 있도록
+	$('.dateTimePicker').datetimepicker({format:"YYYY-MM-DD",minDate : moment()});
+        $('#datepicker1').datetimepicker({
+        	useCurrent: false
+        });
+        $('#datepicker2').datetimepicker({
+        	useCurrent: false
+        });
+        $('#datepicker3').datetimepicker({
+        	useCurrent: false
+        });
+        $('#datepicker4').datetimepicker({
+        	useCurrent: false
+        });
+        
+	   // 함수 호출 순서가 4,3,2 순서이다.
+	   // 4가 바뀌어야 3이 바뀌고 3이 바뀌어야 2가 바뀐다.
+	    $("#datepicker1").on("dp.change", function (e) {
+	        $('#datepicker4').data("DateTimePicker").minDate(e.date);
+	    });
+	    $("#datepicker1").on("dp.change", function (e) {
+	        $('#datepicker3').data("DateTimePicker").minDate(e.date);
+	    });
+	    $("#datepicker1").on("dp.change", function (e) {
+	        $('#datepicker2').data("DateTimePicker").minDate(e.date);
+	    });
+	    
+	    $("#datepicker2").on("dp.change", function (e) {
+	        $('#datepicker1').data("DateTimePicker").maxDate(e.date);
+	    });
+	
+	    
+	    $("#datepicker2").on("dp.change", function (e) {
+	        $('#datepicker4').data("DateTimePicker").minDate(e.date);
+	    });
+	    $("#datepicker2").on("dp.change", function (e) {
+	        $('#datepicker3').data("DateTimePicker").minDate(e.date);
+	    });	
+	    
+	    
+	    $("#datepicker3").on("dp.change", function (e) {
+	        $('#datepicker4').data("DateTimePicker").minDate(e.date);
+	    });
+	    $("#datepicker4").on("dp.change", function (e) {
+	        $('#datepicker3').data("DateTimePicker").maxDate(e.date);
+	    });	
 });
 
-
-
-
-	
 </script>
 
 </head>
@@ -162,57 +250,90 @@ $(document).ready(function(){
 						<div class="form-group">
 	                        <label for="description" class="col-sm-3 control-label">최소투자금액</label>
 		                        <div class="col-sm-9">
-								<input type="number" class="form-control" name="minInvestMoney" required="required">
+								<input type="number" class="form-control" name="minInvestMoney" id="minInvestMoney" min="100" required="required">
+								</div>
+							<label for="description" class="col-sm-3 control-label"></label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="minInvestMoneyCheck" readonly>
 								</div>
                     	</div>
 						
 						<div class="form-group">
 	                        <label for="description" class="col-sm-3 control-label">판매주식수</label>
 		                        <div class="col-sm-9">
-									<input type="number" class="form-control" name="numberOfShares" required="required">
+									<input type="number" class="form-control" min="10" name="numberOfShares" required="required">
 								</div>
                     	</div>
 						
 						<div class="form-group">
 	                        <label for="description" class="col-sm-3 control-label">주당발행가</label>
 		                        <div class="col-sm-9">
-									<input type="number" class="form-control" name="issuePrice" required="required">	
+									<input type="number" class="form-control" min="10" name="issuePrice" id="issuePrice" required="required">	
 								</div>
                     	</div>
 						
 						<div class="form-group">
-	                        <label for="description" class="col-sm-3 control-label">오픈일</label>
-		                        <div class="col-sm-9">
-									<input type="date" class="form-control" name="openDate" required="required">
-								</div>
+	                        <label for="description" class="col-sm-3 control-label">오픈일 ~ 마감일</label>
+		                    <div class="col-sm-9">
+		                       <div class='col-sm-5'>
+							        <div class="form-group">
+							            <div class='input-group date dateTimePicker' id="datepicker1">
+							                <input type='text' class="form-control" name="openDate" required="required"/>
+							                <span class="input-group-addon">
+							                    <span class="glyphicon glyphicon-calendar"></span>
+							                </span>
+							            </div>
+							        </div>
+							    </div>
+							    <div class='col-sm-2'>
+							    	<h4 align="center"><b>~</b></h4>
+							    </div>
+							    <div class='col-sm-5'>
+							        <div class="form-group">
+							            <div class='input-group date dateTimePicker' id="datepicker2">
+							                <input type='text' class="form-control" name="closeDate" required="required"/>
+							                <span class="input-group-addon">
+							                    <span class="glyphicon glyphicon-calendar"></span>
+							                </span>
+							            </div>
+							        </div>
+							    </div>
+						    </div>
                     	</div>
-						
-						<div class="form-group">
-	                        <label for="description" class="col-sm-3 control-label">마감일</label>
-		                        <div class="col-sm-9">
-									<input type="date" class="form-control" name="closeDate" required="required">
-								</div>
-                    	</div>
-						
 						<div class="form-group">
 	                        <label for="description" class="col-sm-3 control-label">최소보장이율</label>
 		                        <div class="col-sm-9">
-									<input type="number" class="form-control" name="minInterestRate" required="required">
+									<input type="number" min="0" class="form-control" name="minInterestRate" required="required">
 								</div>
                     	</div>
 						
 						<div class="form-group">
-	                        <label for="description" class="col-sm-3 control-label">프로젝트 시작일</label>
-		                        <div class="col-sm-9">
-									<input type="date" class="form-control" name="projectStartDate" required="required">
-								</div>
-                    	</div>
-						
-						<div class="form-group">
-	                        <label for="description" class="col-sm-3 control-label">프로젝트 마감일</label>
-		                        <div class="col-sm-9">
-									<input type="date" class="form-control" name="projectEndDate" required="required">
-								</div>
+	                        <label for="description" class="col-sm-3 control-label">프로젝트 시작일 ~ 마감일</label>
+		                    <div class="col-sm-9">
+		                       <div class='col-sm-5'>
+							        <div class="form-group">
+							            <div class='input-group date dateTimePicker' id="datepicker3">
+							                <input type='text' class="form-control" name="projectStartDate" required="required"/>
+							                <span class="input-group-addon">
+							                    <span class="glyphicon glyphicon-calendar"></span>
+							                </span>
+							            </div>
+							        </div>
+							    </div>
+							    <div class='col-sm-2'>
+							    	<h4 align="center"><b>~</b></h4>
+							    </div>
+							    <div class='col-sm-5'>
+							        <div class="form-group">
+							            <div class='input-group date dateTimePicker' id="datepicker4">
+							                <input type='text' class="form-control" name="projectEndDate" required="required"/>
+							                <span class="input-group-addon">
+							                    <span class="glyphicon glyphicon-calendar"></span>
+							                </span>
+							            </div>
+							        </div>
+							    </div>
+						    </div>
                     	</div>
 							<!-- 히든값으로 펀딩개설자 id를 세션에서받아서 넣어줌 -->
 						<input type="hidden" class="form-control" name="fdPublisher" value="${id}">
@@ -227,6 +348,8 @@ $(document).ready(function(){
 				</div>
 			</div>
 			</div>
+			
+
 	</div>
 </div>
 <!-- 풋터 -->

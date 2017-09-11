@@ -124,7 +124,7 @@
 		  
 		<!-- carousel2,3번 영역 -->
 		<div class="row">	
-			<div id="myCarousel2" class="carousel slide" data-ride="carousel" style="width: 48%; height:225px; float: left;">
+			<div id="myCarousel2" class="carousel slide" data-ride="carousel" style="width: 300px; height:245px; float: left;">
 			    <!-- Indicators -->
 			    <ol class="carousel-indicators">
 			    	<li data-target="#myCarousel2" data-slide-to="0" class="active"></li>
@@ -134,10 +134,10 @@
 			    <!-- 화면에 보여줄 아이템 들어갈 곳 -->
 			    <div class="carousel-inner">
 				    <div class="item active">
-				    	<img src="${pageContext.request.contextPath}/resources/img/main/photo1.jpg" alt="Los Angeles" style="width:100%; height:225px;">
+				    	<img src="${pageContext.request.contextPath}/resources/img/main/photo1.jpg" alt="Los Angeles" style="width:100%; height:245px;">
 				    </div>
 				    <div class="item">
-				    	<img src="${pageContext.request.contextPath}/resources/img/main/photo2.jpg" alt="Chicago" style="width:100%; height:225px;">
+				    	<img src="${pageContext.request.contextPath}/resources/img/main/photo2.jpg" alt="Chicago" style="width:100%; height:245px;">
 				    </div>
 			    </div>
 			
@@ -154,7 +154,7 @@
 		  <!-- carousel 끝 -->
 		
 		<!-- carousel : 회전하면서 이미지를 보여주는 것 -->
-			<div id="myCarousel3" class="carousel slide" data-ride="carousel" style="width: 48%; height:225px; float: right;">
+			<div id="myCarousel3" class="carousel slide" data-ride="carousel" style="width: 300px; height:245px; float: right;">
 			    <!-- Indicators -->
 			    <ol class="carousel-indicators">
 			    	<li data-target="#myCarousel3" data-slide-to="0" class="active"></li>
@@ -164,10 +164,10 @@
 			    <!-- 화면에 보여줄 아이템 들어갈 곳 -->
 			    <div class="carousel-inner">
 				    <div class="item active">
-				    	<img src="${pageContext.request.contextPath}/resources/img/main/photo1.jpg" alt="Los Angeles" style="width:100%; height:225px;">
+				    	<img src="${pageContext.request.contextPath}/resources/img/main/photo1.jpg" alt="Los Angeles" style="width:100%; height:245px;">
 				    </div>
 				    <div class="item">
-				    	<img src="${pageContext.request.contextPath}/resources/img/main/photo2.jpg" alt="Chicago" style="width:100%; height:225px;">
+				    	<img src="${pageContext.request.contextPath}/resources/img/main/photo2.jpg" alt="Chicago" style="width:100%; height:245px;">
 				    </div>
 			    </div>
 			

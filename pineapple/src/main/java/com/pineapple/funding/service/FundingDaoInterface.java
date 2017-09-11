@@ -40,4 +40,5 @@ public interface FundingDaoInterface {
 	List<Object> selectMoreFdList(int numberOfRequests);
 	List<Object> selectMilestoneListOfFunding(int fdCode);
 	MileStone milestoneStepCheck(int msFdCode, int milestoneStep);
+	void selectForfundingTotalViewPage(int fdCode, Model model);
 }

@@ -2,6 +2,7 @@ package com.pineapple.funding.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,4 +39,5 @@ public interface FundingServiceInterface {
 	List<Object> getMoreFdList(int numberOfRequests);
 	List<Object> getMilestoneListOfFunding(int fdCode);
 	MileStone milestoneStepCheck(int msFdCode, int milestoneStep);
+	void getForfundingTotalViewPage(int fdCode, Model model);
 }

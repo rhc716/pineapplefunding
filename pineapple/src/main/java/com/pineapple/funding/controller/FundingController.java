@@ -3,14 +3,18 @@ package com.pineapple.funding.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.objenesis.instantiator.basic.NewInstanceInstantiator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -131,6 +135,22 @@ public class FundingController {
 		log.debug("FundingController의 myFundingPosterImgPage호출 성공");
 		return "pms/companyuser/myfundingposterimg";
 	}
+	
+	//관리자권한 프로젝트관리 펀딩보기페이지 요청
+	@RequestMapping(value = "/fundingtotalview.pms", method = RequestMethod.GET)
+	public String fundingTotalViewPage(Locale locale, Model model, @RequestParam(value="fdCode", required=false, defaultValue="0") int fdCode) {
+		log.debug("FundingController의 fundingTotalViewPage호출 성공");
+		log.debug("fundingTotalViewPage의 fdCode : "+fdCode);
+		if(fdCode!='0'){
+			log.debug("fdCode의 값이 들어왔을때");
+			service.getForfundingTotalViewPage(fdCode, model);
+			
+			
+		}
+		return "pms/adminuser/fundingtotalview";
+	}
+	
+	
 ////////////////////////////////////////////////위에는///페이지요청//////////////////////////////////////////////////////
 	
 	// 펀딩개설요청 ( 기업회원 경영자 )

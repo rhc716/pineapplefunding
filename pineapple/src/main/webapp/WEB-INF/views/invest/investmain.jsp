@@ -57,6 +57,16 @@ $(document).ready(function(){
 				dividendcount++
 			}
 		}
+		var statuscount = 0;
+		var checkedfdstatus = document.getElementsByName("status").length
+		var fdstatus = new Array();
+		for(i = 0 ; i < checkedfdstatus ; i++){
+			if(document.getElementsByName("status")[i].checked == true){
+				fdstatus[statuscount] = document.getElementsByName("status")[i].value;
+				statuscount++
+			}
+		}
+		
 		var fundingtitlename = $('#fundinglistnameselecttext').val();
 		$.ajaxSettings.traditional = true;
 			var fundinglistnameselectajax = $.ajax({
@@ -66,7 +76,8 @@ $(document).ready(function(){
 					fundingtitlename : fundingtitlename,
 					fdarea : fdarea,
 					fdtype : fdtype,
-					fddividend : fddividend
+					fddividend : fddividend,
+					fdstatus : fdstatus
 				},
 				success : function success(msg){
 					$('#fdlist').html(msg)
@@ -113,7 +124,7 @@ $(document).ready(function(){
 				<form>
 					<ul style="font-size:15px; list-style: none; height: 100%; width: 100%; padding: 10px; text-align: left; margin: 0px; border-bottom: 1px solid #d7d7d7;">
 						<label style="font-size: 20px;">카테고리</label>
-						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="it"></span><span>it</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="it"></span><span>IT</span></li>
 						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="핀테크"></span><span>핀테크</span></li>
 						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="인터넷서비스"></span><span>인터넷서비스</span></li>
 						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="문화"></span><span>문화</span></li>
@@ -129,11 +140,17 @@ $(document).ready(function(){
 						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="type" type="checkbox" value="주식"></span><span>주식</span></li>
 						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="type" type="checkbox" value="채권"></span><span>채권</span></li>
 					</ul>
-					<ul style="font-size: 15px; list-style: none; height: 100%; width: 100%; padding: 10px; text-align: left; margin: 0px;">
+					<ul style="font-size: 15px; list-style: none; height: 100%; width: 100%; padding: 10px; text-align: left; margin: 0px; border-bottom: 1px solid #d7d7d7;">
 						<label style="font-size: 20px;">배당수익률</label>
 						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="dividend" type="checkbox" value="1"></span><span>10% 미만</span></li>
 						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="dividend" type="checkbox" value="2"></span><span>10%~15%</span></li>
 						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="dividend" type="checkbox" value="3"></span><span>15% 이상</span></li>
+					</ul>
+					<ul style="font-size: 15px; list-style: none; height: 100%; width: 100%; padding: 10px; text-align: left; margin: 0px;">
+						<label style="font-size: 20px;">펀딩상태</label>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="status" type="checkbox" value="모집중"></span><span>모집중</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="status" type="checkbox" value="결제모집중"></span><span>결제모집중</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="status" type="checkbox" value="진행중"></span><span>진행중</span></li>
 					</ul>
 				</form>
 			</div>
