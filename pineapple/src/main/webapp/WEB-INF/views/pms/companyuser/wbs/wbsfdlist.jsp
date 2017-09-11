@@ -114,17 +114,17 @@ $(document).on("change","select[name='wbsPlanFdCode']",function(){
 	});
 	var wbsfdinsert = $(this).val();
 	console.log(wbsfdinsert);
-	
-	$('#wbsfdinsert').html('')
+	$('#insertbtn').html('');
+	$('#wbsfdinsert').html('');
 	$('#wbsfdinsert').append(
 		'<input type="hidden" name="wbsPlanFdCode" value="'+wbsfdinsert+'">'
 	);
 	// 성공시
 	wbsPlanMsCode.done(function(msg){
 		console.log(msg);
-		$('#mymslistselect').html('')
-		$('#chart_div').html('')
-		$('#chart_btnarea').html('')
+		$('#mymslistselect').html('');
+		$('#chart_div').html('');
+		$('#chart_btnarea').html('');
 		$('#mymslistselect').append(
 				'<select name="wbsPlanMsCode" id="mymslist">'
 				+'<option>마일스톤 선택</option>'
