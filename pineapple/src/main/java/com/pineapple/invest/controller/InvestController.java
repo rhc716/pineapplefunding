@@ -1,5 +1,6 @@
 package com.pineapple.invest.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -49,11 +50,13 @@ public class InvestController {
 		String[] fdarea = request.getParameterValues("fdarea");
 		String[] fdtype = request.getParameterValues("fdtype");
 		String[] fddividend = request.getParameterValues("fddividend");
+		String[] fdstatus = request.getParameterValues("fdstatus");
 		HashMap<String, String[]> map = new HashMap<>();
 		map.put("fundingtitlename", fundingtitlename);
 		map.put("fdarea", fdarea);
 		map.put("fdtype", fdtype);
 		map.put("fddividend", fddividend);
+		map.put("fdstatus", fdstatus);
 		List<InvestAndFd> fundingListChoose = investserviceinterface.getInvestFundingChoose(map);
 		model.addAttribute("fundingListChoose", fundingListChoose);
 		log.debug(fundingListChoose+"<-----InvestController[fundingListChoose 값 출력]");
@@ -61,10 +64,14 @@ public class InvestController {
 	}
 	//투자하기 페이지에서 펀딩페이지 오픈 investfunding.jsp
 	@RequestMapping(value="/investfunding.invest",method=RequestMethod.GET)
-	public String investFunding(Locale locale, Model model,@RequestParam(value="fdCode") int fdCode){
+	public String investFunding(Locale locale, Model model,@RequestParam(value="fdCode") int fdCode,HttpSession session){
 		log.debug("<-----InvestController[investFunding호출]----->");
 		log.debug(fdCode+"<-----InvestController[fdCode 값 출력]");
-		InvestAndFdLikeAndFd fundingData = investserviceinterface.getInvestFundingone(fdCode);
+		log.debug(session.getAttribute("id").toString()+"<-----InvestController[id 값 출력]");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("fdCode", fdCode);
+		map.put("id", session.getAttribute("id").toString());
+		InvestAndFdLikeAndFd fundingData = investserviceinterface.getInvestFundingone(map);
 		model.addAttribute("fundingData", fundingData);
 		log.debug(fundingData+"<-----InvestController[fundingData 값 출력]");
 		return "invest/investfunding";
@@ -79,6 +86,30 @@ public class InvestController {
 		log.debug(investmentadd+"<-----InvestController[investmentadd 값 출력]");
 		return "redirect:/investfunding.invest";
 	}
+	//투자하기 페이지에서 투자 예약 취소 클릭시 Data 요청 
+	@RequestMapping(value="/investdeletedata.invest",method=RequestMethod.GET)
+	public String investmentRemoveData(Locale locale,Model model,HttpSession session,@RequestParam(value="fdCode") int fdCode){
+		log.debug("<-----InvestController[investmentRemoveData호출]----->");
+		log.debug(session.getAttribute("id").toString()+"<-----InvestController[id 값 출력]");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("fdCode", fdCode);
+		map.put("id", session.getAttribute("id").toString());
+		Investment investmentdeletedata = investserviceinterface.getInvestmentModifyData(map);
+		model.addAttribute("investmentdeletedata",investmentdeletedata);
+		log.debug(investmentdeletedata+"<-----InvestController[investmentdeletedata 값 출력]");
+		return "invest/investajax/investmentdeletedata";
+	}
+	//투자하기 페이지에서 투자 예약 취소
+	@RequestMapping(value="/investmentdelete.invest",method=RequestMethod.POST)
+	public String investmentRemove(Locale locale,Model model,@RequestParam(value="investCode") int investCode,@RequestParam(value="investfdCode")int investfdCode){
+		log.debug("<-----InvestController[investmentRemove호출]----->");
+		int investmentdeletedata = investserviceinterface.removeInvestment(investCode);
+		model.addAttribute("fdCode",investfdCode);
+		log.debug(investmentdeletedata+"<-----InvestController[investmentdeletedata 값 출력]");
+		return "redirect:/investfunding.invest";
+	}
+	//투자하기 페이지에서 결제하기 클릭시 Data 요청
+	
 	//펀딩페이지에서 Q&A입력
 	@RequestMapping(value="/investquestion.invest",method=RequestMethod.POST)
 	public String investQuestion(Locale locale, Model model,FundingQna fundingqna){

@@ -23,9 +23,9 @@ public class InvestService implements InvestServiceInterface {
 	}
 	//투자하기에서 펀딩클릭시 하나의 펀딩 정보 열람
 	@Override
-	public InvestAndFdLikeAndFd getInvestFundingone(int fdCode) {
+	public InvestAndFdLikeAndFd getInvestFundingone(HashMap<String, Object> map) {
 		log.debug("------------------InvestService-----------------getInvestFundingone()");
-		InvestAndFdLikeAndFd fdonedata = investdaointerface.investFundingDataSelect(fdCode);
+		InvestAndFdLikeAndFd fdonedata = investdaointerface.investFundingDataSelect(map);
 		return fdonedata;
 	}
 	//투자하기에서 펀딩클릭시 하나의 펀딩에 대한 Detail 정보열람
@@ -40,6 +40,27 @@ public class InvestService implements InvestServiceInterface {
 		log.debug("------------------InvestService-----------------getInvestFundingDetail()");
 		int addinvestment = investdaointerface.investmentinsert(investment);
 		return addinvestment;
+	}
+	//투자하기에서 펀딩클릭후 투자예약 취소하기 시 Data 요청
+	@Override
+	public Investment getInvestmentModifyData(HashMap<String, Object> map) {
+		log.debug("------------------InvestService-----------------getInvestmentModifyData()");
+		Investment getinvestmentmodifydata = investdaointerface.investmentDeleteData(map);
+		return getinvestmentmodifydata;
+	}
+	//투자하기에서 펀딩클릭후 투자예약 취소하기
+	@Override 
+	public int removeInvestment(int investCode) {
+		log.debug("------------------InvestService-----------------removeInvestment()");
+		int getinvestmentdelete = investdaointerface.investmentDelete(investCode);
+		return getinvestmentdelete;
+	}
+	//결제하기에서 클릭후 Data 요청
+	@Override
+	public List<InvestAndFundingAndMoney> getinvestmentFundingAndMoney(HashMap<String, Object> map) {
+		log.debug("------------------InvestService-----------------getinvestmentFundingAndMoney()");
+		List<InvestAndFundingAndMoney> getinvestmentFundingAndMoney = investdaointerface.investmentFundingAndMoneyData(map);
+		return getinvestmentFundingAndMoney;
 	}
 	//투자하기에서 펀딩클릭후 펀딩Q&A클릭시 펀딩 Q&A조회
 	@Override

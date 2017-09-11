@@ -24,9 +24,9 @@ public class InvestDao implements InvestDaoInterface {
 	}
 	//하나의 펀딩 정보 열람
 	@Override
-	public InvestAndFdLikeAndFd investFundingDataSelect(int fdCode){
+	public InvestAndFdLikeAndFd investFundingDataSelect(HashMap<String, Object> map){
 		log.debug("InvestDao-----investFundingDataSelect");
-		return sqlSessionTemplate.selectOne("com.pineapple.invest.service.InvestMapper.selectInvestAndFdLikeAndFd",fdCode);
+		return sqlSessionTemplate.selectOne("com.pineapple.invest.service.InvestMapper.selectInvestAndFdLikeAndFd",map);
 	}
 	//하나의 펀딩 Detail 열람
 	@Override
@@ -34,10 +34,28 @@ public class InvestDao implements InvestDaoInterface {
 		log.debug("InvestDao-----investFundingDetailSelect");
 		return sqlSessionTemplate.selectOne("com.pineapple.invest.service.InvestMapper.selectFundingDetail",fdCode);
 	}
-	//하나의 펀딩에서 투하예약하기
+	//하나의 펀딩에서 투자예약하기
 	public int investmentinsert(Investment investment){
 		log.debug("InvestDao-----investinsert");
 		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.insertInvestment",investment);
+	}
+	//하나의 펀딩에서 투자취소하기시 Data 요청
+	@Override
+	public Investment investmentDeleteData(HashMap<String, Object> map) {
+		log.debug("InvestDao-----investmentDeleteData");
+		return sqlSessionTemplate.selectOne("com.pineapple.invest.service.InvestMapper.selectInvestmentDeleteData",map);
+	}
+	//하나의 펀딩에서 투자 취소하기
+	@Override 
+	public int investmentDelete(int investCode) {
+		log.debug("InvestDao-----investmentDeleteData");
+		return sqlSessionTemplate.delete("com.pineapple.invest.service.InvestMapper.deleteinvestment",investCode);
+	}
+	//하나의 펀딩에서 투자예약후 결제하기 클릭시 Data 요청
+	@Override
+	public List<InvestAndFundingAndMoney> investmentFundingAndMoneyData(HashMap<String, Object> map) {
+		log.debug("InvestDao-----investmentFundingAndMoneyData");
+		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.selectMyinvestData",map);
 	}
 	//하나의 펀딩 Q&A SELECT
 	@Override

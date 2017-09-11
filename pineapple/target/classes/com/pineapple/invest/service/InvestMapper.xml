@@ -31,6 +31,8 @@
 		<result property="investtotal" column="investtotal"/>
 		<result property="investcount" column="investcount"/>
 		<result property="posterImg" column="posterImg"/>
+		<result property="idpaycheck" column="idpaycheck"/>
+		<result property="fdStatus" column="fdStatus"/>
 	</resultMap>
 	<!-- FundingDetail -->
 	<resultMap type="com.pineapple.funding.service.Funding"
@@ -68,13 +70,33 @@
 		<result property="qnaReTime" column="qnaReTime"/>
 		<result property="qnaFdCode" column="qnaFdCode"/>
 	</resultMap>
+	<resultMap type="com.pineapple.invest.service.Investment" id="investmentresultmapper">
+		<id property="investCode" column="investCode"/>
+		<result property="investFdCode" column="investFdCode"/>
+		<result property="investId" column="investId"/>
+		<result property="purchaseShares" column="purchaseShares"/>
+		<result property="investTime" column="investTime"/>
+	</resultMap>
+	<resultMap type="com.pineapple.invest.service.InvestAndFundingAndMoney" id="selectinvestFundingMoney">
+		<id property="investCode" column="investCode"/>
+		<result property="investFdCode" column="investFdCode"/>
+		<result property="investId" column="investId"/>
+		<result property="purchaseShares" column="purchaseShares"/>
+		<result property="investTime" column="investTime"/>
+		<result property="payCheck" column="payCheck"/>
+		<result property="fdCode" column="fdCode"/>
+		<result property="moneytotal" column="moneytotal"/>
+		<result property="numberOfShares" column="numberOfShares"/>
+		<result property="issuePrice" column="issuePrice"/>
+		<result property="minInvestMoney" column="minInvestMoney"/>
+	</resultMap>
 	<!-- 투자하기 main 에서 사용하는 펀딩조건 검색 조회 쿼리 -->
 	<select id="selectInvestFundingListChoose" parameterType="hashmap" resultMap="selectInvestAndFd">
 		SELECT  f.fdCode,
 				f.fdTitle,
 				f.numberOfShares,
 				c.comName,
-				IFNULL((SELECT sum(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode GROUP BY si.investFdCode),0) as total,
+				CASE f.fdStatus WHEN '모집중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode GROUP BY si.investFdCode ) WHEN '결제모집중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode AND si.payCheck = 1 GROUP BY si.investFdCode) WHEN '진행중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode GROUP BY si.investFdCode) END as total,
 				f.posterImg,
 				f.minInvestMoney,
 				f.issuePrice,
@@ -121,12 +143,18 @@
 				</if>
 			</foreach>
 		</if>
+		<if test="fdstatus != null">
+			AND
+			<foreach collection="fdstatus" item="status" open="(" close=")" separator="or">
+				f.fdstatus = #{status}			
+			</foreach>
+		</if>
 		</where>
 		GROUP BY f.fdCode 
 		ORDER BY f.fdDate DESC;
 	</select>
 	<!-- 투자하기 펀딩안에서 사용하는 모집중인 펀딩 조회 쿼리 -->
-	<select id="selectInvestAndFdLikeAndFd" parameterType="INT" resultType="com.pineapple.invest.service.InvestAndFdLikeAndFd">
+	<select id="selectInvestAndFdLikeAndFd" parameterType="hashmap" resultMap="selectInvestAndFdLikeAndFd">
 		SELECT f.fdCode,
 			 f.numberOfShares, 
 			 f.issuePrice,
@@ -135,11 +163,13 @@
 			 f.fdType,
 			 f.minInvestMoney,
 			 (SELECT COUNT(sfl.fdCode)FROM fundinglike sfl WHERE sfl.fdCode= #{fdCode}) as liketotal,
-			 IFNULL(SUM(i.purchaseShares),0) as investtotal,
+			 CASE f.fdStatus WHEN '모집중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode GROUP BY si.investFdCode ) WHEN '결제모집중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode AND si.payCheck = 1 GROUP BY si.investFdCode) WHEN '진행중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode GROUP BY si.investFdCode) END as investtotal,
 			 COUNT(i.investId) as investcount,
 			 IFNULL(fd.openstory,'정보없음') as openstory,
 			 IFNULL(fd.comValue,'정보없음') as comValue,
-			 f.posterImg
+			 f.posterImg,
+			 IFNULL((SELECT si.payCheck FROM investment si WHERE si.investId = #{id} AND si.investFdCode = f.fdCode),2) idpaycheck,
+			 f.fdStatus
 		FROM funding f 
 		LEFT JOIN investment i 
 		ON f.fdCode = i.investFdCode 
@@ -161,6 +191,39 @@
 			   (investFdCode, investId, purchaseShares, investTime)
 		VALUES (#{investFdCode}, #{investId}, #{purchaseShares}, NOW())
 	</insert>
+	<!-- 펀딩 투자 취소하기 클릭시 Data 요청 -->
+	<select id="selectInvestmentDeleteData" parameterType="hashmap" resultMap="investmentresultmapper">
+		SELECT i.investCode,
+			   i.investFdCode,
+			   i.investId,
+			   i.purchaseShares,
+			   i.investTime 
+		FROM investment i 
+		WHERE i.investId = #{id} 
+		AND i.investFdCode = #{fdCode}
+	</select>
+	<!-- 펀딩 투자 취소하기 모달에서 취소하기 버튼 클릭시 삭제 -->
+	<delete id="deleteinvestment" parameterType="INT">
+		DELETE FROM investment WHERE investCode=#{investCode}
+	</delete>
+	<!-- 펀딩 투자예약후 결제하기 Data 요청 -->
+	<select id="selectMyinvestData" parameterType="hashmap" resultMap="selectinvestFundingMoney">
+		SELECT i.investCode,
+		       i.investFdCode,
+		       i.investId,
+		       i.purchaseShares,
+		       i.investTime,
+		       i.payCheck,
+		       f.fdCode,
+		       (SELECT SUM(m.mfAmount) FROM moneyflow m WHERE m.mfFdCode = f.fdCode AND m.mfCategory = 1) as moneytotal,
+		       f.numberOfShares,
+		       f.issuePrice,
+		       f.minInvestMoney  
+		FROM investment i 
+		INNER JOIN funding f 
+		ON i.investFdCode = f.fdCode 
+		WHERE i.investId = #{id} AND f.fdCode = #{fdCode}
+	</select>
 	<!-- 하나의 펀딩의 Q&A정보 -->
  	<select id="selectFundingQna" parameterType="INT" resultType="com.pineapple.invest.service.FundingQna">
 		SELECT fq.qnaCode,

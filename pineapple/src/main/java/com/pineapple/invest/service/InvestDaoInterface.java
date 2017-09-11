@@ -9,11 +9,17 @@ public interface InvestDaoInterface {
 	//조건 검색으로 펀딩 리스트 조회 Dao
 	List<InvestAndFd> investFundingChooseSelect(HashMap<String, String[]> map);
 	//하나의 펀딩 data 불러오는 Dao
-	InvestAndFdLikeAndFd investFundingDataSelect(int fdCode);
+	InvestAndFdLikeAndFd investFundingDataSelect(HashMap<String, Object> map);
 	//하나의 펀딩 Detail 불러오는 Dao
 	FundingDetail investFundingDetailSelect(int fdCode);
 	//하나의 펀딩에 투자예약하는 Dao
 	int investmentinsert(Investment investment);
+	//하나의 펀딩에 투자예약취소시 Data 요청 Dao
+	Investment investmentDeleteData(HashMap<String, Object> map);
+	//하나의 펀딩에 투자예약취소하는 Dao
+	int investmentDelete(int investCode);
+	//투자예약한 invest 결제하기 Data 조회 Dao
+	List<InvestAndFundingAndMoney> investmentFundingAndMoneyData(HashMap<String, Object> map);
 	//하나의 펀딩의 Q&A 불러오는 Dao
 	List<FundingQna> investFundingQnaSelect(int fdCode);
 	//하나의 펀딩 Q&A의 댓글 불러오는 Dao
