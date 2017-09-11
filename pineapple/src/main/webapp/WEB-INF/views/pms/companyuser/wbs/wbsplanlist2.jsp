@@ -39,7 +39,7 @@ $(document).ready(function(){
 	var wbsplanlist = $.ajax({
 		type : "post",
 		url : "/pineapple/Wbsplanlist.pms",
-		/* 아이디 세션에서 받아서 가져옴 */
+		/* 마일스톤으로 검색 */
 		data : { milestoneCode : "${milestoneCode}" }
 	});
 	// 성공시
