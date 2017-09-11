@@ -189,7 +189,7 @@ public class UserController {
 	@RequestMapping(value="/login.user", method=RequestMethod.GET)
 	public String login(){
 		log.debug("UserController login 페이지 요청 처리");
-		return "redirect:/";
+		return "user/login";
 	}
 	
 	//로그인 요청 처리

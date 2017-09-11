@@ -24,6 +24,10 @@ $(document).ready(function(){
 	// 페이지 로드할 때 : 현재 선택된 탭으로 전환
 	var hash = window.location.hash;
 	$('#myTab a[href="' + hash + '"]').tab('show');
+});
+$(document).ready(function(){
+	//전체펀딩조회 테이블 정렬기능 구현
+	
 	
 	//계좌수정버튼 클릭시 ajax 이벤트 실행
 	$('.changeaccount').click(function(){
@@ -297,56 +301,50 @@ $(document).ready(function(){
 					<!-- 조회 목록 출력될 부분 -->
 					<div>
 						<table class="table table-striped table-bordered table-hover">
-							<thead>
-								<tr class="info">
-									<td>번호</td>
-									<td>펀딩코드</td>
-									<td>회사</td>
-									<td>펀딩</td>
-									<td>형태</td>
-									<td>상황</td>
-									<td>최저이율</td>
-									<td>개설ID</td>
-									<td>등록요청일</td>
-									<td>승인여부</td>
-									<td>승인일</td>
-									<td>승인ID</td>
+							<tr class="info">
+								<th>번호</th>
+								<th>펀딩코드</th>
+								<th>기업명</th>
+								<th>펀딩</th>
+								<th>형태</th>
+								<th>상황</th>
+								<th>최저이율</th>
+								<th>개설ID</th>
+								<th>등록요청일</th>
+								<th>승인여부</th>
+								<th>승인일</th>
+								<th>승인ID</th>
+							</tr>
+							<c:forEach var="allfdList" items="${allfdList}" varStatus="numberoffdlist">
+								<tr>
+									<td>${numberoffdlist.count}</td>
+									<td>${allfdList.fdCode}</td>
+									<td>${allfdList.comName}</td>
+									<td>${allfdList.fdTitle}</td>
+									<td>${allfdList.fdType}</td>
+									<td><a type="button" class="btn btn-block btn-success disabled">${allfdList.fdStatus}</a></td>
+									<td>${allfdList.minInterestRate}</td>
+									<td>${allfdList.fdPublisher}</td>
+									<td>${allfdList.fdDate}</td>
+									<c:choose>
+										<c:when test="${allfdList.adminApproval == 0}">
+											<td>
+												<form action="/pineapple/approvefunding.user#fundinginfo" method="post">
+													<input type="hidden" name="fdCode" value="${allfdList.fdCode}">
+													<button type="submit" class="btn btn-block btn-primary">펀딩승인</button>
+												</form>
+											</td>
+											<td>${allfdList.fdApprovalDate}</td>
+											<td>${allfdList.fdApprovalId}</td>
+										</c:when>
+										<c:otherwise>
+											<td><a type="button" class="btn btn-block btn-success disabled">승인완료</a></td>
+											<td>${allfdList.fdApprovalDate}</td>
+											<td>${allfdList.fdApprovalId}</td>
+										</c:otherwise>
+									</c:choose>
 								</tr>
-							</thead>
-							<tbody>
-								<c:forEach var="allfdList" items="${allfdList}" varStatus="numberoffdlist">
-									<tr>
-										<td>${numberoffdlist.count}</td>
-										<td>${allfdList.fdCode}</td>
-										<td>${allfdList.comName}</td>
-										<td>${allfdList.fdTitle}</td>
-										<td>${allfdList.fdType}</td>
-										<td><a type="button" class="btn btn-block btn-success disabled">${allfdList.fdStatus}</a></td>
-										<td>${allfdList.minInterestRate}</td>
-										<td>${allfdList.fdPublisher}</td>
-										<td>${allfdList.fdDate}</td>
-										<c:choose>
-											<c:when test="${allfdList.adminApproval == 0}">
-												<td>
-													<form action="/pineapple/approvefunding.user#fundinginfo" method="post">
-														<input type="hidden" name="fdCode" value="${allfdList.fdCode}">
-														<button type="submit" class="btn btn-block btn-primary">펀딩승인</button>
-													</form>
-												</td>
-												<td>${allfdList.fdApprovalDate}</td>
-												<td>${allfdList.fdApprovalId}</td>
-											</c:when>
-											<c:otherwise>
-												<td><a type="button" class="btn btn-block btn-success disabled">승인완료</a></td>
-												<td>${allfdList.fdApprovalDate}</td>
-												<td>${allfdList.fdApprovalId}</td>
-											</c:otherwise>
-										</c:choose>
-									</tr>
-								</c:forEach>
-							</tbody>
-							<tfoot>
-							</tfoot>
+							</c:forEach>
 						</table>
 					</div>
 				</div>
