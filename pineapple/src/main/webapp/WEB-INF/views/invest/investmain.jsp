@@ -148,7 +148,7 @@ $(document).ready(function(){
 					</ul>
 					<ul style="font-size: 15px; list-style: none; height: 100%; width: 100%; padding: 10px; text-align: left; margin: 0px;">
 						<label style="font-size: 20px;">펀딩상태</label>
-						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="status" type="checkbox" value="모집중"></span><span>모집중</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="status" type="checkbox" value="모집중" checked="checked"></span><span>모집중</span></li>
 						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="status" type="checkbox" value="결제모집중"></span><span>결제모집중</span></li>
 						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="status" type="checkbox" value="진행중"></span><span>진행중</span></li>
 					</ul>

@@ -6,6 +6,7 @@ import com.pineapple.user.service.Businessarea;
 import com.pineapple.user.service.Company;
 import com.pineapple.user.service.Employee;
 import com.pineapple.user.service.FundingAndCompany;
+import com.pineapple.user.service.FundingAndCompanyAndMilestoneAndWbsAndMargin;
 import com.pineapple.user.service.Fundingauth;
 import com.pineapple.user.service.FundingauthFundingAuthlevelCompany;
 import com.pineapple.user.service.Fundingauthlevel;
@@ -735,7 +736,7 @@ public class MypageController {
          }
 		return "user/employeemypage";
 	}
-	//관리자 마이페이지 분기(회원상세정보조회, 전체회사조회 포함)
+	//관리자 마이페이지 분기(회원상세정보조회, 전체회사조회, 전체펀딩조회 포함)
 	@RequestMapping(value="/adminmypage.user", method=RequestMethod.GET)
 	public String adminmypage(Model model, HttpSession session){
 		log.debug(session.getAttribute("level")+" 권한으로 "+session.getAttribute("nickname")+"님의 adminmypage 페이지로 분기");
@@ -766,6 +767,14 @@ public class MypageController {
         	model.addAttribute("allfdList", allfdList);
         } else {
         	log.debug(session.getAttribute("nickname")+"님이 전체 펀딩리스트 조회 실패");
+        }
+        //전체 프로젝트관리시스템 정보 조회(펀딩별 마일스톤, wbs예상, wbs실제, wbs예상마진, wbsDailymargin)
+        List<FundingAndCompanyAndMilestoneAndWbsAndMargin> getPmsInfoByAdmin = mypageservice.getPmsInfoByAdmin();
+        if(getPmsInfoByAdmin != null){
+        	log.debug(session.getAttribute("nickname")+"님이 전체 PMS정보 조회 성공");
+        	model.addAttribute("getPmsInfoByAdmin", getPmsInfoByAdmin);
+        } else {
+        	log.debug(session.getAttribute("nickname")+"님이 전체 PMS정보 조회 실패");
         }
 		return "user/adminmypage";
 	}	

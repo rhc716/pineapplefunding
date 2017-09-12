@@ -3,6 +3,8 @@ package com.pineapple.invest.service;
 import java.util.HashMap;
 import java.util.List;
 
+import com.pineapple.funding.service.Funding;
+import com.pineapple.funding.service.FundingAndFdFile;
 import com.pineapple.funding.service.FundingDetail;
 
 public interface InvestDaoInterface {
@@ -19,7 +21,11 @@ public interface InvestDaoInterface {
 	//하나의 펀딩에 투자예약취소하는 Dao
 	int investmentDelete(int investCode);
 	//투자예약한 invest 결제하기 Data 조회 Dao
-	List<InvestAndFundingAndMoney> investmentFundingAndMoneyData(HashMap<String, Object> map);
+	InvestAndFundingAndMoney investmentFundingAndMoneyData(HashMap<String, Object> map);
+	//투자예약한 invest 결제하기
+	int moneyflowInsert(Moneyflow moneyflow);
+	//펀딩 보고서 list
+	List<FundingAndFdFile> fundingReportFilelistSelect(int fdCode);
 	//하나의 펀딩의 Q&A 불러오는 Dao
 	List<FundingQna> investFundingQnaSelect(int fdCode);
 	//하나의 펀딩 Q&A의 댓글 불러오는 Dao
@@ -38,6 +44,9 @@ public interface InvestDaoInterface {
 	int investFundingQnaReplyUpdate(FundingQnaReply fundingqnareply);
 	//하나의 펀딩의 Q&A의 댓글 삭제 Dao
 	int investFundingQnaReplyDelete(int qnaReCode);
+	
+	/////////PMS Dividend ////////////
+	List<Funding> pmsDividendpaySelect(String id);
 	
 	
 	/////////MY Page Investor/////////

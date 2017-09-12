@@ -224,6 +224,24 @@
 		ON i.investFdCode = f.fdCode 
 		WHERE i.investId = #{id} AND f.fdCode = #{fdCode}
 	</select>
+	<!-- 펀딩 투자예약후 결제하기 -->
+	<insert id="insertMoneyflow" parameterType="com.pineapple.invest.service.Moneyflow">
+		INSERT INTO moneyflow
+			(mfFdCode, mfInvestCode, mfAmount, mfCategory, mfDate)
+		VALUES (#{mfFdCode}, #{mfInvestCode}, #{mfAmount}, 1, NOW())
+	</insert>
+	<!-- 펀딩 보고서 list -->
+	<select id="selectFundingReportList" parameterType="INT" resultType="java.util.HashMap">
+		SELECT f.fdTitle,
+		       ff.fdFileName,
+		       ff.fdFileExtension,
+		       ff.fdFileSize,
+		       ff.fdFileUploadName 
+		FROM funding f 
+		LEFT JOIN fundingfile ff 
+		ON f.fdCode = ff.fileFdCode 
+		WHERE f.fdCode = #{fdCode}
+	</select>
 	<!-- 하나의 펀딩의 Q&A정보 -->
  	<select id="selectFundingQna" parameterType="INT" resultType="com.pineapple.invest.service.FundingQna">
 		SELECT fq.qnaCode,
@@ -291,6 +309,19 @@
 		DELETE FROM fundingqnareply WHERE qnaReCode=#{qnaReCode}
 	</delete>
 	
+	
+	
+<!-- 	PMS Dividend PMS Dividend PMS Dividend PMS Dividend PMS Dividend PMS Dividend PMS Dividend PMS Dividend PMS Dividend -->
+	<select id="selectPMSDividendpay" resultType="java.util.HashMap" parameterType="String">
+		SELECT *
+			FROM funding
+			WHERE (fdComCode = ANY 
+				(SELECT e.emComCode 
+				FROM user u INNER JOIN employee e 
+				ON u.userId = e.emUserId
+				WHERE u.userId = #{id}))
+				AND (fdStatus = '진행중')
+	</select>
 	
 	
 	

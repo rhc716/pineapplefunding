@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pineapple.funding.service.Funding;
+import com.pineapple.funding.service.FundingAndFdFile;
 import com.pineapple.funding.service.FundingDetail;
 @Transactional
 public interface InvestServiceInterface {
@@ -21,7 +23,11 @@ public interface InvestServiceInterface {
 	//하나의 펀딩에 투자 취소하는 Service
 	int removeInvestment(int investCode);
 	//하나의 펀딩에 결제하기 클릭시 Data 요청 Service
-	List<InvestAndFundingAndMoney> getinvestmentFundingAndMoney(HashMap<String, Object> map);
+	InvestAndFundingAndMoney getinvestmentFundingAndMoney(HashMap<String, Object> map);
+	//하나의 펀딩에 결제하기
+	int addMoneyflow(Moneyflow moneyflow);
+	//펀딩 보고서 list
+	List<FundingAndFdFile> getFundingReportyList(int fdCode);
 	//하나의 펀딩 Q&A 불러오는 Service
 	List<FundingQna> getInvestFundingQna(int fdCode);
 	//하나의 펀딩 Q&A 댓글 불러오는 Service
@@ -39,6 +45,9 @@ public interface InvestServiceInterface {
 	//하나의 펀딩 Q&A 댓글 삭제하는 Service
 	int removeInvestFundingQnaReply(int qnaReCode);
 	
+	
+	/////////PMS Dividend ////////////
+	List<Funding> getPMSDividendpay(String id);
 	
 	
 	

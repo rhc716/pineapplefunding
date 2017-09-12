@@ -103,13 +103,6 @@
 			console.log(msg)
 			$('#openstoryContent').html(msg.openstory);
 			$('#comValueContent').text(msg.comValue);
-			$('img').each(function(n){
-				   console.log($(this));
-				   
-				   $(this).on( "error", function(){
-					   $(this).attr("src", "${pageContext.request.contextPath}/resources/img/404alternateimage.jpg");
-			    });
-			});
 		});
 		// 실패시
 		getfundingdata.fail(function(){
@@ -144,19 +137,33 @@
 				}
 			});
 		});
-		$('#dividendinsert').click(function (){
+		$('#moneyinsertbtn').click(function (){
 			var fdCode = $(this).attr('dataCode');
 			var fundinglistnameselectajax = $.ajax({
 				type: 'get',
-				url : '/pineapple/investdividenddata.invest',
+				url : '/pineapple/investmoneydata.invest',
 				data : {fdCode : fdCode},
 				success : function success(msg){
-					$('#investmentdeletedatainsert').html(msg);
+					$('#investmentmoneydatainsert').html(msg);
 				},
 				error : function error(){
 					
 				}
 			});
+		});
+		var getfundingfilelist = $.ajax({
+			type : "get",
+			url : "/pineapple/getfundingfilelist.invest",
+			/* 아이디 세션에서 받아서 가져옴 */
+			data : {fdCode : ${param.fdCode}},
+			async : false
+		});
+		// 성공시
+		getfundingfilelist.done(function(msg){
+			$('#reportContent').html(msg);
+		});
+		getfundingfilelist.fail(function(){
+			alert('ajax통신실패');
 		});
 	});
 </script>
@@ -250,7 +257,7 @@
 					<c:otherwise>
 						<c:choose>
 							<c:when test="${Data.idpaycheck == 0}">
-								<button class="btn btn-info" style="width: 100%; height: 100%; font-size: 30px;"  data-toggle="modal" data-target="#dividendinsert">결제하기</button>
+								<button class="btn btn-info" style="width: 100%; height: 100%; font-size: 30px;"  data-toggle="modal" data-target="#moneyinsert" dataCode=${Data.fdCode} id="moneyinsertbtn">결제하기</button>
 							</c:when>
 							<c:when test="${Data.idpaycheck == 2}">
 								<button class="btn btn-info disabled" style="width: 100%; height: 100%; font-size: 30px;">투자마감</button>
@@ -338,25 +345,14 @@
  	</div>
  	
  	<!-- 결제하기 -->
- 	<div class="modal fade" id="dividendinsert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ 	<div class="modal fade" id="moneyinsert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
  	  <div class="modal-dialog">
  	    <div class="modal-content font-j"> 
  	      <div class="modal-header text-lr-center">
  	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
  	        <h1 class="modal-title" id="myModalLabel">투자 결제 하기</h1>
  	      </div>
- 	      <div class="modal-body">
- 	      <div class="dividendinsert-form-group">
- 	      	<form id="investform" action="/pineapple/investmentinsert.invest" method="post">
- 	      		<input type="hidden" name="investFdCode" value="${Data.fdCode}">
- 	      		<input type="hidden" name="investId" value="${id}">
- 				<div style="font-size: 30px">구입 주식수 : <input type="text" name="purchaseShares"></div>
- 			</form>
- 	      </div>
- 	      <div class="modal-footer">
- 	      	<button id="investreservebtn" type="button" class="btn btn-default" data-dismiss="modal">투자예약하기</button>
- 	        <button type="button" class="btn btn-default" data-dismiss="modal">투자그만두기</button>
- 	      </div>
+ 	      <div class="modal-body" id="investmentmoneydatainsert">
  	    </div>
  	  </div>
  	</div>
@@ -375,13 +371,16 @@
 			<li role="presentation" class="">
 				<a href="#fundingqna" role="tab" id="fundingqna-tab" data-toggle="tab" aria-controls="fundingqna" aria-expanded="false">펀딩Q&A</a>
 			</li>
+			<li role="presentation" class="">
+				<a href="#report" role="tab" id="report-tab" data-toggle="tab" aria-controls="report" aria-expanded="false">보고서</a>
+			</li>
 		</ul>
 		<div id="myTabContent" class="tab-content font-j" style="text-align: center;">
 			<div role="tabpanel" class="tab-pane fade active in" id="openstory" aria-labelledby="openstory-tab">
 				<div id="openstoryContent"></div>
 			</div> 
 			<div role="tabpanel" class="tab-pane fade" id="comValue" aria-labelledby="comValue-tab"> 
-				<p id="comValueContent"></p> 
+				<div id="comValueContent"></div> 
 			</div> 
 			<div role="tabpanel" class="tab-pane fade pd-a-0" id="fundingqna" aria-labelledby="fundingqna-tab"> 
 				<h2>펀딩 Q&A</h2>
@@ -400,6 +399,10 @@
 				</div>
 				<div id="fundingqnalist">
 				</div>
+			</div> 
+			<div role="tabpanel" class="tab-pane fade" id="report" aria-labelledby="report-tab"> 
+				<div id="reportContent">
+				</div> 
 			</div> 
 		</div> 
 	</div>

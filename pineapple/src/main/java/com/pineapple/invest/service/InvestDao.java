@@ -8,6 +8,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.pineapple.funding.service.Funding;
+import com.pineapple.funding.service.FundingAndFdFile;
 import com.pineapple.funding.service.FundingDetail;
 
 
@@ -53,9 +55,21 @@ public class InvestDao implements InvestDaoInterface {
 	}
 	//하나의 펀딩에서 투자예약후 결제하기 클릭시 Data 요청
 	@Override
-	public List<InvestAndFundingAndMoney> investmentFundingAndMoneyData(HashMap<String, Object> map) {
+	public InvestAndFundingAndMoney investmentFundingAndMoneyData(HashMap<String, Object> map) {
 		log.debug("InvestDao-----investmentFundingAndMoneyData");
-		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.selectMyinvestData",map);
+		return sqlSessionTemplate.selectOne("com.pineapple.invest.service.InvestMapper.selectMyinvestData",map);
+	}
+	//하나의 펀딩에서 투자예약후 결제하기  insertMoneyflow
+	@Override
+	public int moneyflowInsert(Moneyflow moneyflow) {
+		log.debug("InvestDao-----moneyflowInsert");
+		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.insertMoneyflow",moneyflow);
+	}
+	//펀딩 보고서 list
+	@Override
+	public List<FundingAndFdFile> fundingReportFilelistSelect(int fdCode) {
+		log.debug("InvestDao-----fundingReportFilelistSelect");
+		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.selectFundingReportList",fdCode);
 	}
 	//하나의 펀딩 Q&A SELECT
 	@Override
@@ -112,6 +126,13 @@ public class InvestDao implements InvestDaoInterface {
 		return sqlSessionTemplate.delete("com.pineapple.invest.service.InvestMapper.deleteFundingQnaReply", qnaReCode);
 	}
 	
+	
+	/////////PMS Dividend ////////////
+	@Override
+	public List<Funding> pmsDividendpaySelect(String id) {
+		log.debug("InvestDao-----pmsDividendpaySelect");
+		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.selectPMSDividendpay", id);
+	}
 	
 	
 	
