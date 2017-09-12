@@ -6,6 +6,9 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.pineapple.funding.service.Funding;
+import com.pineapple.funding.service.FundingAndFdFile;
 import com.pineapple.funding.service.FundingDetail;
 
 @Service
@@ -57,10 +60,24 @@ public class InvestService implements InvestServiceInterface {
 	}
 	//결제하기에서 클릭후 Data 요청
 	@Override
-	public List<InvestAndFundingAndMoney> getinvestmentFundingAndMoney(HashMap<String, Object> map) {
+	public InvestAndFundingAndMoney getinvestmentFundingAndMoney(HashMap<String, Object> map) {
 		log.debug("------------------InvestService-----------------getinvestmentFundingAndMoney()");
-		List<InvestAndFundingAndMoney> getinvestmentFundingAndMoney = investdaointerface.investmentFundingAndMoneyData(map);
+		InvestAndFundingAndMoney getinvestmentFundingAndMoney = investdaointerface.investmentFundingAndMoneyData(map);
 		return getinvestmentFundingAndMoney;
+	}
+	//결제하기
+	@Override
+	public int addMoneyflow(Moneyflow moneyflow) {
+		log.debug("------------------InvestService-----------------addMoneyflow()");
+		int addMoneyflow = investdaointerface.moneyflowInsert(moneyflow);
+		return addMoneyflow;
+	}
+	//펀딩 보고서 list
+	@Override
+	public List<FundingAndFdFile> getFundingReportyList(int fdCode) {
+		log.debug("------------------InvestService-----------------getFundingReportyList()");
+		List<FundingAndFdFile> getfundingreportylist = investdaointerface.fundingReportFilelistSelect(fdCode);
+		return getfundingreportylist;
 	}
 	//투자하기에서 펀딩클릭후 펀딩Q&A클릭시 펀딩 Q&A조회
 	@Override
@@ -119,6 +136,17 @@ public class InvestService implements InvestServiceInterface {
 		int removeinvestfundingqnareply = investdaointerface.investFundingQnaReplyDelete(qnaReCode);
 		return removeinvestfundingqnareply;
 	}
+	
+	
+	
+	/////////PMS Dividend ////////////
+	@Override
+	public List<Funding> getPMSDividendpay(String id) {
+		log.debug("------------------InvestService-----------------getPMSDividendpay()");
+		List<Funding> getPMSDividendpay = investdaointerface.pmsDividendpaySelect(id);
+		return getPMSDividendpay;
+	}
+	
 	
 	
 	

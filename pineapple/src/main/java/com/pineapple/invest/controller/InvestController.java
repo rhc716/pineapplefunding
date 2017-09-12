@@ -21,15 +21,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pineapple.funding.service.Funding;
+import com.pineapple.funding.service.FundingAndFdFile;
 import com.pineapple.funding.service.FundingDetail;
 import com.pineapple.invest.service.FundingQna;
 import com.pineapple.invest.service.FundingQnaReply;
 import com.pineapple.invest.service.InvestAndFd;
 import com.pineapple.invest.service.InvestAndFdLikeAndFd;
+import com.pineapple.invest.service.InvestAndFundingAndMoney;
 import com.pineapple.invest.service.InvestServiceInterface;
 import com.pineapple.invest.service.Investment;
 import com.pineapple.invest.service.InvestorInvestList;
 import com.pineapple.invest.service.MyInvestorFundingQna;
+import com.pineapple.invest.service.Moneyflow;
 
 @Controller
 public class InvestController {
@@ -67,10 +71,15 @@ public class InvestController {
 	public String investFunding(Locale locale, Model model,@RequestParam(value="fdCode") int fdCode,HttpSession session){
 		log.debug("<-----InvestController[investFunding호출]----->");
 		log.debug(fdCode+"<-----InvestController[fdCode 값 출력]");
-		log.debug(session.getAttribute("id").toString()+"<-----InvestController[id 값 출력]");
+		log.debug(session+"<-----InvestController[session 값 출력]");
+		String idcheck = "";
+		if(session.getAttribute("id") != null){
+			idcheck = session.getAttribute("id").toString();
+		}
+		log.debug(idcheck+"<-----InvestController[id 값 출력]");
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("fdCode", fdCode);
-		map.put("id", session.getAttribute("id").toString());
+		map.put("id", idcheck);
 		InvestAndFdLikeAndFd fundingData = investserviceinterface.getInvestFundingone(map);
 		model.addAttribute("fundingData", fundingData);
 		log.debug(fundingData+"<-----InvestController[fundingData 값 출력]");
@@ -108,8 +117,38 @@ public class InvestController {
 		log.debug(investmentdeletedata+"<-----InvestController[investmentdeletedata 값 출력]");
 		return "redirect:/investfunding.invest";
 	}
-	//투자하기 페이지에서 결제하기 클릭시 Data 요청
-	
+	//투자하기 페이지에서 결제하기 클릭시 Data 요청 
+	@RequestMapping(value="/investmoneydata.invest",method=RequestMethod.GET)
+	public String investmentMoneyData(Locale locale,Model model,HttpSession session,@RequestParam(value="fdCode") int fdCode){
+		log.debug("<-----InvestController[investmentMoneyData호출]----->");
+		log.debug(session.getAttribute("id").toString()+"<-----InvestController[id 값 출력]");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("fdCode", fdCode);
+		map.put("id", session.getAttribute("id").toString());
+		InvestAndFundingAndMoney investmentmoneydata = investserviceinterface.getinvestmentFundingAndMoney(map);
+		model.addAttribute("investmentmoneydata",investmentmoneydata);
+		log.debug(investmentmoneydata+"<-----InvestController[investmentmoneydata 값 출력]");
+		return "invest/investajax/investmentmoneydata";
+	}
+	//투자하기 페이지에서 결제하기 
+	@RequestMapping(value="/investmentmoney.invest",method=RequestMethod.POST)
+	public String moneyflowAdd(Locale locale,Model model,Moneyflow moneyflow){
+		log.debug("<-----InvestController[investAdd호출]----->");
+		log.debug(moneyflow+"<-----InvestController[moneyflow 값 출력]");
+		int moneyflowinsert = investserviceinterface.addMoneyflow(moneyflow);
+		model.addAttribute("fdCode",moneyflow.getMfFdCode());
+		log.debug(moneyflowinsert+"<-----InvestController[moneyflowinsert 값 출력]");
+		return "redirect:/investfunding.invest";
+	}
+	//투자하기 페이지에서 보고서 list 호출
+	@RequestMapping(value = "/getfundingfilelist.invest", method = RequestMethod.GET)
+	public String getFundingFileList(Model model, Locale locale, @RequestParam("fdCode") int fdCode) {
+		log.debug("<-----InvestController[getFundingFileList호출]----->");
+		List<FundingAndFdFile> fundingreportlist = investserviceinterface.getFundingReportyList(fdCode);
+		model.addAttribute("fundingreportlist",fundingreportlist);
+		log.debug(fundingreportlist+"<-----InvestController[fundingreportlist 값 출력]");
+		return "invest/investajax/investreportdata";
+	}
 	//펀딩페이지에서 Q&A입력
 	@RequestMapping(value="/investquestion.invest",method=RequestMethod.POST)
 	public String investQuestion(Locale locale, Model model,FundingQna fundingqna){
@@ -262,7 +301,29 @@ public class InvestController {
 		return "user/investormypageajax/investormypage";
 	}
 	
-
+	
+	
+	
+	
+	////////////////////////////////////PSM (DIVIDEND PAY)/////////////////////////////////////////////
+	//자신의 진행중 펀딩 조회
+	@RequestMapping(value = "/myfundingdividendpay.invest", method = RequestMethod.GET)
+	public String getMyFundingDividendpay(Locale locale, Model model,HttpSession session) {
+		log.debug("<-----InvestController[myFundingDetailList호출]----->");
+		List<Funding> getMyFundingDividendpay = investserviceinterface.getPMSDividendpay(session.getAttribute("id").toString());
+		model.addAttribute("getMyFundingDividendpay", getMyFundingDividendpay);
+		log.debug(getMyFundingDividendpay+"<-----InvestController[getMyFundingDividendpay 값 출력]");
+		return "pms/companyuser/myfundingdividendpay";
+	}
+	//자신의 펀딩의 투자자 조회
+	@RequestMapping(value = "/mydividendpayinvestlist.invest", method = RequestMethod.GET)
+	public String getMyFundingDividendpayInvest(Locale locale, Model model,HttpSession session) {
+		log.debug("<-----InvestController[getMyFundingDividendpayInvest호출]----->");
+/*		List<Funding> getMyFundingDividendpay = investserviceinterface.getPMSDividendpay(session.getAttribute("id").toString());
+		model.addAttribute("getMyFundingDividendpay", getMyFundingDividendpay);
+		log.debug(getMyFundingDividendpay+"<-----InvestController[getMyFundingDividendpay 값 출력]");*/
+		return "pms/companyuser/myfundingdividendpayinvestlist";
+	}
 	
 	
 	
