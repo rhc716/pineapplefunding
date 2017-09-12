@@ -167,7 +167,7 @@ $(document).on("change","select[name='wbsPlanMsCode']",function(){
 			/* 바뀐마일스톤이름으로 검색 */
 			data : { milestoneCode : $(this).val() }
 		});
-		
+		$('#insertbtn').html('');
 		var wbsmsinsert = $(this).val();
 		console.log(wbsmsinsert);
 		
@@ -183,7 +183,7 @@ $(document).on("change","select[name='wbsPlanMsCode']",function(){
 			
             $('#wbslistselect').html('')
             $('#wbslistselect').append(
-                    '<select name="wbsPlanDependency" id="mywbslist">'
+                    '<select name="wbsPlanDependency" id="mywbslist2">'
                     +'<option value=null>wbs 선택</option>'
                     +'</select>'
                     
@@ -240,9 +240,10 @@ $(document).on("change","select[name='wbsPlanMsCode']",function(){
 			      		}
 			      	
 		                
-                    $('#mywbslist').append(
-                        '<option value="'+msg[s].wbsPlanName+'">'+msg[s].wbsPlanName+'</option><br>'
-                    );
+                  
+                    $('#mywbslist2').append(
+                            '<option value="'+msg[s].wbsPlanName+'">'+msg[s].wbsPlanName+'</option><br>'
+                        );
 
                     
 			      	
@@ -266,7 +267,7 @@ $(document).on("change","select[name='wbsPlanMsCode']",function(){
 		 				+'<input type="text" class="form-control" name="wbsPlanName" value="'+msg[s].wbsPlanName+'"/>'
 		 				+'선행작업:'
 		 				+'<input type="text" class="form-control" name="wbsPlanDependency2" value="'+msg[s].wbsPlanDependency+'" readonly/>'
-		 				+'<select name="wbsPlanDependency" class="wbsdc">'
+		 				+'<select name="wbsPlanDependency" class="wbsdc" id="wbsdc">'
 		 				+'<option value="없음"> 없음</option>'
 		 				+'</select><br>'
 		 				+'작업기간:'
@@ -298,7 +299,9 @@ $(document).on("change","select[name='wbsPlanMsCode']",function(){
 		    		  	+'</div>'
 		    		  	
 			      );
-			      
+			      $('#wbsdc').append(
+	                        '<option value="'+msg[s].wbsPlanName+'">'+msg[s].wbsPlanName+'</option><br>'
+	                    );
 			      }
 			      $('#insertbtn').append(
                           '<button type="button" data-toggle="modal" data-target="#insert">WBS생성</button>'
@@ -316,6 +319,33 @@ $(document).on("change","select[name='wbsPlanMsCode']",function(){
 			      var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
 
 			      chart.draw(data, options);
+			      
+			  /*     google.visualization.events.addListener(chart, 'select', selectHandler);
+			      
+			      function selectHandler() {
+			    	  
+			    	  
+			    	  $('#chart_str').html('')
+			    	  var selection = chart.getSelection();
+			    	  
+			    	  var message = '';
+			    	  
+			    	  
+			    	  for (var i = 0; i < selection.length; i++){
+			    		  var item = selection[i];
+			    		  var name = data.getFormattedValue(item.row, 1);			    		
+			    		  var startdate = data.getFormattedValue(item.row, 2);	
+			    		  var duration  = data.getFormattedValue(item.row, 4);	
+			    			
+			    		  console.log(duration)
+			    	  }
+			    	  $('#chart_str').append(
+			    			  '작업명:'+name+'<br>'
+			    			  +'시작일:'+formatDate(startdate)+'<br>'
+			    			  +'작업기간'+duration+'<br>'
+			    			  );
+			      } */
+			     
 			    } 
 		});
 		// 실패시
