@@ -3,10 +3,12 @@ package com.pineapple.user.service;
 import java.util.List;
 import java.util.Map;
 
-import com.pineapple.funding.service.Funding;
 import com.pineapple.invest.service.InvestorInvestList;
 
 public interface MypageServiceInterface {
+	//관리자 마이페이지 전체펀딩의 프로젝트관리시스템 조회
+	List<FundingAndCompanyAndMilestoneAndWbsAndMargin> getPmsInfoByAdmin();
+		
 	//펀딩내 권한부여 삭제
 	int removeFundingAuth(int authCode);
 	

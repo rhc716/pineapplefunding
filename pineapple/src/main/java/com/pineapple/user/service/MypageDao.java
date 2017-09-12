@@ -18,6 +18,13 @@ public class MypageDao implements MypageDaoInterface {
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
 	
+	//관리자 마이페이지 전체펀딩의 프로젝트관리시스템 조회
+	@Override
+	public List<FundingAndCompanyAndMilestoneAndWbsAndMargin> selectPmsInfoByAdmin() {
+		log.debug("MypageDao selectPmsInfoByAdmin 호출");
+		return sqlSessionTemplate.selectList("com.pineapple.user.service.MypageMapper.selectPmsInfoByAdmin");
+	}
+	
 	//펀딩내 권한부여 삭제
 	@Override
 	public int deleteFundingAuth(int authCode) {
@@ -273,4 +280,6 @@ public class MypageDao implements MypageDaoInterface {
 		log.debug("MypageDao selectInvestorBasic 메서드 호출 결과"+sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAllInvestorInfo", userId));
 		return sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAllInvestorInfo", userId);
 	}
+
+
 }

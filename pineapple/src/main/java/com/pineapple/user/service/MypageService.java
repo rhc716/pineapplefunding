@@ -6,8 +6,6 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.pineapple.funding.service.Funding;
 import com.pineapple.invest.service.InvestorInvestList;
 
 @Service
@@ -16,6 +14,13 @@ public class MypageService implements MypageServiceInterface {
 	
 	@Autowired
 	private MypageDaoInterface mypagedao;
+	
+	//관리자 마이페이지 전체펀딩의 프로젝트관리시스템 조회
+	@Override
+	public List<FundingAndCompanyAndMilestoneAndWbsAndMargin> getPmsInfoByAdmin() {
+		log.debug("MypageService getPmsInfoByAdmin 호출 결과: "+mypagedao.selectPmsInfoByAdmin());
+		return mypagedao.selectPmsInfoByAdmin();
+	}
 	
 	//펀딩내 권한부여 삭제
 	@Override

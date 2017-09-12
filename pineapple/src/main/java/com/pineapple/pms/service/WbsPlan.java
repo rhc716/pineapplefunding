@@ -12,6 +12,7 @@ public class WbsPlan {
 	private String wbsPlanWriteDate;
 	private String wbsPlanManager;
 	private int wbsPlanComCode;
+	private int wbsMargin;
 	
 	public int getWbsPlanCode() {
 		//System.out.println("wbsPlanCode get"+wbsPlanCode);
@@ -99,18 +100,20 @@ public class WbsPlan {
 	public void setWbsPlanComCode(int wbsPlanComCode) {
 		this.wbsPlanComCode = wbsPlanComCode;
 	}
-	
-	
+	public int getWbsMargin() {
+		return wbsMargin;
+	}
+	public void setWbsMargin(int wbsMargin) {
+		this.wbsMargin = wbsMargin;
+	}
 	@Override
 	public String toString() {
-		return "WbsPlan [wbsPlanCode=" + wbsPlanCode + ", wbsPlanFdCode="
-				+ wbsPlanFdCode + ", wbsPlanMsCode=" + wbsPlanMsCode
-				+  ", wbsPlanChange="
-				+ wbsPlanChange + ", wbsPlanName=" + wbsPlanName
-				+ ", wbsPlanDependency=" + wbsPlanDependency
-				+ ", wbsPlanStartDate=" + wbsPlanStartDate
-				+ ", wbsPlanDuration=" + wbsPlanDuration + ", wbsPlanWriteDate="
-				+ wbsPlanWriteDate + ", wbsPlanManager=" + wbsPlanManager
-				+ ", wbsPlanComCode=" + wbsPlanComCode + "]";
+		return "WbsPlan [wbsPlanCode=" + wbsPlanCode + ", wbsPlanFdCode=" + wbsPlanFdCode + ", wbsPlanMsCode="
+				+ wbsPlanMsCode + ", wbsPlanChange=" + wbsPlanChange + ", wbsPlanName=" + wbsPlanName
+				+ ", wbsPlanDependency=" + wbsPlanDependency + ", wbsPlanStartDate=" + wbsPlanStartDate
+				+ ", wbsPlanDuration=" + wbsPlanDuration + ", wbsPlanWriteDate=" + wbsPlanWriteDate
+				+ ", wbsPlanManager=" + wbsPlanManager + ", wbsPlanComCode=" + wbsPlanComCode + ", wbsMargin="
+				+ wbsMargin + "]";
 	}	
+	
 }
