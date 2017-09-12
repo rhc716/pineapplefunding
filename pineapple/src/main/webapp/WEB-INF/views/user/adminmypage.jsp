@@ -291,8 +291,7 @@ $(document).ready(function(){
 				<div class="col-md-9">
 					<br>
 					<p id="explanation">파인애플펀딩 사이트에서 활동중인 펀딩의 전체목록을 조회, 검색 할 수 있습니다. 
-										펀딩 진행중인 상황에 대한 대시보드로서 기능하며, 개별 펀딩에 포함된 프로젝트 관리 사항인 
-										마일스톤 목록, 예상WBS 목록, 실제WBS 목록을 조회하고 비교할 수 있습니다.
+										펀딩 진행중인 상황에 대한 대시보드로서 기능하며, 펀딩 개설 요청에 대하여 승인 처리를 할 수 있습니다.
 					</p>
 					<br>
 					<!-- 조회 목록 출력될 부분 -->
@@ -349,8 +348,122 @@ $(document).ready(function(){
 		</div>
 		<!-- 세번째 탭; 사이트에서 개설한 펀딩 현황(마일스톤, 예상WBS, 실제WBS) 조회 및 검색 -->
 		<div role="tabpanel" class="tab-pane fade" id="pmsinfo" aria-labelledby="pmsinfo-tab">
-		
-		
+			<div class="row">
+				<div class="col-md-3">
+					<br>
+					<p>PMS대시보드</p>
+					<br>
+				</div>
+				<div class="col-md-9">
+					<br>
+					<p id="explanation">파인애플펀딩 사이트에서 활동중인 펀딩에 대하여 프로젝트관리시스템(PMS) 종합 정보를 조회할 수 있습니다. 
+										펀딩 진행중인 상황에 대한 대시보드로서 기능하며, 개별 펀딩에 포함된 프로젝트 관리 사항인
+										마일스톤 목록, 예상WBS 목록, 실제WBS 목록을 조회하고 비교할 수 있습니다.
+					</p>
+					<br>
+					<!-- 조회 목록 출력될 부분 -->
+					<div>
+						<table class="table table-striped table-bordered table-hover">
+							<tr class="info">
+								<th>#</th>
+								<th>기업명</th>
+								<th>펀딩명</th>
+								<th>마일스톤명</th>
+								<th>마일스톤요약</th>
+								<th>작성자</th>
+								<th>WBS종합</th>
+								<th>마진종합</th>
+							</tr>
+							<c:forEach var="allpmslist" items="${getPmsInfoByAdmin}" varStatus="numberofPmslist">
+								<tr>
+									<td>${numberofPmslist.count}</td>
+									<td>${allpmslist.comName}</td>
+									<td>${allpmslist.fdTitle}</td>
+									<td>${allpmslist.milestoneName}</td>
+									<td>${allpmslist.milestoneSummary}</td>
+									<td>${allpmslist.pm}</td>
+									<td><a type="button" class="btn btn-block btn-info" href="#wbs${allpmslist.milestoneName}" data-toggle="modal">${allpmslist.fdTitle} WBS</a></td>
+									<td><a type="button" class="btn btn-block btn-success" href="#margin${allpmslist.milestoneName}" data-toggle="modal">${allpmslist.fdTitle} 마진</a></td>
+									<!-- wbs예상/실제 비교를 위한 모달 -->
+									<div class="modal fade" id="wbs${allpmslist.milestoneName}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									  <div class="modal-dialog">
+									    <div class="modal-content">
+									      <div class="modal-header">
+									        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									        <h4 class="modal-title" id="myModalLabel">${allpmslist.milestoneName} wbs예상/실제 정보</h4>
+									      </div>
+									      <div class="modal-body">
+									      <!-- 회사정보확인 및 수정 모달 -->
+									        <form action="#" method="post">
+									        	<div class="container_insert">
+													<div id="comApprovalDonePart" class="form-group has-success has-feedback" hidden>
+													    <label class="control-label" for="inputSuccess4">기업승인여부</label>
+													    <input type="text" class="form-control" id="comApprovalDone" name="comAdminApproved" aria-describedby="inputSuccess4Status" readonly>
+													    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+													    <span id="comApprovedStatus" class="sr-only">(success)</span>
+													</div>
+													<div id="comApprovalNotPart" class="form-group has-error has-feedback" hidden>
+													    <label class="control-label" for="inputError2">기업승인여부</label>
+													    <input type="text" class="form-control" id="comApprovalNot" name="comAdminNotApproved"aria-describedby="inputError2Status" readonly>
+													    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+													    <span id="inputError2Status" class="sr-only">(error)</span>
+													</div>
+													<br>
+													
+													<br>
+													<div class="modal-footer">
+														<button type="submit" class="btn btn-info">기업승인</button>
+														<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+													</div>
+												  </div>
+												</form>
+									        </div>
+									    </div>
+									  </div>
+									</div>
+									<!-- 마진 비교를 위한 모달 -->
+									<div class="modal fade" id="margin${allpmslist.milestoneName}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									  <div class="modal-dialog">
+									    <div class="modal-content">
+									      <div class="modal-header">
+									        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									        <h4 class="modal-title" id="myModalLabel">${allpmslist.milestoneName} wbs예상/실제 정보</h4>
+									      </div>
+									      <div class="modal-body">
+									      <!-- 회사정보확인 및 수정 모달 -->
+									        <form action="#" method="post">
+									        	<div class="container_insert">
+													<div id="comApprovalDonePart" class="form-group has-success has-feedback" hidden>
+													    <label class="control-label" for="inputSuccess4">기업승인여부</label>
+													    <input type="text" class="form-control" id="comApprovalDone" name="comAdminApproved" aria-describedby="inputSuccess4Status" readonly>
+													    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+													    <span id="comApprovedStatus" class="sr-only">(success)</span>
+													</div>
+													<div id="comApprovalNotPart" class="form-group has-error has-feedback" hidden>
+													    <label class="control-label" for="inputError2">기업승인여부</label>
+													    <input type="text" class="form-control" id="comApprovalNot" name="comAdminNotApproved"aria-describedby="inputError2Status" readonly>
+													    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+													    <span id="inputError2Status" class="sr-only">(error)</span>
+													</div>
+													<br>
+													
+													<br>
+													<div class="modal-footer">
+														<button type="submit" class="btn btn-info">기업승인</button>
+														<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+													</div>
+												  </div>
+												</form>
+									        </div>
+									    </div>
+									  </div>
+									</div>
+								</tr>
+							</c:forEach>
+						</table>
+					</div>
+				</div>
+			</div>
 		</div>
 		<!-- 네번째 탭(전체기업목록조회, 기업등록승인, 기업삭제승인) -->
 		<div role="tabpanel" class="tab-pane fade" id="allCompanyList" aria-labelledby="allCompanyList-tab"> 

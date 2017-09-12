@@ -31,18 +31,12 @@
 	<result property="fdCode" column="fdCode"/>
 	<result property="fdTitle" column="fdTitle"/>
 	<result property="fdComCode" column="fdComCode"/>
-	<collection property="company"
-				ofType="com.pineapple.user.service.Company">
-		<result property="comName" column="comName"/>
-	</collection>
-	<collection property="milestone"
-				ofType="com.pineapple.pms.service.WbsMs">
-		<result property="milestoneCode" column="milestoneCode"/>
-		<result property="milestoneStep" column="milestoneStep"/>
-		<result property="milestoneName" column="milestoneName"/>
-		<result property="milestoneSummary" column="milestoneSummary"/>
-		<result property="pm" column="pm"/>
-	</collection>
+	<result property="comName" column="comName"/>
+	<result property="milestoneCode" column="milestoneCode"/>
+	<result property="milestoneStep" column="milestoneStep"/>
+	<result property="milestoneName" column="milestoneName"/>
+	<result property="milestoneSummary" column="milestoneSummary"/>
+	<result property="pm" column="pm"/>
 	<collection property="wbsplan"
 				ofType="com.pineapple.pms.service.WbsPlan">
 		<result property="wbsPlanCode" column="wbsPlanCode"/>

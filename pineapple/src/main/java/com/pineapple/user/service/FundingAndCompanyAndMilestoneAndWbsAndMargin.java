@@ -11,10 +11,14 @@ public class FundingAndCompanyAndMilestoneAndWbsAndMargin {
 	private String fdTitle;
 	
 	//company
-	private Company company;
+	private String comName;
 	
 	//milestone
-	private WbsMs milestone;
+	private int milestoneCode;
+	private int milestoneStep;
+	private String milestoneName;
+	private String milestoneSummary;
+	private String pm;
 	
 	//WbsPlan
 	private WbsPlan wbsplan;
@@ -52,20 +56,44 @@ public class FundingAndCompanyAndMilestoneAndWbsAndMargin {
 		this.fdTitle = fdTitle;
 	}
 
-	public Company getCompany() {
-		return company;
+	public int getMilestoneCode() {
+		return milestoneCode;
 	}
 
-	public void setCompany(Company company) {
-		this.company = company;
+	public void setMilestoneCode(int milestoneCode) {
+		this.milestoneCode = milestoneCode;
 	}
 
-	public WbsMs getMilestone() {
-		return milestone;
+	public int getMilestoneStep() {
+		return milestoneStep;
 	}
 
-	public void setMilestone(WbsMs milestone) {
-		this.milestone = milestone;
+	public void setMilestoneStep(int milestoneStep) {
+		this.milestoneStep = milestoneStep;
+	}
+
+	public String getMilestoneName() {
+		return milestoneName;
+	}
+
+	public void setMilestoneName(String milestoneName) {
+		this.milestoneName = milestoneName;
+	}
+
+	public String getMilestoneSummary() {
+		return milestoneSummary;
+	}
+
+	public void setMilestoneSummary(String milestoneSummary) {
+		this.milestoneSummary = milestoneSummary;
+	}
+
+	public String getPm() {
+		return pm;
+	}
+
+	public void setPm(String pm) {
+		this.pm = pm;
 	}
 
 	public WbsPlan getWbsplan() {
@@ -100,12 +128,21 @@ public class FundingAndCompanyAndMilestoneAndWbsAndMargin {
 		this.wbsplanmargin = wbsplanmargin;
 	}
 
+	public String getComName() {
+		return comName;
+	}
+
+	public void setComName(String comName) {
+		this.comName = comName;
+	}
+
 	@Override
 	public String toString() {
 		return "FundingAndCompanyAndMilestoneAndWbsAndMargin [fdCode=" + fdCode + ", fdComCode=" + fdComCode
-				+ ", fdTitle=" + fdTitle + ", company=" + company + ", milestone=" + milestone + ", wbsplan=" + wbsplan
-				+ ", wbsactual=" + wbsactual + ", wbsdailymargin=" + wbsdailymargin + ", wbsplanmargin=" + wbsplanmargin
-				+ "]";
+				+ ", fdTitle=" + fdTitle + ", comName=" + comName + ", milestoneCode=" + milestoneCode
+				+ ", milestoneStep=" + milestoneStep + ", milestoneName=" + milestoneName + ", milestoneSummary="
+				+ milestoneSummary + ", pm=" + pm + ", wbsplan=" + wbsplan + ", wbsactual=" + wbsactual
+				+ ", wbsdailymargin=" + wbsdailymargin + ", wbsplanmargin=" + wbsplanmargin + "]";
 	}
 
 }
