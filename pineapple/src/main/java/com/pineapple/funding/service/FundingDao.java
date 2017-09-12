@@ -133,12 +133,20 @@ public class FundingDao implements FundingDaoInterface {
 		
 	}
 	
-	// 펀딩파일 업로드 리스트 가져오기
+	// 펀딩파일 업로드 리스트 가져오기 (userId로)
 	@Override
 	public List<FundingAndFdFile> selectFundingFileList(String userId) {
 		log.debug("FundingDao의 selectFundingFileList호출 성공");
 		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectFundingFileList", userId);
 	}
+	
+	// 펀딩파일 업로드 리스트 가져오기 (fdCode로)
+	@Override
+	public List<FundingAndFdFile> selectFundingFileList(int fdCode) {
+		log.debug("FundingDao의 selectFundingFileList호출 성공");
+		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectFundingFileListOfFunding", fdCode);
+	}
+	
 	
 	// 펀딩파일 삭제
 	@Override
@@ -272,4 +280,14 @@ public class FundingDao implements FundingDaoInterface {
 		model.addAttribute("fundingAndComAndMile",sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectForfundingTotalViewPageOne", fdCode));
 		log.debug("model : "+model);
 	}
+	
+	@Override
+	public List<Object> selectAllFundingList() {
+		log.debug("FundingDao의 selectAllFundingList호출 성공");
+		List<Object> list = new ArrayList<Object>();
+		// 마감, 모집실패로 끝난 펀딩을 제외한 모든 펀딩 목록을 가져옴
+		list.add(sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListAdminThird"));
+		return list;
+	}
+	
 }

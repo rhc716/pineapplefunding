@@ -135,11 +135,18 @@ public class FundingService implements FundingServiceInterface {
 		fundingdao.insertFundingFile(file);
 	}
 	
-	// 펀딩파일 업로드 리스트 가져오기
+	// 펀딩파일 업로드 리스트 가져오기 (userId로)
 	@Override
 	public List<FundingAndFdFile> getFundingFileList(String userId) {
 		log.debug("FundingService의 getFundingFileList호출 성공");
 		return fundingdao.selectFundingFileList(userId);
+	}
+
+	// 펀딩파일 업로드 리스트 가져오기 (fdCode로)
+	@Override
+	public List<FundingAndFdFile> getFundingFileList(int fdCode) {
+		log.debug("FundingService의 getFundingFileList호출 성공");
+		return fundingdao.selectFundingFileList(fdCode);
 	}
 	
 	// 펀딩파일 삭제
@@ -230,5 +237,13 @@ public class FundingService implements FundingServiceInterface {
 		log.debug("FundingService의 getForfundingTotalViewPage호출 성공");
 		fundingdao.selectForfundingTotalViewPage(fdCode, model);
 	}
+	
+	// 관리자권한의 펀딩보기에서 모든 펀딩리스트를 가져옴
+	@Override
+	public List<Object> getAllFundingList() {
+		log.debug("FundingService의 getAllFundingList호출 성공");
+		return fundingdao.selectAllFundingList();
+	}
+	
 }
  

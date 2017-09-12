@@ -40,4 +40,6 @@ public interface FundingServiceInterface {
 	List<Object> getMilestoneListOfFunding(int fdCode);
 	MileStone milestoneStepCheck(int msFdCode, int milestoneStep);
 	void getForfundingTotalViewPage(int fdCode, Model model);
+	List<FundingAndFdFile> getFundingFileList(int fdCode);
+	List<Object> getAllFundingList();
 }

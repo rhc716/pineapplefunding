@@ -69,38 +69,72 @@ $(document).ready(function(){
 
 	    return [year, month, day].join('-');
 	}
-	/*********** 펀딩을 셀렉트 했을때 투자자 리스트를 불러오는 ajax*********/
+	/*********** 펀딩을 셀렉트 했을때 투자자 리스트를 불러오는 ajax && 공지하기 버튼을 보기에 해줌*********/
 	$('#selectfd').change(function(){
 		// 폼 초기화
-		console.log($("#selectfd option:selected").val());
-		$('#investorlist').html('');
 		//console.log($("#selectfd option:selected").val());
-		var getfundingdividendpalnlist = $.ajax({
-			type : "get",
-			url : "/pineapple/getfundinginvestorlist.pms",
-			data : { fdCode : $("#selectfd option:selected").val() }
-		});
+		$('#investorlist').html('');
 		
-		//성공시 투자자 리스트를 investorlist에 채워줌
-		getfundingdividendpalnlist.done(function(msg){
-			console.log(msg);
-			for(var i = 0; i<msg.length; i++){
-				$('#investorlist').append(
-					'<tr>'
-						+'<td>'+msg[i].investId+'</td>'
-						+'<td>'+msg[i].purchaseShares+'</td>'
-						+'<td>'+msg[i].payCheck+'</td>'
-						+'<td>'+formatDate(msg[i].investTime)+'</td>'
-					+'</tr>'
-				);
-			}
-		});
+		// 선택했을때만 ajax통신
+		if($("#selectfd option:selected").val()!="null"){
+			var getfundinginvestorlist = $.ajax({
+				type : "get",
+				url : "/pineapple/getfundinginvestorlist.pms",
+				data : { fdCode : $("#selectfd option:selected").val()}
+			});
+			
+			//성공시 투자자 리스트를 investorlist에 채워줌
+			getfundinginvestorlist.done(function(msg){
+				console.log(msg);
+				for(var i = 0; i<msg.length; i++){
+					var paychecktext = "";
+					if(msg[i].payCheck=='0'){
+						paychecktext = "미결제";
+					}else{
+						paychecktext = "결제";
+					}
+					$('#investorlist').append(
+						'<tr>'
+							+'<td>'+msg[i].investId+'</td>'
+							+'<td>'+msg[i].purchaseShares+'</td>'
+							+'<td>'+paychecktext+'</td>'
+							+'<td>'+formatDate(msg[i].investTime)+'</td>'
+						+'</tr>'
+					);
+				}
+			});
+			
+			//실패시
+			getfundinginvestorlist.fail(function(){
+				alert('ajax통신실패');
+			});
+			
+		}
 		
-		//실패시
-		getfundingdividendpalnlist.fail(function(){
-			alert('ajax통신실패');
-		});
+		//공지하기 버튼을 보이게 해줌.
+		if($("#selectfd option:selected").val()!="null"){
+			$('#employeebtn').show();
+		} else {
+			$('#employeebtn').hide();
+		}
 	});
+	
+	// 공지하기 버튼을 눌렀을때 모달안의 form에 투자자들의 아이디들을 input hidden 으로 추가해줌
+	// 메세지를 보내줄 대상들을 배열로 넘겨서 컨트롤러에서 처리할 것임
+	$('#employeebtn').click(function(){
+		// console.log($('#investorlist').find("tr:eq(0)").find("td:eq(0)").text());
+		// console.log($('#investorlist').find("tr").length);
+		var inputidArr = new Array();
+		for(var i=0; i<$('#investorlist').find("tr").length; i++ ){
+			inputidArr[i] = $('#investorlist').find("tr:eq("+i+")").find("td:eq(0)").text();
+		}
+		console.log(inputidArr);
+		
+		$('#inputidArrArea').append(
+				
+		);
+	});
+	
 	
 });
 </script>
@@ -120,26 +154,77 @@ $(document).ready(function(){
 	<div class="col-md-9" id="myfundinglist">
 		<div class="pagetitleandexplainbox">
 			<h1>펀딩투자자조회</h1>
+			<span> 
+				펀딩을 선택하면 <button class="btn btn-primary btn-sm disabled">공지하기</button> 버튼이 나옵니다<br>
+				버튼을 누르면 투자자에게 공지가 가능합니다<br>
+				(펀딩내의 투자자에게 전체 메세지)
+			</span>
 		</div>
-		<select class="fdselectlist" id="selectfd">
-			<option value="null">선택해주세요</option>	
-		</select><br><br>
-		<table class="table">
+		<div class="row">
+			<div class="col-xs-6">
+				<select class="fdselectlist" id="selectfd">
+					<option value="null">선택해주세요</option>	
+				</select>
+			</div>
+			<div class="col-xs-6" align="right" >
+				<button type="button" id="employeebtn" style="display: none;" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" >
+					공지하기
+				</button>
+			</div>
+		</div>
+		<br><br>
+		<table class="table table-striped table-bordered table-hover">
 			<thead>
-				<tr>
-					<td>투자자아이디</td>
-					<td>구매주식수</td>
-					<td>결제여부</td>
-					<td>투자일</td>
+				<tr class="info">
+					<th>투자자아이디</th>
+					<th>구매주식수</th>
+					<th>결제여부</th>
+					<th>투자일</th>
 				</tr>
 			</thead>
 			<!-- ajax요청으로 목록을 채워줌 -->
 			<tbody id="investorlist"> 
-						
+				
 			</tbody>
 		</table>
+		<br>
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" role="dialog">
+		  <div class="modal-dialog">
+		  
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">공지하기</h4>
+		      </div>
+		      <div class="modal-body" id="emlist">
+				<!-- 메세지 보내기 -->
+				<form id="newmessageform" action="/pineapple/" method="post" style="padding: 30px 15px;">
+					<input type="hidden" name="msgSendId" value="${id}">
+					<div style="margin: 20px 0px;">
+					<input type="hidden" name="msgReceiveId" value="">
+					<label for="messagetitleinput">메세지 제목</label>
+					<input id="messagetitleinput" name="msgTitle" type="text" class="form-control box1" placeholder="메세지 제목을 입력해 주세요">
+					</div>
+					<div style="margin: 20px 0px;">
+					<label for="messagecontentinput">메세지 내용</label>
+					<textarea id="messagecontentinput" name="msgContent" type="text" class="form-control box1" placeholder="메세지 내용을 입력해 주세요" style="height: 200px; resize: none;"></textarea>
+					</div>
+					<div id="inputidArrArea">
+					
+					</div>
+					<div>
+					<button class="btn btn-info" type="button">입력</button>
+					</div>
+		       </form>
+		      </div>
+		    </div>
+		    
+		  </div>
+		</div>
+		
 	</div>
-
 </div>
 
 <!-- 풋터 -->

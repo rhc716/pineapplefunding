@@ -1,9 +1,5 @@
 package com.pineapple;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,7 +18,6 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 		request.setCharacterEncoding("utf-8");
 		
 		
-		
 		//////////////////////////////////// 요청 인증 과정  ////////////////////////////////////
 		boolean result;
 		// 세션에서 받아온 로그인정보
@@ -34,7 +29,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 		if(user == null){
 			log.debug("CommonInterceptor : 로그인한 사용자가 아닙니다");
 			// 로그인이 필요한 요청을 막아줌 ( 현재는 메인으로 리다이렉트지만, 나중에는 로그인페이지로 리다이렉트 )
-			String whereredirect = "/pineapple";
+			String whereredirect = "/pineapple/login.user";
 			
 			if(uri.equals("/pineapple/pmsmain.pms")){
 				response.sendRedirect(whereredirect);

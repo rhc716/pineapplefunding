@@ -304,6 +304,13 @@
 		WHERE f.fdCode = l.fileFdCode
 	</select>
 	
+	<!-- 펀딩에 속해있는 펀딩파일 리스트 불러오기 -->
+	<select id="selectFundingFileListOfFunding" parameterType="int" resultType="java.util.HashMap">
+		SELECT *
+		FROM fundingfile
+		WHERE fileFdCode = #{fdCode}
+	</select>
+	
 	<!-- 펀딩파일 삭제 -->
 	<delete id="deleteFundingFile" parameterType="int">
 		DELETE FROM fundingfile 

@@ -73,10 +73,17 @@ public class FundingRestController {
 		
 		// 펀딩파일 업로드 리스트 가져오기
 		@RequestMapping(value = "/getfundingfilelist.pms", method = RequestMethod.GET)
-		public List<FundingAndFdFile> getFundingFileList(Model model, Locale locale, @RequestParam("userId") String userId) {
+		public List<FundingAndFdFile> getFundingFileList(Model model, Locale locale
+				,@RequestParam(value="userId", required=false,defaultValue="i") String userId
+				,@RequestParam(value="fdCode", required=false,defaultValue="0") int fdCode) {
 			log.debug("FundingRestController의 getFundingFileList호출 성공");
 			log.debug("userId : " + userId);
-			return service.getFundingFileList(userId);
+			// 펀딩파일 업로드 리스트를 userId로 가져오느냐, 펀딩코드로 가져오느냐를 분기
+			if(fdCode==0){
+				return service.getFundingFileList(userId);
+			}else{
+				return service.getFundingFileList(fdCode);
+			}
 		}
 		
 		// 펀딩배당계획 리스트 가져오기
@@ -152,5 +159,13 @@ public class FundingRestController {
 			log.debug("msFdCode : " + msFdCode);
 			return service.milestoneStepCheck(msFdCode, milestoneStep);
 		}
+		
+		// 마일스톤입력에서 사용할 마일스톤 단계 중복검사
+		@RequestMapping(value = "/getallfundinglist.pms", method = RequestMethod.GET)
+		public  List<Object> getAllFundingList(Model model, Locale locale) {
+			log.debug("FundingRestController의 getAllFundingList호출 성공");
+			return service.getAllFundingList();
+		}
+		
 		
 }
