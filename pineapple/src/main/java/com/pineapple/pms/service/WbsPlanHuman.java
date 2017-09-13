@@ -9,8 +9,7 @@ public class WbsPlanHuman {
 	private int wphNoPeople;
 	private int wphCost;
 	private String wphRemarks;
-	private String wphStartDate;
-	private String wphEndDate;
+	private String wphDate;
 	public int getWphCode() {
 		//System.out.println("wphCode get"+wphCode);
 		return wphCode;
@@ -75,29 +74,18 @@ public class WbsPlanHuman {
 		//System.out.println("wphRemarks set"+wphRemarks);
 		this.wphRemarks = wphRemarks;
 	}
-	public String getWphStartDate() {
-		//System.out.println("wphStartDate get"+wphStartDate);
-		return wphStartDate;
+	public String getwphDate() {
+		//System.out.println("wphDate get"+wphDate);
+		return wphDate;
 	}
-	public void setWphStartDate(String wphStartDate) {
-		if(wphStartDate==""){
-			wphStartDate = null;
+	public void setwphDate(String wphDate) {
+		if(wphDate==""){
+			wphDate = null;
 		}else{
-		this.wphStartDate = wphStartDate;
+		this.wphDate = wphDate;
 		}
-		//System.out.println("wphStartDate set"+wphStartDate);
+		//System.out.println("wphDate set"+wphDate);
 	}
-	public String getWphEndDate() {
-		//System.out.println("wphEndDate get"+wphEndDate);
-		return wphEndDate;
-	}
-	public void setWphEndDate(String wphEndDate) {
-		if(wphEndDate==""){
-			wphEndDate = null;
-		}else{
-		this.wphEndDate = wphEndDate;
-		}
-		//System.out.println("wphEndDate set"+wphEndDate);
-	}
+
 
 }
