@@ -47,6 +47,10 @@ public interface InvestDaoInterface {
 	
 	/////////PMS Dividend ////////////
 	List<Funding> pmsDividendpaySelect(String id);
+	/////////PMS Assignment //////////
+	List<InvestAndFd> pmsAssignmentSelect();
+	List<InvestAndFd> pmsAssignmentAddSelect(int numberOfRequests);
+	
 	
 	
 	/////////MY Page Investor/////////

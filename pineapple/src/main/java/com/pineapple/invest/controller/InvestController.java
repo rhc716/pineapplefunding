@@ -1,15 +1,12 @@
 package com.pineapple.invest.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.connector.Request;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pineapple.funding.service.Funding;
 import com.pineapple.funding.service.FundingAndFdFile;
 import com.pineapple.funding.service.FundingDetail;
@@ -326,6 +321,20 @@ public class InvestController {
 	}
 	
 	
+	////////////////////////////////////PSM (Assignment)/////////////////////////////////////////////
+	//결제모집중인 펀딩 list 조회
+	@RequestMapping(value = "/fundingassignmentmain.invest", method = RequestMethod.GET)
+	public String getFundingAssignmentmain(Locale locale, Model model,HttpSession session) {
+		log.debug("<-----InvestController[getFundingAssignmentmain호출]----->");
+		return "pms/adminuser/fundingassignmentlist";
+	}
+	//배당하기 페이지 이동 
+	@RequestMapping(value = "/fundingassignmentinsertpage.invest", method = RequestMethod.GET)
+	public String getFundingAssignmentInsert(Locale locale, Model model,HttpSession session) {
+		log.debug("<-----InvestController[getFundingAssignmentInsert호출]----->");
+		return "pms/adminuser/fundingassignmentaddpage";
+	}
+	
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	//REST CONTOROLLER
@@ -338,6 +347,21 @@ public class InvestController {
 		log.debug(fundingdetail+"<-----InvestController[fundingdetail 값 출력]");
 		return fundingdetail;
 	}
-
+	//배정하기 펀딩 list 조회 요청 ajax
+	@RequestMapping(value="/fundingassignmentlist.invest",method=RequestMethod.GET)
+	public @ResponseBody List<InvestAndFd> getFundingAssignmentList(Locale locale, Model model){
+		log.debug("<-----InvestController[getFundingAssignmentList호출]----->");
+		List<InvestAndFd> getfundingassignmentlist = investserviceinterface.getPMSAssignmentlist();
+		log.debug(getfundingassignmentlist+"<-----InvestController[getfundingassignmentlist 값 출력]");
+		return getfundingassignmentlist;
+	}
+	//배정하기 펀딩 list 추가 요청
+	@RequestMapping(value="/fundingassignmentaddlist.invest",method=RequestMethod.GET)
+	public @ResponseBody List<InvestAndFd> getFundingAssignmentAddList(Locale locale, Model model,@RequestParam(value="numberOfRequests")int numberOfRequests){
+		log.debug("<-----InvestController[getFundingAssignmentAddList호출]----->");
+		List<InvestAndFd> getFundingAssignmentAddList = investserviceinterface.getPMSAssignmentlistAdd(numberOfRequests);
+		log.debug(getFundingAssignmentAddList+"<-----InvestController[getFundingAssignmentAddList 값 출력]");
+		return getFundingAssignmentAddList;
+	}
 
 }

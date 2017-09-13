@@ -146,8 +146,19 @@ public class InvestService implements InvestServiceInterface {
 		List<Funding> getPMSDividendpay = investdaointerface.pmsDividendpaySelect(id);
 		return getPMSDividendpay;
 	}
-	
-	
+	/////////PMS Assignment //////////
+	@Override
+	public List<InvestAndFd> getPMSAssignmentlist() {
+		log.debug("------------------InvestService-----------------getPMSAssignmentlist()");
+		List<InvestAndFd> getPMSAssignmentlist = investdaointerface.pmsAssignmentSelect();
+		return getPMSAssignmentlist;
+	}
+	@Override
+	public List<InvestAndFd> getPMSAssignmentlistAdd(int numberOfRequests) {
+		log.debug("------------------InvestService-----------------getPMSAssignmentlistAdd()");
+		List<InvestAndFd> getPMSAssignmentlistAdd = investdaointerface.pmsAssignmentAddSelect(numberOfRequests);
+		return getPMSAssignmentlistAdd;
+	}
 	
 	
 	////////////MY Page Investor///////////
