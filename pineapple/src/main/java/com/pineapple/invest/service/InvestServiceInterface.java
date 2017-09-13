@@ -48,6 +48,9 @@ public interface InvestServiceInterface {
 	
 	/////////PMS Dividend ////////////
 	List<Funding> getPMSDividendpay(String id);
+	/////////PMS Assignment //////////
+	List<InvestAndFd> getPMSAssignmentlist();
+	List<InvestAndFd> getPMSAssignmentlistAdd(int numberOfRequests);
 	
 	
 	

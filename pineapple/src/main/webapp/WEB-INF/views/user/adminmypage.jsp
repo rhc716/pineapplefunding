@@ -283,12 +283,12 @@ $(document).ready(function(){
 		<!-- 두번째 탭; 사이트에서 개설한 펀딩 현황(마일스톤, 예상WBS, 실제WBS) 조회 및 검색 -->
 		<div role="tabpanel" class="tab-pane fade" id="fundinginfo" aria-labelledby="fundinginfo-tab">
 			<div class="row">
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<br>
 					<p>펀딩 대시보드</p>
 					<br>
 				</div>
-				<div class="col-md-9">
+				<div class="col-md-10">
 					<br>
 					<p id="explanation">파인애플펀딩 사이트에서 활동중인 펀딩의 전체목록을 조회, 검색 할 수 있습니다. 
 										펀딩 진행중인 상황에 대한 대시보드로서 기능하며, 펀딩 개설 요청에 대하여 승인 처리를 할 수 있습니다.
@@ -318,7 +318,18 @@ $(document).ready(function(){
 									<td>${allfdList.comName}</td>
 									<td>${allfdList.fdTitle}</td>
 									<td>${allfdList.fdType}</td>
-									<td><a type="button" class="btn btn-block btn-success disabled">${allfdList.fdStatus}</a></td>
+									<td>
+										<c:choose>
+											<c:when test="${allfdList.fdStatus eq '모집중' or allfdList.fdStatus eq '진행중' or allfdList.fdStatus eq '개설요청'}">
+												<a type="button" class="btn btn-block btn-primary disabled">${allfdList.fdStatus}</a>
+											</c:when>
+											<c:when test="${allfdList.fdStatus eq '마감' or allfdList.fdStatus eq '모집실패'}">
+												<a type="button" class="btn btn-block btn-danger disabled">${allfdList.fdStatus}</a>
+											</c:when>
+											<c:otherwise>
+												<a type="button" class="btn btn-block btn-success disabled">${allfdList.fdStatus}</a>
+											</c:otherwise>
+										</c:choose>
 									<td>${allfdList.minInterestRate}</td>
 									<td>${allfdList.fdPublisher}</td>
 									<td>${allfdList.fdDate}</td>
@@ -349,12 +360,12 @@ $(document).ready(function(){
 		<!-- 세번째 탭; 사이트에서 개설한 펀딩 현황(마일스톤, 예상WBS, 실제WBS) 조회 및 검색 -->
 		<div role="tabpanel" class="tab-pane fade" id="pmsinfo" aria-labelledby="pmsinfo-tab">
 			<div class="row">
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<br>
 					<p>PMS대시보드</p>
 					<br>
 				</div>
-				<div class="col-md-9">
+				<div class="col-md-10">
 					<br>
 					<p id="explanation">파인애플펀딩 사이트에서 활동중인 펀딩에 대하여 프로젝트관리시스템(PMS) 종합 정보를 조회할 수 있습니다. 
 										펀딩 진행중인 상황에 대한 대시보드로서 기능하며, 개별 펀딩에 포함된 프로젝트 관리 사항인
@@ -382,37 +393,192 @@ $(document).ready(function(){
 									<td>${allpmslist.milestoneName}</td>
 									<td>${allpmslist.milestoneSummary}</td>
 									<td>${allpmslist.pm}</td>
-									<td><a type="button" class="btn btn-block btn-info" href="#wbs${allpmslist.milestoneName}" data-toggle="modal">${allpmslist.fdTitle} WBS</a></td>
-									<td><a type="button" class="btn btn-block btn-success" href="#margin${allpmslist.milestoneName}" data-toggle="modal">${allpmslist.fdTitle} 마진</a></td>
-									<!-- wbs예상/실제 비교를 위한 모달 -->
-									<div class="modal fade" id="wbs${allpmslist.milestoneName}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-									  <div class="modal-dialog">
-									    <div class="modal-content">
-									      <div class="modal-header">
-									        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									        <h4 class="modal-title" id="myModalLabel">${allpmslist.milestoneName} wbs예상/실제 정보</h4>
-									      </div>
-									      <div class="modal-body">
-									      <!-- 회사정보확인 및 수정 모달 -->
-									        <form action="#" method="post">
-									        	<div class="container_insert">
-													<div id="comApprovalDonePart" class="form-group has-success has-feedback" hidden>
-													    <label class="control-label" for="inputSuccess4">기업승인여부</label>
-													    <input type="text" class="form-control" id="comApprovalDone" name="comAdminApproved" aria-describedby="inputSuccess4Status" readonly>
-													    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-													    <span id="comApprovedStatus" class="sr-only">(success)</span>
-													</div>
-													<div id="comApprovalNotPart" class="form-group has-error has-feedback" hidden>
-													    <label class="control-label" for="inputError2">기업승인여부</label>
-													    <input type="text" class="form-control" id="comApprovalNot" name="comAdminNotApproved"aria-describedby="inputError2Status" readonly>
-													    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-													    <span id="inputError2Status" class="sr-only">(error)</span>
-													</div>
-													<br>
-													
+									<td>
+										<c:choose>
+											<c:when test="${not empty allpmslist.wbsplan}">
+												<a type="button" class="btn btn-block btn-info" href="#wbs${numberofPmslist.count}" data-toggle="modal">${allpmslist.fdTitle} ${allpmslist.milestoneName} WBS</a>
+											</c:when>
+											<c:otherwise>
+												<a type="button" class="btn btn-block btn-default disabled" href="#wbs${numberofPmslist.count}" data-toggle="modal">${allpmslist.fdTitle} ${allpmslist.milestoneName} WBS</a>
+											</c:otherwise>
+										</c:choose>
+										<!-- wbs예상/실제 비교를 위한 모달 -->
+										<div class="modal fade" id="wbs${numberofPmslist.count}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+										  <div class="modal-dialog modal-lg">
+										    <div class="modal-content">
+										      <div class="modal-header">
+										        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										        <h4 class="modal-title" id="myModalLabel">[${allpmslist.fdTitle}] 펀딩 [${allpmslist.milestoneName}] 마일스톤의 wbs예상/실제 정보</h4>
+										      </div>
+										      <div class="modal-body">
+										        <form action="#" method="post">
+										        	<div class="container_insert">
+										        		<div>
+										        			<p>WBS예상</p>
+										        			<table class="table table-striped table-bordered table-hover">
+																<tr class="info">
+																	<th>#</th>
+																	<th>코드</th>
+																	<th>버전</th>
+																	<th>항목</th>
+																	<th>시작일</th>
+																	<th>기간</th>
+																	<th>작성일</th>
+																	<th>작성자</th>
+																</tr>
+																<c:forEach items="${allpmslist.wbsplan}" var="wbsplanlist" varStatus="numberofwbsplan">
+																	<tr>
+																		<td>${numberofwbsplan.count}</td>
+																		<td>${wbsplanlist.wbsPlanCode}</td>
+																		<td>${wbsplanlist.wbsPlanChange}</td>
+																		<td>${wbsplanlist.wbsPlanName}</td>
+																		<td>${wbsplanlist.wbsPlanStartDate}</td>
+																		<td>${wbsplanlist.wbsPlanDuration}</td>
+																		<td>${wbsplanlist.wbsPlanWriteDate}</td>
+																		<td>${wbsplanlist.wbsPlanManager}</td>
+																	</tr>
+																</c:forEach>
+															</table>
+										        		</div>
+														<br>
+														<div>
+										        			<p>WBS실제</p>
+										        			<table class="table table-striped table-bordered table-hover">
+																<tr class="info">
+																	<th>#</th>
+																	<th>코드</th>
+																	<th>항목</th>
+																	<th>시작일</th>
+																	<th>종료일</th>
+																	<th>기간</th>
+																	<th>상태</th>
+																	<th>진행도</th>
+																	<th>작성일</th>
+																	<th>작성자</th>
+																	<th>승인일</th>
+																	<th>승인자</th>
+																</tr>
+																<c:forEach items="${allpmslist.wbsactual}" var="wbsactuallist" varStatus="numberofwbsactual">
+																	<tr>
+																		<td>${numberofwbsactual.count}</td>
+																		<td>${wbsactuallist.wbsActualCode}</td>
+																		<td>${wbsactuallist.wbsActualName}</td>
+																		<td>${wbsactuallist.wbsActualStartDate}</td>
+																		<td>${wbsactuallist.wbsActualEndDate}</td>
+																		<td>${wbsactuallist.wbsActualDuration}</td>
+																		<td>${wbsactuallist.wbsActualStatus}</td>
+																		<td>${wbsactuallist.wbsActualProgress}</td>
+																		<td>${wbsactuallist.wbsActualWriteDate}</td>
+																		<td>${wbsactuallist.wbsActualWriteManager}</td>
+																		<td>${wbsactuallist.wbsActualApprovalDate}</td>
+																		<td>${wbsactuallist.wbsActualApprovalManager}</td>
+																	</tr>
+																</c:forEach>
+															</table>
+										        		</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+														</div>
+													  </div>
+													</form>
+										        </div>
+										    </div>
+										  </div>
+										</div>
+									</td>
+									<td>
+										<c:choose>
+											<c:when test="${not empty allpmslist.wbsdailymargin}">
+												<a type="button"  class="btn btn-block btn-success" href="#margin${numberofPmslist.count}" data-toggle="modal">${allpmslist.fdTitle} ${allpmslist.milestoneName} 마진</a>
+											</c:when>
+											<c:otherwise>
+												<a type="button"  class="btn btn-block btn-default disabled" href="#margin${numberofPmslist.count}" data-toggle="modal">${allpmslist.fdTitle} ${allpmslist.milestoneName} 마진</a>
+											</c:otherwise>
+										</c:choose>
+										<!-- 마진 비교를 위한 모달 -->
+										<div class="modal fade" id="margin${numberofPmslist.count}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+										  <div class="modal-dialog modal-lg">
+										    <div class="modal-content">
+										      <div class="modal-header">
+										        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										        <h4 class="modal-title" id="myModalLabel">[${allpmslist.fdTitle}] 펀딩 [${allpmslist.milestoneName}] 마일스톤의 마진 예상/실제 정보</h4>
+										      </div>
+										      <div class="modal-body">
+										        <form action="#" method="post">
+										        	<div class="container_insert">
+														<div>
+										        			<p>WBS계획 연동 예상 마진</p>
+										        			<table class="table table-striped table-bordered table-hover">
+																<tr class="info">
+																	<th>#</th>
+																	<th>코드</th>
+																	<th>항목</th>
+																	<th>예상마진</th>
+																	<th>시작일</th>
+																	<th>기간</th>
+																	<th>작성일</th>
+																	<th>작성자</th>
+																</tr>
+																<c:forEach items="${allpmslist.wbsplan}" var="marginplanlist" varStatus="numberofmarginplan">
+																	<tr>
+																		<td>${numberofmarginplan.count}</td>
+																		<td>${marginplanlist.wbsPlanCode}</td>
+																		<td>${marginplanlist.wbsPlanName}</td>
+																		<td>
+																			<c:choose>
+																				<c:when test="${marginplanlist.wbsMargin < 0}">
+																					<a type="button" class="btn btn-block btn-danger disabled">${marginplanlist.wbsMargin}</a>
+																				</c:when>
+																				<c:when test="${marginplanlist.wbsMargin == 0}">
+																					<a type="button" class="btn btn-block btn-default disabled">${marginplanlist.wbsMargin}</a>
+																				</c:when>
+																				<c:otherwise>
+																					<a type="button" class="btn btn-block btn-success disabled">${marginplanlist.wbsMargin}</a>
+																				</c:otherwise>
+																			</c:choose>
+																		</td>
+																		<td>${marginplanlist.wbsPlanStartDate}</td>
+																		<td>${marginplanlist.wbsPlanDuration}</td>
+																		<td>${marginplanlist.wbsPlanWriteDate}</td>
+																		<td>${marginplanlist.wbsPlanManager}</td>
+																	</tr>
+																</c:forEach>
+															</table>
+										        		</div>
+														<br>
+														<div>
+										        			<p>실제 마진(Daily)</p>
+										        			<table class="table table-striped table-bordered table-hover">
+																<tr class="info">
+																	<th>#</th>
+																	<th>코드</th>
+																	<th>실제마진</th>
+																	<th>날짜</th>
+																</tr>
+																<c:forEach items="${allpmslist.wbsdailymargin}" var="wbsdailymarginlist" varStatus="numberofdailymargin">
+																	<tr>
+																		<td>${numberofdailymargin.count}</td>
+																		<td>${wbsdailymarginlist.wdmgCode}</td>
+																		<td>
+																			<c:choose>
+																				<c:when test="${wbsdailymarginlist.wdmgMargin < 0}">
+																					<a type="button" class="btn btn-block btn-danger disabled">${wbsdailymarginlist.wdmgMargin}</a>
+																				</c:when>
+																				<c:when test="${wbsdailymarginlist.wdmgMargin == 0}">
+																					<a type="button" class="btn btn-block btn-default disabled">${wbsdailymarginlist.wdmgMargin}</a>
+																				</c:when>
+																				<c:otherwise>
+																					<a type="button" class="btn btn-block btn-success disabled">${wbsdailymarginlist.wdmgMargin}</a>
+																				</c:otherwise>
+																			</c:choose>
+																		</td>
+																		<td>${wbsdailymarginlist.wdmgDate}</td>
+																	</tr>
+																</c:forEach>
+															</table>
+										        		</div>
 													<br>
 													<div class="modal-footer">
-														<button type="submit" class="btn btn-info">기업승인</button>
 														<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
 													</div>
 												  </div>
@@ -421,46 +587,10 @@ $(document).ready(function(){
 									    </div>
 									  </div>
 									</div>
-									<!-- 마진 비교를 위한 모달 -->
-									<div class="modal fade" id="margin${allpmslist.milestoneName}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-									  <div class="modal-dialog">
-									    <div class="modal-content">
-									      <div class="modal-header">
-									        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									        <h4 class="modal-title" id="myModalLabel">${allpmslist.milestoneName} wbs예상/실제 정보</h4>
-									      </div>
-									      <div class="modal-body">
-									      <!-- 회사정보확인 및 수정 모달 -->
-									        <form action="#" method="post">
-									        	<div class="container_insert">
-													<div id="comApprovalDonePart" class="form-group has-success has-feedback" hidden>
-													    <label class="control-label" for="inputSuccess4">기업승인여부</label>
-													    <input type="text" class="form-control" id="comApprovalDone" name="comAdminApproved" aria-describedby="inputSuccess4Status" readonly>
-													    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-													    <span id="comApprovedStatus" class="sr-only">(success)</span>
-													</div>
-													<div id="comApprovalNotPart" class="form-group has-error has-feedback" hidden>
-													    <label class="control-label" for="inputError2">기업승인여부</label>
-													    <input type="text" class="form-control" id="comApprovalNot" name="comAdminNotApproved"aria-describedby="inputError2Status" readonly>
-													    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-													    <span id="inputError2Status" class="sr-only">(error)</span>
-													</div>
-													<br>
-													
-													<br>
-													<div class="modal-footer">
-														<button type="submit" class="btn btn-info">기업승인</button>
-														<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
-													</div>
-												  </div>
-												</form>
-									        </div>
-									    </div>
-									  </div>
-									</div>
-								</tr>
-							</c:forEach>
-						</table>
+								</td>
+							</tr>
+						</c:forEach>
+					</table>
 					</div>
 				</div>
 			</div>
@@ -720,7 +850,19 @@ $(document).ready(function(){
 									<td>${alluser.userId}</td>
 									<td>${alluser.nickname}</td>
 									<td>${alluser.name}</td>
-									<td>${alluser.userlevel.userLevelName} ${alluser.rankcode.rankName}</td>
+									<td>
+										<c:choose>
+											<c:when test="${alluser.userlevel.userLevelName eq '기업회원'}">
+												<a class="btn btn-block btn-primary disabled">${alluser.userlevel.userLevelName} ${alluser.rankcode.rankName}</a>
+											</c:when>
+											<c:when test="${alluser.userlevel.userLevelName eq '투자자'}">
+												<a class="btn btn-block btn-info disabled">${alluser.userlevel.userLevelName}</a>
+											</c:when>
+											<c:otherwise>
+												<a class="btn btn-block btn-success disabled">관리자</a>
+											</c:otherwise>
+										</c:choose>
+									</td>
 									<c:choose>
 										<c:when test="${alluser.uDelTime != null}">
 											<td><a class="btn btn-block btn-warning disabled">${alluser.uDelTime}</a></td>
@@ -729,8 +871,9 @@ $(document).ready(function(){
 											<td><a class="btn btn-block btn-default disabled">탈퇴요청없음</a></td>
 										</c:otherwise>
 									</c:choose>
+									
 									<td>
-										<a class="btn btn-info btn-block" data-toggle="modal" href="#userdetailcheckModal${numberofuser.count}" value="${alluser.userId}">상세정보</a>
+										<a class="btn btn-info btn-block" data-toggle="modal" href="#userdetailcheckModal${numberofuser.count}" value="${alluser.userId}">${alluser.nickname} 상세정보</a>
 										<!-- 회원정보 수정하기(모달화면 교체를 통한 수정) -->
 										<div class="modal fade" id="userdetailcheckModal${numberofuser.count}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 										  <div class="modal-dialog">
@@ -771,17 +914,20 @@ $(document).ready(function(){
 																<span id="guide" style="color:#999"></span>
 															</div>
 															<br>
+															<div class="form-group">
+															<label for="userCompany">소속기업명</label>
+														    <p id="explain">(회원이 소속된 모든 기업 목록을 볼 수 있습니다)</p>
+														    <c:forEach var="comNameList" items="${alluser.company}" varStatus="comnumber">
+														    	<a class="btn btn-block btn-info">${comNameList.comName}</a>
+														    </c:forEach>
+												  		</div>
 													      </div>
 													      <div class="modal-footer">
 													        <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
 													        <button type="submit" class="btn btn-info">수정</button>
 													      </div>
 											      	</form>
-											      		<div class="form-group">
-														 <label for="userCompany">소속기업명</label>
-													    <p id="explain">(회원이 소속된 모든 기업 목록을 볼 수 있습니다)</p>
-													    <a href="#" class="btn btn-block btn-info"></a>
-												  	</div>
+											      		
 											    </div>
 											  </div>
 											</div>

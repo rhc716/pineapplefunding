@@ -16,6 +16,7 @@
 	 	<result property="issuePrice" column="issuePrice"/>
 	 	<result property="days" column="days"/>
 	 	<result property="fdStatus" column="fdStatus"/>
+	 	<result property="checkassignment" column="checkassignment"/>
 	 </resultMap>
 	 <!-- InvestAndFdLikeAndFd -->
 	 <resultMap type="com.pineapple.invest.service.InvestAndFdLikeAndFd"
@@ -322,9 +323,36 @@
 				WHERE u.userId = #{id}))
 				AND (fdStatus = '진행중')
 	</select>
-	
-	
-	
+
+<!-- 	PMS Assignment PMS Assignment PMS Assignment PMS Assignment PMS Assignment PMS Assignment PMS Assignment PMS Assignment PMS Assignment -->
+ 	<select id="selectsendAssignmentlist" resultMap="selectInvestAndFd" parameterType="INT">
+		SELECT  f.fdCode,
+				f.fdTitle,
+				f.numberOfShares,
+				c.comName,
+				CASE f.fdStatus WHEN '모집중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode GROUP BY si.investFdCode ) WHEN '결제모집중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode AND si.payCheck = 1 GROUP BY si.investFdCode) WHEN '진행중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode GROUP BY si.investFdCode) END as total,
+				f.posterImg,
+				f.minInvestMoney,
+				f.issuePrice,
+				f.fdStatus,
+				TO_DAYS(f.projectStartDate)-TO_DAYS(now()) as days,
+				(SELECT mf.flowCode FROM moneyflow mf WHERE f.fdCode = mf.mfFdCode AND mf.mfCategory = 3) checkassignment
+		FROM funding f 
+		LEFT JOIN company c 
+		ON f.fdComCode = c.comCode 
+		WHERE f.fdStatus = '결제모집중'
+		GROUP BY f.fdCode 
+		ORDER BY f.fdDate DESC
+		<choose>
+		<when test="_parameter != null">
+			limit #{numberOfRequests},10;
+		</when>
+		<otherwise>
+			limit 0,10;
+		</otherwise>
+		</choose>
+	</select>
+
 <!-- 	MY Page MY Page MY Page MY Page MY Page MY Page MY Page MY Page MY Page MY Page MY Page MY Page MY Page  -->
 	<!-- MyInvestorFundingQna -->
 	<resultMap type="com.pineapple.invest.service.MyInvestorFundingQna" 

@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -738,7 +739,7 @@ public class MypageController {
 	}
 	//관리자 마이페이지 분기(회원상세정보조회, 전체회사조회, 전체펀딩조회 포함)
 	@RequestMapping(value="/adminmypage.user", method=RequestMethod.GET)
-	public String adminmypage(Model model, HttpSession session){
+	public String adminmypage(Model model, HttpSession session, HttpServletRequest request){
 		log.debug(session.getAttribute("level")+" 권한으로 "+session.getAttribute("nickname")+"님의 adminmypage 페이지로 분기");
 		User user = mypageservice.getInvestorBasic(session.getAttribute("id").toString());
     	model.addAttribute("user", user);
@@ -773,6 +774,16 @@ public class MypageController {
         if(getPmsInfoByAdmin != null){
         	log.debug(session.getAttribute("nickname")+"님이 전체 PMS정보 조회 성공");
         	model.addAttribute("getPmsInfoByAdmin", getPmsInfoByAdmin);
+        	HashMap<Object, Object> map = new HashMap<>();
+        	for(int i=0; i<getPmsInfoByAdmin.size(); i++){
+        		if(getPmsInfoByAdmin.get(i).getWbsplan() != null){
+        			map.put("wbsplan", getPmsInfoByAdmin.get(i).getWbsplan());
+        			model.addAttribute("wbsplan", getPmsInfoByAdmin.get(i).getWbsplan());
+                	log.debug("wbsplan not null 조회 결과 : "+getPmsInfoByAdmin.get(i).getWbsplan());
+        		} else{
+        			log.debug("wbsplan null 조회 결과 : "+getPmsInfoByAdmin.get(i).getWbsplan());
+        		}
+        	}
         } else {
         	log.debug(session.getAttribute("nickname")+"님이 전체 PMS정보 조회 실패");
         }

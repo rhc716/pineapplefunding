@@ -6,13 +6,10 @@ public class WbsPlanMaterial {
 	private int wpmFdCode;
 	private int wpmMsCode;
 	private int wpmComCode;
-	private int wpmNo;
-	private int wpmCostPerNo;
 	private int wpmCost;
 	private String wpmName;
 	private String wpmRemarks;
-	private String wpmStartDate;
-	private String wpmEndDate;
+	private String wpmDate;
 	public int getWpmCode() {
 		
 		return wpmCode;
@@ -47,18 +44,7 @@ public class WbsPlanMaterial {
 	public void setWpmComCode(int wpmComCode) {
 		this.wpmComCode = wpmComCode;
 	}
-	public int getWpmNo() {
-		return wpmNo;
-	}
-	public void setWpmNo(int wpmNo) {
-		this.wpmNo = wpmNo;
-	}
-	public int getWpmCostPerNo() {
-		return wpmCostPerNo;
-	}
-	public void setWpmCostPerNo(int wpmCostPerNo) {
-		this.wpmCostPerNo = wpmCostPerNo;
-	}
+
 	public int getWpmCost() {
 		return wpmCost;
 	}
@@ -77,33 +63,16 @@ public class WbsPlanMaterial {
 	public void setWpmRemarks(String wpmRemarks) {
 		this.wpmRemarks = wpmRemarks;
 	}
-	public String getWpmStartDate() {
-		return wpmStartDate;
+	public String getWpmDate() {
+		return wpmDate;
 	}
-	public void setWpmStartDate(String wpmStartDate) {
-		if(wpmStartDate==""){
-			wpmStartDate = null;
+	public void setWpmDate(String wpmDate) {
+		if(wpmDate==""){
+			wpmDate = null;
 		}else{
-			this.wpmStartDate = wpmStartDate;
+			this.wpmDate = wpmDate;
 		}
 		
-	}
-	public String getWpmEndDate() {
-		return wpmEndDate;
-	}
-	public void setWpmEndDate(String wpmEndDate) {
-		if(wpmEndDate==""){
-			wpmEndDate = null;
-		}else{
-			this.wpmEndDate = wpmEndDate;
-		}
-	}
-	@Override
-	public String toString() {
-		return "WbsPlanMaterial [wpmCode=" + wpmCode + ", wpmWpCode=" + wpmWpCode + ", wpmFdCode=" + wpmFdCode
-				+ ", wpmMsCode=" + wpmMsCode + ", wpmComCode=" + wpmComCode + ", wpmNo=" + wpmNo + ", wpmCostPerNo="
-				+ wpmCostPerNo + ", wpmCost=" + wpmCost + ", wpmName=" + wpmName + ", wpmRemarks=" + wpmRemarks
-				+ ", wpmStartDate=" + wpmStartDate + ", wpmEndDate=" + wpmEndDate + "]";
 	}
 	
 	

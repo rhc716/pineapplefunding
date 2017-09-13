@@ -133,6 +133,18 @@ public class InvestDao implements InvestDaoInterface {
 		log.debug("InvestDao-----pmsDividendpaySelect");
 		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.selectPMSDividendpay", id);
 	}
+	/////////PMS Assignment //////////
+	@Override
+	public List<InvestAndFd> pmsAssignmentSelect() {
+		log.debug("InvestDao-----pmsAssignmentSelect");
+		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.selectsendAssignmentlist");
+	}
+	@Override
+	public List<InvestAndFd> pmsAssignmentAddSelect(int numberOfRequests) {
+		log.debug("InvestDao-----pmsAssignmentAddSelect");
+		numberOfRequests = numberOfRequests*10;
+		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.selectsendAssignmentlist",numberOfRequests);
+	}
 	
 	
 	

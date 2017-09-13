@@ -14,13 +14,13 @@
 	</insert>
 	<insert id="insertWbsPlanHuman" parameterType="com.pineapple.pms.service.WbsPlanHuman">
 		INSERT INTO wbsplanhuman
-		(wphCode, wphFdCode, wphMsCode, wphWpCode, wphNoPeople, wphCost, wphStartDate, wphEndDate, wphRemarks, wphComCode)
-		VALUES (NULL, #{wphFdCode}, #{wphMsCode}, #{wphWpCode}, #{wphNoPeople}, #{wphCost}, #{wphStartDate}, #{wphEndDate}, #{wphRemarks}, #{wphComCode})
+		(wphCode, wphFdCode, wphMsCode, wphWpCode, wphNoPeople, wphCost, wphDate, wphRemarks, wphComCode)
+		VALUES (NULL, #{wphFdCode}, #{wphMsCode}, #{wphWpCode}, #{wphNoPeople}, #{wphCost}, #{wphDate}, #{wphRemarks}, #{wphComCode})
 	</insert>
 	<insert id="insertWbsPlanMaterial" parameterType="com.pineapple.pms.service.WbsPlanMaterial">
 		INSERT INTO wbsplanmaterial
-			(wpmCode, wpmFdCode, wpmMsCode, wpmWpCode, wpmName, wpmNo, wpmCostPerNo, wpmCost, wpmStartDate, wpmEndDate, wpmRemarks, wpmComCode)
-			VALUES (NULL, #{wpmFdCode}, #{wpmMsCode}, #{wpmWpCode}, #{wpmName}, #{wpmNo}, #{wpmCostPerNo}, #{wpmCost}, #{wpmStartDate}, #{wpmEndDate}, #{wpmRemarks}, #{wpmComCode})
+			(wpmCode, wpmFdCode, wpmMsCode, wpmWpCode, wpmName, wpmCost, wpmDate, wpmRemarks, wpmComCode)
+			VALUES (NULL, #{wpmFdCode}, #{wpmMsCode}, #{wpmWpCode}, #{wpmName}, #{wpmCost}, #{wpmDate}, #{wpmRemarks}, #{wpmComCode})
 	</insert>
 	
 	<insert id="wbsactualinsert" parameterType="com.pineapple.pms.service.WbsActual">
