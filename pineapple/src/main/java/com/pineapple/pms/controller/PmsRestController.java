@@ -1,8 +1,14 @@
 package com.pineapple.pms.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,6 +17,7 @@ import com.pineapple.funding.service.Funding;
 import com.pineapple.funding.service.FundingService;
 import com.pineapple.pms.service.WbsMs;
 import com.pineapple.pms.service.WbsPlan;
+import com.pineapple.pms.service.WbsPlanHuman;
 import com.pineapple.pms.service.PmsService;
 
 
@@ -53,5 +60,24 @@ public class PmsRestController {
 		List<WbsPlan> wbsplan = service.wbsplanlist(milestoneCode);
 		log.debug("wbsplan확인"+wbsplan);
 		return wbsplan;
+	}
+	
+	
+	// wbsplan 인원 상세보기 리스트 페이지
+	@RequestMapping(value ="/wbsplanhumanlist.pms", method = {RequestMethod.GET, RequestMethod.POST})
+	public List<WbsPlanHuman> wbsplanhumanlist(String wbsplancode){
+		log.debug("PmsController의 wbsplanhumanlist호출 성공");
+		log.debug("wbs코드" + wbsplancode);
+		List<WbsPlanHuman> wbsplanhumanlist = new ArrayList<WbsPlanHuman>();
+		wbsplanhumanlist = service.getMyWbsPlanHumanList(wbsplancode);
+		return wbsplanhumanlist;
+	}
+	
+	//wbsplanhuman 삭제
+	@RequestMapping(value = "/wbsplanhumandelete.pms", method = {RequestMethod.GET, RequestMethod.POST})
+	public void wbsplanhumandelete(String wphCode) {
+		log.debug("PmsController의 wbsplanhumandelete호출 성공");
+		log.debug("wbh코드" + wphCode);
+		service.deletewbsplanhuman(wphCode);
 	}
 }
