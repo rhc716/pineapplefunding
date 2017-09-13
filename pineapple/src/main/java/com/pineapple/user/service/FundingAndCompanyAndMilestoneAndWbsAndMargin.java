@@ -1,7 +1,8 @@
 package com.pineapple.user.service;
 
+import java.util.List;
+
 import com.pineapple.pms.service.WbsActual;
-import com.pineapple.pms.service.WbsMs;
 import com.pineapple.pms.service.WbsPlan;
 
 public class FundingAndCompanyAndMilestoneAndWbsAndMargin {
@@ -21,17 +22,14 @@ public class FundingAndCompanyAndMilestoneAndWbsAndMargin {
 	private String pm;
 	
 	//WbsPlan
-	private WbsPlan wbsplan;
+	private List<WbsPlan> wbsplan;
 	
 	//WbsActual
-	private WbsActual wbsactual;
+	private List<WbsActual> wbsactual;
 	
 	//WbsDailyMargin
-	private WbsDailyMargin wbsdailymargin;
+	private List<WbsDailyMargin> wbsdailymargin;
 	
-	//WbsPlanMargin
-	private WbsPlanMargin wbsplanmargin;
-
 	public int getFdCode() {
 		return fdCode;
 	}
@@ -96,36 +94,28 @@ public class FundingAndCompanyAndMilestoneAndWbsAndMargin {
 		this.pm = pm;
 	}
 
-	public WbsPlan getWbsplan() {
+	public List<WbsPlan> getWbsplan() {
 		return wbsplan;
 	}
 
-	public void setWbsplan(WbsPlan wbsplan) {
+	public void setWbsplan(List<WbsPlan> wbsplan) {
 		this.wbsplan = wbsplan;
 	}
 
-	public WbsActual getWbsactual() {
+	public List<WbsActual> getWbsactual() {
 		return wbsactual;
 	}
 
-	public void setWbsactual(WbsActual wbsactual) {
+	public void setWbsactual(List<WbsActual> wbsactual) {
 		this.wbsactual = wbsactual;
 	}
 
-	public WbsDailyMargin getWbsdailymargin() {
+	public List<WbsDailyMargin> getWbsdailymargin() {
 		return wbsdailymargin;
 	}
 
-	public void setWbsdailymargin(WbsDailyMargin wbsdailymargin) {
+	public void setWbsdailymargin(List<WbsDailyMargin> wbsdailymargin) {
 		this.wbsdailymargin = wbsdailymargin;
-	}
-
-	public WbsPlanMargin getWbsplanmargin() {
-		return wbsplanmargin;
-	}
-
-	public void setWbsplanmargin(WbsPlanMargin wbsplanmargin) {
-		this.wbsplanmargin = wbsplanmargin;
 	}
 
 	public String getComName() {
@@ -142,7 +132,8 @@ public class FundingAndCompanyAndMilestoneAndWbsAndMargin {
 				+ ", fdTitle=" + fdTitle + ", comName=" + comName + ", milestoneCode=" + milestoneCode
 				+ ", milestoneStep=" + milestoneStep + ", milestoneName=" + milestoneName + ", milestoneSummary="
 				+ milestoneSummary + ", pm=" + pm + ", wbsplan=" + wbsplan + ", wbsactual=" + wbsactual
-				+ ", wbsdailymargin=" + wbsdailymargin + ", wbsplanmargin=" + wbsplanmargin + "]";
+				+ ", wbsdailymargin=" + wbsdailymargin + "]";
 	}
 
+	
 }

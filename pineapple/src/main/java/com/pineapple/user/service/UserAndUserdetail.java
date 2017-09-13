@@ -1,5 +1,7 @@
 package com.pineapple.user.service;
 
+import java.util.List;
+
 public class UserAndUserdetail {
 	//user
 	private String userId;
@@ -21,7 +23,7 @@ public class UserAndUserdetail {
 	private UserLevel userlevel;
 	private RankCode rankcode;
 	private Employee employee;
-	private Company company;
+	private List<Company> company;
 	
 	public UserLevel getUserlevel() {
 		return userlevel;
@@ -113,10 +115,10 @@ public class UserAndUserdetail {
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
-	public Company getCompany() {
+	public List<Company> getCompany() {
 		return company;
 	}
-	public void setCompany(Company company) {
+	public void setCompany(List<Company> company) {
 		this.company = company;
 	}
 	@Override
@@ -127,5 +129,6 @@ public class UserAndUserdetail {
 				+ address2 + ", nameCheck=" + nameCheck + ", userlevel=" + userlevel + ", rankcode=" + rankcode
 				+ ", employee=" + employee + ", company=" + company + "]";
 	}
+	
 	
 }

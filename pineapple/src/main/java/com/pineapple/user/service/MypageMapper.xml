@@ -7,7 +7,7 @@
 <!-- 사이트 관리자 마이페이지 전체 펀딩의 프로젝트관리 상황 조회(마일스톤, wbs플랜, wbs실제, 예상마진, 실제마진) -->
 <select id="selectPmsInfoByAdmin" resultMap="selectPmsInfoByAdmin">
 	SELECT f.fdCode, f.fdComCode, f.fdTitle, c.comName, ms.milestoneCode, ms.milestoneStep, ms.milestoneName, ms.milestoneSummary
-	, ms.pm, wp.wbsPlanCode, wp.wbsPlanChange, wp.wbsPlanName, wp.wbsPlanDependency, wp.wbsPlanStartDate, wp.wbsPlanDuration
+	, ms.pm, wp.wbsPlanCode, wp.wbsPlanChange, wp.wbsPlanName, wp.wbsPlanStartDate, wp.wbsPlanDuration
 	, wp.wbsPlanWriteDate, wp.wbsPlanManager, wp.wbsMargin, wa.wbsActualCode, wa.wbsActualName, wa.wbsActualStartDate
 	, wa.wbsActualEndDate, wa.wbsActualDuration, wa.wbsActualStatus, wa.wbsActualProgress, wa.wbsActualWriteDate
 	, wa.wbsActualApprovalDate, wa.wbsActualWriteManager, wa.wbsActualApprovalManager, wdm.wdmgCode, wdm.wdmgMargin
@@ -25,6 +25,7 @@
 	ON ms.milestoneCode=wdm.wdmgMsCode
 	LEFT JOIN wbsplanmargin wpm
 	ON ms.milestoneCode=wpm.wpmgMsCode
+	ORDER BY c.comName ASC
 </select>
 <resultMap type="com.pineapple.user.service.FundingAndCompanyAndMilestoneAndWbsAndMargin" 
 		   id="selectPmsInfoByAdmin">
@@ -68,11 +69,6 @@
 		<result property="wdmgCode" column="wdmgCode"/>
 		<result property="wdmgMargin" column="wdmgMargin"/>
 		<result property="wdmgDate" column="wdmgDate"/>
-	</collection>
-	<collection property="wbsplanmargin"
-				ofType="com.pineapple.user.service.WbsPlanMargin">
-		<result property="wpmgCode" column="wpmgCode"/>
-		<result property="wpmgMargin" column="wpmgMargin"/>
 	</collection>
 </resultMap>
 
