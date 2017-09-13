@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -187,10 +188,14 @@ public class UserController {
 	
 	//로그인 페이지 요청
 	@RequestMapping(value="/login.user", method=RequestMethod.GET)
-	public String login(){
-		log.debug("UserController login 페이지 요청 처리");
-		return "user/login";
+	public String login(HttpServletRequest request, HttpSession session){
+	        log.debug("UserController login 페이지 요청 처리");
+	        //이전페이지를 request에 저장해놓은 것을 받아와서 다시 세션에 넣어준다. ​
+	        log.debug("UserController 로그인 페이지 요청메서드에서 받은 이전페이지 : "+request.getAttribute("refererPage"));
+	        session.setAttribute("refererPage",request.getAttribute("refererPage"));
+	        return "user/login";
 	}
+
 	
 	//로그인 요청 처리
 	@RequestMapping(value="/login.user", method=RequestMethod.POST)
@@ -236,7 +241,14 @@ public class UserController {
 			log.debug("유효하지 않은 아이디 또는 비밀번호 입력");
 			model.addAttribute("msg", "유효하지 않은 아이디 또는 비밀번호가 입력되었습니다");
 		}
-		return "redirect:/";
+		
+		String refererPage = (String)session.getAttribute("refererPage");
+        if(refererPage==null){
+                return "redirect:/";
+        } else {
+
+                return "redirect:/"+refererPage;
+        }
 	}
 	
 	//회원가입시 닉네임 중복 체크 ajax 요청 처리

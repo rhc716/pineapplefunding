@@ -28,12 +28,36 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 		
 		if(user == null){
 			log.debug("CommonInterceptor : 로그인한 사용자가 아닙니다");
-			// 로그인이 필요한 요청을 막아줌 ( 현재는 메인으로 리다이렉트지만, 나중에는 로그인페이지로 리다이렉트 )
+			// 로그인이 필요한 요청은 로그인페이지로 리다이렉트 해줌
 			String whereredirect = "/pineapple/login.user";
-			
-			if(uri.equals("/pineapple/pmsmain.pms")){
-				response.sendRedirect(whereredirect);
+
+			// 로그인이 필요한 페이지에서 로그인 페이지로 이동될때 이전 페이지의 정보를 저장해서 => 로그인 후 다시 그 페이지로 가도록 해줄 것. 
+			log.debug("=================CommonInterceptor 요청한페이지의 getHeader중 Referer================= : "+request.getHeader("Referer"));
+			// 최초 실행에 메인페이지로 왔을때 헤더에 Referer가 null이기에 if문으로 넣어줌 
+			if(request.getHeader("Referer")!=null){
+			        String[] cutUriStr = request.getHeader("Referer").split("/");
+			        log.debug("================cutUriStr.length=============== : "+cutUriStr.length);
+			        // 자른 문자열의 마지막값으로 리다이렉트할때 쓸 것임
+			        String refererPage = cutUriStr[cutUriStr.length-1];
+			        log.debug("================refererPage=============== : "+refererPage);
+
+			        // 이전페이지로 돌아가는 기능을 할때,, (로그인 페이지에서 온 요청(로그인처리)은 건너뛰어야함)
+			        if(!refererPage.equals("/pineapple/login.user")){
+			                request.setAttribute("refererPage", refererPage);
+			        }
+			        
+			        // 메인에서 온 (로그인페이지 or 로그인처리)요청인경우        공백을 넣어서 메인으로 리다이렉트함
+			        if(refererPage.equals("pineapple")){
+			                refererPage = "";
+			                request.setAttribute("refererPage", refererPage);
+			        }
 			}
+
+			if(uri.equals("/pineapple/pmsmain.pms")){
+			        
+			        response.sendRedirect(whereredirect);
+			}
+
 			
 			result=true;
 			
