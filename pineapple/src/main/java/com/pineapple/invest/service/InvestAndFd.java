@@ -11,7 +11,15 @@ public class InvestAndFd {
 	private int issuePrice;
 	private int days;
 	private String fdStatus;
+	private String checkassignment;
 	
+	
+	public String getCheckassignment() {
+		return checkassignment;
+	}
+	public void setCheckassignment(String checkassignment) {
+		this.checkassignment = checkassignment;
+	}
 	public String getFdStatus() {
 		return fdStatus;
 	}
@@ -76,7 +84,8 @@ public class InvestAndFd {
 	public String toString() {
 		return "InvestAndFd [fdCode=" + fdCode + ", fdTitle=" + fdTitle + ", numberOfShares=" + numberOfShares
 				+ ", comName=" + comName + ", total=" + total + ", posterImg=" + posterImg + ", minInvestMoney="
-				+ minInvestMoney + ", issuePrice=" + issuePrice + ", days=" + days + ", fdStatus=" + fdStatus + "]";
+				+ minInvestMoney + ", issuePrice=" + issuePrice + ", days=" + days + ", fdStatus=" + fdStatus
+				+ ", checkassignment=" + checkassignment + "]";
 	}
 
 
