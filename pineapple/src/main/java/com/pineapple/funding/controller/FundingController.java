@@ -144,11 +144,24 @@ public class FundingController {
 		if(fdCode!='0'){
 			log.debug("fdCode의 값이 들어왔을때");
 			service.getForfundingTotalViewPage(fdCode, model);
-			
-			
 		}
 		return "pms/adminuser/fundingtotalview";
 	}
+	
+	//관리자권한 프로젝트관리 마일스톤&WBS 페이지 요청
+		@RequestMapping(value = "/msandwbstotalview.pms", method = RequestMethod.GET)
+		public String msAndWbsTotalView(Locale locale, Model model, @RequestParam(value="fdCode", required=false, defaultValue="0") int fdCode) {
+			log.debug("FundingController의 msAndWbsTotalView호출 성공");
+			log.debug("msAndWbsTotalView의 fdCode : "+fdCode);
+			if(fdCode!='0'){
+				log.debug("fdCode의 값이 들어왔을때");
+				//service.getForfundingTotalViewPage(fdCode, model);
+				
+				
+			}
+			return "pms/adminuser/milestonewbstotalview";
+		}
+	
 	
 	
 ////////////////////////////////////////////////위에는///페이지요청//////////////////////////////////////////////////////

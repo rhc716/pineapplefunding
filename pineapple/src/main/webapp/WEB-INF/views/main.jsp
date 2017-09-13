@@ -51,7 +51,7 @@
 
 
 	<div class="row" id="toptitlearea">
-		<!-- 로고 및 검색 -->
+		<!-- 타이틀 및 검색 -->
 		<div class="col-xs-2 col-md-2 logoandsearch">
 			<form action="/pineapple" method="get" class="row" align="left">
 			    <input style="width: 70%; display: inline;"  type="text" class="form-control">

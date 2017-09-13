@@ -29,8 +29,18 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
 
 <!-- 구글차트  -->
- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
- 
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<style>
+	img {
+		display: inline-block;
+		text-align: center;
+	}
+	p {
+		margin :0px;
+		width: 100%;
+		padding: 0px 6%;
+	}
+</style>
 <script>
 $(document).ready(function(){
 	/* 날짜를 yyyy-mm-dd 형태로 바꿔주는 함수 */
@@ -59,6 +69,7 @@ $(document).ready(function(){
 	
 		//console.log(msg);
 		
+			//구글차트를 그려줌
 		 	google.charts.load('current', {'packages':['gantt']});
 		    google.charts.setOnLoadCallback(drawChart);
 	
@@ -76,27 +87,27 @@ $(document).ready(function(){
 		      
 		      $('#chart_btnarea').html('');
 		      for(var s = 0; s<msg.length; s++){
-		      	if(msg[s].wbsPlanStartDate!=null){
-		      		if(msg[s].wbsPlanDependency=="없음"){
-		      			data.addRows([
-			      			[msg[s].wbsPlanName, msg[s].wbsPlanName,
-						         new Date(msg[s].wbsPlanStartDate), null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, null],
-				     	 	]);
-		      		}else{
-				    	 data.addRows([
-				    		 [msg[s].wbsPlanName, msg[s].wbsPlanName,
-						         new Date(msg[s].wbsPlanStartDate), null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, msg[s].wbsPlanDependency],
-				     	 	]);
-		      		}
-		      	}else{
-		      		 data.addRows([
-			    		 [msg[s].wbsPlanName, msg[s].wbsPlanName,
-					         null, null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, msg[s].wbsPlanDependency],
-			     	 	]);
-		      		}
+				if(msg[s].wbsPlanStartDate!=null){
+					if(msg[s].wbsPlanDependency=="없음"){
+						data.addRows([
+							[msg[s].wbsPlanName, msg[s].wbsPlanName,
+				      new Date(msg[s].wbsPlanStartDate), null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, null],
+					 ]);
+					}else{
+				 data.addRows([
+					 [msg[s].wbsPlanName, msg[s].wbsPlanName,
+				      new Date(msg[s].wbsPlanStartDate), null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, msg[s].wbsPlanDependency],
+					 ]);
+					}
+				}else{
+					 data.addRows([
+				 [msg[s].wbsPlanName, msg[s].wbsPlanName,
+				     null, null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, msg[s].wbsPlanDependency],
+				 ]);
+				}
 		      	
 		      
-		      /* 차트를 그릴때에 버튼도 함께 그려넣어줌  */
+		      /* 차트를 그릴때에 상세정보버튼도 함께 그려넣어줌  */
 		      $('#chart_btnarea').append(
 	    		 	'<div style="height:42px; padding-top:6px;">'
 	    		 	+'<span>작업명 : </span>'+msg[s].wbsPlanName
@@ -145,33 +156,41 @@ $(document).ready(function(){
 	
 	
 	
-//	파라미터값으로 fdCode가 있을때에만 => 펀딩을 선택해서 들어올경우//	
+/////////////////////////////////	파라미터값으로 fdCode가 있을때에만 => 펀딩을 선택해서 들어올경우/////////////////	
 	if(${param.fdCode!=null}){
 		/* 펀딩 보고서 리스트 불러올 ajax */
 		var getfundingfilelist = $.ajax({
 			type : "get",
 			url : "/pineapple/getfundingfilelist.pms",
-			/* 아이디 세션에서 받아서 가져옴 */
 			data : { fdCode : "${fundingAndComAndMile[0].fdCode}"},
 			async : false
 		});
 		// 성공시
 		getfundingfilelist.done(function(msg){
-			console.log(msg);
-		// 펀딩파일의 목록을 화면에 뿌려줌 
-		for(var i = 0; i<msg.length; i++){
-			$('#myfundingfilelist').append(
-				'<tr>'
-					+'<td>'+msg[i].fdTitle+'</td>'
-					+'<td>'+msg[i].fdFileName+'</td>'
-					+'<td>'+msg[i].fdFileExtension+'</td>'
-					+'<td>'+number_to_human_size(msg[i].fdFileSize)+'</td>'
-					+'<td><a href="calldownload.pms?fileFullPath='+msg[i].fdFileUploadName+'">'
-					+'<button type="button" class="btn btn-sm btn-success">다운로드</button></a></td>'
-					+'<td><a href="deletefundingfile.pms?fileFullPath='+msg[i].fdFileUploadName+'&fdFileCode='+msg[i].fdFileCode+'">'
-				+'</tr>'
-			);
-		}
+			console.log("펀딩파일ajax 요청결과 : "+msg);
+			//파일목록이 없으면 문구를 뜨게함
+			if(msg==""){
+				$('#myfundingfilelist').append(
+					'<tr>'
+						+'<td colspan="5" align="center"><b>펀딩보고서 파일이 없습니다</b></td>'
+					+'</tr>'
+				);
+			
+			} else {
+				for(var i = 0; i<msg.length; i++){
+					// 펀딩파일의 목록을 화면에 뿌려줌 
+					$('#myfundingfilelist').append(
+						'<tr>'
+							+'<td>'+msg[i].fdTitle+'</td>'
+							+'<td>'+msg[i].fdFileName+'</td>'
+							+'<td>'+msg[i].fdFileExtension+'</td>'
+							+'<td>'+number_to_human_size(msg[i].fdFileSize)+'</td>'
+							+'<td><a href="calldownload.pms?fileFullPath='+msg[i].fdFileUploadName+'">'
+							+'<button type="button" class="btn btn-sm btn-success">다운로드</button></a></td>'
+						+'</tr>'
+					);
+				}
+			}
 		
 		});
 		// 실패시
@@ -190,41 +209,104 @@ $(document).ready(function(){
 		//성공시 투자자 리스트를 investorlist에 채워줌
 		getfundinginvestorlist.done(function(msg){
 			console.log(msg);
-			for(var i = 0; i<msg.length; i++){
-				var paychecktext = "";
-				if(msg[i].payCheck=='0'){
-					paychecktext = "미결제";
-				}else{
-					paychecktext = "결제";
-				}
+			
+			//투자자 리스트가 없으면 문구 출력
+			if(msg==""){
 				$('#investorlist').append(
 					'<tr>'
-						+'<td>'+msg[i].investId+'</td>'
-						+'<td>'+msg[i].purchaseShares+'</td>'
-						+'<td>'+paychecktext+'</td>'
-						+'<td>'+formatDate(msg[i].investTime)+'</td>'
+						+'<td colspan="4" align="center"><b>투자자가 없습니다</b></td>'
 					+'</tr>'
 				);
+			}else{
+				for(var i = 0; i<msg.length; i++){
+					var paychecktext = "";
+					if(msg[i].payCheck=='0'){
+						paychecktext = "미결제";
+					}else{
+						paychecktext = "결제";
+					}
+					$('#investorlist').append(
+						'<tr>'
+							+'<td>'+msg[i].investId+'</td>'
+							+'<td>'+msg[i].purchaseShares+'</td>'
+							+'<td>'+paychecktext+'</td>'
+							+'<td>'+formatDate(msg[i].investTime)+'</td>'
+						+'</tr>'
+					);
+				}
 			}
+			
+			
+			$('#investorlist').append(
+				'<tr id="investoraddlistbtnarea">'
+					+'<td colspan="4">'
+					+'<button type="button" onclick="javascript:investormoreList(this)" id="investoraddlistbtn" value="1" class="btn-block btn btn-primary">'
+					+'더보기</button>'
+					+'</td>'
+				+'</tr>'
+			);
 		});
 		
 		//실패시
 		getfundinginvestorlist.fail(function(){
 			alert('getfundingdividendpalnlist ajax통신실패');
 		});
-	} else {
-		// 펀딩선택을 하지 않고 펀딩보기를 눌렀을때 <펀딩의 모든 리스트를 보여주고 고르게함> 
 		
-		// 모든 펀딩 리스트를 불러오는  ajax (마감, 모집실패 제외)
-		var getallfundinglist = $.ajax({
+		
+		
+		
+		// 펀딩의 배당계획 리스트를 가져오는 ajax
+		var getfundingdividendpalnlist = $.ajax({
 			type : "get",
-			url : "/pineapple//getallfundinglist.pms"
+			url : "/pineapple/getfundingdividendpalnlist.pms",
+			data : { fdCode : "${fundingAndComAndMile[0].fdCode}" }
 		});
 		
-		//성공시 투자자 리스트를 investorlist에 채워줌
+		//성공시
+		getfundingdividendpalnlist.done(function(msg){
+			//console.log(msg);
+			
+			//배당계획이 없으면 문구를 출력
+			if(msg==""){
+				$('#fundingdividendplanlist').append(
+						'<tr>'
+							+'<td colspan="5" align="center"><b>배당계획이 없습니다</b></td>'
+						+'</tr>'
+				);
+			}else{
+				for(var i = 0; i<msg.length; i++){
+					$('#fundingdividendplanlist').append(
+						'<tr>'
+							+'<td>'+msg[i].divIndexName+'</td>'
+							+'<td>'+msg[i].settlementUnit+'일</td>'
+							+'<td>'+msg[i].minMargin+'원</td>'
+							+'<td>'+msg[i].maxMargin+'원</td>'
+							+'<td>'+msg[i].dividendRate+'%</td>'
+						+'</tr>'
+					);
+				}
+			}
+		});
+		
+		//실패시
+		getfundingdividendpalnlist.fail(function(){
+			alert('ajax통신실패');
+		});
+		
+		
+	} else {
+		/////////////////////// 펀딩선택을 하지 않고 펀딩보기를 눌렀을때 <펀딩의 모든 리스트를 보여주고 고르게함> //////////
+		
+		//  (마감, 모집실패 제외) 펀딩 리스트를 불러오는  ajax
+		var getallfundinglist = $.ajax({
+			type : "get",
+			url : "/pineapple/getallfundinglist.pms"
+		});
+		
+		//성공시 펀딩 리스트를 뿌려줌
 		getallfundinglist.done(function(msg){
 			console.log(msg);
-			// 펀딩리스트 뿌려줌
+			
 			for(var i=0; i<msg[0].length; i++){
 				$('#adminFdList').append(
 						'<tr>'
@@ -235,7 +317,7 @@ $(document).ready(function(){
 	       						+'<div class="progress">'
 								+'<div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="60"'
 								+'aria-valuemin="0" aria-valuemax="100" style="width:'
-								+msg[0][i].total/msg[0][i].numberOfShares*100+'%;">'
+								+msg[0][i].total/msg[0][i].numberOfShares*100+'%; max-width: 100%;">'
 								+msg[0][i].total/msg[0][i].numberOfShares*100+'%'
 								+'</div>'
 								+'</div>'
@@ -248,10 +330,10 @@ $(document).ready(function(){
 				// 마지막에 더보기 버튼을 추가함
 				if(i==msg[0].length-1){
 					$('#adminFdList').append(
-						'<tr id="addlistbtnarea">'
+						'<tr id="fdaddlistbtnarea">'
 						+'<td colspan="5">'
 						+'<div class="btns">'
-						+'<button id="addlistbtn" onclick="javascript:moreList(this);" value="1" class="btn btn-primary btn-block">더보기</button>'
+						+'<button id="fdaddlistbtn" onclick="javascript:fdmoreList(this);" value="1" class="btn btn-primary btn-block">더보기</button>'
 						+'</div>'
 						+'</td>'
 						+'</tr>'
@@ -263,6 +345,58 @@ $(document).ready(function(){
 		//실패시
 		getallfundinglist.fail(function(){
 			alert('getallfundinglist ajax통신실패');
+		});
+		
+		
+		
+	//  마감, 모집실패 펀딩 리스트를 불러오는  ajax
+		var getendfundinglist = $.ajax({
+			type : "get",
+			url : "/pineapple/getendfundinglist.pms"
+		});
+		
+		//성공시 펀딩 리스트를 뿌려줌
+		getendfundinglist.done(function(msg){
+			console.log(msg);
+			
+			for(var i=0; i<msg[0].length; i++){
+				$('#adminEndFdList').append(
+						'<tr>'
+							+'<td>'+msg[0][i].fdCode+'</td>'
+							+'<td>'+msg[0][i].fdStatus+'</td>'
+	       					+'<td>'+msg[0][i].fdTitle+'</td>'
+	       					+'<td>'
+	       						+'<div class="progress">'
+								+'<div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="60"'
+								+'aria-valuemin="0" aria-valuemax="100" style="width:'
+								+msg[0][i].total/msg[0][i].numberOfShares*100+'%; max-width: 100%;">'
+								+msg[0][i].total/msg[0][i].numberOfShares*100+'%'
+								+'</div>'
+								+'</div>'
+							+'</td>'
+	       					+'<td><a href="/pineapple/fundingtotalview.pms?fdCode='+msg[0][i].fdCode+'">'
+	       					+'<button type="button" class="btn btn-sm btn-warning btn-block">정보보기</button></a></td>'
+       					+'</tr>'
+				);
+				
+				// 마지막에 더보기 버튼을 추가함
+				if(i==msg[0].length-1){
+					$('#adminEndFdList').append(
+						'<tr id="endfdaddlistbtnarea">'
+						+'<td colspan="5">'
+						+'<div class="btns">'
+						+'<button id="endfdaddlistbtn" onclick="javascript:endfdmoreList(this);" value="1" class="btn btn-primary btn-block">더보기</button>'
+						+'</div>'
+						+'</td>'
+						+'</tr>'
+     				);
+				}
+			}
+		});
+		
+		//실패시
+		getendfundinglist.fail(function(){
+			alert('getEndfundinglist ajax통신실패');
 		});
 		
 	}
@@ -285,18 +419,12 @@ h1{	text-align:center;}
 		<c:import url="/resources/module/pmsleftmenu.jsp"/>
 	</div>
 	<div class="col-md-9" id="myfundinglist">
-			<div class="pagetitleandexplainbox"> 
-				<c:if test="${param.fdCode!=null}">
-					<h1>펀딩정보</h1>
-				</c:if>
-				<c:if test="${param.fdCode==null}">
-					<h1>펀딩리스트</h1>
-				</c:if>
-			</div>
-<!-- 펀딩 리스트 뿌려질 곳 -->
 			<div class="row">
 			<!-- 펀딩코드가 들어왔을때와 들어오지 않았을때 화면구성을 다르게 해줌 -->
 				<c:if test="${param.fdCode!=null}">
+					<div class="pagetitleandexplainbox"> 
+						<h1>펀딩정보</h1>
+					</div>
 					<table class="table table-striped table-bordered table-hover">
 						<tr class="info">
 							<th>기업코드</th>
@@ -356,10 +484,10 @@ h1{	text-align:center;}
 								<h1>펀딩포스터</h1>
 							</div>
 							<c:if test="${fundingAndComAndMile[0].posterImg!=null}">
-								<img src="${pageContext.request.contextPath}/resources/files/${fn:substringAfter(fundingAndComAndMile[0].posterImg, 'files')}">
+								<p><img src="${pageContext.request.contextPath}/resources/files/${fn:substringAfter(fundingAndComAndMile[0].posterImg, 'files')}"></p>
 							</c:if>
 							<c:if test="${fundingAndComAndMile[0].posterImg==null}">
-								<img src="${pageContext.request.contextPath}/resources/files/insertnotsum.jpg">
+								<p><img src="${pageContext.request.contextPath}/resources/files/insertnotsum.jpg"></p>
 							</c:if>
 						</div>
 						<div class="col-xs-7">
@@ -384,9 +512,14 @@ h1{	text-align:center;}
 												<td>${milestone.milestoneName}</td>
 												<td>${milestone.milestoneSummary}</td>
 												<td>${milestone.pm}</td>
-												<th><button type="button" value="${milestone.milestoneCode}" class="milestonebtn btn btn-primary btn-sm">클릭</button></th>
+												<td><button type="button" value="${milestone.milestoneCode}" class="milestonebtn btn btn-primary btn-sm">클릭</button></td>
 											</tr>
 										</c:forEach>
+										<c:if test="${empty fundingAndComAndMile[0].mileStoneList}">
+											<tr>
+												<td align="center" colspan="6"><b>마일스톤데이터가 없습니다</b></td>
+											</tr>
+										</c:if>
 									</table>
 								</div>
 							</div>
@@ -421,8 +554,8 @@ h1{	text-align:center;}
 							</div>
 							<!-- 보고서 파일 다운로드 리스트 들어갈 곳 -->
 							<div>
-								<table class="table" id="myfundingfilelist">
-									<tr>
+								<table class="table table-striped table-bordered table-hover" id="myfundingfilelist">
+									<tr class="info">
 										<td>펀딩명</td>
 										<td>보고서명</td>
 										<td>보고서확장자</td>
@@ -435,27 +568,50 @@ h1{	text-align:center;}
 						</div>
 						<div class="col-xs-6">
 							<div class="pagetitleandexplainbox"> 
-								<h1>투자자 리스트</h1>
+								<h1>배당계획 리스트</h1>
 							</div>
 							<table class="table table-striped table-bordered table-hover">
 								<thead>
 									<tr class="info">
-										<th>투자자아이디</th>
-										<th>구매주식수</th>
-										<th>결제여부</th>
-										<th>투자일</th>
+										<td>기준명</td>
+										<td>마감기준</td>
+										<td>최소마진</td>
+										<td>최대마진</td>
+										<td>배당율</td>
 									</tr>
 								</thead>
-								<!-- ajax요청으로 목록을 채워줌 -->
-								<tbody id="investorlist"> 
-											
-								</tbody>
+								<!-- 배당계획 리스트 뿌려질 곳 -->		
+								<tbody id="fundingdividendplanlist"> 
+									
+								</tbody>			
 							</table>
 						</div>
+					</div>
+					<div class="row">
+						<div class="pagetitleandexplainbox"> 
+							<h1>투자자 리스트</h1>
+						</div>
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr class="info">
+									<th>투자자아이디</th>
+									<th>구매주식수</th>
+									<th>결제여부</th>
+									<th>투자일</th>
+								</tr>
+							</thead>
+							<!-- ajax요청으로 목록을 채워줌 -->
+							<tbody id="investorlist"> 
+										
+							</tbody>
+						</table>
 					</div>
 				</c:if>
 				<!-- 펀딩코드를 선택하지 않았을때는 펀딩목록을 보여줌 -->
            		<c:if test="${param.fdCode==null}">
+	           		<div class="pagetitleandexplainbox"> 
+		           		<h1>마감, 모집실패상태를 제외한 모든 펀딩리스트</h1>
+					</div>
 	           		<table class="table table-striped table-bordered table-hover">
 	           			<thead>
 	           				<tr class="info">
@@ -471,15 +627,33 @@ h1{	text-align:center;}
 	           			
 	           			</tbody>
 	           		</table>
+					<div class="pagetitleandexplainbox"> 
+						<h1>마감, 모집실패상태의 펀딩</h1>
+					</div>
+           			<table class="table table-striped table-bordered table-hover">
+	           			<thead>
+	           				<tr class="info">
+	           					<td>펀딩코드</td>
+	           					<td>펀딩상태</td>
+	           					<td>펀딩명</td>
+	           					<td>모집률</td>
+	           					<td>정보보기</td>
+	           				</tr>
+	           			</thead>
+	           			<tbody id="adminEndFdList">
+	           			<!-- 펀딩목록 들어올 곳 -->
+	           			
+	           			</tbody>
+	           		</table>
            		</c:if>
 			</div>
 	</div>
 </div>
 <script>
-	// 더보기버튼 실행 함수 (ajax 요청)
-	function moreList(btn){
-		console.log("moreList에서 받은 매개변수 : "+btn);
-		console.log("moreList 매개변수로 들어온 (버튼객체)의 value = 페이징 "+btn.value);
+	// 모든펀딩보기의 더보기버튼 실행 함수 (ajax 요청)
+	function fdmoreList(btn){
+		//console.log("moreList에서 받은 매개변수 : "+btn);
+		//console.log("moreList 매개변수로 들어온 (버튼객체)의 value = 페이징 "+btn.value);
 	    $.ajax({
 	        url : "/pineapple/getmorefdlist.pms",
 	        type : "get",
@@ -487,12 +661,12 @@ h1{	text-align:center;}
 	        dataType: 'json',
 	        data : {numberOfRequests : btn.value },
 	        success : function(data){
-	            console.log(data);
+	            //console.log(data);
 	            
 	            if(data.length==0){
 	            	// 더 불러올 펀딩 목록이 없는 경우
-	            	$('#addlistbtn').attr("class","btn btn-primary btn-block disabled");
-	            	$('#addlistbtn').text("더 불러올 펀딩목록이 없습니다");
+	            	$('#fdaddlistbtn').attr("class","btn btn-primary btn-block disabled");
+	            	$('#fdaddlistbtn').text("더 불러올 펀딩목록이 없습니다");
 	            } else {
 	            	// 불러올 펀딩 목록이 있는 경우
 	            	var content="";
@@ -506,7 +680,7 @@ h1{	text-align:center;}
 	   						+'<div class="progress">'
 							+'<div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="60"'
 							+'aria-valuemin="0" aria-valuemax="100" style="width:'
-							+data[i].total/data[i].numberOfShares*100+'%;">'
+							+data[i].total/data[i].numberOfShares*100+'%; max-width: 100%;">'
 							+data[i].total/data[i].numberOfShares*100+'%'
 							+'</div>'
 							+'</div>'
@@ -518,13 +692,13 @@ h1{	text-align:center;}
 	            
 	            	// 기존 버튼을 지우고 새로 만들어줄때 value 값을 1 증가시켜서 다음 10개를 불러올 페이징넘버를 기억하게함.
 	            	var pagingNum = Number(btn.value) + 1; 
-		            content += '<tr id="addlistbtnarea">'
+		            content += '<tr id="fdaddlistbtnarea">'
 		            	+'<td colspan="5"><div class="btns">'
-		            	+'<button type="button" id="addlistbtn" onclick="javascript:moreList(this);"'
+		            	+'<button type="button" id="fdaddlistbtn" onclick="javascript:fdmoreList(this);"'
 		            	+'value="'+pagingNum+'" class="btn btn-primary btn-block">'
 		            	+'더보기</button></div></td></tr>"';
 		            //console.log("content : "+content);
-		            $('#addlistbtnarea').remove();
+		            $('#fdaddlistbtnarea').remove();
 		            $('#adminFdList').append(content);
 		       }
 	            
@@ -533,13 +707,147 @@ h1{	text-align:center;}
 	           alert('ajax 통신 실패');
 	        }
 	   
-	});
-}
+		});
+	}
+	
+	
+	// 모집실패, 마감펀딩보기의 더보기버튼 실행 함수 (ajax 요청)
+	function endfdmoreList(btn){
+		//console.log("moreList에서 받은 매개변수 : "+btn);
+		//console.log("moreList 매개변수로 들어온 (버튼객체)의 value = 페이징 "+btn.value);
+	    $.ajax({
+	        url : "/pineapple/getmoreendfdlist.pms",
+	        type : "get",
+	        cache : false,
+	        dataType: 'json',
+	        data : {numberOfRequests : btn.value },
+	        success : function(data){
+	            console.log("endfdmoreList의 ajax 통신 성공함수 매개변수 : "+data);
+	            
+	            if(data==""){
+	            	// 더 불러올 펀딩 목록이 없는 경우
+	            	$('#endfdaddlistbtn').attr("class","btn btn-primary btn-block disabled");
+	            	$('#endfdaddlistbtn').text("더 불러올 펀딩목록이 없습니다");
+	            } else {
+	            	// 불러올 펀딩 목록이 있는 경우
+	            	var content="";
+	            	for(var i=0; i<data.length; i++){
+		                content +=
+		                '<tr>'
+		                	+'<td>'+data[i].fdCode+'</td>'
+		                    +'<td>'+data[i].fdStatus+'</td>'
+		                    +'<td>'+data[i].fdTitle+'</td>'
+		                    +'<td>'
+	   						+'<div class="progress">'
+							+'<div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="60"'
+							+'aria-valuemin="0" aria-valuemax="100" style="width:'
+							+data[i].total/data[i].numberOfShares*100+'%; max-width: 100%;">'
+							+data[i].total/data[i].numberOfShares*100+'%'
+							+'</div>'
+							+'</div>'
+							+'</td>'
+							+'<td><a href="/pineapple/fundingtotalview.pms?fdCode='+data[i].fdCode+'">'
+							+'<button type="button" class="btn btn-sm btn-warning btn-block">정보보기</button></td>'
+		                +'</tr>';
+	           		}
+	            
+	            	// 기존 버튼을 지우고 새로 만들어줄때 value 값을 1 증가시켜서 다음 10개를 불러올 페이징넘버를 기억하게함.
+	            	var pagingNum = Number(btn.value) + 1; 
+		            content += '<tr id="endfdaddlistbtnarea">'
+		            	+'<td colspan="5"><div class="btns">'
+		            	+'<button type="button" id="endfdaddlistbtn" onclick="javascript:endfdmoreList(this);"'
+		            	+'value="'+pagingNum+'" class="btn btn-primary btn-block">'
+		            	+'더보기</button></div></td></tr>"';
+		            //console.log("content : "+content);
+		            $('#endfdaddlistbtnarea').remove();
+		            $('#adminEndFdList').append(content);
+		       }
+	            
+	        }, 
+	        error : function(){
+	           alert('ajax 통신 실패');
+	        }
+	   
+		});
+	}
 
 	
+	function formatDate(date) {
+	    var d = new Date(date),
+	        month = '' + (d.getMonth() + 1),
+	        day = '' + d.getDate(),
+	        year = d.getFullYear();
+
+	    if (month.length < 2) month = '0' + month;
+	    if (day.length < 2) day = '0' + day;
+
+	    return [year, month, day].join('-');
+	}
+	
+	
+	// 투자자의 더보기버튼 실행 함수 (ajax 요청)
+	
+	function investormoreList(btn){
+	//console.log("moreList에서 받은 매개변수 : "+btn);
+	//console.log("moreList 매개변수로 들어온 (버튼객체)의 value = 페이징 "+btn.value);
+    $.ajax({
+        url : "/pineapple/getfundinginvestorlist.pms",
+        type : "get",
+        cache : false,
+        dataType: 'json',
+        data : {
+        	fdCode : "${fundingAndComAndMile[0].fdCode}"
+        	,numberOfRequests : btn.value },
+        success : function(data){
+            //console.log(data);
+            
+            if(data.length==0){
+            	// 더 불러올 펀딩 목록이 없는 경우
+            	$('#investoraddlistbtn').attr("class","btn btn-primary btn-block disabled");
+            	$('#investoraddlistbtn').text("더 불러올 투자자 목록이 없습니다");
+            } else {
+            	// 불러올 펀딩 목록이 있는 경우
+            	var content="";
+            	for(var i=0; i<data.length; i++){
+            		if(data[i].payCheck=='0'){
+						paychecktext = "미결제";
+					}else{
+						paychecktext = "결제";
+					}
+	                content +=
+						'<tr>'
+							+'<td>'+data[i].investId+'</td>'
+							+'<td>'+data[i].purchaseShares+'</td>'
+							+'<td>'+paychecktext+'</td>'
+							+'<td>'+formatDate(data[i].investTime)+'</td>'
+						+'</tr>'
+           		}
+            
+            	// 기존 버튼을 지우고 새로 만들어줄때 value 값을 1 증가시켜서 다음 10개를 불러올 페이징넘버를 기억하게함.
+            	var pagingNum = Number(btn.value) + 1; 
+	            content += 
+	            	'<tr id="investoraddlistbtnarea">'
+						+'<td colspan="4">'
+						+'<button type="button" onclick="javascript:investormoreList(this)" id="investoraddlistbtn" value="'+btn.value+1+'" class="btn-block btn btn-primary">'
+						+'더보기</button>'
+						+'</td>'
+					+'</tr>'
+	            //console.log("content : "+content);
+	            $('#investoraddlistbtnarea').remove();
+	            $('#investorlist').append(content);
+	       	}
+            
+        }, 
+        error : function(){
+           alert('ajax 통신 실패');
+        }
+   
+	});
+	}
+		
 //이미지 경로가 잘못되었을때 표시해주는 이미지 
 $('img').each(function(n){
-	console.log($(this));
+	//console.log($(this));
 	$(this).on( "error", function(){
 		$(this).attr("src", "${pageContext.request.contextPath}/resources/img/404alternateimage.jpg");
     });

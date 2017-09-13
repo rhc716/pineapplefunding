@@ -69,6 +69,24 @@ $(document).ready(function(){
 
 	    return [year, month, day].join('-');
 	}
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/*********** 펀딩을 셀렉트 했을때 투자자 리스트를 불러오는 ajax && 공지하기 버튼을 보기에 해줌*********/
 	$('#selectfd').change(function(){
 		// 폼 초기화
@@ -80,7 +98,8 @@ $(document).ready(function(){
 			var getfundinginvestorlist = $.ajax({
 				type : "get",
 				url : "/pineapple/getfundinginvestorlist.pms",
-				data : { fdCode : $("#selectfd option:selected").val()}
+				data : { fdCode : $("#selectfd option:selected").val()
+				}
 			});
 			
 			//성공시 투자자 리스트를 investorlist에 채워줌
@@ -102,6 +121,16 @@ $(document).ready(function(){
 						+'</tr>'
 					);
 				}
+				
+				$('#investorlist').append(
+						'<tr id="addlistbtnarea">'
+							+'<td colspan="4">'
+							// 버튼에 value를 넣어서 페이징 (numberOfRequests)으로 활용한다.
+							+'<button type="button" onclick="javascript:moreList(this)" id="addlistbtn" value="1" class="btn-block btn btn-primary">'
+							+'더보기</button>'
+							+'</td>'
+						+'</tr>'
+				);
 			});
 			
 			//실패시
@@ -121,10 +150,10 @@ $(document).ready(function(){
 	
 	// 공지하기 버튼을 눌렀을때 모달안의 form에 투자자들의 아이디들을 input hidden 으로 추가해줌
 	// 메세지를 보내줄 대상들을 배열로 넘겨서 컨트롤러에서 처리할 것임
-	$('#employeebtn').click(function(){
+//	$('#employeebtn').click(function(){
 		// console.log($('#investorlist').find("tr:eq(0)").find("td:eq(0)").text());
 		// console.log($('#investorlist').find("tr").length);
-		var inputidArr = new Array();
+/* 		var inputidArr = new Array();
 		for(var i=0; i<$('#investorlist').find("tr").length; i++ ){
 			inputidArr[i] = $('#investorlist').find("tr:eq("+i+")").find("td:eq(0)").text();
 		}
@@ -133,9 +162,10 @@ $(document).ready(function(){
 		$('#inputidArrArea').append(
 				
 		);
-	});
+	}); */
 	
 	
+
 });
 </script>
 
@@ -226,7 +256,79 @@ $(document).ready(function(){
 		
 	</div>
 </div>
+<script>
+/* 날짜를 yyyy-mm-dd 형태로 바꿔주는 함수 */
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
 
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+// 더보기버튼 실행 함수 (ajax 요청)
+function moreList(btn){
+	console.log("moreList에서 받은 매개변수 : "+btn);
+	console.log("moreList 매개변수로 들어온 (버튼객체)의 value = 페이징 "+btn.value);
+    $.ajax({
+        url : "/pineapple/getfundinginvestorlist.pms",
+        type : "get",
+        cache : false,
+        dataType: 'json',
+        data : {
+        	fdCode : $("#selectfd option:selected").val()
+        	,numberOfRequests : btn.value },
+        success : function(data){
+            console.log(data);
+            
+            if(data.length==0){
+            	// 더 불러올 펀딩 목록이 없는 경우
+            	$('#addlistbtn').attr("class","btn btn-primary btn-block disabled");
+            	$('#addlistbtn').text("더 불러올 투자자 목록이 없습니다");
+            } else {
+            	// 불러올 펀딩 목록이 있는 경우
+            	var content="";
+            	for(var i=0; i<data.length; i++){
+            		if(data[i].payCheck=='0'){
+						paychecktext = "미결제";
+					}else{
+						paychecktext = "결제";
+					}
+	                content +=
+						'<tr>'
+							+'<td>'+data[i].investId+'</td>'
+							+'<td>'+data[i].purchaseShares+'</td>'
+							+'<td>'+paychecktext+'</td>'
+							+'<td>'+formatDate(data[i].investTime)+'</td>'
+						+'</tr>'
+           		}
+            
+            	// 기존 버튼을 지우고 새로 만들어줄때 value 값을 1 증가시켜서 다음 10개를 불러올 페이징넘버를 기억하게함.
+            	var pagingNum = Number(btn.value) + 1; 
+	            content += 
+	            	'<tr id="addlistbtnarea">'
+						+'<td colspan="4">'
+						+'<button type="button" onclick="javascript:moreList(this)" id="addlistbtn" value="'+btn.value+1+'" class="btn-block btn btn-primary">'
+						+'더보기</button>'
+						+'</td>'
+					+'</tr>'
+	            //console.log("content : "+content);
+	            $('#addlistbtnarea').remove();
+	            $('#investorlist').append(content);
+	       	}
+            
+        }, 
+        error : function(){
+           alert('ajax 통신 실패');
+        }
+   
+	});
+}
+</script>
 <!-- 풋터 -->
 <div>
 	<c:import url="/resources/module/footer.jsp"/>

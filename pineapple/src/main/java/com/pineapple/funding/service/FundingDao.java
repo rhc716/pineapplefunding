@@ -178,9 +178,19 @@ public class FundingDao implements FundingDaoInterface {
 	
 	// 펀딩별 투자자 리스트 불러오기
 	@Override
-	public List<Investment> selectFundingInvestorList(int fdCode) {
+	public List<Investment> selectFundingInvestorList(int fdCode, int numberOfRequests) {
 		log.debug("FundingDao의 selectFundingInvestorList호출 성공");
-		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectFundingInvestorList", fdCode);
+		Map map = new HashMap<>();
+		// numberOfRequests가 입력됐을때 즉 더보기 버튼을 눌렀을때는 0이 아닐때 이므로 그때에만 map에 저장해줌. 
+		if(numberOfRequests==0){
+			map.put("fdCode", fdCode);
+		}else{
+			map.put("fdCode", fdCode);
+			// 5를 곱해서 넣어줘야 limit의 시작점인 페이징x불러온 투자자수가 됨.
+			numberOfRequests=numberOfRequests*5; 
+			map.put("numberOfRequests", numberOfRequests);
+		}
+		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectFundingInvestorList", map);
 	}
 	
 	// 펀딩생성에서 사용할 회사정보 가져오기
@@ -271,23 +281,40 @@ public class FundingDao implements FundingDaoInterface {
 		map.put("milestoneStep", milestoneStep);
 		return sqlSessionTemplate.selectOne("com.pineapple.funding.service.FundingMapper.milestoneStepCheck", map);
 	}
-	
+
+	// 펀딩코드에 해당되는 회사정보와 펀딩정보를 가져옴
 	@Override
 	public void selectForfundingTotalViewPage(int fdCode, Model model) {
 		log.debug("FundingDao의 selectForfundingTotalViewPage호출 성공");
-
-		// 펀딩코드에 해당되는 회사정보와 펀딩정보를 가져옴
 		model.addAttribute("fundingAndComAndMile",sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectForfundingTotalViewPageOne", fdCode));
 		log.debug("model : "+model);
 	}
 	
+	// 마감, 모집실패로 끝난 펀딩을 제외한 모든 펀딩 목록을 가져옴
 	@Override
 	public List<Object> selectAllFundingList() {
 		log.debug("FundingDao의 selectAllFundingList호출 성공");
 		List<Object> list = new ArrayList<Object>();
-		// 마감, 모집실패로 끝난 펀딩을 제외한 모든 펀딩 목록을 가져옴
 		list.add(sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectProjectInfoListAdminThird"));
 		return list;
 	}
 	
+	// 마감, 모집실패로 끝난 펀딩목록을 가져옴
+	@Override
+	public List<Object> selectEndFundingList() {
+		log.debug("FundingDao의 selectEndFundingList호출 성공");
+		List<Object> list = new ArrayList<Object>();
+		list.add(sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectEndFundingList"));
+		return list;
+	}
+	
+	// 바로 위의 마감, 모집실패 상태의 펀딩리스트에서 더보기버튼을 눌렀을때 
+	@Override
+	public List<Funding> selectMoreEndFundingList(int numberOfRequests) {
+		log.debug("FundingDao의 selectMoreEndFundingList호출 성공");
+		List<Funding> list = new ArrayList<Funding>();
+		numberOfRequests = numberOfRequests*10;
+		list.addAll(sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectEndFundingList", numberOfRequests));
+		return list;
+	}
 }

@@ -29,7 +29,6 @@ public interface FundingServiceInterface {
 	List<FundingAndFdFile> getFundingFileList(String userId);
 	void addFundingFile(MultipartFile uploadFile, String result, int fdCode);
 	void removeFundingDividendPaln(int divCode);
-	List<Investment> getFundingInvestorList(int fdCode);
 	List<Company> getComList(String userId);
 	void addFunding(Funding funding);
 	void modifyFundingImage(Model model);
@@ -42,4 +41,7 @@ public interface FundingServiceInterface {
 	void getForfundingTotalViewPage(int fdCode, Model model);
 	List<FundingAndFdFile> getFundingFileList(int fdCode);
 	List<Object> getAllFundingList();
+	List<Investment> getFundingInvestorList(int fdCode, int numberOfRequests);
+	List<Object> getEndFundingList();
+	List<Funding> getMoreEndFdList(int numberOfRequests);
 }

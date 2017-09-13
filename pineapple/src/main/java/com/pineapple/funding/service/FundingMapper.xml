@@ -340,10 +340,16 @@
 	</delete>
 	
 	<!-- 펀딩별 투자자 리스트 불러오기 -->
-	<select id="selectFundingInvestorList" parameterType="int" resultType="java.util.HashMap">
+	<select id="selectFundingInvestorList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT *
 		FROM investment
 		WHERE investFdCode=#{fdCode}
+		<if test="_parameter.numberOfRequests==null">
+			limit 0,5;
+		</if>
+		<if test="_parameter.numberOfRequests!=null">
+			limit #{numberOfRequests},5;
+		</if>
 	</select>
 	
 	<!-- 펀딩생성에서 사용할 회사정보 가져오기 -->
@@ -617,6 +623,23 @@
 			FROM funding f INNER JOIN company c
 			WHERE f.fdCode = #{fdCode} AND f.fdComCode = c.comCode) fac LEFT JOIN milestone m 
 		ON fac.fdCode = m.msFdCode
+	</select>
+	
+	<!-- 관리자 프로젝트관리의 펀딩보기에서 마감, 모집실패로 끝난 펀딩리스트를 불러옴 -->
+	<select id="selectEndFundingList" resultType="com.pineapple.funding.service.Funding" parameterType="int">
+		<!-- 마감, 모집실패로 끝난 펀딩을 10개를 가져옴 -->
+		SELECT * 
+		FROM funding
+		WHERE fdStatus = '마감' OR fdStatus = '모집실패'
+		ORDER BY fdDate DESC
+		<choose>
+		<when test="_parameter != null">
+			limit #{numberOfRequests},10;
+		</when>
+		<otherwise>
+			limit 0,10;
+		</otherwise>
+		</choose>
 	</select>
 </mapper>
 

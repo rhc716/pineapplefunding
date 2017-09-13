@@ -96,10 +96,12 @@ public class FundingRestController {
 		
 		// 펀딩별 투자자 리스트 불러오기
 		@RequestMapping(value = "/getfundinginvestorlist.pms", method = RequestMethod.GET)
-		public List<Investment> getFundingInvestorList(Model model, Locale locale, @RequestParam("fdCode") int fdCode) {
+		public List<Investment> getFundingInvestorList(Model model, Locale locale
+				, @RequestParam("fdCode") int fdCode
+				, @RequestParam(value="numberOfRequests", required=false, defaultValue="0") int numberOfRequests) {
 			log.debug("FundingRestController의 getFundingInvestorList호출 성공");
 			log.debug("fdCode : " + fdCode);
-			return service.getFundingInvestorList(fdCode);
+			return service.getFundingInvestorList(fdCode, numberOfRequests);
 		}
 		
 		// 펀딩생성에서 사용할 회사정보 가져오기
@@ -160,12 +162,27 @@ public class FundingRestController {
 			return service.milestoneStepCheck(msFdCode, milestoneStep);
 		}
 		
-		// 마일스톤입력에서 사용할 마일스톤 단계 중복검사
+		// 관리자 프로젝트관리 페이지, 펀딩보기에서 마감, 모집실패 상태를 제외한 모든 펀딩리스트를 가져옴 
 		@RequestMapping(value = "/getallfundinglist.pms", method = RequestMethod.GET)
-		public  List<Object> getAllFundingList(Model model, Locale locale) {
+		public List<Object> getAllFundingList(Model model, Locale locale) {
 			log.debug("FundingRestController의 getAllFundingList호출 성공");
 			return service.getAllFundingList();
 		}
 		
+		// 관리자 프로젝트관리 페이지, 펀딩보기에서 마감, 모집실패 상태의 펀딩리스트를 가져옴 
+		@RequestMapping(value = "/getendfundinglist.pms", method = RequestMethod.GET)
+		public List<Object> getEndFundingList(Model model, Locale locale) {
+			log.debug("FundingRestController의 getEndFundingList호출 성공");
+			return service.getEndFundingList();
+		}
+		
+		// 바로 위의 마감, 모집실패 상태의 펀딩리스트에서 더보기버튼을 눌렀을때 
+		@RequestMapping(value = "/getmoreendfdlist.pms", method = RequestMethod.GET)
+		public List<Funding> getMoreEndFdList(Model model, Locale locale, @RequestParam("numberOfRequests") int numberOfRequests) {
+			log.debug("FundingRestController의 getMoreEndFdList호출 성공");
+			log.debug("numberOfRequests : "+numberOfRequests);
+			List<Funding> list = service.getMoreEndFdList(numberOfRequests);
+			return list;
+		}
 		
 }

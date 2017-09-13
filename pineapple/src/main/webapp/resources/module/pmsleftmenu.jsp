@@ -70,9 +70,8 @@
 <c:if test="${level eq '관리자'}">
 	<nav id="mysidebarmenu" class="amazonmenu">
 		<ul>
-			<li><a href="/pineapple/fundingtotalview.pms">펀딩관리</a></li>
-			<li><a href="">마일스톤보기</a></li>
-			<li><a href="">WBS보기</a></li>
+			<li><a href="/pineapple/fundingtotalview.pms">펀딩보기</a></li>
+			<li><a href="/pineapple/msandwbstotalview.pms">마일스톤&WBS보기</a></li>
 			<li><a href="">배당내역보기</a></li>
 		</ul>
 	</nav>

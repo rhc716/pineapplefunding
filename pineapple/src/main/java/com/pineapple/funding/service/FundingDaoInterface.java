@@ -31,7 +31,6 @@ public interface FundingDaoInterface {
 	void insertDividendPlan(FundingDividendPlan fundingdividendplan);
 	List<FundingAndFdDividendPlan> selectFundingDividendPalnList(int fdCode);
 	void deleteFundingDividendPaln(int divCode);
-	List<Investment> selectFundingInvestorList(int fdCode);
 	List<Company> selectComList(String userId);
 	void updateFundingImage(Model model);
 	Funding fdtitleCheck(String fdTitle);
@@ -43,4 +42,8 @@ public interface FundingDaoInterface {
 	void selectForfundingTotalViewPage(int fdCode, Model model);
 	List<FundingAndFdFile> selectFundingFileList(int fdCode);
 	List<Object> selectAllFundingList();
+	List<Investment> selectFundingInvestorList(int fdCode,
+			int numberOfRequests);
+	List<Object> selectEndFundingList();
+	List<Funding> selectMoreEndFundingList(int numberOfRequests);
 }

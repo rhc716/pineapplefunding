@@ -179,9 +179,9 @@ public class FundingService implements FundingServiceInterface {
 	
 	// 펀딩별 투자자 리스트 불러오기
 	@Override
-	public List<Investment> getFundingInvestorList(int fdCode) {
+	public List<Investment> getFundingInvestorList(int fdCode, int numberOfRequests) {
 		log.debug("FundingService의 getFundingInvestorList호출 성공");
-		return fundingdao.selectFundingInvestorList(fdCode);
+		return fundingdao.selectFundingInvestorList(fdCode, numberOfRequests);
 	}
 	
 	// 펀딩생성에서 사용할 회사정보 가져오기
@@ -245,5 +245,18 @@ public class FundingService implements FundingServiceInterface {
 		return fundingdao.selectAllFundingList();
 	}
 	
+	// 관리자권한의 펀딩보기에서 모집실패와 마감된 펀딩리스트를 가져옴
+	@Override
+	public List<Object> getEndFundingList() {
+		log.debug("FundingService의 getEndFundingList호출 성공");
+		return fundingdao.selectEndFundingList();
+	}
+	
+	// 바로 위의 마감, 모집실패 상태의 펀딩리스트에서 더보기버튼을 눌렀을때 
+	@Override
+	public List<Funding> getMoreEndFdList(int numberOfRequests) {
+		log.debug("FundingService의 getMoreEndFdList호출 성공");
+		return fundingdao.selectMoreEndFundingList(numberOfRequests);
+	}
 }
  
