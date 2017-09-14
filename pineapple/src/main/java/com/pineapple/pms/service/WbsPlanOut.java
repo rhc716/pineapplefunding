@@ -8,8 +8,7 @@ public class WbsPlanOut {
 	private int wpoCost;
 	private int wpoComCode;
 	private String wpoOutComName;
-	private String wpoStartDate;
-	private String wpoEndDate;
+	private String wpoDate;
 	private String wpoRemarks;
 	public int getWpoCode() {
 		return wpoCode;
@@ -53,24 +52,14 @@ public class WbsPlanOut {
 	public void setWpoOutComName(String wpoOutComName) {
 		this.wpoOutComName = wpoOutComName;
 	}
-	public String getWpoStartDate() {
-		return wpoStartDate;
+	public String getWpoDate() {
+		return wpoDate;
 	}
-	public void setWpoStartDate(String wpoStartDate) {
-		if(wpoStartDate==""){
-			wpoStartDate=null;
+	public void setWpoDate(String wpoDate) {
+		if(wpoDate==""){
+			wpoDate=null;
 		}else{
-			this.wpoStartDate = wpoStartDate;
-		}
-	}
-	public String getWpoEndDate() {
-		return wpoEndDate;
-	}
-	public void setWpoEndDate(String wpoEndDate) {
-		if(wpoEndDate==""){
-			wpoEndDate=null;
-		}else{
-			this.wpoEndDate = wpoEndDate;
+			this.wpoDate = wpoDate;
 		}
 	}
 	public String getWpoRemarks() {
@@ -83,8 +72,7 @@ public class WbsPlanOut {
 	public String toString() {
 		return "WbsPlanOut [wpoCode=" + wpoCode + ", wpoFdCode=" + wpoFdCode + ", wpoMsCode=" + wpoMsCode
 				+ ", wpoWpCode=" + wpoWpCode + ", wpoCost=" + wpoCost + ", wpoComCode=" + wpoComCode
-				+ ", wpoOutComName=" + wpoOutComName + ", wpoStartDate=" + wpoStartDate + ", wpoEndDate=" + wpoEndDate
-				+ ", wpoRemarks=" + wpoRemarks + "]";
+				+ ", wpoOutComName=" + wpoOutComName + ", wpoDate=" + wpoDate + ", wpoRemarks=" + wpoRemarks + "]";
 	}
 	
 

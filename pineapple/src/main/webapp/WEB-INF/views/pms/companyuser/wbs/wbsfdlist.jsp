@@ -34,6 +34,8 @@
 <script>
 /* 펀딩 리스트 불러올 ajax */
 $(document).ready(function(){
+	var message = "${message}";
+	if(message!="") alert(message);
 	var getfundinglist = $.ajax({
 		type : "get",
 		url : "/pineapple/wbsfundinglist.pms",
@@ -254,20 +256,26 @@ $(document).on("change","select[name='wbsPlanMsCode']",function(){
 		    		 	'<div style="height:30px; padding-top:6px;">'
 		    		 	+'<span>작업명 : </span>'+msg[s].wbsPlanName
 		    		 	+' <form action="/pineapple/wbsplandetail.pms" method="post" style="display:inline;">'
+		    		 	+'<input type="hidden" name="wbsPlanCode" value="'+msg[s].wbsPlanCode+'"/>'
 		    		  	+'<button type="submit" class="btn btn-primary btn-sm" name="btn" value="detail">상세정보</button>'		
+		    		  	+'</form>'
 		    		  	+'<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#'+msg[s].wbsPlanCode+'">수정</button>'
+		    		  	+' <form action="/pineapple/wbsplandelete.pms" method="post" style="display:inline;">'
+		    		  	+'<input type="hidden" name="wbsPlanCode" value="'+msg[s].wbsPlanCode+'"/>'
 		    		  	+'<button type="submit" class="btn btn-danger btn-sm" name="btn" value="delete">삭제</button>'
+		    		  	+'</form>'
 		 				+'<div class="modal fade" id="'+msg[s].wbsPlanCode+'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">'
 		 				+'<div class="modal-dialog" role="document">'
 		 				+'<div class="modal-content">'
 		 				+'<div class="modal-body">'
+		 				+' <form action="/pineapple/wbsplanupdate.pms" method="post" style="display:inline;">'
 		 				+'<label for="wbsplan">WBS수정</label><br>'
 		 				+'작업명:'
 		 				+'<input type="text" class="form-control" name="wbsPlanName2" value="'+msg[s].wbsPlanName+'" readonly/>'
 		 				+'<input type="text" class="form-control" name="wbsPlanName" value="'+msg[s].wbsPlanName+'"/>'
 		 				+'선행작업:'
 		 				+'<input type="text" class="form-control" name="wbsPlanDependency2" value="'+msg[s].wbsPlanDependency+'" readonly/>'
-		 				+'<select name="wbsPlanDependency" class="wbsdc" id="wbsdc">'
+		 				+'<select name="wbsPlanDependency" class="wbsdc">'
 		 				+'<option value="없음"> 없음</option>'
 		 				+'</select><br>'
 		 				+'작업기간:'
@@ -291,17 +299,21 @@ $(document).on("change","select[name='wbsPlanMsCode']",function(){
 		 				+'<input type="hidden" readonly="readonly"  name="milestoneName" value="${milestoneName}">'
 		 				+'<input type="hidden" readonly="readonly"  name="msComCode" value="${msComCode}">'
 		 				+'<button type="submit" name="btn" value="update">입력완료</button>'
-		 				+'</div>'
-		 				+'</div>'
-		 				+'</div>'
-		 				+'</div>'
 		 				+'</form>'
+		 				+'</div>'
+		 				+'</div>'
+		 				+'</div>'
+		 				+'</div>'
 		    		  	+'</div>'
 		    		  	
+		    		  	
 			      );
-			      $('#wbsdc').append(
-	                        '<option value="'+msg[s].wbsPlanName+'">'+msg[s].wbsPlanName+'</option><br>'
-	                    );
+			    
+			      }
+			      for(var s = 0; s<msg.length; s++){
+				      $('.wbsdc').append(
+		                        '<option value="'+msg[s].wbsPlanName+'">'+msg[s].wbsPlanName+'</option><br>'
+		                    );
 			      }
 			      $('#insertbtn').append(
                           '<button type="button" data-toggle="modal" data-target="#insert">WBS생성</button>'
