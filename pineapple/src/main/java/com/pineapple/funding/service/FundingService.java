@@ -272,5 +272,12 @@ public class FundingService implements FundingServiceInterface {
 		log.debug("FundingService의 getMyNewMessageNum호출 성공");
 		return fundingdao.selectMyNewMessageNum(userid);
 	}
+	
+	// 메인에서 모집중펀딩순위 랭킹 5를 가져오는 ajax요청
+	@Override
+	public List<Funding> getCompanyRankingFive() {
+		log.debug("FundingService의 getCompanyRankingFive호출 성공");
+		return fundingdao.selectCompanyRankingFive();
+	}
 }
  

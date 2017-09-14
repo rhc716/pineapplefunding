@@ -664,6 +664,17 @@
 		FROM message
 		WHERE msgReceiveId = #{userId} AND msgCheck = 0
 	</select>
+	
+	<!-- 메인에서 사용할 모집중 펀딩순위 랭킹 5를 셀렉트 해오는 쿼리 -->
+	<select id="selectCompanyRankingFive" resultType="com.pineapple.funding.service.Funding">
+		SELECT *
+		FROM funding f INNER JOIN investment i
+		ON f.fdCode = i.investFdCode
+		WHERE fdStatus = '모집중'
+		GROUP BY fdTitle
+		ORDER BY SUM(f.issuePrice*i.purchaseShares) DESC
+		limit 0,5
+	</select>
 </mapper>
 
  

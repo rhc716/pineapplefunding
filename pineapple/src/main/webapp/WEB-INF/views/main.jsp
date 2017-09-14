@@ -35,8 +35,27 @@ $(document).ready(function(){
 	banner();
 	setInterval("banner()", 10000);
 
-	//기업순위를 가져오는 ajax 요청
+	//모집중 랭킹 5 펀딩순위를 가져오는 ajax 요청
+	var getcompanyrankingfive = $.ajax({
+		type : "get",
+		url : "/pineapple/getcompanyrankingfive.pms",
+	});
 	
+	// 성공시
+	getcompanyrankingfive.done(function(msg){
+		console.log(msg);
+		// 랭킹 5에 불러온 펀딩 수 만큼 추가해줌  // 링크도 걸어줌
+		for(var i=0; i<msg.length; i++){
+			$('#rankinglist').find("a:eq("+i+")").html(msg[i].fdTitle);
+			$('#rankinglist').find("a:eq("+i+")").attr("href","/pineapple/investfunding.invest?fdCode="+msg[i].fdCode);
+		}
+		
+	});	
+	
+	// 실패시
+	getcompanyrankingfive.fail(function(){
+		alert('ajax통신실패');
+	});
 	
 });
  </script>
@@ -81,9 +100,9 @@ $(document).ready(function(){
 <div class="row">
 	<!-- 본문 좌측 -->
 	<div class="col-xs-2 col-md-2">
-		<div class="list-group">
-		  <a class="list-group-item active">기업순위</a>
-		  <a href="#" class="list-group-item list-group-item-action"></a>
+		<div class="list-group" id="rankinglist">
+		  <h4 align="center" class="list-group-item active"> 모집중 펀딩<br> 투자금액 순위 TOP5</h4>
+		  <a href="#" class="list-group-item list-group-item-action" ></a>
 		  <a href="#" class="list-group-item list-group-item-action list-group-item-success"></a>
 		  <a href="#" class="list-group-item list-group-item-action list-group-item-info"></a>
 		  <a href="#" class="list-group-item list-group-item-action list-group-item-warning"></a>

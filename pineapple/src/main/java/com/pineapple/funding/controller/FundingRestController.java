@@ -1,6 +1,7 @@
 package com.pineapple.funding.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -209,5 +210,14 @@ public class FundingRestController {
 			return result;
 		}
 		
+		// 메인에서 모집중펀딩순위 랭킹 5를 가져오는 ajax요청
+		@RequestMapping(value = "/getcompanyrankingfive.pms", method = RequestMethod.GET)
+		public List<Funding> getCompanyRankingFive(Model model, Locale locale){
+			log.debug("FundingRestController의 getCompanyRankingFive호출 성공");
+			List<Funding> list = new ArrayList<Funding>();
+			list = service.getCompanyRankingFive();
+			
+			return list;
+		}
 		
 }

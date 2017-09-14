@@ -344,4 +344,11 @@ public class FundingDao implements FundingDaoInterface {
 		log.debug("새 메세지의 수 result : "+ result);
 		return result;
 	}
+	
+	// 메인에서 모집중펀딩순위 랭킹 5를 가져오는 ajax요청
+	@Override
+	public List<Funding> selectCompanyRankingFive() {
+		log.debug("FundingDao의 selectCompanyRankingFive호출 성공");
+		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectCompanyRankingFive");
+	}
 }

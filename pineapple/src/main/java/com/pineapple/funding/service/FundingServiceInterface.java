@@ -46,4 +46,5 @@ public interface FundingServiceInterface {
 	List<Funding> getMoreEndFdList(int numberOfRequests);
 	int sendMessageAllInvestors(MessageAndFd messageandfd);
 	int getMyNewMessageNum(String userid);
+	List<Funding> getCompanyRankingFive();
 }
