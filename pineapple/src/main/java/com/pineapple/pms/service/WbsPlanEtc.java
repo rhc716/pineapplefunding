@@ -8,8 +8,7 @@ public class WbsPlanEtc {
 	private int wpeCost;
 	private int wpeComCode;
 	private String wpePurpose;
-	private String wpeStartDate;
-	private String wpeEndDate;
+	private String wpeDate;
 	private String wpeRemarks;
 	public int getWpeCode() {
 		return wpeCode;
@@ -53,24 +52,14 @@ public class WbsPlanEtc {
 	public void setWpePurpose(String wpePurpose) {
 		this.wpePurpose = wpePurpose;
 	}
-	public String getWpeStartDate() {
-		return wpeStartDate;
+	public String getWpeDate() {
+		return wpeDate;
 	}
-	public void setWpeStartDate(String wpeStartDate) {
-		if(wpeStartDate==""){
-			wpeStartDate=null;
+	public void setWpeDate(String wpeDate) {
+		if(wpeDate==""){
+			wpeDate=null;
 		}else{
-			this.wpeStartDate = wpeStartDate;
-		}
-	}
-	public String getWpeEndDate() {
-		return wpeEndDate;
-	}
-	public void setWpeEndDate(String wpeEndDate) {
-		if(wpeEndDate==""){
-			wpeEndDate=null;
-		}else{
-			this.wpeEndDate = wpeEndDate;
+			this.wpeDate = wpeDate;
 		}
 	}
 	public String getWpeRemarks() {
@@ -83,7 +72,7 @@ public class WbsPlanEtc {
 	public String toString() {
 		return "WbsPlanEtc [wpeCode=" + wpeCode + ", wpeFdCode=" + wpeFdCode + ", wpeMsCode=" + wpeMsCode
 				+ ", wpeWpCode=" + wpeWpCode + ", wpeCost=" + wpeCost + ", wpeComCode=" + wpeComCode + ", wpePurpose="
-				+ wpePurpose + ", wpeStartDate=" + wpeStartDate + ", wpeEndDate=" + wpeEndDate + ", wpeRemarks="
+				+ wpePurpose + ", wpeDate=" + wpeDate + ", wpeRemarks="
 				+ wpeRemarks + "]";
 	}
 	

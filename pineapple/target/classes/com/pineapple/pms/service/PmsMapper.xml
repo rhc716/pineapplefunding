@@ -31,25 +31,25 @@
 	
 	<insert id="wbsplanfacilityinsert" parameterType="com.pineapple.pms.service.WbsPlanFacility">
 		INSERT INTO wbsplanfacility
-			(wpfCode, wpfFdCode, wpfMsCode, wpfWpCode, wpfName, wpfCost, wpfStartDate, wpfEndDate, wpfRemarks, wpfComCode)
-			VALUES (NULL, #{wpfFdCode}, #{wpfMsCode}, #{wpfWpCode}, #{wpfName}, #{wpfCost}, #{wpfStartDate}, #{wpfEndDate}, #{wpfRemarks}, #{wpfComCode})
+			(wpfCode, wpfFdCode, wpfMsCode, wpfWpCode, wpfName, wpfCost, wpfDate, wpfRemarks, wpfComCode)
+			VALUES (NULL, #{wpfFdCode}, #{wpfMsCode}, #{wpfWpCode}, #{wpfName}, #{wpfCost}, #{wpfDate}, #{wpfRemarks}, #{wpfComCode})
 	</insert>
 	
 	<insert id="wbsplanoutinsert" parameterType="com.pineapple.pms.service.WbsPlanOut">
 		INSERT INTO wbsplanout
-			(wpoCode, wpoFdCode, wpoMsCode, wpoWpCode, wpoOutComName, wpoCost, wpoStartDate, wpoEndDate, wpoRemarks, wpoComCode)
-			VALUES (NULL, #{wpoFdCode}, #{wpoMsCode}, #{wpoWpCode}, #{wpoOutComName}, #{wpoCost}, #{wpoStartDate}, #{wpoEndDate}, #{wpoRemarks}, #{wpoComCode})
+			(wpoCode, wpoFdCode, wpoMsCode, wpoWpCode, wpoOutComName, wpoCost, wpoDate, wpoRemarks, wpoComCode)
+			VALUES (NULL, #{wpoFdCode}, #{wpoMsCode}, #{wpoWpCode}, #{wpoOutComName}, #{wpoCost}, #{wpoDate}, #{wpoRemarks}, #{wpoComCode})
 	</insert>
 	
 	<insert id="wbsplanetcinser" parameterType="com.pineapple.pms.service.WbsPlanEtc">
 		INSERT INTO wbsplanetc
-			(wpeCode, wpeFdCode, wpeMsCode, wpeWpCode, wpePurpose, wpeCost, wpeStartDate, wpeEndDate, wpeRemarks, wpeComCode)
-			VALUES (NULL, #{wpeFdCode}, #{wpeMsCode}, #{wpeWpCode}, #{wpePurpose}, #{wpeCost}, #{wpeStartDate}, #{wpeEndDate}, #{wpeRemarks}, #{wpeComCode})
+			(wpeCode, wpeFdCode, wpeMsCode, wpeWpCode, wpePurpose, wpeCost, wpeDate, wpeRemarks, wpeComCode)
+			VALUES (NULL, #{wpeFdCode}, #{wpeMsCode}, #{wpeWpCode}, #{wpePurpose}, #{wpeCost}, #{wpeDate}, #{wpeRemarks}, #{wpeComCode})
 	</insert>
 	<insert id="wbsplanincomeinsert" parameterType="com.pineapple.pms.service.WbsPlanIncome">
 		INSERT INTO wbsplanincome
-			(wpiCode, wpiFdCode, wpiMsCode, wpiWpCode, wpiReason, wpiIncome, wpiStartDate, wpiEndDate, wpiComCode)
-			VALUES (NULL, #{wpiFdCode}, #{wpiMsCode}, #{wpiWpCode}, #{wpiReason}, #{wpiIncome}, #{wpiStartDate}, #{wpiEndDate}, #{wpiComCode})
+			(wpiCode, wpiFdCode, wpiMsCode, wpiWpCode, wpiReason, wpiIncome, wpiDate, wpiComCode)
+			VALUES (NULL, #{wpiFdCode}, #{wpiMsCode}, #{wpiWpCode}, #{wpiReason}, #{wpiIncome}, #{wpiDate}, #{wpiComCode})
 	</insert>
 	
 	<!-- wbsplanHuman 리스트 요청쿼리 -->
@@ -215,12 +215,7 @@
 			wphWpCode=#{changecode}
 		WHERE wphWpCode=#{wbsplancode}
 	</update>
-	<update id="wbsmargin" parameterType="HashMap">
-		UPDATE wbsplan
-		SET
-			wbsMargin=#{margin}
-		WHERE wbsPlanCode=#{wbsplancode}
-	</update>
+
 		<update id="wbsplanupdatefacility" parameterType="HashMap">
 		UPDATE wbsplanfacility
 		SET

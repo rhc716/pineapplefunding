@@ -29,7 +29,117 @@
 <script>
 
 $(document).ready(function(){
-
+	 $('#inserthumanBtn').click(function(){	
+		if($('#wphNoPeople').val() !="") {
+			if($('#wphCost').val() !=""){
+				if($('#wphRemarks').val() !=""){
+					if($('#wphDate').val() !=""){
+						$('#humanform').submit();
+					 }else{
+						 alert('사용일을 입력해주세요');
+					 }
+				 }else{
+					 alert('비고를 입력해주세요');
+				 }
+			 }else{
+				 alert('비용을 입력해주세요');
+			 }
+		 }else{
+			 alert('인원수를 입력해주세요');
+		 }
+	 })
+	 $('#insertmaterialBtn').click(function(){	
+		if($('#wpmName').val() !="") {
+			if($('#wpmCost').val() !=""){
+				if($('#wpmRemarks').val() !=""){
+					if($('#wpmDate').val() !=""){
+						$('#materialform').submit();
+					 }else{
+						 alert('사용일을 입력해주세요');
+					 }
+				 }else{
+					 alert('비고를 입력해주세요');
+				 }
+			 }else{
+				 alert('비용을 입력해주세요');
+			 }
+		 }else{
+			 alert('장비명을 입력해주세요');
+		 }
+	 })
+	 $('#insertfacilityBtn').click(function(){	
+		if($('#wpfName').val() !="") {
+			if($('#wpfCost').val() !=""){
+				if($('#wpfRemarks').val() !=""){
+					if($('#wpfDate').val() !=""){
+						$('#facilityform').submit();
+					 }else{
+						 alert('사용일을 입력해주세요');
+					 }
+				 }else{
+					 alert('비고를 입력해주세요');
+				 }
+			 }else{
+				 alert('비용을 입력해주세요');
+			 }
+		 }else{
+			 alert('시설명을 입력해주세요');
+		 }
+	 })
+	 $('#insertoutBtn').click(function(){	
+		if($('#wpoOutComName').val() !="") {
+			if($('#wpoCost').val() !=""){
+				if($('#wpoRemarks').val() !=""){
+					if($('#wpoDate').val() !=""){
+						$('#outform').submit();
+					 }else{
+						 alert('사용일을 입력해주세요');
+					 }
+				 }else{
+					 alert('비고를 입력해주세요');
+				 }
+			 }else{
+				 alert('비용을 입력해주세요');
+			 }
+		 }else{
+			 alert('외주업체명을 입력해주세요');
+		 }
+	 })
+	 $('#insertetcBtn').click(function(){	
+		if($('#wpePurpose').val() !="") {
+			if($('#wpeCost').val() !=""){
+				if($('#wpeRemarks').val() !=""){
+					if($('#wpeDate').val() !=""){
+						$('#etcform').submit();
+					 }else{
+						 alert('사용일을 입력해주세요');
+					 }
+				 }else{
+					 alert('비고를 입력해주세요');
+				 }
+			 }else{
+				 alert('비용을 입력해주세요');
+			 }
+		 }else{
+			 alert('용도를 입력해주세요');
+		 }
+	 })
+	 $('#insertincomeBtn').click(function(){	
+		if($('#wpiReason').val() !="") {
+			if($('#wpiIncome').val() !=""){
+				if($('#wpiDate').val() !=""){
+						$('#incomeform').submit();
+				}else{
+					alert('수익일을 입력하세요');
+				}
+			}else{
+				alert('수익을 입력하세요');
+			}
+		}else{
+			alert('수익사유를 입력하세요');
+		}
+				
+	 })
 	//wbs코드로 humanlist받아옴
 	var getwbsplanlist = $.ajax({
 		type : "get",
@@ -52,7 +162,42 @@ $(document).ready(function(){
 		       	+'<input type="hidden" class="form-control" name="wphMsCode" value="'+msg.wbsplan.wbsPlanMsCode+'">'
 		       	+'<input type="hidden" class="form-control" name="wphComCode" value="'+msg.wbsplan.wbsPlanComCode+'">'
 		)
-		
+		$('#wbsplanmaterial').append(
+				'<input type="hidden"name="wbsPlanCode" value="'+msg.wbsplan.wbsPlanCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpmWpCode" value="'+msg.wbsplan.wbsPlanCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpmFdCode" value="'+msg.wbsplan.wbsPlanFdCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpmMsCode" value="'+msg.wbsplan.wbsPlanMsCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpmComCode" value="'+msg.wbsplan.wbsPlanComCode+'">'
+		)
+		$('#wbsplanfacility').append(
+				'<input type="hidden"name="wbsPlanCode" value="'+msg.wbsplan.wbsPlanCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpfWpCode" value="'+msg.wbsplan.wbsPlanCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpfFdCode" value="'+msg.wbsplan.wbsPlanFdCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpfMsCode" value="'+msg.wbsplan.wbsPlanMsCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpfComCode" value="'+msg.wbsplan.wbsPlanComCode+'">'
+		)
+		$('#wbsplanout').append(
+				'<input type="hidden"name="wbsPlanCode" value="'+msg.wbsplan.wbsPlanCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpoWpCode" value="'+msg.wbsplan.wbsPlanCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpoFdCode" value="'+msg.wbsplan.wbsPlanFdCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpoMsCode" value="'+msg.wbsplan.wbsPlanMsCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpoComCode" value="'+msg.wbsplan.wbsPlanComCode+'">'
+		)
+		$('#wbsplanetc').append(
+				'<input type="hidden"name="wbsPlanCode" value="'+msg.wbsplan.wbsPlanCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpeWpCode" value="'+msg.wbsplan.wbsPlanCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpeFdCode" value="'+msg.wbsplan.wbsPlanFdCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpeMsCode" value="'+msg.wbsplan.wbsPlanMsCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpeComCode" value="'+msg.wbsplan.wbsPlanComCode+'">'
+		)
+		$('#wbsplanincome').append(
+				'<input type="hidden"name="wbsPlanCode" value="'+msg.wbsplan.wbsPlanCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpiWpCode" value="'+msg.wbsplan.wbsPlanCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpiFdCode" value="'+msg.wbsplan.wbsPlanFdCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpiMsCode" value="'+msg.wbsplan.wbsPlanMsCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpiComCode" value="'+msg.wbsplan.wbsPlanComCode+'">'
+		)
+
 			
 		for(var i = 0; i<msg.wbsplanhuman.length; i++){
 			$('#humanlist').append(
@@ -89,12 +234,49 @@ $(document).ready(function(){
 					+'<td>'+msg.wbsplanfacility[i].wpfRemarks+'</td>'	
 					+'<td>'+msg.wbsplanfacility[i].wpfDate+'</td>'	
 					+'<td class="minitd">'
-					+'<button type="submit" class="btn btn-danger  minibtn deletematerial" value="'+msg.wbsplanfacility[i].wpfCode+'">삭제</button>'
+					+'<button type="submit" class="btn btn-danger  minibtn deletefacility" value="'+msg.wbsplanfacility[i].wpfCode+'">삭제</button>'
 					+'</td>'
 					+'</tr>'
 			)
 		}
-		
+		for(var i = 0; i<msg.wbsplanout.length; i++){
+			$('#outlist').append(
+					'<tr>'
+					+'<td>'+msg.wbsplanout[i].wpoOutComName+'</td>'
+					+'<td>'+msg.wbsplanout[i].wpoCost+'</td>'
+					+'<td>'+msg.wbsplanout[i].wpoRemarks+'</td>'	
+					+'<td>'+msg.wbsplanout[i].wpoDate+'</td>'	
+					+'<td class="minitd">'
+					+'<button type="submit" class="btn btn-danger  minibtn deleteout" value="'+msg.wbsplanout[i].wpoCode+'">삭제</button>'
+					+'</td>'
+					+'</tr>'
+			)
+		}
+		for(var i = 0; i<msg.wbsplanetc.length; i++){
+			$('#etclist').append(
+					'<tr>'
+					+'<td>'+msg.wbsplanetc[i].wpePurpose+'</td>'
+					+'<td>'+msg.wbsplanetc[i].wpeCost+'</td>'
+					+'<td>'+msg.wbsplanetc[i].wpeRemarks+'</td>'	
+					+'<td>'+msg.wbsplanetc[i].wpeDate+'</td>'	
+					+'<td class="minitd">'
+					+'<button type="submit" class="btn btn-danger  minibtn deleteetc" value="'+msg.wbsplanetc[i].wpeCode+'">삭제</button>'
+					+'</td>'
+					+'</tr>'
+			)
+		}
+		for(var i = 0; i<msg.wbsplanincome.length; i++){
+			$('#incomelist').append(
+					'<tr>'
+					+'<td>'+msg.wbsplanincome[i].wpiReason+'</td>'
+					+'<td>'+msg.wbsplanincome[i].wpiIncome+'</td>'
+					+'<td>'+msg.wbsplanincome[i].wpiDate+'</td>'	
+					+'<td class="minitd">'
+					+'<button type="submit" class="btn btn-danger  minibtn deleteincome" value="'+msg.wbsplanincome[i].wpiCode+'">삭제</button>'
+					+'</td>'
+					+'</tr>'
+			)
+		}
 		
 		
 			
@@ -118,9 +300,113 @@ $(document).ready(function(){
 						alert('삭제실패')
 					})
 				}else{
-					
 				}
-				
+			});
+			$('.deletematerial').click(function () {
+				var answer = confirm("삭제하시겠습니까?")
+				if (answer) {
+					var ss = $(this).val();
+					var test = $.ajax({
+						type : "post",
+						url : "/pineapple/wbsplanmaterialdelete.pms",
+						/* 아이디 세션에서 받아서 가져옴 */
+						data : { wpmCode : ss }
+					}); 
+					test.done(function(){
+						location.reload();
+						alert('삭제완료')
+					})
+					test.fail(function(){
+						location.reload();
+						alert('삭제실패')
+					})
+				}else{
+				}
+			});
+			
+			$('.deletefacility').click(function () {
+				var answer = confirm("삭제하시겠습니까?")
+				if (answer) {
+					var ss = $(this).val();
+					var test = $.ajax({
+						type : "post",
+						url : "/pineapple/wbsplanfacilitydelete.pms",
+						/* 아이디 세션에서 받아서 가져옴 */
+						data : { wpfCode : ss }
+					}); 
+					test.done(function(){
+						location.reload();
+						alert('삭제완료')
+					})
+					test.fail(function(){
+						location.reload();
+						alert('삭제실패')
+					})
+				}else{
+				}
+			});
+			$('.deleteout').click(function () {
+				var answer = confirm("삭제하시겠습니까?")
+				if (answer) {
+					var ss = $(this).val();
+					var test = $.ajax({
+						type : "post",
+						url : "/pineapple/wbsplanoutdelete.pms",
+						/* 아이디 세션에서 받아서 가져옴 */
+						data : { wpoCode : ss }
+					}); 
+					test.done(function(){
+						location.reload();
+						alert('삭제완료')
+					})
+					test.fail(function(){
+						location.reload();
+						alert('삭제실패')
+					})
+				}else{	
+				}
+			});
+			$('.deleteetc').click(function () {
+				var answer = confirm("삭제하시겠습니까?")
+				if (answer) {
+					var ss = $(this).val();
+					var test = $.ajax({
+						type : "post",
+						url : "/pineapple/wbsplanetcdelete.pms",
+						/* 아이디 세션에서 받아서 가져옴 */
+						data : { wpeCode : ss }
+					}); 
+					test.done(function(){
+						location.reload();
+						alert('삭제완료')
+					})
+					test.fail(function(){
+						location.reload();
+						alert('삭제실패')
+					})
+				}else{
+				}
+			});
+			$('.deleteincome').click(function () {
+				var answer = confirm("삭제하시겠습니까?")
+				if (answer) {
+					var ss = $(this).val();
+					var test = $.ajax({
+						type : "post",
+						url : "/pineapple/wbsplanincomedelete.pms",
+						/* 아이디 세션에서 받아서 가져옴 */
+						data : { wpiCode : ss }
+					}); 
+					test.done(function(){
+						location.reload();
+						alert('삭제완료')
+					})
+					test.fail(function(){
+						location.reload();
+						alert('삭제실패')
+					})
+				}else{
+				}
 			});
 		})
 	})
@@ -238,40 +524,26 @@ $(document).ready(function(){
 				</div>
 			</div><br>
 			<div class="row">
-				<div class="col-md-4">
-					<form  action="/pineapple/wbsplanoutlist.pms" method="post">
-						<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
-						<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
-						<input type="hidden" readonly="readonly"  name="milestoneCode" value="${milestoneCode}">
-						<input type="hidden" readonly="readonly"  name="milestoneName" value="${milestoneName}">
-						<input type="hidden" readonly="readonly"  name="msComCode" value="${msComCode}">
-						<input type="hidden"name="wbsPlanCode" value="${wbsplandetail.wbsPlanCode}">
-						<button type="submit" class="btn btn-primary">외주 상세보기</button>
-					</form>
+				<div class="col-md-6 boder">
+					<table id="etclist">
+						 <tr>
+							 <th>용도</th>
+							 <th>비용</th>
+							 <th>비고</th>
+							 <th>사용일</th>
+						 </tr>
+					 </table>
 				</div>
-				<div class="col-md-4">
-					<form action="/pineapple/wbsplanetclist.pms" method="post">
-						<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
-						<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
-						<input type="hidden" readonly="readonly"  name="milestoneCode" value="${milestoneCode}">
-						<input type="hidden" readonly="readonly"  name="milestoneName" value="${milestoneName}">
-						<input type="hidden" readonly="readonly"  name="msComCode" value="${msComCode}">
-						<input type="hidden"name="wbsPlanCode" value="${wbsplandetail.wbsPlanCode}">
-						<button type="submit" class="btn btn-primary">기타 상세보기</button>	
-					</form>
+				<div class="col-md-6 boder">
+					<table id="incomelist">
+						 <tr>
+							 <th>수익사유</th>
+							 <th>수익</th>
+							 <th>수익일</th>
+						 </tr>
+					 </table>
 				</div>
-				<div class="col-md-4">
-					<form action="/pineapple/wbsplanincomelist.pms" method="post">
-						<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
-						<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
-						<input type="hidden" readonly="readonly"  name="milestoneCode" value="${milestoneCode}">
-						<input type="hidden" readonly="readonly"  name="milestoneName" value="${milestoneName}">
-						<input type="hidden" readonly="readonly"  name="msComCode" value="${msComCode}">
-						<input type="hidden"name="wbsPlanCode" value="${wbsplandetail.wbsPlanCode}">
-						<button type="submit" class="btn btn-primary">수입 상세보기</button>
-					</form>		
-				</div>	
-			</div>
+			</div><br>
 			
 			
 			
@@ -283,21 +555,21 @@ $(document).ready(function(){
 			    <div class="modal-content">
 			<!-- 모달창 본문내용 -->				      
 			      <div class="modal-body">
-			        <form action="/pineapple/wbsplanhumaninsert.pms" method="post">
+			        <form id="humanform" action="/pineapple/wbsplanhumaninsert.pms" method="post">
 			        <!-- 기본적으로 들어가는 wbs예상코드 펀딩코드 마일스톤코드 회사코드를 입력되는곳 -->
 			        	<label for="wbsplanhuman" id="wbsplanhuman">WBS예상인원 지출</label><br>
 						
 		          	<!-- 여기서부터는 직접 입력하는곳 --> 
 			           	인원수:
-			            <input type="number" class="form-control" name="wphNoPeople">
+			            <input type="number" class="form-control" id="wphNoPeople" name="wphNoPeople">
 					         총비용:
-			          	<input type="number" class="form-control" name="wphCost">
+			          	<input type="number" class="form-control" id="wphCost" name="wphCost">
 			          	비고:
-			          	<input type="text" class="form-control" name="wphRemarks">
+			          	<input type="text" class="form-control" id="wphRemarks" name="wphRemarks">
 			          	사용일:
-			          	<input type="date" class="form-control" name="wphDate">
+			          	<input type="date" class="form-control" id="wphDate" name="wphDate">
 			          	<br>
-			          	<button type="submit">입력완료</button>
+			          	<input id="inserthumanBtn" type="button" class="button_insert signupbtn" value="입력완료">
 			        </form>
 			      </div>
 			    </div>
@@ -308,22 +580,18 @@ $(document).ready(function(){
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-body">
-			        <form action="/pineapple/wbsplanmaterialinsert.pms" method="post">
-			        	<label for="wbsplanmaterial">WBS예상장비 지출</label><br>
-			        	<input type="hidden" class="form-control" name="wpmWpCode" value="${wbsplandetail.wbsPlanCode}">
-			        	<input type="hidden" class="form-control" name="wpmFdCode" value="${wbsplandetail.wbsPlanFdCode}">
-			        	<input type="hidden" class="form-control" name="wpmMsCode" value="${wbsplandetail.wbsPlanMsCode}">
-			           	<input type="hidden" class="form-control" name="wpmComCode" value="${wbsplandetail.wbsPlanComCode}">
+			        <form  id="materialform"action="/pineapple/wbsplanmaterialinsert.pms" method="post">
+			        	<label for="wbsplanmaterial" id="wbsplanmaterial">WBS예상장비 지출</label><br>
 			           	장비명:
-			            <input type="text" class="form-control" name="wpmName">
+			            <input type="text" class="form-control" id="wpmName" name="wpmName">
 			          	비용:
-			          	<input type="number" class="form-control" name="wpmCost">
+			          	<input type="number" class="form-control" id="wpmCost" name="wpmCost">
 			          	비고:
-			          	<input type="text" class="form-control" name="wpmRemarks">
+			          	<input type="text" class="form-control" id="wpmRemarks" name="wpmRemarks">
 			          	사용일:
-			          	<input type="date" class="form-control" name="wpmDate">
+			          	<input type="date" class="form-control" id="wpmDate" name="wpmDate">
 			          	<br>
-			          	<button type="submit">입력완료</button>
+			          	<input id="insertmaterialBtn" type="button" class="button_insert signupbtn" value="입력완료">
 			        </form>
 			      </div>
 			    </div>
@@ -333,23 +601,18 @@ $(document).ready(function(){
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-body">
-			        <form action="/pineapple/wbsplanfacilityinsert.pms" method="post">
-			        	<label for="wbsplanfacility">WBS예상시설 지출</label><br>
-			       	<input type="hidden" class="form-control" name="wpfWpCode" value="${wbsplandetail.wbsPlanCode}">
-			        	<input type="hidden" class="form-control" name="wpfFdCode" value="${wbsplandetail.wbsPlanFdCode}">
-			        	<input type="hidden" class="form-control" name="wpfMsCode" value="${wbsplandetail.wbsPlanMsCode}">
-			           	<input type="hidden" class="form-control" name="wpfComCode" value="${wbsplandetail.wbsPlanComCode}">
+			        <form id="facilityform"action="/pineapple/wbsplanfacilityinsert.pms" method="post">
+			        	<label for="wbsplanfacility" id="wbsplanfacility">WBS예상시설 지출</label><br>
 			           	시설명:
-			            <input type="text" class="form-control" name="wpfName">
+			            <input type="text" class="form-control" id="wpfName" name="wpfName">
 			          	가격:
-			          	<input type="number" class="form-control" name="wpfCost">
+			          	<input type="number" class="form-control" id="wpfCost"name="wpfCost">
 			          	비고:
-			          	<input type="text" class="form-control" name="wpfRemarks">
-			          	시작일:
-			          	<input type="date" class="form-control" name="wpfStartDate">
-			          	종료일:
-			          	<input type="date" class="form-control" name="wpfEndDate"><br>
-			          	<button type="submit">입력완료</button>
+			          	<input type="text" class="form-control" id="wpfRemarks"name="wpfRemarks">
+			          	사용일:
+			          	<input type="date" class="form-control" id="wpfDate"name="wpfDate">
+			      		<br>
+			          	<input id="insertfacilityBtn" type="button" class="button_insert signupbtn" value="입력완료">
 			        </form>
 			      </div>				     
 			    </div>
@@ -358,26 +621,19 @@ $(document).ready(function(){
 			<div class="modal fade" id="insertout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLabel">예상 외주 지출 입력</h5>
-			      </div>
 			      <div class="modal-body">
-			        <form action="/pineapple/wbsplanoutinsert.pms" method="post">
-			        	<input type="hidden" class="form-control" name="wpoWpCode" value="${wbsplandetail.wbsPlanCode}">
-			        	<input type="hidden" class="form-control" name="wpoFdCode" value="${wbsplandetail.wbsPlanFdCode}">
-			        	<input type="hidden" class="form-control" name="wpoMsCode" value="${wbsplandetail.wbsPlanMsCode}">
-			           	<input type="hidden" class="form-control" name="wpoComCode" value="${wbsplandetail.wbsPlanComCode}">
+			        <form id="outform"action="/pineapple/wbsplanoutinsert.pms" method="post">
+			        <label for="wbsplanout" id="wbsplanout">WBS예상외주 지출</label><br>
 			           	외주업체명:
-			            <input type="text" class="form-control" name="wpoOutComName">			    
+			            <input type="text" class="form-control" id="wpoOutComName"name="wpoOutComName">			    
 			          	비용:
-			          	<input type="number" class="form-control" name="wpoCost">
+			          	<input type="number" class="form-control" id="wpoCost"name="wpoCost">
 			          	비고:
-			          	<input type="text" class="form-control" name="wpoRemarks">
-			          	시작일:
-			          	<input type="date" class="form-control" name="wpoStartDate">
-			          	종료일:
-			          	<input type="date" class="form-control" name="wpoEndDate"><br>
-			          	<button type="submit">입력완료</button>
+			          	<input type="text" class="form-control" id="wpoRemarks"name="wpoRemarks">
+			          	사용일:
+			          	<input type="date" class="form-control" id="wpoDate"name="wpoDate">
+			          	<br>
+			          	<input id="insertoutBtn" type="button" class="button_insert signupbtn" value="입력완료">
 			        </form>
 			      </div>				     
 			    </div>
@@ -386,26 +642,19 @@ $(document).ready(function(){
 			<div class="modal fade" id="insertetc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLabel">예상 기타 지출 입력</h5>
-			      </div>
 			      <div class="modal-body">
-			        <form action="/pineapple/addwbsplanetc.pms" method="post">
-			        	<input type="hidden" class="form-control" name="wpeWpCode" value="${wbsplandetail.wbsPlanCode}">
-			        	<input type="hidden" class="form-control" name="wpeFdCode" value="${wbsplandetail.wbsPlanFdCode}">
-			        	<input type="hidden" class="form-control" name="wpeMsCode" value="${wbsplandetail.wbsPlanMsCode}">
-			           	<input type="hidden" class="form-control" name="wpeComCode" value="${wbsplandetail.wbsPlanComCode}">
+			        <form id="etcform" action="/pineapple/addwbsplanetc.pms" method="post">
+			        	<label for="wbsplanetc" id="wbsplanetc">WBS예상기타 지출</label><br>
 			           	용도:
-			            <input type="text" class="form-control" name="wpePurpose">
+			            <input type="text" class="form-control" id="wpePurpose"name="wpePurpose">
 			          	비용:
-			          	<input type="number" class="form-control" name="wpeCost">
+			          	<input type="number" class="form-control" id="wpeCost"name="wpeCost">
 			          	비고:
-			          	<input type="text" class="form-control" name="wpeRemarks">
-			          	시작일:
-			          	<input type="date" class="form-control" name="wpeStartDate">
-			          	종료일:
-			          	<input type="date" class="form-control" name="wpeEndDate"><br>
-			          	<button type="submit">입력완료</button>
+			          	<input type="text" class="form-control" id="wpeRemarks"name="wpeRemarks">
+			          	사용일:
+			          	<input type="date" class="form-control" id="wpeDate"name="wpeDate">
+			         	<br>
+			          	<input id="insertetcBtn" type="button" class="button_insert signupbtn" value="입력완료">
 			        </form>
 			      </div>				      
 			    </div>
@@ -414,24 +663,17 @@ $(document).ready(function(){
 			<div class="modal fade" id="insertincome" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLabel">예상 수입 입력</h5>
-			      </div>
 			      <div class="modal-body">
-			        <form action="/pineapple/wbsplanincomeinsert.pms" method="post">
-			        	<input type="hidden" class="form-control" name="wpiWpCode" value="${wbsplandetail.wbsPlanCode}">
-			        	<input type="hidden" class="form-control" name="wpiFdCode" value="${wbsplandetail.wbsPlanFdCode}">
-			        	<input type="hidden" class="form-control" name="wpiMsCode" value="${wbsplandetail.wbsPlanMsCode}">
-			        	<input type="hidden" class="form-control" name="wpiComCode" value="${wbsplandetail.wbsPlanComCode}">
+			        <form id="incomeform"action="/pineapple/wbsplanincomeinsert.pms" method="post">
+			        	<label for="wbsplanincome" id="wbsplanincome">WBS예상 수익</label><br>
 			           	수익사유:
-			            <input type="text" class="form-control" name="wpiReason">
+			            <input type="text" class="form-control" id="wpiReason"name="wpiReason">
 			          	수익:
-			          	<input type="number" class="form-control" name="wpiIncome">
-			          	시작일:
-			          	<input type="date" class="form-control" name="wpiStartDate">
-			          	종료일:
-			          	<input type="date" class="form-control" name="wpiEndDate"><br>
-			          	<button type="submit">입력완료</button>
+			          	<input type="number" class="form-control" id="wpiIncome"name="wpiIncome">
+			          	수익일:
+			          	<input type="date" class="form-control" id="wpiDate"name="wpiDate">
+			          	<br>
+			          	<input id="insertincomeBtn" type="button" class="button_insert signupbtn" value="입력완료">
 			        </form>
 			      </div>				   
 			    </div>
