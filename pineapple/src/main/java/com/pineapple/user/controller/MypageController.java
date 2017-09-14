@@ -10,6 +10,7 @@ import com.pineapple.user.service.FundingAndCompanyAndMilestoneAndWbsAndMargin;
 import com.pineapple.user.service.Fundingauth;
 import com.pineapple.user.service.FundingauthFundingAuthlevelCompany;
 import com.pineapple.user.service.Fundingauthlevel;
+import com.pineapple.user.service.InvestmentAndDividendpay;
 import com.pineapple.user.service.MypageServiceInterface;
 import com.pineapple.user.service.User;
 import com.pineapple.user.service.UserAndUserdetail;
@@ -774,19 +775,17 @@ public class MypageController {
         if(getPmsInfoByAdmin != null){
         	log.debug(session.getAttribute("nickname")+"님이 전체 PMS정보 조회 성공");
         	model.addAttribute("getPmsInfoByAdmin", getPmsInfoByAdmin);
-        	HashMap<Object, Object> map = new HashMap<>();
-        	for(int i=0; i<getPmsInfoByAdmin.size(); i++){
-        		if(getPmsInfoByAdmin.get(i).getWbsplan() != null){
-        			map.put("wbsplan", getPmsInfoByAdmin.get(i).getWbsplan());
-        			model.addAttribute("wbsplan", getPmsInfoByAdmin.get(i).getWbsplan());
-                	log.debug("wbsplan not null 조회 결과 : "+getPmsInfoByAdmin.get(i).getWbsplan());
-        		} else{
-        			log.debug("wbsplan null 조회 결과 : "+getPmsInfoByAdmin.get(i).getWbsplan());
-        		}
-        	}
         } else {
         	log.debug(session.getAttribute("nickname")+"님이 전체 PMS정보 조회 실패");
         }
+        //전체 투자자들의 투자내역 조회와 투자별 배당지급내역 조회
+        List<InvestmentAndDividendpay> investAndDividendList = mypageservice.getInvestInfoAndDividendInfo();
+        if(investAndDividendList != null){
+        	log.debug(session.getAttribute("nickname")+"님의 전체 투자 및 배당 조회 성공");
+         	model.addAttribute("investAndDividendList", investAndDividendList);
+         } else {
+         	log.debug(session.getAttribute("nickname")+"님의  전체 투자 및 배당 조회 실패");
+         }
 		return "user/adminmypage";
 	}	
 	//mypage main 페이지 요청 - 권한별 마이페이지 분기 시점에 필요한 객체 조회 기능 구현(처음 회원가입한 기업회원 레벨의 회원은 rank가 경영진이 아니므로 일반사원 마이페이지로 분기된다)

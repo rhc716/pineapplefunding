@@ -8,8 +8,7 @@ public class WbsPlanFacility {
 	private int wpfCost;
 	private int wpfComCode;
 	private String wpfName;
-	private String wpfStartDate;
-	private String wpfEndDate;
+	private String wpftDate;
 	private String wpfRemarks;
 	public int getWpfCode() {
 		return wpfCode;
@@ -53,28 +52,18 @@ public class WbsPlanFacility {
 	public void setWpfName(String wpfName) {
 		this.wpfName = wpfName;
 	}
-	public String getWpfStartDate() {
-		return wpfStartDate;
+	public String getWpftDate() {
+		return wpftDate;
 	}
-	public void setWpfStartDate(String wpfStartDate) {
-		if(wpfStartDate==""){
-			wpfStartDate =null;
+	public void setWpftDate(String wpftDate) {
+		if(wpftDate==""){
+			wpftDate =null;
 		}else{
-			this.wpfStartDate = wpfStartDate;
+			this.wpftDate = wpftDate;
 		}
 		
 	}
-	public String getWpfEndDate() {
-		return wpfEndDate;
-	}
-	public void setWpfEndDate(String wpfEndDate) {
-		if(wpfEndDate==""){
-			wpfEndDate=null;
-		}else{
-			this.wpfEndDate = wpfEndDate;
-		}
-		
-	}
+	
 	public String getWpfRemarks() {
 		return wpfRemarks;
 	}
@@ -85,7 +74,7 @@ public class WbsPlanFacility {
 	public String toString() {
 		return "WbsDailyfacility [wpfCode=" + wpfCode + ", wpfFdCode=" + wpfFdCode + ", wpfMsCode=" + wpfMsCode
 				+ ", wpfWpCode=" + wpfWpCode + ", wpfCost=" + wpfCost + ", wpfComCode=" + wpfComCode + ", wpfName="
-				+ wpfName + ", wpfStartDate=" + wpfStartDate + ", wpfEndDate=" + wpfEndDate + ", wpfRemarks="
+				+ wpfName + ", wpftDate=" + wpftDate + ", wpfRemarks="
 				+ wpfRemarks + "]";
 	}
 

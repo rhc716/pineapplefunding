@@ -17,7 +17,13 @@ import com.pineapple.funding.service.Funding;
 import com.pineapple.funding.service.FundingService;
 import com.pineapple.pms.service.WbsMs;
 import com.pineapple.pms.service.WbsPlan;
+import com.pineapple.pms.service.WbsPlanBox;
+import com.pineapple.pms.service.WbsPlanEtc;
+import com.pineapple.pms.service.WbsPlanFacility;
 import com.pineapple.pms.service.WbsPlanHuman;
+import com.pineapple.pms.service.WbsPlanIncome;
+import com.pineapple.pms.service.WbsPlanMaterial;
+import com.pineapple.pms.service.WbsPlanOut;
 import com.pineapple.pms.service.PmsService;
 
 
@@ -61,6 +67,35 @@ public class PmsRestController {
 		log.debug("wbsplan확인"+wbsplan);
 		return wbsplan;
 	}
+	
+	// wbsplan 상세정보
+		@RequestMapping(value ="/wbsplanlistview.pms", method = {RequestMethod.GET, RequestMethod.POST})
+		public WbsPlanBox wbsplanlistveiw(String wbsplancode){
+			log.debug("PmsController의 wbsplanlistveiw호출 성공");
+			log.debug("wbs코드" + wbsplancode);
+			WbsPlanBox wbsplanbox = new WbsPlanBox();
+			WbsPlan wbsplan = service.getMyWbsPlanDetail(wbsplancode);
+			List<WbsPlanHuman> wbsplanhumanlist = new ArrayList<WbsPlanHuman>();
+			wbsplanhumanlist = service.getMyWbsPlanHumanList(wbsplancode);
+			List<WbsPlanMaterial> wbsplanmateriallist = new ArrayList<WbsPlanMaterial>();
+			wbsplanmateriallist = service.getMyWbsPlanMaterialList(wbsplancode);
+			List<WbsPlanFacility> wbsplanfacilityllist = new ArrayList<WbsPlanFacility>();
+			wbsplanfacilityllist = service.getMyWbsPlanFacilityList(wbsplancode);
+			List<WbsPlanOut> wbsplanoutlist = new ArrayList<WbsPlanOut>();
+			wbsplanoutlist = service.getMyWbsPlanOutList(wbsplancode);
+			List<WbsPlanEtc> wbsplanetclist = new ArrayList<WbsPlanEtc>();
+			wbsplanetclist = service.getMyWbsPlanEtcList(wbsplancode);
+			List<WbsPlanIncome> wbsplanincomelist = new ArrayList<WbsPlanIncome>();
+			wbsplanincomelist = service.getMyWbsPlanIncomeyList(wbsplancode);
+			wbsplanbox.setWbsplan(wbsplan);
+			wbsplanbox.setWbsplanhuman(wbsplanhumanlist);
+			wbsplanbox.setWbsplanmaterial(wbsplanmateriallist);
+			wbsplanbox.setWbsplanfacility(wbsplanfacilityllist);
+			wbsplanbox.setWbsplanout(wbsplanoutlist);
+			wbsplanbox.setWbsplanetc(wbsplanetclist);
+			wbsplanbox.setWbsplanincome(wbsplanincomelist);
+			return wbsplanbox;
+		}
 	
 	
 	// wbsplan 인원 상세보기 리스트 페이지

@@ -29,55 +29,103 @@
 <script>
 
 $(document).ready(function(){
+
 	//wbs코드로 humanlist받아옴
-	var gethumanlist = $.ajax({
-		type : "post",
-		url : "/pineapple/wbsplanhumanlist.pms",
-		/* 아이디 세션에서 받아서 가져옴 */
-		data : { wbsplancode : "${wbsplandetail.wbsPlanCode}" }
-	});
-	//성공했을경우
-	gethumanlist.done(function(msg){
+	var getwbsplanlist = $.ajax({
+		type : "get",
+		url : "/pineapple/wbsplanlistview.pms",
+		data : { wbsplancode : "${wbsplancode}" }
+	})
+
+	getwbsplanlist.done(function(msg){
 		console.log(msg);
-		for(var i = 0; i<msg.length; i++){
+		$('#wbscode').append(msg.wbsplan.wbsPlanCode)
+		$('#wbsname').append(msg.wbsplan.wbsPlanName)
+		$('#wbsdependency').append(msg.wbsplan.wbsPlanDependency)
+		$('#wbsduration').append(msg.wbsplan.wbsPlanDuration)
+		$('#wbsstartdate').append(msg.wbsplan.wbsPlanStartDate)
+		$('#wbsmanager').append(msg.wbsplan.wbsPlanManager)
+		$('#wbsplanhuman').append(
+				'<input type="hidden"name="wbsPlanCode" value="'+msg.wbsplan.wbsPlanCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wphWpCode" value="'+msg.wbsplan.wbsPlanCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wphFdCode" value="'+msg.wbsplan.wbsPlanFdCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wphMsCode" value="'+msg.wbsplan.wbsPlanMsCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wphComCode" value="'+msg.wbsplan.wbsPlanComCode+'">'
+		)
+		
+			
+		for(var i = 0; i<msg.wbsplanhuman.length; i++){
 			$('#humanlist').append(
 					'<tr>'
-					+'<td>'+msg[i].wphNoPeople+'</td>'
-					+'<td>'+msg[i].wphCost+'</td>'
-					+'<td>'+msg[i].wphRemarks+'</td>'	
-					+'<td>'+msg[i].wphDate+'</td>'	
+					+'<td>'+msg.wbsplanhuman[i].wphNoPeople+'</td>'
+					+'<td>'+msg.wbsplanhuman[i].wphCost+'</td>'
+					+'<td>'+msg.wbsplanhuman[i].wphRemarks+'</td>'	
+					+'<td>'+msg.wbsplanhuman[i].wphDate+'</td>'	
 					+'<td class="minitd">'
-					+'<button type="submit" class="btn btn-danger  minibtn deleterequestbtn" value="'+msg[i].wphCode+'">삭제</button>'
+					+'<button type="submit" class="btn btn-danger  minibtn deletehuman" value="'+msg.wbsplanhuman[i].wphCode+'">삭제</button>'
+					+'</td>'
+					+'</tr>'
+			)
+	
+		}	
+		for(var i = 0; i<msg.wbsplanmaterial.length; i++){
+			$('#materiallist').append(
+					'<tr>'
+					+'<td>'+msg.wbsplanmaterial[i].wpmName+'</td>'
+					+'<td>'+msg.wbsplanmaterial[i].wpmCost+'</td>'
+					+'<td>'+msg.wbsplanmaterial[i].wpmRemarks+'</td>'	
+					+'<td>'+msg.wbsplanmaterial[i].wpmDate+'</td>'	
+					+'<td class="minitd">'
+					+'<button type="submit" class="btn btn-danger  minibtn deletematerial" value="'+msg.wbsplanmaterial[i].wpmCode+'">삭제</button>'
 					+'</td>'
 					+'</tr>'
 			)
 		}
-		$('.deleterequestbtn').click(function () {
-			var answer = confirm("삭제하시겠습니까?")
-			if (answer) {
-				var ss = $(this).val();
-				var test = $.ajax({
-					type : "post",
-					url : "/pineapple/wbsplanhumandelete.pms",
-					/* 아이디 세션에서 받아서 가져옴 */
-					data : { wphCode : ss }
-				}); 
-				test.done(function(){
-					location.reload();
-					alert('삭제완료')
-				})
-				test.fail(function(){
-					location.reload();
-					alert('삭제실패')
-				})
-			}else{
-				
-			}
-			
-		});
+		for(var i = 0; i<msg.wbsplanfacility.length; i++){
+			$('#facilitylist').append(
+					'<tr>'
+					+'<td>'+msg.wbsplanfacility[i].wpfName+'</td>'
+					+'<td>'+msg.wbsplanfacility[i].wpfCost+'</td>'
+					+'<td>'+msg.wbsplanfacility[i].wpfRemarks+'</td>'	
+					+'<td>'+msg.wbsplanfacility[i].wpfDate+'</td>'	
+					+'<td class="minitd">'
+					+'<button type="submit" class="btn btn-danger  minibtn deletematerial" value="'+msg.wbsplanfacility[i].wpfCode+'">삭제</button>'
+					+'</td>'
+					+'</tr>'
+			)
+		}
 		
+		
+		
+			
+			
+			$('.deletehuman').click(function () {
+				var answer = confirm("삭제하시겠습니까?")
+				if (answer) {
+					var ss = $(this).val();
+					var test = $.ajax({
+						type : "post",
+						url : "/pineapple/wbsplanhumandelete.pms",
+						/* 아이디 세션에서 받아서 가져옴 */
+						data : { wphCode : ss }
+					}); 
+					test.done(function(){
+						location.reload();
+						alert('삭제완료')
+					})
+					test.fail(function(){
+						location.reload();
+						alert('삭제실패')
+					})
+				}else{
+					
+				}
+				
+			});
+		})
 	})
-})
+	
+	
 
 </script>
 </head>
@@ -100,19 +148,19 @@ $(document).ready(function(){
 						<div class=col-md-3>
 							<div class="panel panel-default">
 								<div class="panel-heading">WBS코드</div>
-								<div class="panel-body">${wbsplandetail.wbsPlanCode}</div>
+								<div class="panel-body" id="wbscode"></div>
 							</div>
 						</div>
 						<div class=col-md-3>
 							<div class="panel panel-default">
 								<div class="panel-heading">작업명</div>
-								<div class="panel-body">${wbsplandetail.wbsPlanName}</div>
+								<div class="panel-body" id="wbsname"></div>
 							</div>
 						</div>
 						<div class=col-md-3>
 							<div class="panel panel-default">
 								<div class="panel-heading">선행작업</div>
-								<div class="panel-body">${wbsplandetail.wbsPlanDependency}</div>
+								<div class="panel-body" id="wbsdependency"></div>
 							</div>
 						</div>
 					</div>
@@ -120,19 +168,19 @@ $(document).ready(function(){
 						<div class=col-md-3>
 							<div class="panel panel-default">
 								<div class="panel-heading">작업기간</div>
-								<div class="panel-body">${wbsplandetail.wbsPlanDuration}</div>
+								<div class="panel-body" id="wbsduration"></div>
 							</div>
 						</div>
 						<div class=col-md-3>
 							<div class="panel panel-default">
 								<div class="panel-heading">시작일</div>
-								<div class="panel-body">${wbsplandetail.wbsPlanStartDate}</div>
+								<div class="panel-body" id="wbsstartdate"></div>
 							</div>
 						</div>
 						<div class=col-md-3>
 							<div class="panel panel-default">
 								<div class="panel-heading">담당자ID</div>
-								<div class="panel-body">${wbsplandetail.wbsPlanManager}</div>
+								<div class="panel-body" id="wbsmanager"></div>
 							</div>
 						</div> 
 					</div> 
@@ -166,17 +214,28 @@ $(document).ready(function(){
 						 </tr>
 					 </table>
 				</div>
-				<%-- <div class="col-md-4">
-					<form action="/pineapple/wbsplanfacilitylist.pms" method="post">
-						<input type="hidden" readonly="readonly"  name="fdCode" value="${fdCode}">
-						<input type="hidden" readonly="readonly"  name="fdTitle" value="${fdTitle}">
-						<input type="hidden" readonly="readonly"  name="milestoneCode" value="${milestoneCode}">
-						<input type="hidden" readonly="readonly"  name="milestoneName" value="${milestoneName}">
-						<input type="hidden" readonly="readonly"  name="msComCode" value="${msComCode}">
-						<input type="hidden"name="wbsPlanCode" value="${wbsplandetail.wbsPlanCode}">
-						<button type="submit" class="btn btn-primary">시설 상세보기</button>	
-					</form>
-				</div> --%>
+			</div><br>
+			<div class="row">
+				<div class="col-md-6 boder">
+					<table id="facilitylist">
+						 <tr>
+							 <th>시설명</th>
+							 <th>비용</th>
+							 <th>비고</th>
+							 <th>사용일</th>
+						 </tr>
+					 </table>
+				</div>
+				<div class="col-md-6 boder">
+					<table id="outlist">
+						 <tr>
+							 <th>업체명</th>
+							 <th>비용</th>
+							 <th>비고</th>
+							 <th>사용일</th>
+						 </tr>
+					 </table>
+				</div>
 			</div><br>
 			<div class="row">
 				<div class="col-md-4">
@@ -226,12 +285,8 @@ $(document).ready(function(){
 			      <div class="modal-body">
 			        <form action="/pineapple/wbsplanhumaninsert.pms" method="post">
 			        <!-- 기본적으로 들어가는 wbs예상코드 펀딩코드 마일스톤코드 회사코드를 입력되는곳 -->
-			        	<label for="wbsplanhuman">WBS예상인원 지출</label><br>
-						<input type="hidden"name="wbsPlanCode" value="${wbsplandetail.wbsPlanCode}">
-			        	<input type="hidden" class="form-control" name="wphWpCode" value="${wbsplandetail.wbsPlanCode}">
-			        	<input type="hidden" class="form-control" name="wphFdCode" value="${wbsplandetail.wbsPlanFdCode}">
-			        	<input type="hidden" class="form-control" name="wphMsCode" value="${wbsplandetail.wbsPlanMsCode}">
-			        	<input type="hidden" class="form-control" name="wphComCode" value="${wbsplandetail.wbsPlanComCode}">
+			        	<label for="wbsplanhuman" id="wbsplanhuman">WBS예상인원 지출</label><br>
+						
 		          	<!-- 여기서부터는 직접 입력하는곳 --> 
 			           	인원수:
 			            <input type="number" class="form-control" name="wphNoPeople">

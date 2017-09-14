@@ -4,6 +4,48 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.pineapple.user.service.MypageMapper">
+<!-- 관리자 마이페이지 투자자 정보 조회(투자내역, 배당지급내역) -->
+<select id="selectInvestInfo" resultMap="selectInvestInfo">
+	SELECT i.investCode, i.investFdCode, i.investId, i.purchaseShares, i.investTime, i.payCheck
+	, i.purchaseShares * f.issuePrice ia, f.fdTitle, f.issuePrice, c.comName
+	, dp.divPayCode, dp.divPayFdTitle, dp.divPayAmount, dp.divPayDate, dp.divPayissuePrice, dp.divPayPurchaseShares
+	, dp.divPayNoShares, dp.divPayMinInterestRate, dp.divPayDividendRate, dp.divPayTotalMargin
+	, (dp.divPayAmount/(i.purchaseShares * f.issuePrice))*100 roe
+	FROM investment i
+	LEFT JOIN dividendpay dp
+	ON i.investCode=dp.divPayInvestCode
+	LEFT JOIN funding f
+	ON i.investFdCode=f.fdCode
+	LEFT JOIN company c
+	ON f.fdComCode=c.comCode
+	ORDER BY investTime ASC
+</select>
+<resultMap type="com.pineapple.user.service.InvestmentAndDividendpay" id="selectInvestInfo">
+	<result property="investCode" column="investCode"/>
+	<result property="investFdCode" column="investFdCode"/>
+	<result property="investId" column="investId"/>
+	<result property="purchaseShares" column="purchaseShares"/>
+	<result property="investTime" column="investTime"/>
+	<result property="payCheck" column="payCheck"/>
+	<result property="ia" column="ia"/>
+	<result property="fdTitle" column="fdTitle"/>
+	<result property="issuePrice" column="issuePrice"/>
+	<result property="comName" column="comName"/>
+	<collection property="dividendpay" ofType="com.pineapple.user.service.Dividendpay">
+		<result property="divPayCode" column="divPayCode"/>
+		<result property="divPayFdTitle" column="divPayFdTitle"/>
+		<result property="divPayAmount" column="divPayAmount"/>
+		<result property="divPayDate" column="divPayDate"/>
+		<result property="divPayissuePrice" column="divPayissuePrice"/>
+		<result property="divPayPurchaseShares" column="divPayPurchaseShares"/>
+		<result property="divPayNoShares" column="divPayNoShares"/>
+		<result property="divPayMinInterestRate" column="divPayMinInterestRate"/>
+		<result property="divPayDividendRate" column="divPayDividendRate"/>
+		<result property="divPayTotalMargin" column="divPayTotalMargin"/>
+		<result property="roe" column="roe"/>
+	</collection>
+</resultMap>
+
 <!-- 사이트 관리자 마이페이지 전체 펀딩의 프로젝트관리 상황 조회(마일스톤, wbs플랜, wbs실제, 예상마진, 실제마진) -->
 <select id="selectPmsInfoByAdmin" resultMap="selectPmsInfoByAdmin">
 	SELECT f.fdCode, f.fdComCode, f.fdTitle, c.comName, ms.milestoneCode, ms.milestoneStep, ms.milestoneName, ms.milestoneSummary
