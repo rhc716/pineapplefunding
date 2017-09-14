@@ -2,6 +2,7 @@ package com.pineapple.invest.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -9,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.pineapple.funding.service.Funding;
+import com.pineapple.funding.service.FundingAndCompanyAndMileStone;
 import com.pineapple.funding.service.FundingAndFdFile;
 import com.pineapple.funding.service.FundingDetail;
+import com.pineapple.user.service.FundingAndCompany;
 
 
 @Repository
@@ -145,8 +148,62 @@ public class InvestDao implements InvestDaoInterface {
 		numberOfRequests = numberOfRequests*10;
 		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.selectsendAssignmentlist",numberOfRequests);
 	}
-	
-	
+	@Override  
+	public FundingAndCompanyAndMileStone pmsAssignmentFundingData(int fdCode) {
+		log.debug("InvestDao-----pmsAssignmentFundingData");
+		return sqlSessionTemplate.selectOne("com.pineapple.invest.service.InvestMapper.selectFundingAndCompanyData",fdCode);
+	}
+	//배정하기
+	@Override
+	public int pmsAssignmentInsert(Moneyflow moneyflow) {
+		log.debug("InvestDao-----pmsAssignmentInsert");
+		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.insertAssignment",moneyflow);
+	}
+	//수수료 받기
+	@Override
+	public int pmsFeesInsert(Moneyflow moneyflow) {
+		log.debug("InvestDao-----pmsFeesInsert");
+		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.insertFees",moneyflow);
+	}
+	//환불대상 조회
+	@Override
+	public List<Investment> pmsRefundSelect(int fdCode, int numberOfRequests) {
+		log.debug("InvestDao-----pmsRefundSelect");
+		HashMap<String, Number> map = new HashMap<>();
+		// numberOfRequests가 입력됐을때 즉 더보기 버튼을 눌렀을때는 0이 아닐때 이므로 그때에만 map에 저장해줌. 
+		if(numberOfRequests==0){
+			map.put("fdCode", fdCode);
+		}else{
+			map.put("fdCode", fdCode);
+			// 5를 곱해서 넣어줘야 limit의 시작점인 페이징x불러온 투자자수가 됨.
+			numberOfRequests=numberOfRequests*10; 
+			map.put("numberOfRequests", numberOfRequests);
+		}
+		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.selectInvestmentRefundList",map);
+	}
+	//펀딩 상태 (모집실패 -> 환불완료)
+	@Override
+	public int pmsRefundFundingStatusUpdate(int fdCode) {
+		log.debug("InvestDao-----pmsRefundFundingStatusUpdate");
+		return sqlSessionTemplate.update("com.pineapple.invest.service.InvestMapper.updateFundingRefundStatus",fdCode);
+	}
+	//펀딩의 투자한 목록 조회
+	@Override
+	public List<Moneyflow> pmsRefundidlistSelect(int fdCode) {
+		log.debug("InvestDao-----pmsRefundidlistSelect");
+		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.selectFundingRefundInvestorList",fdCode);
+	}
+	//펀딩투자한 목록 조회 토대로 환불입력
+	@Override
+	public int pmsRefundInsert(List<Moneyflow> investmentidlist) {
+		log.debug("InvestDao-----pmsRefundInsert");
+		int suss = 0;
+		for(int i = 0 ; i < investmentidlist.size(); i ++){
+		int susscheck = sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.insertInvestorRefund",investmentidlist.get(i));
+		suss += susscheck;
+		}
+		return suss;
+	}
 	
 	///////////////////////////////My Page Investor/////////////////////
 	//자신의 펀딩 Q&A 글 조회

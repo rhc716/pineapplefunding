@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.pineapple.funding.service.Funding;
+import com.pineapple.funding.service.FundingAndCompanyAndMileStone;
 import com.pineapple.funding.service.FundingAndFdFile;
 import com.pineapple.funding.service.FundingDetail;
+import com.pineapple.user.service.FundingAndCompany;
 
 public interface InvestDaoInterface {
 	//조건 검색으로 펀딩 리스트 조회 Dao
@@ -50,7 +52,19 @@ public interface InvestDaoInterface {
 	/////////PMS Assignment //////////
 	List<InvestAndFd> pmsAssignmentSelect();
 	List<InvestAndFd> pmsAssignmentAddSelect(int numberOfRequests);
-	
+	FundingAndCompanyAndMileStone pmsAssignmentFundingData(int fdCode);
+	//배정하기
+	int pmsAssignmentInsert(Moneyflow moneyflow);
+	//수수료받기
+	int pmsFeesInsert(Moneyflow moneyflow);
+	//환불대상 list 조회
+	List<Investment> pmsRefundSelect(int fdCode,int numberOfRequests);
+	//펀딩 상태 (모집실패 -> 환불완료)
+	int pmsRefundFundingStatusUpdate(int fdCode);
+	//펀딩의 투자한 목록 조회
+	List<Moneyflow> pmsRefundidlistSelect(int fdCode);
+	//펀딩투자한 목록 조회 토대로 환불입력
+	int pmsRefundInsert(List<Moneyflow> investmentidlist);
 	
 	
 	/////////MY Page Investor/////////

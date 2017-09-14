@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pineapple.funding.service.Funding;
+import com.pineapple.funding.service.FundingAndCompanyAndMileStone;
 import com.pineapple.funding.service.FundingAndFdFile;
 import com.pineapple.funding.service.FundingDetail;
 
@@ -147,17 +148,55 @@ public class InvestService implements InvestServiceInterface {
 		return getPMSDividendpay;
 	}
 	/////////PMS Assignment //////////
+	//배당 list 요청
 	@Override
 	public List<InvestAndFd> getPMSAssignmentlist() {
 		log.debug("------------------InvestService-----------------getPMSAssignmentlist()");
 		List<InvestAndFd> getPMSAssignmentlist = investdaointerface.pmsAssignmentSelect();
 		return getPMSAssignmentlist;
 	}
+	//배당 list 추가 요청
 	@Override
 	public List<InvestAndFd> getPMSAssignmentlistAdd(int numberOfRequests) {
 		log.debug("------------------InvestService-----------------getPMSAssignmentlistAdd()");
 		List<InvestAndFd> getPMSAssignmentlistAdd = investdaointerface.pmsAssignmentAddSelect(numberOfRequests);
 		return getPMSAssignmentlistAdd;
+	}
+	//배당 Funding 정보 조회
+	@Override
+	public FundingAndCompanyAndMileStone getPMSAssignmentFundingData(int fdCode) {
+		log.debug("------------------InvestService-----------------getPMSAssignmentFundingData()");
+		FundingAndCompanyAndMileStone getPMSAssignmentFundingData = investdaointerface.pmsAssignmentFundingData(fdCode);
+		return getPMSAssignmentFundingData;
+	}
+	//배정하기
+	@Override
+	public int addPMSAssignment(Moneyflow moneyflow) {
+		log.debug("------------------InvestService-----------------addPMSAssignment()");
+		int addPMSAssignment = investdaointerface.pmsAssignmentInsert(moneyflow);
+		moneyflow.setMfAmount((moneyflow.getMfAmount()*5)/100);
+		moneyflow.setMfCategory(4);
+		int addFees = investdaointerface.pmsFeesInsert(moneyflow);
+		return addPMSAssignment+addFees;
+	}
+	//환불대상 조회
+	@Override
+	public List<Investment> getPMSRefundlist(int fdCode,int numberOfRequests) {
+		log.debug("------------------InvestService-----------------getPMSRefundlist()");
+		List<Investment> getPMSRefundlist = investdaointerface.pmsRefundSelect(fdCode,numberOfRequests);
+		return getPMSRefundlist;
+	}
+	//환불 대상사람들 한번에 환불
+	@Override
+	public int addrefund(int fdCode) {
+		log.debug("------------------InvestService-----------------addrefund()");
+		//펀딩 상태 (모집실패 -> 환불완료)
+		int getPMSRefundupdate = investdaointerface.pmsRefundFundingStatusUpdate(fdCode);
+		//펀딩의 투자한 목록 조회
+		List<Moneyflow> getPMSRefundlist = investdaointerface.pmsRefundidlistSelect(fdCode);
+		//펀딩투자한 목록 조회 토대로 환불입력
+		int getPMSRefundinsert = investdaointerface.pmsRefundInsert(getPMSRefundlist);
+		return getPMSRefundupdate+getPMSRefundinsert;
 	}
 	
 	

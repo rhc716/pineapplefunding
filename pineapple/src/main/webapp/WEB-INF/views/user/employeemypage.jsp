@@ -9,6 +9,17 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+	//메세지 tab 클릭시 ajax 요청
+	var messagetab = $.ajax({ // ajax실행부분
+        type: 'get',
+        url : '/pineapple/investormessagelist.timeline',
+        success : function success(msg){
+        	$('#investormessage').html(msg);
+        },
+        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+        error : function error(){
+       	}
+	});
 	//부트스트랩 새로고침할 때 페이지 유지
 	$('#myTab a').click(function(e) {
 	  e.preventDefault();
@@ -118,13 +129,10 @@ $(document).ready(function(){
 				<a href="#insertCompany" role="tab" id="#insertCompany-tab" data-toggle="tab" aria-controls="#insertCompany" aria-expanded="false">기업등록요청</a>
 			</li>
 			<li role="presentation" class="">
-				<a href="#fundingqna" role="tab" id="fundingqna-tab" data-toggle="tab" aria-controls="fundingqna" aria-expanded="false">펀딩Q&A</a>
-			</li>
-			<li role="presentation" class="">
 				<a href="#message" role="tab" id="message-tab" data-toggle="tab" aria-controls="message" aria-expanded="false">메세지</a>
 			</li>  
 			<li role="presentation" class="">
-				<a href="#investmemt" role="tab" id="investmemt-tab" data-toggle="tab" aria-controls="investmemt" aria-expanded="false">투자내역</a>
+				<a href="#report" role="tab" id="report-tab" data-toggle="tab" aria-controls="report" aria-expanded="false">보고서</a>
 			</li>  
 		</ul>
 		<div id="myTabContent" class="tab-content">
@@ -519,10 +527,11 @@ $(document).ready(function(){
 				</div>
 			</div>
 			<div role="tabpanel" class="tab-pane fade" id="message" aria-labelledby="message-tab"> 
-				<p>메세지</p> 
+				<h1 style="text-align: center;">MY MESSAGE LIST</h1>
+				<div class="col-xs-12" id="investormessage"></div> 
 			</div>
-			<div role="tabpanel" class="tab-pane fade" id="investmemt" aria-labelledby="investmemt-tab"> 
-				<p></p> 
+			<div role="tabpanel" class="tab-pane fade" id="report" aria-labelledby="report-tab"> 
+				<p>~~~~~~~~~~</p> 
 			</div>
 		</div> 
 	</div>

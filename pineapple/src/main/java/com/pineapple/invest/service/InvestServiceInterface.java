@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pineapple.funding.service.Funding;
+import com.pineapple.funding.service.FundingAndCompanyAndMileStone;
 import com.pineapple.funding.service.FundingAndFdFile;
 import com.pineapple.funding.service.FundingDetail;
+import com.pineapple.user.service.FundingAndCompany;
 @Transactional
 public interface InvestServiceInterface {
 	//조건 검색으로 펀딩 리스트 조회 Service
@@ -51,7 +53,13 @@ public interface InvestServiceInterface {
 	/////////PMS Assignment //////////
 	List<InvestAndFd> getPMSAssignmentlist();
 	List<InvestAndFd> getPMSAssignmentlistAdd(int numberOfRequests);
-	
+	FundingAndCompanyAndMileStone getPMSAssignmentFundingData(int fdCode);
+	//배정하기,수수료
+	int addPMSAssignment(Moneyflow moneyflow);
+	//환불대상 조회
+	List<Investment> getPMSRefundlist(int fdCode, int numberOfRequests);
+	//환불대상사람들 모두 한번에 환불
+	int addrefund(int fdCode);
 	
 	
 	////////MY Page Investor////////////

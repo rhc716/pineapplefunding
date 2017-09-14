@@ -48,6 +48,9 @@ $(document).ready(function(){
         	}
 		});
 	});
+	$('#messagereceiveidinput').blur(function(){
+		$('#sendreceiveidlist').empty();
+	});
 	$('#messagereceiveidinput').keyup(function(){
 		var receiveidselect = $(this).val();
 		var receiveidtandd = $(this).attr('dataCode');
@@ -93,6 +96,9 @@ $(document).ready(function(){
 				messagecount++
 			}
 		}
+		if(messagechecklist == ''){
+			console.log('미실행')
+		}else{
 		$.ajaxSettings.traditional = true;
 		var investmenttab = $.ajax({ // ajax실행부분
 	        type: 'get',
@@ -105,6 +111,7 @@ $(document).ready(function(){
 	        error : function error(){
         	}
 		});
+		}
 	
 	});
 	$('#messagereadok').click(function(){
@@ -118,6 +125,9 @@ $(document).ready(function(){
 				messagecount++
 			}
 		}
+		if(messagechecklist == ''){
+			console.log('미실행')
+		}else{
 		$.ajaxSettings.traditional = true;
 		var investmenttab = $.ajax({ // ajax실행부분
 	        type: 'get',
@@ -130,7 +140,7 @@ $(document).ready(function(){
 	        error : function error(){
         	}
 		});
-	
+		}
 	});	
 	$('#messagereadno').click(function(){
 		$('#checkall').prop('checked',false)
@@ -143,6 +153,9 @@ $(document).ready(function(){
 				messagecount++
 			}
 		}
+		if(messagechecklist == ''){
+			console.log('미실행')
+		}else{
 		$.ajaxSettings.traditional = true;
 		var investmenttab = $.ajax({ // ajax실행부분
 	        type: 'get',
@@ -155,7 +168,7 @@ $(document).ready(function(){
 	        error : function error(){
         	}
 		});
-	
+		}
 	});	
 });
 </script>
@@ -185,6 +198,15 @@ $(document).ready(function(){
 			<div class="col-md-12" id="messagesendlist" style="border: 1.5px solid #009442; border-radius: 5px;">
 			<table class="table" style="margin: 0px;">
 				<c:forEach var="myinvestormessage" items="${myinvestormessage}">
+				<c:choose>
+				<c:when test="${myinvestormessage == null}">
+				<tbody>
+					<tr>
+						<td>받은 메일이 없습니다.</td>
+					</tr>
+				</tbody>
+				</c:when>
+				<c:otherwise>
 				<tbody id="${myinvestormessage.msgCode}" style="text-align: center;">
 		 			 	<tr>
 		 			 	<td><input type="checkbox" name="messagechecked" value="${myinvestormessage.msgCode}"></td>
@@ -209,6 +231,8 @@ $(document).ready(function(){
 		 			 	</c:choose>
 		 			 	</tr>
 				</tbody>
+				</c:otherwise>
+				</c:choose>
 				</c:forEach>
 			</table>
 			</div>

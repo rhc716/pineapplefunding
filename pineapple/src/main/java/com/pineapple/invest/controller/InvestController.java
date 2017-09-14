@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pineapple.funding.service.Funding;
+import com.pineapple.funding.service.FundingAndCompanyAndMileStone;
 import com.pineapple.funding.service.FundingAndFdFile;
 import com.pineapple.funding.service.FundingDetail;
 import com.pineapple.invest.service.FundingQna;
@@ -324,15 +325,40 @@ public class InvestController {
 	////////////////////////////////////PSM (Assignment)/////////////////////////////////////////////
 	//결제모집중인 펀딩 list 조회
 	@RequestMapping(value = "/fundingassignmentmain.invest", method = RequestMethod.GET)
-	public String getFundingAssignmentmain(Locale locale, Model model,HttpSession session) {
+	public String getFundingAssignmentmain(Locale locale, Model model) {
 		log.debug("<-----InvestController[getFundingAssignmentmain호출]----->");
 		return "pms/adminuser/fundingassignmentlist";
 	}
 	//배당하기 페이지 이동 
 	@RequestMapping(value = "/fundingassignmentinsertpage.invest", method = RequestMethod.GET)
-	public String getFundingAssignmentInsert(Locale locale, Model model,HttpSession session) {
+	public String getFundingAssignmentInsert(Locale locale, Model model,@RequestParam(value="fdCode") int fdCode) {
 		log.debug("<-----InvestController[getFundingAssignmentInsert호출]----->");
+		FundingAndCompanyAndMileStone getFundingAssignmentInsert = investserviceinterface.getPMSAssignmentFundingData(fdCode);
+		model.addAttribute("getFundingAssignmentInsert",getFundingAssignmentInsert);
+		log.debug(getFundingAssignmentInsert+"<-----InvestController[getFundingAssignmentInsert 값 출력]");
 		return "pms/adminuser/fundingassignmentaddpage";
+	}
+	//배정하기
+	@RequestMapping(value = "/fundingassignmentinsert.invest", method = RequestMethod.POST)
+	public String addAssignment(Locale locale, Model model,Moneyflow moneyflow){
+		log.debug("<-----InvestController[addAssignment호출]----->");
+		int addAssignment = investserviceinterface.addPMSAssignment(moneyflow);
+		log.debug(addAssignment+"<-----InvestController[addAssignment 값 출력]");
+		return "redirect:/fundingassignmentmain.invest";
+	}
+	//환불하기로 이동 refund
+	@RequestMapping(value = "/fundingrefundmain.invest", method = RequestMethod.GET)
+	public String getFundingRefundmain(Locale locale, Model model) {
+		log.debug("<-----InvestController[getFundingRefundmain호출]----->");
+		return "pms/adminuser/fundingReFundlist";
+	}
+	//투자자 리스트 한번에 다 환불하기 
+	@RequestMapping(value = "/fundingrefundinsert.invest", method = RequestMethod.GET)
+	public String getFundingRefundinsert(Locale locale, Model model,@RequestParam(value="fdCode")int fdCode) {
+		log.debug("<-----InvestController[getFundingRefundinsert호출]----->");
+		int investorrefund = investserviceinterface.addrefund(fdCode);
+		log.debug(investorrefund+"<-----InvestController[investorrefund 값 출력]");
+		return "redirect:/fundingassignmentmain.invest";
 	}
 	
 	
@@ -362,6 +388,16 @@ public class InvestController {
 		List<InvestAndFd> getFundingAssignmentAddList = investserviceinterface.getPMSAssignmentlistAdd(numberOfRequests);
 		log.debug(getFundingAssignmentAddList+"<-----InvestController[getFundingAssignmentAddList 값 출력]");
 		return getFundingAssignmentAddList;
+	}
+	//환불대상 list 조회
+	@RequestMapping(value="/fundingrefundlist.invest",method=RequestMethod.GET)
+	public @ResponseBody List<Investment> getFundingRefundList(Model model, Locale locale
+			, @RequestParam("fdCode") int fdCode
+			, @RequestParam(value="numberOfRequests", required=false, defaultValue="0") int numberOfRequests){
+		log.debug("<-----InvestController[getFundingAssignmentAddList호출]----->");
+		List<Investment> getFundingRefundList = investserviceinterface.getPMSRefundlist(fdCode,numberOfRequests);
+		log.debug(getFundingRefundList+"<-----InvestController[getFundingRefundList 값 출력]");
+		return getFundingRefundList;
 	}
 
 }

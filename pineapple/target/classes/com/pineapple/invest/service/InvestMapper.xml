@@ -325,14 +325,51 @@
 	</select>
 
 <!-- 	PMS Assignment PMS Assignment PMS Assignment PMS Assignment PMS Assignment PMS Assignment PMS Assignment PMS Assignment PMS Assignment -->
+ 	<resultMap type="com.pineapple.funding.service.FundingAndCompanyAndMileStone" id="FundingAndCompany">
+		<result property="fdCode" column="fdCode"/>
+		<result property="fdComCode" column="fdComCode"/>
+		<result property="fdTitle" column="fdTitle"/>
+		<result property="minInvestMoney" column="minInvestMoney"/>
+		<result property="numberOfShares" column="numberOfShares"/>
+		<result property="issuePrice" column="issuePrice"/>
+		<result property="openDate" column="openDate"/>
+		<result property="closeDate" column="closeDate"/>
+		<result property="minInterestRate" column="minInterestRate"/>
+		<result property="fdType" column="fdType"/>
+		<result property="fdStatus" column="fdStatus"/>
+		<result property="projectStartDate" column="projectStartDate"/>
+		<result property="projectEndDate" column="projectEndDate"/>
+		<result property="posterImg" column="posterImg"/>
+		<result property="fdPublisher" column="fdPublisher"/>
+		<result property="adminApproval" column="adminApproval"/>
+		<result property="fdApprovalDate" column="fdApprovalDate"/>
+		<result property="fdApprovalId" column="fdApprovalId"/>
+		<result property="fdDate" column="fdDate"/>
+		<result property="comCode" column="comCode"/>
+		<result property="comName" column="comName"/>
+	</resultMap>
+	<resultMap type="com.pineapple.invest.service.Investment" id="investmentlistresultmapper">
+		<id property="investCode" column="investCode"/>
+		<result property="investFdCode" column="investFdCode"/>
+		<result property="investId" column="investId"/>
+		<result property="purchaseShares" column="purchaseShares"/>
+		<result property="investTime" column="investTime"/>
+		<result property="payCheck" column="payCheck"/>
+	</resultMap>
+ 	<resultMap type="com.pineapple.invest.service.Moneyflow" id="moneyflowresultmapper">
+		<result property="flowCode" column="flowCode"/>
+		<result property="mfFdCode" column="mfFdCode"/>
+		<result property="mfInvestCode" column="mfInvestCode"/>
+		<result property="mfAmount" column="mfAmount"/>
+		<result property="mfCategory" column="mfCategory"/>
+		<result property="mfDate" column="mfDate"/>
+	</resultMap>
  	<select id="selectsendAssignmentlist" resultMap="selectInvestAndFd" parameterType="INT">
 		SELECT  f.fdCode,
 				f.fdTitle,
 				f.numberOfShares,
 				c.comName,
-				CASE f.fdStatus WHEN '모집중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode GROUP BY si.investFdCode ) WHEN '결제모집중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode AND si.payCheck = 1 GROUP BY si.investFdCode) WHEN '진행중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode GROUP BY si.investFdCode) END as total,
-				f.posterImg,
-				f.minInvestMoney,
+				CASE f.fdStatus WHEN '모집중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode GROUP BY si.investFdCode ) WHEN '결제모집중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode AND si.payCheck = 1 GROUP BY si.investFdCode) WHEN '진행중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode AND si.payCheck = 1 GROUP BY si.investFdCode) WHEN '모집실패' THEN(SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode AND si.payCheck = 1 GROUP BY si.investFdCode) END as total,				f.minInvestMoney,
 				f.issuePrice,
 				f.fdStatus,
 				TO_DAYS(f.projectStartDate)-TO_DAYS(now()) as days,
@@ -340,7 +377,7 @@
 		FROM funding f 
 		LEFT JOIN company c 
 		ON f.fdComCode = c.comCode 
-		WHERE f.fdStatus = '결제모집중'
+		WHERE f.fdStatus = '결제모집중' or f.fdStatus = '진행중' or (f.fdStatus = '모집실패' AND (SELECT SUM(ssi.purchaseShares) FROM investment ssi WHERE ssi.investFdCode = f.fdCode AND ssi.payCheck = 1))
 		GROUP BY f.fdCode 
 		ORDER BY f.fdDate DESC
 		<choose>
@@ -352,6 +389,53 @@
 		</otherwise>
 		</choose>
 	</select>
+
+	<select id="selectFundingAndCompanyData" resultMap="FundingAndCompany" parameterType="INT">
+		SELECT *
+			FROM funding f INNER JOIN company c
+			WHERE f.fdCode = #{fdCode} AND f.fdComCode = c.comCode
+	</select>
+	<!-- 배정하기 -->
+	<insert id="insertAssignment" parameterType="com.pineapple.invest.service.Moneyflow">
+		INSERT INTO moneyflow
+	(mfFdCode, mfInvestCode, mfAmount, mfCategory, mfDate)
+	VALUES (#{mfFdCode}, #{mfInvestCode}, #{mfAmount}, #{mfCategory}, NOW())
+	</insert>
+	<!-- 수수료받기 -->
+	<insert id="insertFees" parameterType="com.pineapple.invest.service.Moneyflow">
+		INSERT INTO moneyflow
+	(mfFdCode, mfInvestCode, mfAmount, mfCategory, mfDate)
+	VALUES (#{mfFdCode}, #{mfInvestCode}, #{mfAmount}, #{mfCategory}, NOW())
+	</insert>
+	<!-- 환불 대상 list 조회 -->
+	<select id="selectInvestmentRefundList" parameterType="INT" resultMap="investmentlistresultmapper" >
+		SELECT *
+		FROM investment
+		WHERE investFdCode=#{fdCode} AND payCheck = 1
+		<if test="_parameter.numberOfRequests==null">
+			limit 0,10;
+		</if>
+		<if test="_parameter.numberOfRequests!=null">
+			limit #{numberOfRequests},10;
+		</if>
+	</select>
+	<!-- 펀딩 상태 (모집실패 -> 환불완료) -->
+	<update id="updateFundingRefundStatus" parameterType="INT">
+		UPDATE funding
+	SET
+		fdStatus='환불완료'
+	WHERE fdCode = #{fdCode}
+	</update>
+	<!-- 펀딩의 투자한 목록 조회 -->
+ 	<select id="selectFundingRefundInvestorList" parameterType="INT" resultMap="moneyflowresultmapper">
+		SELECT f.fdCode mfFdCode,i.investCode mfInvestCode,(i.purchaseShares*f.issuePrice) mfAmount FROM investment i INNER JOIN funding f ON i.investFdCode = f.fdCode WHERE investFdCode = #{fdCode} AND payCheck = 1
+	</select>
+	<!-- 펀딩투자한 목록 조회 토대로 환불입력 -->
+  	<insert id="insertInvestorRefund" parameterType="com.pineapple.invest.service.Moneyflow">
+		INSERT INTO moneyflow
+	(mfFdCode, mfInvestCode, mfAmount, mfCategory, mfDate)
+	VALUES (#{mfFdCode}, #{mfInvestCode}, #{mfAmount}, 2, NOW())
+	</insert>
 
 <!-- 	MY Page MY Page MY Page MY Page MY Page MY Page MY Page MY Page MY Page MY Page MY Page MY Page MY Page  -->
 	<!-- MyInvestorFundingQna -->

@@ -53,7 +53,7 @@ if(msg[i].days < 1){
 						+'</div>'
 					+'</td>'
       					+'<td><a href=\'#\'>'
-      					+'<button type="button" class="btn btn-sm btn-warning btn-block disabled">배당완료</button></a></td>'
+      					+'<button type="button" class="btn btn-sm btn-warning btn-block disabled">배정완료</button></a></td>'
   					+'</tr>'
 		);
 		}else{
@@ -72,7 +72,7 @@ if(msg[i].days < 1){
 									+'</div>'
 								+'</td>'
 		       					+'<td><a href=\'/pineapple/fundingassignmentinsertpage.invest?fdCode='+msg[i].fdCode+'\'>'
-		       					+'<button type="button" class="btn btn-sm btn-warning btn-block ">배당하기</button></a></td>'
+		       					+'<button type="button" class="btn btn-sm btn-warning btn-block ">배정하기</button></a></td>'
 		   					+'</tr>'
 					);	
 		}
@@ -91,7 +91,7 @@ if(msg[i].days < 1){
 							+'</div>'
 							+'</div>'
 						+'</td>'
-       					+'<td><a href="/pineapple/fundingtotalview.pms?fdCode='+msg[i].fdCode+'">'
+       					+'<td><a href="/pineapple/fundingrefundmain.invest?fdCode='+msg[i].fdCode+'">'
        					+'<button type="button" class="btn btn-sm btn-warning btn-block">환불하기</button></a></td>'
    					+'</tr>'
 			);
@@ -153,7 +153,7 @@ if(msg[i].days < 1){
 	</div>
 	<div class="col-md-9">
 			<div class="pagetitleandexplainbox"> 
-					<h1>결제 모집중인 펀딩리스트</h1>
+					<h1>배정 관련 펀딩리스트</h1>
 			</div>
 		    <table class="table table-striped table-bordered table-hover">
           			<thead>
@@ -210,7 +210,7 @@ if(msg[i].days < 1){
 		                							+'</div>'
 		                						+'</td>'
 		                	      					+'<td><a href=\'#\'>'
-		                	      					+'<button type="button" class="btn btn-sm btn-warning btn-block disabled">배당완료</button></a></td>'
+		                	      					+'<button type="button" class="btn btn-sm btn-warning btn-block disabled">배정완료</button></a></td>'
 		                	  					+'</tr>'
 		                			}else{
 		                				content +=
@@ -227,8 +227,8 @@ if(msg[i].days < 1){
 		                										+'</div>'
 		                										+'</div>'
 		                									+'</td>'
-		                			       					+'<td><a href=\'/pineapple/fundingtotalview.pms?fdCode='+data[i].fdCode+'\'>'
-		                			       					+'<button type="button" class="btn btn-sm btn-warning btn-block ">배당하기</button></a></td>'
+		                			       					+'<td><a href=\'/pineapple/fundingassignmentinsertpage.invest?fdCode='+data[i].fdCode+'\'>'
+		                			       					+'<button type="button" class="btn btn-sm btn-warning btn-block ">배정하기</button></a></td>'
 		                			   					+'</tr>'
 
 		                			}
@@ -247,7 +247,7 @@ if(msg[i].days < 1){
 		                								+'</div>'
 		                								+'</div>'
 		                							+'</td>'
-		                	       					+'<td><a href="/pineapple/fundingtotalview.pms?fdCode='+data[i].fdCode+'">'
+		                	       					+'<td><a href="/pineapple/fundingrefundmain.invest?fdCode='+data[i].fdCode+'">'
 		                	       					+'<button type="button" class="btn btn-sm btn-warning btn-block">환불하기</button></a></td>'
 		                	   					+'</tr>'
 
