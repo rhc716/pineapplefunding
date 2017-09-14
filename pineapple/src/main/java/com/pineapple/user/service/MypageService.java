@@ -15,6 +15,13 @@ public class MypageService implements MypageServiceInterface {
 	@Autowired
 	private MypageDaoInterface mypagedao;
 	
+	//관리자 마이페이지 전체투자내역과 투자에 대한 배당지급내역 조회
+	@Override
+	public List<InvestmentAndDividendpay> getInvestInfoAndDividendInfo() {
+		log.debug("MypageService getInvestInfoAndDividendInfo 호출 결과: "+mypagedao.selectInvestInfoAndDividendInfo());
+		return mypagedao.selectInvestInfoAndDividendInfo();
+	}
+	
 	//관리자 마이페이지 전체펀딩의 프로젝트관리시스템 조회
 	@Override
 	public List<FundingAndCompanyAndMilestoneAndWbsAndMargin> getPmsInfoByAdmin() {
@@ -275,4 +282,6 @@ public class MypageService implements MypageServiceInterface {
 		log.debug("MypageService selectInvestorBasic 메서드 호출 "+userId);
 		return mypagedao.selectInvestorBasic(userId);
 	}
+
+
 }

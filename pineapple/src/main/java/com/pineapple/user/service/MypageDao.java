@@ -18,6 +18,13 @@ public class MypageDao implements MypageDaoInterface {
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
 	
+	//관리자 마이페이지 전체투자내역과 투자에 대한 배당지급내역 조회
+	@Override
+	public List<InvestmentAndDividendpay> selectInvestInfoAndDividendInfo() {
+		log.debug("MypageDao selectInvestInfoAndDividendInfo 호출");
+		return sqlSessionTemplate.selectList("com.pineapple.user.service.MypageMapper.selectInvestInfo");
+	}
+	
 	//관리자 마이페이지 전체펀딩의 프로젝트관리시스템 조회
 	@Override
 	public List<FundingAndCompanyAndMilestoneAndWbsAndMargin> selectPmsInfoByAdmin() {
@@ -281,5 +288,5 @@ public class MypageDao implements MypageDaoInterface {
 		return sqlSessionTemplate.selectOne("com.pineapple.user.service.MypageMapper.selectAllInvestorInfo", userId);
 	}
 
-
+	
 }
