@@ -46,7 +46,6 @@
 		overflow: scroll;
 		overflow-x: hidden;
 	}
-	
 </style>
 
 <script type="text/javascript">
@@ -144,10 +143,28 @@ $(document).ready(function(){
 				<div class="pagetitleandexplainbox"> 
 					<div class="list-group" id="wbslistgroup"> 
 						<button class="list-group-item">마일스톤을 선택해주세요</button>
-						<a class="list-group-item active">이곳에서 WBS를 선택해서 상세정보를 아래에 보여줄것</a>
+						<a class="list-group-item active">이곳에서 WBS를 선택시 상세투입요소를 아래에 보여줄것</a>
 					</div>
 				</div>
 			</div>
+		</div>
+		<div class="pagetitleandexplainbox">
+			<h2 align="center">
+				WBS 계획차트
+			</h2>
+			<h4>마일스톤을 선택해주세요</h4>
+		</div>
+		<div class="pagecontentboxrhc" id="chart_div">
+			
+		</div>
+		<div class="pagetitleandexplainbox">
+			<h2 align="center">
+				WBS 상세투입요소
+			</h2>
+			<h4>WBS를 선택해주세요</h4>
+		</div>
+		<div class="pagecontentboxrhc">
+			
 		</div>
 	</div>
 </div>
@@ -243,8 +260,79 @@ function fdbtnclick(btn){
 //마일스톤 선택시 WBS 예상 간트차트를 띄워주고 WBS 계획별 목록을 보여줌
 function msbtnclick(btn){
 	console.log(btn.value);
+	var wbsplanlist = $.ajax({
+		type : "post",
+		url : "/pineapple/Wbsplanlist.pms",
+		/* 마일스톤으로 검색 */
+		data : { milestoneCode : btn.value }
+	});
+	// 성공시
+	wbsplanlist.done(function(msg){
+
+	console.log(msg);
 	
+		//구글차트를 그려줌
+	 	google.charts.load('current', {'packages':['gantt']});
+	    google.charts.setOnLoadCallback(drawChart);
+
+
+	    function drawChart() {
+
+	      var data = new google.visualization.DataTable();
+	      data.addColumn('string', '작업번호');
+	      data.addColumn('string', '작업명');
+	      data.addColumn('date', '시작일');
+	      data.addColumn('date', '종료일');
+	      data.addColumn('number', '작업기간');
+	      data.addColumn('number', '진행도');
+	      data.addColumn('string', '선행작업');
+	      
+	      $('#chart_btnarea').html('');
+	      for(var s = 0; s<msg.length; s++){
+			if(msg[s].wbsPlanStartDate!=null){
+				if(msg[s].wbsPlanDependency=="없음"){
+					data.addRows([
+						[msg[s].wbsPlanName, msg[s].wbsPlanName,
+			      new Date(msg[s].wbsPlanStartDate), null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, null],
+				 ]);
+				}else{
+			 data.addRows([
+				 [msg[s].wbsPlanName, msg[s].wbsPlanName,
+			      new Date(msg[s].wbsPlanStartDate), null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, msg[s].wbsPlanDependency],
+				 ]);
+				}
+			}else{
+				 data.addRows([
+			 [msg[s].wbsPlanName, msg[s].wbsPlanName,
+			     null, null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, msg[s].wbsPlanDependency],
+			 ]);
+			}
+	      }
+	      
+	      var options = {
+	        height: 400
+	        ,gantt: {
+	            criticalPathEnabled: false, // Critical path arrows will be the same as other arrows.
+	            arrow: {
+	              angle: 100,
+	              width: 5,
+	              color: 'green',
+	              radius: 0
+	            }
+	        }
+	      };
+
+	      var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+	      chart.draw(data, options);
+	    } 
+	});
 	
+	// 실패시
+	wbsplanlist.fail(function(){
+		alert('wbsplanlist ajax통신실패');
+	});
+
 }
 
 

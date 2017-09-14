@@ -17,6 +17,36 @@
 	.team {
 		height: 30px;
 	}
+	
+.colorchangetitle {
+    -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+    animation-name: examplecolorchange;
+    animation-duration: 7s;
+    animation-iteration-count: infinite;
+}
+.asdfasdf{
+	color : #e84c3d;
+	color : #f8f8cd;
+	color : #081420;
+}
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes examplecolorchange {
+    0%   {color: #e84c3d;}
+    25%  {color: #f8f8cd;}
+    50%  {color: #081420;}
+    75%  {color: #f8f8cd;}
+    100% {color: #e84c3d;}
+}
+
+/* Standard syntax */
+@keyframes examplecolorchange {
+    0%   {color: #e84c3d;}
+    25%  {color: #f8f8cd;}
+    50%  {color: #081420;}
+    75%  {color: #f8f8cd;}
+    100% {color: #e84c3d;}
+}
 
 </style>
 </head>
