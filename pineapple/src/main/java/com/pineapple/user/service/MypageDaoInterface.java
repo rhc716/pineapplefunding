@@ -5,6 +5,9 @@ import java.util.Map;
 import com.pineapple.invest.service.InvestorInvestList;
 
 public interface MypageDaoInterface {
+	//관리자 마이페이지 전체투자내역과 투자에 대한 배당지급내역 조회
+	List<InvestmentAndDividendpay> selectInvestInfoAndDividendInfo();
+	
 	//관리자 마이페이지 전체펀딩의 프로젝트관리시스템 조회
 	List<FundingAndCompanyAndMilestoneAndWbsAndMargin> selectPmsInfoByAdmin();
 	

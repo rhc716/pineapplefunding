@@ -816,7 +816,139 @@ $(document).ready(function(){
 		</div>
 		<!-- 다섯번째 탭(모든 펀딩에 대한 투자자들의 투자정보 및 배당금 지급 정보 조회) -->
 		<div role="tabpanel" class="tab-pane fade" id="investinfo" aria-labelledby="investinfo-tab">
-		
+			 <div class="row">
+				<div class="col-md-2">
+					<br>
+					<p>투자종합조회</p>
+				</div>
+				<div class="col-md-10">
+					<br>
+					<p id="explanation">파인애플펀딩 사이트를 통해 투자한 모든 투자 내역을 조회할 수 있습니다.
+										펀딩별 투자자들의 투자예약과 결제여부까지 확인가능합니다. 
+										결제 후 프로젝트를 진행하며 배당금을 지급받은 전체 내역을 확인할 수 있습니다.</p>
+					<br>
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr class="info">
+								<td>#</td>
+								<td>코드</td>
+								<td>투자자</td>
+								<td>기업</td>
+								<td>펀딩</td>
+								<td>주식수</td>
+								<td>발행가</td>
+								<td>투자액</td>
+								<td>투자시간</td>
+								<td>결제여부</td>
+								<td>배당내역</td>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="allinvestment" items="${investAndDividendList}" varStatus="numberofinvest">
+								<tr>
+									<td>${numberofinvest.count}</td>
+									<td>${allinvestment.investCode}</td>
+									<td>${allinvestment.investId}</td>
+									<td>${allinvestment.comName}</td>
+									<td>${allinvestment.fdTitle}</td>
+									<td>${allinvestment.purchaseShares}</td>
+									<td>${allinvestment.issuePrice}</td>
+									<td>${allinvestment.ia}</td>
+									<td>${allinvestment.investTime}</td>
+									<td>
+										<c:choose>
+											<c:when test="${allinvestment.payCheck eq 1}">
+												<a class="btn btn-block btn-success disabled">투자완료</a>
+											</c:when>
+											<c:otherwise>
+												<a class="btn btn-block btn-warning disabled">투자예약</a>
+											</c:otherwise>
+										</c:choose>
+									</td>
+									<td>
+										<c:choose>
+											<c:when test="${not empty allinvestment.dividendpay}">
+												<a class="btn btn-block btn-info" data-toggle="modal" href="#dividendpay${numberofinvest.count}">배당내역</a>
+												<!-- 배당상세내역 확인 모달 -->
+												<div class="modal fade" id="dividendpay${numberofinvest.count}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+												  <div class="modal-dialog modal-lg">
+												    <div class="modal-content">
+												      <div class="modal-header">
+												        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+												        <h4 class="modal-title" id="myModalLabel">[${allinvestment.investId}]님의 배당내역</h4>
+												      </div>
+												      <div class="modal-body">
+									      					<form action="#" method="post" style="border:1px solid #ccc">
+																<div class="container_insert">
+																    <br>
+																	<p id="explanation">파인애플펀딩 사이트를 통해 투자한 모든 투자 내역을 조회할 수 있습니다.
+																						펀딩별 투자자들의 투자예약과 결제여부까지 확인가능합니다. 
+																						결제 후 프로젝트를 진행하며 배당금을 지급받은 전체 내역을 확인할 수 있습니다.</p>
+																	<br>
+																	<table class="table table-striped table-bordered table-hover">
+																		<thead>
+																			<tr class="info">
+																				<td>#</td>
+																				<td>코드</td>
+																				<td>펀딩</td>
+																				<td>배당액</td>
+																				<td>배당일</td>
+																				<td>최소이율</td>
+																				<td>배당율</td>
+																				<td>배당마진</td>
+																				<td>투자수익률</td>
+																			</tr>
+																		</thead>
+																		<tbody>
+																			<c:forEach var="alldividendpay" items="${allinvestment.dividendpay}" varStatus="numberofdividendpay">
+																				<tr>
+																					<td>${numberofdividendpay.count}</td>
+																					<td>${alldividendpay.divPayCode}</td>
+																					<td>${alldividendpay.divPayFdTitle}</td>
+																					<td><a class="btn btn-block btn-info disabled">${alldividendpay.divPayAmount}</a></td>
+																					<td>${alldividendpay.divPayDate}</td>
+																					<td>${alldividendpay.divPayMinInterestRate}</td>
+																					<td>${alldividendpay.divPayDividendRate}</td>
+																					<td>
+																						<c:choose>
+																							<c:when test="${alldividendpay.divPayTotalMargin > 0}">
+																								<a class="btn btn-block btn-success disabled">${alldividendpay.divPayTotalMargin}</a>
+																							</c:when>
+																							<c:when test="${alldividendpay.divPayTotalMargin == 0}">
+																								<a class="btn btn-block btn-default disabled">${alldividendpay.divPayTotalMargin}</a>
+																							</c:when>
+																							<c:otherwise>
+																								<a class="btn btn-block btn-danger disabled">${alldividendpay.divPayTotalMargin}</a>
+																							</c:otherwise>
+																						</c:choose>
+																					</td>
+																					<td>${alldividendpay.roe}%</td>
+														      					  </tr>
+													      					  </c:forEach>
+												      					   </tbody>
+												      					</table>
+																    <div class="modal-footer">
+																      <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+																    </div>
+															    </div>
+													      	</form>
+													      		
+													    </div>
+													  </div>
+													</div>
+												</div>		
+											</c:when>
+											<c:otherwise>
+												<a class="btn btn-block btn-default disabled">배당없음</a>
+											</c:otherwise>
+										</c:choose>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</div>	
 		</div>
 		<!-- 여섯번째탭 시작(전체회원조회, 탈퇴승인) -->
 		<div role="tabpanel" class="tab-pane fade" id="allUserList" aria-labelledby="allUserList-tab">
