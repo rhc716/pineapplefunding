@@ -641,6 +641,40 @@
 		</otherwise>
 		</choose>
 	</select>
+	
+	<!-- 공지 메세지를 보내기 위해 한 펀딩내에 투자한 모든 투자자들의 아이디를 받아옴 -->
+	<select id="getIdListForSendMessageAllInvestors" parameterType="com.pineapple.funding.service.MessageAndFd" resultType="String">
+		SELECT investId
+		FROM investment
+		WHERE investFdCode = #{fdCode}
+	</select>
+	<!-- 펀딩내의 모든 투자자들에게 공지하기(메세지 보내기) -->
+	<insert id="sendMessageAllInvestors" parameterType="java.util.HashMap">
+		INSERT INTO message
+		(msgTitle, msgContent, msgSendId, msgReceiveId, msgTime)
+		VALUES
+		<foreach collection="idList" item="investId" separator=" , ">
+            (#{messageandfd.msgTitle}, #{messageandfd.msgContent}, #{messageandfd.msgSendId}, #{investId}, NOW())
+        </foreach>
+	</insert>
+	
+	<!-- 아이디로 새메세지의 수를 가져오는 쿼리  -->
+	<select id="selectMyNewMessageNum" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM message
+		WHERE msgReceiveId = #{userId} AND msgCheck = 0
+	</select>
+	
+	<!-- 메인에서 사용할 모집중 펀딩순위 랭킹 5를 셀렉트 해오는 쿼리 -->
+	<select id="selectCompanyRankingFive" resultType="com.pineapple.funding.service.Funding">
+		SELECT *
+		FROM funding f INNER JOIN investment i
+		ON f.fdCode = i.investFdCode
+		WHERE fdStatus = '모집중'
+		GROUP BY fdTitle
+		ORDER BY SUM(f.issuePrice*i.purchaseShares) DESC
+		limit 0,5
+	</select>
 </mapper>
 
  

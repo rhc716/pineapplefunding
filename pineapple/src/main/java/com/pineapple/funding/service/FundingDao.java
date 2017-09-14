@@ -317,4 +317,38 @@ public class FundingDao implements FundingDaoInterface {
 		list.addAll(sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectEndFundingList", numberOfRequests));
 		return list;
 	}
+	
+	// 모든 투자자들에게 공지보내기
+	@Override
+	public int sendMessageAllInvestors(MessageAndFd messageandfd) {
+		log.debug("FundingDao의 sendMessageAllInvestors호출 성공");
+		log.debug("///////FundingDao/////messageandfd///////  :"+messageandfd.getFdCode());
+		List<String> idList = new ArrayList<String>();
+		HashMap<String, Object> map = new HashMap<>();
+		// 펀딩코드로 모든 투자자들의 아이디를 가져옴
+		idList.addAll(sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.getIdListForSendMessageAllInvestors", messageandfd));
+		log.debug("/////////////getIdListForSendMessageAllInvestors///////쿼리결과  :"+idList);
+		// 가져온 아이디리스트와 메세지 제목, 내용을 담은 messageandfd객체를 map에 담아 보내서 insert 쿼리 실행
+		map.put("idList", idList);
+		map.put("messageandfd", messageandfd);
+		
+		int result = sqlSessionTemplate.insert("com.pineapple.funding.service.FundingMapper.sendMessageAllInvestors", map);
+		log.debug("/////////////SendMessageAllInvestors///////쿼리결과 result  :"+result);
+		return result;
+	}
+	// 메인에서 새 메세지가 있을 경우 알림을 위해 ajax 요청
+	@Override
+	public int selectMyNewMessageNum(String userid) {
+		log.debug("FundingDao의 selectMyNewMessageNum호출 성공");
+		int result = sqlSessionTemplate.selectOne("com.pineapple.funding.service.FundingMapper.selectMyNewMessageNum", userid);
+		log.debug("새 메세지의 수 result : "+ result);
+		return result;
+	}
+	
+	// 메인에서 모집중펀딩순위 랭킹 5를 가져오는 ajax요청
+	@Override
+	public List<Funding> selectCompanyRankingFive() {
+		log.debug("FundingDao의 selectCompanyRankingFive호출 성공");
+		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectCompanyRankingFive");
+	}
 }

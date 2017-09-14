@@ -46,4 +46,7 @@ public interface FundingDaoInterface {
 			int numberOfRequests);
 	List<Object> selectEndFundingList();
 	List<Funding> selectMoreEndFundingList(int numberOfRequests);
+	int sendMessageAllInvestors(MessageAndFd messageandfd);
+	int selectMyNewMessageNum(String userid);
+	List<Funding> selectCompanyRankingFive();
 }
