@@ -22,6 +22,37 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
 <!-- 아이콘 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script>
+	$(document).ready(function(){
+		if(${not empty sessionScope.userLogin}){
+			console.log('메인에서 로그인 이벤트 발생');
+			// 새메세지가 있을경우 알림을 위한 메세지수를 가져오는 ajax
+			var getmynewmessagenum = $.ajax({
+				type : "get",
+				url : "/pineapple/getmynewmessagenum.pms",
+				/* 아이디 세션에서 받아서 가져옴 */
+				data : { userId : "${id}"}
+			});
+			// 성공시
+			getmynewmessagenum.done(function(msg){
+				console.log(msg);
+				// 새메세지가 있을때
+				if(msg!=0){
+					$('#newmessage').css("color","#e95343");
+					$('#newmessage').html(msg)
+				}else{
+					$('#newmessage').css("color","#0c1218");
+				}
+				
+		
+			});	
+			// 실패시
+			getmynewmessagenum.fail(function(){
+				alert('ajax통신실패');
+			});
+		}
+	});
+</script>
 </head>
 <body>
 <!-- 세션값 있을 경우 로그인 성공 후 화면, 세션값 없을 경우 로그인 화면 -->
@@ -39,9 +70,9 @@
 	               <i class="fa fa-user fa-lg pull-right" style="color: #009442;"></i>
 	               <p class="list-group-item-text">${nickname}님의 마이페이지</p>
 	            </a>
-	            <a href="" class="list-group-item">
+	            <a href="/pineapple/investormypage.user#message" class="list-group-item">
 	               <i class="glyphicon glyphicon-envelope pull-right" style="color: #01619d;"></i>
-	               <p class="list-group-item-text">메세지</p>
+	               <p class="list-group-item-text">메세지 (<span id="newmessage">0</span>)</p>
 	            </a>
 	            <a href="/pineapple/logout.user" class="list-group-item">
 	               <i class="glyphicon glyphicon-off pull-right logouttxt"></i>

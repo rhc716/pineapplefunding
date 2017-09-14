@@ -63,7 +63,7 @@ $(document).ready(function(){
 		
 		for(var i=0; i<msg[0].length; i++){
 			$('#fdlistgroup').append(
-				'<button class="list-group-item fdbtn" onclick="javascript:fdbtnclick(this)"' 
+				'<button class="list-group-item" onclick="javascript:fdbtnclick(this)"' 
 				+'value="'+msg[0][i].fdCode+'">'+msg[0][i].fdTitle+'</button>'
 			);
 			
@@ -135,15 +135,14 @@ $(document).ready(function(){
 			<div class="col-xs-4">
 				<div class="pagetitleandexplainbox"> 
 					<div class="list-group" id="mslistgroup">
-						<button class="list-group-item">펀딩을 선택해주세요</button>
+						<button class="list-group-item active">펀딩을 선택해주세요</button>
 					</div>
 				</div>
 			</div>
 			<div class="col-xs-4">
 				<div class="pagetitleandexplainbox"> 
-					<div class="list-group" id="wbslistgroup"> 
-						<button class="list-group-item">마일스톤을 선택해주세요</button>
-						<a class="list-group-item active">이곳에서 WBS를 선택시 상세투입요소를 아래에 보여줄것</a>
+					<div class="list-group" id="wbsplanlistgroup"> 
+						<button class="list-group-item active">마일스톤을 선택해주세요</button>
 					</div>
 				</div>
 			</div>
@@ -194,7 +193,7 @@ function fdmoreList(btn){
             	var content="";
             	for(var i=0; i<data.length; i++){
 	                content +=
-	                	'<button class="list-group-item fdbtn" onclick="javascript:fdbtnclick(this)"' 
+	                	'<button class="list-group-item" onclick="javascript:fdbtnclick(this)"' 
 	    				+'value="'+data[i].fdCode+'">'+data[i].fdTitle+'</button>';
            		}
             
@@ -233,7 +232,7 @@ function fdbtnclick(btn){
 		// 받아온 마일스톤 목록이 없을때
 		if(msg.length==0){
 			$('#mslistgroup').html(
-				'<button class="list-group-item fdbtn">목록이 없습니다</button>'
+				'<button class="list-group-item active">목록이 없습니다</button>'
 			);
 		} else {
 			//받아온 마일스톤 목록이 있을때
@@ -241,7 +240,7 @@ function fdbtnclick(btn){
 			$('#mslistgroup').html('');
 			for(var i=0; i<msg.length; i++){
 				$('#mslistgroup').append(
-					'<button class="list-group-item fdbtn" onclick="javascript:msbtnclick(this)"' 
+					'<button class="list-group-item" onclick="javascript:msbtnclick(this)"' 
 					+'value="'+msg[i].milestoneCode+'">'+msg[i].milestoneName+'</button>'
 				);
 			}
@@ -269,8 +268,26 @@ function msbtnclick(btn){
 	// 성공시
 	wbsplanlist.done(function(msg){
 
-	console.log(msg);
-	
+		console.log(msg);
+		    
+	 	// 받아온 WBSPLAN 목록이 없을때
+		if(msg.length==0){
+			$('#wbsplanlistgroup').html(
+				'<button class="list-group-item active">목록이 없습니다</button>'
+			);
+		} else {
+			//받아온 WBSPLAN 목록이 있을때
+			//내용한번 리셋후 리스트를 채워넣음
+			$('#wbsplanlistgroup').html('');
+			for(var i=0; i<msg.length; i++){
+				$('#wbsplanlistgroup').append(
+					'<button class="list-group-item" onclick="javascript:wbsplanbtnclick(this)"' 
+					+'value="'+msg[i].wbsPlanCode+'">'+msg[i].wbsPlanName+'</button>'
+				);
+			}
+		}
+		
+		
 		//구글차트를 그려줌
 	 	google.charts.load('current', {'packages':['gantt']});
 	    google.charts.setOnLoadCallback(drawChart);
@@ -326,6 +343,8 @@ function msbtnclick(btn){
 
 	      chart.draw(data, options);
 	    } 
+	    
+
 	});
 	
 	// 실패시
@@ -335,6 +354,11 @@ function msbtnclick(btn){
 
 }
 
+// WBSPLAN 선택시 이벤트 함수
+
+function wbsplanbtnclick(btn){
+	console.log(btn);
+}
 
 </script>
 <div>

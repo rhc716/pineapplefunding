@@ -1,5 +1,6 @@
 package com.pineapple.funding.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Locale;
 
@@ -16,8 +17,8 @@ import com.pineapple.funding.service.FundingAndFdDetail;
 import com.pineapple.funding.service.FundingAndFdDividendPlan;
 import com.pineapple.funding.service.FundingAndFdFile;
 import com.pineapple.funding.service.FundingAndMileStone;
-import com.pineapple.funding.service.FundingService;
 import com.pineapple.funding.service.FundingServiceInterface;
+import com.pineapple.funding.service.MessageAndFd;
 import com.pineapple.funding.service.MileStone;
 import com.pineapple.invest.service.Investment;
 import com.pineapple.user.service.Company;
@@ -184,5 +185,29 @@ public class FundingRestController {
 			List<Funding> list = service.getMoreEndFdList(numberOfRequests);
 			return list;
 		}
+		
+		// 모든 투자자들에게 공지보내기
+		@RequestMapping(value = "/sendmessageallinvestors.pms", produces = "application/text; charset=utf8"
+				, method = RequestMethod.POST)
+		public String sendMessageAllInvestors(Model model, Locale locale, MessageAndFd messageandfd) throws UnsupportedEncodingException {
+			log.debug("FundingRestController의 sendMessageAllInvestors호출 성공");
+			log.debug("essageandfd : "+messageandfd);
+			String result ="메세지 보내기 ";
+			result += String.valueOf(service.sendMessageAllInvestors(messageandfd))+"명 성공";
+			log.debug("컨트롤러의 sendMessageAllInvestors 최종 result 결과물 : "+result);
+			return result;
+		}
+		
+		// 메인에서 새 메세지가 있을 경우 알림을 위해 ajax 요청
+		@RequestMapping(value = "/getmynewmessagenum.pms", method = RequestMethod.GET)
+		public int getMyNewMessageNum(Model model, Locale locale, @RequestParam("userId") String userid){
+			log.debug("FundingRestController의 getMyNewMessageNum호출 성공");
+			log.debug("userid : "+userid);
+			int result = 0;
+			result = service.getMyNewMessageNum(userid);
+			
+			return result;
+		}
+		
 		
 }

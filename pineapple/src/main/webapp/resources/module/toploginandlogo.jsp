@@ -5,22 +5,73 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
+<script>
+
+	$(document).ready(function(){
+		if(${not empty sessionScope.userLogin}){
+			console.log('메인에서 로그인 이벤트 발생');
+			// 새메세지가 있을경우 알림을 위한 메세지수를 가져오는 ajax
+			var getmynewmessagenum = $.ajax({
+				type : "get",
+				url : "/pineapple/getmynewmessagenum.pms",
+				/* 아이디 세션에서 받아서 가져옴 */
+				data : { userId : "${id}"}
+			});
+			// 성공시
+			getmynewmessagenum.done(function(msg){
+				console.log(msg);
+				// 새메세지가 있을때
+				if(msg!=0){
+					$('#newmessage').css("color","#34ffd2");
+					$('#newmessage').html(msg)
+				}else{
+					$('#newmessage').css("color","#34ffd2");
+					$('#newmessage').html("0");
+				}
+				
+		
+			});	
+			// 실패시
+			getmynewmessagenum.fail(function(){
+				alert('ajax통신실패');
+			});
+		}
+	});
+</script>
+<style>
+.topbtnspan{
+	font-size: 15px;
+}
+.topbtnspan b{
+	font-family: jejugothic;
+}
+</style>
 </head>
 <body>
 <div class="row" align="right">
 	<c:choose>
 		<c:when test="${not empty sessionScope.userLogin}">
+		
+            <div style="float: right; display:block;">
+				<a href="/pineapple/investormypage.user#message">
+					<button type="button" class="btn btn-primary btn-sm" aria-label="left Align">
+						<span class="topbtnspan glyphicon glyphicon-envelope pull-right"><b> 메세지 (<span id="newmessage">0</span>)</b></span>
+					</button>
+				</a>
+		    </div> 
 			<div style="float: right; display:block;">
 				<a href="/pineapple/logout.user">
 					<button type="button" class="btn btn-danger  btn-sm" aria-label="left Align">
-					  <span class="glyphicon glyphicon-off" aria-hidden="true">로그아웃</span>
-					</button>
+					  <span class="topbtnspan glyphicon glyphicon-off" aria-hidden="true"><b> 로그아웃</b></span>
+					</button>&nbsp;
 				 </a>
 			 </div>
 			 <div style="float: right; display:block;">
 				 <a href="/pineapple/mypage.user">
-					<button type="button" class="btn btn-danger  btn-sm" aria-label="left Align">
-					  <span class="glyphicon glyphicon-user" aria-hidden="true">마이페이지</span>
+					<button type="button" class="btn btn-success  btn-sm" aria-label="left Align">
+					  <span class="topbtnspan glyphicon glyphicon-user" aria-hidden="true"><b> 마이페이지</b></span>
 					</button>&nbsp;
 				 </a>
 			</div> 
@@ -29,14 +80,14 @@
 			<div style="float: right; display:block;">
 				<a href="/pineapple/login.user">
 					<button type="button" class="btn btn-success  btn-sm" aria-label="left Align">
-					  <span class="glyphicon glyphicon-globe" aria-hidden="true">로그인</span>
+					  <span class="topbtnspan glyphicon glyphicon-globe" aria-hidden="true"><b> 로그인</b></span>
 					</button>
 				</a>
 			</div>
 			 <div style="float: right; display:block;">
 				<a href="/pineapple/userinsert.user">
 					<button type="button" class="btn btn-success btn-sm" aria-label="left Align">
-					  <span class="glyphicon glyphicon-globe" aria-hidden="true">회원가입</span>
+					  <span class="topbtnspan glyphicon glyphicon-globe" aria-hidden="true"><b> 회원가입</b></span>
 					</button>&nbsp;
 				</a>
 			</div> 

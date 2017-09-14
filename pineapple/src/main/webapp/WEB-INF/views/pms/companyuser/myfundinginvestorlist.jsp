@@ -73,18 +73,6 @@ $(document).ready(function(){
 	
 	
 	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	/*********** 펀딩을 셀렉트 했을때 투자자 리스트를 불러오는 ajax && 공지하기 버튼을 보기에 해줌*********/
@@ -148,21 +136,79 @@ $(document).ready(function(){
 		}
 	});
 	
-	// 공지하기 버튼을 눌렀을때 모달안의 form에 투자자들의 아이디들을 input hidden 으로 추가해줌
-	// 메세지를 보내줄 대상들을 배열로 넘겨서 컨트롤러에서 처리할 것임
-//	$('#employeebtn').click(function(){
-		// console.log($('#investorlist').find("tr:eq(0)").find("td:eq(0)").text());
-		// console.log($('#investorlist').find("tr").length);
-/* 		var inputidArr = new Array();
-		for(var i=0; i<$('#investorlist').find("tr").length; i++ ){
-			inputidArr[i] = $('#investorlist').find("tr:eq("+i+")").find("td:eq(0)").text();
-		}
-		console.log(inputidArr);
 		
-		$('#inputidArrArea').append(
+	
+	//공지하기 유효성검사
+	//제목은 4글자 이상
+	$('#messagetitleinput').blur(function(){
+		if($('#messagetitleinput').val().length < 4){
+			$('#msgchecktext').css("color","#FF0000");
+			$('#msgchecktext').val('제목을 4글자 이상 입력해주세요');
+			$('#msgcheck').val("0");
+		} else {
+			$('#msgchecktext').css("color","#008000");
+			$('#msgchecktext').val('사용할 수 있는 제목입니다');
+		}
+	});
+	
+	$('#messagecontentinput').focus(function(){
+		if($('#messagetitleinput').val().length < 4){
+			$('#msgchecktext').css("color","#FF0000");
+			$('#msgchecktext').val('제목을 먼저 작성해주세요');
+			$('#msgcheck').val("0");
+			$('#messagetitleinput').focus();
+		}
+	});
+	//내용은 10글자 이상
+	$('#messagecontentinput').blur(function(){
+		if($('#messagecontentinput').val().length < 10){
+			$('#msgchecktext').css("color","#FF0000");
+			$('#msgchecktext').val('내용은 10글자 이상 작성해주세요');
+			$('#msgcheck').val("0");
+		} else {
+			$('#msgchecktext').css("color","#008000");
+			$('#msgchecktext').val('메세지를 보낼 수 있습니다');
+			$('#msgcheck').val("1");
+		}
+	});
+	
+	
+	
+	// 공지하기에서 입력 버튼을 눌렀을때 펀딩코드를 가져와서 펀딩코드에 해당하는 모든 투자자에게 메세지를 보내는 ajax요청
+	$('#messagesubmitbtn').click(function(){
+		if($('#msgcheck').val()=="1"){
+			var answer = confirm("메세지를 보내시겠습니까?")
+			if (answer) {
+				var sendmessageallinvestors = $.ajax({
+					type : "post",
+					url : "/pineapple/sendmessageallinvestors.pms",
+					data : { fdCode : $("#selectfd option:selected").val()
+						,msgTitle : $('#messagetitleinput').val()
+						,msgContent : $('#messagecontentinput').val()
+						,msgSendId : "${id}"
+					}
+				});
 				
-		);
-	}); */
+				//성공시 성공여부를 출력해줌
+				sendmessageallinvestors.done(function(msg){
+					// 메세지 보내기 몇명 성공했는지 alert로 띄워주고
+					alert(msg);
+					// 모달안의 내용을 초기화해주고 닫아줌
+					$('#messagetitleinput').val("");
+					$('#messagecontentinput').val("");
+					$('#myModal').modal('hide');
+				});
+				
+				//실패시
+				sendmessageallinvestors.fail(function(){
+					alert('sendmessageallinvestors ajax통신실패');
+				});
+			}
+		} else {
+			alert('메세지를 보내려면 제목과 내용을 입력해주셔야 합니다');
+		}
+		
+	});
 	
 	
 
@@ -235,17 +281,16 @@ $(document).ready(function(){
 					<div style="margin: 20px 0px;">
 					<input type="hidden" name="msgReceiveId" value="">
 					<label for="messagetitleinput">메세지 제목</label>
-					<input id="messagetitleinput" name="msgTitle" type="text" class="form-control box1" placeholder="메세지 제목을 입력해 주세요">
+					<input id="messagetitleinput" name="msgTitle" type="text" class="form-control box1" placeholder="제목에 공지임을 밝혀주세요">
 					</div>
 					<div style="margin: 20px 0px;">
 					<label for="messagecontentinput">메세지 내용</label>
-					<textarea id="messagecontentinput" name="msgContent" type="text" class="form-control box1" placeholder="메세지 내용을 입력해 주세요" style="height: 200px; resize: none;"></textarea>
-					</div>
-					<div id="inputidArrArea">
-					
+					<textarea id="messagecontentinput" name="msgContent" class="form-control box1" placeholder="메세지 내용을 입력해 주세요" style="height: 200px; resize: none;"></textarea>
 					</div>
 					<div>
-					<button class="btn btn-info" type="button">입력</button>
+						<input type="hidden" id="msgcheck" value="0">
+						<input type="text" class="form-control" id="msgchecktext" readonly><br>
+						<button id="messagesubmitbtn" class="btn btn-info" type="button">입력</button>
 					</div>
 		       </form>
 		      </div>

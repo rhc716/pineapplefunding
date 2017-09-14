@@ -30,12 +30,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/utils/Draggable.min.js"></script>
 <script>
-	$(document).ready(function(){
-		// 우측 배너를 실행해줌 (처음 호출 후 10초마다 한번씩) 
-		banner();
-		setInterval("banner()", 10000);
-		
-	});
+$(document).ready(function(){
+	// 우측 배너를 실행해줌 (처음 호출 후 10초마다 한번씩) 
+	banner();
+	setInterval("banner()", 10000);
+
+	//기업순위를 가져오는 ajax 요청
+	
+	
+});
  </script>
  
 <style type="text/css">
