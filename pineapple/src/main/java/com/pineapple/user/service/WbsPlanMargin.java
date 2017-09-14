@@ -6,6 +6,7 @@ public class WbsPlanMargin {
 	private int wpmgMsCode;
 	private int wpmgWpCode;
 	private int wpmgMargin;
+	
 	public int getWpmgCode() {
 		return wpmgCode;
 	}

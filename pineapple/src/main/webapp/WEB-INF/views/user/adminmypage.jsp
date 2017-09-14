@@ -7,6 +7,22 @@
 <title>관리자 MyPage</title>
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<style type="text/css">
+	th {
+		    color: #4CAF50;
+   			border-bottom: 3px solid;
+   			padding: 10px;
+   			text-align: left;
+			vertical-align: top;
+			    
+		}
+
+	td {
+		    text-align: left;
+		    vertical-align: top;
+			    
+		}
+</style>
 <script type="text/javascript">
 $(document).ready(function(){
 	//부트스트랩 새로고침할 때 페이지 유지
@@ -152,12 +168,12 @@ $(document).ready(function(){
 				<br><br>
 				<table class="table table-striped table-bordered table-hover">
 					<thead>
-						<tr class="info">
-						<td>증권사</td>
-						<td>계좌번호</td>
-						<td>계좌이름</td>
-						<td>계좌정보수정</td>
-						<td>계좌정보삭제</td>
+						<tr>
+							<th>증권사</th>
+							<th>계좌번호</th>
+							<th>계좌이름</th>
+							<th>계좌정보수정</th>
+							<th>계좌정보삭제</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -297,20 +313,22 @@ $(document).ready(function(){
 					<!-- 조회 목록 출력될 부분 -->
 					<div>
 						<table class="table table-striped table-bordered table-hover">
-							<tr class="info">
-								<th>#</th>
-								<th>펀딩코드</th>
-								<th>기업명</th>
-								<th>펀딩</th>
-								<th>형태</th>
-								<th>상황</th>
-								<th>최저이율</th>
-								<th>개설ID</th>
-								<th>요청일</th>
-								<th>승인여부</th>
-								<th>승인일</th>
-								<th>승인ID</th>
-							</tr>
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>펀딩코드</th>
+									<th>기업명</th>
+									<th>펀딩</th>
+									<th>형태</th>
+									<th>상황</th>
+									<th>최저이율</th>
+									<th>개설ID</th>
+									<th>요청일</th>
+									<th>승인여부</th>
+									<th>승인일</th>
+									<th>승인ID</th>
+								</tr>
+							</thead>
 							<c:forEach var="allfdList" items="${allfdList}" varStatus="numberoffdlist">
 								<tr>
 									<td>${numberoffdlist.count}</td>
@@ -375,16 +393,18 @@ $(document).ready(function(){
 					<!-- 조회 목록 출력될 부분 -->
 					<div>
 						<table class="table table-striped table-bordered table-hover">
-							<tr class="info">
-								<th>#</th>
-								<th>기업명</th>
-								<th>펀딩명</th>
-								<th>마일스톤명</th>
-								<th>마일스톤요약</th>
-								<th>작성자</th>
-								<th>WBS종합</th>
-								<th>마진종합</th>
-							</tr>
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>기업명</th>
+									<th>펀딩명</th>
+									<th>마일스톤명</th>
+									<th>마일스톤요약</th>
+									<th>작성자</th>
+									<th>WBS종합</th>
+									<th>마진종합</th>
+								</tr>
+							</thead>
 							<c:forEach var="allpmslist" items="${getPmsInfoByAdmin}" varStatus="numberofPmslist">
 								<tr>
 									<td>${numberofPmslist.count}</td>
@@ -416,16 +436,18 @@ $(document).ready(function(){
 										        		<div>
 										        			<p>WBS예상</p>
 										        			<table class="table table-striped table-bordered table-hover">
-																<tr class="info">
-																	<th>#</th>
-																	<th>코드</th>
-																	<th>버전</th>
-																	<th>항목</th>
-																	<th>시작일</th>
-																	<th>기간</th>
-																	<th>작성일</th>
-																	<th>작성자</th>
-																</tr>
+											        			<thead>
+																	<tr>
+																		<th>#</th>
+																		<th>코드</th>
+																		<th>버전</th>
+																		<th>항목</th>
+																		<th>시작일</th>
+																		<th>기간</th>
+																		<th>작성일</th>
+																		<th>작성자</th>
+																	</tr>
+																</thead>
 																<c:forEach items="${allpmslist.wbsplan}" var="wbsplanlist" varStatus="numberofwbsplan">
 																	<tr>
 																		<td>${numberofwbsplan.count}</td>
@@ -444,20 +466,22 @@ $(document).ready(function(){
 														<div>
 										        			<p>WBS실제</p>
 										        			<table class="table table-striped table-bordered table-hover">
-																<tr class="info">
-																	<th>#</th>
-																	<th>코드</th>
-																	<th>항목</th>
-																	<th>시작일</th>
-																	<th>종료일</th>
-																	<th>기간</th>
-																	<th>상태</th>
-																	<th>진행도</th>
-																	<th>작성일</th>
-																	<th>작성자</th>
-																	<th>승인일</th>
-																	<th>승인자</th>
-																</tr>
+										        				<thead>
+																	<tr>
+																		<th>#</th>
+																		<th>코드</th>
+																		<th>항목</th>
+																		<th>시작일</th>
+																		<th>종료일</th>
+																		<th>기간</th>
+																		<th>상태</th>
+																		<th>진행도</th>
+																		<th>작성일</th>
+																		<th>작성자</th>
+																		<th>승인일</th>
+																		<th>승인자</th>
+																	</tr>
+																</thead>
 																<c:forEach items="${allpmslist.wbsactual}" var="wbsactuallist" varStatus="numberofwbsactual">
 																	<tr>
 																		<td>${numberofwbsactual.count}</td>
@@ -509,38 +533,30 @@ $(document).ready(function(){
 														<div>
 										        			<p>WBS계획 연동 예상 마진</p>
 										        			<table class="table table-striped table-bordered table-hover">
-																<tr class="info">
-																	<th>#</th>
-																	<th>코드</th>
-																	<th>항목</th>
-																	<th>예상마진</th>
-																	<th>시작일</th>
-																	<th>기간</th>
-																	<th>작성일</th>
-																	<th>작성자</th>
-																</tr>
-																<c:forEach items="${allpmslist.wbsplan}" var="marginplanlist" varStatus="numberofmarginplan">
+										        				<thead>
+																	<tr>
+																		<th>#</th>
+																		<th>마진코드</th>
+																		<th>예상마진액</th>
+																	</tr>
+																</thead>
+																<c:forEach items="${allpmslist.wbsplanmargin}" var="marginplanlist" varStatus="numberofmarginplan">
 																	<tr>
 																		<td>${numberofmarginplan.count}</td>
-																		<td>${marginplanlist.wbsPlanCode}</td>
-																		<td>${marginplanlist.wbsPlanName}</td>
+																		<td>${marginplanlist.wpmgCode}</td>
 																		<td>
 																			<c:choose>
-																				<c:when test="${marginplanlist.wbsMargin < 0}">
-																					<a type="button" class="btn btn-block btn-danger disabled">${marginplanlist.wbsMargin}</a>
+																				<c:when test="${marginplanlist.wpmgMargin < 0}">
+																					<a type="button" class="btn btn-block btn-danger disabled">${marginplanlist.wpmgMargin}</a>
 																				</c:when>
-																				<c:when test="${marginplanlist.wbsMargin == 0}">
-																					<a type="button" class="btn btn-block btn-default disabled">${marginplanlist.wbsMargin}</a>
+																				<c:when test="${marginplanlist.wpmgMargin == 0}">
+																					<a type="button" class="btn btn-block btn-default disabled">${marginplanlist.wpmgMargin}</a>
 																				</c:when>
 																				<c:otherwise>
-																					<a type="button" class="btn btn-block btn-success disabled">${marginplanlist.wbsMargin}</a>
+																					<a type="button" class="btn btn-block btn-success disabled">${marginplanlist.wpmgMargin}</a>
 																				</c:otherwise>
 																			</c:choose>
 																		</td>
-																		<td>${marginplanlist.wbsPlanStartDate}</td>
-																		<td>${marginplanlist.wbsPlanDuration}</td>
-																		<td>${marginplanlist.wbsPlanWriteDate}</td>
-																		<td>${marginplanlist.wbsPlanManager}</td>
 																	</tr>
 																</c:forEach>
 															</table>
@@ -549,12 +565,14 @@ $(document).ready(function(){
 														<div>
 										        			<p>실제 마진(Daily)</p>
 										        			<table class="table table-striped table-bordered table-hover">
-																<tr class="info">
+										        				<thead>
+																<tr>
 																	<th>#</th>
-																	<th>코드</th>
-																	<th>실제마진</th>
+																	<th>마진코드</th>
+																	<th>실제마진액</th>
 																	<th>날짜</th>
 																</tr>
+																</thead>
 																<c:forEach items="${allpmslist.wbsdailymargin}" var="wbsdailymarginlist" varStatus="numberofdailymargin">
 																	<tr>
 																		<td>${numberofdailymargin.count}</td>
@@ -609,15 +627,15 @@ $(document).ready(function(){
 					<br>
 					<table class="table table-striped table-bordered table-hover">
 						<thead>
-							<tr class="info">
-								<td>#</td>
-								<td>기업코드</td>
-								<td>기업명</td>
-								<td>사업자번호</td>
-								<td>기업대표</td>
-								<td>개설자ID</td>
-								<td>등록승인</td>
-								<td>삭제승인</td>
+							<tr>
+								<th>#</th>
+								<th>기업코드</th>
+								<th>기업명</th>
+								<th>사업자번호</th>
+								<th>기업대표</th>
+								<th>개설자ID</th>
+								<th>등록승인</th>
+								<th>삭제승인</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -829,18 +847,18 @@ $(document).ready(function(){
 					<br>
 					<table class="table table-striped table-bordered table-hover">
 						<thead>
-							<tr class="info">
-								<td>#</td>
-								<td>코드</td>
-								<td>투자자</td>
-								<td>기업</td>
-								<td>펀딩</td>
-								<td>주식수</td>
-								<td>발행가</td>
-								<td>투자액</td>
-								<td>투자시간</td>
-								<td>결제여부</td>
-								<td>배당내역</td>
+							<tr>
+								<th>#</th>
+								<th>코드</th>
+								<th>투자자</th>
+								<th>기업</th>
+								<th>펀딩</th>
+								<th>주식수</th>
+								<th>발행가</th>
+								<th>투자액</th>
+								<th>투자시간</th>
+								<th>결제여부</th>
+								<th>배당내역</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -887,16 +905,16 @@ $(document).ready(function(){
 																	<br>
 																	<table class="table table-striped table-bordered table-hover">
 																		<thead>
-																			<tr class="info">
-																				<td>#</td>
-																				<td>코드</td>
-																				<td>펀딩</td>
-																				<td>배당액</td>
-																				<td>배당일</td>
-																				<td>최소이율</td>
-																				<td>배당율</td>
-																				<td>배당마진</td>
-																				<td>투자수익률</td>
+																			<tr>
+																				<th>#</th>
+																				<th>코드</th>
+																				<th>펀딩</th>
+																				<th>배당액</th>
+																				<th>배당일</th>
+																				<th>최소이율</th>
+																				<th>배당율</th>
+																				<th>배당마진</th>
+																				<th>투자수익률</th>
 																			</tr>
 																		</thead>
 																		<tbody>
@@ -922,7 +940,7 @@ $(document).ready(function(){
 																							</c:otherwise>
 																						</c:choose>
 																					</td>
-																					<td>${alldividendpay.roe}%</td>
+																					<td>${alldividendpay.roi}%</td>
 														      					  </tr>
 													      					  </c:forEach>
 												      					   </tbody>
@@ -964,15 +982,15 @@ $(document).ready(function(){
 					<br>
 					<table class="table table-striped table-bordered table-hover">
 						<thead>
-							<tr class="info">
-								<td>번호</td>
-								<td>아이디</td>
-								<td>닉네임</td>
-								<td>이름</td>
-								<td>권한</td>
-								<td>탈퇴요청시간</td>
-								<td>상세정보</td>
-								<td>삭제</td>
+							<tr>
+								<th>#</th>
+								<th>아이디</th>
+								<th>닉네임</th>
+								<th>이름</th>
+								<th>권한</th>
+								<th>탈퇴요청시간</th>
+								<th>상세정보</th>
+								<th>삭제</th>
 							</tr>
 						</thead>
 						<tbody>

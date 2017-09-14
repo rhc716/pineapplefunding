@@ -30,6 +30,9 @@ public class FundingAndCompanyAndMilestoneAndWbsAndMargin {
 	//WbsDailyMargin
 	private List<WbsDailyMargin> wbsdailymargin;
 	
+	//WbsPlanMargin
+	private List<WbsPlanMargin> wbsplanmargin;
+	
 	public int getFdCode() {
 		return fdCode;
 	}
@@ -133,6 +136,14 @@ public class FundingAndCompanyAndMilestoneAndWbsAndMargin {
 				+ ", milestoneStep=" + milestoneStep + ", milestoneName=" + milestoneName + ", milestoneSummary="
 				+ milestoneSummary + ", pm=" + pm + ", wbsplan=" + wbsplan + ", wbsactual=" + wbsactual
 				+ ", wbsdailymargin=" + wbsdailymargin + "]";
+	}
+
+	public List<WbsPlanMargin> getWbsplanmargin() {
+		return wbsplanmargin;
+	}
+
+	public void setWbsplanmargin(List<WbsPlanMargin> wbsplanmargin) {
+		this.wbsplanmargin = wbsplanmargin;
 	}
 
 	

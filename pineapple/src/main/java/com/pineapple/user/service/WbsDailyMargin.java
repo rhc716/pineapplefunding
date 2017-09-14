@@ -8,6 +8,7 @@ public class WbsDailyMargin {
 	private int wdmgMargin;
 	private String wdmgDate;
 	private int wdmgComCode;
+	
 	public int getWdmgCode() {
 		return wdmgCode;
 	}

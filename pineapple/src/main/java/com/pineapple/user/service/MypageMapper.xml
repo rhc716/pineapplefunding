@@ -10,7 +10,7 @@
 	, i.purchaseShares * f.issuePrice ia, f.fdTitle, f.issuePrice, c.comName
 	, dp.divPayCode, dp.divPayFdTitle, dp.divPayAmount, dp.divPayDate, dp.divPayissuePrice, dp.divPayPurchaseShares
 	, dp.divPayNoShares, dp.divPayMinInterestRate, dp.divPayDividendRate, dp.divPayTotalMargin
-	, (dp.divPayAmount/(i.purchaseShares * f.issuePrice))*100 roe
+	, (dp.divPayAmount/(i.purchaseShares * f.issuePrice))*100 roi
 	FROM investment i
 	LEFT JOIN dividendpay dp
 	ON i.investCode=dp.divPayInvestCode
@@ -42,7 +42,7 @@
 		<result property="divPayMinInterestRate" column="divPayMinInterestRate"/>
 		<result property="divPayDividendRate" column="divPayDividendRate"/>
 		<result property="divPayTotalMargin" column="divPayTotalMargin"/>
-		<result property="roe" column="roe"/>
+		<result property="roi" column="roi"/>
 	</collection>
 </resultMap>
 
@@ -50,10 +50,11 @@
 <select id="selectPmsInfoByAdmin" resultMap="selectPmsInfoByAdmin">
 	SELECT f.fdCode, f.fdComCode, f.fdTitle, c.comName, ms.milestoneCode, ms.milestoneStep, ms.milestoneName, ms.milestoneSummary
 	, ms.pm, wp.wbsPlanCode, wp.wbsPlanChange, wp.wbsPlanName, wp.wbsPlanStartDate, wp.wbsPlanDuration
-	, wp.wbsPlanWriteDate, wp.wbsPlanManager, wp.wbsMargin, wa.wbsActualCode, wa.wbsActualName, wa.wbsActualStartDate
+	, wp.wbsPlanWriteDate, wp.wbsPlanManager, wa.wbsActualCode, wa.wbsActualName, wa.wbsActualStartDate
 	, wa.wbsActualEndDate, wa.wbsActualDuration, wa.wbsActualStatus, wa.wbsActualProgress, wa.wbsActualWriteDate
 	, wa.wbsActualApprovalDate, wa.wbsActualWriteManager, wa.wbsActualApprovalManager, wdm.wdmgCode, wdm.wdmgMargin
-	, wdm.wdmgDate, wpm.wpmgCode, wpm.wpmgMargin
+	, wdm.wdmgDate, wdm.wdmgFdCode, wdm.wdmgMsCode, wdm.wdmgWaCode, wpm.wpmgCode, wpm.wpmgMargin, wpm.wpmgFdCode
+	, wpm.wpmgMsCode, wpm.wpmgWpCode
 	FROM funding f
 	LEFT JOIN company c
 	ON f.fdComCode=c.comCode
@@ -90,7 +91,6 @@
 		<result property="wbsPlanDuration" column="wbsPlanDuration"/>
 		<result property="wbsPlanWriteDate" column="wbsPlanWriteDate"/>
 		<result property="wbsPlanManager" column="wbsPlanManager"/>
-		<result property="wbsMargin" column="wbsMargin"/>
 	</collection>
 	<collection property="wbsactual"
 				ofType="com.pineapple.pms.service.WbsActual">
@@ -109,8 +109,19 @@
 	<collection property="wbsdailymargin"
 				ofType="com.pineapple.user.service.WbsDailyMargin">
 		<result property="wdmgCode" column="wdmgCode"/>
+		<result property="wdmgFdCode" column="wdmgFdCode"/>
+		<result property="wdmgMsCode" column="wdmgMsCode"/>
+		<result property="wdmgWaCode" column="wdmgWaCode"/>
 		<result property="wdmgMargin" column="wdmgMargin"/>
 		<result property="wdmgDate" column="wdmgDate"/>
+	</collection>
+	<collection property="wbsplanmargin"
+				ofType="com.pineapple.user.service.WbsPlanMargin">
+		<result property="wpmgCode" column="wpmgCode"/>
+		<result property="wpmgFdCode" column="wpmgFdCode"/>
+		<result property="wpmgMsCode" column="wpmgMsCode"/>
+		<result property="wpmgWpCode" column="wpmgWpCode"/>
+		<result property="wpmgMargin" column="wpmgMargin"/>
 	</collection>
 </resultMap>
 

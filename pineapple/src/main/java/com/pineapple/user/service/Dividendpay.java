@@ -15,7 +15,7 @@ public class Dividendpay {
 	private int divPayTotalMargin;
 	
 	//투자수익률 지표
-	private int roe;
+	private int roi;
 	
 	public int getDivPayCode() {
 		return divPayCode;
@@ -89,11 +89,11 @@ public class Dividendpay {
 	public void setDivPayTotalMargin(int divPayTotalMargin) {
 		this.divPayTotalMargin = divPayTotalMargin;
 	}
-	public int getRoe() {
-		return roe;
+	public int getRoi() {
+		return roi;
 	}
-	public void setRoe(int roe) {
-		this.roe = roe;
+	public void setRoi(int roi) {
+		this.roi = roi;
 	}
 	@Override
 	public String toString() {
@@ -102,7 +102,7 @@ public class Dividendpay {
 				+ ", divPayDate=" + divPayDate + ", divPayissuePrice=" + divPayissuePrice + ", divPayPurchaseShares="
 				+ divPayPurchaseShares + ", divPayNoShares=" + divPayNoShares + ", divPayMinInterestRate="
 				+ divPayMinInterestRate + ", divPayDividendRate=" + divPayDividendRate + ", divPayTotalMargin="
-				+ divPayTotalMargin + ", roe=" + roe + "]";
+				+ divPayTotalMargin + ", roi=" + roi + "]";
 	}
 	
 }
