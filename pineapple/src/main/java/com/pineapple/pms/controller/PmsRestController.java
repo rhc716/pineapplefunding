@@ -115,4 +115,44 @@ public class PmsRestController {
 		log.debug("wbh코드" + wphCode);
 		service.deletewbsplanhuman(wphCode);
 	}
+	
+	///wbsplanmaterial 삭제
+	@RequestMapping(value = "/wbsplanmaterialdelete.pms", method = {RequestMethod.GET, RequestMethod.POST})
+	public void wbsplanmaterialdelete(String wpmCode) {
+		log.debug("PmsController의 wbsplanmaterialdelete호출 성공");
+		log.debug("wbm코드" + wpmCode);
+		service.deletewbsplanmaterial(wpmCode);
+	}
+	
+	///wbsplanfacility 삭제
+	@RequestMapping(value = "/wbsplanfacilitydelete.pms", method = {RequestMethod.GET, RequestMethod.POST})
+	public void wbsplanfacilitydelete(String wpfCode) {
+		log.debug("PmsController의 wbsplanfacilitydelete호출 성공");
+		log.debug("wbf코드" + wpfCode);
+		service.deletewbsplanfacility(wpfCode);	
+	}
+	
+	///wbsplanout 삭제
+	@RequestMapping(value = "/wbsplanoutdelete.pms", method = {RequestMethod.GET, RequestMethod.POST})
+	public void wbsplanoutdelete(String wpoCode) {
+		log.debug("PmsController의 wbsplanoutdelete호출 성공");
+		log.debug("wbo코드" + wpoCode);
+		service.deletewbsplanout(wpoCode);
+	}
+	
+	///wbsplanetc 삭제
+	@RequestMapping(value = "/wbsplanetcdelete.pms", method = {RequestMethod.GET, RequestMethod.POST})
+	public void wbsplanetcdelete(String wpeCode) {
+		log.debug("PmsController의 wbsplanetcdelete호출 성공");
+		log.debug("wbe코드" + wpeCode);
+		service.deletewbsplanetc(wpeCode);
+	}
+	
+	///wbsplanincome 삭제
+	@RequestMapping(value = "/wbsplanincomedelete.pms", method = {RequestMethod.GET, RequestMethod.POST})
+	public void wbsplanincomedelete(String wpiCode) {
+		log.debug("PmsController의 wbsplanincomedelete호출 성공");		
+		log.debug("wbi코드" + wpiCode);
+		service.deletewbsplanincome(wpiCode);
+	}
 }

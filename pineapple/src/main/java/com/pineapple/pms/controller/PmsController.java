@@ -413,29 +413,9 @@ public class PmsController {
 			service.wbsplanoutinsert(wbsplanout);
 			//원래 페이지로 돌아가는 코드
 			String wbsplancode = request.getParameter("wpoWpCode");
-			int income = service.getincome(wbsplancode);
-			int wbsplanhumancost = service.gethumancost(wbsplancode);
-			int wbsplanfacilitycost = service.getfacilitycost(wbsplancode);
-			int wbsplanetccost = service.getetccost(wbsplancode);
-			int wbsplanmaterialcost = service.getmaterialcost(wbsplancode);
-			int wbsplanoutcost = service.getoutcost(wbsplancode);
-			int margin = income-wbsplanhumancost-wbsplanfacilitycost-wbsplanetccost-wbsplanmaterialcost-wbsplanoutcost;
 			log.debug("wbs코드" + wbsplancode);
-			WbsPlan wbsplandetail;
-			wbsplandetail = service.getMyWbsPlanDetail(wbsplancode);
-			String fdCode = request.getParameter("fdCode");
-			String fdTitle = request.getParameter("fdTitle");
-			String milestoneCode = request.getParameter("milestoneCode");
-			String milestoneName = request.getParameter("milestoneName");
-			String msComCode = request.getParameter("msComCode");
-			model.addAttribute("fdCode", fdCode);
-			model.addAttribute("fdTitle", fdTitle);
-			model.addAttribute("milestoneCode", milestoneCode);
-			model.addAttribute("milestoneName", milestoneName);
-			model.addAttribute("msComCode", msComCode);
 			model.addAttribute("wbsplancode", wbsplancode);
-			model.addAttribute("wbsplandetail",wbsplandetail);
-			return "pms/companyuser/wbs/wbsplandetail";
+			return "redirect:/wbsplandetail2.pms";
 		}
 		
 		// WbsPlanetc 입력
@@ -446,29 +426,9 @@ public class PmsController {
 			service.wbsplanetcinser(wbsplanetc);
 			//원래 페이지로 돌아가는 코드
 			String wbsplancode = request.getParameter("wpeWpCode");
-			int income = service.getincome(wbsplancode);
-			int wbsplanhumancost = service.gethumancost(wbsplancode);
-			int wbsplanfacilitycost = service.getfacilitycost(wbsplancode);
-			int wbsplanetccost = service.getetccost(wbsplancode);
-			int wbsplanmaterialcost = service.getmaterialcost(wbsplancode);
-			int wbsplanoutcost = service.getoutcost(wbsplancode);
-			int margin = income-wbsplanhumancost-wbsplanfacilitycost-wbsplanetccost-wbsplanmaterialcost-wbsplanoutcost;
-			log.debug("wbs코드" + wbsplancode);
-			WbsPlan wbsplandetail;
-			wbsplandetail = service.getMyWbsPlanDetail(wbsplancode);
-			String fdCode = request.getParameter("fdCode");
-			String fdTitle = request.getParameter("fdTitle");
-			String milestoneCode = request.getParameter("milestoneCode");
-			String milestoneName = request.getParameter("milestoneName");
-			String msComCode = request.getParameter("msComCode");
-			model.addAttribute("fdCode", fdCode);
-			model.addAttribute("fdTitle", fdTitle);
-			model.addAttribute("milestoneCode", milestoneCode);
-			model.addAttribute("milestoneName", milestoneName);
-			model.addAttribute("msComCode", msComCode);
+			log.debug("wbs코드" + wbsplancode);			
 			model.addAttribute("wbsplancode", wbsplancode);
-			model.addAttribute("wbsplandetail",wbsplandetail);
-			return "pms/companyuser/wbs/wbsplandetail";
+			return "redirect:/wbsplandetail2.pms";
 		}
 	
 	
@@ -481,29 +441,9 @@ public class PmsController {
 			service.wbsplanincomeinsert(wbsplanincome);
 			//원래 페이지로 돌아가는 코드
 			String wbsplancode = request.getParameter("wpiWpCode");
-			int income = service.getincome(wbsplancode);
-			int wbsplanhumancost = service.gethumancost(wbsplancode);
-			int wbsplanfacilitycost = service.getfacilitycost(wbsplancode);
-			int wbsplanetccost = service.getetccost(wbsplancode);
-			int wbsplanmaterialcost = service.getmaterialcost(wbsplancode);
-			int wbsplanoutcost = service.getoutcost(wbsplancode);
-			int margin = income-wbsplanhumancost-wbsplanfacilitycost-wbsplanetccost-wbsplanmaterialcost-wbsplanoutcost;
 			log.debug("wbs코드" + wbsplancode);
-			WbsPlan wbsplandetail;
-			wbsplandetail = service.getMyWbsPlanDetail(wbsplancode);
-			String fdCode = request.getParameter("fdCode");
-			String fdTitle = request.getParameter("fdTitle");
-			String milestoneCode = request.getParameter("milestoneCode");
-			String milestoneName = request.getParameter("milestoneName");
-			String msComCode = request.getParameter("msComCode");
-			model.addAttribute("fdCode", fdCode);
-			model.addAttribute("fdTitle", fdTitle);
-			model.addAttribute("milestoneCode", milestoneCode);
-			model.addAttribute("milestoneName", milestoneName);
-			model.addAttribute("msComCode", msComCode);
 			model.addAttribute("wbsplancode", wbsplancode);
-			model.addAttribute("wbsplandetail",wbsplandetail);
-			return "pms/companyuser/wbs/wbsplandetail";
+			return "redirect:/wbsplandetail2.pms";
 		}
 		
 	
@@ -517,7 +457,7 @@ public class PmsController {
 		//wbsplanhuman 업데이트
 		@RequestMapping(value = "/wbsplanhumanupdate.pms", method = RequestMethod.POST)
 		public String wbsplanhumanupdate(WbsPlanHuman wbsplanhuman, Model model, Locale locale,HttpServletRequest request) {
-			log.debug("PmsController의 wbsplanhumandelete호출 성공");
+			log.debug("PmsController의 wbsplanhumanupdate호출 성공");
 			String wphWpCode = request.getParameter("wphWpCode");
 			log.debug("wbsplanhuman : " + wbsplanhuman);
 			log.debug("wbs코드" + wphWpCode);
@@ -608,81 +548,10 @@ public class PmsController {
 		
 
 		
-		///wbsplanmaterial 삭제
-		@RequestMapping(value = "/wbsplanmaterialdelete.pms", method = {RequestMethod.GET, RequestMethod.POST})
-		public String wbsplanmaterialdelete(Locale locale, Model model,HttpServletRequest request) {
-			log.debug("PmsController의 wbsplanhumandelete호출 성공");
-			String wpmWpCode = request.getParameter("wpmWpCode");
-			String wpmCode = request.getParameter("wpmCode");
-			log.debug("wbs코드" + wpmWpCode);
-			log.debug("wbm코드" + wpmCode);
-			service.deletewbsplanmaterial(wpmCode);
-			List<WbsPlanMaterial> wbsplanmateriallist = new ArrayList<WbsPlanMaterial>();
-			wbsplanmateriallist = service.getMyWbsPlanMaterialList(wpmWpCode);
-			model.addAttribute("wbsplanmateriallist", wbsplanmateriallist);
-			return "pms/companyuser/wbs/wbsplanmateriallist";
-		}
 		
-		///wbsplanfacility 삭제
-		@RequestMapping(value = "/wbsplanfacilitydelete.pms", method = {RequestMethod.GET, RequestMethod.POST})
-		public String wbsplanfacilitydelete(Locale locale, Model model,HttpServletRequest request) {
-			log.debug("PmsController의 wbsplanfacilitydelete호출 성공");
-			String wpfWpCode = request.getParameter("wpfWpCode");
-			String wpfCode = request.getParameter("wpfCode");
-			log.debug("wbs코드" + wpfWpCode);
-			log.debug("wbf코드" + wpfCode);
-			service.deletewbsplanfacility(wpfCode);
-			List<WbsPlanFacility> wbsplanfacilityllist = new ArrayList<WbsPlanFacility>();
-			wbsplanfacilityllist = service.getMyWbsPlanFacilityList(wpfWpCode);
-			model.addAttribute("wbsplanfacilityllist", wbsplanfacilityllist);
-			return "pms/companyuser/wbs/wbsplanfacilitylist";
-		}
+		
+		
 		
 	
-		
-		///wbsplanout 삭제
-		@RequestMapping(value = "/wbsplanoutdelete.pms", method = {RequestMethod.GET, RequestMethod.POST})
-		public String wbsplanoutdelete(Locale locale, Model model,HttpServletRequest request) {
-			log.debug("PmsController의 wbsplanoutdelete호출 성공");
-			String wpoWpCode = request.getParameter("wpoWpCode");
-			String wpoCode = request.getParameter("wpoCode");
-			log.debug("wbs코드" + wpoWpCode);
-			log.debug("wbo코드" + wpoCode);
-			service.deletewbsplanout(wpoCode);
-			List<WbsPlanOut> wbsplanoutlist = new ArrayList<WbsPlanOut>();
-			wbsplanoutlist = service.getMyWbsPlanOutList(wpoWpCode);
-			model.addAttribute("wbsplanoutlist", wbsplanoutlist);
-			return "pms/companyuser/wbs/wbsplanoutlist";
-		}
-		
-		///wbsplanetc 삭제
-		@RequestMapping(value = "/wbsplanetcdelete.pms", method = {RequestMethod.GET, RequestMethod.POST})
-		public String wbsplanetcdelete(Locale locale, Model model,HttpServletRequest request) {
-			log.debug("PmsController의 wbsplanetcdelete호출 성공");
-			String wpeWpCode = request.getParameter("wpeWpCode");
-			String wpeCode = request.getParameter("wpeCode");
-			log.debug("wbs코드" + wpeWpCode);
-			log.debug("wbe코드" + wpeCode);
-			service.deletewbsplanetc(wpeCode);
-			List<WbsPlanEtc> wbsplanetclist = new ArrayList<WbsPlanEtc>();
-			wbsplanetclist = service.getMyWbsPlanEtcList(wpeWpCode);
-			model.addAttribute("wbsplanetclist", wbsplanetclist);
-			return "pms/companyuser/wbs/wbsplanetclist";
-		}
-		
-		///wbsplanincome 삭제
-		@RequestMapping(value = "/wbsplanincomedelete.pms", method = {RequestMethod.GET, RequestMethod.POST})
-		public String wbsplanincomedelete(Locale locale, Model model,HttpServletRequest request) {
-			log.debug("PmsController의 wbsplanincomedelete호출 성공");
-			String wpiWpCode = request.getParameter("wpiWpCode");
-			String wpiCode = request.getParameter("wpiCode");
-			log.debug("wbs코드" + wpiWpCode);
-			log.debug("wbi코드" + wpiCode);
-			service.deletewbsplanincome(wpiCode);
-			List<WbsPlanIncome> wbsplanincomelist = new ArrayList<WbsPlanIncome>();
-			wbsplanincomelist = service.getMyWbsPlanIncomeyList(wpiWpCode);
-			model.addAttribute("wbsplanincomelist", wbsplanincomelist);
-			return "pms/companyuser/wbs/wbsplanincomelist";
-		}
 		
 }

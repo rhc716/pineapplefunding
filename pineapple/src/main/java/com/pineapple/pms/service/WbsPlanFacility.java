@@ -8,7 +8,7 @@ public class WbsPlanFacility {
 	private int wpfCost;
 	private int wpfComCode;
 	private String wpfName;
-	private String wpftDate;
+	private String wpfDate;
 	private String wpfRemarks;
 	public int getWpfCode() {
 		return wpfCode;
@@ -52,14 +52,14 @@ public class WbsPlanFacility {
 	public void setWpfName(String wpfName) {
 		this.wpfName = wpfName;
 	}
-	public String getWpftDate() {
-		return wpftDate;
+	public String getWpfDate() {
+		return wpfDate;
 	}
 	public void setWpftDate(String wpftDate) {
 		if(wpftDate==""){
 			wpftDate =null;
 		}else{
-			this.wpftDate = wpftDate;
+			this.wpfDate = wpftDate;
 		}
 		
 	}
@@ -74,7 +74,7 @@ public class WbsPlanFacility {
 	public String toString() {
 		return "WbsDailyfacility [wpfCode=" + wpfCode + ", wpfFdCode=" + wpfFdCode + ", wpfMsCode=" + wpfMsCode
 				+ ", wpfWpCode=" + wpfWpCode + ", wpfCost=" + wpfCost + ", wpfComCode=" + wpfComCode + ", wpfName="
-				+ wpfName + ", wpftDate=" + wpftDate + ", wpfRemarks="
+				+ wpfName + ", wpfDate=" + wpfDate + ", wpfRemarks="
 				+ wpfRemarks + "]";
 	}
 

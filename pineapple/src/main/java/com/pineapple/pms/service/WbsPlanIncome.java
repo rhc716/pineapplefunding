@@ -8,8 +8,7 @@ public class WbsPlanIncome {
 	private int wpiIncome;
 	private int wpiComCode;
 	private String wpiReason;
-	private String wpiStartDate;
-	private String wpiEndDate;
+	private String wpiDate;
 	public int getWpiCode() {
 		return wpiCode;
 	}
@@ -52,31 +51,22 @@ public class WbsPlanIncome {
 	public void setWpiReason(String wpiReason) {
 		this.wpiReason = wpiReason;
 	}
-	public String getWpiStartDate() {
-		return wpiStartDate;
+	public String getWpiDate() {
+		return wpiDate;
 	}
-	public void setWpiStartDate(String wpiStartDate) {
-		if(wpiStartDate==""){
-			wpiStartDate=null;
+	public void setWpiDate(String wpiDate) {
+		if(wpiDate==""){
+			wpiDate=null;
 		}else{
-			this.wpiStartDate = wpiStartDate;
+			this.wpiDate = wpiDate;
 		}
 	}
-	public String getWpiEndDate() {
-		return wpiEndDate;
-	}
-	public void setWpiEndDate(String wpiEndDate) {
-		if(wpiEndDate==""){
-			wpiEndDate=null;
-		}else{
-			this.wpiEndDate = wpiEndDate;
-		}
-	}
+
 	@Override
 	public String toString() {
 		return "WbsPlanIncome [wpiCode=" + wpiCode + ", wpiFdCode=" + wpiFdCode + ", wpiMsCode=" + wpiMsCode
 				+ ", wpiWpCode=" + wpiWpCode + ", wpiIncome=" + wpiIncome + ", wpiComCode=" + wpiComCode
-				+ ", wpiReason=" + wpiReason + ", wpiStartDate=" + wpiStartDate + ", wpiEndDate=" + wpiEndDate + "]";
+				+ ", wpiReason=" + wpiReason + ", wpiDate=" + wpiDate + "]";
 	}
 	
 }
