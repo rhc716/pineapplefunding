@@ -53,3 +53,8 @@ th, td {
 	border:1px solid #ddd;
 	padding:10px 20px 10px 20px;
 }
+.listgroup{
+	height: 150px;
+	overflow: scroll;
+	overflow-x: hidden;
+}

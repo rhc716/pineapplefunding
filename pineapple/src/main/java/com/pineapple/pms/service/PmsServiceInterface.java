@@ -58,7 +58,7 @@ public interface PmsServiceInterface {
 
 	void deletewbsplanincome(String wbmcode);
 
-	void deletewbsplan(String wbsplancode);
+	void deletewbsplan(DeleteWbsplan delete);
 
 	void updatewbsplan(String wbsplanCode);
 

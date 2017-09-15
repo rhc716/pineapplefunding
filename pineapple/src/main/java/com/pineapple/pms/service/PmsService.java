@@ -189,15 +189,15 @@ public class PmsService implements PmsServiceInterface{
 	}
 	
 	@Override
-	public void deletewbsplan(String wbsplancode){
+	public void deletewbsplan(DeleteWbsplan delete){
 		log.debug("PmsService의 deletewbsplanetc호출 성공");
-		pmsdao.deletewbsplan(wbsplancode);
-		pmsdao.deletehuman(wbsplancode);
-		pmsdao.deletematerial(wbsplancode);
-		pmsdao.deletefacility(wbsplancode);
-		pmsdao.deleteout(wbsplancode);
-		pmsdao.deleteetc(wbsplancode);
-		pmsdao.deleteincome(wbsplancode);
+		pmsdao.deletewbsplan(delete);
+		pmsdao.deletehuman(delete);
+		pmsdao.deletematerial(delete);
+		pmsdao.deletefacility(delete);
+		pmsdao.deleteout(delete);
+		pmsdao.deleteetc(delete);
+		pmsdao.deleteincome(delete);
 	}
 	
 	@Override

@@ -115,13 +115,7 @@ public class PmsController {
 			model.addAttribute("wbsplancode",wbsplancode);
 			return "pms/companyuser/wbs/wbsplandetail";
 		}
-	//wbsplan삭제
-	@RequestMapping(value = "/wbsplandelete.pms", method = {RequestMethod.GET, RequestMethod.POST})
-	public String wbsplandelete(Locale locale, Model model, HttpServletRequest request) {
-		String wbsplancode = request.getParameter("wbsPlanCode");
-		service.deletewbsplan(wbsplancode);
-		return "pms/companyuser/wbs/wbsfdlist";
-	}
+
 	//wbsplan업데이트
 	@RequestMapping(value = "/wbsplanupdate.pms", method = {RequestMethod.GET, RequestMethod.POST})
 	public String wbsplanupdate(WbsPlan wbsplan,Locale locale, Model model, HttpServletRequest request) {
@@ -166,57 +160,7 @@ public class PmsController {
 		}
 		
 	}
-	/*// wbsplan 상세보기 페이지
-	@RequestMapping(value = "/wbsplandetail.pms", method = {RequestMethod.GET, RequestMethod.POST})
-	public String wbsplandetail(WbsPlan wbsplan,Locale locale, Model model, HttpServletRequest request) {
-		String btn = request.getParameter("btn");
-		String wbsplancode = request.getParameter("wbsPlanCode");
-		log.debug("btn"+btn);
-		if(btn.equals("detail")){	
-			log.debug("PmsController의 wbsplandetail의 detail호출 성공");
-			log.debug("wbs코드" + wbsplancode);
-			model.addAttribute("wbsplancode",wbsplancode);
-			return "pms/companyuser/wbs/wbsplandetail";
-		}else if(btn.equals("delete")){
-			log.debug("PmsController의 wbsplandetail의 delete호출 성공");
-			log.debug("wbs코드" + wbsplancode);
-			service.deletewbsplan(wbsplancode);
-			return "pms/companyuser/wbs/wbsfdlist";
-		}else{
-			
-		
-			
-		}
-		
-	}*/
 	
-	// wbsactual 상세보기 페이지
-	@RequestMapping(value = "/wbsactualdetail.pms", method = {RequestMethod.GET, RequestMethod.POST})
-	public String wbsactualdetail(WbsActual wbsactual,Locale locale, Model model, HttpServletRequest request) {
-		String btn = request.getParameter("btn");
-		String wbsActualCode = request.getParameter("wbsActualCode");
-		log.debug("btn"+btn);
-		if(btn.equals("detail")){	
-			log.debug("PmsController의 wbsactualdetail의 detail호출 성공");
-			log.debug("wbs코드" + wbsActualCode);
-			WbsActual wbsactualdetail;
-			wbsactualdetail = service.wbsactualdetail(wbsActualCode);
-			model.addAttribute("wbsactualdetail",wbsactualdetail);
-			log.debug(wbsactualdetail+"<------PmsController[wbsplandetail 값 출력]");
-			return "pms/companyuser/wbs/wbsplandetail";
-		}else if(btn.equals("delete")){
-			log.debug("PmsController의 wbsactualdetail의 delete호출 성공");
-			log.debug("wbs코드" + wbsActualCode);
-			service.deletewbsplan(wbsActualCode);
-			return "redirect:/wbsplanlistpage.pms";
-		}else{
-			log.debug("PmsController의 wbsactualdetail의 update호출 성공");
-			log.debug("WbsPlan" + wbsactual);
-			
-			return "redirect:/wbsplanlistpage.pms";
-		}
-		
-	}
 	
 	//wbsplan 리스트페이지 불러오기
 	@RequestMapping(value = "/wbsplanlistpage.pms", method = RequestMethod.GET)
@@ -364,7 +308,7 @@ public class PmsController {
 			service.addWbsplan(wbsplan);
 			model.addAttribute("fdTitle", fdTitle );
 			model.addAttribute("fdCode", fdCode );
-			return "pms/companyuser/wbs/wbsmslist";
+			return "pms/companyuser/wbs/wbsfdlist";
 		}
 		// WbsPlanhuman 입력
 		@RequestMapping(value = "/wbsplanhumaninsert.pms", method = RequestMethod.POST)
@@ -539,15 +483,6 @@ public class PmsController {
 			return "pms/companyuser/wbs/wbsplanincomelist";
 		}
 
-		
-		
-////////////////////////////////////////////////위에는///update요청////////////////////////////////////////////////////////
-////////////////////////////////////////////////아래는///delete요청////////////////////////////////////////////////////////
-		
-		
-		
-
-		
 		
 		
 		

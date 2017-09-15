@@ -144,39 +144,39 @@ public class PmsDao implements PmsDaoInterface {
 		return sqlSessionTemplate.selectList("com.pineapple.pms.service.PmsMapper.selectWbsPlanMaterial", wbsplancode);
 	}
 	@Override
-	public void deletewbsplan(String wbsplancode){
+	public void deletewbsplan(DeleteWbsplan delete){
 		log.debug("PmsDao의 deletewbsplan호출 성공");
-		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.deletewbsplan", wbsplancode);
+		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.deletewbsplan", delete);
 	}
 	@Override
-	public void deletehuman(String wbsplancode){
+	public void deletehuman(DeleteWbsplan delete){
 		log.debug("PmsDao의 deletehuman호출 성공");
-		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.deletehuman", wbsplancode);
+		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.deletehuman", delete);
 	}
 	@Override
-	public void deletematerial(String wbsplancode){
+	public void deletematerial(DeleteWbsplan delete){
 		log.debug("PmsDao의 deletematerial호출 성공");
-		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.deletematerial", wbsplancode);
+		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.deletematerial", delete);
 	}
 	@Override
-	public void deletefacility(String wbsplancode){
+	public void deletefacility(DeleteWbsplan delete){
 		log.debug("PmsDao의 deletefacility호출 성공");
-		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.deletefacility", wbsplancode);
+		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.deletefacility", delete);
 	}
 	@Override
-	public void deleteout(String wbsplancode){
+	public void deleteout(DeleteWbsplan delete){
 		log.debug("PmsDao의 deleteout호출 성공");
-		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.deleteout", wbsplancode);
+		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.deleteout", delete);
 	}
 	@Override
-	public void deleteetc(String wbsplancode){
+	public void deleteetc(DeleteWbsplan delete){
 		log.debug("PmsDao의 deleteetc호출 성공");
-		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.deleteetc", wbsplancode);
+		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.deleteetc", delete);
 	}
 	@Override
-	public void deleteincome(String wbsplancode){
+	public void deleteincome(DeleteWbsplan delete){
 		log.debug("PmsDao의 deleteincome호출 성공");
-		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.deleteincome", wbsplancode);
+		sqlSessionTemplate.insert("com.pineapple.pms.service.PmsMapper.deleteincome", delete);
 	}
 	
 	@Override

@@ -24,6 +24,7 @@ import com.pineapple.pms.service.WbsPlanHuman;
 import com.pineapple.pms.service.WbsPlanIncome;
 import com.pineapple.pms.service.WbsPlanMaterial;
 import com.pineapple.pms.service.WbsPlanOut;
+import com.pineapple.pms.service.DeleteWbsplan;
 import com.pineapple.pms.service.PmsService;
 
 
@@ -154,5 +155,12 @@ public class PmsRestController {
 		log.debug("PmsController의 wbsplanincomedelete호출 성공");		
 		log.debug("wbi코드" + wpiCode);
 		service.deletewbsplanincome(wpiCode);
+	}
+	
+	//wbsplan삭제
+	@RequestMapping(value = "/wbsplandelete.pms", method = {RequestMethod.GET, RequestMethod.POST})
+	public void wbsplandelete(DeleteWbsplan delete) {
+		log.debug("delete코드" + delete);
+		service.deletewbsplan(delete);
 	}
 }

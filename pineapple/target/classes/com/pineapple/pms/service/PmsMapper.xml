@@ -115,26 +115,103 @@
 		FROM wbsplan 
 		where wbsPlanStatus =1  and wbsPlanCode=#{wbsplancode};
 	</select>
-	<delete id="deletewbsplan" parameterType="String">
-		DELETE FROM wbsplan WHERE wbsPlanCode= #{wbsplancode}
+	<delete id="deletewbsplan" parameterType="com.pineapple.pms.service.DeleteWbsplan">
+		DELETE FROM wbsplan 
+		<where>
+			<if test="wbsPlanCode!=0">
+				wbsPlanCode= #{wbsPlanCode}
+			</if>
+			<if test="msCode!=0">
+				wbsPlanMsCode = #{msCode}
+			</if>
+			<if test="fdCode!=0">
+				wbsPlanFdCode = #{fdCode}
+			</if>
+		</where>
 	</delete>
-	<delete id="deletehuman" parameterType="String">
-		DELETE FROM wbsplanhuman WHERE wphWpCode= #{wbsplancode}
+	<delete id="deletehuman" parameterType="com.pineapple.pms.service.DeleteWbsplan">
+		DELETE FROM wbsplanhuman 
+		<where>
+			<if test="wbsPlanCode!=0">
+				wphWpCode= #{wbsPlanCode}
+			</if>
+			<if test="msCode!=0">
+				wphMsCode = #{msCode}
+			</if>
+			<if test="fdCode!=0">
+				wphFdCode = #{fdCode}
+			</if>
+		</where>
 	</delete>
-	<delete id="deletematerial" parameterType="String">
-		DELETE FROM wbsplanmaterial WHERE wpmWpCode= #{wbsplancode}
+	<delete id="deletematerial" parameterType="com.pineapple.pms.service.DeleteWbsplan">
+		DELETE FROM wbsplanmaterial
+		<where>
+			<if test="wbsPlanCode!=0">
+				wpmWpCode= #{wbsPlanCode}
+			</if>
+			<if test="msCode!=0">
+				wpmMsCode = #{msCode}
+			</if>
+			<if test="fdCode!=0">
+				wpmFdCode = #{fdCode}
+			</if>
+		</where>
 	</delete>
-	<delete id="deletefacility" parameterType="String">
-		DELETE FROM wbsplanfacility WHERE wpfWpCode= #{wbsplancode}
+	<delete id="deletefacility" parameterType="com.pineapple.pms.service.DeleteWbsplan">
+		DELETE FROM wbsplanfacility 
+		<where>
+			<if test="wbsPlanCode!=0">
+				wpfWpCode= #{wbsPlanCode}
+			</if>
+			<if test="msCode!=0">
+				wpfMsCode = #{msCode}
+			</if>
+			<if test="fdCode!=0">
+				wpfFdCode = #{fdCode}
+			</if>
+		</where>
 	</delete>
-	<delete id="deleteout" parameterType="String">
-		DELETE FROM wbsplanout WHERE wpoWpCode= #{wbsplancode}
+	<delete id="deleteout" parameterType="com.pineapple.pms.service.DeleteWbsplan">
+		DELETE FROM wbsplanout 
+		<where>
+			<if test="wbsPlanCode!=0">
+				wpoWpCode= #{wbsPlanCode}
+			</if>
+			<if test="msCode!=0">
+				wpoMsCode = #{msCode}
+			</if>
+			<if test="fdCode!=0">
+				wpoFdCode = #{fdCode}
+			</if>
+		</where>
 	</delete>
-	<delete id="deleteetc" parameterType="String">
-		DELETE FROM wbsplanetc WHERE wpeWpCode= #{wbsplancode}
+	<delete id="deleteetc" parameterType="com.pineapple.pms.service.DeleteWbsplan">
+		DELETE FROM wbsplanetc 
+		<where>
+			<if test="wbsPlanCode!=0">
+				wpeWpCode= #{wbsPlanCode}
+			</if>
+			<if test="msCode!=0">
+				wpeMsCode = #{msCode}
+			</if>
+			<if test="fdCode!=0">
+				wpeFdCode = #{fdCode}
+			</if>
+		</where>
 	</delete>
-	<delete id="deleteincome" parameterType="String">
-		DELETE FROM wbsplanincome WHERE wpiWpCode= #{wbsplancode}
+	<delete id="deleteincome" parameterType="com.pineapple.pms.service.DeleteWbsplan">
+		DELETE FROM wbsplanincome 
+		<where>
+			<if test="wbsPlanCode!=0">
+				wpiWpCode= #{wbsPlanCode}
+			</if>
+			<if test="msCode!=0">
+				wpiMsCode = #{msCode}
+			</if>
+			<if test="fdCode!=0">
+				wpiFdCode = #{fdCode}
+			</if>
+		</where>
 	</delete>
 	<delete id="deletewbsplanhuman" parameterType="String">
 		DELETE FROM wbsplanhuman WHERE wphCode= #{wbhcode}

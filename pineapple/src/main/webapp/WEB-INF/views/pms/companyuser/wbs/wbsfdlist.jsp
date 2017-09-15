@@ -50,7 +50,8 @@ $(document).ready(function(){
 	    console.log('modal close');
 	  $(this).find('form')[0].reset()
 	});
-	
+
+
 	 $("#dependency").click(function(){
 	        $("#dp").show();       	
 	        $('#sd').hide();	
@@ -260,10 +261,7 @@ $(document).on("change","select[name='wbsPlanMsCode']",function(){
 		    		  	+'<button type="submit" class="btn btn-primary btn-sm" name="btn" value="detail">상세정보</button>'		
 		    		  	+'</form>'
 		    		  	+'<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#'+msg[s].wbsPlanCode+'">수정</button>'
-		    		  	+' <form action="/pineapple/wbsplandelete.pms" method="post" style="display:inline;">'
-		    		  	+'<input type="hidden" name="wbsPlanCode" value="'+msg[s].wbsPlanCode+'"/>'
-		    		  	+'<button type="submit" class="btn btn-danger btn-sm" name="btn" value="delete">삭제</button>'
-		    		  	+'</form>'
+		    		  	+'<button type="submit" class="btn btn-danger btn-sm deletebtn" name="wbsPlanCode" value="'+msg[s].wbsPlanCode+'">삭제</button>'	    		  	
 		 				+'<div class="modal fade" id="'+msg[s].wbsPlanCode+'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">'
 		 				+'<div class="modal-dialog" role="document">'
 		 				+'<div class="modal-content">'
@@ -359,6 +357,29 @@ $(document).on("change","select[name='wbsPlanMsCode']",function(){
 			      } */
 			     
 			    } 
+			   
+				$('.deletebtn').click(function () {
+					var answer = confirm("삭제하시겠습니까?")
+					if (answer) {
+						var ss = $(this).val();
+						var test = $.ajax({
+							type : "post",
+							url : "/pineapple/wbsplandelete.pms",
+							/* 아이디 세션에서 받아서 가져옴 */
+							data : { wbsPlanCode : ss }
+						}); 
+						test.done(function(){
+							location.reload();
+							alert('삭제완료')
+						})
+						test.fail(function(){
+							location.reload();
+							alert('삭제실패')
+						})
+					}else{
+					}
+				});
+			    
 		});
 		// 실패시
 		wbsplanlist.fail(function(){

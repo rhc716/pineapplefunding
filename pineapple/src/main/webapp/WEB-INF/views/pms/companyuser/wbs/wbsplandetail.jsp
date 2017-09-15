@@ -26,6 +26,7 @@
 
 <!-- css lsk -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lsk.css" />
+
 <script>
 
 $(document).ready(function(){
@@ -480,7 +481,7 @@ $(document).ready(function(){
 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insertincome">수입</button><br>
 			<br>
 			<div class="row">
-				<div class="col-md-6 boder">
+				<div class="col-md-6 boder listgroup">
 					<table id="humanlist">
 						 <tr>
 							 <th>인원수</th>
@@ -490,7 +491,7 @@ $(document).ready(function(){
 						 </tr>
 					 </table>
 				</div>
-				<div class="col-md-6 boder">
+				<div class="col-md-6 boder listgroup">
 					<table id="materiallist">
 						 <tr>
 							 <th>장비명</th>
@@ -502,7 +503,7 @@ $(document).ready(function(){
 				</div>
 			</div><br>
 			<div class="row">
-				<div class="col-md-6 boder">
+				<div class="col-md-6 boder listgroup">
 					<table id="facilitylist">
 						 <tr>
 							 <th>시설명</th>
@@ -512,7 +513,7 @@ $(document).ready(function(){
 						 </tr>
 					 </table>
 				</div>
-				<div class="col-md-6 boder">
+				<div class="col-md-6 boder listgroup">
 					<table id="outlist">
 						 <tr>
 							 <th>업체명</th>
@@ -524,7 +525,7 @@ $(document).ready(function(){
 				</div>
 			</div><br>
 			<div class="row">
-				<div class="col-md-6 boder">
+				<div class="col-md-6 boder listgroup">
 					<table id="etclist">
 						 <tr>
 							 <th>용도</th>
@@ -534,7 +535,7 @@ $(document).ready(function(){
 						 </tr>
 					 </table>
 				</div>
-				<div class="col-md-6 boder">
+				<div class="col-md-6 boder listgroup">
 					<table id="incomelist">
 						 <tr>
 							 <th>수익사유</th>
