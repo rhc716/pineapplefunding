@@ -172,32 +172,6 @@ $(document).ready(function(){
     		};
 		});
 	});
-	//사원탈퇴요청하기(탈퇴요청모달 확인 후 삭제요청 제출)
-	$('.deleteemployeeinfo').click(function(){
-		var in_employeeCode = $(this).attr('value');
-		var deleteEmployeeAjax = $.ajax({ // ajax실행부분
-							        type: "get",
-							        url : "/pineapple/deleterequestemployeepage.user",
-							        data : {emCode : in_employeeCode},
-							        success : function success(){
-							        	alert('삭제할 사원코드 : '+ in_employeeCode);
-							        },
-							        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
-							        error : function error(){
-						        		alert('사원정보 불러오기 오류');
-						        	}
-								});
-		//ajax를 통해 조회한 계좌 정보를 모달창 수정페이지 각 입력값으로 넣어준다
-		deleteEmployeeAjax.done(function(de){
-			$('#emCodeDel').val(de.emCode);
-			$('#emComCodeDel').val(de.emComCode);
-    		$('#emComNameDel').val(de.emComName);
-    		$('#emUserIdDel').val(de.emUserId);
-    		$('#emRankCodeDel').val(de.emRankCode);
-    		$('#emDepartmentDel').val(de.emDepartment);
-    		$('#emCheckDel').val(de.emCheck);
-		});
-	});
 });
 //기업등록시 기업명 존재여부 검사
 $(document).ready(function(){
@@ -800,10 +774,10 @@ $(document).ready(function(){
 							</div>
 						</c:when>
 						<c:when test="${companyOpenedByMyIdforDel.comDelRequestId != null and companyOpenedByMyIdforDel.comDelApprovalId == null}">
-							<a type="button" class="btn btn-warning btn-block disabled">삭제승인대기중</a>
+							<a type="button" class="btn btn-warning btn-block disabled">${companyOpenedByMyIdforDel.comName} 삭제승인대기중</a>
 						</c:when>
 						<c:when test="${companyOpenedByMyIdforDel.comDelRequestId != null and companyOpenedByMyIdforDel.comDelApprovalId != null}">
-							<a type="button" class="btn btn-default btn-block disabled">${companyOpenedByMyIdforDel.comName}삭제처리완료</a>
+							<a type="button" class="btn btn-default btn-block disabled">${companyOpenedByMyIdforDel.comName} 삭제처리완료</a>
 						</c:when>
 					</c:choose>
 					
@@ -1027,8 +1001,18 @@ $(document).ready(function(){
 				<div class="col-xs-10">
 					<br>
 					<c:forEach var="employeeOneIdforDel" items="${employeeOneId}" varStatus="index">
-						<a href="#deleteEmployee" class="btn btn-danger btn-block deleteemployeeinfo" data-toggle="modal" value="${employeeOneIdforDel.emCode}">${employeeOneIdforDel.emComName} 사원탈퇴요청</a>
-						<p id="explain">${employeeOneIdforDel.emComName}에서 사원탈퇴 요청을 할 수 있습니다. 경영진이 사원탈퇴요청을 승인할 경우 사원에서 탈퇴하게 됩니다.</p>
+						<c:choose>
+				  			<c:when test="${employeeOneIdforDel.emDelRequest == 1 || not empty companyOpen}">
+				  				<a href="#deleteEmployee${employeeOneIdforDel.emComName}" class="btn btn-danger btn-block disabled" data-toggle="modal">${employeeOneIdforDel.emComName} 사원탈퇴요청</a>
+				  			</c:when>
+				  			<c:otherwise>
+				  				<a href="#deleteEmployee${employeeOneIdforDel.emComName}" class="btn btn-danger btn-block" data-toggle="modal">${employeeOneIdforDel.emComName} 사원탈퇴요청</a>
+				  			</c:otherwise>
+				  		</c:choose>
+						<p id="explain">${employeeOneIdforDel.emComName}에서 사원탈퇴 요청을 할 수 있습니다. 
+										경영진이 사원탈퇴요청을 승인할 경우 사원에서 탈퇴하게 됩니다.
+										기업 최초개설자일 경우 또는 이미 탈퇴요청을 한 경우 사원탈퇴요청을 할 수 없습니다.
+						</p>
 						<!-- 사원등록 정보 확인 모달창 -->
 						<div class="modal fade" id="deleteEmployee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						  <div class="modal-dialog">
@@ -1039,18 +1023,18 @@ $(document).ready(function(){
 						      </div>
 				      		  <div class="modal-body">
 						        <form action="/pineapple/deleterequestemployee.user#insertEmployee" method="post">
-						        	<input id="emCodeDel" name="emCode" type="hidden" class="form-control">
-						        	<input id="emComCodeDel" name="emComCode" type="hidden" class="form-control">
+						        	<input name="emCode" type="hidden" class="form-control" value="${employeeOneIdforDel.emCode}">
+						        	<input name="emComCode" type="hidden" class="form-control" value="${employeeOneIdforDel.emComCode}">
 									<div class="form-group has-success has-feedback">
 									    <label class="control-label" for="inputSuccess4">소속기업명</label>
-									    <input id="emComNameDel" name="emComName" type="text" class="focus form-control" readonly>
+									    <input name="emComName" type="text" class="focus form-control" value="${employeeOneIdforDel.emComName}" readonly>
 									    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 									    <span id="comApprovedStatus" class="sr-only">(success)</span>
 								    </div>
 									<br>
 								    <div id="emUserIdEmail" class="form-group has-success has-feedback">
 										<label class="control-label" for="inputSuccess2">사원탈퇴요청아이디</label>
-										<input id="emUserIdDel" name="emUserId" type="text" class="form-control" varia-describedby="inputSuccess2Status" readonly>
+										<input name="emUserId" type="text" class="form-control" value="${employeeOneIdforDel.emUserId}" varia-describedby="inputSuccess2Status" readonly>
 										<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 										<span id="inputSuccess2Status" class="sr-only">(success)</span>
 										<p id="explain">(사원으로 등록하려고 하는 분의 아이디입니다)</p>
@@ -1059,14 +1043,14 @@ $(document).ready(function(){
 									<div class="form-group">
 									    <label for="emRankCodeInput">직급선택</label>
 									    <p id="explain">(경영진과 일반사원 중 하나를 선택해주시기 바랍니다)</p>
-								        ${rank}  <input id="emRankCodeDel" name="emRankCode" type="radio" checked>
+								        ${rank}  <input name="emRankCode" type="radio" value="${employeeOneIdforDel.emRankCode}" checked>
 									    <span id="emrankch1"></span>
 								  	</div>
 								  	<br>
 								  	<div class="form-group">
 									    <label for="employeeDepInput1">부서선택</label>
 									    <p id="explain">(기업내의 소속 부서를 입력해주시기 바랍니다)</p>
-									    <input id="emDepartmentDel" name="emDepartment" type="text" class="form-control">
+									    <input name="emDepartment" type="text" value="${employeeOneIdforDel.emDepartment}" class="form-control">
 								  	</div>
 								  	<br>
 								 	<!-- 기업을 최초로 등록한 경영진은 자동적으로 사원요청승인처리됨 -->
@@ -1077,17 +1061,17 @@ $(document).ready(function(){
 									    		<p>기업 최초 개설자 입니다</p>
 									    	</c:when>
 									    	<c:otherwise>
-									    		<p>일반 경영진 입니다</p>
+									    		<p>일반 사원 입니다</p>
 									    	</c:otherwise>
 									    </c:choose>
-									    <input id="emCheckDel" name="emCheck" type="hidden">
+									    <input name="emCheck" value="${employeeOneIdforDel.emCheck}" type="hidden">
 									    <span id="emrankch1"></span>
 								  	</div>
 								  	<div>
-								  		<input id="emDelRequestDel" name="emDelRequest" type="hidden" value="1" class="form-control">
+								  		<input name="emDelRequest" type="hidden" value="1" class="form-control">
 								  	</div>
 								  	<div>
-										<button type="submit" class="btn btn-info">사원탈퇴요청</button>&nbsp
+								  		<button type="submit" class="btn btn-info">사원탈퇴요청</button>&nbsp
 										<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
 									</div>
 								</form>

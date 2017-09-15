@@ -358,7 +358,7 @@ public class MypageController {
         return "redirect:/mypage.user"; // 글입력후 "/"로 리다이렉트(재요청)
     }
 	
-	//사원삭제처리
+	//사원 완전 삭제처리
 	@RequestMapping(value="/deleteemployee.user", method = RequestMethod.POST)
     public String removeEmployee(HttpSession session, @RequestParam("emCode") int emCode) { //커맨드 객체
         log.debug("removeEmployee 사원삭제처리 : "+emCode);
