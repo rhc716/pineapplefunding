@@ -39,6 +39,7 @@
 			<li><a href="">WBS관리</a>
 				<ul>
 					<li><a href="/pineapple/wbsplanlistpage.pms">WBSPLAN관리</a></li>
+					<li><a href="/pineapple/wbsactuallistpage.pms">WBSACTUAL관리</a></li>
 					<li><a href="">WBS승인</a></li>
 				</ul>
 			</li>

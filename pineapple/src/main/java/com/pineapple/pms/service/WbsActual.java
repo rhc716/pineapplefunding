@@ -17,8 +17,6 @@ public class WbsActual {
 	private String wbsActualWriteManager;
 	private String wbsActualApprovalManager;
 	private int wbsActualComCode;
-	private String fdTitle;
-	private String milestoneName;
 	
 	public int getWbsActualCode() {
 		return wbsActualCode;
@@ -134,43 +132,8 @@ public class WbsActual {
 	public void setWbsActualComCode(int wbsActualComCode) {
 		this.wbsActualComCode = wbsActualComCode;
 	}
-	public String getFdTitle() {
-		return fdTitle;
-	}
-	public void setFdTitle(String fdTitle) {
-		this.fdTitle = fdTitle;
-	}
-	public String getMilestoneName() {
-		return milestoneName;
-	}
-	public void setMilestoneName(String milestoneName) {
-		this.milestoneName = milestoneName;
-	}
-	@Override
-	public String toString() {
-		return "WbsActual [wbsActualCode=" + wbsActualCode + ", wbsActualFdCode=" + wbsActualFdCode
-				+ ", wbsActualMsCode=" + wbsActualMsCode + ", wbsPlanAcCode=" + wbsPlanAcCode + ", wbsActualName="
-				+ wbsActualName + ", wbsActualStartDate=" + wbsActualStartDate + ", wbsActualEndDate="
-				+ wbsActualEndDate + ", wbsActualDuration=" + wbsActualDuration + ", wbsActualStatus=" + wbsActualStatus
-				+ ", wbsActualProgress=" + wbsActualProgress + ", wbsActualWriteDate=" + wbsActualWriteDate
-				+ ", wbsActualApprovalDate=" + wbsActualApprovalDate + ", wbsActualApprovalReason="
-				+ wbsActualApprovalReason + ", wbsActualWriteManager=" + wbsActualWriteManager
-				+ ", wbsActualApprovalManager=" + wbsActualApprovalManager + ", wbsActualComCode=" + wbsActualComCode
-				+ ", fdTitle=" + fdTitle + ", milestoneName=" + milestoneName + ", getWbsActualCode()="
-				+ getWbsActualCode() + ", getWbsActualFdCode()=" + getWbsActualFdCode() + ", getWbsActualMsCode()="
-				+ getWbsActualMsCode() + ", getWbsPlanAcCode()=" + getWbsPlanAcCode() + ", getWbsActualName()="
-				+ getWbsActualName() + ", getWbsActualStartDate()=" + getWbsActualStartDate()
-				+ ", getWbsActualEndDate()=" + getWbsActualEndDate() + ", getWbsActualDuration()="
-				+ getWbsActualDuration() + ", getWbsActualStatus()=" + getWbsActualStatus()
-				+ ", getWbsActualProgress()=" + getWbsActualProgress() + ", getWbsActualWriteDate()="
-				+ getWbsActualWriteDate() + ", getWbsActualApprovalDate()=" + getWbsActualApprovalDate()
-				+ ", getWbsActualApprovalReason()=" + getWbsActualApprovalReason() + ", getWbsActualWriteManager()="
-				+ getWbsActualWriteManager() + ", getWbsActualApprovalManager()=" + getWbsActualApprovalManager()
-				+ ", getWbsActualComCode()=" + getWbsActualComCode() + ", getFdTitle()=" + getFdTitle()
-				+ ", getMilestoneName()=" + getMilestoneName() + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + ", toString()=" + super.toString() + "]";
-	}
-	
+
+
 	
 
 }

@@ -75,9 +75,17 @@
 	<select id="getoutcost" resultType="int" parameterType="String">
 		select IFNULL(sum(wpoCost),0) from wbsplanout where wpoWpCode=#{wbsplancode}
 	</select>
-		<select id="wbsplanlist" resultType="com.pineapple.pms.service.WbsPlan" parameterType="String">
+	<select id="wbsplanlist" resultType="com.pineapple.pms.service.WbsPlan" parameterType="String">
 		SELECT * FROM wbsplan 
 		where wbsPlanStatus =1 and wbsPlanMsCode = #{milestoneCode}
+	</select>
+	<select id="wbsactuallist" resultType="com.pineapple.pms.service.WbsActual" parameterType="String">
+		SELECT * FROM wbsactual
+		where  wbsActualMsCode = #{milestoneCode};
+	</select>
+	<select id="wbsactualdetail" resultType="com.pineapple.pms.service.WbsActual" parameterType="String">
+		SELECT * FROM wbsactual
+		where  wbsActualCode = #{wbsactualcode};
 	</select>
 	<select id="wbsmsview" resultType="com.pineapple.pms.service.WbsMs" parameterType="String">
 		select *

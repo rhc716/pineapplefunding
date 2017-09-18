@@ -82,4 +82,6 @@ public interface PmsServiceInterface {
 	int getoutcost(String wbsplancode);
 	void wbsmargin(HashMap map);
 
+	List<WbsActual> wbsactual(String milestoneCode);
+
 }

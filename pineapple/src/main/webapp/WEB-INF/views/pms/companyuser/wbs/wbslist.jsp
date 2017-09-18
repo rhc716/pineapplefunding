@@ -28,6 +28,10 @@
 <!-- css rhc -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
 
+<!-- css lsk -->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lsk.css" />
+
+
 <!-- 구글차트  -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <style type="text/css">
@@ -68,7 +72,7 @@ $(document).ready(function(){
 	 $("#startdate").click(function(){
 	        $('#sd').show();
 	        $('#dp').hide();
-	        $('#mywbslist').val(null);
+	        $('#mywbslist2').val(null);
 	    });
 	 //인서트내용
 
@@ -81,6 +85,16 @@ $(document).ready(function(){
 	//성공시 펀딩 리스트를 뿌려줌
 	getallfundinglist.done(function(msg){
 		console.log(msg);
+		
+		$('#mymslistselect').html('')
+		$('#chart_div').html('')
+		$('#chart_btnarea').html('')
+		$('#mymslistselect').append(
+				'<select name="wbsActualMsCode" id="mymslist">'
+				+'<option>마일스톤 선택</option>'
+				+'</select>'
+				
+			);
 		
 		for(var i=0; i<msg[0].length; i++){
 			$('#fdlistgroup').append(
@@ -124,7 +138,7 @@ $(document).ready(function(){
 			<h4>
 				<b>펀딩 <i class="glyphicon glyphicon-triangle-right"></i> 
 				마일스톤<i class="glyphicon glyphicon-triangle-right"></i> 
-				WBS계획</b><br>
+				WBS실제</b><br>
 				순서대로 선택해주세요
 			</h4>
 		</div>
@@ -141,7 +155,7 @@ $(document).ready(function(){
 			</div>
 			<div class="col-xs-4">
 				<div class="pagetitleandexplainbox"> 
-					<h1>WBS계획</h1>
+					<h1>WBS실제</h1>
 				</div>
 			</div>
 		</div>
@@ -170,24 +184,45 @@ $(document).ready(function(){
 		</div>
 		<div class="pagetitleandexplainbox">
 			<h2 align="center">
-				WBS 계획차트
+				WBS 실제차트
 			</h2>
 			<h4>마일스톤을 선택해주세요</h4>
 		</div>
-		<div class="pagecontentboxrhc" id="chart_div">
-			
+		<div class="row">
+				<div class="col-xs-8" id="chart_div">
+					
+				</div>
+				<div class="col-xs-4" id="chart_btnarea">
+				</div>
 		</div>
-		<div class="pagetitleandexplainbox">
-			<h2 align="center">
-				WBS 상세투입요소
-			</h2>
-			<h4>WBS를 선택해주세요</h4>
-		</div>
-		<div class="pagecontentboxrhc">
-			
-		</div>
+
+		<div class="modal fade" id="insert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	 		<div class="modal-dialog" role="document">
+		 		<div class="modal-content">
+			 		<div class="modal-body">
+			 		<form action="/pineapple/wbsplaninsert.pms" method="post">
+						<label for="wbsplan">WBS예상계획</label><br>
+						<div id="wbsfdinsert">
+						</div>
+						<div id="wbsmsinsert">
+						</div>
+						작업명:
+						<input type="text" class="form-control" name="wbsActualName">
+           				시작일:<br>
+						<input type="date" name="wbsActualStartDate" id="wbssd"><br>
+						</div>
+						작업기간:
+						<input type="number" class="form-control" name="wbsActualDuration">
+						담당자ID:
+						<input type="text" class="form-control" name="wbsActualWriteManager">
+						<!-- 회사코드 펀딩코드 마일스톤 코드 받아와서 입력 -->
+						<button type="hidden" class="btn btn-success">입력완료</button>
+					</form>
+			 		</div>
+	 			</div>
+	 		</div>
+ 		</div>
 	</div>
-</div>
 <!-- 풋터 -->
 <!-- 버튼클릭시 자바스크립트 함수 -->
 <script type="text/javascript">
@@ -247,9 +282,25 @@ function fdbtnclick(btn){
 		url : "/pineapple/getmilestonelistoffunding.pms",
 		data : { fdCode : btn.value }
 	});
+	var wbsfdinsert = btn.value;
+	$('#insertbtn').html('');
+	$('#wbsfdinsert').html('');
+	$('#wbsfdinsert').append(
+		'<input type="hidden" name="wbsActualFdCode" value="'+wbsfdinsert+'">'
+	);
 	//성공시
 	getmilestonelist.done(function(msg){
 		console.log(msg);
+		
+		$('#mymslistselect').html('');
+		$('#chart_div').html('');
+		$('#chart_btnarea').html('');
+		$('#mymslistselect').append(
+				'<select name="wbsActualMsCode" id="mymslist">'
+				+'<option>마일스톤 선택</option>'
+				+'</select>'
+				
+			);
 		// 받아온 마일스톤 목록이 없을때
 		if(msg.length==0){
 			$('#mslistgroup').html(
@@ -282,15 +333,26 @@ function msbtnclick(btn){
 	console.log(btn.value);
 	var wbsplanlist = $.ajax({
 		type : "post",
-		url : "/pineapple/Wbsplanlist.pms",
+		url : "/pineapple/Wbsactuallist.pms",
 		/* 마일스톤으로 검색 */
 		data : { milestoneCode : btn.value }
 	});
+	
+	$('#insertbtn').html('');
+	var wbsmsinsert = btn.value;
+	console.log(wbsmsinsert);
+	
+	$('#wbsmsinsert').html('')
+	$('#wbsmsinsert').append(
+		'<input type="hidden" name="wbsActualMsCode" value="'+wbsmsinsert+'">'
+		)
+		
 	// 성공시
 	wbsplanlist.done(function(msg){
-
+		$('#chart_div').html('')
+		$('#chart_btnarea').html('')
 		console.log(msg);
-		    
+      
 	 	// 받아온 WBSPLAN 목록이 없을때
 		if(msg.length==0){
 			$('#wbsplanlistgroup').html(
@@ -302,10 +364,15 @@ function msbtnclick(btn){
 			$('#wbsplanlistgroup').html('');
 			for(var i=0; i<msg.length; i++){
 				$('#wbsplanlistgroup').append(
-					'<button class="list-group-item" onclick="javascript:wbsplanbtnclick(this)"' 
-					+'value="'+msg[i].wbsPlanCode+'">'+msg[i].wbsPlanName+'</button>'
+					' <form action="/pineapple/wbsplandetail.pms" method="post" style="display:inline;">'
+	    		 	+'<input type="hidden" name="wbsActualCode" value="'+msg[i].wbsActualCode+'"/>'
+					+'<button type="submit" class="list-group-item" value="'+msg[i].wbsActualCode+'">'+msg[i].wbsActualName+'</button>'
+					+'</form>'	
 				);
 			}
+			$('#wbsplanlistgroup').append(
+					'<button class="list-group-item" data-toggle="modal" data-target="#insert">wbs추가</button>' 
+				);
 		}
 		
 		
@@ -327,25 +394,101 @@ function msbtnclick(btn){
 	      
 	      $('#chart_btnarea').html('');
 	      for(var s = 0; s<msg.length; s++){
-			if(msg[s].wbsPlanStartDate!=null){
-				if(msg[s].wbsPlanDependency=="없음"){
-					data.addRows([
-						[msg[s].wbsPlanName, msg[s].wbsPlanName,
-			      new Date(msg[s].wbsPlanStartDate), null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, null],
-				 ]);
+	    	  if(msg[s].wbsActualApprovalDate!=null){
+	    	  	if(msg[s].wbsActualStartDate!=null){
+					if(msg[s].wbsPlanDependency=="없음"){
+						data.addRows([
+							[msg[s].wbsActualName, msg[s].wbsActualName,
+				      new Date(msg[s].wbsActualStartDate), null, msg[s].wbsActualDuration* 24 * 60 * 60 * 1000,  100, null],
+					 ]);
+					}else{
+				 data.addRows([
+					 [msg[s].wbsActualName, msg[s].wbsActualName,
+				      new Date(msg[s].wbsActualStartDate), null, msg[s].wbsActualDuration* 24 * 60 * 60 * 1000,  100, msg[s].wbsPlanDependency],
+					 ]);
+					}
 				}else{
-			 data.addRows([
-				 [msg[s].wbsPlanName, msg[s].wbsPlanName,
-			      new Date(msg[s].wbsPlanStartDate), null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, msg[s].wbsPlanDependency],
+					 data.addRows([
+				 [msg[s].wbsActualName, msg[s].wbsActualName,
+				     null, null, msg[s].wbsActualDuration* 24 * 60 * 60 * 1000,  100, msg[s].wbsPlanDependency],
 				 ]);
 				}
-			}else{
-				 data.addRows([
-			 [msg[s].wbsPlanName, msg[s].wbsPlanName,
-			     null, null, msg[s].wbsPlanDuration* 24 * 60 * 60 * 1000,  100, msg[s].wbsPlanDependency],
-			 ]);
-			}
+				
+	            $('#mywbslist2').append(
+	                    '<option value="'+msg[s].wbsActualName+'">'+msg[s].wbsActualName+'</option><br>'
+	                );
+				
+			      /* 차트를 그릴때에 버튼도 함께 그려넣어줌  */
+			      $('#chart_btnarea').append(
+		    		 	'<div style="height:44px; padding-top:6px;">'
+		    		 	+'<span>작업명 : </span>'+msg[s].wbsActualName
+		    		 	+' <form action="/pineapple/wbsplandetail.pms" method="post" style="display:inline;">'
+		    		 	+'<input type="hidden" name="wbsActualCode" value="'+msg[s].wbsActualCode+'"/>'
+		    		  	+'<button type="submit" class="btn btn-primary btn-sm" name="btn" value="detail">상세정보</button>'		
+		    		  	+'</form>'
+		    		  	+'<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#'+msg[s].wbsActualCode+'">수정</button>'
+		    		  	+'<button type="submit" class="btn btn-danger btn-sm deletebtn" value="'+msg[s].wbsActualCode+'">삭제</button>'	    		  	
+		 				+'<div class="modal fade" id="'+msg[s].wbsActualCode+'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">'
+		 				+'<div class="modal-dialog" role="document">'
+		 				+'<div class="modal-content">'
+		 				+'<div class="modal-body">'
+		 				+' <form action="/pineapple/wbsplanupdate.pms" method="post" style="display:inline;">'
+		 				+'<label for="wbsplan">WBS수정</label><br>'
+		 				+'작업명:'
+		 				+'<input type="text" class="form-control" name="wbsActualName2" value="'+msg[s].wbsActualName+'" readonly/>'
+		 				+'<input type="text" class="form-control" name="wbsActualName" value="'+msg[s].wbsActualName+'"/>'
+		 				+'작업기간:'
+		 				+'<input type="number" class="form-control" name="wbsActualDuration2" value="'+msg[s].wbsActualDuration+'"readonly/>'
+		 				+'<input type="number" class="form-control" name="wbsActualDuration" value="'+msg[s].wbsActualDuration+'"/>'
+		 				+'시작일:<br>'
+		 				+'<input type="date" name="wbsActualStartDate2" value="'+msg[s].wbsActualStartDate+'"readonly/><br>'
+		 				+'<input type="date" name="wbsActualStartDate" value="'+msg[s].wbsActualStartDate+'"/><br>'
+		 				+'담당자ID:'
+		 				+'<input type="text" class="form-control" name="wbsActualWriteManager2" value="'+msg[s].wbsActualWriteManager+'"readonly/><br>'
+		 				+'<input type="text" class="form-control" name="wbsActualWriteManager" value="'+msg[s].wbsActualWriteManager+'"/><br>'
+		 				+'<input type="hidden" name="wbsActualCode" value="'+msg[s].wbsActualCode+'"/>'
+		 				+'<input type="hidden" class="form-control" name="wbsActualComCode" value="'+msg[s].wbsActualComCode+'">'
+		 				+'<input type="hidden" class="form-control" name="wbsActualFdCode" value="'+msg[s].wbsActualFdCode+'">'
+		 				+'<input type="hidden" class="form-control" name="wbsActualMsCode" value="'+msg[s].wbsActualMsCode+'">'
+		 				+'<button type="submit" name="btn" value="update">입력완료</button>'
+		 				+'</form>'
+		 				+'</div>'
+		 				+'</div>'
+		 				+'</div>'
+		 				+'</div>'
+		    		  	+'</div>'
+		    		  	
+		    		  	
+			      );
+	    	  }
 	      }
+	      $('.deletebtn').click(function () {
+	    		var answer = confirm("삭제하시겠습니까?")
+	    		if (answer) {
+	    			var ss = $(this).val();
+	    			var test = $.ajax({
+	    				type : "post",
+	    				url : "/pineapple/wbsplandelete.pms",
+	    				/* 아이디 세션에서 받아서 가져옴 */
+	    				data : { wbsActualCode : ss }
+	    			}); 
+	    			test.done(function(){
+	    				location.reload();
+	    				alert('삭제완료')
+	    			})
+	    			test.fail(function(){
+	    				location.reload();
+	    				alert('삭제실패')
+	    			})
+	    		}else{
+	    		}
+	    	});
+	      for(var s = 0; s<msg.length; s++){
+		      $('.wbsdc').append(
+                        '<option value="'+msg[s].wbsActualName+'">'+msg[s].wbsActualName+'</option><br>'
+                    );
+	      }
+	    
 	      
 	      var options = {
 	        height: 400
@@ -364,7 +507,7 @@ function msbtnclick(btn){
 
 	      chart.draw(data, options);
 	    } 
-	    
+
 
 	});
 	
@@ -380,6 +523,7 @@ function msbtnclick(btn){
 function wbsplanbtnclick(btn){
 	console.log(btn);
 }
+
 
 </script>
 <div>

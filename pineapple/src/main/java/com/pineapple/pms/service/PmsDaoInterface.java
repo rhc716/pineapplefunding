@@ -104,4 +104,6 @@ public interface PmsDaoInterface {
 
 	void wbsmargin(HashMap map);
 
+	List<WbsActual> wbsactual(String milestoneCode);
+
 }
