@@ -316,7 +316,7 @@ public class FundingController {
 	public String removeFundingDividendPaln(Model model, Locale locale, @RequestParam("divCode") int divCode) {
 		log.debug("FundingController의 removeFundingDividendPaln호출 성공");
 		log.debug("divCode : " + divCode);
-		service.removeFundingDividendPaln(divCode);
+		service.removeFundingDividendPlan(divCode);
 		return "redirect:/myfundingdividendplan.pms";
 		
 	}

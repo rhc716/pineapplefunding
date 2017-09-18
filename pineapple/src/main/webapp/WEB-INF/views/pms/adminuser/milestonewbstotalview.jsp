@@ -354,10 +354,14 @@ function fdbtnclick(btn){
 			$('#mslistgroup').html(
 				'<button class="list-group-item active">목록이 없습니다</button>'
 			);
+			$('#wbsplanlistgroup').html(
+				'<button class="list-group-item active">목록이 없습니다</button>'
+			);
 		} else {
 			//받아온 마일스톤 목록이 있을때
 			//내용한번 리셋후 리스트를 채워넣음
 			$('#mslistgroup').html('');
+			$('#wbsplanlistgroup').html('');
 			for(var i=0; i<msg.length; i++){
 				$('#mslistgroup').append(
 					'<button class="list-group-item" onclick="javascript:msbtnclick(this)"' 
@@ -446,8 +450,12 @@ function msbtnclick(btn){
 			}
 	      }
 	      
+	      // 구글차트 높이가 자동으로 정해지지 않아서 불러온 wbs리스트 개수에 따라 높이를 다르게 해줌 
+	      var heightvalue = 42;
+	      heightvalue += msg.length*42     
+	      
 	      var options = {
-	        height: 400
+	        height: heightvalue
 	        ,gantt: {
 	            criticalPathEnabled: false, // Critical path arrows will be the same as other arrows.
 	            arrow: {

@@ -171,7 +171,7 @@ public class FundingDao implements FundingDaoInterface {
 	
 	// 펀딩배당계획 삭제
 	@Override
-	public void deleteFundingDividendPaln(int divCode) {
+	public void deleteFundingDividendPlan(int divCode) {
 		log.debug("FundingDao의 deleteFundingDividendPaln호출 성공");
 		sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.deleteFundingDividendPaln", divCode);
 	}
@@ -365,4 +365,12 @@ public class FundingDao implements FundingDaoInterface {
 		log.debug("FundingDao의 selectInvestorFundingList호출 성공");
 		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectInvestorFundingList",userId);
 	}
+	
+	// 펀딩에 종속된 펀딩파일을 삭제하기 위해 경로 리스트를 가져오기
+	@Override
+	public List<String> selectFilePathList(int fdCode) {
+		log.debug("FundingDao의 selectFilePathList호출 성공");
+		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectFilePathList",fdCode);
+	}
+	
 }

@@ -10,9 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pineapple.invest.service.Investment;
+import com.pineapple.pms.service.DeleteWbsplan;
 import com.pineapple.pms.service.PmsService;
 import com.pineapple.user.service.Company;
 import com.pineapple.user.service.Employee;
+import com.pineapple.util.FileUtil;
 
 
 @Service
@@ -45,14 +47,58 @@ public class FundingService implements FundingServiceInterface {
 		log.debug("FundingService의 getMyFundinglist호출 성공");
 		return fundingdao.selectMyFundinglist(userId);
 	}
-	// 펀딩삭제 (경영자) // 펀딩상세 같이 지워지는 트랜젝션
+	
+	// 펀딩삭제시 (경영자)    마일스톤, WBS예상,WBS실제, 펀딩보고서파일
+	//						배당계획, 포스터이미지, 펀딩상세도 같이 지워지는 트랜젝션
 	@Override
 	public int removeFunding(int delfdCode) {
 		log.debug("FundingService의 deleteFunding호출 성공");
-		int result = fundingdao.deleteFunding(delfdCode);
-		fundingdao.deleteFundingDetail(delfdCode);
-		return result;
+		//펀딩삭제
+		//int result = fundingdao.deleteFunding(delfdCode);
+		//펀딩상세 삭제
+		//fundingdao.deleteFundingDetail(delfdCode);
+		//마일스톤 삭제 (wbs예상은 처리함//wbs실제삭제 추가필요)
+		/*PmsService pmsservice = new PmsService();
+		DeleteWbsplan delete = new DeleteWbsplan();
+		delete.setFdCode(delfdCode);
+		pmsservice.deletewbsplan(delete);*/
+		//펀딩보고서 업로드파일 삭제
+		/*List<String> fdfilepathlist = new ArrayList<String>();
+		fdfilepathlist = fundingdao.selectFilePathList(delfdCode);
+		log.debug("fdfilelist : " + fdfilepathlist);
+		log.debug("fdfilelist size : " + fdfilepathlist.size());
+		FileUtil fileutil = new FileUtil();
+		for(int i=0; i<fdfilepathlist.size(); i++){
+			log.debug("fdfilelist getFdFileUploadName : " + fdfilepathlist.get(i));
+			fileutil.deleteFile(fdfilepathlist.get(i));
+		}*/
+		//펀딩보고서 DB삭제
+		//removeFundingFile(delfdCode);
+		//배당계획 삭제
+/*		List<String> fdfilepathlist = new ArrayList<String>();
+		List<String> getFundingDividendPalnList(fdCode);
+		removeFundingDividendPlan(divCode);*/
+		//포스터이미지 삭제
+		/*Funding funding = fundingdao.selectMyFunding(delfdCode);
+		log.debug("funding funding funding : " + funding.getPosterImg());
+		fileutil.deleteFile(funding.getPosterImg());*/
+		
+		return 0;
 	}
+	
+	// 마일스톤 삭제 // 삭제시 예상WBS, WBS실제, 투입요소들도 같이 삭제해줌
+	@Override
+	public void removeMileStone(int delMsCode) {
+		log.debug("FundingService의 removeMileStone호출 성공");
+		fundingdao.deleteMileStone(delMsCode);
+		// 마일스톤에 종속된 WBS PLAN의 하위요소까지 모두 삭제해주는 과정  
+		PmsService pmsservice = new PmsService();
+		DeleteWbsplan delete = new DeleteWbsplan();
+		delete.setMsCode(delMsCode);
+		pmsservice.deletewbsplan(delete);
+		// 마일스톤에 종속된 WBS 실제와 하위요소까지 모두 삭제해주는 과정 (추가필요)
+	}
+	
 	// 펀딩수정 (경영자)
 	@Override
 	public void modifyFunding(Funding funding, int fdCode) {
@@ -99,18 +145,15 @@ public class FundingService implements FundingServiceInterface {
 		log.debug("FundingService의 getMyMileStoneList호출 성공");
 		return fundingdao.selectMyMileStoneList(userId);
 	}
+	
 	// 마일스톤 수정
 	@Override
 	public void modifyMileStone(MileStone mileStone) {
 		log.debug("FundingService의 modifyMileStone호출 성공");
 		fundingdao.updateMileStone(mileStone);
 	}
-	// 마일스톤 삭제 // 삭제시 예상WBS와 투입요소들도 같이 삭제해주려(PmsService의 deletewbsplan를 호출)
-	@Override
-	public void removeMileStone(int delMsCode) {
-		log.debug("FundingService의 removeMileStone호출 성공");
-		fundingdao.deleteMileStone(delMsCode);
-	}
+	
+
 	// 펀딩파일 업로드정보 저장
 	@Override
 	public void addFundingFile(MultipartFile uploadFile, String result, int fdCode) {
@@ -172,9 +215,9 @@ public class FundingService implements FundingServiceInterface {
 	
 	// 펀딩배당계획 삭제
 	@Override
-	public void removeFundingDividendPaln(int divCode) {
-		log.debug("FundingService의 removeFundingDividendPaln호출 성공");
-		fundingdao.deleteFundingDividendPaln(divCode);
+	public void removeFundingDividendPlan(int divCode) {
+		log.debug("FundingService의 removeFundingDividendPlan호출 성공");
+		fundingdao.deleteFundingDividendPlan(divCode);
 	}
 	
 	// 펀딩별 투자자 리스트 불러오기

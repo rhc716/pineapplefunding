@@ -248,21 +248,30 @@ function fdbtnclick(btn){
 	
 	//성공시
 	getdividendpaylist.done(function(msg){
+		$('#divpaylist').html('');
 		console.log("getdividendpaylist 성공시 매개변수 : "+msg);
-		for(var i = 0; i<msg.length; i++){
+		if(msg=="") {
 			$('#divpaylist').append(
 				'<tr>'
-					+'<td>'+msg[i].divPayCode+'</td>'
-					+'<td>'+msg[i].investId+'</td>'
-					+'<td>'+numberWithCommas(msg[i].divPayissuePrice)+'원</td>'
-					+'<td>'+msg[i].divPayPurchaseShares+'주</td>'
-					+'<td>'+msg[i].divPayMinInterestRate+'%</td>'
-					+'<td>'+msg[i].divPayDividendRate+'%</td>'
-					+'<td>'+numberWithCommas(msg[i].divPayTotalMargin)+'원</td>'
-					+'<td>'+numberWithCommas(msg[i].divPayAmount)+'원</td>'
-					+'<td>'+msg[i].divPayDate+'</td>'
+				+'<td colspan="9" align="center"><b>배당내역이 없습니다</b></td>'
 				+'</tr>'
 			);
+		} else {
+			for(var i = 0; i<msg.length; i++){
+				$('#divpaylist').append(
+					'<tr>'
+						+'<td>'+msg[i].divPayCode+'</td>'
+						+'<td>'+msg[i].investId+'</td>'
+						+'<td>'+numberWithCommas(msg[i].divPayissuePrice)+'원</td>'
+						+'<td>'+msg[i].divPayPurchaseShares+'주</td>'
+						+'<td>'+msg[i].divPayMinInterestRate+'%</td>'
+						+'<td>'+msg[i].divPayDividendRate+'%</td>'
+						+'<td>'+numberWithCommas(msg[i].divPayTotalMargin)+'원</td>'
+						+'<td>'+numberWithCommas(msg[i].divPayAmount)+'원</td>'
+						+'<td>'+msg[i].divPayDate+'</td>'
+					+'</tr>'
+				);
+			}
 		}
 	});
 	

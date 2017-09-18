@@ -693,6 +693,13 @@
 		WHERE investId = #{userId}
 	</select>
 	
+	<!-- 펀딩에 종속된 펀딩파일을 삭제하기 위해 경로 리스트를 가져오기 -->
+	<select id="selectFilePathList" parameterType="int" resultType="String">
+		SELECT fdFileUploadName
+		FROM
+		fundingfile
+		WHERE fileFdCode = #{fdCode};
+	</select>
 </mapper>
 
  

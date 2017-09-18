@@ -30,7 +30,6 @@ public interface FundingDaoInterface {
 	void deleteFundingFile(int fdFileCode);
 	void insertDividendPlan(FundingDividendPlan fundingdividendplan);
 	List<FundingAndFdDividendPlan> selectFundingDividendPalnList(int fdCode);
-	void deleteFundingDividendPaln(int divCode);
 	List<Company> selectComList(String userId);
 	void updateFundingImage(Model model);
 	Funding fdtitleCheck(String fdTitle);
@@ -51,4 +50,6 @@ public interface FundingDaoInterface {
 	List<Funding> selectCompanyRankingFive();
 	List<DividendpayAndInvestment> selectDividendPayList(int fdCode);
 	List<FundingAndInvestment> selectInvestorFundingList(String userId);
+	List<String> selectFilePathList(int fdCode);
+	void deleteFundingDividendPlan(int divCode);
 }
