@@ -17,6 +17,14 @@ import com.pineapple.funding.service.Funding;
 import com.pineapple.funding.service.FundingService;
 import com.pineapple.pms.service.WbsMs;
 import com.pineapple.pms.service.WbsPlan;
+import com.pineapple.pms.service.WbsActual;
+import com.pineapple.pms.service.WbsActualBox;
+import com.pineapple.pms.service.WbsDailyEtc;
+import com.pineapple.pms.service.WbsDailyFacility;
+import com.pineapple.pms.service.WbsDailyHuman;
+import com.pineapple.pms.service.WbsDailyIncome;
+import com.pineapple.pms.service.WbsDailyMatrial;
+import com.pineapple.pms.service.WbsDailyOut;
 import com.pineapple.pms.service.WbsPlanBox;
 import com.pineapple.pms.service.WbsPlanEtc;
 import com.pineapple.pms.service.WbsPlanFacility;
@@ -42,7 +50,7 @@ public class PmsRestController {
 	// 내가 소속된 회사 펀딩 리스트 불러오기 ( 기업회원 )
 	@RequestMapping(value = "/wbsfundinglist.pms", method = RequestMethod.GET)
 	public List<Funding> Wbsfunding(String userId) {
-		log.debug("RestPmsController의 Wbsfunding호출 성공");
+		log.debug("PmsRestController의 Wbsfunding호출 성공");
 		log.debug("userId : " + userId);
 		List<Funding> fdlist = fservice.getMyFundinglist(userId);
 		log.debug("컨트롤러에서 받은 리턴값 : " +fdlist);
@@ -53,7 +61,7 @@ public class PmsRestController {
 	@RequestMapping(value = "/WbsMs.pms", method = {RequestMethod.GET, RequestMethod.POST})
 	public List<WbsMs> WbsMs(String fdCode) {
 		log.debug("펀딩코드"+fdCode);
-		log.debug("RestPmsController의 WbsMs호출 성공");
+		log.debug("PmsRestController의 WbsMs호출 성공");
 		List<WbsMs> mslist = service.wbsmsview(fdCode);
 		log.debug("mslist확인"+mslist);
 		return mslist;
@@ -63,16 +71,26 @@ public class PmsRestController {
 	@RequestMapping(value = "/Wbsplanlist.pms", method = {RequestMethod.GET, RequestMethod.POST})
 	public List<WbsPlan> Wbsplan(String milestoneCode) {
 		log.debug("마일스톤코드"+milestoneCode);
-		log.debug("RestPmsController의 Wbsplan호출 성공");
+		log.debug("PmsRestController의 Wbsplan호출 성공");
 		List<WbsPlan> wbsplan = service.wbsplanlist(milestoneCode);
 		log.debug("wbsplan확인"+wbsplan);
 		return wbsplan;
 	}
 	
+	//wbs실제리스트 확인
+	@RequestMapping(value = "/Wbsactuallist.pms", method = {RequestMethod.GET, RequestMethod.POST})
+	public List<WbsActual> WbsActual(String milestoneCode) {
+		log.debug("마일스톤코드"+milestoneCode);
+		log.debug("PmsRestController의 Wbsplan호출 성공");
+		List<WbsActual> wbsactual = service.wbsactual(milestoneCode);
+		log.debug("wbsactual확인"+wbsactual);
+		return wbsactual;
+	}
+	
 	// wbsplan 상세정보
 		@RequestMapping(value ="/wbsplanlistview.pms", method = {RequestMethod.GET, RequestMethod.POST})
 		public WbsPlanBox wbsplanlistveiw(String wbsplancode){
-			log.debug("PmsController의 wbsplanlistveiw호출 성공");
+			log.debug("PmsRestController의 wbsplanlistveiw호출 성공");
 			log.debug("wbs코드" + wbsplancode);
 			WbsPlanBox wbsplanbox = new WbsPlanBox();
 			WbsPlan wbsplan = service.getMyWbsPlanDetail(wbsplancode);
@@ -97,22 +115,42 @@ public class PmsRestController {
 			wbsplanbox.setWbsplanincome(wbsplanincomelist);
 			return wbsplanbox;
 		}
+		
+		
+		// wbsactual 상세정보
+		@RequestMapping(value ="/wbsactuallistview.pms", method = {RequestMethod.GET, RequestMethod.POST})
+		public WbsActualBox wbsactuallistveiw(String wbsActualCode){
+			log.debug("PmsRestController의 wbsplanlistveiw호출 성공");
+			log.debug("wbs코드" + wbsActualCode);
+			WbsActualBox wbsactualbox = new WbsActualBox();
+			WbsActual wbsactual = service.wbsactualdetail(wbsActualCode);
+			/*List<WbsDailyEtc> wbsdailyetc = new ArrayList<WbsDailyEtc>();
+			wbsdailyetc = service.getMyWbsPlanHumanList(wbsactualcode);
+			List<WbsDailyFacility> wbsdailyfacility = new ArrayList<WbsDailyFacility>();
+			wbsdailyfacility = service.getMyWbsPlanMaterialList(wbsactualcode);
+			List<WbsDailyHuman> wbsdailyhuman = new ArrayList<WbsDailyHuman>();
+			wbsdailyhuman = service.getMyWbsPlanFacilityList(wbsactualcode);
+			List<WbsDailyIncome> wbsdailyincome = new ArrayList<WbsDailyIncome>();
+			wbsdailyincome = service.getMyWbsPlanOutList(wbsactualcode);
+			List<WbsDailyMatrial> wbsdailymatrial = new ArrayList<WbsDailyMatrial>();
+			wbsdailymatrial = service.getMyWbsPlanEtcList(wbsactualcode);
+			List<WbsDailyOut> wbsdailyout = new ArrayList<WbsDailyOut>();
+			wbsdailyout = service.getMyWbsPlanIncomeyList(wbsactualcode);*/
+			wbsactualbox.setWbsactual(wbsactual);
+			/*wbsactualbox.setWbsdailyetc(wbsdailyetc);
+			wbsactualbox.setWbsdailyfacility(wbsdailyfacility);
+			wbsactualbox.setWbsdailyhuman(wbsdailyhuman);
+			wbsactualbox.setWbsdailyincome(wbsdailyincome);
+			wbsactualbox.setWbsdailymatrial(wbsdailymatrial);
+			wbsactualbox.setWbsdailyout(wbsdailyout);*/
+			return wbsactualbox;
+		}
 	
-	
-	// wbsplan 인원 상세보기 리스트 페이지
-	@RequestMapping(value ="/wbsplanhumanlist.pms", method = {RequestMethod.GET, RequestMethod.POST})
-	public List<WbsPlanHuman> wbsplanhumanlist(String wbsplancode){
-		log.debug("PmsController의 wbsplanhumanlist호출 성공");
-		log.debug("wbs코드" + wbsplancode);
-		List<WbsPlanHuman> wbsplanhumanlist = new ArrayList<WbsPlanHuman>();
-		wbsplanhumanlist = service.getMyWbsPlanHumanList(wbsplancode);
-		return wbsplanhumanlist;
-	}
-	
+
 	//wbsplanhuman 삭제
 	@RequestMapping(value = "/wbsplanhumandelete.pms", method = {RequestMethod.GET, RequestMethod.POST})
 	public void wbsplanhumandelete(String wphCode) {
-		log.debug("PmsController의 wbsplanhumandelete호출 성공");
+		log.debug("PmsRestController의 wbsplanhumandelete호출 성공");
 		log.debug("wbh코드" + wphCode);
 		service.deletewbsplanhuman(wphCode);
 	}
@@ -120,7 +158,7 @@ public class PmsRestController {
 	///wbsplanmaterial 삭제
 	@RequestMapping(value = "/wbsplanmaterialdelete.pms", method = {RequestMethod.GET, RequestMethod.POST})
 	public void wbsplanmaterialdelete(String wpmCode) {
-		log.debug("PmsController의 wbsplanmaterialdelete호출 성공");
+		log.debug("PmsRestController의 wbsplanmaterialdelete호출 성공");
 		log.debug("wbm코드" + wpmCode);
 		service.deletewbsplanmaterial(wpmCode);
 	}
@@ -128,7 +166,7 @@ public class PmsRestController {
 	///wbsplanfacility 삭제
 	@RequestMapping(value = "/wbsplanfacilitydelete.pms", method = {RequestMethod.GET, RequestMethod.POST})
 	public void wbsplanfacilitydelete(String wpfCode) {
-		log.debug("PmsController의 wbsplanfacilitydelete호출 성공");
+		log.debug("PmsRestController의 wbsplanfacilitydelete호출 성공");
 		log.debug("wbf코드" + wpfCode);
 		service.deletewbsplanfacility(wpfCode);	
 	}
@@ -136,7 +174,7 @@ public class PmsRestController {
 	///wbsplanout 삭제
 	@RequestMapping(value = "/wbsplanoutdelete.pms", method = {RequestMethod.GET, RequestMethod.POST})
 	public void wbsplanoutdelete(String wpoCode) {
-		log.debug("PmsController의 wbsplanoutdelete호출 성공");
+		log.debug("PmsRestController의 wbsplanoutdelete호출 성공");
 		log.debug("wbo코드" + wpoCode);
 		service.deletewbsplanout(wpoCode);
 	}
@@ -144,7 +182,7 @@ public class PmsRestController {
 	///wbsplanetc 삭제
 	@RequestMapping(value = "/wbsplanetcdelete.pms", method = {RequestMethod.GET, RequestMethod.POST})
 	public void wbsplanetcdelete(String wpeCode) {
-		log.debug("PmsController의 wbsplanetcdelete호출 성공");
+		log.debug("PmsRestController의 wbsplanetcdelete호출 성공");
 		log.debug("wbe코드" + wpeCode);
 		service.deletewbsplanetc(wpeCode);
 	}
@@ -152,7 +190,7 @@ public class PmsRestController {
 	///wbsplanincome 삭제
 	@RequestMapping(value = "/wbsplanincomedelete.pms", method = {RequestMethod.GET, RequestMethod.POST})
 	public void wbsplanincomedelete(String wpiCode) {
-		log.debug("PmsController의 wbsplanincomedelete호출 성공");		
+		log.debug("PmsRestController의 wbsplanincomedelete호출 성공");		
 		log.debug("wbi코드" + wpiCode);
 		service.deletewbsplanincome(wpiCode);
 	}

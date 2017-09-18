@@ -7,6 +7,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pineapple.invest.service.InvestAndFd;
+import com.pineapple.invest.service.MoneyAndTitleAndId;
 import com.pineapple.user.service.User;
 
 @Service
@@ -71,8 +73,21 @@ public class TimelineService implements TimelineServiceInterface{
 		int timelinereplydelete = timelinedaointerface.timelineReplyDelete(tlReCode);
 		return timelinereplydelete;
 	}
-	
-	
+	//펀딩 최신 조회
+	@Override
+	public List<InvestAndFd> getTimelineFundingranking() {
+		log.debug("------------------TimelineService-----------------getTimelineFundingranking()");
+		List<InvestAndFd> timelinefundingranking = timelinedaointerface.timelineFundingRanking();
+		return timelinefundingranking;
+	}
+	//자금관리 전체내역 조회
+	@Override
+	public List<MoneyAndTitleAndId> getMoneyall(int mfCategory,int numberOfRequests) {
+		log.debug("------------------TimelineService-----------------getMoneyall()");
+		List<MoneyAndTitleAndId> getMoneyall = timelinedaointerface.moneyInvestall(mfCategory,numberOfRequests);
+		return getMoneyall;
+	}
+
 	
 	////////////////////////My Page Time Line////////////////////////////////
 	//자신이 등록한 타임라인 list 조회

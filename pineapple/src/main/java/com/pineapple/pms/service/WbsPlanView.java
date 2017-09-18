@@ -12,9 +12,7 @@ public class WbsPlanView {
 	private int wbsPlanMsCode;
 	private int wbsPlanComCode;
 	private int wbsPlanChange;
-	private String fdTitle;
-	private String milestoneName;
-	
+
 	public int getWbsPlanFdCode() {
 		return wbsPlanFdCode;
 	}
@@ -70,18 +68,6 @@ public class WbsPlanView {
 	public void setWbsPlanManager(String wbsPlanManager) {
 		this.wbsPlanManager = wbsPlanManager;
 	}
-	public String getFdTitle() {
-		return fdTitle;
-	}
-	public void setFdTitle(String fdTitle) {
-		this.fdTitle = fdTitle;
-	}
-	public String getMilestoneName() {
-		return milestoneName;
-	}
-	public void setMilestoneName(String milestoneName) {
-		this.milestoneName = milestoneName;
-	}
 	
 	public int getWbsPlanComCode() {
 		return wbsPlanComCode;
@@ -101,8 +87,7 @@ public class WbsPlanView {
 				+ wbsPlanName + ", wbsPlanDependency=" + wbsPlanDependency + ", wbsPlanStartDate=" + wbsPlanStartDate
 				+ ", wbsPlanDuration=" + wbsPlanDuration + ", wbsPlanManager=" + wbsPlanManager + ", wbsPlanFdCode="
 				+ wbsPlanFdCode + ", wbsPlanMsCode=" + wbsPlanMsCode + ", wbsPlanComCode=" + wbsPlanComCode
-				+ ", wbsPlanChange=" + wbsPlanChange + ", fdTitle=" + fdTitle + ", milestoneName=" + milestoneName
-				+ "]";
+				+ ", wbsPlanChange=" + wbsPlanChange + "]";
 	}
 	
 }

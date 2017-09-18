@@ -7,23 +7,81 @@
 <title>관리자 MyPage</title>
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<style type="text/css">
-	th {
-		    color: #4CAF50;
-   			border-bottom: 3px solid;
-   			padding: 10px;
-   			text-align: left;
-			vertical-align: top;
-			    
-		}
-
-	td {
-		    text-align: left;
-		    vertical-align: top;
-			    
-		}
+<style type="text/css">	
+	.filterable {
+	    margin-top: 15px;
+	}
+	.filterable .panel-heading .pull-right {
+	    margin-top: -20px;
+	}
+	.filterable .filters input[disabled] {
+	    background-color: transparent;
+	    border: none;
+	    cursor: auto;
+	    box-shadow: none;
+	    padding: 0;
+	    height: auto;
+	}
+	.filterable .filters input[disabled]::-webkit-input-placeholder {
+	    color: #369;
+	}
+	.filterable .filters input[disabled]::-moz-placeholder {
+	    color: #369;
+	}
+	.filterable .filters input[disabled]:-ms-input-placeholder {
+	    color: #369;
+	}
+	
 </style>
 <script type="text/javascript">
+/*
+table 검색정렬 기능
+*/
+$(document).ready(function(){
+    $('.filterable .btn-filter').click(function(e){
+    	e.preventdefault;
+        var $panel = $(this).parents('.filterable'),
+        $filters = $panel.find('.filters input'),
+        $tbody = $panel.find('.table tbody');
+        if ($filters.prop('disabled') == true) {
+            $filters.prop('disabled', false);
+            $filters.first().focus();
+        } else {
+            $filters.val('').prop('disabled', true);
+            $tbody.find('.no-result').remove();
+            $tbody.find('tr').show();
+        }
+    });
+
+    $('.filterable .filters input').keyup(function(e){
+    	e.preventdefault;
+        /* Ignore tab key */
+        var code = e.keyCode || e.which;
+        if (code == '9') return;
+        /* Useful DOM data and selectors */
+        var $input = $(this),
+        inputContent = $input.val().toLowerCase(),
+        $panel = $input.parents('.filterable'),
+        column = $panel.find('.filters th').index($input.parents('th')),
+        $table = $panel.find('.table'),
+        $rows = $table.find('tbody tr');
+       
+        var $filteredRows = $rows.filter(function(){
+            var value = $(this).find('td').eq(column).text().toLowerCase();
+            return value.indexOf(inputContent) === -1;
+        });
+        /* Clean previous no-result if exist */
+        $table.find('tbody .no-result').remove();
+        /* Show all rows, hide filtered ones (never do that outside of a demo ! xD) */
+        $rows.show();
+        $filteredRows.hide();
+        /* Prepend no-result row if all rows are filtered */
+        if ($filteredRows.length === $rows.length) {
+            $table.find('tbody').prepend($('<tr class="no-result text-center"><td colspan="'+ $table.find('.filters th').length +'">No result found</td></tr>'));
+        }
+    });
+});
+
 $(document).ready(function(){
 	//부트스트랩 새로고침할 때 페이지 유지
 	$('#myTab a').click(function(e) {
@@ -95,30 +153,27 @@ $(document).ready(function(){
 			}
 		});
 	});
-	//회원전체리스트에서 각 회원의 상세정보 확인 모달
-	/**
-	$('#userdetailBtn').click(function(){
-		var in_userId = $(this).attr('value');
-		var changeUserDetailAjax = $.ajax({ // ajax실행부분
-							        type: "get",
-							        url : "/pineapple/userdetailmodify.user",
-							        data : {userId : in_userId},
-							        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
-							        error : function error(){
-							        		alert('회원상세정보 불러오기 오류');
-							        }
-								});
-		//ajax를 통해 조회한 계좌 정보를 모달창 수정페이지 각 입력값으로 넣어준다
-		changeUserDetailAjax.done(function(ud){
-			$('#userDetailIdChange').val(ud.userDetailId);
-			$('#phoneFront3Change').val(ud.phoneFront3);
-			$('#phoneRest8Change').val(ud.phoneRest8);
-    		$('#postalCodeChange').val(ud.postalCode);
-    		$('#addressChange').val(ud.address);
-    		$('#address2Change').val(ud.address2);
-		});
+	
+	var changeAccountAjax = $.ajax({ // ajax실행부분
+        type: "get",
+        url : "/pineapple/moneyflow.timeline",
+        success : function success(msg){
+        	$('#moneyflowcontent').html(msg);
+        },
+        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+        error : function error(){
+    	}
 	});
-	**/
+	var messagetab = $.ajax({ // ajax실행부분
+        type: 'get',
+        url : '/pineapple/investormessagelist.timeline',
+        success : function success(msg){
+        	$('#adminmessage').html(msg);
+        },
+        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+        error : function error(){
+       	}
+	});
 });
 </script>
 </head>
@@ -130,6 +185,7 @@ $(document).ready(function(){
 	<c:import url="/resources/module/topmenu.jsp"/>
 <!-- 본문 -->
 <!-- 사이트관리자마이페이지 Tab bar -->
+<div class="container">
 	<ul id="myTab" class="nav nav-tabs" role="tablist"> 
 		<li role="presentation" class="active">
 			<a href="#admininfo" id="admininfo-tab" role="tab" data-toggle="tab" aria-controls="admininfo" aria-expanded="true">내정보</a>
@@ -152,6 +208,9 @@ $(document).ready(function(){
 		<li role="presentation" class="">
 			<a href="#message" role="tab" id="message-tab" data-toggle="tab" aria-controls="message" aria-expanded="false">메세지</a>
 		</li>
+		<li role="presentation" class="">
+			<a href="#moneyflow" role="tab" id="moneyflow-tab" data-toggle="tab" aria-controls="moneyflow" aria-expanded="false">자금관리</a>
+		</li>
 	</ul>
 	<!-- 첫번째 탭 시작(관리자 정보 보기) -->
 	<div id="myTabContent" class="tab-content">
@@ -166,16 +225,25 @@ $(document).ready(function(){
 				</div>
 				<div class="col-md-10">
 				<br><br>
-				<table class="table table-striped table-bordered table-hover">
-					<thead>
-						<tr>
-							<th>증권사</th>
-							<th>계좌번호</th>
-							<th>계좌이름</th>
-							<th>계좌정보수정</th>
-							<th>계좌정보삭제</th>
-						</tr>
-					</thead>
+				<!-- table table-striped table-bordered table-hover -->
+				<div class="panel panel-primary filterable">
+		            <div class="panel-heading">
+		                <h3 class="panel-title">계좌 목록</h3>
+		                <div class="pull-right">
+		                	<a type="button" class="btn btn-xs btn-info" data-toggle="modal" href="#newaccountmodal">+ 새로운 계좌등록</a>&nbsp
+		                    <button class="btn btn-xs btn-warning btn-filter"><span class="glyphicon glyphicon-filter"></span>검색정렬</button>
+		                </div>
+		            </div>
+					<table class="table">
+						<thead>
+							<tr class="filters">
+								<th><input type="text" class="form-control" placeholder="증권사" disabled></th>
+								<th><input type="text" class="form-control" placeholder="계좌번호" disabled></th>
+								<th><input type="text" class="form-control" placeholder="계좌이름" disabled></th>
+								<th><input type="text" class="form-control" placeholder="계좌정보수정" disabled></th>
+								<th><input type="text" class="form-control" placeholder="계좌정보삭제" disabled></th>
+							</tr>
+						</thead>
 					<tbody>
 						<c:forEach var="useraccount" items="${user.account}">
 							<tr>
@@ -194,12 +262,8 @@ $(document).ready(function(){
 							</tr>
 						</c:forEach>
 					</tbody>
-					<tfoot>
-						<div>
-							<a type="button" class="btn btn-info" data-toggle="modal" href="#newaccountmodal">+ 새로운 계좌등록</a>
-						</div>
-					</tfoot>
 				</table>
+				</div>
 				</div>
 				<!-- 새로운 계좌등록을위한 모달 내부 구현 -->
 				<div class="modal fade" id="newaccountmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -311,22 +375,28 @@ $(document).ready(function(){
 					</p>
 					<br>
 					<!-- 조회 목록 출력될 부분 -->
-					<div>
-						<table class="table table-striped table-bordered table-hover">
+					 <div class="panel panel-primary filterable">
+			            <div class="panel-heading">
+			                <h3 class="panel-title">Funding List</h3>
+			                <div class="pull-right">
+			                    <button class="btn btn-warning btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span>검색정렬</button>
+			                </div>
+			            </div>
+						<table class="table">
 							<thead>
-								<tr>
-									<th>#</th>
-									<th>펀딩코드</th>
-									<th>기업명</th>
-									<th>펀딩</th>
-									<th>형태</th>
-									<th>상황</th>
-									<th>최저이율</th>
-									<th>개설ID</th>
-									<th>요청일</th>
-									<th>승인여부</th>
-									<th>승인일</th>
-									<th>승인ID</th>
+								<tr class="filters">
+									<th><input type="text" class="form-control" placeholder="#" disabled></th>
+									<th><input type="text" class="form-control" placeholder="코드" disabled></th>
+									<th><input type="text" class="form-control" placeholder="기업명" disabled></th>
+									<th><input type="text" class="form-control" placeholder="펀딩" disabled></th>
+									<th><input type="text" class="form-control" placeholder="형태" disabled></th>
+									<th><input type="text" class="form-control" placeholder="상황" disabled></th>
+									<th><input type="text" class="form-control" placeholder="이율" disabled></th>
+									<th><input type="text" class="form-control" placeholder="개설ID" disabled></th>
+									<th><input type="text" class="form-control" placeholder="요청일" disabled></th>
+									<th><input type="text" class="form-control" placeholder="승인여부" disabled></th>
+									<th><input type="text" class="form-control" placeholder="승인일" disabled></th>
+									<th><input type="text" class="form-control" placeholder="승인ID" disabled></th>
 								</tr>
 							</thead>
 							<c:forEach var="allfdList" items="${allfdList}" varStatus="numberoffdlist">
@@ -391,18 +461,24 @@ $(document).ready(function(){
 					</p>
 					<br>
 					<!-- 조회 목록 출력될 부분 -->
-					<div>
-						<table class="table table-striped table-bordered table-hover">
+					<div class="panel panel-primary filterable">
+			            <div class="panel-heading">
+			                <h3 class="panel-title">프로젝트관리 목록조회</h3>
+			                <div class="pull-right">
+			                    <button class="btn btn-warning btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span>검색정렬</button>
+			                </div>
+			            </div>
+						<table class="table">
 							<thead>
-								<tr>
-									<th>#</th>
-									<th>기업명</th>
-									<th>펀딩명</th>
-									<th>마일스톤명</th>
-									<th>마일스톤요약</th>
-									<th>작성자</th>
-									<th>WBS종합</th>
-									<th>마진종합</th>
+								<tr class="filters">
+									<th><input type="text" class="form-control" placeholder="#" disabled></th>
+									<th><input type="text" class="form-control" placeholder="기업명" disabled></th>
+									<th><input type="text" class="form-control" placeholder="펀딩명" disabled></th>
+									<th><input type="text" class="form-control" placeholder="마일스톤" disabled></th>
+									<th><input type="text" class="form-control" placeholder="요약" disabled></th>
+									<th><input type="text" class="form-control" placeholder="작성자" disabled></th>
+									<th><input type="text" class="form-control" placeholder="WBS종합" disabled></th>
+									<th><input type="text" class="form-control" placeholder="마진종합" disabled></th>
 								</tr>
 							</thead>
 							<c:forEach var="allpmslist" items="${getPmsInfoByAdmin}" varStatus="numberofPmslist">
@@ -423,7 +499,7 @@ $(document).ready(function(){
 											</c:otherwise>
 										</c:choose>
 										<!-- wbs예상/실제 비교를 위한 모달 -->
-										<div class="modal fade" id="wbs${numberofPmslist.count}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+										<div class="modal fade modalfilter" id="wbs${numberofPmslist.count}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 										  <div class="modal-dialog modal-lg">
 										    <div class="modal-content">
 										      <div class="modal-header">
@@ -435,70 +511,86 @@ $(document).ready(function(){
 										        	<div class="container_insert">
 										        		<div>
 										        			<p>WBS예상</p>
-										        			<table class="table table-striped table-bordered table-hover">
-											        			<thead>
-																	<tr>
-																		<th>#</th>
-																		<th>코드</th>
-																		<th>버전</th>
-																		<th>항목</th>
-																		<th>시작일</th>
-																		<th>기간</th>
-																		<th>작성일</th>
-																		<th>작성자</th>
-																	</tr>
-																</thead>
-																<c:forEach items="${allpmslist.wbsplan}" var="wbsplanlist" varStatus="numberofwbsplan">
-																	<tr>
-																		<td>${numberofwbsplan.count}</td>
-																		<td>${wbsplanlist.wbsPlanCode}</td>
-																		<td>${wbsplanlist.wbsPlanChange}</td>
-																		<td>${wbsplanlist.wbsPlanName}</td>
-																		<td>${wbsplanlist.wbsPlanStartDate}</td>
-																		<td>${wbsplanlist.wbsPlanDuration}</td>
-																		<td>${wbsplanlist.wbsPlanWriteDate}</td>
-																		<td>${wbsplanlist.wbsPlanManager}</td>
-																	</tr>
-																</c:forEach>
-															</table>
+										        			<div class="panel panel-primary filterable">
+													            <div class="panel-heading">
+													                <h3 class="panel-title">WBS예상</h3>
+													                <div class="pull-right">
+													                    <a class="btn btn-warning btn-xs btn-filter" href="/pineapple/adminmypage.user#pmsinfo"><span class="glyphicon glyphicon-filter"></span>검색정렬</a>
+													                </div>
+													            </div>
+																<table class="table">
+																	<thead>
+																		<tr class="filters">
+																			<th><input type="text" class="form-control" placeholder="#" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="코드" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="버전" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="항목" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="시작일" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="기간" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="작성일" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="작성자" disabled></th>
+																		</tr>
+																	</thead>
+																	<c:forEach items="${allpmslist.wbsplan}" var="wbsplanlist" varStatus="numberofwbsplan">
+																		<tr>
+																			<td>${numberofwbsplan.count}</td>
+																			<td>${wbsplanlist.wbsPlanCode}</td>
+																			<td>${wbsplanlist.wbsPlanChange}</td>
+																			<td>${wbsplanlist.wbsPlanName}</td>
+																			<td>${wbsplanlist.wbsPlanStartDate}</td>
+																			<td>${wbsplanlist.wbsPlanDuration}</td>
+																			<td>${wbsplanlist.wbsPlanWriteDate}</td>
+																			<td>${wbsplanlist.wbsPlanManager}</td>
+																		</tr>
+																	</c:forEach>
+																</table>
+															</div>
 										        		</div>
 														<br>
 														<div>
 										        			<p>WBS실제</p>
-										        			<table class="table table-striped table-bordered table-hover">
-										        				<thead>
-																	<tr>
-																		<th>#</th>
-																		<th>코드</th>
-																		<th>항목</th>
-																		<th>시작일</th>
-																		<th>종료일</th>
-																		<th>기간</th>
-																		<th>상태</th>
-																		<th>진행도</th>
-																		<th>작성일</th>
-																		<th>작성자</th>
-																		<th>승인일</th>
-																		<th>승인자</th>
-																	</tr>
-																</thead>
-																<c:forEach items="${allpmslist.wbsactual}" var="wbsactuallist" varStatus="numberofwbsactual">
-																	<tr>
-																		<td>${numberofwbsactual.count}</td>
-																		<td>${wbsactuallist.wbsActualCode}</td>
-																		<td>${wbsactuallist.wbsActualName}</td>
-																		<td>${wbsactuallist.wbsActualStartDate}</td>
-																		<td>${wbsactuallist.wbsActualEndDate}</td>
-																		<td>${wbsactuallist.wbsActualDuration}</td>
-																		<td>${wbsactuallist.wbsActualStatus}</td>
-																		<td>${wbsactuallist.wbsActualProgress}</td>
-																		<td>${wbsactuallist.wbsActualWriteDate}</td>
-																		<td>${wbsactuallist.wbsActualWriteManager}</td>
-																		<td>${wbsactuallist.wbsActualApprovalDate}</td>
-																		<td>${wbsactuallist.wbsActualApprovalManager}</td>
-																	</tr>
-																</c:forEach>
-															</table>
+										        			<div class="panel panel-primary filterable">
+													            <div class="panel-heading">
+													                <h3 class="panel-title">WBS실제</h3>
+													                <div class="pull-right">
+													                    <a class="btn btn-warning btn-xs btn-filter" href="/pineapple/adminmypage.user#pmsinfo"><span class="glyphicon glyphicon-filter"></span>검색정렬</a>
+													                </div>
+													            </div>
+																<table class="table">
+																	<thead>
+																		<tr class="filters">
+																			<th><input type="text" class="form-control" placeholder="#" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="코드" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="항목" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="시작일" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="종료일" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="기간" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="상태" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="진행도" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="작성일" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="작성자" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="승인일" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="승인자" disabled></th>
+																		</tr>
+																	</thead>
+																	<c:forEach items="${allpmslist.wbsactual}" var="wbsactuallist" varStatus="numberofwbsactual">
+																		<tr>
+																			<td>${numberofwbsactual.count}</td>
+																			<td>${wbsactuallist.wbsActualCode}</td>
+																			<td>${wbsactuallist.wbsActualName}</td>
+																			<td>${wbsactuallist.wbsActualStartDate}</td>
+																			<td>${wbsactuallist.wbsActualEndDate}</td>
+																			<td>${wbsactuallist.wbsActualDuration}</td>
+																			<td>${wbsactuallist.wbsActualStatus}</td>
+																			<td>${wbsactuallist.wbsActualProgress}</td>
+																			<td>${wbsactuallist.wbsActualWriteDate}</td>
+																			<td>${wbsactuallist.wbsActualWriteManager}</td>
+																			<td>${wbsactuallist.wbsActualApprovalDate}</td>
+																			<td>${wbsactuallist.wbsActualApprovalManager}</td>
+																		</tr>
+																	</c:forEach>
+																</table>
+															</div>
 										        		</div>
 														<div class="modal-footer">
 															<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
@@ -532,13 +624,20 @@ $(document).ready(function(){
 										        	<div class="container_insert">
 														<div>
 										        			<p>WBS계획 연동 예상 마진</p>
-										        			<table class="table table-striped table-bordered table-hover">
-										        				<thead>
-																	<tr>
-																		<th>#</th>
-																		<th>마진코드</th>
-																		<th>예상마진액</th>
-																	</tr>
+										        			<div class="panel panel-primary filterable">
+													            <div class="panel-heading">
+													                <h3 class="panel-title">WBS계획 연동 예상 마진</h3>
+													                <div class="pull-right">
+													                    <a class="btn btn-warning btn-xs btn-filter" href="/pineapple/adminmypage.user#pmsinfo"><span class="glyphicon glyphicon-filter"></span>검색정렬</a>
+													                </div>
+													            </div>
+																<table class="table">
+																	<thead>
+																		<tr class="filters">
+																			<th><input type="text" class="form-control" placeholder="#" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="마진코드" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="예상마진액" disabled></th>
+																		</tr>
 																</thead>
 																<c:forEach items="${allpmslist.wbsplanmargin}" var="marginplanlist" varStatus="numberofmarginplan">
 																	<tr>
@@ -560,19 +659,27 @@ $(document).ready(function(){
 																	</tr>
 																</c:forEach>
 															</table>
+															</div>
 										        		</div>
 														<br>
 														<div>
 										        			<p>실제 마진(Daily)</p>
-										        			<table class="table table-striped table-bordered table-hover">
-										        				<thead>
-																<tr>
-																	<th>#</th>
-																	<th>마진코드</th>
-																	<th>실제마진액</th>
-																	<th>날짜</th>
-																</tr>
-																</thead>
+										        			<div class="panel panel-primary filterable">
+													            <div class="panel-heading">
+													                <h3 class="panel-title">실제 마진(Daily)</h3>
+													                <div class="pull-right">
+													                    <a class="btn btn-warning btn-xs btn-filter" href="/pineapple/adminmypage.user#pmsinfo"><span class="glyphicon glyphicon-filter"></span>검색정렬</a>
+													                </div>
+													            </div>
+																<table class="table">
+																	<thead>
+																		<tr class="filters">
+																			<th><input type="text" class="form-control" placeholder="#" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="마진코드" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="실제마진액" disabled></th>
+																			<th><input type="text" class="form-control" placeholder="날짜" disabled></th>
+																		</tr>
+																		</thead>
 																<c:forEach items="${allpmslist.wbsdailymargin}" var="wbsdailymarginlist" varStatus="numberofdailymargin">
 																	<tr>
 																		<td>${numberofdailymargin.count}</td>
@@ -594,6 +701,7 @@ $(document).ready(function(){
 																	</tr>
 																</c:forEach>
 															</table>
+															</div>
 										        		</div>
 													<br>
 													<div class="modal-footer">
@@ -625,17 +733,24 @@ $(document).ready(function(){
 					<p id="explanation">파인애플펀딩 사이트에 등록요청/등록승인된 기업의 전체기업리스트를 확인할 수 있습니다. 
 										전체기업리스트 조회 후 바로 기업등록승인 또는 기업삭제승인 작업을 할 수 있습니다.</p>
 					<br>
-					<table class="table table-striped table-bordered table-hover">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>기업코드</th>
-								<th>기업명</th>
-								<th>사업자번호</th>
-								<th>기업대표</th>
-								<th>개설자ID</th>
-								<th>등록승인</th>
-								<th>삭제승인</th>
+					<div class="panel panel-primary filterable">
+			            <div class="panel-heading">
+			                <h3 class="panel-title">전체기업조회</h3>
+			                <div class="pull-right">
+			                    <a class="btn btn-warning btn-xs btn-filter" href="/pineapple/adminmypage.user#allCompanyList"><span class="glyphicon glyphicon-filter"></span>검색정렬</a>
+			                </div>
+			            </div>
+						<table class="table">
+							<thead>
+								<tr class="filters">
+								<th><input type="text" class="form-control" placeholder="#" disabled></th>
+								<th><input type="text" class="form-control" placeholder="기업코드" disabled></th>
+								<th><input type="text" class="form-control" placeholder="기업명" disabled></th>
+								<th><input type="text" class="form-control" placeholder="사업자번호" disabled></th>
+								<th><input type="text" class="form-control" placeholder="기업대표" disabled></th>
+								<th><input type="text" class="form-control" placeholder="개설자ID" disabled></th>
+								<th><input type="text" class="form-control" placeholder="등록승인" disabled></th>
+								<th><input type="text" class="form-control" placeholder="삭제승인" disabled></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -829,6 +944,7 @@ $(document).ready(function(){
 							</c:forEach>
 						</tbody>
 					</table>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -845,21 +961,28 @@ $(document).ready(function(){
 										펀딩별 투자자들의 투자예약과 결제여부까지 확인가능합니다. 
 										결제 후 프로젝트를 진행하며 배당금을 지급받은 전체 내역을 확인할 수 있습니다.</p>
 					<br>
-					<table class="table table-striped table-bordered table-hover">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>코드</th>
-								<th>투자자</th>
-								<th>기업</th>
-								<th>펀딩</th>
-								<th>주식수</th>
-								<th>발행가</th>
-								<th>투자액</th>
-								<th>투자시간</th>
-								<th>결제여부</th>
-								<th>배당내역</th>
-							</tr>
+					<div class="panel panel-primary filterable">
+			            <div class="panel-heading">
+			                <h3 class="panel-title">투자종합조회</h3>
+			                <div class="pull-right">
+			                    <a class="btn btn-warning btn-xs btn-filter" href="/pineapple/adminmypage.user#investinfo"><span class="glyphicon glyphicon-filter"></span>검색정렬</a>
+			                </div>
+			            </div>
+						<table class="table">
+							<thead>
+								<tr class="filters">
+									<th><input type="text" class="form-control" placeholder="#" disabled></th>
+									<th><input type="text" class="form-control" placeholder="코드" disabled></th>
+									<th><input type="text" class="form-control" placeholder="투자자" disabled></th>
+									<th><input type="text" class="form-control" placeholder="기업" disabled></th>
+									<th><input type="text" class="form-control" placeholder="펀딩" disabled></th>
+									<th><input type="text" class="form-control" placeholder="주식수" disabled></th>
+									<th><input type="text" class="form-control" placeholder="발행가" disabled></th>
+									<th><input type="text" class="form-control" placeholder="투자액" disabled></th>
+									<th><input type="text" class="form-control" placeholder="투자시간" disabled></th>
+									<th><input type="text" class="form-control" placeholder="결제여부" disabled></th>
+									<th><input type="text" class="form-control" placeholder="배당내역" disabled></th>
+								</tr>
 						</thead>
 						<tbody>
 							<c:forEach var="allinvestment" items="${investAndDividendList}" varStatus="numberofinvest">
@@ -903,7 +1026,7 @@ $(document).ready(function(){
 																						펀딩별 투자자들의 투자예약과 결제여부까지 확인가능합니다. 
 																						결제 후 프로젝트를 진행하며 배당금을 지급받은 전체 내역을 확인할 수 있습니다.</p>
 																	<br>
-																	<table class="table table-striped table-bordered table-hover">
+																	<table class="table table-hover table-striped">
 																		<thead>
 																			<tr>
 																				<th>#</th>
@@ -965,6 +1088,7 @@ $(document).ready(function(){
 							</c:forEach>
 						</tbody>
 					</table>
+					</div>
 				</div>
 			</div>	
 		</div>
@@ -980,17 +1104,24 @@ $(document).ready(function(){
 					<p id="explanation">파인애플펀딩 사이트에 가입한 전체회원리스트를 확인할 수 있습니다.
 										회원상세정보를 보기위해 상세정보 버튼을 클릭해주시기 바랍니다.</p>
 					<br>
-					<table class="table table-striped table-bordered table-hover">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>아이디</th>
-								<th>닉네임</th>
-								<th>이름</th>
-								<th>권한</th>
-								<th>탈퇴요청시간</th>
-								<th>상세정보</th>
-								<th>삭제</th>
+					<div class="panel panel-primary filterable">
+			            <div class="panel-heading">
+			                <h3 class="panel-title">전체회원조회</h3>
+			                <div class="pull-right">
+			                    <a class="btn btn-warning btn-xs btn-filter" href="/pineapple/adminmypage.user#allUserList"><span class="glyphicon glyphicon-filter"></span>검색정렬</a>
+			                </div>
+			            </div>
+						<table class="table">
+							<thead>
+								<tr class="filters">
+								<th><input type="text" class="form-control" placeholder="#" disabled></th>
+								<th><input type="text" class="form-control" placeholder="아이디" disabled></th>
+								<th><input type="text" class="form-control" placeholder="닉네임" disabled></th>
+								<th><input type="text" class="form-control" placeholder="이름" disabled></th>
+								<th><input type="text" class="form-control" placeholder="권한" disabled></th>
+								<th><input type="text" class="form-control" placeholder="탈퇴요청시간" disabled></th>
+								<th><input type="text" class="form-control" placeholder="상세정보" disabled></th>
+								<th><input type="text" class="form-control" placeholder="삭제" disabled></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -1136,15 +1267,22 @@ $(document).ready(function(){
 							</c:forEach>
 						</tbody>
 					</table>
+					</div>
 				</div>
 			</div>	
 		</div>
 		<!-- 일곱번째 탭 시작 -->
 		<div role="tabpanel" class="tab-pane fade" id="message" aria-labelledby="message-tab"> 
-			<p>메세지</p> 
+			<h1 style="text-align: center;">MY MESSAGE LIST</h1>
+			<div class="col-xs-12" id="adminmessage"></div>
+		</div>
+		<div role="tabpanel" class="tab-pane fade" id="moneyflow" aria-labelledby="moneyflow-tab"> 
+			<h1 style="text-align: center;">MONEY FLOW LIST</h1>
+			<div class="col-xs-12" id="moneyflowcontent"></div> 
 		</div>
 		
 	</div> 
+	</div>
 <!-- 풋터 -->
 <c:import url="/resources/module/footer.jsp"/>
 </div>

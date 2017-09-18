@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.pineapple.invest.service.InvestAndFd;
+import com.pineapple.invest.service.MoneyAndTitleAndId;
 import com.pineapple.timeline.service.Message;
 import com.pineapple.timeline.service.MyInvestorTimeline;
 import com.pineapple.timeline.service.MyInvestorTimelineLog;
@@ -92,6 +94,15 @@ public class TimelineController {
 		log.debug(timelinereplydelete+"<-----TimelineController[timelinereplydelete 값 출력]");
 		return "redirect:/timelinemain.timeline";
 	}
+	//타임라인 왼쪽 Funding ranking (최신펀딩)  
+	@RequestMapping(value="/timelinefundingranking.timeline",method=RequestMethod.GET)
+	public String investorTimelineReplyRemove(Locale locale,Model model){
+		log.debug("<----- TimelineController[investorTimelineReplyRemove호출]----->");
+		List<InvestAndFd> timelinereplydelete = timelineserviceinterface.getTimelineFundingranking();
+		model.addAttribute("timelinereplydelete",timelinereplydelete);
+		log.debug(timelinereplydelete+"<-----TimelineController[timelinereplydelete 값 출력]");
+		return "timeline/timelineajax/timelinefundingrenaking";
+	}
 	
 	
 	///////////////////////My Page Time Line//////////////////////////
@@ -156,12 +167,13 @@ public class TimelineController {
 	}
 	//자신이 등록한 타임라인 댓글 삭제하기
 	@RequestMapping(value="/investortimelinereplydelete.invest",method=RequestMethod.GET)
-	public String investorTimelineReplyRemove(Locale locale,Model model,@RequestParam(value="tlReCode")int tlReCode){
+	public String timelineFundingRankingGet(Locale locale,Model model,@RequestParam(value="tlReCode")int tlReCode){
 		log.debug("<----- TimelineController[investorTimelineReplyRemove호출]----->");
 		int timelinereplydelete = timelineserviceinterface.removeTimelineReply(tlReCode);
 		log.debug(timelinereplydelete+"<-----TimelineController[timelinereplydelete 값 출력]");
 		return "redirect:/investormypage.user";
 	}
+
 	
 	
 	/////////////////////My Page Message///////////////////////////
@@ -250,6 +262,36 @@ public class TimelineController {
 		return "user/investormypageajax/investormessagesendlist";
 	}
 	
+	///////////////////////////MY Page Moneyflow///////////////////////////////////////
+	//자금조회 
+	@RequestMapping(value="/moneyflow.timeline",method=RequestMethod.GET)
+	public String moneyflow(Locale locale,Model model,HttpServletRequest request,HttpSession session){
+		log.debug("<----- TimelineController[moneyflow호출]----->");
+		return "user/adminpageajax/moneyflow";
+	}
+	//내역 조회
+	@RequestMapping(value="/moneyflowall.timeline",method=RequestMethod.GET)
+	public String moneyflowall(Locale locale,Model model,HttpServletRequest request,@RequestParam(value="mfCategory",defaultValue="0")int mfCategory,@RequestParam(value="numberOfRequests",defaultValue="0")int numberOfRequests){
+		log.debug("<----- TimelineController[moneyflowall호출]----->");
+		log.debug(mfCategory+"<-----TimelineController[mfCategory 값 출력]11111111111111111111111111111111111111111");
+		log.debug(numberOfRequests+"<-----TimelineController[numberOfRequests 값 출력]222222222222222222222222222222222222222");
+		List<MoneyAndTitleAndId> moneycontent = timelineserviceinterface.getMoneyall(mfCategory,numberOfRequests);
+		model.addAttribute("moneycontent",moneycontent);
+		log.debug(moneycontent+"<-----TimelineController[moneycontent 값 출력]");
+		model.addAttribute("mfCategory",mfCategory);
+		return "user/adminpageajax/moneyflowcontent";
+	}
+	@RequestMapping(value="/moneyflowalladd.timeline",method=RequestMethod.GET)
+	public @ResponseBody List<MoneyAndTitleAndId> moneyflowalladd(Locale locale,Model model,HttpServletRequest request,@RequestParam(value="mfCategory",defaultValue="0")int mfCategory,@RequestParam(value="numberOfRequests",defaultValue="0")int numberOfRequests){
+		log.debug("<----- TimelineController[moneyflowall호출]----->");
+		log.debug(mfCategory+"<-----TimelineController[mfCategory 값 출력]11111111111111111111111111111111111111111");
+		log.debug(numberOfRequests+"<-----TimelineController[numberOfRequests 값 출력]222222222222222222222222222222222222222");
+		List<MoneyAndTitleAndId> moneycontent = timelineserviceinterface.getMoneyall(mfCategory,numberOfRequests);
+		model.addAttribute("moneycontent",moneycontent);
+		log.debug(moneycontent+"<-----TimelineController[moneycontent 값 출력]");
+		model.addAttribute("mfCategory",mfCategory);
+		return moneycontent;
+	}
 	
 	
 	

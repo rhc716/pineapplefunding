@@ -16,6 +16,81 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
 <!-- css rhc -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
+<!-- table 검색정렬기능 css-->
+<style type="text/css">	
+	.filterable {
+	    margin-top: 15px;
+	}
+	.filterable .panel-heading .pull-right {
+	    margin-top: -20px;
+	}
+	.filterable .filters input[disabled] {
+	    background-color: transparent;
+	    border: none;
+	    cursor: auto;
+	    box-shadow: none;
+	    padding: 0;
+	    height: auto;
+	}
+	.filterable .filters input[disabled]::-webkit-input-placeholder {
+	    color: #369;
+	}
+	.filterable .filters input[disabled]::-moz-placeholder {
+	    color: #369;
+	}
+	.filterable .filters input[disabled]:-ms-input-placeholder {
+	    color: #369;
+	}
+</style>
+<script type="text/javascript">
+/*
+table 검색정렬 기능
+*/
+$(document).ready(function(){
+    $('.filterable .btn-filter').click(function(e){
+    	e.preventdefault;
+        var $panel = $(this).parents('.filterable'),
+        $filters = $panel.find('.filters input'),
+        $tbody = $panel.find('.table tbody');
+        if ($filters.prop('disabled') == true) {
+            $filters.prop('disabled', false);
+            $filters.first().focus();
+        } else {
+            $filters.val('').prop('disabled', true);
+            $tbody.find('.no-result').remove();
+            $tbody.find('tr').show();
+        }
+    });
+
+    $('.filterable .filters input').keyup(function(e){
+    	e.preventdefault;
+        /* Ignore tab key */
+        var code = e.keyCode || e.which;
+        if (code == '9') return;
+        /* Useful DOM data and selectors */
+        var $input = $(this),
+        inputContent = $input.val().toLowerCase(),
+        $panel = $input.parents('.filterable'),
+        column = $panel.find('.filters th').index($input.parents('th')),
+        $table = $panel.find('.table'),
+        $rows = $table.find('tbody tr');
+       
+        var $filteredRows = $rows.filter(function(){
+            var value = $(this).find('td').eq(column).text().toLowerCase();
+            return value.indexOf(inputContent) === -1;
+        });
+        /* Clean previous no-result if exist */
+        $table.find('tbody .no-result').remove();
+        /* Show all rows, hide filtered ones (never do that outside of a demo ! xD) */
+        $rows.show();
+        $filteredRows.hide();
+        /* Prepend no-result row if all rows are filtered */
+        if ($filteredRows.length === $rows.length) {
+            $table.find('tbody').prepend($('<tr class="no-result text-center"><td colspan="'+ $table.find('.filters th').length +'">No result found</td></tr>'));
+        }
+    });
+});
+</script>
 <title>펀딩내 권한부여</title>
 </head>
 <body>
@@ -35,44 +110,53 @@
 			<div class="pagetitleandexplainbox">
 				<h4>${nickname}님이 펀딩내 권한 부여자</h4>
 			</div>
-			<div>
-				<table class="table table-striped table-bordered table-hover">
+			<div class="panel panel-primary filterable">
+	            <div class="panel-heading">
+	                <h3 class="panel-title">권한을 부여한 목록 조회</h3>
+	                <div class="pull-right">
+	                    <button class="btn btn-xs btn-warning btn-filter"><span class="glyphicon glyphicon-filter"></span>검색정렬</button>
+	                </div>
+	            </div>
+	            <br>
+				<table class="table">
 					<thead>
-						<tr class="info">
-							<td>번호</td>
-							<td>권한코드</td>
-							<td>회사명</td>
-							<td>펀딩명</td>
-							<td>펀딩상황</td>
-							<td>부여자ID</td>
-							<td>피부여자ID</td>
-							<td>권한명</td>
-							<td>삭제</td>
+						<tr class="filters">
+							<th><input type="text" class="form-control" placeholder="#" disabled></th>
+							<th><input type="text" class="form-control" placeholder="권한코드" disabled></th>
+							<th><input type="text" class="form-control" placeholder="회사명" disabled></th>
+							<th><input type="text" class="form-control" placeholder="펀딩명" disabled></th>
+							<th><input type="text" class="form-control" placeholder="펀딩상황" disabled></th>
+							<th><input type="text" class="form-control" placeholder="부여자ID" disabled></th>
+							<th><input type="text" class="form-control" placeholder="피부여자ID" disabled></th>
+							<th><input type="text" class="form-control" placeholder="권한명" disabled></th>
+							<th><input type="text" class="form-control" placeholder="삭제" disabled></th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="authgiverList" items="${authgiverList}" varStatus="numberofauthgive">
-							<tr>
-								<td> ${numberofauthgive.count} </td>
-								<td> ${authgiverList.authCode} </td>
-								<td> ${authgiverList.comName} </td>
-								<td> ${authgiverList.fdTitle} </td>
-								<td> ${authgiverList.fdStatus} </td>
-								<td><a type="button" class="btn btn-block btn-success disabled">${authgiverList.authGiver}</a></td>
-								<td> ${authgiverList.authReceiver} </td>
-								<td><a type="button" class="btn btn-block btn-danger disabled">${authgiverList.authLevelName}</a></td>
-								<td>
-									<form action="/pineapple/deletefundingauth.user" method="post">
-										<input type="hidden" name="authCode" value="${authgiverList.authCode}">
-										<button type="submit" class="btn btn-block btn-danger">삭제</button>
-									</form>
-								</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-					<tfoot>
-						<div>
-							<a type="button" class="btn btn-info" data-toggle="modal" href="#newfdauthmodal${numberofauthgive.count}">+ 새로운 펀딩내 권한부여하기</a>
+					<c:forEach var="authgiverList" items="${authgiverList}" varStatus="numberofauthgive">
+						<tr>
+							<td> ${numberofauthgive.count} </td>
+							<td> ${authgiverList.authCode} </td>
+							<td> ${authgiverList.comName} </td>
+							<td> ${authgiverList.fdTitle} </td>
+							<td> ${authgiverList.fdStatus} </td>
+							<td><a type="button" class="btn btn-block btn-success disabled">${authgiverList.authGiver}</a></td>
+							<td> ${authgiverList.authReceiver} </td>
+							<td><a type="button" class="btn btn-block btn-danger disabled">${authgiverList.authLevelName}</a></td>
+							<td>
+								<form action="/pineapple/deletefundingauth.user" method="post">
+									<input type="hidden" name="authCode" value="${authgiverList.authCode}">
+									<button type="submit" class="btn btn-block btn-danger">삭제</button>
+								</form>
+							</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+				<tfoot>
+						<tr>
+							<a type="button" class="btn btn-md btn-success btn-block" data-toggle="modal" href="#newfdauthmodal${numberofauthgive.count}">+ 새로운 펀딩내 권한부여하기</a>
+						</tr>
+							<br>
 							<!-- 새로운 권한부여 모달 화면 -->
 							<div class="modal fade" id="newfdauthmodal${numberofauthgive.count}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 							  <div class="modal-dialog">
@@ -138,27 +222,32 @@
 							    </div>
 							  </div>
 							</div>
-						</div>
 					</tfoot>
 				</table>
-				
 			</div>
 			<!-- 권한 피부여자인 권한부여정보 조회 -->
 			<div class="pagetitleandexplainbox">
 				<h4>${nickname}님이 펀딩내 권한 피부여자</h4>
 			</div>
-			<div>
-				<table class="table table-striped table-bordered table-hover">
+			<div class="panel panel-primary filterable">
+	            <div class="panel-heading">
+	                <h3 class="panel-title">권한을 부여받은 목록 조회</h3>
+	                <div class="pull-right">
+	                    <button class="btn btn-xs btn-warning btn-filter"><span class="glyphicon glyphicon-filter"></span>검색정렬</button>
+	                </div>
+	            </div>
+	            <br>
+				<table class="table">
 					<thead>
-						<tr class="info">
-							<td>번호</td>
-							<td>권한코드</td>
-							<td>회사명</td>
-							<td>펀딩명</td>
-							<td>펀딩상황</td>
-							<td>부여자ID</td>
-							<td>피부여자ID</td>
-							<td>권한명</td>
+						<tr class="filters">
+							<th><input type="text" class="form-control" placeholder="#" disabled></th>
+							<th><input type="text" class="form-control" placeholder="권한코드" disabled></th>
+							<th><input type="text" class="form-control" placeholder="회사명" disabled></th>
+							<th><input type="text" class="form-control" placeholder="펀딩명" disabled></th>
+							<th><input type="text" class="form-control" placeholder="펀딩상황" disabled></th>
+							<th><input type="text" class="form-control" placeholder="부여자ID" disabled></th>
+							<th><input type="text" class="form-control" placeholder="피부여자ID" disabled></th>
+							<th><input type="text" class="form-control" placeholder="권한명" disabled></th>
 						</tr>
 					</thead>
 					<tbody>

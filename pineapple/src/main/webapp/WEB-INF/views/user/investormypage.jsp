@@ -7,9 +7,82 @@
 <title>투자자 MyPage</title>
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+<!-- table 검색정렬기능 css-->
+<style type="text/css">	
+	.filterable {
+	    margin-top: 15px;
+	}
+	.filterable .panel-heading .pull-right {
+	    margin-top: -20px;
+	}
+	.filterable .filters input[disabled] {
+	    background-color: transparent;
+	    border: none;
+	    cursor: auto;
+	    box-shadow: none;
+	    padding: 0;
+	    height: auto;
+	}
+	.filterable .filters input[disabled]::-webkit-input-placeholder {
+	    color: #369;
+	}
+	.filterable .filters input[disabled]::-moz-placeholder {
+	    color: #369;
+	}
+	.filterable .filters input[disabled]:-ms-input-placeholder {
+	    color: #369;
+	}
+	
+</style>
 <script type="text/javascript">
 $(document).ready(function(){
+	/*
+	table 검색정렬 기능
+	*/
+	$(document).ready(function(){
+	    $('.filterable .btn-filter').click(function(e){
+	    	e.preventdefault;
+	        var $panel = $(this).parents('.filterable'),
+	        $filters = $panel.find('.filters input'),
+	        $tbody = $panel.find('.table tbody');
+	        if ($filters.prop('disabled') == true) {
+	            $filters.prop('disabled', false);
+	            $filters.first().focus();
+	        } else {
+	            $filters.val('').prop('disabled', true);
+	            $tbody.find('.no-result').remove();
+	            $tbody.find('tr').show();
+	        }
+	    });
+
+	    $('.filterable .filters input').keyup(function(e){
+	    	e.preventdefault;
+	        /* Ignore tab key */
+	        var code = e.keyCode || e.which;
+	        if (code == '9') return;
+	        /* Useful DOM data and selectors */
+	        var $input = $(this),
+	        inputContent = $input.val().toLowerCase(),
+	        $panel = $input.parents('.filterable'),
+	        column = $panel.find('.filters th').index($input.parents('th')),
+	        $table = $panel.find('.table'),
+	        $rows = $table.find('tbody tr');
+	       
+	        var $filteredRows = $rows.filter(function(){
+	            var value = $(this).find('td').eq(column).text().toLowerCase();
+	            return value.indexOf(inputContent) === -1;
+	        });
+	        /* Clean previous no-result if exist */
+	        $table.find('tbody .no-result').remove();
+	        /* Show all rows, hide filtered ones (never do that outside of a demo ! xD) */
+	        $rows.show();
+	        $filteredRows.hide();
+	        /* Prepend no-result row if all rows are filtered */
+	        if ($filteredRows.length === $rows.length) {
+	            $table.find('tbody').prepend($('<tr class="no-result text-center"><td colspan="'+ $table.find('.filters th').length +'">No result found</td></tr>'));
+	        }
+	    });
+	});
 	//부트스트랩 새로고침할 때 페이지 유지
 	$('#myTab a').click(function(e) {
 	  e.preventDefault();
@@ -187,40 +260,44 @@ $(document).ready(function(){
 				<div class="col-md-10">
 				<!-- 투자자 고유 영역 -->
 				<br><br>
-				<table class="table table-striped table-bordered table-hover">
-					<thead>
-						<tr class="info">
-						<td>증권사</td>
-						<td>계좌번호</td>
-						<td>계좌이름</td>
-						<td>계좌정보수정</td>
-						<td>계좌정보삭제</td>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="useraccount" items="${user.account}">
-							<tr>
-								<td> ${useraccount.secCompany} </td>
-								<td> ${useraccount.accountNumber} </td>
-								<td> ${useraccount.accountNickname} </td>
-								<td>
-									<a type="button" class="btn btn-info btn-block changeaccount" data-toggle="modal" value="${useraccount.accountCode}" href="#changeAccountModal">수정</a>
-								</td>
-								<td>
-									<form action="/pineapple/deleteaccount.user" method="post">
-										<input type="hidden" id="accountCode" name="accountCode" value="${useraccount.accountCode}">
-										<button type="submit" class="btn btn-info btn-block">삭제</button>
-									</form>
-								</td>
+				<div class="panel panel-primary filterable">
+		            <div class="panel-heading">
+		                <h3 class="panel-title">계좌목록 조회</h3>
+		                <div class="pull-right">
+		                	<a type="button" class="btn btn-info btn-xs" data-toggle="modal" href="#newaccountmodal">+ 새로운 계좌등록</a>&nbsp
+		                    <button class="btn btn-xs btn-warning btn-filter"><span class="glyphicon glyphicon-filter"></span>검색정렬</button>
+		                </div>
+		            </div>
+		            <br>
+					<table class="table">
+						<thead>
+							<tr class="filters">
+								<th><input type="text" class="form-control" placeholder="증권사" disabled></th>
+								<th><input type="text" class="form-control" placeholder="계좌번호" disabled></th>
+								<th><input type="text" class="form-control" placeholder="계좌이름" disabled></th>
+								<th><input type="text" class="form-control" placeholder="계좌정보수정" disabled></th>
+								<th><input type="text" class="form-control" placeholder="계좌정보삭제" disabled></th>
 							</tr>
-						</c:forEach>
-					</tbody>
-					<tfoot>
-						<div>
-							<button type="button" class="btn btn-info" data-toggle="modal" data-target="#newaccountmodal">+ 새로운 계좌등록</button>
-						</div>
-					</tfoot>
-				</table>
+						</thead>
+						<tbody>
+							<c:forEach var="useraccount" items="${user.account}">
+								<tr>
+									<td> ${useraccount.secCompany} </td>
+									<td> ${useraccount.accountNumber} </td>
+									<td> ${useraccount.accountNickname} </td>
+									<td>
+										<a type="button" class="btn btn-info btn-block changeaccount" data-toggle="modal" value="${useraccount.accountCode}" href="#changeAccountModal">수정</a>
+									</td>
+									<td>
+										<form action="/pineapple/deleteaccount.user#investorinfo" method="post">
+											<input type="hidden" id="accountCode" name="accountCode" value="${useraccount.accountCode}">
+											<button type="submit" class="btn btn-info btn-block">삭제</button>
+										</form>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
 				</div>
 				<!-- 새로운 계좌등록을위한 모달 내부 구현 -->
 				<div class="modal fade" id="newaccountmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -231,7 +308,7 @@ $(document).ready(function(){
 				        <h4 class="modal-title" id="myModalLabel">${nickname}님의 새로운 계좌등록</h4>
 				      </div>
 				      <div class="modal-body">
-				        <form id="newaccountform" action="/pineapple/addnewaccount.user" method="post">
+				        <form id="newaccountform" action="/pineapple/addnewaccount.user#investorinfo" method="post">
 				        	<div class="container_insert">
 							    <div id="accountHolerIdinput" class="form-group has-success has-feedback">
 									<label class="control-label" for="inputSuccess2">${nickname}님의 아이디</label>
@@ -261,7 +338,7 @@ $(document).ready(function(){
 						      </div>
 						      <div class="modal-footer">
 						        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-						        <button type="button" class="btn btn-primary">추가하기</button>
+						        <button type="submit" class="btn btn-primary">추가하기</button>
 						      </div>
 				        </form>
 				      </div>
@@ -317,6 +394,8 @@ $(document).ready(function(){
 				</div>
 			</div>
 		</div>
+		</div>
+		<!-- 두번째탭 시작 -->
 		<div role="tabpanel" class="tab-pane fade" id="timeline" aria-labelledby="timeline-tab"> 
 			<h1 style="text-align: center;">MY TIMELINE LIST</h1> 
 			<div class="col-xs-12" style="text-align: center; border: 1.5px solid #009442 ;border-radius: 5px; padding: 0px; margin: 0px 0px 20px 0px">
@@ -346,8 +425,10 @@ $(document).ready(function(){
 		</div>
 	</div>
 </div>
+
 <!-- 풋터 -->
 <c:import url="/resources/module/footer.jsp"/>
+</div>
 </div>
 </body>
 </html>

@@ -34,7 +34,20 @@
 			<result property="timelinelikenickname" column="timelinelikenickname"/>
 		</collection>
 	</resultMap>
-	
+	<resultMap type="com.pineapple.invest.service.InvestAndFd"
+	 			id="selectInvestAndFd">
+	 	<result property="fdCode" column="fdCode"/>
+	 	<result property="fdTitle" column="fdTitle"/>
+	 	<result property="numberOfShares" column="numberOfShares"/>
+	 	<result property="comName" column="comName"/>
+	 	<result property="total" column="total"/>
+	 	<result property="posterImg" column="posterImg"/>
+	 	<result property="minInvestMoney" column="minInvestMoney"/>
+	 	<result property="issuePrice" column="issuePrice"/>
+	 	<result property="days" column="days"/>
+	 	<result property="fdStatus" column="fdStatus"/>
+	 	<result property="checkassignment" column="checkassignment"/>
+	 </resultMap>
 	<!-- 타임라인 메인 페이지 에서 list 조회 -->
  	<select id="selectTimelineList" resultMap="selectTimelineListresultmap">
 		SELECT t.tlCode,
@@ -106,7 +119,30 @@
 	<delete id="deleteTimelineReply" parameterType="com.pineapple.timeline.service.TimelineReply">
 		DELETE FROM timelinereply WHERE tlReCode=#{tlReCode}
 	</delete>
-	
+	<!-- 펀딩 조회 (최신순) -->
+	<select id="selectTimelineFundingRankung" resultMap="selectInvestAndFd">
+		SELECT  f.fdCode,
+				f.fdTitle,
+				f.numberOfShares,
+				c.comName,
+				CASE f.fdStatus WHEN '모집중' THEN IFNULL((SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode GROUP BY si.investFdCode ),0) END as total,
+				f.posterImg,
+				f.minInvestMoney,
+				f.issuePrice,
+				TO_DAYS(f.closeDate)-TO_DAYS(now()) as days,
+				f.fdStatus
+		FROM funding f 
+		LEFT JOIN company c 
+		ON f.fdComCode = c.comCode
+		LEFT JOIN businessarea b
+		ON f.fdCode = b.areaFdCode
+		LEFT JOIN dividendplan d
+		ON f.fdCode = d.divFdCode
+		WHERE f.fdStatus = '모집중'
+		GROUP BY f.fdCode 
+		ORDER BY f.openDate DESC
+		LIMIT 3
+	</select>
 	
 	
 	
@@ -256,4 +292,52 @@
 				msgCheck=0
 		WHERE msgCode = #{msgCode}
 	</update>
+	<resultMap type="com.pineapple.invest.service.MoneyAndTitleAndId" id="MoneyAndTitleAndIdResultmapper">
+		<result property="flowCode" column="flowCode"/>
+		<result property="mfFdCode" column="mfFdCode"/>
+		<result property="mfInvestCode" column="mfInvestCode"/>
+		<result property="mfAmount" column="mfAmount"/>
+		<result property="mfCategory" column="mfCategory"/>
+		<result property="mfDate" column="mfDate"/>
+		<result property="title" column="title"/>
+		<result property="id" column="id"/>
+	</resultMap>
+	<!-- 자금내역 조회 -->
+	<select id="selectmoneyall" resultMap="MoneyAndTitleAndIdResultmapper" parameterType="hashmap">
+		SELECT mf.flowCode,
+			   mf.mfFdCode,
+			   mf.mfInvestCode,
+			   mf.mfAmount,
+			   mf.mfCategory,
+			   mf.mfDate,
+			   (SELECT fdTitle FROM funding WHERE mf.mfFdCode = fdCode) title,
+			   (SELECT investId FROM investment WHERE mf.mfInvestCode = investCode ) id 
+		FROM moneyflow mf
+
+		<choose>
+			<when test="mfCategory == 0">
+				ORDER BY mf.mfDate DESC
+				<choose>
+					<when test="numberOfRequests != null">
+						limit #{numberOfRequests},10;
+					</when>
+					<otherwise>
+						limit 0,10;
+					</otherwise>
+				</choose>
+			</when>
+			<otherwise>
+				WHERE mf.mfCategory = #{mfCategory}
+				ORDER BY mf.mfDate DESC
+				<choose>
+					<when test="numberOfRequests != null">
+						limit #{numberOfRequests},10;
+					</when>
+					<otherwise>
+						limit 0,10;
+					</otherwise>
+				</choose>
+			</otherwise>
+		</choose>
+	</select>
 </mapper>

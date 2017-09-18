@@ -31,6 +31,12 @@ public class PmsService implements PmsServiceInterface{
 	 */
 	
 	@Override
+	public List<WbsActual> wbsactual(String milestoneCode) {
+		log.debug("PmsService의 getMyWbsPlanList호출 성공");
+		return pmsdao.wbsactual(milestoneCode);
+	}
+	
+	@Override
 	public List<WbsPlan> wbsplanlist(String milestoneCode) {
 		log.debug("PmsService의 getMyWbsPlanList호출 성공");
 		return pmsdao.wbsplanlist(milestoneCode);
@@ -120,6 +126,7 @@ public class PmsService implements PmsServiceInterface{
 		return wbsplandetail;
 	}
 	
+
 	@Override
 	public  WbsPlanUpdate wbsplanupdate(WbsPlan wbsplan) {
 		log.debug("PmsService의 wbsplanupdate호출 성공");

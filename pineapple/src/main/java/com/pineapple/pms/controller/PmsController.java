@@ -73,41 +73,24 @@ public class PmsController {
 		return "pms/companyuser/wbs/wbsactualinsert";
 	}
 	
-	@RequestMapping(value = "/wbsactualinsert.pms", method = {RequestMethod.GET, RequestMethod.POST})
-	public String wbsactualinsert(WbsActual wbsactual,Locale locale, Model model) {
-		log.debug("wbsactual 내용 "+wbsactual);         
-		service.wbsactualinsert(wbsactual);
-		log.debug("PmsController의 wbsactualinsert호출 성공");                                                                                                                   
-		return "pms/companyuser/wbs/wbsactualinsert";
-	}
+
 	
-	
-	
-	@RequestMapping(value = "/insertwbsactual.pms", method = {RequestMethod.GET, RequestMethod.POST})
-	public String wbsactualinsertfrom(WbsActual wbsactual,Locale locale, Model model, HttpServletRequest request) {
-		log.debug("PmsController의 wbsactualinsertfrom호출 성공");
-		String wbsplancode = request.getParameter("wbsPlanCode");
-		String fdCode = request.getParameter("fdCode");
-		String fdTitle = request.getParameter("fdTitle");
-		String milestoneCode = request.getParameter("milestoneCode");
-		String milestoneName = request.getParameter("milestoneName");
-		String msComCode = request.getParameter("msComCode");
-		model.addAttribute("wbsactual", wbsactual);
-		model.addAttribute("fdCode", fdCode);
-		model.addAttribute("fdTitle", fdTitle);
-		model.addAttribute("milestoneCode", milestoneCode);
-		model.addAttribute("milestoneName", milestoneName);
-		model.addAttribute("msComCode", msComCode);
-		model.addAttribute("wbsplancode", wbsplancode);
-		log.debug("WbsActual값"+wbsactual);
-		return "pms/companyuser/wbs/wbsactualinsertform";
-	}
 	//wbsplan 상세보기 페이지
 	@RequestMapping(value = "/wbsplandetail.pms", method = {RequestMethod.GET, RequestMethod.POST})
 	public String wbsplandetail(Locale locale, Model model, HttpServletRequest request) {
+		log.debug("wbsplandetail호출");
 		String wbsplancode = request.getParameter("wbsPlanCode");
 		model.addAttribute("wbsplancode",wbsplancode);
 		return "pms/companyuser/wbs/wbsplandetail";
+	}
+	
+	//wbsplan 상세보기 페이지
+	@RequestMapping(value = "/wbsactualdetail.pms", method = {RequestMethod.GET, RequestMethod.POST})
+	public String wbsactualdetail(Locale locale, Model model, HttpServletRequest request) {
+		log.debug("wbsactualdetail호출");
+		String wbsActualCode = request.getParameter("wbsActualCode");
+		model.addAttribute("wbsActualCode",wbsActualCode);
+		return "pms/companyuser/wbs/wbsactualdetail";
 	}
 	//wbsplan 입력후 상세보기 페이지
 		@RequestMapping(value = "/wbsplandetail2.pms", method = {RequestMethod.GET, RequestMethod.POST})
@@ -171,7 +154,7 @@ public class PmsController {
 	
 	
 	//wbsactual 리스트페이지 불러오기
-	@RequestMapping(value = "/wbsactuallistform.pms", method = RequestMethod.GET)
+	@RequestMapping(value = "/wbsactuallistpage.pms", method = RequestMethod.GET)
 	public String wbsactuallistform(Locale locale, Model model) {
 		log.debug("PmsController의 wbsactuallistform호출 성공");
 		return "pms/companyuser/wbs/wbsactuallist";
@@ -184,18 +167,7 @@ public class PmsController {
 		String wbsplancode = request.getParameter("wbsPlanCode");
 		log.debug("wbs코드" + wbsplancode);
 		List<WbsPlanMaterial> wbsplanmateriallist = new ArrayList<WbsPlanMaterial>();
-		wbsplanmateriallist = service.getMyWbsPlanMaterialList(wbsplancode);
-		String fdCode = request.getParameter("fdCode");
-		String fdTitle = request.getParameter("fdTitle");
-		String milestoneCode = request.getParameter("milestoneCode");
-		String milestoneName = request.getParameter("milestoneName");
-		String msComCode = request.getParameter("msComCode");
-		model.addAttribute("fdCode", fdCode);
-		model.addAttribute("fdTitle", fdTitle);
-		model.addAttribute("milestoneCode", milestoneCode);
-		model.addAttribute("milestoneName", milestoneName);
-		model.addAttribute("msComCode", msComCode);
-		model.addAttribute("wbsplancode", wbsplancode);
+		wbsplanmateriallist = service.getMyWbsPlanMaterialList(wbsplancode);	
 		model.addAttribute("wbsplanmateriallist", wbsplanmateriallist);
 		return "pms/companyuser/wbs/wbsplanmateriallist";
 	}
@@ -208,17 +180,6 @@ public class PmsController {
 		log.debug("wbs코드" + wbsplancode);
 		List<WbsPlanFacility> wbsplanfacilityllist = new ArrayList<WbsPlanFacility>();
 		wbsplanfacilityllist = service.getMyWbsPlanFacilityList(wbsplancode);
-		String fdCode = request.getParameter("fdCode");
-		String fdTitle = request.getParameter("fdTitle");
-		String milestoneCode = request.getParameter("milestoneCode");
-		String milestoneName = request.getParameter("milestoneName");
-		String msComCode = request.getParameter("msComCode");
-		model.addAttribute("fdCode", fdCode);
-		model.addAttribute("fdTitle", fdTitle);
-		model.addAttribute("milestoneCode", milestoneCode);
-		model.addAttribute("milestoneName", milestoneName);
-		model.addAttribute("msComCode", msComCode);
-		model.addAttribute("wbsplancode", wbsplancode);
 		model.addAttribute("wbsplanfacilityllist", wbsplanfacilityllist);
 		return "pms/companyuser/wbs/wbsplanfacilitylist";
 	}
@@ -232,17 +193,6 @@ public class PmsController {
 		log.debug("wbs코드" + wbsplancode);
 		List<WbsPlanOut> wbsplanoutlist = new ArrayList<WbsPlanOut>();
 		wbsplanoutlist = service.getMyWbsPlanOutList(wbsplancode);
-		String fdCode = request.getParameter("fdCode");
-		String fdTitle = request.getParameter("fdTitle");
-		String milestoneCode = request.getParameter("milestoneCode");
-		String milestoneName = request.getParameter("milestoneName");
-		String msComCode = request.getParameter("msComCode");
-		model.addAttribute("fdCode", fdCode);
-		model.addAttribute("fdTitle", fdTitle);
-		model.addAttribute("milestoneCode", milestoneCode);
-		model.addAttribute("milestoneName", milestoneName);
-		model.addAttribute("msComCode", msComCode);
-		model.addAttribute("wbsplancode", wbsplancode);
 		model.addAttribute("wbsplanoutlist", wbsplanoutlist);		
 		return "pms/companyuser/wbs/wbsplanoutlist";
 	}
@@ -255,17 +205,6 @@ public class PmsController {
 		log.debug("wbs코드" + wbsplancode);
 		List<WbsPlanEtc> wbsplanetclist = new ArrayList<WbsPlanEtc>();
 		wbsplanetclist = service.getMyWbsPlanEtcList(wbsplancode);
-		String fdCode = request.getParameter("fdCode");
-		String fdTitle = request.getParameter("fdTitle");
-		String milestoneCode = request.getParameter("milestoneCode");
-		String milestoneName = request.getParameter("milestoneName");
-		String msComCode = request.getParameter("msComCode");
-		model.addAttribute("fdCode", fdCode);
-		model.addAttribute("fdTitle", fdTitle);
-		model.addAttribute("milestoneCode", milestoneCode);
-		model.addAttribute("milestoneName", milestoneName);
-		model.addAttribute("msComCode", msComCode);
-		model.addAttribute("wbsplancode", wbsplancode);
 		model.addAttribute("wbsplanetclist", wbsplanetclist);
 		return "pms/companyuser/wbs/wbsplanetclist";
 	}
@@ -277,17 +216,6 @@ public class PmsController {
 		log.debug("wbs코드" + wbsplancode);
 		List<WbsPlanIncome> wbsplanincomelist = new ArrayList<WbsPlanIncome>();
 		wbsplanincomelist = service.getMyWbsPlanIncomeyList(wbsplancode);
-		String fdCode = request.getParameter("fdCode");
-		String fdTitle = request.getParameter("fdTitle");
-		String milestoneCode = request.getParameter("milestoneCode");
-		String milestoneName = request.getParameter("milestoneName");
-		String msComCode = request.getParameter("msComCode");
-		model.addAttribute("fdCode", fdCode);
-		model.addAttribute("fdTitle", fdTitle);
-		model.addAttribute("milestoneCode", milestoneCode);
-		model.addAttribute("milestoneName", milestoneName);
-		model.addAttribute("msComCode", msComCode);
-		model.addAttribute("wbsplancode", wbsplancode);
 		model.addAttribute("wbsplanincomelist", wbsplanincomelist);
 		return "pms/companyuser/wbs/wbsplanincomelist";
 	}
@@ -301,15 +229,19 @@ public class PmsController {
 		public String addWbsplan(WbsPlan wbsplan, Model model, Locale locale, HttpServletRequest request) {
 			log.debug("PmsController의 addWbsplan호출 성공");
 			log.debug("WbsPlan : " + wbsplan);
-			String fdCode = request.getParameter("fdCode");
-			String fdTitle = request.getParameter("fdTitle");
-			String wbsPlanDependency = request.getParameter("wbsPlanDependency");
-			log.debug("wbsPlanDependency"+wbsPlanDependency);
 			service.addWbsplan(wbsplan);
-			model.addAttribute("fdTitle", fdTitle );
-			model.addAttribute("fdCode", fdCode );
 			return "pms/companyuser/wbs/wbsfdlist";
 		}
+		
+		@RequestMapping(value = "/wbsactualinsert.pms", method = RequestMethod.GET)
+		public String wbsactualinsert(WbsActual wbsactual, Model model, Locale locale, HttpServletRequest request) {
+			log.debug("PmsController의 wbsactualinsert호출 성공");
+			log.debug("wbsactual : " + wbsactual);
+			service.wbsactualinsert(wbsactual);
+			return "pms/companyuser/wbs/wbsactuallist";
+		}
+		
+		
 		// WbsPlanhuman 입력
 		@RequestMapping(value = "/wbsplanhumaninsert.pms", method = RequestMethod.POST)
 		public String addWbsplanHuman(WbsPlanHuman wbsplanhuman, Model model, Locale locale,HttpServletRequest request) {

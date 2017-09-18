@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pineapple.invest.service.InvestAndFd;
+import com.pineapple.invest.service.MoneyAndTitleAndId;
 import com.pineapple.user.service.User;
 @Transactional
 public interface TimelineServiceInterface {
@@ -24,6 +26,12 @@ public interface TimelineServiceInterface {
 	int modifyTimelineReply(TimelineReply timelinereply);
 	//타임라인 댓글 삭제하는 Service
 	int removeTimelineReply(int tlReCode);
+	//펀딩 최신 조회
+	List<InvestAndFd> getTimelineFundingranking();
+	//자금관리 전체내역 조회
+	List<MoneyAndTitleAndId> getMoneyall(int mfCategory,int numberOfRequests);	
+
+	
 	
 	/////////////////My Page Time Line//////////////////////
 	//자신이 등록한 타임라인 list 조회

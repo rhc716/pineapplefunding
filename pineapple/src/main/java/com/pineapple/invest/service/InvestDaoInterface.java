@@ -59,12 +59,14 @@ public interface InvestDaoInterface {
 	int pmsFeesInsert(Moneyflow moneyflow);
 	//환불대상 list 조회
 	List<Investment> pmsRefundSelect(int fdCode,int numberOfRequests);
-	//펀딩 상태 (모집실패 -> 환불완료)
-	int pmsRefundFundingStatusUpdate(int fdCode);
 	//펀딩의 투자한 목록 조회
 	List<Moneyflow> pmsRefundidlistSelect(int fdCode);
 	//펀딩투자한 목록 조회 토대로 환불입력
 	int pmsRefundInsert(List<Moneyflow> investmentidlist);
+	//펀딩투자한 목록 조회 토대로 입금내역 삭제
+	int pmsInvestInsert(List<Moneyflow> investmentidlist);
+	//펀딩투자한 목록 조회 토대로 투자내역 삭제
+	int pmsInvestInsertlist(List<Moneyflow> investmentidlist);
 	
 	
 	/////////MY Page Investor/////////

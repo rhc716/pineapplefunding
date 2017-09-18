@@ -49,7 +49,7 @@
 		</div>
 		<div class="col-md-12" style="padding: 0px 10px 0px 10px;">
 		<div class="progress bor-defult" style="margin-bottom: 10px;">
-  				<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ${(list.total/list.numberOfShares)*100}%; min-width: 3em; max-width: 100%;">
+  				<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ${(list.total/list.numberOfShares)*100}%; min-width: 3em; max-width: 100%;">
     				${(list.total/list.numberOfShares)*100}%
   				</div>
 		</div>
