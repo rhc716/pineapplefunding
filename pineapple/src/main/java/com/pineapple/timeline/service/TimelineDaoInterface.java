@@ -3,6 +3,9 @@ package com.pineapple.timeline.service;
 import java.util.HashMap;
 import java.util.List;
 
+import com.pineapple.invest.service.InvestAndFd;
+import com.pineapple.invest.service.MoneyAndTitleAndId;
+import com.pineapple.invest.service.Moneyflow;
 import com.pineapple.user.service.User;
 
 public interface TimelineDaoInterface {
@@ -24,8 +27,10 @@ public interface TimelineDaoInterface {
 	int timelineReplyUpdate(TimelineReply timelinereply);
 	//타임라인 댓글 삭제 Dao
 	int timelineReplyDelete(int tlReCode);
-	
-	
+	//펀딩 최신순 검색
+	List<InvestAndFd> timelineFundingRanking();
+	//자금관리 전체내역 조회
+	List<MoneyAndTitleAndId> moneyInvestall(int mfCategory,int numberOfRequests);
 	
 	///////////////////////////My Page Time Line /////////////////////////
 	//자신이 등록한 타임라인 list 조회

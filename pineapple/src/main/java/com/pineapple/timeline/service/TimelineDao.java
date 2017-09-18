@@ -8,6 +8,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.pineapple.invest.service.InvestAndFd;
+import com.pineapple.invest.service.MoneyAndTitleAndId;
 import com.pineapple.user.service.User;
 
 @Repository
@@ -69,7 +71,31 @@ public class TimelineDao implements TimelineDaoInterface{
 		log.debug("TimelineDao-----timelineReplyDelete");
 		return sqlSessionTemplate.delete("com.pineapple.timeline.service.TimelineMapper.deleteTimelineReply",tlReCode);
 	}
-	
+	//펀딩 최신 조회 selectTimelineFundingRankung
+	@Override  
+	public List<InvestAndFd> timelineFundingRanking() {
+		log.debug("TimelineDao-----timelineFundingRanking");
+		return sqlSessionTemplate.selectList("com.pineapple.timeline.service.TimelineMapper.selectTimelineFundingRankung");
+	}
+	//자금관리 전체내역 조회
+	@Override
+	public List<MoneyAndTitleAndId> moneyInvestall(int mfCategory,int numberOfRequests) {
+		log.debug("TimelineDao-----moneyInvestall");
+		HashMap<String, Number> map = new HashMap<>();
+		// numberOfRequests가 입력됐을때 즉 더보기 버튼을 눌렀을때는 0이 아닐때 이므로 그때에만 map에 저장해줌. 
+		if(numberOfRequests==0){
+			map.put("mfCategory", mfCategory);
+		}else{
+			map.put("mfCategory", mfCategory);
+			// 5를 곱해서 넣어줘야 limit의 시작점인 페이징x불러온 투자자수가 됨.
+			numberOfRequests=numberOfRequests*10;
+			map.put("numberOfRequests", numberOfRequests);
+		}
+		log.debug(map.get("mfCategory")+"<---------------------map.get('mfCategory')");
+		log.debug(map.get("numberOfRequests")+"<---------------------map.get('numberOfRequests')");
+		
+		return sqlSessionTemplate.selectList("com.pineapple.timeline.service.TimelineMapper.selectmoneyall",map);
+	}
 	
 	
 	

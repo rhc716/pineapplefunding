@@ -190,13 +190,15 @@ public class InvestService implements InvestServiceInterface {
 	@Override
 	public int addrefund(int fdCode) {
 		log.debug("------------------InvestService-----------------addrefund()");
-		//펀딩 상태 (모집실패 -> 환불완료)
-		int getPMSRefundupdate = investdaointerface.pmsRefundFundingStatusUpdate(fdCode);
 		//펀딩의 투자한 목록 조회
 		List<Moneyflow> getPMSRefundlist = investdaointerface.pmsRefundidlistSelect(fdCode);
 		//펀딩투자한 목록 조회 토대로 환불입력
-		int getPMSRefundinsert = investdaointerface.pmsRefundInsert(getPMSRefundlist);
-		return getPMSRefundupdate+getPMSRefundinsert;
+		int pmsRefundInsert = investdaointerface.pmsRefundInsert(getPMSRefundlist);
+		//펀딩투자한 목록 조회 토대로 입금내역 삭제
+		int pmsInvestInsert = investdaointerface.pmsInvestInsert(getPMSRefundlist);
+		//펀딩투자한 목록 조회 토대로 투자내역 삭제
+		int pmsInvestInsertlist = investdaointerface.pmsInvestInsertlist(getPMSRefundlist);
+		return pmsRefundInsert+pmsInvestInsert+pmsInvestInsertlist;
 	}
 	
 	

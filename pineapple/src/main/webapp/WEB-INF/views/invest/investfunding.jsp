@@ -225,7 +225,7 @@
 				</div>
 				<div class="col-xs-12" style="height: 50%;line-height: 66px;">
 					<div class="progress bor-defult" style="margin: 0px; height: 30px;">
-  						<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ${(Data.investtotal/Data.numberOfShares)*100}%; min-width: 3em; max-width: 100%;">
+  						<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ${(Data.investtotal/Data.numberOfShares)*100}%; min-width: 3em; max-width: 100%;">
     						<span style="font-size: 18px; line-height: 28px;">${(Data.investtotal/Data.numberOfShares)*100}%</span>
   						</div>
   					</div>

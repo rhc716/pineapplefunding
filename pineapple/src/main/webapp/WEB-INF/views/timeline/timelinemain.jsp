@@ -69,6 +69,17 @@
  					$('#timelinereply'+tlCode+'').attr('aria-expanded',false)
  				}
         });
+		var getfundingqnareply = $.ajax({
+			type : 'get',
+			url : '/pineapple/timelinefundingranking.timeline'
+		});
+		getfundingqnareply.done(function(msg){	
+			$('#fundingranking').html(msg);
+		});
+		getfundingqnareply.fail(function(){
+			alert("실패");
+		});
+        
 	})
 </script>
 </head>
@@ -83,7 +94,25 @@
 			<div class="col-xs 12" style="text-align: center;">
 				<h1>TIME LINE</h1>
 			</div>
-			<div class="col-xs-12">
+			<div class="col-xs-2" style="padding: 0px 0px;">
+				<div class="col-xs-12" style="border: 1.5px solid #009442; border-radius: 5px; padding: 10px;">
+				<ul style="font-size:15px; list-style: none; height: 100%; width: 100%; padding: 10px; text-align: left; margin: 0px; border-bottom: 1px solid #d7d7d7;">
+						<label style="font-size: 20px;">카테고리</label>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="it"></span><span>IT</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="핀테크"></span><span>핀테크</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="인터넷서비스"></span><span>인터넷서비스</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="문화"></span><span>문화</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="디자인"></span><span>디자인</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="뷰티"></span><span>뷰티</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="의료"></span><span>의료</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="제조"></span><span>제조</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="유통"></span><span>유통</span></li>
+						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="농수산"></span><span>농수산</span></li>
+				</ul>
+				</div>
+			</div>
+			<div class="col-xs-8" style="padding: 0px;">
+			<div class="col-xs-12" style="padding: 0px;">
 				<div class="col-xs-12 timemaintop">
 					<div class="col-xs-9 timeinputbox">
 						<input id="timeinputbox" type="text" class="form-control box1" placeholder="타임라인을 등록해주세요"  data-toggle="modal" data-target="#myModal" readonly="readonly">
@@ -124,7 +153,7 @@
 			 	</div>
 			 	</div>
 				<!-- Time line input modal -->
-				
+				</div>
 				<div class="col-xs-12">
 					<c:forEach var="Data" items="${timelinelist}">
 					<div class="col-xs-12 timelinelist">
@@ -213,6 +242,9 @@
 				 	
 					</c:forEach>
 				</div>
+			</div>
+			<div class="col-xs-2" id="fundingranking" style="padding: 0px;">
+				
 			</div>
 		</div>
 	<!-- 풋터 -->

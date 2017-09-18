@@ -181,12 +181,6 @@ public class InvestDao implements InvestDaoInterface {
 		}
 		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.selectInvestmentRefundList",map);
 	}
-	//펀딩 상태 (모집실패 -> 환불완료)
-	@Override
-	public int pmsRefundFundingStatusUpdate(int fdCode) {
-		log.debug("InvestDao-----pmsRefundFundingStatusUpdate");
-		return sqlSessionTemplate.update("com.pineapple.invest.service.InvestMapper.updateFundingRefundStatus",fdCode);
-	}
 	//펀딩의 투자한 목록 조회
 	@Override
 	public List<Moneyflow> pmsRefundidlistSelect(int fdCode) {
@@ -200,6 +194,28 @@ public class InvestDao implements InvestDaoInterface {
 		int suss = 0;
 		for(int i = 0 ; i < investmentidlist.size(); i ++){
 		int susscheck = sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.insertInvestorRefund",investmentidlist.get(i));
+		suss += susscheck;
+		}
+		return suss;
+	}
+	//펀딩투자한 목록 조회 토대로 입금내역 삭제
+	@Override
+	public int pmsInvestInsert(List<Moneyflow> investmentidlist) {
+		log.debug("InvestDao-----pmsInvestInsert");
+		int suss = 0;
+		for(int i = 0 ; i < investmentidlist.size(); i ++){
+		int susscheck = sqlSessionTemplate.delete("com.pineapple.invest.service.InvestMapper.deleteInvestorInvest",investmentidlist.get(i));
+		suss += susscheck;
+		}
+		return suss;
+	}
+	//펀딩투자한 목록 조회 토대로 투자내역 삭제
+	@Override
+	public int pmsInvestInsertlist(List<Moneyflow> investmentidlist) {
+		log.debug("InvestDao-----pmsInvestInsert");
+		int suss = 0;
+		for(int i = 0 ; i < investmentidlist.size(); i ++){
+		int susscheck = sqlSessionTemplate.delete("com.pineapple.invest.service.InvestMapper.deleteInvestorInvestlist",investmentidlist.get(i));
 		suss += susscheck;
 		}
 		return suss;
