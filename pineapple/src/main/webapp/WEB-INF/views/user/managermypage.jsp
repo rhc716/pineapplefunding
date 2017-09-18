@@ -7,6 +7,28 @@
 <title>경영진 MyPage</title>
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<style type="text/css">
+	table.type09 {
+	    border-collapse: collapse;
+	    text-align: left;
+	    line-height: 1.5;
+	}
+	
+	table.type09 thead th {
+	    padding: 10px;
+	    font-weight: bold;
+	    vertical-align: top;
+	    color: #1ec545;
+	    border-bottom: 3px solid #1ec545;
+	}
+
+	table.type09 td {
+	    width: 350px;
+	    padding: 10px;
+	    vertical-align: top;
+	    border-bottom: 1px solid #ccc;
+	}
+</style>
 <script type="text/javascript">
 $(document).ready(function(){
 	//부트스트랩 새로고침할 때 페이지 유지
