@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pineapple.funding.service.DividendpayAndInvestment;
 import com.pineapple.funding.service.Funding;
 import com.pineapple.funding.service.FundingAndFdDetail;
 import com.pineapple.funding.service.FundingAndFdDividendPlan;
 import com.pineapple.funding.service.FundingAndFdFile;
+import com.pineapple.funding.service.FundingAndInvestment;
 import com.pineapple.funding.service.FundingAndMileStone;
 import com.pineapple.funding.service.FundingServiceInterface;
 import com.pineapple.funding.service.MessageAndFd;
@@ -217,6 +219,28 @@ public class FundingRestController {
 			List<Funding> list = new ArrayList<Funding>();
 			list = service.getCompanyRankingFive();
 			
+			return list;
+		}
+		
+		// 관리자권한 배당보기에서 펀딩을 선택했을때 배당지급리스트를 불러오는 ajax
+		@RequestMapping(value = "/getdividendpaylist.pms", method = RequestMethod.GET)
+		public List<DividendpayAndInvestment> getDividendPayList(Model model, Locale locale
+				, @RequestParam("fdCode") int fdCode){
+			log.debug("FundingRestController의 getDividendPayList호출 성공");
+			log.debug("fdCode : "+fdCode);
+			List<DividendpayAndInvestment> list = new ArrayList<DividendpayAndInvestment>();
+			list = service.getDividendPayList(fdCode);
+			return list;
+		}
+		
+		// 투자자권한 펀딩보기에서 투자한 펀딩리스트 가져오기
+		@RequestMapping(value = "/getinvestorfundinglist.pms", method = RequestMethod.GET)
+		public List<FundingAndInvestment> investorGetMyFundingList(Model model, Locale locale
+				, @RequestParam("userId") String userId){
+			log.debug("FundingRestController의 investorGetMyFundingList호출 성공");
+			log.debug("userId : "+userId);
+			List<FundingAndInvestment> list = new ArrayList<FundingAndInvestment>();
+			list = service.getInvestorFundingList(userId);
 			return list;
 		}
 		

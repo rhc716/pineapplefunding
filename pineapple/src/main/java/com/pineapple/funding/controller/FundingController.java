@@ -163,7 +163,32 @@ public class FundingController {
 		}
 	
 	
-	
+	// 관리자권한 프로젝트관리 (배당보기페이지)
+		@RequestMapping(value = "/dividendlisttotalview.pms", method = RequestMethod.GET)
+		public String dividendListTotalView(Locale locale, Model model) {
+			log.debug("FundingController의 dividendListTotalView호출 성공");
+			return "pms/adminuser/dividendlisttotalview";
+		}
+		
+	// 투자자권한 프로젝트관리 (펀딩보기 페이지)
+		@RequestMapping(value = "/investormyfundingview.pms", method = RequestMethod.GET)
+		public String investorMyFundingView(Locale locale, Model model) {
+			log.debug("FundingController의 investorMyFundingView호출 성공");
+			return "pms/investoruser/myfundingview";
+		}
+	// 투자자권한 프로젝트관리 (마일스톤&WBS 페이지)
+		@RequestMapping(value = "/investormymilestonewbsview.pms", method = RequestMethod.GET)
+		public String investorMyMilestoneWbsView(Locale locale, Model model) {
+			log.debug("FundingController의 investorMyMilestoneWbsView호출 성공");
+			return "pms/investoruser/mymilestonewbsview";
+		}
+	// 투자자권한 프로젝트관리 (배당보기 페이지)
+		@RequestMapping(value = "/investormydividendview.pms", method = RequestMethod.GET)
+		public String investorMyDividendView(Locale locale, Model model) {
+			log.debug("FundingController의 investorMyDividendView호출 성공");
+			return "pms/investoruser/mydividendview";
+		}
+		
 ////////////////////////////////////////////////위에는///페이지요청//////////////////////////////////////////////////////
 	
 	// 펀딩개설요청 ( 기업회원 경영자 )

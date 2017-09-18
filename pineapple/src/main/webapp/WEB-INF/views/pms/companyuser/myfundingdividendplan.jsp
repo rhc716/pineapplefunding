@@ -94,7 +94,7 @@ $(document).ready(function(){
 							+'<td>'+msg[i].maxMargin+'원</td>'
 							+'<td>'+msg[i].dividendRate+'%</td>'
 							+'<td><a href="/pineapple/removefundingdividendpaln.pms?divCode='+msg[i].divCode+'">'
-							+'<button type="button" class="btn btn-sm btn-danger deletebtn">삭제</button></a></td>'
+							+'<button type="button" class="btn btn-sm btn-danger btn-block deletebtn">삭제</button></a></td>'
 							+'</tr>'
 						);
 					break;
@@ -108,7 +108,7 @@ $(document).ready(function(){
 							+'<td>'+msg[i].maxMargin+'원</td>'
 							+'<td>'+msg[i].dividendRate+'%</td>'
 							+'<td>'
-							+'<button type="button" class="btn btn-sm btn-danger disabled">삭제</button></td>'
+							+'<button type="button" class="btn btn-sm btn-danger btn-block disabled">삭제</button></td>'
 							+'</tr>'
 						);
 					break;
@@ -174,7 +174,7 @@ $(document).ready(function(){
 		<select class="fdselectlist" id="selectfdforview">
 			<option value="null">선택해주세요</option>	
 		</select><br><br>
-			<table class="table">
+			<table class="table table-striped table-bordered table-hover">
 				<thead>
 					<tr>
 						<td>기준명</td>

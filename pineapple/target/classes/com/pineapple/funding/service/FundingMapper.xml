@@ -675,6 +675,24 @@
 		ORDER BY SUM(f.issuePrice*i.purchaseShares) DESC
 		limit 0,5
 	</select>
+	
+	<!-- 관리자권한 배당보기에서 펀딩을 선택했을때 배당지급리스트를 불러오는 ajax -->
+	<select id="selectDividendPayList" parameterType="int" resultType="com.pineapple.funding.service.DividendpayAndInvestment">
+		SELECT d.*, i.investId
+		FROM
+		dividendpay d INNER JOIN investment i
+		ON d.divPayFdCode = i.investFdCode = #{fdCode} AND d.divPayInvestCode = i.investCode
+	</select>
+	
+	<!-- 투자자권한 펀딩보기에서 투자한 펀딩리스트 가져오기 -->
+	<select id="selectInvestorFundingList" parameterType="String" resultType="com.pineapple.funding.service.FundingAndInvestment">
+		SELECT *
+		FROM
+		investment i INNER JOIN funding f
+		ON i.investFdCode = f.fdCode
+		WHERE investId = #{userId}
+	</select>
+	
 </mapper>
 
  

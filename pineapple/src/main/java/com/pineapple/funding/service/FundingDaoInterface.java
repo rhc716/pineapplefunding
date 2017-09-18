@@ -49,4 +49,6 @@ public interface FundingDaoInterface {
 	int sendMessageAllInvestors(MessageAndFd messageandfd);
 	int selectMyNewMessageNum(String userid);
 	List<Funding> selectCompanyRankingFive();
+	List<DividendpayAndInvestment> selectDividendPayList(int fdCode);
+	List<FundingAndInvestment> selectInvestorFundingList(String userId);
 }

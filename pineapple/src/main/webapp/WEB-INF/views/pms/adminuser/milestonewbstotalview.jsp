@@ -41,7 +41,7 @@
 		text-align: center;
 		padding: 10px 40%;
 	}
-	#fdlistgroup{
+	#fdlistgroup,#wbsplanlistgroup,#mslistgroup{
 		height: 300px;
 		overflow: scroll;
 		overflow-x: hidden;
@@ -162,9 +162,129 @@ $(document).ready(function(){
 			</h2>
 			<h4>WBS를 선택해주세요</h4>
 		</div>
-		<div class="pagecontentboxrhc">
-			
-		</div>
+		<div class="row">
+			<div class="col-md-6 boder listgroup">
+				<div class="pagetitleandexplainbox">
+					<h4 align="center">
+						인원
+					</h4>
+				</div>
+				<table>
+					<thead>
+						 <tr>
+							 <th>인원수</th>
+							 <th>비용</th>
+							 <th>비고</th>
+							 <th>사용일</th>
+						 </tr>
+					 </thead>
+					 <tbody id="humanlist">
+					 
+					 </tbody>
+				 </table>
+			</div>
+			<div class="col-md-6 boder listgroup">
+				<div class="pagetitleandexplainbox">
+					<h4 align="center">
+						장비
+					</h4>
+				</div>
+				<table>
+					<thead>
+						 <tr>
+							 <th>장비명</th>
+							 <th>비용</th>
+							 <th>비고</th>
+							 <th>사용일</th>
+						 </tr>
+					 </thead>
+					 <tbody id="materiallist">
+					 </tbody>
+				 </table>
+			</div>
+		</div><br>
+		<div class="row">
+			<div class="col-md-6 boder listgroup">
+				<div class="pagetitleandexplainbox">
+					<h4 align="center">
+						시설
+					</h4>
+				</div>
+				<table>
+					<thead>
+						 <tr>
+							 <th>시설명</th>
+							 <th>비용</th>
+							 <th>비고</th>
+							 <th>사용일</th>
+						 </tr>
+					 </thead>
+					 <tbody id="facilitylist">
+					 </tbody>
+				 </table>
+			</div>
+			<div class="col-md-6 boder listgroup">
+				<div class="pagetitleandexplainbox">
+					<h4 align="center">
+						외주
+					</h4>
+				</div>
+				<table>
+					<thead>
+						 <tr>
+							 <th>업체명</th>
+							 <th>비용</th>
+							 <th>비고</th>
+							 <th>사용일</th>
+						 </tr>
+					 </thead>
+					 <tbody id="outlist">
+					 
+					 </tbody>
+				 </table>
+			</div>
+		</div><br>
+		<div class="row">
+			<div class="col-md-6 boder listgroup">
+				<div class="pagetitleandexplainbox">
+					<h4 align="center">
+						기타
+					</h4>
+				</div>
+				<table>
+					 <thead>
+						 <tr>
+							 <th>용도</th>
+							 <th>비용</th>
+							 <th>비고</th>
+							 <th>사용일</th>
+						 </tr>
+					 </thead>
+					 <tbody id="etclist">
+					 
+					 </tbody>
+				 </table>
+			</div>
+			<div class="col-md-6 boder listgroup">
+				<div class="pagetitleandexplainbox">
+					<h4 align="center">
+						수익
+					</h4>
+				</div>
+				<table>
+					<thead>
+						 <tr>
+							 <th>수익사유</th>
+							 <th>수익</th>
+							 <th>수익일</th>
+						 </tr>
+					 </thead>
+					 <tbody id="incomelist">
+					 
+					 </tbody>
+				 </table>
+			</div>
+		</div><br>
 	</div>
 </div>
 <!-- 풋터 -->
@@ -357,7 +477,84 @@ function msbtnclick(btn){
 // WBSPLAN 선택시 이벤트 함수
 
 function wbsplanbtnclick(btn){
-	console.log(btn);
+	console.log(btn.value);
+	// 버튼 누를때마다 초기화 시키고 목록을 다시 불러옴.
+	$('#humanlist').html("");
+	$('#materiallist').html("");
+	$('#facilitylist').html("");
+	$('#outlist').html("");
+	$('#etclist').html("");
+	$('#incomelist').html("");
+	var getwbsplanlist = $.ajax({
+		type : "get",
+		url : "/pineapple/wbsplanlistview.pms",
+		data : { wbsplancode : btn.value }
+	});
+
+	getwbsplanlist.done(function(msg){
+	
+		for(var i = 0; i<msg.wbsplanhuman.length; i++){
+			$('#humanlist').append(
+					'<tr>'
+					+'<td>'+msg.wbsplanhuman[i].wphNoPeople+'</td>'
+					+'<td>'+msg.wbsplanhuman[i].wphCost+'</td>'
+					+'<td>'+msg.wbsplanhuman[i].wphRemarks+'</td>'	
+					+'<td>'+msg.wbsplanhuman[i].wphDate+'</td>'	
+					+'</tr>'
+			)
+	
+		}	
+		for(var i = 0; i<msg.wbsplanmaterial.length; i++){
+			$('#materiallist').append(
+					'<tr>'
+					+'<td>'+msg.wbsplanmaterial[i].wpmName+'</td>'
+					+'<td>'+msg.wbsplanmaterial[i].wpmCost+'</td>'
+					+'<td>'+msg.wbsplanmaterial[i].wpmRemarks+'</td>'	
+					+'<td>'+msg.wbsplanmaterial[i].wpmDate+'</td>'	
+					+'</tr>'
+			)
+		}
+		for(var i = 0; i<msg.wbsplanfacility.length; i++){
+			$('#facilitylist').append(
+					'<tr>'
+					+'<td>'+msg.wbsplanfacility[i].wpfName+'</td>'
+					+'<td>'+msg.wbsplanfacility[i].wpfCost+'</td>'
+					+'<td>'+msg.wbsplanfacility[i].wpfRemarks+'</td>'	
+					+'<td>'+msg.wbsplanfacility[i].wpfDate+'</td>'	
+					+'</tr>'
+			)
+		}
+		for(var i = 0; i<msg.wbsplanout.length; i++){
+			$('#outlist').append(
+					'<tr>'
+					+'<td>'+msg.wbsplanout[i].wpoOutComName+'</td>'
+					+'<td>'+msg.wbsplanout[i].wpoCost+'</td>'
+					+'<td>'+msg.wbsplanout[i].wpoRemarks+'</td>'	
+					+'<td>'+msg.wbsplanout[i].wpoDate+'</td>'	
+					+'</tr>'
+			)
+		}
+		for(var i = 0; i<msg.wbsplanetc.length; i++){
+			$('#etclist').append(
+					'<tr>'
+					+'<td>'+msg.wbsplanetc[i].wpePurpose+'</td>'
+					+'<td>'+msg.wbsplanetc[i].wpeCost+'</td>'
+					+'<td>'+msg.wbsplanetc[i].wpeRemarks+'</td>'	
+					+'<td>'+msg.wbsplanetc[i].wpeDate+'</td>'	
+					+'</tr>'
+			)
+		}
+		for(var i = 0; i<msg.wbsplanincome.length; i++){
+			$('#incomelist').append(
+					'<tr>'
+					+'<td>'+msg.wbsplanincome[i].wpiReason+'</td>'
+					+'<td>'+msg.wbsplanincome[i].wpiIncome+'</td>'
+					+'<td>'+msg.wbsplanincome[i].wpiDate+'</td>'	
+					+'</tr>'
+			)
+		}
+	
+	});
 }
 
 </script>

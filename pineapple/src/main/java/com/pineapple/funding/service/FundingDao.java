@@ -351,4 +351,18 @@ public class FundingDao implements FundingDaoInterface {
 		log.debug("FundingDao의 selectCompanyRankingFive호출 성공");
 		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectCompanyRankingFive");
 	}
+	
+	// 관리자권한 배당보기에서 펀딩을 선택했을때 배당지급리스트를 불러오는 ajax
+	@Override
+	public List<DividendpayAndInvestment> selectDividendPayList(int fdCode) {
+		log.debug("FundingDao의 selectDividendPayList호출 성공");
+		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectDividendPayList",fdCode);
+	}
+	
+	// 투자자권한 펀딩보기에서 투자한 펀딩리스트 가져오기
+	@Override
+	public List<FundingAndInvestment> selectInvestorFundingList(String userId) {
+		log.debug("FundingDao의 selectInvestorFundingList호출 성공");
+		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectInvestorFundingList",userId);
+	}
 }

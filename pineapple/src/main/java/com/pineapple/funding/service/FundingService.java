@@ -279,5 +279,19 @@ public class FundingService implements FundingServiceInterface {
 		log.debug("FundingService의 getCompanyRankingFive호출 성공");
 		return fundingdao.selectCompanyRankingFive();
 	}
+	
+	// 관리자권한 배당보기에서 펀딩을 선택했을때 배당지급리스트를 불러오는 ajax
+	@Override
+	public List<DividendpayAndInvestment> getDividendPayList(int fdCode) {
+		log.debug("FundingService의 getDividendPayList호출 성공");
+		return fundingdao.selectDividendPayList(fdCode);
+	}
+	
+	// 투자자권한 펀딩보기에서 투자한 펀딩리스트 가져오기
+	@Override
+	public List<FundingAndInvestment> getInvestorFundingList(String userId) {
+		log.debug("FundingService의 getInvestorFundingList호출 성공");
+		return fundingdao.selectInvestorFundingList(userId);
+	}
 }
  
