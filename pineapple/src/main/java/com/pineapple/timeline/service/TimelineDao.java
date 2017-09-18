@@ -114,6 +114,50 @@ public class TimelineDao implements TimelineDaoInterface{
 	}
 	
 	
+	//////////////////////////My Page Emp Report//////////////////////////
+	@Override
+	public List<Companyreport> mypageempreportlistSelect(String Id, String Category, int numberOfRequests) {
+		log.debug("TimelineDao-----mypageempreportlistSelect");
+		HashMap<String, Object> map = new HashMap<>();
+		// numberOfRequests가 입력됐을때 즉 더보기 버튼을 눌렀을때는 0이 아닐때 이므로 그때에만 map에 저장해줌. 
+		if(numberOfRequests==0){
+			map.put("Category", Category);
+			map.put("id",Id);
+		}else{
+			map.put("Category", Category);
+			map.put("id",Id);
+			// 5를 곱해서 넣어줘야 limit의 시작점인 페이징x불러온 투자자수가 됨.
+			numberOfRequests=numberOfRequests*10;
+			map.put("numberOfRequests", numberOfRequests);
+		}
+		log.debug(map.get("Category")+"<---------------------map.get('Category')");
+		log.debug(map.get("id")+"<---------------------map.get('id')");
+		log.debug(map.get("numberOfRequests")+"<---------------------map.get('numberOfRequests')");
+		
+		return sqlSessionTemplate.selectList("com.pineapple.timeline.service.TimelineMapper.selectempreportlist",map);
+	}
+	//선택 보고서 읽은 보고서로
+	@Override
+	public int mypageReportCheckOkUpdate(HashMap<String, String[]> msgCodemap) {
+		log.debug("TimelineDao-----mypageReportCheckOkUpdate");
+		int sucount = 0;
+		for(int i = 0 ; i < msgCodemap.get("msgCodelist").length ; i ++){
+			sqlSessionTemplate.update("com.pineapple.timeline.service.TimelineMapper.updateMypagereportCheckOk",msgCodemap.get("msgCodelist")[i]);
+			sucount++;}
+		return sucount;
+	}
+	//선택 보고서 읽지않은 보고서로
+	@Override
+	public int mypageReportCheckNkUpdate(HashMap<String, String[]> msgCodemap) {
+		log.debug("TimelineDao-----mypageReportCheckNkUpdate");
+		int sucount = 0;
+		for(int i = 0 ; i < msgCodemap.get("msgCodelist").length ; i ++){
+			sqlSessionTemplate.update("com.pineapple.timeline.service.TimelineMapper.updateMypagereportCheckNo",msgCodemap.get("msgCodelist")[i]);
+			sucount++;}
+		return sucount;
+	}
+	
+	
 	
 	//////////////////////////My Page Message ////////////////////////////
 	//자신에게 온 메세지 list 조회

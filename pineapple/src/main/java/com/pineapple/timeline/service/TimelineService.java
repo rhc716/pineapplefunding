@@ -108,6 +108,36 @@ public class TimelineService implements TimelineServiceInterface{
 	
 	
 	
+	
+	//////////////////////////My Page Emp Report//////////////////////////
+	//보고서 조회
+	@Override
+	public List<Companyreport> getMypageEmpReportList(String Id, String Category, int numberOfRequests) {
+		log.debug("------------------TimelineService-----------------getMypageEmpReportList()");
+		List<Companyreport> getMypageEmpReportList = timelinedaointerface.mypageempreportlistSelect(Id,Category,numberOfRequests);
+		return getMypageEmpReportList;
+	}
+	//선택 보고서 읽은 보고서로
+	@Override
+	public List<Companyreport> updateMypageReportCheckOkList(HashMap<String, String[]> msgCodemap, String userid,String Category,int numberOfRequests) {
+		log.debug("------------------TimelineService-----------------updateMypageMessageCheckOkList()");
+		timelinedaointerface.mypageMessageCheckOkUpdate(msgCodemap);
+		List<Companyreport> messagereselect = timelinedaointerface.mypageempreportlistSelect(userid, Category, numberOfRequests);
+		return messagereselect;
+	}
+	//선택 보고서 읽지않은 보고서로
+	@Override
+	public List<Companyreport> updateMypageReportCheckNoList(HashMap<String, String[]> msgCodemap, String userid,String Category,int numberOfRequests) {
+		log.debug("------------------TimelineService-----------------updateMypageMessageCheckNoList()");
+		timelinedaointerface.mypageMessageCheckNkUpdate(msgCodemap);
+		List<Companyreport> messagereselect = timelinedaointerface.mypageempreportlistSelect(userid, Category, numberOfRequests);
+		return messagereselect;
+	}
+	
+	
+	
+	
+	
 	/////////////////My Page Message//////////////////////
 	//자신에게 온 메세지 list 조회
 	@Override

@@ -40,6 +40,15 @@ public interface TimelineServiceInterface {
 	MyInvestorTimelineLog getMypageTimelineLog(String tlId);
 	
 	
+	//////////////////////////My Page Emp Report//////////////////////////
+	List<Companyreport> getMypageEmpReportList(String Id, String Category,int numberOfRequests);
+	//선택 보고서 읽은 보고서로
+	List<Companyreport> updateMypageReportCheckOkList(HashMap<String, String[]> msgCodemap,String userid,String Category,int numberOfRequests);
+	//선택 보고서 읽지않은 보고서로
+	List<Companyreport> updateMypageReportCheckNoList(HashMap<String, String[]> msgCodemap,String userid,String Category,int numberOfRequests);
+	
+	
+	
 	/////////////////My Page Message//////////////////////
 	//자신에게 온 메세지 list 조회
 	List<Message> getMypageMessageList(String tlId);

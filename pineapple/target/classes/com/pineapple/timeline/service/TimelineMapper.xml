@@ -340,4 +340,56 @@
 			</otherwise>
 		</choose>
 	</select>
+	<resultMap type="com.pineapple.timeline.service.Companyreport" id="companyreportresultmapper">
+		<result property="reportCode" column="reportCode"/>
+		<result property="fdCode" column="fdCode"/>
+		<result property="reportSendId" column="reportSendId"/>
+		<result property="reportReceiveId" column="reportReceiveId"/>
+		<result property="reportCheck" column="reportCheck"/>
+		<result property="reportTitle" column="reportTitle"/>
+		<result property="reportContent" column="reportContent"/>
+		<result property="reportTime" column="reportTime"/>
+		<result property="reportFileExtension" column="reportFileExtension"/>
+		<result property="reportServerFileName" column="reportServerFileName"/>
+		<result property="reportFileSize" column="reportFileSize"/>
+	</resultMap>
+	<!-- 보고서 조회 -->
+	<select id="selectempreportlist" parameterType="hashmap" resultMap="companyreportresultmapper">
+		SELECT * FROM companyreport cr 
+		<choose>
+			<when test="Category == 'empreceivemessagelist'">
+				WHERE cr.reportReceiveId = #{id}
+			</when>
+			<otherwise>
+				WHERE cr.reportSendId = #{id}
+			</otherwise>
+		</choose>
+		ORDER BY cr.reportTime DESC
+		<choose>
+			<when test="numberOfRequests != null">
+				limit #{numberOfRequests},10;
+			</when>
+			<otherwise>
+				limit 0,10;
+			</otherwise>
+		</choose>
+	</select>
+	<!--받은 보고서 삭제하기 -->
+ 	<delete id="deleteMypagereport" parameterType="String">
+			DELETE FROM companyreport WHERE reportCode=#{reportCode}
+	</delete>
+	<!-- 선택 보고서 읽은 보고서로 -->
+	<update id="updateMypagereportCheckOk" parameterType="String">
+		UPDATE companyreport
+			SET
+				reportCheck=1
+		WHERE reportCode = #{reportCode}
+	</update>
+	<!-- 선택 보고서 읽지않은 보고서로 -->
+	<update id="updateMypagereportCheckNo" parameterType="String">
+		UPDATE companyreport
+			SET
+				reportCheck=0
+		WHERE reportCode = #{reportCode}
+	</update>
 </mapper>

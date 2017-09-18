@@ -8,39 +8,38 @@
 <title>Insert title here</title>
 <!-- css rhc -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
+
 <script type="text/javascript">
 $(document).ready(function(){
-//부트스트랩 새로고침할 때 페이지 유지
-$('#myTab a').click(function(e) {
-  e.preventDefault();
-  $(this).tab('show');
-});
-
-//hash value에 현재 선택된 탭을 저장한다
-$("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
-  var id = $(e.target).attr("href").substr(1);
-  window.location.hash = id;
-});
-
-// 페이지 로드할 때 : 현재 선택된 탭으로 전환
-var hash = window.location.hash;
-$('#myTab a[href="' + hash + '"]').tab('show');
+	$('#checkallre').click(function(){
+		if($('#checkallre').prop('checked')){
+			$('input[name=reportchecked]').prop('checked',true)
+		}else{
+			$('input[name=reportchecked]').prop('checked',false)
+		}
+	});
+	
+	
 });
 </script>
 </head>
 <body>
 	<c:set var="checkmoney" value="${moneycontent}"></c:set>
+	<c:if test="${Category == 'empreceivemessagelist'}">
+	<div class="col-md-12" style="border: 1.5px solid #009442; border-radius: 5px; margin-bottom: 10px">
+		<table class="table" style="margin: 0px; text-align: center;">
+		<tr>
+		<td style="width: 42px"><input id="checkallre" type="checkbox"></td>
+		<td><a id="messagedelete" style="color: black;"><span class="glyphicon glyphicon-trash"></span>체크된 메세지삭제</a></td>
+		<td><a id="messagereadok" style="color: black;"><span class="glyphicon glyphicon-eye-open"></span>읽은 메세지로</a></td>
+		<td><a id="messagereadno" style="color: black;"><span class="glyphicon glyphicon-eye-close"></span>읽지않은 메세지로</a></td>
+		<td></td>
+		</tr>
+		</table>
+	</div>
+	</c:if>
 	<div class="col-xs-12" style="border: 1.5px solid #009442; border-radius: 5px;" id="checkmoneyflowcheck">
 		<table class="table" style="margin: 0px;">
-			<thead style="text-align: center;">
-	 			 	<tr>
-		 			 	<td>펀딩명</td>
-		 			 	<td>회원ID</td>
-		 			 	<td>금액</td>
-		 			 	<td>자금구분</td>
-		 			 	<td>일자</td>
-	 			 	</tr>
-			</thead>
 			<c:choose>
 			<c:when test="${checkmoney.size() < 1}">
 			<tbody>
@@ -53,22 +52,11 @@ $('#myTab a[href="' + hash + '"]').tab('show');
 			<tbody style="text-align: center;" id="investorlist">
 					<c:forEach var="moneycontent" items="${moneycontent}">
 	 			 	<tr>
-		 			 	<td>${moneycontent.title}</td>
-		 			 	<td>${moneycontent.id}</td>
-		 			 	<td>${moneycontent.mfAmount}</td>
-		 			 	<c:if test="${moneycontent.mfCategory == 1}">
-		 			 		<td>입금</td>
-		 			 	</c:if>
-		 			 	<c:if test="${moneycontent.mfCategory == 2}">
-		 			 		<td>환불</td>
-		 			 	</c:if>
-		 			 	<c:if test="${moneycontent.mfCategory == 3}">
-		 			 		<td>배정</td>
-		 			 	</c:if>
-		 			 	<c:if test="${moneycontent.mfCategory == 4}">
-		 			 		<td>수수료</td>
-		 			 	</c:if>
-		 			 	<td>${moneycontent.mfDate}</td>
+	 			 		<td><input name="reportchecked" type="checkbox"></td>
+		 			 	<td>${moneycontent.reportSendId}</td>
+		 			 	<td>${moneycontent.reportTitle}</td>
+		 			 	<td>${moneycontent.reportContent}</td>
+		 			 	<td>${moneycontent.reportTime}</td>
 	 			 	</tr>
 	 			 	</c:forEach>
 			</tbody>
@@ -76,7 +64,7 @@ $('#myTab a[href="' + hash + '"]').tab('show');
 			<tbody>
 				<tr id="investoraddlistbtnarea" style="text-align: center;">
 					<td colspan="5" style="text-align: center;">
-						<button type="button" onclick="javascript:investormoreList(this)" id="investoraddlistbtn" value="1" class="btn-block btn btn-primary" dataCode="${mfCategory}">더보기</button>
+						<button type="button" onclick="javascript:investormoreList(this)" id="investoraddlistbtn" value="1" class="btn-block btn btn-primary" dataCode="${Category}">더보기</button>
 					</td>
 				</tr>
 			</tbody>
@@ -89,12 +77,12 @@ $('#myTab a[href="' + hash + '"]').tab('show');
 			//console.log("moreList 매개변수로 들어온 (버튼객체)의 value = 페이징 "+btn.value);
 			var dataCode = $('#investoraddlistbtn').attr('dataCode')
 		    $.ajax({
-		        url : "/pineapple/moneyflowalladd.timeline",
+		        url : "/pineapple/reportreceiveandsendlistpageadd.timeline",
 		        type : "get",
 		        cache : false,
 		        dataType: 'json',
 		        data : {
-		        	mfCategory : dataCode,
+		        	Category : dataCode,
 		        	numberOfRequests : btn.value },
 		        success : function(data){
 		            //console.log(data);
@@ -108,47 +96,15 @@ $('#myTab a[href="' + hash + '"]').tab('show');
 		            	var content="";
 		    			for(var i = 0; i<data.length; i++){
 		    				var paychecktext = "";
-    						if(data[i].mfCategory == 1){
 		    				$('#investorlist').append(
 		    					'<tr>'
-		    						+'<td>'+data[i].title+'</td>'
-		    						+'<td>'+data[i].id+'</td>'
-		    						+'<td>'+data[i].mfAmount+'</td>'
-				 			 		+'<td>입금</td>'
-			    					+'<td>'+data[i].mfDate+'</td>'
+		    						+'<td><input name="reportchecked" type="checkbox"></td>'
+		    						+'<td>'+data[i].reportSendId+'</td>'
+		    						+'<td>'+data[i].reportTitle+'</td>'
+		    						+'<td>'+data[i].reportContent+'</td>'
+			    					+'<td>'+data[i].reportTime+'</td>'
 			    				+'</tr>'
 		    				);
-    						}else if(data[i].mfCategory == 2){
-   		    				$('#investorlist').append(
-   			    					'<tr>'
-   			    						+'<td>'+data[i].title+'</td>'
-   			    						+'<td>'+data[i].id+'</td>'
-   			    						+'<td>'+data[i].mfAmount+'</td>'
-   					 			 		+'<td>환불</td>'
-   				    					+'<td>'+data[i].mfDate+'</td>'
-   				    					+'</tr>'
-   			    			);
-							}else if(data[i].mfCategory == 3){
-   		    				$('#investorlist').append(
-   			    					'<tr>'
-   			    						+'<td>'+data[i].title+'</td>'
-   			    						+'<td>'+data[i].id+'</td>'
-   			    						+'<td>'+data[i].mfAmount+'</td>'
-   					 			 		+'<td>배정</td>'
-   				    					+'<td>'+data[i].mfDate+'</td>'
-   				    				+'</tr>'
-   			    			);	
-    						}else{
- 		    				$('#investorlist').append(
- 			    					'<tr>'
- 			    						+'<td>'+data[i].title+'</td>'
- 			    						+'<td>'+data[i].id+'</td>'
- 			    						+'<td>'+data[i].mfAmount+'</td>'
- 					 			 		+'<td>수수료</td>'
- 				    					+'<td>'+data[i].mfDate+'</td>'
- 				    				+'</tr>'
- 			    			);	
-    						}
 		    			}         
 		            	// 기존 버튼을 지우고 새로 만들어줄때 value 값을 1 증가시켜서 다음 10개를 불러올 페이징넘버를 기억하게함.
 		            	var pagingNum = Number(btn.value) + 1; 
@@ -166,7 +122,7 @@ $('#myTab a[href="' + hash + '"]').tab('show');
 		            
 		        }, 
 		        error : function(){
-		           alert('ajax 통신 실패');
+		           alert('ajax 통신 실패..;');
 		        }
 		   
 			});

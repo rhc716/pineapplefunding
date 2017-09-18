@@ -9,7 +9,18 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	//메세지 tab 클릭시 ajax 요청
+	//보고서 tab ajax 요청
+	var reporttab = $.ajax({ // ajax실행부분
+        type: 'get',
+        url : '/pineapple/investorreportlist.timeline',
+        success : function success(msg){
+        	$('#reportmessage').html(msg);
+        },
+        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+        error : function error(){
+       	}
+	});
+	//메세지 tab ajax 요청
 	var messagetab = $.ajax({ // ajax실행부분
         type: 'get',
         url : '/pineapple/investormessagelist.timeline',
@@ -539,7 +550,8 @@ $(document).ready(function(){
 				<div class="col-xs-12" id="investormessage"></div> 
 			</div>
 			<div role="tabpanel" class="tab-pane fade" id="report" aria-labelledby="report-tab"> 
-				<p>~~~~~~~~~~</p> 
+				<h1 style="text-align: center;">MY REPORT LIST</h1>
+				<div class="col-xs-12" id="reportmessage"></div> 
 			</div>
 		</div> 
 	</div>

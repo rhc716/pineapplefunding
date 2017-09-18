@@ -38,6 +38,12 @@ public interface TimelineDaoInterface {
 	//자신의 한달간의 활동기록 조회
 	MyInvestorTimelineLog mypageTimelineLogSelect(String tlId);
 	
+	//////////////////////////My Page Emp Report//////////////////////////
+	List<Companyreport> mypageempreportlistSelect(String Id,String Category,int numberOfRequests);
+	//선택 보고서 읽은 보고서로
+	int mypageReportCheckOkUpdate(HashMap<String, String[]> msgCodemap);
+	//선택 보고서 읽지않은 보고서로
+	int mypageReportCheckNkUpdate(HashMap<String, String[]> msgCodemap);
 	
 	//////////////////////////My Page Message ////////////////////////////
 	//자신에게 온 메세지 list 조회

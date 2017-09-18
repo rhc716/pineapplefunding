@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.pineapple.invest.service.InvestAndFd;
 import com.pineapple.invest.service.MoneyAndTitleAndId;
+import com.pineapple.timeline.service.Companyreport;
 import com.pineapple.timeline.service.Message;
 import com.pineapple.timeline.service.MyInvestorTimeline;
 import com.pineapple.timeline.service.MyInvestorTimelineLog;
@@ -102,6 +103,16 @@ public class TimelineController {
 		model.addAttribute("timelinereplydelete",timelinereplydelete);
 		log.debug(timelinereplydelete+"<-----TimelineController[timelinereplydelete 값 출력]");
 		return "timeline/timelineajax/timelinefundingrenaking";
+	}
+	//댓글더보기 클릭시 ajax로 댓글 list 조회
+	@RequestMapping(value="/timelinereplylist.invest",method=RequestMethod.GET)
+	public String timelineReplyGet(Locale locale,Model model,@RequestParam(value="tlCode")int tlCode){
+		log.debug("<----- TimelineController[timelineReplyGet호출]----->");
+		List<TimelineReply> timelinereplylist = timelineserviceinterface.getTimelineReplyList(tlCode);
+		log.debug(timelinereplylist+"<-----TimelineController[timelinereplylist 값 출력]");
+		model.addAttribute("timelinereplylist",timelinereplylist);
+		log.debug(timelinereplylist.size()+"<-----TimelineController[timelinereplylist 값 출력]");
+		return "timeline/timelineajax/timelineReply";
 	}
 	
 	
@@ -273,27 +284,55 @@ public class TimelineController {
 	@RequestMapping(value="/moneyflowall.timeline",method=RequestMethod.GET)
 	public String moneyflowall(Locale locale,Model model,HttpServletRequest request,@RequestParam(value="mfCategory",defaultValue="0")int mfCategory,@RequestParam(value="numberOfRequests",defaultValue="0")int numberOfRequests){
 		log.debug("<----- TimelineController[moneyflowall호출]----->");
-		log.debug(mfCategory+"<-----TimelineController[mfCategory 값 출력]11111111111111111111111111111111111111111");
-		log.debug(numberOfRequests+"<-----TimelineController[numberOfRequests 값 출력]222222222222222222222222222222222222222");
+		log.debug(mfCategory+"<-----TimelineController[mfCategory 값 출력]");
+		log.debug(numberOfRequests+"<-----TimelineController[numberOfRequests 값 출력]");
 		List<MoneyAndTitleAndId> moneycontent = timelineserviceinterface.getMoneyall(mfCategory,numberOfRequests);
 		model.addAttribute("moneycontent",moneycontent);
 		log.debug(moneycontent+"<-----TimelineController[moneycontent 값 출력]");
 		model.addAttribute("mfCategory",mfCategory);
 		return "user/adminpageajax/moneyflowcontent";
 	}
-	@RequestMapping(value="/moneyflowalladd.timeline",method=RequestMethod.GET)
-	public @ResponseBody List<MoneyAndTitleAndId> moneyflowalladd(Locale locale,Model model,HttpServletRequest request,@RequestParam(value="mfCategory",defaultValue="0")int mfCategory,@RequestParam(value="numberOfRequests",defaultValue="0")int numberOfRequests){
-		log.debug("<----- TimelineController[moneyflowall호출]----->");
-		log.debug(mfCategory+"<-----TimelineController[mfCategory 값 출력]11111111111111111111111111111111111111111");
-		log.debug(numberOfRequests+"<-----TimelineController[numberOfRequests 값 출력]222222222222222222222222222222222222222");
-		List<MoneyAndTitleAndId> moneycontent = timelineserviceinterface.getMoneyall(mfCategory,numberOfRequests);
+	
+	
+	
+	
+	///////////////////////////MY Page Emp Report ///////////////////////////////////////
+	//보고서 조회
+	@RequestMapping(value="/investorreportlist.timeline",method=RequestMethod.GET)
+	public String employeeReport(Locale locale,Model model,HttpServletRequest request){
+		log.debug("<----- TimelineController[employeeReport호출]----->");
+		return "user/employeeajax/employeereportmain";
+	}
+	//보고서 보내기 메인 
+	@RequestMapping(value="/reportsendmainpage.timeline",method=RequestMethod.GET)
+	public String employeeReportsnedpage(Locale locale,Model model,HttpServletRequest request){
+		log.debug("<----- TimelineController[employeeReportsnedpage호출]----->");
+		return "user/employeeajax/employeereportsendmainpage";
+	}
+	//보고서 조회 Content 
+	@RequestMapping(value="/reportreceiveandsendlistpage.timeline",method=RequestMethod.GET)
+	public String empreportreceiveandsendlistpage(Locale locale,Model model,HttpServletRequest request,@RequestParam(value="Category",defaultValue="default")String Category,@RequestParam(value="numberOfRequests",defaultValue="0")int numberOfRequests,HttpSession session){
+		log.debug("<----- TimelineController[empreportreceiveandsendlistpage호출]----->");
+		log.debug(Category+"<-----TimelineController[mfCategory 값 출력]");
+		log.debug(numberOfRequests+"<-----TimelineController[numberOfRequests 값 출력]");
+		model.addAttribute("Category",Category);
+		List<Companyreport> moneycontent = timelineserviceinterface.getMypageEmpReportList(session.getAttribute("id").toString(),Category,numberOfRequests);
 		model.addAttribute("moneycontent",moneycontent);
 		log.debug(moneycontent+"<-----TimelineController[moneycontent 값 출력]");
-		model.addAttribute("mfCategory",mfCategory);
+		return "user/employeeajax/employeereportsendandreceivepagere";
+	}
+	//보고서 조회 추가 요청 
+	@RequestMapping(value="/reportreceiveandsendlistpageadd.timeline",method=RequestMethod.GET)
+	public @ResponseBody List<Companyreport> empreportreceiveandsendlistpageadd(Locale locale,Model model,HttpServletRequest request,@RequestParam(value="Category",defaultValue="default")String Category,@RequestParam(value="numberOfRequests",defaultValue="0")int numberOfRequests,HttpSession session){
+		log.debug("<----- TimelineController[empreportreceiveandsendlistpage호출]----->");
+		log.debug(Category+"<-----TimelineController[mfCategory 값 출력]");
+		log.debug(numberOfRequests+"<-----TimelineController[numberOfRequests 값 출력]");
+		model.addAttribute("Category",Category);
+		List<Companyreport> moneycontent = timelineserviceinterface.getMypageEmpReportList(session.getAttribute("id").toString(),Category,numberOfRequests);
+		model.addAttribute("moneycontent",moneycontent);
+		log.debug(moneycontent+"<-----TimelineController[moneycontent 값 출력]");
 		return moneycontent;
 	}
-	
-	
 	
 	
 	
@@ -307,15 +346,42 @@ public class TimelineController {
 		log.debug(myinvestortimelinelog+"<-----TimelineController[myinvestortimelinelog 값 출력]");
 		return myinvestortimelinelog;
 	}
-	//댓글더보기 클릭시 ajax로 댓글 list 조회
-	@RequestMapping(value="/timelinereplylist.invest",method=RequestMethod.GET)
-	public String timelineReplyGet(Locale locale,Model model,@RequestParam(value="tlCode")int tlCode){
-		log.debug("<----- TimelineController[timelineReplyGet호출]----->");
-		List<TimelineReply> timelinereplylist = timelineserviceinterface.getTimelineReplyList(tlCode);
-		log.debug(timelinereplylist+"<-----TimelineController[timelinereplylist 값 출력]");
-		model.addAttribute("timelinereplylist",timelinereplylist);
-		log.debug(timelinereplylist.size()+"<-----TimelineController[timelinereplylist 값 출력]");
-		return "timeline/timelineajax/timelineReply";
+	//자금관리 더보기 클릭시 ajax 요청 페이징
+	@RequestMapping(value="/moneyflowalladd.timeline",method=RequestMethod.GET)
+	public @ResponseBody List<MoneyAndTitleAndId> moneyflowalladd(Locale locale,Model model,HttpServletRequest request,@RequestParam(value="mfCategory",defaultValue="0")int mfCategory,@RequestParam(value="numberOfRequests",defaultValue="0")int numberOfRequests){
+		log.debug("<----- TimelineController[moneyflowall호출]----->");
+		log.debug(mfCategory+"<-----TimelineController[mfCategory 값 출력]11111111111111111111111111111111111111111");
+		log.debug(numberOfRequests+"<-----TimelineController[numberOfRequests 값 출력]222222222222222222222222222222222222222");
+		List<MoneyAndTitleAndId> moneycontent = timelineserviceinterface.getMoneyall(mfCategory,numberOfRequests);
+		model.addAttribute("moneycontent",moneycontent);
+		log.debug(moneycontent+"<-----TimelineController[moneycontent 값 출력]");
+		model.addAttribute("mfCategory",mfCategory);
+		return moneycontent;
 	}
-	
+	//선택 보고서 읽은 보고서로
+/*	@RequestMapping(value="/investorreportcheckok.timeline",method=RequestMethod.GET)*/
+/*	public String investorReportCheckOkUpdate(Locale locale,Model model,HttpServletRequest request,HttpSession session,@RequestParam(value="Category",defaultValue="0")int Category,@RequestParam(value="numberOfRequests",defaultValue="0")int numberOfRequests){
+		log.debug("<----- TimelineController[investorReportCheckOkUpdate호출]----->");
+		String[] msgCodelist = request.getParameterValues("reportchecklist");
+		HashMap<String, String[]> msgCodemap = new HashMap<>();
+		msgCodemap.put("msgCodelist", msgCodelist);
+		log.debug(msgCodemap.get("msgCodelist").length+"<----- TimelineController[msgCodemap.get('msgCodelist').length호출]----->");
+		List<Companyreport> myinvestormessagecheckok= timelineserviceinterface.updateMypageReportCheckOkList(msgCodemap, session.getAttribute("id").toString(), Category, numberOfRequests);
+		log.debug(myinvestormessagecheckok+"<-----TimelineController[myinvestorreportdelete 값 출력]");
+		model.addAttribute("myinvestormessage",myinvestormessagecheckok);
+		return "user/investormypageajax/investormessagesendlist";
+	}
+	//선택 보고서 읽지않은 보고서로
+	@RequestMapping(value="/investorreportcheckno.timeline",method=RequestMethod.GET)
+	public String investorReportCheckNoUpdate(Locale locale,Model model,HttpServletRequest request,HttpSession session,@RequestParam(value="mfCategory",defaultValue="0")int mfCategory,@RequestParam(value="numberOfRequests",defaultValue="0")int numberOfRequests){
+		log.debug("<----- TimelineController[investorReportCheckNoUpdate호출]----->");
+		String[] msgCodelist = request.getParameterValues("reportchecklist");
+		HashMap<String, String[]> msgCodemap = new HashMap<>();
+		msgCodemap.put("msgCodelist", msgCodelist);
+		log.debug(msgCodemap.get("msgCodelist").length+"<----- TimelineController[msgCodemap.get('msgCodelist').length호출]----->");
+		List<Companyreport> myinvestormessagecheckno= timelineserviceinterface.updateMypageMessageCheckNoList(msgCodemap,session.getAttribute("id").toString());
+		log.debug(myinvestormessagecheckno+"<-----TimelineController[myinvestorreportcheckno 값 출력]");
+		model.addAttribute("myinvestormessage",myinvestormessagecheckno);
+		return "user/investormypageajax/investormessagesendlist";
+	}*/
 }
