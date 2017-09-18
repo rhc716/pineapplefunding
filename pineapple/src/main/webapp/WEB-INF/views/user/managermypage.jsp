@@ -7,29 +7,81 @@
 <title>경영진 MyPage</title>
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<style type="text/css">
-	table.type09 {
-	    border-collapse: collapse;
-	    text-align: left;
-	    line-height: 1.5;
+<style type="text/css">	
+	.filterable {
+	    margin-top: 15px;
+	}
+	.filterable .panel-heading .pull-right {
+	    margin-top: -20px;
+	}
+	.filterable .filters input[disabled] {
+	    background-color: transparent;
+	    border: none;
+	    cursor: auto;
+	    box-shadow: none;
+	    padding: 0;
+	    height: auto;
+	}
+	.filterable .filters input[disabled]::-webkit-input-placeholder {
+	    color: #369;
+	}
+	.filterable .filters input[disabled]::-moz-placeholder {
+	    color: #369;
+	}
+	.filterable .filters input[disabled]:-ms-input-placeholder {
+	    color: #369;
 	}
 	
-	table.type09 thead th {
-	    padding: 10px;
-	    font-weight: bold;
-	    vertical-align: top;
-	    color: #1ec545;
-	    border-bottom: 3px solid #1ec545;
-	}
-
-	table.type09 td {
-	    width: 350px;
-	    padding: 10px;
-	    vertical-align: top;
-	    border-bottom: 1px solid #ccc;
-	}
 </style>
 <script type="text/javascript">
+/*
+table 검색정렬 기능
+*/
+$(document).ready(function(){
+    $('.filterable .btn-filter').click(function(e){
+    	e.preventdefault;
+        var $panel = $(this).parents('.filterable'),
+        $filters = $panel.find('.filters input'),
+        $tbody = $panel.find('.table tbody');
+        if ($filters.prop('disabled') == true) {
+            $filters.prop('disabled', false);
+            $filters.first().focus();
+        } else {
+            $filters.val('').prop('disabled', true);
+            $tbody.find('.no-result').remove();
+            $tbody.find('tr').show();
+        }
+    });
+
+    $('.filterable .filters input').keyup(function(e){
+    	e.preventdefault;
+        /* Ignore tab key */
+        var code = e.keyCode || e.which;
+        if (code == '9') return;
+        /* Useful DOM data and selectors */
+        var $input = $(this),
+        inputContent = $input.val().toLowerCase(),
+        $panel = $input.parents('.filterable'),
+        column = $panel.find('.filters th').index($input.parents('th')),
+        $table = $panel.find('.table'),
+        $rows = $table.find('tbody tr');
+       
+        var $filteredRows = $rows.filter(function(){
+            var value = $(this).find('td').eq(column).text().toLowerCase();
+            return value.indexOf(inputContent) === -1;
+        });
+        /* Clean previous no-result if exist */
+        $table.find('tbody .no-result').remove();
+        /* Show all rows, hide filtered ones (never do that outside of a demo ! xD) */
+        $rows.show();
+        $filteredRows.hide();
+        /* Prepend no-result row if all rows are filtered */
+        if ($filteredRows.length === $rows.length) {
+            $table.find('tbody').prepend($('<tr class="no-result text-center"><td colspan="'+ $table.find('.filters th').length +'">No result found</td></tr>'));
+        }
+    });
+});
+	
 $(document).ready(function(){
 	//부트스트랩 새로고침할 때 페이지 유지
 	$('#myTab a').click(function(e) {
@@ -317,40 +369,44 @@ $(document).ready(function(){
 				<!-- 경영진 고유 영역 -->
 				<br>
 				<p>내계좌정보</p>
-				<table class="table table-striped table-bordered table-hover">
-				<thead>
-					<tr class="info">
-					<td>증권사</td>
-					<td>계좌번호</td>
-					<td>계좌이름</td>
-					<td>계좌정보수정</td>
-					<td>계좌정보삭제</td>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="useraccount" items="${user.account}">
-						<tr>
-							<td> ${useraccount.secCompany} </td>
-							<td> ${useraccount.accountNumber} </td>
-							<td> ${useraccount.accountNickname} </td>
-							<td>
-								<a type="button" class="btn btn-info btn-block changeaccount" data-toggle="modal" value="${useraccount.accountCode}" href="#changeAccountModal">수정</a>
-							</td>
-							<td>
-								<form action="/pineapple/deleteaccount.user" method="post">
-									<input type="hidden" name="accountCode" value="${useraccount.accountCode}">
-									<button type="submit" class="btn btn-info btn-block">삭제</button>
-								</form>
-							</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-				<tfoot>
-					<div>
-						<a type="button" class="btn btn-info" data-toggle="modal" href="#newaccountmodal">+ 새로운 계좌등록</a>
-					</div>
-				</tfoot>
-				</table>
+				<div class="panel panel-primary filterable">
+		            <div class="panel-heading">
+		                <h3 class="panel-title">계좌 목록</h3>
+		                <div class="pull-right">
+		                	<a type="button" class="btn btn-xs btn-info" data-toggle="modal" href="#newaccountmodal">+ 새로운 계좌등록</a>&nbsp
+		                    <button class="btn btn-xs btn-warning btn-filter"><span class="glyphicon glyphicon-filter"></span>검색정렬</button>
+		                </div>
+		            </div>
+					<table class="table">
+						<thead>
+							<tr class="filters">
+								<th><input type="text" class="form-control" placeholder="증권사" disabled></th>
+								<th><input type="text" class="form-control" placeholder="계좌번호" disabled></th>
+								<th><input type="text" class="form-control" placeholder="계좌이름" disabled></th>
+								<th><input type="text" class="form-control" placeholder="계좌정보수정" disabled></th>
+								<th><input type="text" class="form-control" placeholder="계좌정보삭제" disabled></th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="useraccount" items="${user.account}">
+								<tr>
+									<td> ${useraccount.secCompany} </td>
+									<td> ${useraccount.accountNumber} </td>
+									<td> ${useraccount.accountNickname} </td>
+									<td>
+										<a type="button" class="btn btn-info btn-block changeaccount" data-toggle="modal" value="${useraccount.accountCode}" href="#changeAccountModal">수정</a>
+									</td>
+									<td>
+										<form action="/pineapple/deleteaccount.user" method="post">
+											<input type="hidden" name="accountCode" value="${useraccount.accountCode}">
+											<button type="submit" class="btn btn-info btn-block">삭제</button>
+										</form>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+						</table>
+				</div>
 				<!-- 계좌정보 수정을위한 모달 내부 구현 -->
 				<div class="modal fade" id="changeAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				  <div class="modal-dialog">
@@ -1207,17 +1263,24 @@ $(document).ready(function(){
 					<br>
 					<p id="explanation">자신이 경영진으로 속한 기업의 전체사원리스트를 확인할 수 있습니다. 전체사원조회, 기업별, 등록요청사원별, 삭제요청사원별 조회를 할 수 있습니다.</p>
 					<br>
-					<table class="table table-striped table-bordered table-hover">
+					<div class="panel panel-primary filterable">
+		            <div class="panel-heading">
+		                <h3 class="panel-title">사원목록</h3>
+		                <div class="pull-right">
+		                    <button class="btn btn-xs btn-warning btn-filter"><span class="glyphicon glyphicon-filter"></span>검색정렬</button>
+		                </div>
+		            </div>
+					<table class="table">
 						<thead>
-							<tr class="info">
-								<td>번호</td>
-								<td>사원코드</td>
-								<td>사원아이디</td>
-								<td>소속기업</td>
-								<td>사원직급</td>
-								<td>소속부서</td>
-								<td>등록승인</td>
-								<td>탈퇴승인</td>
+							<tr class="filters">
+								<th><input type="text" class="form-control" placeholder="#" disabled></th>
+								<th><input type="text" class="form-control" placeholder="코드" disabled></th>
+								<th><input type="text" class="form-control" placeholder="사원ID" disabled></th>
+								<th><input type="text" class="form-control" placeholder="소속기업" disabled></th>
+								<th><input type="text" class="form-control" placeholder="직급" disabled></th>
+								<th><input type="text" class="form-control" placeholder="부서" disabled></th>
+								<th><input type="text" class="form-control" placeholder="등록승인" disabled></th>
+								<th><input type="text" class="form-control" placeholder="탈퇴승인" disabled></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -1360,6 +1423,7 @@ $(document).ready(function(){
 							</c:forEach>
 						</tbody>
 					</table>
+					</div>
 				</div>
 			</div>
 			<!-- 여섯번째탭 시작 -->

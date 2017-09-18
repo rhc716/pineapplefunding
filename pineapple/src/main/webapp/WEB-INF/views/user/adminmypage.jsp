@@ -81,6 +81,7 @@ $(document).ready(function(){
         }
     });
 });
+
 $(document).ready(function(){
 	//부트스트랩 새로고침할 때 페이지 유지
 	$('#myTab a').click(function(e) {
