@@ -373,4 +373,20 @@ public class FundingDao implements FundingDaoInterface {
 		return sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.selectFilePathList",fdCode);
 	}
 	
+	// 펀딩에 종속된 배당계획을 삭제
+	@Override
+	public void deleteDividendPlanOfFunding(int fdCode) {
+		log.debug("FundingDao의 deleteDividendPlanOfFunding호출 성공");
+		sqlSessionTemplate.delete("com.pineapple.funding.service.FundingMapper.deleteDividendPlanOfFunding",fdCode);
+	}
+	
+	// 메인화면 검색기능
+	@Override
+	public HashMap<String, Object> mainSearch(String searchtext) {
+		log.debug("FundingDao의 mainSearch호출 성공");
+		Map<String,Object> map = new HashMap<String,Object>();
+		/*log.debug("FundingDao의 mainSearch 펀딩검색결과 : "+sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.mainSearchFunding",searchtext));
+		log.debug("FundingDao의 mainSearch 타임라인검색결과 : "+sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.mainSearchTimeline",searchtext));*/
+		return null;
+	}
 }

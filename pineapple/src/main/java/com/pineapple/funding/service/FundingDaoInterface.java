@@ -2,6 +2,7 @@ package com.pineapple.funding.service;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.ui.Model;
@@ -52,4 +53,6 @@ public interface FundingDaoInterface {
 	List<FundingAndInvestment> selectInvestorFundingList(String userId);
 	List<String> selectFilePathList(int fdCode);
 	void deleteFundingDividendPlan(int divCode);
+	void deleteDividendPlanOfFunding(int fdCode);
+	HashMap<String, Object> mainSearch(String searchtext);
 }

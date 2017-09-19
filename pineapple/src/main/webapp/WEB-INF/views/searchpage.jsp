@@ -115,111 +115,26 @@ $(document).ready(function(){
 	</div>
 	<!-- 본문 중앙부분 -->
 	<div class="col-xs-7 col-md-7">
-		<!-- 가장 큰 carousel1번 영역 -->
 		<div class="row">
-			<!-- carousel : 회전하면서 이미지를 보여주는 것 -->
-			<div id="myCarousel1" class="carousel slide" data-ride="carousel">
-			    <!-- Indicators -->
-			    <ol class="carousel-indicators">
-			    	<li data-target="#myCarousel1" data-slide-to="0" class="active"></li>
-			    	<li data-target="#myCarousel1" data-slide-to="1"></li>
-			    </ol>
+			<div class="pagetitleandexplainbox">
+				<h4 align="center">
+					펀딩분야 검색결과
+				</h4>
+			</div>
+			<div>
 			
-			    <!-- 화면에 보여줄 아이템 들어갈 곳 -->
-			    <div class="carousel-inner">
-				    <div class="item active">
-				    	<img src="${pageContext.request.contextPath}/resources/img/main/photo1.jpg" alt="Los Angeles" style="width:100%; height:450px;">
-				    </div>
-				    <div class="item">
-				    	<img src="${pageContext.request.contextPath}/resources/img/main/photo2.jpg" alt="Chicago" style="width:100%; height:450px;">
-				    </div>
-			    </div>
-			
-			    <!-- Left and right controls -->
-			    <a class="left carousel-control" href="#myCarousel1" data-slide="prev">
-			      <span class="glyphicon glyphicon-chevron-left"></span>
-			      <span class="sr-only">Previous</span>
-			    </a>
-			    <a class="right carousel-control" href="#myCarousel1" data-slide="next">
-			      <span class="glyphicon glyphicon-chevron-right"></span>
-			      <span class="sr-only">Next</span>
-			    </a>
-		  	</div>
+			</div>
 		</div>
-		  <!-- carousel 끝 -->
-		  <br>
-		  
-		<!-- carousel2,3번 영역 -->
-		<div class="row">	
-			<div id="myCarousel2" class="carousel slide" data-ride="carousel" style="width: 300px; height:245px; float: left;">
-			    <!-- Indicators -->
-			    <ol class="carousel-indicators">
-			    	<li data-target="#myCarousel2" data-slide-to="0" class="active"></li>
-			    	<li data-target="#myCarousel2" data-slide-to="1"></li>
-			    </ol>
-			
-			    <!-- 화면에 보여줄 아이템 들어갈 곳 -->
-			    <div class="carousel-inner">
-				    <div class="item active">
-				    	<img src="${pageContext.request.contextPath}/resources/img/main/photo1.jpg" alt="Los Angeles" style="width:100%; height:245px;">
-				    </div>
-				    <div class="item">
-				    	<img src="${pageContext.request.contextPath}/resources/img/main/photo2.jpg" alt="Chicago" style="width:100%; height:245px;">
-				    </div>
-			    </div>
-			
-			    <!-- Left and right controls -->
-			    <a class="left carousel-control" href="#myCarousel2" data-slide="prev">
-			      <span class="glyphicon glyphicon-chevron-left"></span>
-			      <span class="sr-only">Previous</span>
-			    </a>
-			    <a class="right carousel-control" href="#myCarousel2" data-slide="next">
-			      <span class="glyphicon glyphicon-chevron-right"></span>
-			      <span class="sr-only">Next</span>
-			    </a>
-		  	</div>
-		  <!-- carousel 끝 -->
-		
-		<!-- carousel : 회전하면서 이미지를 보여주는 것 -->
-			<div id="myCarousel3" class="carousel slide" data-ride="carousel" style="width: 300px; height:245px; float: right;">
-			    <!-- Indicators -->
-			    <ol class="carousel-indicators">
-			    	<li data-target="#myCarousel3" data-slide-to="0" class="active"></li>
-			    	<li data-target="#myCarousel3" data-slide-to="1"></li>
-			    </ol>
-			
-			    <!-- 화면에 보여줄 아이템 들어갈 곳 -->
-			    <div class="carousel-inner">
-				    <div class="item active">
-				    	<img src="${pageContext.request.contextPath}/resources/img/main/photo1.jpg" alt="Los Angeles" style="width:100%; height:245px;">
-				    </div>
-				    <div class="item">
-				    	<img src="${pageContext.request.contextPath}/resources/img/main/photo2.jpg" alt="Chicago" style="width:100%; height:245px;">
-				    </div>
-			    </div>
-			
-			    <!-- Left and right controls -->
-			    <a class="left carousel-control" href="#myCarousel3" data-slide="prev">
-			      <span class="glyphicon glyphicon-chevron-left"></span>
-			      <span class="sr-only">Previous</span>
-			    </a>
-			    <a class="right carousel-control" href="#myCarousel3" data-slide="next">
-			      <span class="glyphicon glyphicon-chevron-right"></span>
-			      <span class="sr-only">Next</span>
-			    </a>
-		  	</div>
-		  <!-- carousel 끝 -->
-		</div>
-		<br>
-		<br>
 		<div class="row">
-		인기펀딩목록
-		<br><br><br><br><br><br><br><br>
-		
-		신규펀딩목록
-		<br><br><br><br><br><br><br><br>
+			<div class="pagetitleandexplainbox">
+				<h4 align="center">
+					타임라인분야 검색결과
+				</h4>
+			</div>
+			<div>
+			
+			</div>
 		</div>
-		
 	</div>
 		
 	<!-- 본문 우측 부분 -->

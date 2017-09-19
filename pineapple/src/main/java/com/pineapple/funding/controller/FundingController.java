@@ -408,4 +408,17 @@ public class FundingController {
 		return result;
 	}
 	
+	// 메인화면 검색기능
+	@RequestMapping(value = "/mainsearch.pms", method = RequestMethod.POST)
+	public String mainSearch(Model model, Locale locale
+			, @RequestParam(value="searchtext",required=false,defaultValue="asdf") String searchtext) {
+		log.debug("FundingController의 mainSearch호출 성공");
+		log.debug("searchtext : " + searchtext);
+		Map map = new HashMap<>();
+		map.put("result", service.mainSearch(searchtext));
+		log.debug("result : " + map.get("result"));
+		return "searchpage";
+	}
+	
+	
 }

@@ -1,6 +1,8 @@
 package com.pineapple.funding.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -54,16 +56,16 @@ public class FundingService implements FundingServiceInterface {
 	public int removeFunding(int delfdCode) {
 		log.debug("FundingService의 deleteFunding호출 성공");
 		//펀딩삭제
-		//int result = fundingdao.deleteFunding(delfdCode);
+		int result = fundingdao.deleteFunding(delfdCode);
 		//펀딩상세 삭제
-		//fundingdao.deleteFundingDetail(delfdCode);
+		fundingdao.deleteFundingDetail(delfdCode);
 		//마일스톤 삭제 (wbs예상은 처리함//wbs실제삭제 추가필요)
-		/*PmsService pmsservice = new PmsService();
+		PmsService pmsservice = new PmsService();
 		DeleteWbsplan delete = new DeleteWbsplan();
 		delete.setFdCode(delfdCode);
-		pmsservice.deletewbsplan(delete);*/
+		pmsservice.deletewbsplan(delete);
 		//펀딩보고서 업로드파일 삭제
-		/*List<String> fdfilepathlist = new ArrayList<String>();
+		List<String> fdfilepathlist = new ArrayList<String>();
 		fdfilepathlist = fundingdao.selectFilePathList(delfdCode);
 		log.debug("fdfilelist : " + fdfilepathlist);
 		log.debug("fdfilelist size : " + fdfilepathlist.size());
@@ -71,17 +73,15 @@ public class FundingService implements FundingServiceInterface {
 		for(int i=0; i<fdfilepathlist.size(); i++){
 			log.debug("fdfilelist getFdFileUploadName : " + fdfilepathlist.get(i));
 			fileutil.deleteFile(fdfilepathlist.get(i));
-		}*/
+		}
 		//펀딩보고서 DB삭제
-		//removeFundingFile(delfdCode);
+		removeFundingFile(delfdCode);
 		//배당계획 삭제
-/*		List<String> fdfilepathlist = new ArrayList<String>();
-		List<String> getFundingDividendPalnList(fdCode);
-		removeFundingDividendPlan(divCode);*/
+		fundingdao.deleteDividendPlanOfFunding(delfdCode);
 		//포스터이미지 삭제
-		/*Funding funding = fundingdao.selectMyFunding(delfdCode);
-		log.debug("funding funding funding : " + funding.getPosterImg());
-		fileutil.deleteFile(funding.getPosterImg());*/
+		Funding funding = fundingdao.selectMyFunding(delfdCode);
+		log.debug("funding posterImg Path : " + funding.getPosterImg());
+		fileutil.deleteFile(funding.getPosterImg());
 		
 		return 0;
 	}
@@ -335,6 +335,13 @@ public class FundingService implements FundingServiceInterface {
 	public List<FundingAndInvestment> getInvestorFundingList(String userId) {
 		log.debug("FundingService의 getInvestorFundingList호출 성공");
 		return fundingdao.selectInvestorFundingList(userId);
+	}
+	
+	// 메인화면 검색기능
+	@Override
+	public HashMap<String, Object> mainSearch(String searchtext) {
+		log.debug("FundingService의 mainsearch호출 성공");
+		return fundingdao.mainSearch(searchtext);
 	}
 }
  

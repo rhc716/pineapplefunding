@@ -700,6 +700,24 @@
 		fundingfile
 		WHERE fileFdCode = #{fdCode};
 	</select>
+	
+	<!-- 펀딩에 종속된 배당계획을 삭제하기 -->
+	<delete id="deleteDividendPlanOfFunding" parameterType="int">
+		DELETE 
+		FROM dividendplan 
+		WHERE divFdCode = #{fdCode}
+	</delete>
+	
+	<!-- 메인화면 검색 // 펀딩분야 -->
+	<select id="mainSearchFunding">
+	
+	</select>
+	
+	<!-- 메인화면 검색 // 타임라인분야 -->
+	<select id="mainSearchTimeline">
+	
+	</select>
+	
 </mapper>
 
  

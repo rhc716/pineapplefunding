@@ -1,6 +1,8 @@
 package com.pineapple.funding.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,4 +51,5 @@ public interface FundingServiceInterface {
 	List<DividendpayAndInvestment> getDividendPayList(int fdCode);
 	List<FundingAndInvestment> getInvestorFundingList(String userId);
 	void removeFundingDividendPlan(int divCode);
+	HashMap<String, Object> mainSearch(String searchtext);
 }
