@@ -72,6 +72,7 @@
 		<ul>
 			<li><a href="/pineapple/fundingtotalview.pms">펀딩보기</a></li>
 			<li><a href="/pineapple/msandwbstotalview.pms">마일스톤&WBS보기</a></li>
+			<li><a href="/pineapple/fundingassignmentmain.invest">배정및환불하기</a></li>
 			<li><a href="/pineapple/dividendlisttotalview.pms">배당내역보기</a></li>
 		</ul>
 	</nav>
