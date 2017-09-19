@@ -30,10 +30,10 @@
 
 $(document).ready(function(){
 	 $('#inserthumanBtn').click(function(){	
-		if($('#wphNoPeople').val() !="") {
-			if($('#wphCost').val() !=""){
-				if($('#wphRemarks').val() !=""){
-					if($('#wphDate').val() !=""){
+		if($('#wdhNoPeople').val() !="") {
+			if($('#wdhCost').val() !=""){
+				if($('#wdhRemarks').val() !=""){
+					if($('#wdhDate').val() !=""){
 						$('#humanform').submit();
 					 }else{
 						 alert('사용일을 입력해주세요');
@@ -142,138 +142,136 @@ $(document).ready(function(){
 	 })
 	 console.log("${wbsActualCode}")
 	//wbs코드로 actual받아옴
-	var getwbsplanlist = $.ajax({
+	var getwbsactuallist = $.ajax({
 		type : "get",
 		url : "/pineapple/wbsactuallistview.pms",
 		data : { wbsActualCode : "${wbsActualCode}" }
 	})
 
-	getwbsplanlist.done(function(msg){
+	getwbsactuallist.done(function(msg){
 		console.log(msg);
-		$('#wbscode').append(msg.wbsplan.wbsPlanCode)
-		$('#wbsname').append(msg.wbsplan.wbsPlanName)
-		$('#wbsdependency').append(msg.wbsplan.wbsPlanDependency)
-		$('#wbsduration').append(msg.wbsplan.wbsPlanDuration)
-		$('#wbsstartdate').append(msg.wbsplan.wbsPlanStartDate)
-		$('#wbsmanager').append(msg.wbsplan.wbsPlanManager)
-		$('#wbsplanhuman').append(
-				'<input type="hidden"name="wbsPlanCode" value="'+msg.wbsplan.wbsPlanCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wphWpCode" value="'+msg.wbsplan.wbsPlanCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wphFdCode" value="'+msg.wbsplan.wbsPlanFdCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wphMsCode" value="'+msg.wbsplan.wbsPlanMsCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wphComCode" value="'+msg.wbsplan.wbsPlanComCode+'">'
+		$('#wbscode').append(msg.wbsactual.wbsActualCode)
+		$('#wbsname').append(msg.wbsactual.wbsActualName)
+		$('#wbsstartdate').append(msg.wbsactual.wbsActualStartDate)
+		$('#wbsmanager').append(msg.wbsactual.wbsActualWriteManager)
+		$('#wbsdailyhuman').append(
+				'<input type="hidden"name="wbsActualCode" value="'+msg.wbsactual.wbsActualCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wdhWpCode" value="'+msg.wbsactual.wbsActualCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wdhFdCode" value="'+msg.wbsactual.wbsActualFdCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wdhMsCode" value="'+msg.wbsactual.wbsActualMsCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wdhComCode" value="'+msg.wbsactual.wbsActualComCode+'">'
 		)
-		$('#wbsplanmaterial').append(
-				'<input type="hidden"name="wbsPlanCode" value="'+msg.wbsplan.wbsPlanCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wpmWpCode" value="'+msg.wbsplan.wbsPlanCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wpmFdCode" value="'+msg.wbsplan.wbsPlanFdCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wpmMsCode" value="'+msg.wbsplan.wbsPlanMsCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wpmComCode" value="'+msg.wbsplan.wbsPlanComCode+'">'
+		$('#wbsdailymaterial').append(
+				'<input type="hidden"name="wbsActualCode" value="'+msg.wbsactual.wbsActualCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpmWpCode" value="'+msg.wbsactual.wbsActualCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpmFdCode" value="'+msg.wbsactual.wbsActualFdCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpmMsCode" value="'+msg.wbsactual.wbsActualMsCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpmComCode" value="'+msg.wbsactual.wbsActualComCode+'">'
 		)
-		$('#wbsplanfacility').append(
-				'<input type="hidden"name="wbsPlanCode" value="'+msg.wbsplan.wbsPlanCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wpfWpCode" value="'+msg.wbsplan.wbsPlanCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wpfFdCode" value="'+msg.wbsplan.wbsPlanFdCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wpfMsCode" value="'+msg.wbsplan.wbsPlanMsCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wpfComCode" value="'+msg.wbsplan.wbsPlanComCode+'">'
+		$('#wbsdailyfacility').append(
+				'<input type="hidden"name="wbsActualCode" value="'+msg.wbsactual.wbsActualCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpfWpCode" value="'+msg.wbsactual.wbsActualCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpfFdCode" value="'+msg.wbsactual.wbsActualFdCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpfMsCode" value="'+msg.wbsactual.wbsActualMsCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpfComCode" value="'+msg.wbsactual.wbsActualComCode+'">'
 		)
-		$('#wbsplanout').append(
-				'<input type="hidden"name="wbsPlanCode" value="'+msg.wbsplan.wbsPlanCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wpoWpCode" value="'+msg.wbsplan.wbsPlanCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wpoFdCode" value="'+msg.wbsplan.wbsPlanFdCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wpoMsCode" value="'+msg.wbsplan.wbsPlanMsCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wpoComCode" value="'+msg.wbsplan.wbsPlanComCode+'">'
+		$('#wbsdailyout').append(
+				'<input type="hidden"name="wbsActualCode" value="'+msg.wbsactual.wbsActualCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpoWpCode" value="'+msg.wbsactual.wbsActualCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpoFdCode" value="'+msg.wbsactual.wbsActualFdCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpoMsCode" value="'+msg.wbsactual.wbsActualMsCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpoComCode" value="'+msg.wbsactual.wbsActualComCode+'">'
 		)
-		$('#wbsplanetc').append(
-				'<input type="hidden"name="wbsPlanCode" value="'+msg.wbsplan.wbsPlanCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wpeWpCode" value="'+msg.wbsplan.wbsPlanCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wpeFdCode" value="'+msg.wbsplan.wbsPlanFdCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wpeMsCode" value="'+msg.wbsplan.wbsPlanMsCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wpeComCode" value="'+msg.wbsplan.wbsPlanComCode+'">'
+		$('#wbsdailyetc').append(
+				'<input type="hidden"name="wbsActualCode" value="'+msg.wbsactual.wbsActualCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpeWpCode" value="'+msg.wbsactual.wbsActualCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpeFdCode" value="'+msg.wbsactual.wbsActualFdCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpeMsCode" value="'+msg.wbsactual.wbsActualMsCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpeComCode" value="'+msg.wbsactual.wbsActualComCode+'">'
 		)
-		$('#wbsplanincome').append(
-				'<input type="hidden"name="wbsPlanCode" value="'+msg.wbsplan.wbsPlanCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wpiWpCode" value="'+msg.wbsplan.wbsPlanCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wpiFdCode" value="'+msg.wbsplan.wbsPlanFdCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wpiMsCode" value="'+msg.wbsplan.wbsPlanMsCode+'">'
-		       	+'<input type="hidden" class="form-control" name="wpiComCode" value="'+msg.wbsplan.wbsPlanComCode+'">'
+		$('#wbsdailyincome').append(
+				'<input type="hidden"name="wbsActualCode" value="'+msg.wbsactual.wbsActualCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpiWpCode" value="'+msg.wbsactual.wbsActualCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpiFdCode" value="'+msg.wbsactual.wbsActualFdCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpiMsCode" value="'+msg.wbsactual.wbsActualMsCode+'">'
+		       	+'<input type="hidden" class="form-control" name="wpiComCode" value="'+msg.wbsactual.wbsActualComCode+'">'
 		)
 
 			
-		for(var i = 0; i<msg.wbsplanhuman.length; i++){
+		for(var i = 0; i<msg.wbsdailyhuman.length; i++){
 			$('#humanlist').append(
 					'<tr>'
-					+'<td>'+msg.wbsplanhuman[i].wphNoPeople+'</td>'
-					+'<td>'+msg.wbsplanhuman[i].wphCost+'</td>'
-					+'<td>'+msg.wbsplanhuman[i].wphRemarks+'</td>'	
-					+'<td>'+msg.wbsplanhuman[i].wphDate+'</td>'	
+					+'<td>'+msg.wbsdailyhuman[i].wdhNoPeople+'</td>'
+					+'<td>'+msg.wbsdailyhuman[i].wdhCost+'</td>'
+					+'<td>'+msg.wbsdailyhuman[i].wdhRemarks+'</td>'	
+					+'<td>'+msg.wbsdailyhuman[i].wdhDate+'</td>'	
 					+'<td class="minitd">'
-					+'<button type="submit" class="btn btn-danger  minibtn deletehuman" value="'+msg.wbsplanhuman[i].wphCode+'">삭제</button>'
+					+'<button type="submit" class="btn btn-danger  minibtn deletehuman" value="'+msg.wbsdailyhuman[i].wdhCode+'">삭제</button>'
 					+'</td>'
 					+'</tr>'
 			)
 	
 		}	
-		for(var i = 0; i<msg.wbsplanmaterial.length; i++){
+		for(var i = 0; i<msg.wbsdailymaterial.length; i++){
 			$('#materiallist').append(
 					'<tr>'
-					+'<td>'+msg.wbsplanmaterial[i].wpmName+'</td>'
-					+'<td>'+msg.wbsplanmaterial[i].wpmCost+'</td>'
-					+'<td>'+msg.wbsplanmaterial[i].wpmRemarks+'</td>'	
-					+'<td>'+msg.wbsplanmaterial[i].wpmDate+'</td>'	
+					+'<td>'+msg.wbsdailymaterial[i].wpmName+'</td>'
+					+'<td>'+msg.wbsdailymaterial[i].wpmCost+'</td>'
+					+'<td>'+msg.wbsdailymaterial[i].wpmRemarks+'</td>'	
+					+'<td>'+msg.wbsdailymaterial[i].wpmDate+'</td>'	
 					+'<td class="minitd">'
-					+'<button type="submit" class="btn btn-danger  minibtn deletematerial" value="'+msg.wbsplanmaterial[i].wpmCode+'">삭제</button>'
+					+'<button type="submit" class="btn btn-danger  minibtn deletematerial" value="'+msg.wbsdailymaterial[i].wpmCode+'">삭제</button>'
 					+'</td>'
 					+'</tr>'
 			)
 		}
-		for(var i = 0; i<msg.wbsplanfacility.length; i++){
+		for(var i = 0; i<msg.wbsdailyfacility.length; i++){
 			$('#facilitylist').append(
 					'<tr>'
-					+'<td>'+msg.wbsplanfacility[i].wpfName+'</td>'
-					+'<td>'+msg.wbsplanfacility[i].wpfCost+'</td>'
-					+'<td>'+msg.wbsplanfacility[i].wpfRemarks+'</td>'	
-					+'<td>'+msg.wbsplanfacility[i].wpfDate+'</td>'	
+					+'<td>'+msg.wbsdailyfacility[i].wpfName+'</td>'
+					+'<td>'+msg.wbsdailyfacility[i].wpfCost+'</td>'
+					+'<td>'+msg.wbsdailyfacility[i].wpfRemarks+'</td>'	
+					+'<td>'+msg.wbsdailyfacility[i].wpfDate+'</td>'	
 					+'<td class="minitd">'
-					+'<button type="submit" class="btn btn-danger  minibtn deletefacility" value="'+msg.wbsplanfacility[i].wpfCode+'">삭제</button>'
+					+'<button type="submit" class="btn btn-danger  minibtn deletefacility" value="'+msg.wbsdailyfacility[i].wpfCode+'">삭제</button>'
 					+'</td>'
 					+'</tr>'
 			)
 		}
-		for(var i = 0; i<msg.wbsplanout.length; i++){
+		for(var i = 0; i<msg.wbsdailyout.length; i++){
 			$('#outlist').append(
 					'<tr>'
-					+'<td>'+msg.wbsplanout[i].wpoOutComName+'</td>'
-					+'<td>'+msg.wbsplanout[i].wpoCost+'</td>'
-					+'<td>'+msg.wbsplanout[i].wpoRemarks+'</td>'	
-					+'<td>'+msg.wbsplanout[i].wpoDate+'</td>'	
+					+'<td>'+msg.wbsdailyout[i].wpoOutComName+'</td>'
+					+'<td>'+msg.wbsdailyout[i].wpoCost+'</td>'
+					+'<td>'+msg.wbsdailyout[i].wpoRemarks+'</td>'	
+					+'<td>'+msg.wbsdailyout[i].wpoDate+'</td>'	
 					+'<td class="minitd">'
-					+'<button type="submit" class="btn btn-danger  minibtn deleteout" value="'+msg.wbsplanout[i].wpoCode+'">삭제</button>'
+					+'<button type="submit" class="btn btn-danger  minibtn deleteout" value="'+msg.wbsdailyout[i].wpoCode+'">삭제</button>'
 					+'</td>'
 					+'</tr>'
 			)
 		}
-		for(var i = 0; i<msg.wbsplanetc.length; i++){
+		for(var i = 0; i<msg.wbsdailyetc.length; i++){
 			$('#etclist').append(
 					'<tr>'
-					+'<td>'+msg.wbsplanetc[i].wpePurpose+'</td>'
-					+'<td>'+msg.wbsplanetc[i].wpeCost+'</td>'
-					+'<td>'+msg.wbsplanetc[i].wpeRemarks+'</td>'	
-					+'<td>'+msg.wbsplanetc[i].wpeDate+'</td>'	
+					+'<td>'+msg.wbsdailyetc[i].wpePurpose+'</td>'
+					+'<td>'+msg.wbsdailyetc[i].wpeCost+'</td>'
+					+'<td>'+msg.wbsdailyetc[i].wpeRemarks+'</td>'	
+					+'<td>'+msg.wbsdailyetc[i].wpeDate+'</td>'	
 					+'<td class="minitd">'
-					+'<button type="submit" class="btn btn-danger  minibtn deleteetc" value="'+msg.wbsplanetc[i].wpeCode+'">삭제</button>'
+					+'<button type="submit" class="btn btn-danger  minibtn deleteetc" value="'+msg.wbsdailyetc[i].wpeCode+'">삭제</button>'
 					+'</td>'
 					+'</tr>'
 			)
 		}
-		for(var i = 0; i<msg.wbsplanincome.length; i++){
+		for(var i = 0; i<msg.wbsdailyincome.length; i++){
 			$('#incomelist').append(
 					'<tr>'
-					+'<td>'+msg.wbsplanincome[i].wpiReason+'</td>'
-					+'<td>'+msg.wbsplanincome[i].wpiIncome+'</td>'
-					+'<td>'+msg.wbsplanincome[i].wpiDate+'</td>'	
+					+'<td>'+msg.wbsdailyincome[i].wpiReason+'</td>'
+					+'<td>'+msg.wbsdailyincome[i].wpiIncome+'</td>'
+					+'<td>'+msg.wbsdailyincome[i].wpiDate+'</td>'	
 					+'<td class="minitd">'
-					+'<button type="submit" class="btn btn-danger  minibtn deleteincome" value="'+msg.wbsplanincome[i].wpiCode+'">삭제</button>'
+					+'<button type="submit" class="btn btn-danger  minibtn deleteincome" value="'+msg.wbsdailyincome[i].wpiCode+'">삭제</button>'
 					+'</td>'
 					+'</tr>'
 			)
@@ -288,9 +286,9 @@ $(document).ready(function(){
 					var ss = $(this).val();
 					var test = $.ajax({
 						type : "post",
-						url : "/pineapple/wbsplanhumandelete.pms",
+						url : "/pineapple/wbsdailyhumandelete.pms",
 						/* 아이디 세션에서 받아서 가져옴 */
-						data : { wphCode : ss }
+						data : { wdhCode : ss }
 					}); 
 					test.done(function(){
 						location.reload();
@@ -309,7 +307,7 @@ $(document).ready(function(){
 					var ss = $(this).val();
 					var test = $.ajax({
 						type : "post",
-						url : "/pineapple/wbsplanmaterialdelete.pms",
+						url : "/pineapple/wbsdailymaterialdelete.pms",
 						/* 아이디 세션에서 받아서 가져옴 */
 						data : { wpmCode : ss }
 					}); 
@@ -331,7 +329,7 @@ $(document).ready(function(){
 					var ss = $(this).val();
 					var test = $.ajax({
 						type : "post",
-						url : "/pineapple/wbsplanfacilitydelete.pms",
+						url : "/pineapple/wbsdailyfacilitydelete.pms",
 						/* 아이디 세션에서 받아서 가져옴 */
 						data : { wpfCode : ss }
 					}); 
@@ -352,7 +350,7 @@ $(document).ready(function(){
 					var ss = $(this).val();
 					var test = $.ajax({
 						type : "post",
-						url : "/pineapple/wbsplanoutdelete.pms",
+						url : "/pineapple/wbsdailyoutdelete.pms",
 						/* 아이디 세션에서 받아서 가져옴 */
 						data : { wpoCode : ss }
 					}); 
@@ -373,7 +371,7 @@ $(document).ready(function(){
 					var ss = $(this).val();
 					var test = $.ajax({
 						type : "post",
-						url : "/pineapple/wbsplanetcdelete.pms",
+						url : "/pineapple/wbsdailyetcdelete.pms",
 						/* 아이디 세션에서 받아서 가져옴 */
 						data : { wpeCode : ss }
 					}); 
@@ -394,7 +392,7 @@ $(document).ready(function(){
 					var ss = $(this).val();
 					var test = $.ajax({
 						type : "post",
-						url : "/pineapple/wbsplanincomedelete.pms",
+						url : "/pineapple/wbsdailyincomedelete.pms",
 						/* 아이디 세션에서 받아서 가져옴 */
 						data : { wpiCode : ss }
 					}); 
@@ -429,7 +427,7 @@ $(document).ready(function(){
 			<c:import url="/resources/module/pmsleftmenu.jsp"/>
 		</div>
 		<div class="col-md-9">
-			<label for="wbsplan">WBS예상계획</label><br>
+			<label for="wbsdaily">WBS예상계획</label><br>
 				
 					<div class="row">
 						<div class=col-md-3>
@@ -446,16 +444,14 @@ $(document).ready(function(){
 						</div>
 						<div class=col-md-3>
 							<div class="panel panel-default">
-								<div class="panel-heading">선행작업</div>
-								<div class="panel-body" id="wbsdependency"></div>
+								
 							</div>
 						</div>
 					</div>
 			 		<div class="row">
 						<div class=col-md-3>
 							<div class="panel panel-default">
-								<div class="panel-heading">작업기간</div>
-								<div class="panel-body" id="wbsduration"></div>
+								
 							</div>
 						</div>
 						<div class=col-md-3>
@@ -556,19 +552,19 @@ $(document).ready(function(){
 			    <div class="modal-content">
 			<!-- 모달창 본문내용 -->				      
 			      <div class="modal-body">
-			        <form id="humanform" action="/pineapple/wbsplanhumaninsert.pms" method="post">
+			        <form id="humanform" action="/pineapple/wbsdailyhumaninsert.pms" method="post">
 			        <!-- 기본적으로 들어가는 wbs예상코드 펀딩코드 마일스톤코드 회사코드를 입력되는곳 -->
-			        	<label for="wbsplanhuman" id="wbsplanhuman">WBS예상인원 지출</label><br>
+			        	<label for="wbsdailyhuman" id="wbsdailyhuman">WBS예상인원 지출</label><br>
 						
 		          	<!-- 여기서부터는 직접 입력하는곳 --> 
 			           	인원수:
-			            <input type="number" class="form-control" id="wphNoPeople" name="wphNoPeople">
+			            <input type="number" class="form-control" id="wdhNoPeople" name="wdhNoPeople">
 					         총비용:
-			          	<input type="number" class="form-control" id="wphCost" name="wphCost">
+			          	<input type="number" class="form-control" id="wdhCost" name="wdhCost">
 			          	비고:
-			          	<input type="text" class="form-control" id="wphRemarks" name="wphRemarks">
+			          	<input type="text" class="form-control" id="wdhRemarks" name="wdhRemarks">
 			          	사용일:
-			          	<input type="date" class="form-control" id="wphDate" name="wphDate">
+			          	<input type="date" class="form-control" id="wdhDate" name="wdhDate">
 			          	<br>
 			          	<input id="inserthumanBtn" type="button" class="button_insert signupbtn" value="입력완료">
 			        </form>
@@ -581,8 +577,8 @@ $(document).ready(function(){
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-body">
-			        <form  id="materialform"action="/pineapple/wbsplanmaterialinsert.pms" method="post">
-			        	<label for="wbsplanmaterial" id="wbsplanmaterial">WBS예상장비 지출</label><br>
+			        <form  id="materialform"action="/pineapple/wbsdailymaterialinsert.pms" method="post">
+			        	<label for="wbsdailymaterial" id="wbsdailymaterial">WBS예상장비 지출</label><br>
 			           	장비명:
 			            <input type="text" class="form-control" id="wpmName" name="wpmName">
 			          	비용:
@@ -602,8 +598,8 @@ $(document).ready(function(){
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-body">
-			        <form id="facilityform"action="/pineapple/wbsplanfacilityinsert.pms" method="post">
-			        	<label for="wbsplanfacility" id="wbsplanfacility">WBS예상시설 지출</label><br>
+			        <form id="facilityform"action="/pineapple/wbsdailyfacilityinsert.pms" method="post">
+			        	<label for="wbsdailyfacility" id="wbsdailyfacility">WBS예상시설 지출</label><br>
 			           	시설명:
 			            <input type="text" class="form-control" id="wpfName" name="wpfName">
 			          	가격:
@@ -623,8 +619,8 @@ $(document).ready(function(){
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-body">
-			        <form id="outform"action="/pineapple/wbsplanoutinsert.pms" method="post">
-			        <label for="wbsplanout" id="wbsplanout">WBS예상외주 지출</label><br>
+			        <form id="outform"action="/pineapple/wbsdailyoutinsert.pms" method="post">
+			        <label for="wbsdailyout" id="wbsdailyout">WBS예상외주 지출</label><br>
 			           	외주업체명:
 			            <input type="text" class="form-control" id="wpoOutComName"name="wpoOutComName">			    
 			          	비용:
@@ -644,8 +640,8 @@ $(document).ready(function(){
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-body">
-			        <form id="etcform" action="/pineapple/addwbsplanetc.pms" method="post">
-			        	<label for="wbsplanetc" id="wbsplanetc">WBS예상기타 지출</label><br>
+			        <form id="etcform" action="/pineapple/addwbsdailyetc.pms" method="post">
+			        	<label for="wbsdailyetc" id="wbsdailyetc">WBS예상기타 지출</label><br>
 			           	용도:
 			            <input type="text" class="form-control" id="wpePurpose"name="wpePurpose">
 			          	비용:
@@ -665,8 +661,8 @@ $(document).ready(function(){
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-body">
-			        <form id="incomeform"action="/pineapple/wbsplanincomeinsert.pms" method="post">
-			        	<label for="wbsplanincome" id="wbsplanincome">WBS예상 수익</label><br>
+			        <form id="incomeform"action="/pineapple/wbsdailyincomeinsert.pms" method="post">
+			        	<label for="wbsdailyincome" id="wbsdailyincome">WBS예상 수익</label><br>
 			           	수익사유:
 			            <input type="text" class="form-control" id="wpiReason"name="wpiReason">
 			          	수익:

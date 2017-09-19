@@ -84,4 +84,8 @@ public interface PmsServiceInterface {
 
 	List<WbsActual> wbsactual(String milestoneCode);
 
+	List<WbsDailyEtc> getMyWbsActualEtcList(String wbsactualcode);
+
+	List<WbsDailyHuman> getMyWbsActualHumanList(String wbsactualcode);
+
 }

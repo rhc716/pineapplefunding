@@ -283,10 +283,27 @@ public class PmsDao implements PmsDaoInterface {
 		log.debug("PmsDao의 getMyWbsPlanFacilityList호출 성공");
 		return sqlSessionTemplate.selectList("com.pineapple.pms.service.PmsMapper.selectWbsPlanEtc", wbsplancode);
 	}
+
+	
+	
 	@Override
 	public List<WbsPlanIncome> getMyWbsPlanIncomeyList(String wbsplancode) {
 		log.debug("PmsDao의 getMyWbsPlanIncomeyList호출 성공");
 		return sqlSessionTemplate.selectList("com.pineapple.pms.service.PmsMapper.selectWbsPlanIncome", wbsplancode);
+	}
+	
+	
+	@Override
+	public List<WbsDailyEtc> getMyWbsActualEtcList(String wbsactualcode) {
+		log.debug("PmsDao의 getMyWbsActualEtcList호출 성공");
+		return sqlSessionTemplate.selectList("com.pineapple.pms.service.PmsMapper.selectWbsActualEtc", wbsactualcode);
+	}
+	
+	
+	@Override
+	public List<WbsDailyHuman> getMyWbsActualHumanList(String wbsactualcode) {
+		log.debug("PmsDao의 getMyWbsActualEtcList호출 성공");
+		return sqlSessionTemplate.selectList("com.pineapple.pms.service.PmsMapper.selectWbsActualHuman", wbsactualcode);
 	}
 	
 	@Override

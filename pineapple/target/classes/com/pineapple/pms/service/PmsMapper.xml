@@ -113,6 +113,15 @@
 		select *
 		from wbsplanetc where wpeWpCode = #{wbsplancode}
 	</select>
+	<select id="selectWbsActualEtc" resultType="com.pineapple.pms.service.WbsDailyEtc" parameterType="String">
+		select *
+		from wbsdailyetc where wdeWaCode = #{wbsactualcode}
+	</select>
+	<select id="selectWbsActualHuman" resultType="com.pineapple.pms.service.WbsDailyHuman" parameterType="String">
+		select *
+		from wbsdailyhuman where wdhWaCode = #{wbsactualcode}
+	</select>
+	
 	<select id="selectWbsPlanIncome" resultType="com.pineapple.pms.service.WbsPlanIncome" parameterType="String">
 		select *
 		from wbsplanincome where wpiWpCode = #{wbsplancode}

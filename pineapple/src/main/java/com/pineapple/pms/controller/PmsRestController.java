@@ -124,12 +124,13 @@ public class PmsRestController {
 			log.debug("wbs코드" + wbsActualCode);
 			WbsActualBox wbsactualbox = new WbsActualBox();
 			WbsActual wbsactual = service.wbsactualdetail(wbsActualCode);
-			/*List<WbsDailyEtc> wbsdailyetc = new ArrayList<WbsDailyEtc>();
-			wbsdailyetc = service.getMyWbsPlanHumanList(wbsactualcode);
-			List<WbsDailyFacility> wbsdailyfacility = new ArrayList<WbsDailyFacility>();
-			wbsdailyfacility = service.getMyWbsPlanMaterialList(wbsactualcode);
+			List<WbsDailyEtc> wbsdailyetc = new ArrayList<WbsDailyEtc>();
+			wbsdailyetc = service.getMyWbsActualEtcList(wbsActualCode);
 			List<WbsDailyHuman> wbsdailyhuman = new ArrayList<WbsDailyHuman>();
-			wbsdailyhuman = service.getMyWbsPlanFacilityList(wbsactualcode);
+			wbsdailyhuman = service.getMyWbsActualHumanList(wbsActualCode);
+			log.debug("wbsdailyhuman코드" + wbsdailyhuman);
+			/*List<WbsDailyFacility> wbsdailyfacility = new ArrayList<WbsDailyFacility>();
+			wbsdailyfacility = service.getMyWbsPlanMaterialList(wbsactualcode);
 			List<WbsDailyIncome> wbsdailyincome = new ArrayList<WbsDailyIncome>();
 			wbsdailyincome = service.getMyWbsPlanOutList(wbsactualcode);
 			List<WbsDailyMatrial> wbsdailymatrial = new ArrayList<WbsDailyMatrial>();
@@ -137,9 +138,9 @@ public class PmsRestController {
 			List<WbsDailyOut> wbsdailyout = new ArrayList<WbsDailyOut>();
 			wbsdailyout = service.getMyWbsPlanIncomeyList(wbsactualcode);*/
 			wbsactualbox.setWbsactual(wbsactual);
-			/*wbsactualbox.setWbsdailyetc(wbsdailyetc);
-			wbsactualbox.setWbsdailyfacility(wbsdailyfacility);
+			wbsactualbox.setWbsdailyetc(wbsdailyetc);
 			wbsactualbox.setWbsdailyhuman(wbsdailyhuman);
+			/*wbsactualbox.setWbsdailyfacility(wbsdailyfacility);
 			wbsactualbox.setWbsdailyincome(wbsdailyincome);
 			wbsactualbox.setWbsdailymatrial(wbsdailymatrial);
 			wbsactualbox.setWbsdailyout(wbsdailyout);*/
