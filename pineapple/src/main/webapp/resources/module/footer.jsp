@@ -76,7 +76,7 @@
 		</div>
 		<div class="team row" >
 		이보라 <i class="glyphicon glyphicon-hand-right"></i> 
-		<a href="http://swswbrbr.cafe24.com/pineapple/"><button type="button" class="btn btn-sm btn-success">호스팅사이트로</button></a>
+		<a href="http://swswbrbr.cafe24.com/"><button type="button" class="btn btn-sm btn-success">호스팅사이트로</button></a>
 		<a href="http://blog.naver.com/essence14"><button type="button" class="btn btn-sm btn-primary">블로그로</button></a>
 		<a href="https://github.com/swswbrbr"><button type="button" class="btn btn-sm btn-info">Git으로</button></a>
 		</div>
