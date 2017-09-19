@@ -2,48 +2,48 @@ package com.pineapple.pms.service;
 
 public class WbsDailyMatrial {
 	
-	private int wpmCode;
-	private int wpmWaCode;
-	private int wpmFdCode;
-	private int wpmMsCode;
-	private int wpmComCode;
+	private int wdmCode;
+	private int wdmWaCode;
+	private int wdmFdCode;
+	private int wdmMsCode;
+	private int wdmComCode;
 	private int wdmCostPerNo;
-	private String wpmName;
-	private String wpmRemarks;
-	private String wpmDate;
-	public int getWpmCode() {
+	private String wdmName;
+	private String wdmRemarks;
+	private String wdmDate;
+	public int getwdmCode() {
 		
-		return wpmCode;
+		return wdmCode;
 	}
-	public void setWpmCode(int wpmCode) {
+	public void setwdmCode(int wdmCode) {
 		
-		this.wpmCode = wpmCode;
+		this.wdmCode = wdmCode;
 	}
-	public int getwpmWaCode() {
-		System.out.println("getwpmWaCode "+wpmWaCode);
-		return wpmWaCode;
+	public int getwdmWaCode() {
+		System.out.println("getwdmWaCode "+wdmWaCode);
+		return wdmWaCode;
 	}
-	public void setwpmWaCode(int wpmWaCode) {
-		System.out.println("setwpmWaCode "+wpmWaCode);
-		this.wpmWaCode = wpmWaCode;
+	public void setwdmWaCode(int wdmWaCode) {
+		System.out.println("setwdmWaCode "+wdmWaCode);
+		this.wdmWaCode = wdmWaCode;
 	}
-	public int getWpmFdCode() {
-		return wpmFdCode;
+	public int getwdmFdCode() {
+		return wdmFdCode;
 	}
-	public void setWpmFdCode(int wpmFdCode) {
-		this.wpmFdCode = wpmFdCode;
+	public void setwdmFdCode(int wdmFdCode) {
+		this.wdmFdCode = wdmFdCode;
 	}
-	public int getWpmMsCode() {
-		return wpmMsCode;
+	public int getwdmMsCode() {
+		return wdmMsCode;
 	}
-	public void setWpmMsCode(int wpmMsCode) {
-		this.wpmMsCode = wpmMsCode;
+	public void setwdmMsCode(int wdmMsCode) {
+		this.wdmMsCode = wdmMsCode;
 	}
-	public int getWpmComCode() {
-		return wpmComCode;
+	public int getwdmComCode() {
+		return wdmComCode;
 	}
-	public void setWpmComCode(int wpmComCode) {
-		this.wpmComCode = wpmComCode;
+	public void setwdmComCode(int wdmComCode) {
+		this.wdmComCode = wdmComCode;
 	}
 	public int getWdmCostPerNo() {
 		return wdmCostPerNo;
@@ -51,26 +51,26 @@ public class WbsDailyMatrial {
 	public void setWdmCostPerNo(int wdmCostPerNo) {
 		this.wdmCostPerNo = wdmCostPerNo;
 	}
-	public String getWpmName() {
-		return wpmName;
+	public String getwdmName() {
+		return wdmName;
 	}
-	public void setWpmName(String wpmName) {
-		this.wpmName = wpmName;
+	public void setwdmName(String wdmName) {
+		this.wdmName = wdmName;
 	}
-	public String getWpmRemarks() {
-		return wpmRemarks;
+	public String getwdmRemarks() {
+		return wdmRemarks;
 	}
-	public void setWpmRemarks(String wpmRemarks) {
-		this.wpmRemarks = wpmRemarks;
+	public void setwdmRemarks(String wdmRemarks) {
+		this.wdmRemarks = wdmRemarks;
 	}
-	public String getWpmDate() {
-		return wpmDate;
+	public String getwdmDate() {
+		return wdmDate;
 	}
-	public void setWpmDate(String wpmDate) {
-		if(wpmDate==""){
-			wpmDate = null;
+	public void setwdmDate(String wdmDate) {
+		if(wdmDate==""){
+			wdmDate = null;
 		}else{
-			this.wpmDate = wpmDate;
+			this.wdmDate = wdmDate;
 		}
 		
 	}

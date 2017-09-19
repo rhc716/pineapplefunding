@@ -1,78 +1,78 @@
 package com.pineapple.pms.service;
 
 public class WbsDailyOut {
-	private int wpoCode;
-	private int wpoFdCode;
-	private int wpoMsCode;
-	private int wpoWaCode;
-	private int wpoCost;
-	private int wpoComCode;
-	private String wpoOutComName;
-	private String wpoDate;
-	private String wpoRemarks;
-	public int getWpoCode() {
-		return wpoCode;
+	private int wdoCode;
+	private int wdoFdCode;
+	private int wdoMsCode;
+	private int wdoWaCode;
+	private int wdoCost;
+	private int wdoComCode;
+	private String wdoOutComName;
+	private String wdoDate;
+	private String wdoRemarks;
+	public int getwdoCode() {
+		return wdoCode;
 	}
-	public void setWpoCode(int wpoCode) {
-		this.wpoCode = wpoCode;
+	public void setwdoCode(int wdoCode) {
+		this.wdoCode = wdoCode;
 	}
-	public int getWpoFdCode() {
-		return wpoFdCode;
+	public int getwdoFdCode() {
+		return wdoFdCode;
 	}
-	public void setWpoFdCode(int wpoFdCode) {
-		this.wpoFdCode = wpoFdCode;
+	public void setwdoFdCode(int wdoFdCode) {
+		this.wdoFdCode = wdoFdCode;
 	}
-	public int getWpoMsCode() {
-		return wpoMsCode;
+	public int getwdoMsCode() {
+		return wdoMsCode;
 	}
-	public void setWpoMsCode(int wpoMsCode) {
-		this.wpoMsCode = wpoMsCode;
+	public void setwdoMsCode(int wdoMsCode) {
+		this.wdoMsCode = wdoMsCode;
 	}
-	public int getwpoWaCode() {
-		return wpoWaCode;
+	public int getwdoWaCode() {
+		return wdoWaCode;
 	}
-	public void setwpoWaCode(int wpoWaCode) {
-		this.wpoWaCode = wpoWaCode;
+	public void setwdoWaCode(int wdoWaCode) {
+		this.wdoWaCode = wdoWaCode;
 	}
-	public int getWpoCost() {
-		return wpoCost;
+	public int getwdoCost() {
+		return wdoCost;
 	}
-	public void setWpoCost(int wpoCost) {
-		this.wpoCost = wpoCost;
+	public void setwdoCost(int wdoCost) {
+		this.wdoCost = wdoCost;
 	}
-	public int getWpoComCode() {
-		return wpoComCode;
+	public int getwdoComCode() {
+		return wdoComCode;
 	}
-	public void setWpoComCode(int wpoComCode) {
-		this.wpoComCode = wpoComCode;
+	public void setwdoComCode(int wdoComCode) {
+		this.wdoComCode = wdoComCode;
 	}
-	public String getWpoOutComName() {
-		return wpoOutComName;
+	public String getwdoOutComName() {
+		return wdoOutComName;
 	}
-	public void setWpoOutComName(String wpoOutComName) {
-		this.wpoOutComName = wpoOutComName;
+	public void setwdoOutComName(String wdoOutComName) {
+		this.wdoOutComName = wdoOutComName;
 	}
-	public String getWpoDate() {
-		return wpoDate;
+	public String getwdoDate() {
+		return wdoDate;
 	}
-	public void setWpoDate(String wpoDate) {
-		if(wpoDate==""){
-			wpoDate=null;
+	public void setwdoDate(String wdoDate) {
+		if(wdoDate==""){
+			wdoDate=null;
 		}else{
-			this.wpoDate = wpoDate;
+			this.wdoDate = wdoDate;
 		}
 	}
-	public String getWpoRemarks() {
-		return wpoRemarks;
+	public String getwdoRemarks() {
+		return wdoRemarks;
 	}
-	public void setWpoRemarks(String wpoRemarks) {
-		this.wpoRemarks = wpoRemarks;
+	public void setwdoRemarks(String wdoRemarks) {
+		this.wdoRemarks = wdoRemarks;
 	}
 	@Override
 	public String toString() {
-		return "WbsPlanOut [wpoCode=" + wpoCode + ", wpoFdCode=" + wpoFdCode + ", wpoMsCode=" + wpoMsCode
-				+ ", wpoWaCode=" + wpoWaCode + ", wpoCost=" + wpoCost + ", wpoComCode=" + wpoComCode
-				+ ", wpoOutComName=" + wpoOutComName + ", wpoDate=" + wpoDate + ", wpoRemarks=" + wpoRemarks + "]";
+		return "WbsPlanOut [wdoCode=" + wdoCode + ", wdoFdCode=" + wdoFdCode + ", wdoMsCode=" + wdoMsCode
+				+ ", wdoWaCode=" + wdoWaCode + ", wdoCost=" + wdoCost + ", wdoComCode=" + wdoComCode
+				+ ", wdoOutComName=" + wdoOutComName + ", wdoDate=" + wdoDate + ", wdoRemarks=" + wdoRemarks + "]";
 	}
 	
 

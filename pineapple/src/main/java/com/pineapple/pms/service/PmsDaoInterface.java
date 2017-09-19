@@ -106,4 +106,8 @@ public interface PmsDaoInterface {
 
 	List<WbsActual> wbsactual(String milestoneCode);
 
+	List<WbsDailyEtc> getMyWbsActualEtcList(String wbsactualcode);
+
+	List<WbsDailyHuman> getMyWbsActualHumanList(String wbsactualcode);
+
 }

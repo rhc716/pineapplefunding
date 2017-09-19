@@ -2,90 +2,90 @@ package com.pineapple.pms.service;
 
 public class WbsDailyHuman {
 	
-	private int wphCode;
-	private int wphWaCode;
-	private int wphFdCode;
-	private int wphMsCode;
-	private int wphComCode;
-	private int wphNoPeople;
-	private int wphCost;
-	private String wphRemarks;
-	private String wphDate;
-	public int getWphCode() {
-		//System.out.println("wphCode get"+wphCode);
-		return wphCode;
+	private int wdhCode;
+	private int wdhWaCode;
+	private int wdhFdCode;
+	private int wdhMsCode;
+	private int wdhComCode;
+	private int wdhNoPeople;
+	private int wdhCost;
+	private String wdhRemarks;
+	private String wdhDate;
+	public int getwdhCode() {
+		//System.out.println("wdhCode get"+wdhCode);
+		return wdhCode;
 	}
-	public void setWphCode(int wphCode) {
-		//System.out.println("wphCode set"+wphCode);
-		this.wphCode = wphCode;
+	public void setwdhCode(int wdhCode) {
+		//System.out.println("wdhCode set"+wdhCode);
+		this.wdhCode = wdhCode;
 	}
-	public int getwphWaCode() {
-		//System.out.println("wphWaCode get"+wphWaCode);
-		return wphWaCode;
+	public int getwdhWaCode() {
+		//System.out.println("wdhWaCode get"+wdhWaCode);
+		return wdhWaCode;
 	}
-	public void setwphWaCode(int wphWaCode) {
-		//System.out.println("wphWaCode set"+wphWaCode);
-		this.wphWaCode = wphWaCode;
+	public void setwdhWaCode(int wdhWaCode) {
+		//System.out.println("wdhWaCode set"+wdhWaCode);
+		this.wdhWaCode = wdhWaCode;
 	}
-	public int getWphFdCode() {
-		//System.out.println("wphFdCode get"+wphFdCode);
-		return wphFdCode;
+	public int getwdhFdCode() {
+		//System.out.println("wdhFdCode get"+wdhFdCode);
+		return wdhFdCode;
 	}
-	public void setWphFdCode(int wphFdCode) {
-		//System.out.println("wphFdCode set"+wphFdCode);
-		this.wphFdCode = wphFdCode;
+	public void setwdhFdCode(int wdhFdCode) {
+		//System.out.println("wdhFdCode set"+wdhFdCode);
+		this.wdhFdCode = wdhFdCode;
 	}
-	public int getWphMsCode() {
-		//System.out.println("wphMsCode get"+wphMsCode);
-		return wphMsCode;
+	public int getwdhMsCode() {
+		//System.out.println("wdhMsCode get"+wdhMsCode);
+		return wdhMsCode;
 	}
-	public void setWphMsCode(int wphMsCode) {
-		//System.out.println("wphMsCode set"+wphMsCode);
-		this.wphMsCode = wphMsCode;
+	public void setwdhMsCode(int wdhMsCode) {
+		//System.out.println("wdhMsCode set"+wdhMsCode);
+		this.wdhMsCode = wdhMsCode;
 	}
-	public int getWphComCode() {
-		//System.out.println("wphComCode get"+wphComCode);
-		return wphComCode;
+	public int getwdhComCode() {
+		//System.out.println("wdhComCode get"+wdhComCode);
+		return wdhComCode;
 	}
-	public void setWphComCode(int wphComCode) {
-		//System.out.println("wphComCode set"+wphComCode);
-		this.wphComCode = wphComCode;
+	public void setwdhComCode(int wdhComCode) {
+		//System.out.println("wdhComCode set"+wdhComCode);
+		this.wdhComCode = wdhComCode;
 	}
-	public int getWphNoPeople() {
-		//System.out.println("wphNoPeople get"+wphNoPeople);
-		return wphNoPeople;
+	public int getwdhNoPeople() {
+		//System.out.println("wdhNoPeople get"+wdhNoPeople);
+		return wdhNoPeople;
 	}
-	public void setWphNoPeople(int wphNoPeople) {
-		//System.out.println("wphNoPeople set"+wphNoPeople);
-		this.wphNoPeople = wphNoPeople;
+	public void setwdhNoPeople(int wdhNoPeople) {
+		//System.out.println("wdhNoPeople set"+wdhNoPeople);
+		this.wdhNoPeople = wdhNoPeople;
 	}
-	public int getWphCost() {
-		//System.out.println("wphCost get"+wphCost);
-		return wphCost;
+	public int getwdhCost() {
+		//System.out.println("wdhCost get"+wdhCost);
+		return wdhCost;
 	}
-	public void setWphCost(int wphCost) {
-		//System.out.println("wphCost set"+wphCost);
-		this.wphCost = wphCost;
+	public void setwdhCost(int wdhCost) {
+		//System.out.println("wdhCost set"+wdhCost);
+		this.wdhCost = wdhCost;
 	}
-	public String getWphRemarks() {
-		//System.out.println("wphRemarks get"+wphRemarks);
-		return wphRemarks;
+	public String getwdhRemarks() {
+		//System.out.println("wdhRemarks get"+wdhRemarks);
+		return wdhRemarks;
 	}
-	public void setWphRemarks(String wphRemarks) {
-		//System.out.println("wphRemarks set"+wphRemarks);
-		this.wphRemarks = wphRemarks;
+	public void setwdhRemarks(String wdhRemarks) {
+		//System.out.println("wdhRemarks set"+wdhRemarks);
+		this.wdhRemarks = wdhRemarks;
 	}
-	public String getwphDate() {
-		//System.out.println("wphDate get"+wphDate);
-		return wphDate;
+	public String getwdhDate() {
+		//System.out.println("wdhDate get"+wdhDate);
+		return wdhDate;
 	}
-	public void setwphDate(String wphDate) {
-		if(wphDate==""){
-			wphDate = null;
+	public void setwdhDate(String wdhDate) {
+		if(wdhDate==""){
+			wdhDate = null;
 		}else{
-		this.wphDate = wphDate;
+		this.wdhDate = wdhDate;
 		}
-		//System.out.println("wphDate set"+wphDate);
+		//System.out.println("wdhDate set"+wdhDate);
 	}
 
 }

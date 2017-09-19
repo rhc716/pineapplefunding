@@ -3,72 +3,72 @@ package com.pineapple.pms.service;
 public class WbsDailyIncome {
 	
 	
-	private int wpiCode;
-	private int wpiFdCode;
-	private int wpiMsCode;
-	private int wpiWaCode;
-	private int wpiIncome;
-	private int wpiComCode;
-	private String wpiReason;
-	private String wpiDate;
-	public int getWpiCode() {
-		return wpiCode;
+	private int wdiCode;
+	private int wdiFdCode;
+	private int wdiMsCode;
+	private int wdiWaCode;
+	private int wdiIncome;
+	private int wdiComCode;
+	private String wdiReason;
+	private String wdiDate;
+	public int getwdiCode() {
+		return wdiCode;
 	}
-	public void setWpiCode(int wpiCode) {
-		this.wpiCode = wpiCode;
+	public void setwdiCode(int wdiCode) {
+		this.wdiCode = wdiCode;
 	}
-	public int getWpiFdCode() {
-		return wpiFdCode;
+	public int getwdiFdCode() {
+		return wdiFdCode;
 	}
-	public void setWpiFdCode(int wpiFdCode) {
-		this.wpiFdCode = wpiFdCode;
+	public void setwdiFdCode(int wdiFdCode) {
+		this.wdiFdCode = wdiFdCode;
 	}
-	public int getWpiMsCode() {
-		return wpiMsCode;
+	public int getwdiMsCode() {
+		return wdiMsCode;
 	}
-	public void setWpiMsCode(int wpiMsCode) {
-		this.wpiMsCode = wpiMsCode;
+	public void setwdiMsCode(int wdiMsCode) {
+		this.wdiMsCode = wdiMsCode;
 	}
-	public int getwpiWaCode() {
-		return wpiWaCode;
+	public int getwdiWaCode() {
+		return wdiWaCode;
 	}
-	public void setwpiWaCode(int wpiWaCode) {
-		this.wpiWaCode = wpiWaCode;
+	public void setwdiWaCode(int wdiWaCode) {
+		this.wdiWaCode = wdiWaCode;
 	}
-	public int getWpiIncome() {
-		return wpiIncome;
+	public int getwdiIncome() {
+		return wdiIncome;
 	}
-	public void setWpiIncome(int wpiIncome) {
-		this.wpiIncome = wpiIncome;
+	public void setwdiIncome(int wdiIncome) {
+		this.wdiIncome = wdiIncome;
 	}
-	public int getWpiComCode() {
-		return wpiComCode;
+	public int getwdiComCode() {
+		return wdiComCode;
 	}
-	public void setWpiComCode(int wpiComCode) {
-		this.wpiComCode = wpiComCode;
+	public void setwdiComCode(int wdiComCode) {
+		this.wdiComCode = wdiComCode;
 	}
-	public String getWpiReason() {
-		return wpiReason;
+	public String getwdiReason() {
+		return wdiReason;
 	}
-	public void setWpiReason(String wpiReason) {
-		this.wpiReason = wpiReason;
+	public void setwdiReason(String wdiReason) {
+		this.wdiReason = wdiReason;
 	}
-	public String getWpiDate() {
-		return wpiDate;
+	public String getwdiDate() {
+		return wdiDate;
 	}
-	public void setWpiDate(String wpiDate) {
-		if(wpiDate==""){
-			wpiDate=null;
+	public void setwdiDate(String wdiDate) {
+		if(wdiDate==""){
+			wdiDate=null;
 		}else{
-			this.wpiDate = wpiDate;
+			this.wdiDate = wdiDate;
 		}
 	}
 
 	@Override
 	public String toString() {
-		return "WbsPlanIncome [wpiCode=" + wpiCode + ", wpiFdCode=" + wpiFdCode + ", wpiMsCode=" + wpiMsCode
-				+ ", wpiWaCode=" + wpiWaCode + ", wpiIncome=" + wpiIncome + ", wpiComCode=" + wpiComCode
-				+ ", wpiReason=" + wpiReason + ", wpiDate=" + wpiDate + "]";
+		return "WbsPlanIncome [wdiCode=" + wdiCode + ", wdiFdCode=" + wdiFdCode + ", wdiMsCode=" + wdiMsCode
+				+ ", wdiWaCode=" + wdiWaCode + ", wdiIncome=" + wdiIncome + ", wdiComCode=" + wdiComCode
+				+ ", wdiReason=" + wdiReason + ", wdiDate=" + wdiDate + "]";
 	}
 
 }
