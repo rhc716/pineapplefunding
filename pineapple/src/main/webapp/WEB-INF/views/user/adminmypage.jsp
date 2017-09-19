@@ -5,6 +5,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>관리자 MyPage</title>
+
+<!-- 파비콘 -->
+<link rel="shortcut icon" type="image/ico" href="${pageContext.request.contextPath}/resources/img/favicon-32x32.ico">
+
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style type="text/css">	
@@ -55,10 +59,10 @@ $(document).ready(function(){
 
     $('.filterable .filters input').keyup(function(e){
     	e.preventdefault;
-        /* Ignore tab key */
+        //Ignore tab key
         var code = e.keyCode || e.which;
         if (code == '9') return;
-        /* Useful DOM data and selectors */
+        //Useful DOM data and selectors
         var $input = $(this),
         inputContent = $input.val().toLowerCase(),
         $panel = $input.parents('.filterable'),
@@ -70,12 +74,12 @@ $(document).ready(function(){
             var value = $(this).find('td').eq(column).text().toLowerCase();
             return value.indexOf(inputContent) === -1;
         });
-        /* Clean previous no-result if exist */
+        //Clean previous no-result if exist
         $table.find('tbody .no-result').remove();
-        /* Show all rows, hide filtered ones (never do that outside of a demo ! xD) */
+        //Show all rows, hide filtered ones
         $rows.show();
         $filteredRows.hide();
-        /* Prepend no-result row if all rows are filtered */
+        //Prepend no-result row if all rows are filtered
         if ($filteredRows.length === $rows.length) {
             $table.find('tbody').prepend($('<tr class="no-result text-center"><td colspan="'+ $table.find('.filters th').length +'">No result found</td></tr>'));
         }

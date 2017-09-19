@@ -17,6 +17,9 @@
 <!-- css rhc -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
 <title>사업분야등록</title>
+<!-- 파비콘 -->
+<link rel="shortcut icon" type="image/ico" href="${pageContext.request.contextPath}/resources/img/favicon-32x32.ico">
+
 <!-- table 검색정렬기능 css-->
 <style type="text/css">	
 	.filterable {

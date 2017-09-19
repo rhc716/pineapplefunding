@@ -92,6 +92,9 @@ $(document).ready(function(){
 });
 </script>
 <title>펀딩내 권한부여</title>
+
+<!-- 파비콘 -->
+<link rel="shortcut icon" type="image/ico" href="${pageContext.request.contextPath}/resources/img/favicon-32x32.ico">
 </head>
 <body>
 <div class="container">
