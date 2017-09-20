@@ -96,7 +96,19 @@ public class TimelineDao implements TimelineDaoInterface{
 		
 		return sqlSessionTemplate.selectList("com.pineapple.timeline.service.TimelineMapper.selectmoneyall",map);
 	}
+	//타임라인 댓글순
+	@Override
+	public List<TimelineAndUserAndEmployeeAndTimelineLike> timelineListReplySelect() {
+		log.debug("TimelineDao-----timelineFundingRanking");
+		return sqlSessionTemplate.selectList("com.pineapple.timeline.service.TimelineMapper.selectTimelineListReplyCount");
+	}
 	
+	//타임라인 인기순
+	@Override
+	public List<TimelineAndUserAndEmployeeAndTimelineLike> timelineListLikeSelect() {
+		log.debug("TimelineDao-----timelineFundingRanking");
+		return sqlSessionTemplate.selectList("com.pineapple.timeline.service.TimelineMapper.selectTimelineListLikeCount");
+	}
 	
 	
 	////////////////////////////My Page Time Line///////////////////////////
@@ -135,6 +147,16 @@ public class TimelineDao implements TimelineDaoInterface{
 		log.debug(map.get("numberOfRequests")+"<---------------------map.get('numberOfRequests')");
 		
 		return sqlSessionTemplate.selectList("com.pineapple.timeline.service.TimelineMapper.selectempreportlist",map);
+	}
+	//선택 보고서 삭제
+	@Override
+	public int mypageReportDelete(HashMap<String, String[]> msgCodemap) {
+		log.debug("TimelineDao-----mypageReportDelete");
+		int sucount = 0;
+		for(int i = 0 ; i < msgCodemap.get("msgCodelist").length ; i ++){
+			sqlSessionTemplate.update("com.pineapple.timeline.service.TimelineMapper.deleteMypagereport",msgCodemap.get("msgCodelist")[i]);
+			sucount++;}
+		return sucount;
 	}
 	//선택 보고서 읽은 보고서로
 	@Override

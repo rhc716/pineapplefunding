@@ -78,6 +78,21 @@
 		getfundingqnareply.fail(function(){
 			alert("실패");
 		});
+		$('.timemenu').click(function(){
+			var timedataCode = $(this).attr('dataCode')
+			var getfundingqnareply = $.ajax({
+				type : 'get',
+				url : '/pineapple/timelineselectmenu.invest',
+				data : {timedataCode : timedataCode}
+			});
+			getfundingqnareply.done(function(msg){	
+				$('#timecontent').html(msg)
+			});
+			getfundingqnareply.fail(function(){
+				alert("실패");
+			});
+			
+		});
         
 	})
 </script>
@@ -93,22 +108,18 @@
 			<div class="col-xs 12" style="text-align: center;">
 				<h1>TIME LINE</h1>
 			</div>
-			<div class="col-xs-2" style="padding: 0px 0px;">
-				<div class="col-xs-12" style="border: 1.5px solid #009442; border-radius: 5px; padding: 10px;">
-				<ul style="font-size:15px; list-style: none; height: 100%; width: 100%; padding: 10px; text-align: left; margin: 0px; border-bottom: 1px solid #d7d7d7;">
-						<label style="font-size: 20px;">카테고리</label>
-						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="it"></span><span>IT</span></li>
-						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="핀테크"></span><span>핀테크</span></li>
-						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="인터넷서비스"></span><span>인터넷서비스</span></li>
-						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="문화"></span><span>문화</span></li>
-						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="디자인"></span><span>디자인</span></li>
-						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="뷰티"></span><span>뷰티</span></li>
-						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="의료"></span><span>의료</span></li>
-						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="제조"></span><span>제조</span></li>
-						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="유통"></span><span>유통</span></li>
-						<li style="margin-bottom: 5px;"><span style="margin-right: 15px;"><input class="category" name="category" type="checkbox" value="농수산"></span><span>농수산</span></li>
-				</ul>
-				</div>
+			<div class="col-xs-2" style="padding: 0px;">
+				<div class="btn-group" role="group">
+   					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="width: 200px;">
+      				메뉴
+      				<span class="caret"></span>
+   				 </button>
+    				<ul class="dropdown-menu" role="menu" style="width: 200px;">
+     					 <li><a class="timemenu" href="#" dataCode="최신">최신순</a></li>
+     					 <li><a class="timemenu" href="#" dataCode="인기">인기순</a></li>
+     					 <li><a class="timemenu" href="#" dataCode="댓글">댓글순</a></li>
+    				</ul>
+  				</div>
 			</div>
 			<div class="col-xs-8" style="padding: 0px;">
 			<div class="col-xs-12" style="padding: 0px;">
@@ -153,7 +164,7 @@
 			 	</div>
 				<!-- Time line input modal -->
 				</div>
-				<div class="col-xs-12">
+				<div class="col-xs-12"  id="timecontent">
 					<c:forEach var="Data" items="${timelinelist}">
 					<div class="col-xs-12 timelinelist">
 						<div class="col-xs-12">
@@ -168,10 +179,12 @@
 									</c:otherwise>
 								</c:choose>
 								</span>
+								<c:if test="${Data.nickname == nickname}">
 								<span class="timeupanddelspan">
 								&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#${Data.tlCode}">수정하기</a>
 								&nbsp;&nbsp;<a href="/pineapple/timelinedelete.timeline?tlCode=${Data.tlCode}">삭제하기</a>
 								</span>
+								</c:if>
 							</div>
 
 							<h3 class="col-xs-12 timelinetitle">
@@ -242,8 +255,13 @@
 					</c:forEach>
 				</div>
 			</div>
-			<div class="col-xs-2" id="fundingranking" style="padding: 0px;">
+			<div class="col-xs-2" style="padding: 0px;">
+			<div class="col-xs-12" style="border: 1.5px solid #009442; text-align: center; margin-bottom: 10px; padding: 5px; border-radius: 5px;">
+			최근 등록 펀딩
+			</div>
+			<div class="col-xs-12" id="fundingranking" style="padding: 0px;">
 				
+			</div>
 			</div>
 		</div>
 	<!-- 풋터 -->

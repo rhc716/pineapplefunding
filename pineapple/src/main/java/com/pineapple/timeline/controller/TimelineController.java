@@ -184,6 +184,15 @@ public class TimelineController {
 		log.debug(timelinereplydelete+"<-----TimelineController[timelinereplydelete 값 출력]");
 		return "redirect:/investormypage.user";
 	}
+	//타임라인 메뉴 설정 
+	@RequestMapping(value="/timelineselectmenu.invest",method=RequestMethod.GET)
+	public String timelineselectmenu(Locale locale,Model model,@RequestParam(value="timedataCode")String timedataCode){
+		log.debug("<----- TimelineController[timelineselectmenu호출]----->");
+		List<TimelineAndUserAndEmployeeAndTimelineLike> timelineselectmenu = timelineserviceinterface.getTimelineListmenu(timedataCode);
+		model.addAttribute("timelineselectmenu",timelineselectmenu);
+		log.debug(timelineselectmenu+"<-----TimelineController[timelineselectmenu 값 출력]");
+		return "timeline/timelineajax/timelineselectmenu";
+	}
 
 	
 	
@@ -333,6 +342,48 @@ public class TimelineController {
 		log.debug(moneycontent+"<-----TimelineController[moneycontent 값 출력]");
 		return moneycontent;
 	}
+	//받은 보고서 list 삭제
+	@RequestMapping(value="/investorreportdelete.timeline",method=RequestMethod.GET)
+	public String investorReportlistRemove(Locale locale,Model model,HttpServletRequest request,HttpSession session,@RequestParam(value="numberOfRequests",defaultValue="0")int numberOfRequests){
+		log.debug("<----- TimelineController[investorReportlistRemove호출]----->");
+		String Category = "empreceivemessagelist";
+		String[] msgCodelist = request.getParameterValues("reportchecklist");
+		HashMap<String, String[]> msgCodemap = new HashMap<>();
+		msgCodemap.put("msgCodelist", msgCodelist);
+		log.debug(msgCodemap.get("msgCodelist").length+"<----- TimelineController[msgCodemap.get('msgCodelist').length호출]----->");
+		List<Companyreport> investorReportlistRemove= timelineserviceinterface.deleteMypageReportlist(msgCodemap, session.getAttribute("id").toString(), Category, numberOfRequests);
+		log.debug(investorReportlistRemove+"<-----TimelineController[myinvestormessagedelete 값 출력]");
+		model.addAttribute("moneycontent",investorReportlistRemove);
+		return "user/employeeajax/employeereportsendandreceivecontent";
+	}
+	//선택 보고서 읽은 보고서로
+	@RequestMapping(value="/investorreportcheckok.timeline",method=RequestMethod.GET)
+	public String investorReportCheckOkUpdate(Locale locale,Model model,HttpServletRequest request,HttpSession session,@RequestParam(value="numberOfRequests",defaultValue="0")int numberOfRequests){
+		log.debug("<----- TimelineController[investorReportCheckOkUpdate호출]----->");
+		String Category = "empreceivemessagelist";
+		String[] msgCodelist = request.getParameterValues("reportchecklist");
+		HashMap<String, String[]> msgCodemap = new HashMap<>();
+		msgCodemap.put("msgCodelist", msgCodelist);
+		log.debug(msgCodemap.get("msgCodelist").length+"<----- TimelineController[msgCodemap.get('msgCodelist').length호출]----->");
+		List<Companyreport> myinvestormessagecheckok= timelineserviceinterface.updateMypageReportCheckOkList(msgCodemap, session.getAttribute("id").toString(), Category, numberOfRequests);
+		log.debug(myinvestormessagecheckok+"<-----TimelineController[myinvestorreportdelete 값 출력]");
+		model.addAttribute("moneycontent",myinvestormessagecheckok);
+		return "user/employeeajax/employeereportsendandreceivecontent";
+	}
+	//선택 보고서 읽지않은 보고서로
+	@RequestMapping(value="/investorreportcheckno.timeline",method=RequestMethod.GET)
+	public String investorReportCheckNoUpdate(Locale locale,Model model,HttpServletRequest request,HttpSession session,@RequestParam(value="numberOfRequests",defaultValue="0")int numberOfRequests){
+		log.debug("<----- TimelineController[investorReportCheckNoUpdate호출]----->");
+		String Category = "empreceivemessagelist";
+		String[] msgCodelist = request.getParameterValues("reportchecklist");
+		HashMap<String, String[]> msgCodemap = new HashMap<>();
+		msgCodemap.put("msgCodelist", msgCodelist);
+		log.debug(msgCodemap.get("msgCodelist").length+"<----- TimelineController[msgCodemap.get('msgCodelist').length호출]----->");
+		List<Companyreport> myinvestormessagecheckno= timelineserviceinterface.updateMypageReportCheckNoList(msgCodemap,session.getAttribute("id").toString(), Category, numberOfRequests);
+		log.debug(myinvestormessagecheckno+"<-----TimelineController[myinvestorreportcheckno 값 출력]");
+		model.addAttribute("moneycontent",myinvestormessagecheckno);
+		return "user/employeeajax/employeereportsendandreceivecontent";
+	}
 	
 	
 	
@@ -358,30 +409,5 @@ public class TimelineController {
 		model.addAttribute("mfCategory",mfCategory);
 		return moneycontent;
 	}
-	//선택 보고서 읽은 보고서로
-/*	@RequestMapping(value="/investorreportcheckok.timeline",method=RequestMethod.GET)*/
-/*	public String investorReportCheckOkUpdate(Locale locale,Model model,HttpServletRequest request,HttpSession session,@RequestParam(value="Category",defaultValue="0")int Category,@RequestParam(value="numberOfRequests",defaultValue="0")int numberOfRequests){
-		log.debug("<----- TimelineController[investorReportCheckOkUpdate호출]----->");
-		String[] msgCodelist = request.getParameterValues("reportchecklist");
-		HashMap<String, String[]> msgCodemap = new HashMap<>();
-		msgCodemap.put("msgCodelist", msgCodelist);
-		log.debug(msgCodemap.get("msgCodelist").length+"<----- TimelineController[msgCodemap.get('msgCodelist').length호출]----->");
-		List<Companyreport> myinvestormessagecheckok= timelineserviceinterface.updateMypageReportCheckOkList(msgCodemap, session.getAttribute("id").toString(), Category, numberOfRequests);
-		log.debug(myinvestormessagecheckok+"<-----TimelineController[myinvestorreportdelete 값 출력]");
-		model.addAttribute("myinvestormessage",myinvestormessagecheckok);
-		return "user/investormypageajax/investormessagesendlist";
-	}
-	//선택 보고서 읽지않은 보고서로
-	@RequestMapping(value="/investorreportcheckno.timeline",method=RequestMethod.GET)
-	public String investorReportCheckNoUpdate(Locale locale,Model model,HttpServletRequest request,HttpSession session,@RequestParam(value="mfCategory",defaultValue="0")int mfCategory,@RequestParam(value="numberOfRequests",defaultValue="0")int numberOfRequests){
-		log.debug("<----- TimelineController[investorReportCheckNoUpdate호출]----->");
-		String[] msgCodelist = request.getParameterValues("reportchecklist");
-		HashMap<String, String[]> msgCodemap = new HashMap<>();
-		msgCodemap.put("msgCodelist", msgCodelist);
-		log.debug(msgCodemap.get("msgCodelist").length+"<----- TimelineController[msgCodemap.get('msgCodelist').length호출]----->");
-		List<Companyreport> myinvestormessagecheckno= timelineserviceinterface.updateMypageMessageCheckNoList(msgCodemap,session.getAttribute("id").toString());
-		log.debug(myinvestormessagecheckno+"<-----TimelineController[myinvestorreportcheckno 값 출력]");
-		model.addAttribute("myinvestormessage",myinvestormessagecheckno);
-		return "user/investormypageajax/investormessagesendlist";
-	}*/
+
 }

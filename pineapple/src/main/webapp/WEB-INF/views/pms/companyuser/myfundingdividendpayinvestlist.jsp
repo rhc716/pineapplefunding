@@ -40,7 +40,7 @@
 	</div>
 	<div class="col-md-9">
 		<div class="pagetitleandexplainbox">
-			<h1>펀딩의 투자자 목록</h1>
+			<h1>펀딩의 투자자 목록(미완성)</h1>
 			<span>
 				<b>펀딩의 투자자목록을 조회합니다.<br>투자자에게 배당할 수 있습니다.</b>
 			</span>

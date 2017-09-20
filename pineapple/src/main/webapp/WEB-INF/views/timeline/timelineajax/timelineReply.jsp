@@ -45,10 +45,16 @@ $(document).ready(function() {
 						<span>${Data.nickname}</span>
 						<span>${Data.tlReTime}</span>
 					</span>
+					<c:choose>
+					<c:when test="${Data.nickname = nickname}">
 					<span class="timeline-replyupanddel">
 						&nbsp;&nbsp;<a class="timelinereupdate" dataCode="${Data.tlReCode}">수정하기</a>
 						&nbsp;&nbsp;<a href="/pineapple/timelinereplydelete.invest?tlReCode=${Data.tlReCode}">삭제하기</a>
 					</span>
+					</c:when>
+					<c:otherwise>
+					</c:otherwise>
+					</c:choose>
 				</div>
 				<div class="" id="timelinereplyreload${Data.tlReCode}">
 					<div class="col-xs-12">

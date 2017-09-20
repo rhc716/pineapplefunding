@@ -49,7 +49,7 @@
 					<li><a href="/pineapple/fundingfilelistpage.pms">보고서조회(다운로드)</a></li>
 				</ul>
 			</li>
-			<li><a>배당하기</a></li>
+			<li><a href="/pineapple/myfundingdividendpay.invest">배당하기</a></li>
 			<li><a href="/pineapple/fundingauth.user">펀딩내권한부여</a></li>
 	
 		</ul>

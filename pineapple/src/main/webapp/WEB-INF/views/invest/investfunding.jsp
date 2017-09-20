@@ -29,6 +29,41 @@
 <script> 
 	//펀딩 Tab Content
   	$(document).ready(function() {
+  		function numberWithCommas(x) {
+  		    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  		}
+  		var getfundingdividendpalnlist = $.ajax({
+  			type : "get",
+  			url : "/pineapple/getfundingdividendpalnlist.pms",
+  			data : { fdCode : ${param.fdCode} }
+  		});
+  		
+  		//성공시
+  		getfundingdividendpalnlist.done(function(msg){
+  			//console.log(msg);
+  			//초기화
+  			$('#divlist').html("");
+  			//배당계획이 없으면 문구를 출력
+  			if(msg==""){
+  				$('#divlist').append(
+  						'<tr>'
+  							+'<td colspan="5" align="center"><b>배당계획이 없습니다</b></td>'
+  						+'</tr>'
+  				);
+  			}else{
+  				for(var i = 0; i<msg.length; i++){
+  					$('#divlist').append(
+  						'<tr>'
+  							+'<td>'+msg[i].divIndexName+'</td>'
+  							+'<td>'+msg[i].settlementUnit+'일</td>'
+  							+'<td>'+msg[i].minMargin+'원</td>'
+  							+'<td>'+msg[i].maxMargin+'원</td>'
+  							+'<td>'+msg[i].dividendRate+'%</td>'
+  						+'</tr>'
+  					);
+  				}
+  			}
+  		});
 	  	$('img').each(function(n){
 	 		console.log($(this));
 	 		$(this).on( "error", function(){
@@ -373,6 +408,9 @@
 			<li role="presentation" class="">
 				<a href="#report" role="tab" id="report-tab" data-toggle="tab" aria-controls="report" aria-expanded="false">보고서</a>
 			</li>
+			<li role="presentation" class="">
+				<a href="#dividendplan" role="tab" id="dividendplan-tab" data-toggle="tab" aria-controls="dividendplan" aria-expanded="false">배당계획</a>
+			</li>
 		</ul>
 		<div id="myTabContent" class="tab-content font-j" style="text-align: center;">
 			<div role="tabpanel" class="tab-pane fade active in" id="openstory" aria-labelledby="openstory-tab">
@@ -401,6 +439,23 @@
 			</div> 
 			<div role="tabpanel" class="tab-pane fade" id="report" aria-labelledby="report-tab"> 
 				<div id="reportContent">
+				</div> 
+			</div> 
+			<div role="tabpanel" class="tab-pane fade" id="dividendplan" aria-labelledby="dividendplan-tab"> 
+				<div id="dividendplanContent">
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr class="info">
+							<td>기준명</td>
+							<td>마감기준</td>
+							<td>최소마진</td>
+							<td>최대마진</td>
+							<td>배당율</td>
+						</tr>
+					</thead>
+					<tbody id="divlist">
+					</tbody>
+				</table>
 				</div> 
 			</div> 
 		</div> 

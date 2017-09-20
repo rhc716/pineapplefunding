@@ -104,6 +104,21 @@ public class TimelineService implements TimelineServiceInterface{
 		MyInvestorTimelineLog timelinelog = timelinedaointerface.mypageTimelineLogSelect(tlId);
 		return timelinelog;
 	}
+	//타임라인 menu 요청
+	@Override
+	public List<TimelineAndUserAndEmployeeAndTimelineLike> getTimelineListmenu(String timedataCode) {
+		log.debug("------------------TimelineService-----------------getTimelineListmenu()");
+		log.debug(timedataCode+"<------------------timedataCode");
+		List<TimelineAndUserAndEmployeeAndTimelineLike> returntime = null;
+		if(timedataCode.equals("최신")){
+			returntime = timelinedaointerface.timelineListSelect(); 
+		}else if(timedataCode.equals("댓글")){
+			returntime = timelinedaointerface.timelineListReplySelect();
+		}else{
+			returntime = timelinedaointerface.timelineListLikeSelect();
+		}
+		return returntime;
+	}
 	
 	
 	
@@ -121,7 +136,7 @@ public class TimelineService implements TimelineServiceInterface{
 	@Override
 	public List<Companyreport> updateMypageReportCheckOkList(HashMap<String, String[]> msgCodemap, String userid,String Category,int numberOfRequests) {
 		log.debug("------------------TimelineService-----------------updateMypageMessageCheckOkList()");
-		timelinedaointerface.mypageMessageCheckOkUpdate(msgCodemap);
+		timelinedaointerface.mypageReportCheckOkUpdate(msgCodemap);
 		List<Companyreport> messagereselect = timelinedaointerface.mypageempreportlistSelect(userid, Category, numberOfRequests);
 		return messagereselect;
 	}
@@ -129,7 +144,16 @@ public class TimelineService implements TimelineServiceInterface{
 	@Override
 	public List<Companyreport> updateMypageReportCheckNoList(HashMap<String, String[]> msgCodemap, String userid,String Category,int numberOfRequests) {
 		log.debug("------------------TimelineService-----------------updateMypageMessageCheckNoList()");
-		timelinedaointerface.mypageMessageCheckNkUpdate(msgCodemap);
+		timelinedaointerface.mypageReportCheckNkUpdate(msgCodemap);
+		List<Companyreport> messagereselect = timelinedaointerface.mypageempreportlistSelect(userid, Category, numberOfRequests);
+		return messagereselect;
+	}
+	//선택보고서 삭제
+	@Override
+	public List<Companyreport> deleteMypageReportlist(HashMap<String, String[]> msgCodemap, String userid,
+			String Category, int numberOfRequests) {
+		log.debug("------------------TimelineService-----------------deleteMypageReportlist()");
+		timelinedaointerface.mypageReportDelete(msgCodemap);
 		List<Companyreport> messagereselect = timelinedaointerface.mypageempreportlistSelect(userid, Category, numberOfRequests);
 		return messagereselect;
 	}
