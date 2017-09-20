@@ -111,7 +111,23 @@
 			<result property="pm" column="pm"/>
 		</collection>
 	</resultMap>
-	
+		
+	<!-- 메인화면검색용 TimelineAndUserAndEmployeeAndTimelineLike -->
+	<resultMap type="com.pineapple.timeline.service.TimelineAndUserAndEmployeeAndTimelineLike" id="selectTimelineList">
+		<id property="tlCode" column="tlCode"/>
+		<result property="tlTitle" column="tlTitle"/>
+		<result property="tlContent" column="tlContent"/>
+		<result property="tlTime" column="tlTime"/>
+		<result property="nickname" column="nickname"/>
+		<result property="emRankCode" column="emRankCode"/>
+		<result property="emComName" column="emComName"/>
+		<result property="timelinelikecount" column="timelinelikecount"/>
+		<collection property="timelineLike" ofType="com.pineapple.timeline.service.TimelineLike">
+			<id property="tlLikeId" column="tlLikeId"/>
+			<id property="tlCode" column="tlCode"/>
+			<result property="timelinelikenickname" column="timelinelikenickname"/>
+		</collection>
+	</resultMap>
 	
 	
 	
@@ -709,13 +725,36 @@
 	</delete>
 	
 	<!-- 메인화면 검색 // 펀딩분야 -->
-	<select id="mainSearchFunding">
-	
+	<select id="mainSearchFunding" parameterType="String" resultType="com.pineapple.funding.service.Funding">
+		SELECT *
+		FROM funding
+		WHERE fdstatus = '모집중' AND fdTitle LIKE CONCAT('%',#{searchtext},'%')
+		ORDER BY fdCode desc
+		LIMIT 0,5
 	</select>
 	
 	<!-- 메인화면 검색 // 타임라인분야 -->
-	<select id="mainSearchTimeline">
-	
+	<select id="mainSearchTimeline" parameterType="String" resultMap="selectTimelineList">
+		SELECT t.tlCode,
+		   t.tlTitle,
+		   t.tlContent,
+		   t.tlTime,
+		   u.nickname,
+		   e.emRankCode,
+		   e.emComName,
+		   (SELECT COUNT(tlCode) FROM timelinelike WHERE tlCode = t.tlCode) as timelinelikecount,
+		   tl.tlLikeId,
+		   (SELECT nickname FROM user su WHERE tl.tlLikeId = su.userId) as timelinelikenickname
+		FROM timeline t 
+		LEFT JOIN user u 
+		ON t.tlId = u.userId 
+		LEFT JOIN employee e 
+		ON u.userId = e.emUserId 
+		LEFT JOIN timelinelike tl 
+		ON tl.tlCode = t.tlCode
+		WHERE t.tlTitle LIKE CONCAT('%',#{searchtext},'%')
+		ORDER BY t.tlTime DESC
+		LIMIT 0,5
 	</select>
 	
 </mapper>

@@ -26,7 +26,7 @@
 			<ul class="navbar_menuleft"><a href="/pineapple/timelinemain.timeline">타임라인</a></ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/investmain.invest">투자하기</a></ul>
 			<ul class="navbar_menuleft"><a href="/pineapple/pmsmain.pms">펀딩&프로젝트관리</a></ul>
-			<ul class="navbar_menuright"><a>이용안내(개발중)</a></ul>
+			<ul class="navbar_menuright"><a href="/pineapple/guidepage.pms">이용안내</a></ul>
 			<ul class="navbar_menuright"><a href="/pineapple/mypage.user?level=${level}">Mypage</a></ul>
 		</div>
 	</c:when>

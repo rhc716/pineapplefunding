@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,6 +69,15 @@ $(document).ready(function(){
 #toptitlearea{
 	padding: 20px 20px;
 }
+.timelinebox{
+	
+	height: 100%;
+}
+.timelinediv{
+	border: 1px solid #1ec545;
+	display: inline-block;
+	width: 100%;
+}
 </style>
 </head>
 <body>
@@ -122,7 +132,30 @@ $(document).ready(function(){
 				</h4>
 			</div>
 			<div>
-			
+				<table class="table table-striped table-bordered table-hover">
+					<tr class="info">
+						<th>펀딩명</th>
+						<th>형태</th>
+						<th>발행주식수</th>
+						<th>주당발행가</th>
+						<th>최저이율</th>
+						<th>모집 시작일 ~ 마감일</th>
+						<th>프로젝트 시작일 ~ 마감일</th>
+						<th>링크</th>
+					</tr>
+					<c:forEach items="${searchResult.mainSearchFunding}" var="result">
+						<tr>
+							<td>${result.fdTitle}</td>
+							<td>${result.fdType}</td>
+							<td>${result.numberOfShares}</td>
+							<td>${result.issuePrice}</td>
+							<td>${result.minInterestRate}</td>
+							<td>${fn:split(result.openDate," ")[0]} <br>~ ${fn:split(result.closeDate," ")[0]}</td>
+							<td>${fn:split(result.projectStartDate," ")[0]} <br>~ ${fn:split(result.projectEndDate," ")[0]}</td>
+							<td><a href="${pageContext.request.contextPath}/investfunding.invest?fdCode=${result.fdCode}"><button type="button" class="btn btn-block btn-small btn-primary">보기</button></a></td>
+						</tr>
+					</c:forEach>
+				</table>
 			</div>
 		</div>
 		<div class="row">
@@ -132,7 +165,54 @@ $(document).ready(function(){
 				</h4>
 			</div>
 			<div>
-			
+			<div class="timelinebox">
+					<c:forEach items="${searchResult.mainSearchTimeline}" var="result2">
+						<div class="timelinediv">
+						<div class="col-xs-12 timelinenameandtime">
+							<span class="timelinenameandtimespan">
+							<c:choose>
+								<c:when test="${result2.emComName == null}">
+									<span>${result2.nickname}</span><span>${result2.tlTime}</span>
+								</c:when>
+								<c:otherwise>
+									<span>${result2.emComName}</span><span>${result2.tlTime}</span>
+								</c:otherwise>
+							</c:choose>
+							</span>
+							<span class="timeupanddelspan">
+							&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#${result2.tlCode}">수정하기</a>
+							&nbsp;&nbsp;<a href="/pineapple/timelinedelete.timeline?tlCode=${result2.tlCode}">삭제하기</a>
+							</span>
+						</div>
+	
+						<h3 class="col-xs-12 timelinetitle">
+							${result2.tlTitle}
+						</h3>
+						<div class="col-xs-12 timelinecontent">
+							${result2.tlContent}
+						</div>
+						<div class="col-xs-12 timelinefooter ">
+							<a class="timereply" id="timelinereply${result2.tlCode}" href="#collapseExample${result2.tlCode}" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample${result2.tlCode}" dataCode="${result2.tlCode}">댓글더보기</a>
+							<div class="col-xs-12 collapse" id="collapseExample${result2.tlCode}">
+								<div class="col-xs-12" style="margin:20px 0px;">
+									<form id="timelinereplyform${result2.tlCode}" action="/pineapple/timelinereplyinsert.invest" method="post">
+										<div class="col-xs-8">
+											<input name="tlCode" type="hidden" value="${result2.tlCode}">
+											<input name="tlReId" type="hidden" value="${id}">
+											<textarea class="form-control" name="tlReContent" rows="3" style="width: 100%; height: 100px; resize: none;" placeholder="댓글을 입력해주세요"></textarea>
+										</div>
+										<div class="col-xs-4" style="text-align:left; padding:0px;">
+											<button class="timelinereplyinsertbtn btn btn-info" dataCode="${result2.tlCode}" style="width: 50%; height: 100px; padding:0px; font-size:20px;">댓글등록하기</button>
+										</div>
+									</form>
+								</div>
+								<div id="timelinereplylist${result2.tlCode}">
+								</div>
+							</div>
+						</div>
+						</div>
+					</c:forEach>
+				</div>
 			</div>
 		</div>
 	</div>

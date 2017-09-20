@@ -189,6 +189,12 @@ public class FundingController {
 			return "pms/investoruser/mydividendview";
 		}
 		
+	// 메인화면에서 가이드(이용안내)페이지로 이동
+		@RequestMapping(value = "/guidepage.pms", method = RequestMethod.GET)
+		public String guidePage(Locale locale, Model model) {
+			log.debug("FundingController의 guidePage호출 성공");
+			return "guidepage";
+		}
 ////////////////////////////////////////////////위에는///페이지요청//////////////////////////////////////////////////////
 	
 	// 펀딩개설요청 ( 기업회원 경영자 )
@@ -414,11 +420,10 @@ public class FundingController {
 			, @RequestParam(value="searchtext",required=false,defaultValue="asdf") String searchtext) {
 		log.debug("FundingController의 mainSearch호출 성공");
 		log.debug("searchtext : " + searchtext);
-		Map map = new HashMap<>();
-		map.put("result", service.mainSearch(searchtext));
-		log.debug("result : " + map.get("result"));
+		HashMap<String, Object> map;
+		map = service.mainSearch(searchtext);
+		log.debug("컨트롤러에서 다시 받은 result : " + map);
+		model.addAttribute("searchResult",map);
 		return "searchpage";
 	}
-	
-	
 }

@@ -384,9 +384,11 @@ public class FundingDao implements FundingDaoInterface {
 	@Override
 	public HashMap<String, Object> mainSearch(String searchtext) {
 		log.debug("FundingDao의 mainSearch호출 성공");
-		Map<String,Object> map = new HashMap<String,Object>();
-		/*log.debug("FundingDao의 mainSearch 펀딩검색결과 : "+sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.mainSearchFunding",searchtext));
-		log.debug("FundingDao의 mainSearch 타임라인검색결과 : "+sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.mainSearchTimeline",searchtext));*/
-		return null;
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		log.debug("FundingDao의 mainSearch 펀딩검색결과 : "+sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.mainSearchFunding",searchtext));
+		log.debug("FundingDao의 mainSearch 타임라인검색결과 : "+sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.mainSearchTimeline",searchtext));
+		map.put("mainSearchFunding", sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.mainSearchFunding",searchtext));
+		map.put("mainSearchTimeline", sqlSessionTemplate.selectList("com.pineapple.funding.service.FundingMapper.mainSearchTimeline",searchtext));
+		return map;
 	}
 }

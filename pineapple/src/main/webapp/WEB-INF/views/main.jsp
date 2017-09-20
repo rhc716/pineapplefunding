@@ -226,7 +226,7 @@ $(document).ready(function(){
 	<div class="col-xs-3 col-md-3" style="padding-left: 30px;">
 		<!-- 우측 배너 -->
 		<div class="row">
-			<a id="myAdLink" href="">
+			<a id="myAdLink" href="/pineapple/guidepage.pms">
 				<div id="myAd">
 				  <div class="myAd_Img" id="adBg"></div>
 				  <div class="myAd_Img" id="myAd_chrome"></div>
