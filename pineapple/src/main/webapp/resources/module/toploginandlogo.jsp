@@ -55,11 +55,30 @@
 		<c:when test="${not empty sessionScope.userLogin}">
 		
             <div style="float: right; display:block;">
-				<a href="/pineapple/investormypage.user#message">
-					<button type="button" class="btn btn-primary btn-sm" aria-label="left Align">
-						<span class="topbtnspan glyphicon glyphicon-envelope pull-right"><b> 메세지 (<span id="newmessage">0</span>)</b></span>
-					</button>
-				</a>
+				
+				
+	            <c:if test="${sessionScope.level eq '관리자'}">
+		            <a href="/pineapple/adminmypage.user#message">
+						<button type="button" class="btn btn-primary btn-sm" aria-label="left Align">
+							<span class="topbtnspan glyphicon glyphicon-envelope pull-right"><b> 메세지 (<span id="newmessage">0</span>)</b></span>
+						</button>
+					</a>
+	            </c:if>
+	            <!-- 경영진 -->
+	            <c:if test="${sessionScope.level eq '기업회원'}">
+		            <a href="/pineapple/managermypage.user#message">
+						<button type="button" class="btn btn-primary btn-sm" aria-label="left Align">
+							<span class="topbtnspan glyphicon glyphicon-envelope pull-right"><b> 메세지 (<span id="newmessage">0</span>)</b></span>
+						</button>
+					</a>
+	            </c:if>
+	            <c:if test="${sessionScope.level eq '투자자'}">
+		            <a href="/pineapple/investormypage.user#message">
+						<button type="button" class="btn btn-primary btn-sm" aria-label="left Align">
+							<span class="topbtnspan glyphicon glyphicon-envelope pull-right"><b> 메세지 (<span id="newmessage">0</span>)</b></span>
+						</button>
+					</a>
+	            </c:if>
 		    </div> 
 			<div style="float: right; display:block;">
 				<a href="/pineapple/logout.user">

@@ -27,6 +27,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/rhc.css" />
+
 </head>
 <body>
 <div class="container">
@@ -49,7 +50,7 @@
 		<!-- 타이틀영역 -->
 			<div class="row" id="maintitlearea" align="left">
 				<h2 class="colorchangetitle" align="center">프로젝트관리(PMS)가 가능한 크라우드펀딩사이트</h2>
-				<h1 class="colorchangetitle" align="center"><b>PineApple</b></h1>
+				<h1 class="guidetitlebox" class="colorchangetitle" align="center"><b>PineApple</b></h1>
 			</div>
 		</div>
 		<div class="col-xs-3 col-md-3">
@@ -60,6 +61,110 @@
 
 <!-- 본문 -->
 <div class="row">
+	<div class="col-xs-1"></div>
+	<div class="col-xs-10 guidebigbox">
+		<div class="row">
+			<div class="guidesmallbox">
+				<h1 class="guidetitlebox">
+					<img src="${pageContext.request.contextPath}/resources/img/logo.jpg" class="logoimg">
+					소제목
+				</h1>
+				<div class="guidecontentbox">
+					내용
+				</div>
+			</div>
+			<div class="guidesmallbox">
+				<h1 class="guidetitlebox">
+					<img src="${pageContext.request.contextPath}/resources/img/logo.jpg" class="logoimg">
+					소제목
+				</h1>
+				<div class="guidecontentbox">
+					내용   
+				</div>
+			</div>
+		</div>
+		<div class="row">	
+			<div class="guidesmallbox">
+				<h1 class="guidetitlebox">
+					<img src="${pageContext.request.contextPath}/resources/img/logo.jpg" class="logoimg">
+					소제목
+				</h1>
+				<div class="guidecontentbox">
+					내용   
+				</div>
+			</div>
+			<div class="guidesmallbox">
+				<h1 class="guidetitlebox">
+					<img src="${pageContext.request.contextPath}/resources/img/logo.jpg" class="logoimg">
+					소제목
+				</h1>
+				<div class="guidecontentbox">
+					   내용
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="guidesmallbox">
+				<h1 class="guidetitlebox">
+					<img src="${pageContext.request.contextPath}/resources/img/logo.jpg" class="logoimg">
+					소제목
+				</h1>
+				<div class="guidecontentbox">
+					 내용  
+				</div>
+			</div>
+			<div class="guidesmallbox">
+				<h1 class="guidetitlebox">
+					<img src="${pageContext.request.contextPath}/resources/img/logo.jpg" class="logoimg">
+					소제목
+				</h1>
+				<div class="guidecontentbox">
+					내용   
+				</div>
+			</div>
+		</div>
+		<div class="row">	
+			<div class="guidesmallbox">
+				<h1 class="guidetitlebox">
+					<img src="${pageContext.request.contextPath}/resources/img/logo.jpg" class="logoimg">
+					소제목
+				</h1>
+				<div class="guidecontentbox">
+					내용   
+				</div>
+			</div>
+			<div class="guidesmallbox">
+				<h1 class="guidetitlebox">
+					<img src="${pageContext.request.contextPath}/resources/img/logo.jpg" class="logoimg">
+					소제목
+				</h1>
+				<div class="guidecontentbox">
+					내용   
+				</div>
+			</div>
+		</div>
+		<div class="row">	
+			<div class="guidesmallbox">
+				<h1 class="guidetitlebox">
+					<img src="${pageContext.request.contextPath}/resources/img/logo.jpg" class="logoimg">
+					소제목
+				</h1>
+				<div class="guidecontentbox">
+					내용   
+				</div>
+			</div>
+			<div class="guidesmallbox">
+				<h1 class="guidetitlebox">
+					<img src="${pageContext.request.contextPath}/resources/img/logo.jpg" class="logoimg">
+					소제목
+				</h1>
+				<div class="guidecontentbox">
+					내용	   
+				</div>
+			</div>
+		</div>	
+	</div>
+	<div class="col-xs-1"></div>
 </div>
 <!-- 풋터 -->
 	<c:import url="/resources/module/footer.jsp"/>

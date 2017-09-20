@@ -70,10 +70,25 @@
 	               <i class="fa fa-user fa-lg pull-right" style="color: #009442;"></i>
 	               <p class="list-group-item-text">${nickname}님의 마이페이지</p>
 	            </a>
-	            <a href="/pineapple/investormypage.user#message" class="list-group-item">
-	               <i class="glyphicon glyphicon-envelope pull-right" style="color: #01619d;"></i>
-	               <p class="list-group-item-text">메세지 (<span id="newmessage">0</span>)</p>
-	            </a>
+	            <c:if test="${sessionScope.level eq '관리자'}">
+	           	 	<a href="/pineapple/adminmypage.user#message" class="list-group-item">
+		               <i class="glyphicon glyphicon-envelope pull-right" style="color: #01619d;"></i>
+		               <p class="list-group-item-text">메세지 (<span id="newmessage">0</span>)</p>
+		            </a>
+	            </c:if>
+	            <!-- 경영진 -->
+	            <c:if test="${sessionScope.level eq '기업회원'}">
+          	 	 	<a href="/pineapple/managermypage.user#message" class="list-group-item">
+		               <i class="glyphicon glyphicon-envelope pull-right" style="color: #01619d;"></i>
+		               <p class="list-group-item-text">메세지 (<span id="newmessage">0</span>)</p>
+		            </a>
+	            </c:if>
+	            <c:if test="${sessionScope.level eq '투자자'}">
+          	 	 	<a href="/pineapple/investormypage.user#message" class="list-group-item">
+		               <i class="glyphicon glyphicon-envelope pull-right" style="color: #01619d;"></i>
+		               <p class="list-group-item-text">메세지 (<span id="newmessage">0</span>)</p>
+		            </a>
+	            </c:if>
 	            <a href="/pineapple/logout.user" class="list-group-item">
 	               <i class="glyphicon glyphicon-off pull-right logouttxt"></i>
 	               <p class="list-group-item-text">로그아웃</p>
