@@ -332,6 +332,16 @@ $(document).ready(function(){
 			});
 		});
 	});
+	var messagetab = $.ajax({ // ajax실행부분
+        type: 'get',
+        url : '/pineapple/investormessagelist.timeline',
+        success : function success(msg){
+        	$('#adminmessage').html(msg);
+        },
+        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+        error : function error(){
+       	}
+	});
 });
 </script>
 </head>
@@ -343,6 +353,7 @@ $(document).ready(function(){
 	<c:import url="/resources/module/topmenu.jsp"/>
 <!-- 본문 -->
 <!-- 경영진마이페이지 Tab bar -->
+<div class="container">
 	<ul id="myTab" class="nav nav-tabs" role="tablist"> 
 		<li role="presentation" class="active">
 			<a href="#managerinfo" id="managerinfo-tab" role="tab" data-toggle="tab" aria-controls="managerinfo" aria-expanded="true">내정보</a>
@@ -1430,11 +1441,12 @@ $(document).ready(function(){
 					</div>
 				</div>
 			</div>
+		</div> 
 			<!-- 여섯번째탭 시작 -->
 			<div role="tabpanel" class="tab-pane fade" id="message" aria-labelledby="message-tab"> 
-				<p>메세지</p> 
-			</div>
-		</div> 
+				<h1 style="text-align: center;">MY MESSAGE LIST</h1>
+				<div class="col-xs-12" id="adminmessage"></div>
+			</div>	</div>
 	</div>
 <!-- 풋터 -->
 <c:import url="/resources/module/footer.jsp"/>

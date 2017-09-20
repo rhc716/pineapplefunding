@@ -151,7 +151,8 @@ $(document).ready(function(){
 		  
 		<!-- carousel2,3번 영역 -->
 		<div class="row">	
-			<div id="myCarousel2" class="carousel slide" data-ride="carousel" style="width: 300px; height:245px; float: left;">
+			<div class="col-xs-6" style="text-align: center; padding: 0px 5px 0px 0px;">
+			<div id="myCarousel2" class="carousel slide" data-ride="carousel" style="width: 100%">
 			    <!-- Indicators -->
 			    <ol class="carousel-indicators">
 			    	<li data-target="#myCarousel2" data-slide-to="0" class="active"></li>
@@ -178,10 +179,12 @@ $(document).ready(function(){
 			      <span class="sr-only">Next</span>
 			    </a>
 		  	</div>
+		  	</div>
 		  <!-- carousel 끝 -->
 		
 		<!-- carousel : 회전하면서 이미지를 보여주는 것 -->
-			<div id="myCarousel3" class="carousel slide" data-ride="carousel" style="width: 300px; height:245px; float: right;">
+			<div class="col-xs-6" style="text-align: center; padding: 0px 0px 0px 5px;">
+			<div id="myCarousel3" class="carousel slide" data-ride="carousel" style="width: 100%">
 			    <!-- Indicators -->
 			    <ol class="carousel-indicators">
 			    	<li data-target="#myCarousel3" data-slide-to="0" class="active"></li>
@@ -207,6 +210,7 @@ $(document).ready(function(){
 			      <span class="glyphicon glyphicon-chevron-right"></span>
 			      <span class="sr-only">Next</span>
 			    </a>
+		  	</div>
 		  	</div>
 		  <!-- carousel 끝 -->
 		</div>

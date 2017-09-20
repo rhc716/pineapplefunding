@@ -18,8 +18,90 @@ $(document).ready(function(){
 			$('input[name=reportchecked]').prop('checked',false)
 		}
 	});
-	
-	
+	$('#reportreadok').click(function(){
+		$('#checkallre').prop('checked',false)
+		var messagecount = 0;
+		var messagecheckedlength = $('input[name=reportchecked]').length
+		var reportchecklist = new Array();
+		for(i = 0 ; i < messagecheckedlength ; i++){
+			if(document.getElementsByName("reportchecked")[i].checked == true){
+				reportchecklist[messagecount] = document.getElementsByName("reportchecked")[i].value;
+				messagecount++
+			}
+		}
+		if(reportchecklist == ''){
+			console.log('미실행')
+		}else{
+		$.ajaxSettings.traditional = true;
+		var investmenttab = $.ajax({ // ajax실행부분
+	        type: 'get',
+	        url : '/pineapple/investorreportcheckok.timeline',
+	        data : {reportchecklist : reportchecklist},
+	        success : function success(msg){
+	        	$('#checkmoneyflowcheck').html(msg)
+	        },
+	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+	        error : function error(){
+        	}
+		});
+		}
+	});	
+	$('#reportreadno').click(function(){
+		$('#checkallre').prop('checked',false)
+		var messagecount = 0;
+		var messagecheckedlength = $('input[name=reportchecked]').length
+		var reportchecklist = new Array();
+		for(i = 0 ; i < messagecheckedlength ; i++){
+			if(document.getElementsByName("reportchecked")[i].checked == true){
+				reportchecklist[messagecount] = document.getElementsByName("reportchecked")[i].value;
+				messagecount++
+			}
+		}
+		if(reportchecklist == ''){
+			console.log('미실행')
+		}else{
+		$.ajaxSettings.traditional = true;
+		var investmenttab = $.ajax({ // ajax실행부분
+	        type: 'get',
+	        url : '/pineapple/investorreportcheckno.timeline',
+	        data : {reportchecklist : reportchecklist},
+	        success : function success(msg){
+	        	$('#checkmoneyflowcheck').html(msg)
+	        },
+	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+	        error : function error(){
+        	}
+		});
+		}
+	});	
+	$('#reportdelete').click(function(){
+		$('#checkallre').prop('checked',false)
+		var messagecount = 0;
+		var messagecheckedlength = $('input[name=reportchecked]').length
+		var reportchecklist = new Array();
+		for(i = 0 ; i < messagecheckedlength ; i++){
+			if(document.getElementsByName("reportchecked")[i].checked == true){
+				reportchecklist[messagecount] = document.getElementsByName("reportchecked")[i].value;
+				messagecount++
+			}
+		}
+		if(reportchecklist == ''){
+			console.log('미실행')
+		}else{
+		$.ajaxSettings.traditional = true;
+		var investmenttab = $.ajax({ // ajax실행부분
+	        type: 'get',
+	        url : '/pineapple/investorreportdelete.timeline',
+	        data : {reportchecklist : reportchecklist},
+	        success : function success(msg){
+	        	$('#checkmoneyflowcheck').html(msg)
+	        },
+	        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+	        error : function error(){
+        	}
+		});
+		}
+	});	
 });
 </script>
 </head>
@@ -30,9 +112,9 @@ $(document).ready(function(){
 		<table class="table" style="margin: 0px; text-align: center;">
 		<tr>
 		<td style="width: 42px"><input id="checkallre" type="checkbox"></td>
-		<td><a id="messagedelete" style="color: black;"><span class="glyphicon glyphicon-trash"></span>체크된 메세지삭제</a></td>
-		<td><a id="messagereadok" style="color: black;"><span class="glyphicon glyphicon-eye-open"></span>읽은 메세지로</a></td>
-		<td><a id="messagereadno" style="color: black;"><span class="glyphicon glyphicon-eye-close"></span>읽지않은 메세지로</a></td>
+		<td><a id="reportdelete" style="color: black;" dataCode="${Category}"><span class="glyphicon glyphicon-trash"></span>체크된 메세지삭제</a></td>
+		<td><a id="reportreadok" style="color: black;" dataCode="${Category}"><span class="glyphicon glyphicon-eye-open"></span>읽은 메세지로</a></td>
+		<td><a id="reportreadno" style="color: black;" dataCode="${Category}"><span class="glyphicon glyphicon-eye-close"></span>읽지않은 메세지로</a></td>
 		<td></td>
 		</tr>
 		</table>
@@ -52,7 +134,7 @@ $(document).ready(function(){
 			<tbody style="text-align: center;" id="investorlist">
 					<c:forEach var="moneycontent" items="${moneycontent}">
 	 			 	<tr>
-	 			 		<td><input name="reportchecked" type="checkbox"></td>
+	 			 		<td><input name="reportchecked" type="checkbox" value="${moneycontent.reportCode}"></td>
 		 			 	<td>${moneycontent.reportSendId}</td>
 		 			 	<td>${moneycontent.reportTitle}</td>
 		 			 	<td>${moneycontent.reportContent}</td>
@@ -98,7 +180,7 @@ $(document).ready(function(){
 		    				var paychecktext = "";
 		    				$('#investorlist').append(
 		    					'<tr>'
-		    						+'<td><input name="reportchecked" type="checkbox"></td>'
+		    						+'<td><input name="reportchecked" type="checkbox" value="'+data[i].reportCode+'"></td>'
 		    						+'<td>'+data[i].reportSendId+'</td>'
 		    						+'<td>'+data[i].reportTitle+'</td>'
 		    						+'<td>'+data[i].reportContent+'</td>'

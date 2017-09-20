@@ -31,6 +31,11 @@ public interface TimelineDaoInterface {
 	List<InvestAndFd> timelineFundingRanking();
 	//자금관리 전체내역 조회
 	List<MoneyAndTitleAndId> moneyInvestall(int mfCategory,int numberOfRequests);
+	//타임라인 댓글순
+	List<TimelineAndUserAndEmployeeAndTimelineLike> timelineListReplySelect();
+	//타임라인 인기순
+	List<TimelineAndUserAndEmployeeAndTimelineLike>	timelineListLikeSelect();
+	
 	
 	///////////////////////////My Page Time Line /////////////////////////
 	//자신이 등록한 타임라인 list 조회
@@ -44,6 +49,8 @@ public interface TimelineDaoInterface {
 	int mypageReportCheckOkUpdate(HashMap<String, String[]> msgCodemap);
 	//선택 보고서 읽지않은 보고서로
 	int mypageReportCheckNkUpdate(HashMap<String, String[]> msgCodemap);
+	//선택 보고서 삭제
+	int mypageReportDelete(HashMap<String, String[]> msgCodemap);
 	
 	//////////////////////////My Page Message ////////////////////////////
 	//자신에게 온 메세지 list 조회

@@ -30,6 +30,8 @@ public interface TimelineServiceInterface {
 	List<InvestAndFd> getTimelineFundingranking();
 	//자금관리 전체내역 조회
 	List<MoneyAndTitleAndId> getMoneyall(int mfCategory,int numberOfRequests);	
+	//타임라인 글요청
+	List<TimelineAndUserAndEmployeeAndTimelineLike> getTimelineListmenu(String timedataCode);
 
 	
 	
@@ -46,6 +48,8 @@ public interface TimelineServiceInterface {
 	List<Companyreport> updateMypageReportCheckOkList(HashMap<String, String[]> msgCodemap,String userid,String Category,int numberOfRequests);
 	//선택 보고서 읽지않은 보고서로
 	List<Companyreport> updateMypageReportCheckNoList(HashMap<String, String[]> msgCodemap,String userid,String Category,int numberOfRequests);
+	//받은 보고서 삭제하기
+	List<Companyreport> deleteMypageReportlist(HashMap<String, String[]> msgCodemap,String userid,String Category,int numberOfRequests);
 	
 	
 	
