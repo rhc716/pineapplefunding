@@ -442,18 +442,8 @@ $(document).ready(function(){
 								<div class="panel-body" id="wbsname"></div>
 							</div>
 						</div>
-						<div class=col-md-3>
-							<div class="panel panel-default">
-								
-							</div>
-						</div>
 					</div>
 			 		<div class="row">
-						<div class=col-md-3>
-							<div class="panel panel-default">
-								
-							</div>
-						</div>
 						<div class=col-md-3>
 							<div class="panel panel-default">
 								<div class="panel-heading">시작일</div>

@@ -121,6 +121,14 @@
 		select *
 		from wbsdailyhuman where wdhWaCode = #{wbsactualcode}
 	</select>
+	<select id="selectWbsActualFacility" resultType="com.pineapple.pms.service.WbsDailyFacility" parameterType="String">
+		select *
+		from wbsdailyfacility where wdfWaCode = #{wbsactualcode}
+	</select>
+	<select id="selectWbsActualIncome" resultType="com.pineapple.pms.service.WbsDailyIncome" parameterType="String">
+		select *
+		from wbsdailyincome where wdiWaCode = #{wbsactualcode}
+	</select>
 	
 	<select id="selectWbsPlanIncome" resultType="com.pineapple.pms.service.WbsPlanIncome" parameterType="String">
 		select *

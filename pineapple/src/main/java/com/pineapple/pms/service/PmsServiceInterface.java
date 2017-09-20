@@ -88,4 +88,8 @@ public interface PmsServiceInterface {
 
 	List<WbsDailyHuman> getMyWbsActualHumanList(String wbsactualcode);
 
+	List<WbsDailyFacility> getMyWbsActualFacility(String wbsactualcode);
+
+	List<WbsDailyIncome> getMyWbsActualIncome(String wbsactualcode);
+
 }

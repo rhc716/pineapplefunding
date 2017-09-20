@@ -96,6 +96,17 @@ public class PmsService implements PmsServiceInterface{
 	}
 	
 	@Override
+	public List<WbsDailyIncome> getMyWbsActualIncome(String wbsactualcode) {
+		log.debug("PmsService의 getMyWbsPlanIncome호출 성공");
+		return pmsdao.getMyWbsActualIncome(wbsactualcode);
+	}
+	@Override
+	public List<WbsDailyFacility> getMyWbsActualFacility(String wbsactualcode) {
+		log.debug("PmsService의 getMyWbsActualFacility호출 성공");
+		return pmsdao.getMyWbsActualFacility(wbsactualcode);
+	}
+	
+	@Override
 	public int getincome(String wbsplancode) {
 		log.debug("PmsService의 getincome호출 성공");
 		return pmsdao.getincome(wbsplancode);
