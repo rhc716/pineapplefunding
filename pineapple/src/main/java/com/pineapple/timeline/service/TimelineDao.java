@@ -19,9 +19,11 @@ public class TimelineDao implements TimelineDaoInterface{
     private SqlSessionTemplate sqlSessionTemplate;
     //타임라인 list select
 	@Override
-	public List<TimelineAndUserAndEmployeeAndTimelineLike> timelineListSelect() {
+	public List<TimelineAndUserAndEmployeeAndTimelineLike> timelineListSelect(int numberOfRequests) {
 		log.debug("TimelineDao-----timelineListSelect");
-		return sqlSessionTemplate.selectList("com.pineapple.timeline.service.TimelineMapper.selectTimelineList");
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("numberOfRequests", numberOfRequests);
+		return sqlSessionTemplate.selectList("com.pineapple.timeline.service.TimelineMapper.selectTimelineList",map);
 	}
 	//타임라인 등록하기
 	@Override
@@ -98,16 +100,20 @@ public class TimelineDao implements TimelineDaoInterface{
 	}
 	//타임라인 댓글순
 	@Override
-	public List<TimelineAndUserAndEmployeeAndTimelineLike> timelineListReplySelect() {
+	public List<TimelineAndUserAndEmployeeAndTimelineLike> timelineListReplySelect(int numberOfRequests) {
 		log.debug("TimelineDao-----timelineFundingRanking");
-		return sqlSessionTemplate.selectList("com.pineapple.timeline.service.TimelineMapper.selectTimelineListReplyCount");
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("numberOfRequests", numberOfRequests);
+		return sqlSessionTemplate.selectList("com.pineapple.timeline.service.TimelineMapper.selectTimelineListReplyCount",map);
 	}
 	
 	//타임라인 인기순
 	@Override
-	public List<TimelineAndUserAndEmployeeAndTimelineLike> timelineListLikeSelect() {
+	public List<TimelineAndUserAndEmployeeAndTimelineLike> timelineListLikeSelect(int numberOfRequests) {
 		log.debug("TimelineDao-----timelineFundingRanking");
-		return sqlSessionTemplate.selectList("com.pineapple.timeline.service.TimelineMapper.selectTimelineListLikeCount");
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("numberOfRequests", numberOfRequests);
+		return sqlSessionTemplate.selectList("com.pineapple.timeline.service.TimelineMapper.selectTimelineListLikeCount",map);
 	}
 	
 	

@@ -23,11 +23,12 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+	<div class="col-xs-12" style="padding: 0px;">
 	<c:forEach var="list" items="${fundingListChoose}">
 	<c:set var="poster" value="${list.posterImg}"></c:set>
- 	<div class="col-md-4 fdlist-box" style="padding: 0px; margin: auto;">
- 		<div class="col-md-12" style="padding: 0px 10px; margin-bottom: 20px;">
- 		<div class="col-md-12" style="border: 1.5px solid #009442; padding: 0px;">
+ 	<div class="col-xs-4 fdlist-box" style="padding: 0px; margin: auto;">
+ 		<div class="col-xs-12" style="padding: 0px 10px; margin-bottom: 20px;">
+ 		<div class="col-xs-12" style="border: 1.5px solid #009442; padding: 0px;">
  		<c:choose>
  		<c:when test="${poster == null}">
  		<a href="/pineapple/investfunding.invest?fdCode=${list.fdCode}">
@@ -42,18 +43,21 @@ $(document).ready(function(){
 		</c:choose>
 
 		<div>
-		<h4 class="fdlist-title">
+		<div class="fdlist-title" style="height: 56px;">
 			${list.fdTitle}
-		</h4>
+		</div>
 		</div>
 		<div class="fdlist-comname">
 			${list.comName}
 		</div>
 		<div class="fdlist-data" style="width: 100%">
-		<div class="col-xs-12" style="padding: 0px 10px">
-			<div style="float: left;">${list.issuePrice*list.total}원 달성</div><div style="float: right;">${list.days}남음</div>
+		<div class="col-xs-12" style="padding: 0px 0px">
+			<div style="border-bottom: 1px solid #d7d7d7; padding: 5px 10px;"><b>${list.days}남음</b></div>
 		</div>
-		<div class="col-md-12" style="padding: 0px 10px 0px 10px;">
+		<div class="col-xs-12" style="padding: 0px 0px">
+			<div style="padding:5px 10px;"><b>${list.issuePrice*list.total}원 달성</b></div>
+		</div>
+		<div class="col-xs-12" style="padding: 0px 10px 0px 10px;">
 		<div class="progress bor-defult" style="margin-bottom: 10px;">
   				<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ${(list.total/list.numberOfShares)*100}%; min-width: 3em; max-width: 100%;">
     				${(list.total/list.numberOfShares)*100}%
@@ -65,5 +69,6 @@ $(document).ready(function(){
 	</div>
 	</div>
 	</c:forEach>
+	</div>
 </body>
 </html>

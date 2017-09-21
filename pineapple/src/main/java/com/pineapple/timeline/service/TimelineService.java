@@ -18,9 +18,9 @@ public class TimelineService implements TimelineServiceInterface{
 	private TimelineDaoInterface timelinedaointerface;
 	//타임라인에서 타임라인 list select
 	@Override
-	public List<TimelineAndUserAndEmployeeAndTimelineLike> getTimelineList() {
+	public List<TimelineAndUserAndEmployeeAndTimelineLike> getTimelineList(int numberOfRequests) {
 		log.debug("------------------TimelineService-----------------getTimelineList()");
-		List<TimelineAndUserAndEmployeeAndTimelineLike> timelinelist = timelinedaointerface.timelineListSelect();
+		List<TimelineAndUserAndEmployeeAndTimelineLike> timelinelist = timelinedaointerface.timelineListSelect(numberOfRequests);
 		return timelinelist;
 	}
 	//타임라인에서 타임라인 등록하기
@@ -106,16 +106,16 @@ public class TimelineService implements TimelineServiceInterface{
 	}
 	//타임라인 menu 요청
 	@Override
-	public List<TimelineAndUserAndEmployeeAndTimelineLike> getTimelineListmenu(String timedataCode) {
+	public List<TimelineAndUserAndEmployeeAndTimelineLike> getTimelineListmenu(String timedataCode,int numberOfRequests) {
 		log.debug("------------------TimelineService-----------------getTimelineListmenu()");
 		log.debug(timedataCode+"<------------------timedataCode");
 		List<TimelineAndUserAndEmployeeAndTimelineLike> returntime = null;
 		if(timedataCode.equals("최신")){
-			returntime = timelinedaointerface.timelineListSelect(); 
+			returntime = timelinedaointerface.timelineListSelect(numberOfRequests); 
 		}else if(timedataCode.equals("댓글")){
-			returntime = timelinedaointerface.timelineListReplySelect();
+			returntime = timelinedaointerface.timelineListReplySelect(numberOfRequests);
 		}else{
-			returntime = timelinedaointerface.timelineListLikeSelect();
+			returntime = timelinedaointerface.timelineListLikeSelect(numberOfRequests);
 		}
 		return returntime;
 	}

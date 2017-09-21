@@ -40,10 +40,11 @@ public class TimelineController {
 	private TimelineServiceInterface timelineserviceinterface;
 	//타임라인 main 페이지 이동 타임라인 list
 	@RequestMapping(value="/timelinemain.timeline",method=RequestMethod.GET)
-	public String timelineMain(Locale locale,Model model){
+	public String timelineMain(Locale locale,Model model,@RequestParam(value="numberOfRequests",defaultValue="0")int numberOfRequests){
 		log.debug("<----- TimelineController[timelineMain호출]----->");
-		List<TimelineAndUserAndEmployeeAndTimelineLike> timelinelist = timelineserviceinterface.getTimelineList();
+		List<TimelineAndUserAndEmployeeAndTimelineLike> timelinelist = timelineserviceinterface.getTimelineList(numberOfRequests);
 		model.addAttribute("timelinelist",timelinelist);
+		model.addAttribute("timedataCode","최신");
 		log.debug(timelinelist+"<-----TimelineController[timelinelist 값 출력]");
 		return "timeline/timelinemain";
 	}
@@ -186,10 +187,11 @@ public class TimelineController {
 	}
 	//타임라인 메뉴 설정 
 	@RequestMapping(value="/timelineselectmenu.invest",method=RequestMethod.GET)
-	public String timelineselectmenu(Locale locale,Model model,@RequestParam(value="timedataCode")String timedataCode){
+	public String timelineselectmenu(Locale locale,Model model,@RequestParam(value="timedataCode")String timedataCode,@RequestParam(value="numberOfRequests",defaultValue="0")int numberOfRequests){
 		log.debug("<----- TimelineController[timelineselectmenu호출]----->");
-		List<TimelineAndUserAndEmployeeAndTimelineLike> timelineselectmenu = timelineserviceinterface.getTimelineListmenu(timedataCode);
+		List<TimelineAndUserAndEmployeeAndTimelineLike> timelineselectmenu = timelineserviceinterface.getTimelineListmenu(timedataCode,numberOfRequests);
 		model.addAttribute("timelineselectmenu",timelineselectmenu);
+		model.addAttribute("timedataCode",timedataCode);
 		log.debug(timelineselectmenu+"<-----TimelineController[timelineselectmenu 값 출력]");
 		return "timeline/timelineajax/timelineselectmenu";
 	}

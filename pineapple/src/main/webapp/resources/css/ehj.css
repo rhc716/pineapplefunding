@@ -328,11 +328,11 @@
 	.fdlist-main{padding: 0px 20px}
 	.fdlist-box{margin: 0 auto;
 				padding: 0px;}
-	.fdlist-title{padding: 12px 10px 10px;
+	.fdlist-title{padding: 10px 10px 15px;
 				  margin: 0px;
-				  font-size: 17px;
 				  font-weight: bold;
-				  border-bottom: 1px solid #d7d7d7;}
+				  border-bottom: 1px solid #d7d7d7;
+				  font-size: 17px;}
 	.fdlist-context{font-size : 11px;
 					line-height: 17px;
     				height: 68px;
@@ -344,8 +344,8 @@
 					font-weight: bold;
    					text-align: left;
    					padding: 11px 10px 9px;}
-	.fdlist-data{line-height: 44px;
-   				 border-top: 1px solid #d7d7d7;}
+	.fdlist-data{border-top: 1px solid #d7d7d7;
+				 text-align: left;}
    	.positionfixed{position: fixed;
    			       top: 0px}
  /* invest main 투자하기 main */

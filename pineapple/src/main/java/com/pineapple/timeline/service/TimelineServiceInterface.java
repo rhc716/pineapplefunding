@@ -11,7 +11,7 @@ import com.pineapple.user.service.User;
 @Transactional
 public interface TimelineServiceInterface {
 	//타임라인 클릭시 타임라인 list Service
-	List<TimelineAndUserAndEmployeeAndTimelineLike> getTimelineList();
+	List<TimelineAndUserAndEmployeeAndTimelineLike> getTimelineList(int numberOfRequests);
 	//타임라인 등록하는 Service
 	int addTimeline(Timeline timeline);
 	//타임라인 수정하는 Service
@@ -31,7 +31,7 @@ public interface TimelineServiceInterface {
 	//자금관리 전체내역 조회
 	List<MoneyAndTitleAndId> getMoneyall(int mfCategory,int numberOfRequests);	
 	//타임라인 글요청
-	List<TimelineAndUserAndEmployeeAndTimelineLike> getTimelineListmenu(String timedataCode);
+	List<TimelineAndUserAndEmployeeAndTimelineLike> getTimelineListmenu(String timedataCode,int numberOfRequests);
 
 	
 	

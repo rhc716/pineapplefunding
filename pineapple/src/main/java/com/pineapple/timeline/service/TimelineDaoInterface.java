@@ -10,7 +10,7 @@ import com.pineapple.user.service.User;
 
 public interface TimelineDaoInterface {
 	//타임라인 main 에서 타임라인 list Dao
-	List<TimelineAndUserAndEmployeeAndTimelineLike> timelineListSelect();
+	List<TimelineAndUserAndEmployeeAndTimelineLike> timelineListSelect(int numberOfRequests);
 	//타임라인 등록하는 Dao
 	int timelineInsert(Timeline timeline);
 	//타임라인 수정하는 Dao
@@ -32,9 +32,9 @@ public interface TimelineDaoInterface {
 	//자금관리 전체내역 조회
 	List<MoneyAndTitleAndId> moneyInvestall(int mfCategory,int numberOfRequests);
 	//타임라인 댓글순
-	List<TimelineAndUserAndEmployeeAndTimelineLike> timelineListReplySelect();
+	List<TimelineAndUserAndEmployeeAndTimelineLike> timelineListReplySelect(int numberOfRequests);
 	//타임라인 인기순
-	List<TimelineAndUserAndEmployeeAndTimelineLike>	timelineListLikeSelect();
+	List<TimelineAndUserAndEmployeeAndTimelineLike>	timelineListLikeSelect(int numberOfRequests);
 	
 	
 	///////////////////////////My Page Time Line /////////////////////////

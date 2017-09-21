@@ -31,6 +31,10 @@ $(document).ready(function(){
 					$('#timelinereply'+tlCode+'').attr('aria-expanded',false)
 				}
     });
+    if(${timelineselectmenu.size() == 0}){
+		$('#investoraddlistbtn').addClass('disabled')
+		$('#investoraddlistbtn').html('등록된 펀딩이 없습니다.')
+    }
 });
 </script>
 </head>

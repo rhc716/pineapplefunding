@@ -49,7 +49,7 @@
 	 	<result property="checkassignment" column="checkassignment"/>
 	 </resultMap>
 	<!-- 타임라인 메인 페이지 에서 list 조회(최신) -->
- 	<select id="selectTimelineList" resultMap="selectTimelineListresultmap">
+ 	<select id="selectTimelineList" parameterType="INT" resultMap="selectTimelineListresultmap">
 		SELECT t.tlCode,
 			   t.tlTitle,
 			   t.tlContent,
@@ -68,6 +68,12 @@
 		LEFT JOIN timelinelike tl 
 		ON tl.tlCode = t.tlCode
 		ORDER BY t.tlTime DESC
+		<if test="numberOfRequests == 0">
+		limit #{numberOfRequests},10;
+		</if>
+		<if test="numberOfRequests != 0">
+		limit #{numberOfRequests},10;
+		</if>
 	</select>
 	<!-- 타임라인 입력 -->
 	<insert id="insertTimeline" parameterType="com.pineapple.timeline.service.Timeline">
@@ -141,10 +147,10 @@
 		WHERE f.fdStatus = '모집중'
 		GROUP BY f.fdCode 
 		ORDER BY f.openDate DESC
-		LIMIT 3
+		LIMIT 3;
 	</select>
 	<!-- 타임라인 댓글순 -->
-	<select id="selectTimelineListReplyCount" resultMap="selectTimelineListresultmap">
+	<select id="selectTimelineListReplyCount" parameterType="INT" resultMap="selectTimelineListresultmap">
 		SELECT t.tlCode,
 			   t.tlTitle,
 			   t.tlContent,
@@ -163,9 +169,15 @@
 		LEFT JOIN timelinelike tl 
 		ON tl.tlCode = t.tlCode
 		ORDER BY (SELECT COUNT(str.tlReCode) FROM timelinereply str WHERE str.tlCode = t.tlCode ) DESC
+		<if test="numberOfRequests == 0">
+		limit #{numberOfRequests},10;
+		</if>
+		<if test="numberOfRequests != 0">
+		limit #{numberOfRequests},10;
+		</if>
 	</select>
 	<!-- 타임라인 인기순 -->
-	<select id="selectTimelineListLikeCount" resultMap="selectTimelineListresultmap">
+	<select id="selectTimelineListLikeCount" parameterType="INT" resultMap="selectTimelineListresultmap">
 		SELECT t.tlCode,
 			   t.tlTitle,
 			   t.tlContent,
@@ -184,6 +196,12 @@
 		LEFT JOIN timelinelike tl 
 		ON tl.tlCode = t.tlCode
 		ORDER BY (SELECT COUNT(stl.tlCode) FROM timelinelike stl WHERE stl.tlCode = t.tlCode ) DESC
+		<if test="numberOfRequests == 0">
+		limit #{numberOfRequests},10;
+		</if>
+		<if test="numberOfRequests != 0">
+		limit #{numberOfRequests},10;
+		</if>
 	</select>
 	
 	

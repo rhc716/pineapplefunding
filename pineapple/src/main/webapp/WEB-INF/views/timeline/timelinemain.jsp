@@ -41,6 +41,7 @@
 		});
 		getfundingqnareply.done(function(msg){	
 			$('#timecontent').html(msg)
+			
 		});
 		getfundingqnareply.fail(function(){
 			alert("실패");
@@ -88,7 +89,11 @@
 			alert("실패");
 		});
 		$('.timemenu').click(function(){
+			$('#investoraddlistbtn').removeClass('disabled')
+			$('#investoraddlistbtn').attr('dataCode',10)
+			$('#investoraddlistbtn').html('더보기')
 			var timedataCode = $(this).attr('dataCode')
+			$('#DataCheckbtn').attr('DataCheck',timedataCode)
 			var getfundingqnareply = $.ajax({
 				type : 'get',
 				url : '/pineapple/timelineselectmenu.invest',
@@ -102,8 +107,24 @@
 			});
 			
 		});
-        
-	})
+		$('#investoraddlistbtn').click(function(){
+			var numberOfRequests = $(this).attr('dataCode');
+			var timedataCode = $('#DataCheckbtn').attr('DataCheck')
+			var getfundingqnareply = $.ajax({
+				type : 'get',
+				url : '/pineapple/timelineselectmenu.invest',
+				data : {timedataCode : timedataCode,
+						numberOfRequests : numberOfRequests}
+			});
+			getfundingqnareply.done(function(msg){	
+				$('#timecontent').append(msg)
+				$('#investoraddlistbtn').attr('dataCode',Number(numberOfRequests)+10)
+			});
+			getfundingqnareply.fail(function(){
+				alert("실패");
+			});
+		});
+	});
 </script>
 </head>
 <body>
@@ -119,7 +140,7 @@
 			</div>
 			<div class="col-xs-2" style="padding: 0px;">
 				<div class="btn-group" role="group">
-   					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="width: 200px;">
+   					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="width: 200px;" id="DataCheckbtn" DataCheck="최신">
       				메뉴
       				<span class="caret"></span>
    				 </button>
@@ -173,7 +194,10 @@
 			 	</div>
 				<!-- Time line input modal -->
 				</div>
-				<div class="col-xs-12"  id="timecontent">
+				<div class="col-xs-12"  id="timecontent" timedataCode="">
+				</div>
+				<div class="col-xs-12">
+					<button type="button" id="investoraddlistbtn" dataCode="10" class="btn-block btn btn-primary">더보기</button>
 				</div>
 			</div>
 			<div class="col-xs-2" style="padding: 0px;">

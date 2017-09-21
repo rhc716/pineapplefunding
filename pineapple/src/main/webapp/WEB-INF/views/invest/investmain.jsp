@@ -175,9 +175,9 @@ $(document).ready(function(){
 <!-- 본문 -->
 <!-- 펀딩 리스트 -->
 <div class="row fdlist-main text-center" style="padding: 0px;">
-	<div class="col-md-12" id="menubar" style="padding: 0px">
-		<div class="col-md-2" style="padding: 0px; text-align: center; margin-left: auto; margin-right: auto;">
-			<div class="col-md-12" style="padding: 0px;  border: 1.5px solid #009442; border-radius: 5px; margin-bottom: 20px;">
+	<div class="col-xs-12" id="menubar" style="padding: 0px">
+		<div class="col-xs-2" style="padding: 0px; text-align: center; margin-left: auto; margin-right: auto;">
+			<div class="col-xs-12" style="padding: 0px;  border: 1.5px solid #009442; border-radius: 5px; margin-bottom: 20px;">
 				<div class="input-group">
 	      			<input type="text" class="form-control" id="fundinglistnameselecttext" placeholder="펀딩명 검색하기" style="margin-left: 0.75px 0px 0.75px 0.75px;">
 	      				<span class="input-group-btn" style="padding: 0px;">
@@ -186,7 +186,7 @@ $(document).ready(function(){
 	    		</div>
 			</div>
 		
-			<div class="col-md-12" id="menuchecklist" style="padding: 0px;  border: 1.5px solid #009442; border-radius: 5px;">
+			<div class="col-xs-12" id="menuchecklist" style="padding: 0px;  border: 1.5px solid #009442; border-radius: 5px;">
 				<form>
 					<ul style="font-size:15px; list-style: none; height: 100%; width: 100%; padding: 10px; text-align: left; margin: 0px; border-bottom: 1px solid #d7d7d7;">
 						<label style="font-size: 20px;">카테고리</label>
@@ -221,7 +221,7 @@ $(document).ready(function(){
 				</form>
 			</div>
 		</div>
-		<div class="col-md-10" style="padding: 0px 20px; margin-bottom: 20px;">
+		<div class="col-xs-10" style="padding: 0px 20px; margin-bottom: 20px;">
 			<!-- carousel : 회전하면서 이미지를 보여주는 것 -->
 			<div id="myCarousel" class="carousel slide" data-ride="carousel" style="border: 1.5px solid #009442; padding: 0.75px;">
 			    <!-- Indicators -->
@@ -240,11 +240,6 @@ $(document).ready(function(){
 			      <div class="item">
 			        <img src="${pageContext.request.contextPath}/resources/img/main/photo2.jpg" alt="Chicago" style="width:100%; height:450px;">
 			      </div>
-			    	
-			    	<!-- 아이템 추가 가능 -->
-			     <!--  <div class="item">
-			        <img src="https://www.w3schools.com/bootstrap/ny.jpg" alt="New york" style="width:100%;">
-			      </div> -->
 			    </div>
 			
 			    <!-- Left and right controls -->
@@ -259,7 +254,7 @@ $(document).ready(function(){
 		  	</div>
 		 	<!-- carousel 끝 -->
 		</div>
-		<div class="col-md-10" style="padding: 0px 10px 0px 10px;">
+		<div class="col-xs-10" style="padding: 0px 10px 0px 10px;">
 			<div id="fdlist">
 			</div>
 			<div>
