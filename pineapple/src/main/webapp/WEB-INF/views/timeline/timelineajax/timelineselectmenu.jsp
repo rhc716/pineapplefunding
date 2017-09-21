@@ -33,7 +33,7 @@ $(document).ready(function(){
     });
     if(${timelineselectmenu.size() == 0}){
 		$('#investoraddlistbtn').addClass('disabled')
-		$('#investoraddlistbtn').html('등록된 펀딩이 없습니다.')
+		$('#investoraddlistbtn').html('등록된 타임라인이 없습니다.')
     }
 });
 </script>

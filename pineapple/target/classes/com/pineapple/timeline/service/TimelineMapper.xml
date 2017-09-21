@@ -69,10 +69,10 @@
 		ON tl.tlCode = t.tlCode
 		ORDER BY t.tlTime DESC
 		<if test="numberOfRequests == 0">
-		limit #{numberOfRequests},10;
+		limit #{numberOfRequests},5;
 		</if>
 		<if test="numberOfRequests != 0">
-		limit #{numberOfRequests},10;
+		limit #{numberOfRequests},3;
 		</if>
 	</select>
 	<!-- 타임라인 입력 -->
@@ -170,10 +170,10 @@
 		ON tl.tlCode = t.tlCode
 		ORDER BY (SELECT COUNT(str.tlReCode) FROM timelinereply str WHERE str.tlCode = t.tlCode ) DESC
 		<if test="numberOfRequests == 0">
-		limit #{numberOfRequests},10;
+		limit #{numberOfRequests},5;
 		</if>
 		<if test="numberOfRequests != 0">
-		limit #{numberOfRequests},10;
+		limit #{numberOfRequests},3;
 		</if>
 	</select>
 	<!-- 타임라인 인기순 -->
@@ -197,10 +197,10 @@
 		ON tl.tlCode = t.tlCode
 		ORDER BY (SELECT COUNT(stl.tlCode) FROM timelinelike stl WHERE stl.tlCode = t.tlCode ) DESC
 		<if test="numberOfRequests == 0">
-		limit #{numberOfRequests},10;
+		limit #{numberOfRequests},5;
 		</if>
 		<if test="numberOfRequests != 0">
-		limit #{numberOfRequests},10;
+		limit #{numberOfRequests},3;
 		</if>
 	</select>
 	

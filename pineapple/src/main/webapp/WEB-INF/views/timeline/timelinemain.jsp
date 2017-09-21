@@ -90,7 +90,7 @@
 		});
 		$('.timemenu').click(function(){
 			$('#investoraddlistbtn').removeClass('disabled')
-			$('#investoraddlistbtn').attr('dataCode',10)
+			$('#investoraddlistbtn').attr('dataCode',5)
 			$('#investoraddlistbtn').html('더보기')
 			var timedataCode = $(this).attr('dataCode')
 			$('#DataCheckbtn').attr('DataCheck',timedataCode)
@@ -118,7 +118,7 @@
 			});
 			getfundingqnareply.done(function(msg){	
 				$('#timecontent').append(msg)
-				$('#investoraddlistbtn').attr('dataCode',Number(numberOfRequests)+10)
+				$('#investoraddlistbtn').attr('dataCode',Number(numberOfRequests)+3)
 			});
 			getfundingqnareply.fail(function(){
 				alert("실패");
@@ -140,11 +140,11 @@
 			</div>
 			<div class="col-xs-2" style="padding: 0px;">
 				<div class="btn-group" role="group">
-   					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="width: 200px;" id="DataCheckbtn" DataCheck="최신">
+   					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="width: 125px;" id="DataCheckbtn" DataCheck="최신">
       				메뉴
       				<span class="caret"></span>
    				 </button>
-    				<ul class="dropdown-menu" role="menu" style="width: 200px;">
+    				<ul class="dropdown-menu" role="menu" style="width: 100px;">
      					 <li><a class="timemenu" href="#" dataCode="최신">최신순</a></li>
      					 <li><a class="timemenu" href="#" dataCode="인기">인기순</a></li>
      					 <li><a class="timemenu" href="#" dataCode="댓글">댓글순</a></li>
@@ -197,7 +197,7 @@
 				<div class="col-xs-12"  id="timecontent" timedataCode="">
 				</div>
 				<div class="col-xs-12">
-					<button type="button" id="investoraddlistbtn" dataCode="10" class="btn-block btn btn-primary">더보기</button>
+					<button type="button" id="investoraddlistbtn" dataCode="5" class="btn-block btn btn-primary">더보기</button>
 				</div>
 			</div>
 			<div class="col-xs-2" style="padding: 0px;">
