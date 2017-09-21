@@ -79,7 +79,9 @@ $(document).ready(function(){
 	//(마감, 모집실패 제외) 펀딩 리스트를 불러오는  ajax
 	var getallfundinglist = $.ajax({
 		type : "get",
-		url : "/pineapple/getallfundinglist.pms"
+		url : "/pineapple/getmyfundinglist.pms",
+		/* 아이디 세션에서 받아서 가져옴 */
+		data : { userId : "${id}"}
 	});
 	
 	//성공시 펀딩 리스트를 뿌려줌
@@ -98,10 +100,10 @@ $(document).ready(function(){
 				
 			);
 		
-		for(var i=0; i<msg[0].length; i++){
+		for(var i=0; i<msg.length; i++){
 			$('#fdlistgroup').append(
 				'<button class="list-group-item" onclick="javascript:fdbtnclick(this)"' 
-				+'value="'+msg[0][i].fdCode+'">'+msg[0][i].fdTitle+'</button>'
+				+'value="'+msg[i].fdCode+'">'+msg[i].fdTitle+'</button>'
 			);
 			
 			// 마지막에 더보기 버튼을 추가함

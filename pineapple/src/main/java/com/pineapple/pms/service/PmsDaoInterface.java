@@ -114,6 +114,16 @@ public interface PmsDaoInterface {
 
 	List<WbsDailyIncome> getMyWbsActualIncome(String wbsactualcode);
 
+	List<WbsDailyMatrial> getMyWbsActualMatrial(String wbsactualcode);
+
+	List<WbsDailyOut> getMyWbsActualOut(String wbsactualcode);
+
+	void updatecopperwbs(String wbsActualCode);
+
+	void updateapproval(String wbsActualCode);
+
+	void updatenoapproval(String wbsActualCode);
+
 
 	
 	

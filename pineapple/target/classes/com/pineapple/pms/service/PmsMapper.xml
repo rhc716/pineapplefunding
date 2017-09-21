@@ -129,6 +129,14 @@
 		select *
 		from wbsdailyincome where wdiWaCode = #{wbsactualcode}
 	</select>
+	<select id="selectWbsActualMatrial" resultType="com.pineapple.pms.service.WbsDailyMatrial" parameterType="String">
+		select *
+		from wbsdailymatrial where wdmWaCode = #{wbsactualcode}
+	</select>
+	<select id="selectWbsActualOut" resultType="com.pineapple.pms.service.WbsDailyOut" parameterType="String">
+		select *
+		from wbsdailyout where wdoWaCode = #{wbsactualcode}
+	</select>
 	
 	<select id="selectWbsPlanIncome" resultType="com.pineapple.pms.service.WbsPlanIncome" parameterType="String">
 		select *
@@ -266,6 +274,24 @@
 				wphEndDate=#{wphEndDate},
 				wphRemarks=#{wphRemarks}
 			WHERE wphCode=#{wphCode}
+	</update>
+	<update id="updatecopperwbs" parameterType="String">
+		UPDATE wbsactual
+			SET
+				wbsActualEndDate=NOW()
+			WHERE wbsActualCode=#{wbsActualCode}
+	</update>
+	<update id="updateapproval" parameterType="String">
+		UPDATE wbsactual
+			SET
+				wbsActualApprovalDate=NOW()
+			WHERE wbsActualCode=#{wbsActualCode}
+	</update>
+	<update id="updatenoapproval" parameterType="String">
+		UPDATE wbsactual
+			SET
+				wbsActualEndDate=null
+			WHERE wbsActualCode=#{wbsActualCode}
 	</update>
 	
 	<update id="wbsplanmaterialupdate" parameterType="com.pineapple.pms.service.WbsPlanMaterial">

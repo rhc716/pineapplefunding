@@ -61,9 +61,9 @@ $(document).ready(function(){
 		alert('ajax통신실패');
 	});
 	
+	
 });
  </script>
- 
 <style type="text/css">
 #toptitlearea{
 	padding: 20px 20px;
@@ -184,11 +184,14 @@ $(document).ready(function(){
 		
 		<!-- carousel : 회전하면서 이미지를 보여주는 것 -->
 			<div class="col-xs-6" style="text-align: center; padding: 0px 0px 0px 5px;">
-			<div id="myCarousel3" class="carousel slide" data-ride="carousel" style="width: 100%">
+			
+		  	</div>
+		 <div class="col-xs-6" style="text-align: center; padding: 0px 5px 0px 0px;">
+			<div id="myCarousel2" class="carousel slide" data-ride="carousel" style="width: 100%">
 			    <!-- Indicators -->
 			    <ol class="carousel-indicators">
-			    	<li data-target="#myCarousel3" data-slide-to="0" class="active"></li>
-			    	<li data-target="#myCarousel3" data-slide-to="1"></li>
+			    	<li data-target="#myCarousel2" data-slide-to="0" class="active"></li>
+			    	<li data-target="#myCarousel2" data-slide-to="1"></li>
 			    </ol>
 			
 			    <!-- 화면에 보여줄 아이템 들어갈 곳 -->
@@ -202,11 +205,11 @@ $(document).ready(function(){
 			    </div>
 			
 			    <!-- Left and right controls -->
-			    <a class="left carousel-control" href="#myCarousel3" data-slide="prev">
+			    <a class="left carousel-control" href="#myCarousel2" data-slide="prev">
 			      <span class="glyphicon glyphicon-chevron-left"></span>
 			      <span class="sr-only">Previous</span>
 			    </a>
-			    <a class="right carousel-control" href="#myCarousel3" data-slide="next">
+			    <a class="right carousel-control" href="#myCarousel2" data-slide="next">
 			      <span class="glyphicon glyphicon-chevron-right"></span>
 			      <span class="sr-only">Next</span>
 			    </a>
@@ -217,15 +220,69 @@ $(document).ready(function(){
 		<br>
 		<br>
 		<div class="row">
-		인기펀딩목록
-		<br><br><br><br><br><br><br><br>
-		
-		신규펀딩목록
-		<br><br><br><br><br><br><br><br>
+			<h1>인기펀딩목록</h1>
+			<c:forEach var="fdorderbytotal" items="${fdorderbytotal}">
+				<div class="col-xs-6" style="text-align: center; padding: 0px 0px 0px 5px;">
+					<table>
+						<tr>	
+							<td style="background-color: #EAEAEA; color: #000000">
+								<h3>D -	${fdorderbytotal.days}  ${fdorderbytotal.fdStatus}</h3>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="/pineapple/investfunding.invest?fdCode=${fdorderbytotal.fdCode}">
+									<img src="${pageContext.request.contextPath}/resources/files${fdorderbytotal.posterImg.substring(fdorderbytotal.posterImg.lastIndexOf('/'),fdorderbytotal.posterImg.length())}" width="100%" style="padding: 0.75px;">
+								</a>
+							</td>
+						</tr>
+						<tr>	
+							<td style="background-color: #8C8C8C; color: #FFFFFF">
+								<h3>${fdorderbytotal.comName}</h3>
+								<h3><b>${fdorderbytotal.fdTitle}</b></h3>
+							</td>
+						</tr>
+					</table>
+			  	</div>
+		  	</c:forEach>
 		</div>
 		
+		<div class="row">
+			<h1>신규펀딩목록</h1>
+			<c:forEach var="fdorderbydate" items="${fdorderbydate}">
+				<div class="col-xs-6" style="text-align: center; padding: 0px 0px 0px 5px;">
+					<table>
+						<tr>	
+							<td style="background-color: #EAEAEA; color: #000000">
+								<h3>D -	${fdorderbydate.days}  ${fdorderbydate.fdStatus}</h3>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="/pineapple/investfunding.invest?fdCode=${fdorderbydate.fdCode}">
+									<img src="${pageContext.request.contextPath}/resources/files${fdorderbydate.posterImg.substring(fdorderbydate.posterImg.lastIndexOf('/'),fdorderbydate.posterImg.length())}"width="100%" style="padding: 0.75px;">
+								</a>
+							</td>
+						</tr>
+						<tr>	
+							<td style="background-color: #8C8C8C; color: #FFFFFF">
+								<h3>${fdorderbydate.comName}</h3>
+								<h3><b>${fdorderbydate.fdTitle}</b></h3>
+							</td>
+						</tr>
+					</table>	
+				</div>
+			</c:forEach>
+		</div>
 	</div>
-		
+	<script type="text/javascript">
+	$('img').each(function(n){
+		   console.log($(this));
+		   $(this).on("error", function(){
+			   $(this).attr("src", "${pageContext.request.contextPath}/resources/img/404alternateimage.jpg");
+	    });
+	});
+	</script>	
 	<!-- 본문 우측 부분 -->
 	<div class="col-xs-3 col-md-3" style="padding-left: 30px;">
 		<!-- 우측 배너 -->

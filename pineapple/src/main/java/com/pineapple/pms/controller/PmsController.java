@@ -159,6 +159,12 @@ public class PmsController {
 		log.debug("PmsController의 wbsactuallistform호출 성공");
 		return "pms/companyuser/wbs/wbsactuallist";
 	}
+	//wbsactual 리스트페이지 불러오기
+	@RequestMapping(value = "/wbsactualapprovallistpage.pms", method = RequestMethod.GET)
+	public String wbsactualapprovallistform(Locale locale, Model model) {
+		log.debug("PmsController의 wbsactuallistform호출 성공");
+		return "pms/companyuser/wbs/wbsactualapproval";
+	}
 	
 	// wbsplan 장비 상세보기 리스트 페이지
 	@RequestMapping(value ="/wbsplanmateriallist.pms", method = {RequestMethod.GET, RequestMethod.POST})

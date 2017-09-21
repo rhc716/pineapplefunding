@@ -40,7 +40,7 @@
 				<ul>
 					<li><a href="/pineapple/wbsplanlistpage.pms">WBSPLAN관리</a></li>
 					<li><a href="/pineapple/wbsactuallistpage.pms">WBSACTUAL관리</a></li>
-					<li><a href="">WBS승인</a></li>
+					<li><a href="/pineapple/wbsactualapprovallistpage.pms">WBS승인</a></li>
 				</ul>
 			</li>
 			<li><a>보고서관리</a>
