@@ -71,7 +71,8 @@ public class InvestService implements InvestServiceInterface {
 	public int addMoneyflow(Moneyflow moneyflow) {
 		log.debug("------------------InvestService-----------------addMoneyflow()");
 		int addMoneyflow = investdaointerface.moneyflowInsert(moneyflow);
-		return addMoneyflow;
+		int updateinvestorpay = investdaointerface.moneyflowInvestUpdate(moneyflow.getMfInvestCode());
+		return addMoneyflow+updateinvestorpay;
 	}
 	//펀딩 보고서 list
 	@Override

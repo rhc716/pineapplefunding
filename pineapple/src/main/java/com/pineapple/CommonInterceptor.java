@@ -58,7 +58,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 			        response.sendRedirect(whereredirect);
 			}
 			//타임라인 등록 요청시
-			else if(uri.equals("/pineapple/pmsmain.pms")){
+			if(uri.equals("/pineapple/timelineinsert.timeline")){
 					response.sendRedirect(whereredirect);
 			}
 

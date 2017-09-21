@@ -90,7 +90,7 @@
 		});
 		$('.timemenu').click(function(){
 			$('#investoraddlistbtn').removeClass('disabled')
-			$('#investoraddlistbtn').attr('dataCode',5)
+			$('#investoraddlistbtn').attr('dataCode',6)
 			$('#investoraddlistbtn').html('더보기')
 			var timedataCode = $(this).attr('dataCode')
 			$('#DataCheckbtn').attr('DataCheck',timedataCode)
@@ -197,7 +197,7 @@
 				<div class="col-xs-12"  id="timecontent" timedataCode="">
 				</div>
 				<div class="col-xs-12">
-					<button type="button" id="investoraddlistbtn" dataCode="5" class="btn-block btn btn-primary">더보기</button>
+					<button type="button" id="investoraddlistbtn" dataCode="6" class="btn-block btn btn-primary">더보기</button>
 				</div>
 			</div>
 			<div class="col-xs-2" style="padding: 0px;">

@@ -26,6 +26,8 @@ public interface InvestDaoInterface {
 	InvestAndFundingAndMoney investmentFundingAndMoneyData(HashMap<String, Object> map);
 	//투자예약한 invest 결제하기
 	int moneyflowInsert(Moneyflow moneyflow);
+	//투자예약한 invest 결제 update 
+	int moneyflowInvestUpdate(int mfInvestCode);
 	//펀딩 보고서 list
 	List<FundingAndFdFile> fundingReportFilelistSelect(int fdCode);
 	//하나의 펀딩의 Q&A 불러오는 Dao
