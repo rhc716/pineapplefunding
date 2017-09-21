@@ -83,7 +83,7 @@ $(document).ready(function(){
 												<textarea class="form-control" name="tlReContent" rows="3" style="width: 100%; height: 100px; resize: none;" placeholder="댓글을 입력해주세요"></textarea>
 											</div>
 											<div class="col-xs-4" style="text-align:left; padding:0px;">
-												<button class="timelinereplyinsertbtn btn btn-info" dataCode="${Data.tlCode}" style="width: 50%; height: 100px; padding:0px; font-size:20px;">댓글등록하기</button>
+												<button class="timelinereplyinsertbtn btn btn-info" dataCode="${Data.tlCode}" style="width: 50%; height: 100px; padding:0px;">댓글등록</button>
 											</div>
 										</form>
 									</div>
