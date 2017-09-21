@@ -5,6 +5,17 @@
 html body{
 	font-family: 'Jeju Gothic', serif;
 }
+.mainfundingtitle{
+}
+.mainfdboxtitlearea{
+	width:301.5px;
+	display: inline-block;
+}
+.mainfdboxtitlearea b{
+	
+	font-size: 20px
+}
+
 
 .heading img{
 	margin-left: 50px;  

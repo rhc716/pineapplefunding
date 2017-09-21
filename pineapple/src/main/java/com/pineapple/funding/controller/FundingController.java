@@ -274,7 +274,7 @@ public class FundingController {
 			log.debug("result : "+result);
 			//업로드된 경로+파일명 그리고 나머지 정보를 DB에 저장해줌
 			service.addFundingFile(uploadFile, result, fdCode);
-			return "redirect:/fundingfilelistpage.pms";
+			return "redirect:/fundingfileuploadpage.pms";
 		}
 	}
 	

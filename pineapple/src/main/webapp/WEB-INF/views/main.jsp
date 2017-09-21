@@ -66,7 +66,7 @@ $(document).ready(function(){
  </script>
 <style type="text/css">
 #toptitlearea{
-	padding: 20px 20px;
+	padding: 0px 20px 0px 20px;
 }
 </style>
 </head>
@@ -126,12 +126,19 @@ $(document).ready(function(){
 			    </ol>
 			
 			    <!-- 화면에 보여줄 아이템 들어갈 곳 -->
-			    <div class="carousel-inner">
-				    <div class="item active">
-				    	<img src="${pageContext.request.contextPath}/resources/img/main/photo1.jpg" alt="Los Angeles" style="width:100%; height:450px;">
+			    <div class="carousel-inner maincarouselitem">
+			   		<div class="item active maincarouseliteminner" style="height: 450px;">
+				    	 <h1>투자</h1>
+                        	<p>파인애플 크라우드펀딩은 주식과 채권을
+							발행해서 자금을 조달할 수 있는 방법입니다.<br>
+                        	2017년 9월 25일부터 개설되었으며,<br>
+                        	다양한 기업들이 투자를 유치하고 있습니다.</p>
+                        
 				    </div>
-				    <div class="item">
-				    	<img src="${pageContext.request.contextPath}/resources/img/main/photo2.jpg" alt="Chicago" style="width:100%; height:450px;">
+				    <div class="item maincarouseliteminner"  style="height: 450px;">
+				    	<h1>파인애플 펀딩을 <br> 선택해야 하는 이유</h1>
+						<p>일반 크라우드펀딩 처럼 단순히 투자하고 기다리는 것 뿐만 아니라,<br>
+						프로젝트에 대한 실시간으로 이루어지는 정보를 얻을 수 있습니다.</p>
 				    </div>
 			    </div>
 			
@@ -147,80 +154,9 @@ $(document).ready(function(){
 		  	</div>
 		</div>
 		  <!-- carousel 끝 -->
-		  <br>
-		  
-		<!-- carousel2,3번 영역 -->
-		<div class="row">	
-			<div class="col-xs-6" style="text-align: center; padding: 0px 5px 0px 0px;">
-			<div id="myCarousel2" class="carousel slide" data-ride="carousel" style="width: 100%">
-			    <!-- Indicators -->
-			    <ol class="carousel-indicators">
-			    	<li data-target="#myCarousel2" data-slide-to="0" class="active"></li>
-			    	<li data-target="#myCarousel2" data-slide-to="1"></li>
-			    </ol>
-			
-			    <!-- 화면에 보여줄 아이템 들어갈 곳 -->
-			    <div class="carousel-inner">
-				    <div class="item active">
-				    	<img src="${pageContext.request.contextPath}/resources/img/main/photo1.jpg" alt="Los Angeles" style="width:100%; height:245px;">
-				    </div>
-				    <div class="item">
-				    	<img src="${pageContext.request.contextPath}/resources/img/main/photo2.jpg" alt="Chicago" style="width:100%; height:245px;">
-				    </div>
-			    </div>
-			
-			    <!-- Left and right controls -->
-			    <a class="left carousel-control" href="#myCarousel2" data-slide="prev">
-			      <span class="glyphicon glyphicon-chevron-left"></span>
-			      <span class="sr-only">Previous</span>
-			    </a>
-			    <a class="right carousel-control" href="#myCarousel2" data-slide="next">
-			      <span class="glyphicon glyphicon-chevron-right"></span>
-			      <span class="sr-only">Next</span>
-			    </a>
-		  	</div>
-		  	</div>
-		  <!-- carousel 끝 -->
-		
-		<!-- carousel : 회전하면서 이미지를 보여주는 것 -->
-			<div class="col-xs-6" style="text-align: center; padding: 0px 0px 0px 5px;">
-			
-		  	</div>
-		 <div class="col-xs-6" style="text-align: center; padding: 0px 5px 0px 0px;">
-			<div id="myCarousel2" class="carousel slide" data-ride="carousel" style="width: 100%">
-			    <!-- Indicators -->
-			    <ol class="carousel-indicators">
-			    	<li data-target="#myCarousel2" data-slide-to="0" class="active"></li>
-			    	<li data-target="#myCarousel2" data-slide-to="1"></li>
-			    </ol>
-			
-			    <!-- 화면에 보여줄 아이템 들어갈 곳 -->
-			    <div class="carousel-inner">
-				    <div class="item active">
-				    	<img src="${pageContext.request.contextPath}/resources/img/main/photo1.jpg" alt="Los Angeles" style="width:100%; height:245px;">
-				    </div>
-				    <div class="item">
-				    	<img src="${pageContext.request.contextPath}/resources/img/main/photo2.jpg" alt="Chicago" style="width:100%; height:245px;">
-				    </div>
-			    </div>
-			
-			    <!-- Left and right controls -->
-			    <a class="left carousel-control" href="#myCarousel2" data-slide="prev">
-			      <span class="glyphicon glyphicon-chevron-left"></span>
-			      <span class="sr-only">Previous</span>
-			    </a>
-			    <a class="right carousel-control" href="#myCarousel2" data-slide="next">
-			      <span class="glyphicon glyphicon-chevron-right"></span>
-			      <span class="sr-only">Next</span>
-			    </a>
-		  	</div>
-		  	</div>
-		  <!-- carousel 끝 -->
-		</div>
-		<br>
 		<br>
 		<div class="row">
-			<h1>인기펀딩목록</h1>
+			<h1><b class="mainfundingtitle">인기펀딩목록</b></h1>
 			<c:forEach var="fdorderbytotal" items="${fdorderbytotal}">
 				<div class="col-xs-6" style="text-align: center; padding: 0px 0px 0px 5px;">
 					<table>
@@ -239,7 +175,7 @@ $(document).ready(function(){
 						<tr>	
 							<td style="background-color: #8C8C8C; color: #FFFFFF">
 								<h3>${fdorderbytotal.comName}</h3>
-								<h3><b>${fdorderbytotal.fdTitle}</b></h3>
+								<span class="mainfdboxtitlearea"><b>${fdorderbytotal.fdTitle}</b></span>
 							</td>
 						</tr>
 					</table>
@@ -248,7 +184,7 @@ $(document).ready(function(){
 		</div>
 		
 		<div class="row">
-			<h1>신규펀딩목록</h1>
+			<h1><b class="mainfundingtitle">신규펀딩목록</b></h1>
 			<c:forEach var="fdorderbydate" items="${fdorderbydate}">
 				<div class="col-xs-6" style="text-align: center; padding: 0px 0px 0px 5px;">
 					<table>
@@ -267,7 +203,7 @@ $(document).ready(function(){
 						<tr>	
 							<td style="background-color: #8C8C8C; color: #FFFFFF">
 								<h3>${fdorderbydate.comName}</h3>
-								<h3><b>${fdorderbydate.fdTitle}</b></h3>
+								<span class="mainfdboxtitlearea"><b>${fdorderbydate.fdTitle}</b></span>
 							</td>
 						</tr>
 					</table>	

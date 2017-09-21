@@ -1,12 +1,29 @@
 @CHARSET "UTF-8";
 @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
 
+
+	.maincarouselitem{
+		background: url("../img/main/New_York_City_back.jpg") no-repeat 0px 0px;");
+		height: 450px; 
+		
+	}
+	.maincarouseliteminner{
+		text-align: center;
+		padding-top : 10%;
+	}
+	.maincarouseliteminner p{
+		border: 2px solid #00132c;
+		padding : 15px 15px;
+		display: inline-block;
+	}
 	.guidebigbox{
 		border: 40px solid #00132c;
 		border-radius: 25px;
 		padding: 15px 15px;
 		
 	}
+	
+	
 	
 	.guidesmallbox{
 		border: 1px solid #00132c;

@@ -107,19 +107,14 @@ $(document).ready(function(){
 				}
 		      	
 		      
-		      /* 차트를 그릴때에 상세정보버튼도 함께 그려넣어줌  */
-		      $('#chart_btnarea').append(
-	    		 	'<div style="height:42px; padding-top:6px;">'
-	    		 	+'<span>작업명 : </span>'+msg[s].wbsPlanName
-	    		 	+' <a href="">'
-	    		 	+'<button type="submit" class="btn btn-primary btn-sm" name="btn" value="detail">상세정보</button></a>'
-	    		  	+'</div>'
-		    		 
-		      );
-		      
 		      }
+		      
+		      // 구글차트 높이가 자동으로 정해지지 않아서 불러온 wbs리스트 개수에 따라 높이를 다르게 해줌 
+		      var heightvalue = 42;
+		      heightvalue += msg.length*42    
+		      
 		      var options = {
-		        height: 400
+		        height: heightvalue 
 		        ,gantt: {
 		            criticalPathEnabled: false, // Critical path arrows will be the same as other arrows.
 		            arrow: {
@@ -534,16 +529,11 @@ h1{	text-align:center;}
 							</span>
 						</div>
 						<div class="col-xs-12">
-							<div class="col-xs-8">
-								<!-- wbs리스트 부분  -->
-								<div class="row" id="mywbsplanlist">
-								</div>
-								<!-- 차트뿌려지는곳 -->
-								<div class="row" id="chart_div">
-								</div>
+							<!-- wbs리스트 부분  -->
+							<div class="row" id="mywbsplanlist">
 							</div>
-							<div class="col-xs-4" id="chart_btnarea">
-							<!-- 차트에 맞는 버튼이 들어올 곳 -->
+							<!-- 차트뿌려지는곳 -->
+							<div class="row" id="chart_div">
 							</div>
 						</div>
 					</div>

@@ -18,14 +18,16 @@
 				<td>다운로드</td>
 			</tr>
 			<c:forEach var="filelist" items="${fundingreportlist}">
-			<tr>
-				<td>${filelist.fdTitle}</td>
-				<td>${filelist.fdFileName}</td>
-				<td>${filelist.fdFileExtension}</td>
-				<td class="fdFileSize">${filelist.fdFileSize}</td>
-				<td><a href="calldownload.pms?fileFullPath=${filelist.fdFileUploadName}">
-				<button type="button" class="btn btn-sm btn-success">다운로드</button></a></td>
-			</tr>
+				<c:if test="${filelist.fdFileUploadName ne null}">
+					<tr>
+						<td>${filelist.fdTitle}</td>
+						<td>${filelist.fdFileName}</td>
+						<td>${filelist.fdFileExtension}</td>
+						<td class="fdFileSize">${filelist.fdFileSize}</td>
+						<td><a href="calldownload.pms?fileFullPath=${filelist.fdFileUploadName}">
+						<button type="button" class="btn btn-sm btn-success">다운로드</button></a></td>
+					</tr>
+				</c:if>
 			</c:forEach>
 		</table>
 </body>
