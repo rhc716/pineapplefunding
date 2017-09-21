@@ -78,10 +78,23 @@
 	            </c:if>
 	            <!-- 경영진 -->
 	            <c:if test="${sessionScope.level eq '기업회원'}">
-          	 	 	<a href="/pineapple/managermypage.user#message" class="list-group-item">
-		               <i class="glyphicon glyphicon-envelope pull-right" style="color: #01619d;"></i>
-		               <p class="list-group-item-text">메세지 (<span id="newmessage">0</span>)</p>
-		            </a>
+          	 	 	
+	            </c:if>
+	            
+	             <!-- 경영진과 일반사원을 분기해줌 -->
+	            <c:if test="${sessionScope.level eq '기업회원'}">
+		            <c:if test="${sessionScope.rank eq '경영진'}">
+			           <a href="/pineapple/managermypage.user#message" class="list-group-item">
+		               		<i class="glyphicon glyphicon-envelope pull-right" style="color: #01619d;"></i>
+		               		<p class="list-group-item-text">메세지 (<span id="newmessage">0</span>)</p>
+		               </a>
+		            </c:if>
+		            <c:if test="${sessionScope.rank eq '일반사원' || empty sessionScope.rank}">
+						<a href="/pineapple/employeemypage.user#message" class="list-group-item">
+		               		<i class="glyphicon glyphicon-envelope pull-right" style="color: #01619d;"></i>
+		               		<p class="list-group-item-text">메세지 (<span id="newmessage">0</span>)</p>
+		               	</a>
+		            </c:if>
 	            </c:if>
 	            <c:if test="${sessionScope.level eq '투자자'}">
           	 	 	<a href="/pineapple/investormypage.user#message" class="list-group-item">

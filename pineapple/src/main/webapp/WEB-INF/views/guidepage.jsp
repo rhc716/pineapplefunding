@@ -67,19 +67,26 @@
 			<div class="guidesmallbox">
 				<h1 class="guidetitlebox">
 					<img src="${pageContext.request.contextPath}/resources/img/logo.jpg" class="logoimg">
-					소제목
+					파인애플펀딩의 프로젝트관리 목적
 				</h1>
 				<div class="guidecontentbox">
-					내용
+					1. 기업은 WBS 단위로 프로젝트 상세하게 관리 할 수 있다.<br>			
+					2. 투자자는 자신이 투자한 펀딩의 상세하고 투명한 정보를 얻을 수 있다.<br>				
+					3. 펀딩에 대한 상세한 프로젝트관리를 기반으로 투명성있는 정보를 얻고 배당을 지급받는다.<br>				
+					4. PMS를 접목한 크라우드 펀딩을 통해 기업의 재정적 필요를 충족시키고, 투자자의 투자 수익율을 보장한다.			
+  
 				</div>
 			</div>
 			<div class="guidesmallbox">
 				<h1 class="guidetitlebox">
 					<img src="${pageContext.request.contextPath}/resources/img/logo.jpg" class="logoimg">
-					소제목
+					기업회원과 투자자회원 
 				</h1>
 				<div class="guidecontentbox">
-					내용   
+					기업회원은 펀딩을 개설하기 위해 회사에 소속되는 회원을 말한다. 
+					기업회원은 회사를 개설 할 수 있으며(경영진권한으로 변경), 일반사원으로 회사에 소속될 수 있다. 
+					펀딩을 개설하고 펀딩내 권한을 부여받아서 프로젝트관리에서 맡은 역할을 수행한다. 
+					투자자회원은 투자를 할 수 있는 일반회원이다. 펀딩에 투자하고 배당금액을 얻을 수 있다. 
 				</div>
 			</div>
 		</div>
@@ -87,19 +94,22 @@
 			<div class="guidesmallbox">
 				<h1 class="guidetitlebox">
 					<img src="${pageContext.request.contextPath}/resources/img/logo.jpg" class="logoimg">
-					소제목
+					펀딩 개설 및 진행 과정
 				</h1>
 				<div class="guidecontentbox">
-					내용   
+				펀딩개설신청 → 펀딩상세정보입력, 배당계획, 사업분야, 펀딩포스터 등록 → 마일스톤생성 -> WBS 계획 생성
+				→ 펀딩 개설 심사 통과 → 펀딩 투자자 모집 -> 펀딩 투자금액 유치 성공시 자금 배정 or 실패시 투자금 환불
+				 -> 프로젝트 진행 -> WBS 실제 작성 -> 증권 발행 및 배정
 				</div>
 			</div>
 			<div class="guidesmallbox">
 				<h1 class="guidetitlebox">
 					<img src="${pageContext.request.contextPath}/resources/img/logo.jpg" class="logoimg">
-					소제목
+					투자방법
 				</h1>
 				<div class="guidecontentbox">
-					   내용
+					투자하기 페이지에서 원하는 펀딩에 들어가서 투자사전예약 -> 모집기간이 끝나고 모집률 100%가 넘었을때에 결제모집기간으로 변경되며 선착순대로 결제가 가능하게 된다
+					 -> 결제를 하고 결제율이 100%가 달성되면 프로젝트가 진행된다   
 				</div>
 			</div>
 		</div>
@@ -107,10 +117,10 @@
 			<div class="guidesmallbox">
 				<h1 class="guidetitlebox">
 					<img src="${pageContext.request.contextPath}/resources/img/logo.jpg" class="logoimg">
-					소제목
+					배당금
 				</h1>
 				<div class="guidecontentbox">
-					 내용  
+					배당은 펀딩마다 정해놓은 지급기준일마다 최소보장이율 x 투자금액 + (지급기준단위x배당율) 을 통해서 정해진다
 				</div>
 			</div>
 			<div class="guidesmallbox">
