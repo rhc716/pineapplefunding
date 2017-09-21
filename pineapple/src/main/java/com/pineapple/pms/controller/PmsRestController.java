@@ -133,20 +133,41 @@ public class PmsRestController {
 			wbsdailyfacility = service.getMyWbsActualFacility(wbsActualCode);
 			List<WbsDailyIncome> wbsdailyincome = new ArrayList<WbsDailyIncome>();
 			wbsdailyincome = service.getMyWbsActualIncome(wbsActualCode);
-			/*List<WbsDailyMatrial> wbsdailymatrial = new ArrayList<WbsDailyMatrial>();
-			wbsdailymatrial = service.getMyWbsPlanEtcList(wbsactualcode);
+			List<WbsDailyMatrial> wbsdailymatrial = new ArrayList<WbsDailyMatrial>();
+			wbsdailymatrial = service.getMyWbsActualMatrial(wbsActualCode);
 			List<WbsDailyOut> wbsdailyout = new ArrayList<WbsDailyOut>();
-			wbsdailyout = service.getMyWbsPlanIncomeyList(wbsactualcode);*/
+			wbsdailyout = service.getMyWbsActualOut(wbsActualCode);
 			wbsactualbox.setWbsactual(wbsactual);
 			wbsactualbox.setWbsdailyetc(wbsdailyetc);
 			wbsactualbox.setWbsdailyhuman(wbsdailyhuman);
 			wbsactualbox.setWbsdailyfacility(wbsdailyfacility);
 			wbsactualbox.setWbsdailyincome(wbsdailyincome);
-			/*wbsactualbox.setWbsdailymatrial(wbsdailymatrial);
-			wbsactualbox.setWbsdailyout(wbsdailyout);*/
+			wbsactualbox.setWbsdailymatrial(wbsdailymatrial);
+			wbsactualbox.setWbsdailyout(wbsdailyout);
 			return wbsactualbox;
 		}
-	
+	//WBS실제 완료하여 완료일이 들어감
+	@RequestMapping(value = "/updatecopperwbs.pms", method = {RequestMethod.GET, RequestMethod.POST})
+	public void updatecopperwbs(String wbsActualCode) {
+		log.debug("PmsRestController의 updatecopperwbs호출 성공");
+		log.debug("wbsActualCode코드" + wbsActualCode);
+		service.updatecopperwbs(wbsActualCode);
+	}
+	//WBS실제 승인하여 승인일이 들어감
+	@RequestMapping(value = "/approvalupdate.pms", method = {RequestMethod.GET, RequestMethod.POST})
+	public void updateapproval(String wbsActualCode) {
+		log.debug("PmsRestController의 updateapproval호출 성공");
+		log.debug("wbsActualCode코드" + wbsActualCode);
+		service.updateapproval(wbsActualCode);
+	}
+	//WBS실제 승인을 취소하여 완료일이 null
+	@RequestMapping(value = "/noapprovalupdate.pms", method = {RequestMethod.GET, RequestMethod.POST})
+	public void updatenoapproval(String wbsActualCode) {
+		log.debug("PmsRestController의 updatenoapproval호출 성공");
+		log.debug("wbsActualCode코드" + wbsActualCode);
+		service.updatenoapproval(wbsActualCode);
+	}
+
 
 	//wbsplanhuman 삭제
 	@RequestMapping(value = "/wbsplanhumandelete.pms", method = {RequestMethod.GET, RequestMethod.POST})

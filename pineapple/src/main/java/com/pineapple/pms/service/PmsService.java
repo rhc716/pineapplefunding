@@ -101,6 +101,16 @@ public class PmsService implements PmsServiceInterface{
 		return pmsdao.getMyWbsActualIncome(wbsactualcode);
 	}
 	@Override
+	public List<WbsDailyMatrial> getMyWbsActualMatrial(String wbsactualcode) {
+		log.debug("PmsService의 getMyWbsPlanIncome호출 성공");
+		return pmsdao.getMyWbsActualMatrial(wbsactualcode);
+	}
+	@Override
+	public List<WbsDailyOut> getMyWbsActualOut(String wbsactualcode) {
+		log.debug("PmsService의 getMyWbsPlanIncome호출 성공");
+		return pmsdao.getMyWbsActualOut(wbsactualcode);
+	}
+	@Override
 	public List<WbsDailyFacility> getMyWbsActualFacility(String wbsactualcode) {
 		log.debug("PmsService의 getMyWbsActualFacility호출 성공");
 		return pmsdao.getMyWbsActualFacility(wbsactualcode);
@@ -216,6 +226,24 @@ public class PmsService implements PmsServiceInterface{
 	public void wbsplanincomeinsert(WbsPlanIncome wbsplanincome){
 		log.debug("PmsService의 wbsplanincomeinsert호출 성공");
 		pmsdao.wbsplanincomeinsert(wbsplanincome);
+	}
+	
+	@Override
+	public void updatecopperwbs(String wbsActualCode){
+		log.debug("PmsService의 wbsplanincomeinsert호출 성공");
+		pmsdao.updatecopperwbs(wbsActualCode);
+	}
+	
+	@Override
+	public void updateapproval(String wbsActualCode){
+		log.debug("PmsService의 wbsplanincomeinsert호출 성공");
+		pmsdao.updateapproval(wbsActualCode);
+	}
+	
+	@Override
+	public void updatenoapproval(String wbsActualCode){
+		log.debug("PmsService의 wbsplanincomeinsert호출 성공");
+		pmsdao.updatenoapproval(wbsActualCode);
 	}
 	
 	@Override
