@@ -87,6 +87,7 @@ public class PmsDao implements PmsDaoInterface {
 	/* (non-Javadoc)
 	 * @see com.pineapple.pms.service.PmsDaoInterface#getMyWbsPlanDetail(java.lang.String)
 	 */
+
 	@Override
 	public WbsPlan getMyWbsPlanDetail(String wbsplancode){
 		log.debug("PmsDao의 selectWbsPlandetail호출 성공");
@@ -244,6 +245,24 @@ public class PmsDao implements PmsDaoInterface {
 	}
 	
 	@Override
+	public void updatecopperwbs(String wbsActualCode){
+		log.debug("PmsDao의 updatecopperwbs호출 성공");
+		sqlSessionTemplate.update("com.pineapple.pms.service.PmsMapper.updatecopperwbs",wbsActualCode);
+	}
+	
+	@Override
+	public void updateapproval(String wbsActualCode){
+		log.debug("PmsDao의 updatecopperwbs호출 성공");
+		sqlSessionTemplate.update("com.pineapple.pms.service.PmsMapper.updateapproval",wbsActualCode);
+	}
+	
+	@Override
+	public void updatenoapproval(String wbsActualCode){
+		log.debug("PmsDao의 updatecopperwbs호출 성공");
+		sqlSessionTemplate.update("com.pineapple.pms.service.PmsMapper.updatenoapproval",wbsActualCode);
+	}
+	
+	@Override
 	public void wbsplanfacilityupdate(WbsPlanFacility wbsplanfacility){
 		log.debug("PmsDao의 wbsplanfacilityupdate호출 성공");
 		sqlSessionTemplate.update("com.pineapple.pms.service.PmsMapper.wbsplanfacilityupdate", wbsplanfacility);
@@ -314,6 +333,17 @@ public class PmsDao implements PmsDaoInterface {
 	public List<WbsDailyIncome> getMyWbsActualIncome(String wbsactualcode) {
 		log.debug("PmsDao의 WbsDailyIncome호출 성공");
 		return sqlSessionTemplate.selectList("com.pineapple.pms.service.PmsMapper.selectWbsActualIncome", wbsactualcode);
+	}
+	
+	@Override
+	public List<WbsDailyMatrial> getMyWbsActualMatrial(String wbsactualcode) {
+		log.debug("PmsDao의 getMyWbsActualMatrial호출 성공");
+		return sqlSessionTemplate.selectList("com.pineapple.pms.service.PmsMapper.selectWbsActualMatrial", wbsactualcode);
+	}
+	@Override
+	public List<WbsDailyOut> getMyWbsActualOut(String wbsactualcode) {
+		log.debug("PmsDao의 getMyWbsActualMatrial호출 성공");
+		return sqlSessionTemplate.selectList("com.pineapple.pms.service.PmsMapper.selectWbsActualOut", wbsactualcode);
 	}
 	
 	@Override
