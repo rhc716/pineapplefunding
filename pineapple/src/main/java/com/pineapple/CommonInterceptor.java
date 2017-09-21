@@ -52,10 +52,14 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 			                request.setAttribute("refererPage", refererPage);
 			        }
 			}
-
+			//프로젝트 관리 페이지 이동시
 			if(uri.equals("/pineapple/pmsmain.pms")){
 			        
 			        response.sendRedirect(whereredirect);
+			}
+			//타임라인 등록 요청시
+			else if(uri.equals("/pineapple/pmsmain.pms")){
+					response.sendRedirect(whereredirect);
 			}
 
 			
