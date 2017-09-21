@@ -210,8 +210,8 @@ $(document).ready(function(){
 										<br>
 										<div class="form-group">
 										    <label for="emRankCodeInput">직급선택</label>
-										    <p id="explain">(경영진과 일반사원 중 하나를 선택해주시기 바랍니다)</p>
-									        ${rank}  <input name="emRankCode" type="radio" value="${employeeOneId.emRankCode}" checked>
+										    <p id="explain">(경영진 : 1, 일반사원 : 2)</p>
+									        ${employeeOneId.emRankCode} <input name="emRankCode" type="radio" value="${employeeOneId.emRankCode}" checked>
 										    <span id="emrankch1"></span>
 									  	</div>
 									  	<br>
@@ -310,8 +310,8 @@ $(document).ready(function(){
 										<br>
 										<div class="form-group">
 										    <label for="emRankCodeInput">직급선택</label>
-										    <p id="explain">(경영진과 일반사원 중 하나를 선택해주시기 바랍니다)</p>
-									        ${rank}  <input name="emRankCode" type="radio" value="${employeeOneIdforDel.emRankCode}" checked>
+										    <p id="explain">(경영진 : 1, 일반사원 : 2)</p>
+									        ${employeeOneIdforDel.emRankCode} <input name="emRankCode" type="radio" value="${employeeOneIdforDel.emRankCode}" checked>
 										    <span id="emrankch1"></span>
 									  	</div>
 									  	<br>
@@ -403,6 +403,7 @@ $(document).ready(function(){
 							    <p id="explain">(기업을 최초로 개설요청한 경영진이라면 최초개설에 체크해주시기 바랍니다. 일반 경영진의 경우 일반경영진에 체크해주시기 바랍니다.)</p>
 							      최초개설자<input name="emCheck" value="1" type="radio" checked>&nbsp&nbsp&nbsp
 							      일반경영진<input name="emCheck" value="0" type="radio">
+							      일반사원<input name="emCheck" value="0" type="radio">
 							    <span id="emrankch1"></span>
 						  	</div>
 						  		<input name="emDelRequest" type="hidden" value="0" class="form-control">
