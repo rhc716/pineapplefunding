@@ -23,7 +23,7 @@ public class InvestDao implements InvestDaoInterface {
     private SqlSessionTemplate sqlSessionTemplate;
 	//조건 검색으로 펀딩 리스트 조회 Dao
 	@Override
-	public List<InvestAndFd> investFundingChooseSelect(HashMap<String, String[]> map) {
+	public List<InvestAndFd> investFundingChooseSelect(HashMap<String, Object> map) {
 		log.debug("InvestDao-----investFundingChooseSelect");
 		return sqlSessionTemplate.selectList("com.pineapple.invest.service.InvestMapper.selectInvestFundingListChoose",map);
 	}

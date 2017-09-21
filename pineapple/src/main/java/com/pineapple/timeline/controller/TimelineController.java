@@ -401,8 +401,8 @@ public class TimelineController {
 	@RequestMapping(value="/moneyflowalladd.timeline",method=RequestMethod.GET)
 	public @ResponseBody List<MoneyAndTitleAndId> moneyflowalladd(Locale locale,Model model,HttpServletRequest request,@RequestParam(value="mfCategory",defaultValue="0")int mfCategory,@RequestParam(value="numberOfRequests",defaultValue="0")int numberOfRequests){
 		log.debug("<----- TimelineController[moneyflowall호출]----->");
-		log.debug(mfCategory+"<-----TimelineController[mfCategory 값 출력]11111111111111111111111111111111111111111");
-		log.debug(numberOfRequests+"<-----TimelineController[numberOfRequests 값 출력]222222222222222222222222222222222222222");
+		log.debug(mfCategory+"<-----TimelineController[mfCategory 값 출력]");
+		log.debug(numberOfRequests+"<-----TimelineController[numberOfRequests 값 출력]");
 		List<MoneyAndTitleAndId> moneycontent = timelineserviceinterface.getMoneyall(mfCategory,numberOfRequests);
 		model.addAttribute("moneycontent",moneycontent);
 		log.debug(moneycontent+"<-----TimelineController[moneycontent 값 출력]");

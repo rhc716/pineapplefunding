@@ -152,7 +152,13 @@
 		</if>
 		</where>
 		GROUP BY f.fdCode 
-		ORDER BY f.fdDate DESC;
+		ORDER BY f.fdDate DESC
+		<if test="numberOfRequests == 0">
+		limit #{numberOfRequests},9;
+		</if>
+		<if test="numberOfRequests != 0">
+		limit #{numberOfRequests},3;
+		</if>
 	</select>
 	<!-- 투자하기 펀딩안에서 사용하는 모집중인 펀딩 조회 쿼리 -->
 	<select id="selectInvestAndFdLikeAndFd" parameterType="hashmap" resultMap="selectInvestAndFdLikeAndFd">

@@ -13,7 +13,7 @@ import com.pineapple.user.service.FundingAndCompany;
 @Transactional
 public interface InvestServiceInterface {
 	//조건 검색으로 펀딩 리스트 조회 Service
-	List<InvestAndFd> getInvestFundingChoose(HashMap<String, String[]> map);
+	List<InvestAndFd> getInvestFundingChoose(HashMap<String, Object> map);
 	//하나의 펀딩 Data 불러오는 Service(투자하기 list 에서 펀딩클릭시)
 	InvestAndFdLikeAndFd getInvestFundingone(HashMap<String, Object> map);
 	//하나의 펀딩 Detail 불러오는 Service

@@ -80,6 +80,9 @@ $(document).ready(function(){
 				},
 				success : function success(msg){
 					$('#fdlist').html(msg)
+					$('#investoraddlistbtn').attr("dataCode",9)	
+					$('#investoraddlistbtn').removeClass('disabled')
+					$('#investoraddlistbtn').html('더보기')
 				},
 				error : function error(){
 					
@@ -94,6 +97,70 @@ $(document).ready(function(){
 	//검색조건 클릭시 ajax function 실행
 	$('.category').click(function(){
 		ajaxfunction()
+	});
+	var ajaxfunction2 = function(numberOfRequests){
+		var areacount = 0;
+		var checkedfdarea = document.getElementsByName("category").length
+		var fdarea = new Array();
+ 		for(i = 0 ; i < checkedfdarea ; i++){
+			if(document.getElementsByName("category")[i].checked == true){
+				fdarea[areacount] = document.getElementsByName("category")[i].value;
+				areacount++
+			}
+		}
+		var typecount = 0;
+		var checkedfdtype = document.getElementsByName("type").length
+		var fdtype = new Array();
+		for(i = 0 ; i < checkedfdtype ; i++){
+			if(document.getElementsByName("type")[i].checked == true){
+				fdtype[typecount] = document.getElementsByName("type")[i].value;
+				typecount++
+			}
+		}
+		var dividendcount = 0;
+		var checkedfddividend = document.getElementsByName("dividend").length
+		var fddividend = new Array();
+		for(i = 0 ; i < checkedfddividend ; i++){
+			if(document.getElementsByName("dividend")[i].checked == true){
+				fddividend[dividendcount] = document.getElementsByName("dividend")[i].value;
+				dividendcount++
+			}
+		}
+		var statuscount = 0;
+		var checkedfdstatus = document.getElementsByName("status").length
+		var fdstatus = new Array();
+		for(i = 0 ; i < checkedfdstatus ; i++){
+			if(document.getElementsByName("status")[i].checked == true){
+				fdstatus[statuscount] = document.getElementsByName("status")[i].value;
+				statuscount++
+			}
+		}
+		
+		var fundingtitlename = $('#fundinglistnameselecttext').val();
+		$.ajaxSettings.traditional = true;
+			var fundinglistnameselectajax = $.ajax({
+				type: 'get',
+				url : '/pineapple/investfdchoosemain.invest',
+				data: {
+					fundingtitlename : fundingtitlename,
+					fdarea : fdarea,
+					fdtype : fdtype,
+					fddividend : fddividend,
+					fdstatus : fdstatus,
+					numberOfRequests : numberOfRequests
+				},
+				success : function success(msg){
+					$('#fdlist').append(msg)
+					$('#investoraddlistbtn').attr("dataCode",Number(numberOfRequests)+3)
+				},
+				error : function error(){
+					
+				}
+			});
+	}
+	$('#investoraddlistbtn').click(function(){
+		ajaxfunction2($(this).attr("dataCode"))
+
 	});
 });
 </script>
@@ -194,6 +261,9 @@ $(document).ready(function(){
 		</div>
 		<div class="col-md-10" style="padding: 0px 10px 0px 10px;">
 			<div id="fdlist">
+			</div>
+			<div>
+			<button type="button" id="investoraddlistbtn" dataCode="9" class="btn-block btn btn-primary">더보기</button>
 			</div>
 		</div>
 	</div>

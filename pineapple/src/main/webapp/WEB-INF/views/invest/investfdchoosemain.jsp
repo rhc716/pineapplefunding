@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
+$(document).ready(function(){
 	$('img').each(function(n){
 		   console.log($(this));
 		   
@@ -14,6 +15,11 @@
 			   $(this).attr("src", "${pageContext.request.contextPath}/resources/img/404alternateimage.jpg");
 	    });
 	});
+	if(${fundingListChoose.size()} == 0){
+		$('#investoraddlistbtn').addClass('disabled')
+		$('#investoraddlistbtn').html('등록된 펀딩이 없습니다.')
+	}
+});
 </script>
 </head>
 <body>

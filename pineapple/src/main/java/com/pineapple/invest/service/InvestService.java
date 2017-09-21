@@ -20,7 +20,7 @@ public class InvestService implements InvestServiceInterface {
 	
 	//조건 검색으로 펀딩 리스트 조회 Service
 	@Override
-	public List<InvestAndFd> getInvestFundingChoose(HashMap<String, String[]> map) {
+	public List<InvestAndFd> getInvestFundingChoose(HashMap<String, Object> map) {
 		log.debug("------------------InvestService-----------------getInvestFundingChoose()");
 		List<InvestAndFd> fdchooselist =  investdaointerface.investFundingChooseSelect(map);
 		return fdchooselist;

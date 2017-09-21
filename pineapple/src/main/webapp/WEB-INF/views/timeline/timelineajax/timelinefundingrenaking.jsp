@@ -10,7 +10,7 @@
 <body>
 	<c:forEach var="timelinereplydelete" items="${timelinereplydelete}">
 	<div class="col-xs-12" style="border: 1.5px solid #009442; border-radius: 5px; margin-bottom: 10px; padding: 0px;">
-		<a href="#" style="color: black;">
+		<a href="/pineapple/investfunding.invest?fdCode=${timelinereplydelete.fdCode}" style="color: black;">
 		<div class="col-xs-12" style="padding: 0px 5px;">
 			<h4 style="margin: 0px; padding: 3px;">펀딩명</h4>
 			<div style="padding: 3px;">${timelinereplydelete.fdTitle}</div>

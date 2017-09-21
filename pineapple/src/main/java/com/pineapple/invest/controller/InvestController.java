@@ -44,19 +44,22 @@ public class InvestController {
 	}
 	//펀딩리스트 조건 검색
 	@RequestMapping(value="/investfdchoosemain.invest" , method=RequestMethod.GET)
-	public String investFdChooseMain(Locale locale, Model model,HttpServletRequest request){
+	public String investFdChooseMain(Locale locale, Model model,HttpServletRequest request,@RequestParam(value="numberOfRequests",defaultValue="0")int numberOfRequests){
 		log.debug("<----- InvestController[investFdTitleMain호출]----->");
+		log.debug(numberOfRequests+"<-----[numberOfRequests]");
 		String[] fundingtitlename = request.getParameterValues("fundingtitlename");
 		String[] fdarea = request.getParameterValues("fdarea");
 		String[] fdtype = request.getParameterValues("fdtype");
 		String[] fddividend = request.getParameterValues("fddividend");
 		String[] fdstatus = request.getParameterValues("fdstatus");
-		HashMap<String, String[]> map = new HashMap<>();
+		HashMap<String, Object> map = new HashMap<>();
 		map.put("fundingtitlename", fundingtitlename);
 		map.put("fdarea", fdarea);
 		map.put("fdtype", fdtype);
 		map.put("fddividend", fddividend);
 		map.put("fdstatus", fdstatus);
+		map.put("numberOfRequests", numberOfRequests);
+		map.put("numberOfRequests2", numberOfRequests+1);
 		List<InvestAndFd> fundingListChoose = investserviceinterface.getInvestFundingChoose(map);
 		model.addAttribute("fundingListChoose", fundingListChoose);
 		log.debug(fundingListChoose+"<-----InvestController[fundingListChoose 값 출력]");
