@@ -111,7 +111,7 @@
 		LEFT JOIN dividendplan d
 		ON f.fdCode = d.divFdCode
 		<where>
-		(f.fdStatus = '모집중' OR f.fdStatus = '결제모집중')
+		(f.fdStatus = '모집중' OR f.fdStatus = '결제모집중' OR f.fdStatus = '진행중')
 		<if test="fundingtitlename != null">
 			AND
 			<foreach collection="fundingtitlename" item="title" open="(" close=")" separator="or">
@@ -237,6 +237,12 @@
 			(mfFdCode, mfInvestCode, mfAmount, mfCategory, mfDate)
 		VALUES (#{mfFdCode}, #{mfInvestCode}, #{mfAmount}, 1, NOW())
 	</insert>
+	<update id="updateinvestpay" parameterType="INT">
+	UPDATE investment
+	SET
+		payCheck=1
+	WHERE investCode = #{mfInvestCode}
+	</update>
 	<!-- 펀딩 보고서 list -->
 	<select id="selectFundingReportList" parameterType="INT" resultType="java.util.HashMap">
 		SELECT f.fdTitle,

@@ -68,6 +68,12 @@ public class InvestDao implements InvestDaoInterface {
 		log.debug("InvestDao-----moneyflowInsert");
 		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.insertMoneyflow",moneyflow);
 	}
+	//하나의 펀딩에서 투자예약후 결제할때 invest 업데이트
+	@Override
+	public int moneyflowInvestUpdate(int mfInvestCode) {
+		log.debug("InvestDao-----moneyflowInsert");
+		return sqlSessionTemplate.insert("com.pineapple.invest.service.InvestMapper.updateinvestpay",mfInvestCode);
+	}
 	//펀딩 보고서 list
 	@Override
 	public List<FundingAndFdFile> fundingReportFilelistSelect(int fdCode) {
