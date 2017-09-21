@@ -6,6 +6,8 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.pineapple.invest.service.InvestAndFd;
 import com.pineapple.invest.service.InvestorInvestList;
 
 @Service
@@ -14,6 +16,20 @@ public class MypageService implements MypageServiceInterface {
 	
 	@Autowired
 	private MypageDaoInterface mypagedao;
+	
+	//사이트 메인 페이지 인기순 펀딩 조회
+	@Override
+	public List<InvestAndFd> getFundingOrderbyTotal() {
+		log.debug("MypageService getFundingOrderbyTotal 호출 결과: "+mypagedao.selectFundingOrderbyTotal());
+		return mypagedao.selectFundingOrderbyTotal();
+	}
+	
+	//사이트 메인 페이지 최신순 펀딩 조회
+	@Override
+	public List<InvestAndFd> getFundingOrderbyDate() {
+		log.debug("MypageService getFundingOrderbyDate 호출 결과: "+mypagedao.selectFundingOrderbyDate());
+		return mypagedao.selectFundingOrderbyDate();
+	}
 	
 	//관리자 마이페이지 전체투자내역과 투자에 대한 배당지급내역 조회
 	@Override
@@ -282,6 +298,4 @@ public class MypageService implements MypageServiceInterface {
 		log.debug("MypageService selectInvestorBasic 메서드 호출 "+userId);
 		return mypagedao.selectInvestorBasic(userId);
 	}
-
-
 }

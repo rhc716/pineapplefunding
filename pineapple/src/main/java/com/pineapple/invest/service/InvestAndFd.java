@@ -12,7 +12,7 @@ public class InvestAndFd {
 	private int days;
 	private String fdStatus;
 	private String checkassignment;
-	
+	private String fdDate;
 	
 	public String getCheckassignment() {
 		return checkassignment;
@@ -80,13 +80,18 @@ public class InvestAndFd {
 	public void setPosterImg(String posterImg) {
 		this.posterImg = posterImg;
 	}
+	public String getFdDate() {
+		return fdDate;
+	}
+	public void setFdDate(String fdDate) {
+		this.fdDate = fdDate;
+	}
 	@Override
 	public String toString() {
 		return "InvestAndFd [fdCode=" + fdCode + ", fdTitle=" + fdTitle + ", numberOfShares=" + numberOfShares
 				+ ", comName=" + comName + ", total=" + total + ", posterImg=" + posterImg + ", minInvestMoney="
 				+ minInvestMoney + ", issuePrice=" + issuePrice + ", days=" + days + ", fdStatus=" + fdStatus
-				+ ", checkassignment=" + checkassignment + "]";
+				+ ", checkassignment=" + checkassignment + ", fdDate=" + fdDate + "]";
 	}
-
 
 }

@@ -4,6 +4,86 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.pineapple.user.service.MypageMapper">
+<!-- main 화면 에서 사용하는  투자금액순(인기순) 펀딩조회 쿼리 -->
+<select id="selectFundingOrderbyTotal" resultMap="selectFundingOrderbyTotal">
+	SELECT  f.fdCode,
+			f.fdTitle,
+			f.numberOfShares,
+			c.comName,
+			CASE f.fdStatus WHEN '모집중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode GROUP BY si.investFdCode ) WHEN '결제모집중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode AND si.payCheck = 1 GROUP BY si.investFdCode) WHEN '진행중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode GROUP BY si.investFdCode) END as total,
+			f.posterImg,
+			f.minInvestMoney,
+			f.issuePrice,
+			TO_DAYS(f.closeDate)-TO_DAYS(now()) as days,
+			f.fdStatus,
+			f.fdDate
+	FROM funding f
+	LEFT JOIN company c 
+	ON f.fdComCode = c.comCode
+	LEFT JOIN businessarea b
+	ON f.fdCode = b.areaFdCode
+	LEFT JOIN dividendplan d
+	ON f.fdCode = d.divFdCode
+	GROUP BY f.fdCode
+	ORDER BY total DESC
+	LIMIT 0, 2;
+</select>
+ <resultMap type="com.pineapple.invest.service.InvestAndFd"
+ 			id="selectFundingOrderbyTotal">
+ 	<result property="fdCode" column="fdCode"/>
+ 	<result property="fdTitle" column="fdTitle"/>
+ 	<result property="numberOfShares" column="numberOfShares"/>
+ 	<result property="comName" column="comName"/>
+ 	<result property="total" column="total"/>
+ 	<result property="posterImg" column="posterImg"/>
+ 	<result property="minInvestMoney" column="minInvestMoney"/>
+ 	<result property="issuePrice" column="issuePrice"/>
+ 	<result property="days" column="days"/>
+ 	<result property="fdStatus" column="fdStatus"/>
+ 	<result property="checkassignment" column="checkassignment"/>
+ 	<result property="fdDate" column="fdDate"/>
+ </resultMap>
+
+<!-- main 화면 에서 사용하는  최신순 펀딩조회 쿼리 -->
+<select id="selectFundingOrderbyDate" resultMap="selectFundingOrderbyDate">
+	SELECT  f.fdCode,
+			f.fdTitle,
+			f.numberOfShares,
+			c.comName,
+			CASE f.fdStatus WHEN '모집중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode GROUP BY si.investFdCode ) WHEN '결제모집중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode AND si.payCheck = 1 GROUP BY si.investFdCode) WHEN '진행중' THEN (SELECT SUM(si.purchaseShares) FROM investment si WHERE si.investFdCode = f.fdCode GROUP BY si.investFdCode) END as total,
+			f.posterImg,
+			f.minInvestMoney,
+			f.issuePrice,
+			TO_DAYS(f.closeDate)-TO_DAYS(now()) as days,
+			f.fdStatus,
+			f.fdDate
+	FROM funding f
+	LEFT JOIN company c 
+	ON f.fdComCode = c.comCode
+	LEFT JOIN businessarea b
+	ON f.fdCode = b.areaFdCode
+	LEFT JOIN dividendplan d
+	ON f.fdCode = d.divFdCode
+	GROUP BY f.fdCode
+	ORDER BY f.fdDate DESC
+	LIMIT 0, 2;
+</select>
+ <resultMap type="com.pineapple.invest.service.InvestAndFd"
+ 			id="selectFundingOrderbyDate">
+ 	<result property="fdCode" column="fdCode"/>
+ 	<result property="fdTitle" column="fdTitle"/>
+ 	<result property="numberOfShares" column="numberOfShares"/>
+ 	<result property="comName" column="comName"/>
+ 	<result property="total" column="total"/>
+ 	<result property="posterImg" column="posterImg"/>
+ 	<result property="minInvestMoney" column="minInvestMoney"/>
+ 	<result property="issuePrice" column="issuePrice"/>
+ 	<result property="days" column="days"/>
+ 	<result property="fdStatus" column="fdStatus"/>
+ 	<result property="checkassignment" column="checkassignment"/>
+ 	<result property="fdDate" column="fdDate"/>
+ </resultMap>
+
 <!-- 관리자 마이페이지 투자자 정보 조회(투자내역, 배당지급내역) -->
 <select id="selectInvestInfo" resultMap="selectInvestInfo">
 	SELECT i.investCode, i.investFdCode, i.investId, i.purchaseShares, i.investTime, i.payCheck

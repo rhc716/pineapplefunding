@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.pineapple.funding.service.Funding;
+import com.pineapple.invest.service.InvestAndFd;
 import com.pineapple.invest.service.InvestorInvestList;
 
 @Repository
@@ -17,6 +18,19 @@ public class MypageDao implements MypageDaoInterface {
 	
 	@Autowired
     private SqlSessionTemplate sqlSessionTemplate;
+	//사이트 메인 페이지 인기순 펀딩 조회
+	@Override
+	public List<InvestAndFd> selectFundingOrderbyTotal() {
+		log.debug("MypageDao selectFundingOrderbyTotal 호출");
+		return sqlSessionTemplate.selectList("com.pineapple.user.service.MypageMapper.selectFundingOrderbyTotal");
+	}
+	
+	//사이트 메인 페이지 최신순 펀딩 조회
+	@Override
+	public List<InvestAndFd> selectFundingOrderbyDate() {
+		log.debug("MypageDao selectFundingOrderbyDate 호출");
+		return sqlSessionTemplate.selectList("com.pineapple.user.service.MypageMapper.selectFundingOrderbyDate");
+	}
 	
 	//관리자 마이페이지 전체투자내역과 투자에 대한 배당지급내역 조회
 	@Override

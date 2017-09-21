@@ -2,9 +2,17 @@ package com.pineapple.user.service;
 
 import java.util.List;
 import java.util.Map;
+
+import com.pineapple.invest.service.InvestAndFd;
 import com.pineapple.invest.service.InvestorInvestList;
 
 public interface MypageDaoInterface {
+	//사이트 메인 페이지 인기순 펀딩 조회
+	List<InvestAndFd> selectFundingOrderbyTotal();
+	
+	//사이트 메인 페이지 최신순 펀딩 조회
+	List<InvestAndFd> selectFundingOrderbyDate();
+	
 	//관리자 마이페이지 전체투자내역과 투자에 대한 배당지급내역 조회
 	List<InvestmentAndDividendpay> selectInvestInfoAndDividendInfo();
 	
