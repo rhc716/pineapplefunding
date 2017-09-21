@@ -193,10 +193,8 @@ $(document).ready(function(){
 			<h4>마일스톤을 선택해주세요</h4>
 		</div>
 		<div class="row">
-				<div class="col-xs-8" id="chart_div">
+				<div class="col-xs-12" id="chart_div">
 					
-				</div>
-				<div class="col-xs-4" id="chart_btnarea">
 				</div>
 		</div>
 
@@ -222,11 +220,11 @@ $(document).ready(function(){
 							<input type="date" name="wbsPlanStartDate" id="wbssd"><br>
 						</div>
 						<a class="lskbtn"id="dependency">선행작업</a>
-						<a class="lskbtn"id="startdate">시작일</a>
+						<a class="lskbtn"id="startdate">시작일</a><br>
 						작업기간:
 						<input type="number" class="form-control" name="wbsPlanDuration">
 						
-						담당자ID:
+						담당자:
 						<input type="text" class="form-control" name="wbsPlanManager">
 						<div id="wbscomcode">
 						</div>
@@ -327,6 +325,7 @@ function fdbtnclick(btn){
 			$('#mslistgroup').html(
 				'<button class="list-group-item active">목록이 없습니다</button>'
 			);
+			
 		} else {
 			//받아온 마일스톤 목록이 있을때
 			//내용한번 리셋후 리스트를 채워넣음
@@ -384,6 +383,9 @@ function msbtnclick(btn){
 			$('#wbsplanlistgroup').html(
 				'<button class="list-group-item active">목록이 없습니다</button>'
 			);
+			$('#wbsplanlistgroup').append(
+					'<button class="list-group-item" data-toggle="modal" data-target="#insert">wbs추가</button>' 
+				);
 		} else {
 			//받아온 WBSPLAN 목록이 있을때
 			//내용한번 리셋후 리스트를 채워넣음
@@ -446,7 +448,6 @@ function msbtnclick(btn){
 		      /* 차트를 그릴때에 버튼도 함께 그려넣어줌  */
 		      $('#chart_btnarea').append(
 	    		 	'<div style="height:44px; padding-top:6px;">'
-	    		 	+'<span>작업명 : </span>'+msg[s].wbsPlanName
 	    		 	+' <form action="/pineapple/wbsplandetail.pms" method="post" style="display:inline;">'
 	    		 	+'<input type="hidden" name="wbsPlanCode" value="'+msg[s].wbsPlanCode+'"/>'
 	    		  	+'<button type="submit" class="btn btn-primary btn-sm" name="btn" value="detail">상세정보</button>'		
@@ -524,10 +525,12 @@ function msbtnclick(btn){
                         '<option value="'+msg[s].wbsPlanName+'">'+msg[s].wbsPlanName+'</option><br>'
                     );
 	      }
-	    
+	      // 구글차트 높이가 자동으로 정해지지 않아서 불러온 wbs리스트 개수에 따라 높이를 다르게 해줌 
+	      var heightvalue = 42;
+	      heightvalue += msg.length*42     
 	      
 	      var options = {
-	        height: 400
+	        height: heightvalue
 	        ,gantt: {
 	            criticalPathEnabled: false, // Critical path arrows will be the same as other arrows.
 	            arrow: {

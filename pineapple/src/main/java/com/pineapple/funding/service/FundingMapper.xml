@@ -621,6 +621,7 @@
 		SELECT *
 		FROM milestone
 		WHERE msFdCode = #{fdCode}
+		ORDER BY milestoneStep
 	</select>
 	
 	<!-- 마일스톤단계 중복검사를 위해 select -->

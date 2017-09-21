@@ -33,48 +33,14 @@ public class PmsController {
 	
 	@Autowired
     private PmsServiceInterface service;	
-	
-	// wbsplan입력 페이지 요청
-	@RequestMapping(value = "/wbsform.pms", method = {RequestMethod.GET, RequestMethod.POST})
-	public String addWbsplan(Locale locale, Model model, HttpServletRequest request) {
-		log.debug("PmsController의 addWbsplan호출 성공");
-		String fdCode = request.getParameter("fdCode");
-		String fdTitle = request.getParameter("fdTitle");
-		String milestoneCode = request.getParameter("milestoneCode");
-		String milestoneName = request.getParameter("milestoneName");
-		String msComCode = request.getParameter("msComCode");
-		String message = request.getParameter("message");
-		String btn = request.getParameter("btn");
-		model.addAttribute("message", message);
-		model.addAttribute("fdCode", fdCode);
-		model.addAttribute("fdTitle", fdTitle);
-		model.addAttribute("milestoneCode", milestoneCode);
-		model.addAttribute("milestoneName", milestoneName);
-		model.addAttribute("msComCode", msComCode);
-		if(btn.equals("WBS예상입력")){
-			log.debug("펀딩코드"+fdCode+"펀딩명"+fdTitle+"마일스톤코드"+milestoneCode+"마일스톤명"+milestoneName+"회사코드"+msComCode);
-			List<WbsPlan> wbsplan = service.wbsplanlist(milestoneCode);
-			model.addAttribute("wbsplan", wbsplan);
-			return "pms/companyuser/wbs/wbsplaninsert";
-		}else if(btn.equals("WBS예상리스트")){
-			return "pms/companyuser/wbs/wbsplanlist2";
-		}else if(btn.equals("WBS실제입력")){
-			return "pms/companyuser/wbs/wbsactualinsertlist";
-		}else{
-			return "";
-		}
 		
-	}
-	
 	// wbsactual입력 페이지 요청
 	@RequestMapping(value = "/wbsactualinsertform.pms", method = RequestMethod.GET)
 	public String addWbsactualPage(Locale locale, Model model) {
 		log.debug("PmsController의 addWbsactual Page호출 성공");                                                                                                                   
 		return "pms/companyuser/wbs/wbsactualinsert";
 	}
-	
-
-	
+		
 	//wbsplan 상세보기 페이지
 	@RequestMapping(value = "/wbsplandetail.pms", method = {RequestMethod.GET, RequestMethod.POST})
 	public String wbsplandetail(Locale locale, Model model, HttpServletRequest request) {
@@ -236,7 +202,7 @@ public class PmsController {
 			log.debug("PmsController의 addWbsplan호출 성공");
 			log.debug("WbsPlan : " + wbsplan);
 			service.addWbsplan(wbsplan);
-			return "pms/companyuser/wbs/wbsfdlist";
+			return "redirect:/wbsplanlistpage.pms";
 		}
 		
 		@RequestMapping(value = "/wbsactualinsert.pms", method = RequestMethod.GET)
@@ -244,7 +210,7 @@ public class PmsController {
 			log.debug("PmsController의 wbsactualinsert호출 성공");
 			log.debug("wbsactual : " + wbsactual);
 			service.wbsactualinsert(wbsactual);
-			return "pms/companyuser/wbs/wbsactuallist";
+			return "redirect:/wbsactuallistpage.pms";
 		}
 		
 		

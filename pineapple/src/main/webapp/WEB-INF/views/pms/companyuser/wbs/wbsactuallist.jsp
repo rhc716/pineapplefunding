@@ -178,11 +178,10 @@ $(document).ready(function(){
 			<h4>마일스톤을 선택해주세요</h4>
 		</div>
 		<div class="row">
-				<div class="col-xs-8" id="chart_div">
+				<div class="col-xs-12" id="chart_div">
 					
 				</div>
-				<div class="col-xs-4" id="chart_btnarea">
-				</div>
+				
 		</div>
 
 		<div class="modal fade" id="insert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -354,6 +353,9 @@ function msbtnclick(btn){
 			$('#wbsplanlistgroup').html(
 				'<button class="list-group-item active">목록이 없습니다</button>'
 			);
+			$('#wbsplanlistgroup').append(
+					'<button class="list-group-item" data-toggle="modal" data-target="#insert">wbs추가</button>' 
+				);
 		} else {
 			//받아온 WBSPLAN 목록이 있을때
 			//내용한번 리셋후 리스트를 채워넣음
@@ -469,10 +471,13 @@ function msbtnclick(btn){
                         '<option value="'+msg[s].wbsActualName+'">'+msg[s].wbsActualName+'</option><br>'
                     );
 	      }
-	    
+	      // 구글차트 높이가 자동으로 정해지지 않아서 불러온 wbs리스트 개수에 따라 높이를 다르게 해줌 
+	      var heightvalue = 42;
+	      heightvalue += msg.length*42     
+	      
 	      
 	      var options = {
-	        height: 400
+	        height: heightvalue
 	        ,gantt: {
 	            criticalPathEnabled: false, // Critical path arrows will be the same as other arrows.
 	            arrow: {

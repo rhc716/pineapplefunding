@@ -55,15 +55,9 @@ public class WbsPlanFacility {
 	public String getWpfDate() {
 		return wpfDate;
 	}
-	public void setWpftDate(String wpftDate) {
-		if(wpftDate==""){
-			wpftDate =null;
-		}else{
-			this.wpfDate = wpftDate;
-		}
-		
+	public void setWpfDate(String wpfDate) {
+		this.wpfDate = wpfDate;
 	}
-	
 	public String getWpfRemarks() {
 		return wpfRemarks;
 	}
@@ -72,10 +66,9 @@ public class WbsPlanFacility {
 	}
 	@Override
 	public String toString() {
-		return "WbsDailyfacility [wpfCode=" + wpfCode + ", wpfFdCode=" + wpfFdCode + ", wpfMsCode=" + wpfMsCode
+		return "WbsPlanFacility [wpfCode=" + wpfCode + ", wpfFdCode=" + wpfFdCode + ", wpfMsCode=" + wpfMsCode
 				+ ", wpfWpCode=" + wpfWpCode + ", wpfCost=" + wpfCost + ", wpfComCode=" + wpfComCode + ", wpfName="
-				+ wpfName + ", wpfDate=" + wpfDate + ", wpfRemarks="
-				+ wpfRemarks + "]";
+				+ wpfName + ", wpfDate=" + wpfDate + ", wpfRemarks=" + wpfRemarks + "]";
 	}
 
 }
