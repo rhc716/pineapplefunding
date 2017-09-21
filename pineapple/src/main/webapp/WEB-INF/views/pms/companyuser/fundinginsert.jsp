@@ -118,11 +118,13 @@ $(document).ready(function(){
 				$('#minInvestMoneyCheck').val('최소투자금액이 주당발행가보다 작습니다')
 				$('#minInvestMoney').val("");
 			
-			}else if($('#minInvestMoney').val()%$('#issuePrice').val()!=0){
-				$('#minInvestMoneyCheck').val('최소투자금액이 주당발행가의 배수가 아닙니다')
-				$('#minInvestMoney').val("");
 			}else{
-				$('#minInvestMoneyCheck').val('가능한 최소투자금액입니다')
+				if($('#minInvestMoney').val()%$('#issuePrice').val()!=0){
+					$('#minInvestMoneyCheck').val('최소투자금액이 주당발행가의 배수가 아닙니다')
+					$('#minInvestMoney').val("");
+				}else{
+					$('#minInvestMoneyCheck').val('가능한 최소투자금액입니다')
+				}
 			}
 		}
 	});
