@@ -5,6 +5,26 @@
 html body{
 	font-family: 'Jeju Gothic', serif;
 }
+.carouseliteminvest img{
+	border: 2px solid #1ec545;
+	
+}
+.maincarouselitem{
+	background: url("../img/main/New_York_City_back.jpg") no-repeat 0px 0px;");
+	height: 450px;
+	
+}
+.maincarouseliteminner{
+	text-align: center;
+	padding-top : 10%;
+	padding-bottom: 10%;
+}
+.maincarouseliteminner p{
+	border: 2px solid #00132c;
+	padding : 15px 15px;
+	display: inline-block;
+}
+
 .mainfundingtitle{
 }
 .mainfdboxtitlearea{

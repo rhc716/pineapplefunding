@@ -108,15 +108,15 @@
 	</bean>
 
 
-	<!-- 스케줄러설정 -->
+	<!-- 스케줄러설정 멈춰놓음 -->
 	
-	<task:scheduler id="scheduler" pool-size="3"/>
+	<!-- <task:scheduler id="scheduler" pool-size="3"/>
 	<task:scheduled-tasks scheduler="scheduler" >
-		<!-- 매일 01시에 doJob 메서드 실행 -->
+		매일 01시에 doJob 메서드 실행
 	    <task:scheduled ref="Scheduler" method="doJob" cron="0 0 01 * * ?" />
 	</task:scheduled-tasks>
 	
 	<bean id="Scheduler" class="com.pineapple.util.scheduler.Scheduler">
-	</bean>
+	</bean> -->
 	
 </beans>
