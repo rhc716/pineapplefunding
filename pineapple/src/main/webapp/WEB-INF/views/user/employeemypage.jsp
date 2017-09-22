@@ -87,6 +87,35 @@ $(document).ready(function(){
 			alert('유효한 기업명을 입력해주시기 바랍니다.');
 		}
 	});
+	//사원승인여부에 따라 양식 변화시키는 ajax요청 
+	$('.isApproved').click(function(){
+		var in_employeeCode = $(this).attr('value');
+		var changeEmployeeAjax = $.ajax({ // ajax실행부분
+							        type: "get",
+							        url : "/pineapple/employeechangepage.user",
+							        data : {emCode : in_employeeCode},
+							        success : function success(){
+							        	alert('수정할 사원코드 : '+ in_employeeCode);
+							        },
+							        //만약 데이터를 ajax를 통해 불러오지 못할 경우 오류 메세지 출력
+							        error : function error(){
+						        		alert('사원정보 불러오기 오류');
+						        	}
+								});
+		//ajax를 통해 조회한 계좌 정보를 모달창 수정페이지 각 입력값으로 넣어준다
+		changeEmployeeAjax.done(function(ec){
+			$('#emCheckChange').val(ec.emCheck);
+			if(ec.emCheck == 1){
+				$('#emApprovalNotPart').hide();
+				$('#emApprovalDonePart').show();
+				$('#emApprovalDone').val('사원승인완료');
+			} else {
+				$('#emApprovalDonePart').hide();
+				$('#emApprovalNotPart').show();
+				$('#emApprovalNot').val('사원승인대기중');
+			};
+		});
+	});
 });
 //소속기업검색
 $(document).ready(function(){
@@ -164,7 +193,7 @@ $(document).ready(function(){
 						<br>
 						<!-- 사원 등록 정보 확인 버튼 및 사원등록 정보확인 모달 -->
 						<c:forEach var="employeeOneId" items="${employeeOneId}" varStatus="emCount">
-							<a href="#getEmployee${emCount.count}" class="btn btn-info btn-block" data-toggle="modal" value="${employeeOneId.emCode}">${employeeOneId.emComName}사원등록정보확인</a>
+							<a href="#getEmployee${emCount.count}" class="btn btn-info btn-block isApproved" data-toggle="modal" value="${employeeOneId.emCode}">${employeeOneId.emComName}사원등록정보확인</a>
 							<p id="explain">${employeeOneId.emComName}에 등록한 사원정보를 확인하고, 정보를 수정할 수 있습니다</p>
 							<!-- 사원등록 정보 확인 모달창 -->
 							<div class="modal fade" id="getEmployee${emCount.count}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

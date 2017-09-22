@@ -121,6 +121,7 @@ $(document).ready(function(){
 	                </div>
 	            </div>
 	            <br>
+	            <div style="overflow-x:auto;">
 				<table class="table">
 					<thead>
 						<tr class="filters">
@@ -227,6 +228,7 @@ $(document).ready(function(){
 							</div>
 					</tfoot>
 				</table>
+				</div>
 			</div>
 			<!-- 권한 피부여자인 권한부여정보 조회 -->
 			<div class="pagetitleandexplainbox">
@@ -240,6 +242,7 @@ $(document).ready(function(){
 	                </div>
 	            </div>
 	            <br>
+	            <div style="overflow-x:auto;">
 				<table class="table">
 					<thead>
 						<tr class="filters">
@@ -270,6 +273,7 @@ $(document).ready(function(){
 					<tfoot>
 					</tfoot>
 				</table>
+				</div>
 			</div>
 		</div>
 	</div>

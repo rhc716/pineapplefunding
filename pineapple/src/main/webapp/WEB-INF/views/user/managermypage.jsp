@@ -11,7 +11,11 @@
 
 <!-- jqeury -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <style type="text/css">	
+/*
+table 검색정렬 기능
+*/
 	.filterable {
 	    margin-top: 15px;
 	}
@@ -392,6 +396,7 @@ $(document).ready(function(){
 		                    <button class="btn btn-xs btn-warning btn-filter"><span class="glyphicon glyphicon-filter"></span>검색정렬</button>
 		                </div>
 		            </div>
+		            <div style="overflow-x:auto;">
 					<table class="table">
 						<thead>
 							<tr class="filters">
@@ -421,6 +426,7 @@ $(document).ready(function(){
 							</c:forEach>
 						</tbody>
 						</table>
+						</div>
 				</div>
 				<!-- 계좌정보 수정을위한 모달 내부 구현 -->
 				<div class="modal fade" id="changeAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -1285,6 +1291,8 @@ $(document).ready(function(){
 		                    <button class="btn btn-xs btn-warning btn-filter"><span class="glyphicon glyphicon-filter"></span>검색정렬</button>
 		                </div>
 		            </div>
+		            <!--  화면 작아지면 가로 스크롤 생성 -->
+		            <div style="overflow-x:auto;">
 					<table class="table">
 						<thead>
 							<tr class="filters">
@@ -1438,6 +1446,7 @@ $(document).ready(function(){
 							</c:forEach>
 						</tbody>
 					</table>
+					</div>
 					</div>
 				</div>
 			</div>

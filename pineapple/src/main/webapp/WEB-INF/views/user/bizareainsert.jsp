@@ -157,6 +157,7 @@ $(document).ready(function(){
 	                </div>
 	            </div>
 	            <br>
+	            <div style="overflow-x:auto;">
 				<table class="table">
 					<thead>
 						<tr class="filters">
@@ -188,6 +189,7 @@ $(document).ready(function(){
 					<tfoot>
 					</tfoot>
 				</table>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -272,6 +272,7 @@ $(document).ready(function(){
 		                </div>
 		            </div>
 		            <br>
+		            <div style="overflow-x:auto;">
 					<table class="table">
 						<thead>
 							<tr class="filters">
@@ -301,6 +302,7 @@ $(document).ready(function(){
 							</c:forEach>
 						</tbody>
 					</table>
+					</div>
 				</div>
 				<!-- 새로운 계좌등록을위한 모달 내부 구현 -->
 				<div class="modal fade" id="newaccountmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

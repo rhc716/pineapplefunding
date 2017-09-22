@@ -238,6 +238,7 @@ $(document).ready(function(){
 		                    <button class="btn btn-xs btn-warning btn-filter"><span class="glyphicon glyphicon-filter"></span>검색정렬</button>
 		                </div>
 		            </div>
+		            <div style="overflow-x:auto;">
 					<table class="table">
 						<thead>
 							<tr class="filters">
@@ -267,6 +268,7 @@ $(document).ready(function(){
 						</c:forEach>
 					</tbody>
 				</table>
+				</div>
 				</div>
 				</div>
 				<!-- 새로운 계좌등록을위한 모달 내부 구현 -->
@@ -386,6 +388,7 @@ $(document).ready(function(){
 			                    <button class="btn btn-warning btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span>검색정렬</button>
 			                </div>
 			            </div>
+			            <div style="overflow-x:auto;">
 						<table class="table">
 							<thead>
 								<tr class="filters">
@@ -445,6 +448,7 @@ $(document).ready(function(){
 								</tr>
 							</c:forEach>
 						</table>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -472,6 +476,7 @@ $(document).ready(function(){
 			                    <button class="btn btn-warning btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span>검색정렬</button>
 			                </div>
 			            </div>
+			            <div style="overflow-x:auto;">
 						<table class="table">
 							<thead>
 								<tr class="filters">
@@ -522,6 +527,7 @@ $(document).ready(function(){
 													                    <a class="btn btn-warning btn-xs btn-filter" href="/pineapple/adminmypage.user#pmsinfo"><span class="glyphicon glyphicon-filter"></span>검색정렬</a>
 													                </div>
 													            </div>
+													            <div style="overflow-x:auto;">
 																<table class="table">
 																	<thead>
 																		<tr class="filters">
@@ -548,6 +554,7 @@ $(document).ready(function(){
 																		</tr>
 																	</c:forEach>
 																</table>
+																</div>
 															</div>
 										        		</div>
 														<br>
@@ -560,6 +567,7 @@ $(document).ready(function(){
 													                    <a class="btn btn-warning btn-xs btn-filter" href="/pineapple/adminmypage.user#pmsinfo"><span class="glyphicon glyphicon-filter"></span>검색정렬</a>
 													                </div>
 													            </div>
+													            <div style="overflow-x:auto;">
 																<table class="table">
 																	<thead>
 																		<tr class="filters">
@@ -594,6 +602,7 @@ $(document).ready(function(){
 																		</tr>
 																	</c:forEach>
 																</table>
+																</div>
 															</div>
 										        		</div>
 														<div class="modal-footer">
@@ -635,6 +644,7 @@ $(document).ready(function(){
 													                    <a class="btn btn-warning btn-xs btn-filter" href="/pineapple/adminmypage.user#pmsinfo"><span class="glyphicon glyphicon-filter"></span>검색정렬</a>
 													                </div>
 													            </div>
+													            <div style="overflow-x:auto;">
 																<table class="table">
 																	<thead>
 																		<tr class="filters">
@@ -664,6 +674,7 @@ $(document).ready(function(){
 																</c:forEach>
 															</table>
 															</div>
+															</div>
 										        		</div>
 														<br>
 														<div>
@@ -675,6 +686,7 @@ $(document).ready(function(){
 													                    <a class="btn btn-warning btn-xs btn-filter" href="/pineapple/adminmypage.user#pmsinfo"><span class="glyphicon glyphicon-filter"></span>검색정렬</a>
 													                </div>
 													            </div>
+													            <div style="overflow-x:auto;">
 																<table class="table">
 																	<thead>
 																		<tr class="filters">
@@ -706,6 +718,7 @@ $(document).ready(function(){
 																</c:forEach>
 															</table>
 															</div>
+															</div>
 										        		</div>
 													<br>
 													<div class="modal-footer">
@@ -721,6 +734,7 @@ $(document).ready(function(){
 							</tr>
 						</c:forEach>
 					</table>
+					</div>
 					</div>
 				</div>
 			</div>
@@ -744,6 +758,7 @@ $(document).ready(function(){
 			                    <a class="btn btn-warning btn-xs btn-filter" href="/pineapple/adminmypage.user#allCompanyList"><span class="glyphicon glyphicon-filter"></span>검색정렬</a>
 			                </div>
 			            </div>
+			            <div style="overflow-x:auto;">
 						<table class="table">
 							<thead>
 								<tr class="filters">
@@ -949,6 +964,7 @@ $(document).ready(function(){
 						</tbody>
 					</table>
 					</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -972,6 +988,7 @@ $(document).ready(function(){
 			                    <a class="btn btn-warning btn-xs btn-filter" href="/pineapple/adminmypage.user#investinfo"><span class="glyphicon glyphicon-filter"></span>검색정렬</a>
 			                </div>
 			            </div>
+			            <div style="overflow-x:auto;">
 						<table class="table">
 							<thead>
 								<tr class="filters">
@@ -1030,6 +1047,7 @@ $(document).ready(function(){
 																						펀딩별 투자자들의 투자예약과 결제여부까지 확인가능합니다. 
 																						결제 후 프로젝트를 진행하며 배당금을 지급받은 전체 내역을 확인할 수 있습니다.</p>
 																	<br>
+																	<div style="overflow-x:auto;">
 																	<table class="table table-hover table-striped">
 																		<thead>
 																			<tr>
@@ -1072,12 +1090,12 @@ $(document).ready(function(){
 													      					  </c:forEach>
 												      					   </tbody>
 												      					</table>
+												      					</div>
 																    <div class="modal-footer">
 																      <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
 																    </div>
 															    </div>
 													      	</form>
-													      		
 													    </div>
 													  </div>
 													</div>
@@ -1092,6 +1110,7 @@ $(document).ready(function(){
 							</c:forEach>
 						</tbody>
 					</table>
+					</div>
 					</div>
 				</div>
 			</div>	
@@ -1115,6 +1134,7 @@ $(document).ready(function(){
 			                    <a class="btn btn-warning btn-xs btn-filter" href="/pineapple/adminmypage.user#allUserList"><span class="glyphicon glyphicon-filter"></span>검색정렬</a>
 			                </div>
 			            </div>
+			            <div style="overflow-x:auto;">
 						<table class="table">
 							<thead>
 								<tr class="filters">
@@ -1212,7 +1232,6 @@ $(document).ready(function(){
 													        <button type="submit" class="btn btn-info">수정</button>
 													      </div>
 											      	</form>
-											      		
 											    </div>
 											  </div>
 											</div>
@@ -1271,6 +1290,7 @@ $(document).ready(function(){
 							</c:forEach>
 						</tbody>
 					</table>
+					</div>
 					</div>
 				</div>
 			</div>	
