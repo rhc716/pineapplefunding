@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.objenesis.instantiator.basic.NewInstanceInstantiator;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,9 +24,13 @@ import com.pineapple.funding.service.FundingAndMileStone;
 import com.pineapple.funding.service.FundingServiceInterface;
 import com.pineapple.funding.service.MessageAndFd;
 import com.pineapple.funding.service.MileStone;
+import com.pineapple.invest.service.InvestAndFd;
 import com.pineapple.invest.service.Investment;
 import com.pineapple.user.service.Company;
 import com.pineapple.user.service.Employee;
+import com.pineapple.user.service.MypageDao;
+import com.pineapple.user.service.MypageDaoInterface;
+import com.pineapple.user.service.MypageService;
 
 @RestController
 public class FundingRestController {
@@ -33,6 +38,8 @@ public class FundingRestController {
 	
 	@Autowired
     private FundingServiceInterface service;
+	@Autowired
+	private MypageService mypageservice;
 		
 		// 내가 소속된 회사 펀딩 리스트 불러오기 ( 기업회원 )
 		@RequestMapping(value = "/getmyfundinglist.pms", method = RequestMethod.GET)
@@ -243,5 +250,15 @@ public class FundingRestController {
 			list = service.getInvestorFundingList(userId);
 			return list;
 		}
+
+		// 펀딩메인에서 카루셀에 넣어줄 인기펀딩 2개를 불러오는 메서드
+		@RequestMapping(value = "/getfundingorderbytotalinvestmain.pms", method = RequestMethod.GET)
+		public List<InvestAndFd> getFundingOrderbyTotalInvestMain(Model model, Locale locale){
+			log.debug("FundingRestController의 getFundingOrderbyTotalInvestMain호출 성공");
+			List<InvestAndFd> list = mypageservice.getFundingOrderbyTotal();
+			return list;
+		}
+		
+		
 		
 }
