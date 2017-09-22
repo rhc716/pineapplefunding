@@ -162,7 +162,7 @@ $(document).ready(function(){
 					<table>
 						<tr>	
 							<td style="background-color: #EAEAEA; color: #000000">
-								<h3>D -	${fdorderbytotal.days}  ${fdorderbytotal.fdStatus}</h3>
+								<h3>D ${fdorderbytotal.days}  ${fdorderbytotal.fdStatus}</h3>
 							</td>
 						</tr>
 						<tr>
@@ -190,7 +190,7 @@ $(document).ready(function(){
 					<table>
 						<tr>	
 							<td style="background-color: #EAEAEA; color: #000000">
-								<h3>D -	${fdorderbydate.days}  ${fdorderbydate.fdStatus}</h3>
+								<h3>D - ${fdorderbydate.days}  ${fdorderbydate.fdStatus}</h3>
 							</td>
 						</tr>
 						<tr>
