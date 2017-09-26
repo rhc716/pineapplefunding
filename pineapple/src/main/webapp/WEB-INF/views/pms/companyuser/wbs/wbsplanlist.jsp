@@ -421,6 +421,7 @@ function msbtnclick(btn){
 	      data.addColumn('string', '선행작업');
 	      
 	      $('#chart_btnarea').html('');
+	      //차트에 들어갈 내용
 	      for(var s = 0; s<msg.length; s++){
 			if(msg[s].wbsPlanStartDate!=null){
 				if(msg[s].wbsPlanDependency=="없음"){

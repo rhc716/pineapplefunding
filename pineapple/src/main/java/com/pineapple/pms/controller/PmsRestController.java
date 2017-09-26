@@ -87,7 +87,7 @@ public class PmsRestController {
 		return wbsactual;
 	}
 	
-	// wbsplan 상세정보
+		//WbsPlanBox에 들어갈 wbsplan 상세정보
 		@RequestMapping(value ="/wbsplanlistview.pms", method = {RequestMethod.GET, RequestMethod.POST})
 		public WbsPlanBox wbsplanlistveiw(String wbsplancode){
 			log.debug("PmsRestController의 wbsplanlistveiw호출 성공");

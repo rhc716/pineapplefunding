@@ -141,7 +141,7 @@ $(document).ready(function(){
 		}
 				
 	 })
-	//wbs코드로 humanlist받아옴
+	//wbs코드로 WbsPlanBox를받아옴
 	var getwbsplanlist = $.ajax({
 		type : "get",
 		url : "/pineapple/wbsplanlistview.pms",
@@ -289,7 +289,6 @@ $(document).ready(function(){
 					var test = $.ajax({
 						type : "post",
 						url : "/pineapple/wbsplanhumandelete.pms",
-						/* 아이디 세션에서 받아서 가져옴 */
 						data : { wphCode : ss }
 					}); 
 					test.done(function(){
@@ -310,7 +309,6 @@ $(document).ready(function(){
 					var test = $.ajax({
 						type : "post",
 						url : "/pineapple/wbsplanmaterialdelete.pms",
-						/* 아이디 세션에서 받아서 가져옴 */
 						data : { wpmCode : ss }
 					}); 
 					test.done(function(){
@@ -332,7 +330,6 @@ $(document).ready(function(){
 					var test = $.ajax({
 						type : "post",
 						url : "/pineapple/wbsplanfacilitydelete.pms",
-						/* 아이디 세션에서 받아서 가져옴 */
 						data : { wpfCode : ss }
 					}); 
 					test.done(function(){
@@ -353,7 +350,6 @@ $(document).ready(function(){
 					var test = $.ajax({
 						type : "post",
 						url : "/pineapple/wbsplanoutdelete.pms",
-						/* 아이디 세션에서 받아서 가져옴 */
 						data : { wpoCode : ss }
 					}); 
 					test.done(function(){
@@ -374,7 +370,6 @@ $(document).ready(function(){
 					var test = $.ajax({
 						type : "post",
 						url : "/pineapple/wbsplanetcdelete.pms",
-						/* 아이디 세션에서 받아서 가져옴 */
 						data : { wpeCode : ss }
 					}); 
 					test.done(function(){
@@ -395,7 +390,6 @@ $(document).ready(function(){
 					var test = $.ajax({
 						type : "post",
 						url : "/pineapple/wbsplanincomedelete.pms",
-						/* 아이디 세션에서 받아서 가져옴 */
 						data : { wpiCode : ss }
 					}); 
 					test.done(function(){

@@ -189,7 +189,7 @@ $(document).ready(function(){
 		 		<div class="modal-content">
 			 		<div class="modal-body">
 			 		<form action="/pineapple/wbsactualinsert.pms" method="get">
-						<label for="wbsplan">WBS예상계획</label><br>
+						<label for="wbsplan">WBS실제</label><br>
 						<div id="wbsfdinsert">
 						</div>
 						<div id="wbsmsinsert">
@@ -198,6 +198,8 @@ $(document).ready(function(){
 						<input type="text" class="form-control" name="wbsActualName">
            				시작일:<br>
 						<input type="date" name="wbsActualStartDate"><br>
+						작업기간:<br>
+						<input type="number" name="wbsActualDuration"><br>
 						담당자ID:
 						<input type="text" class="form-control" name="wbsActualWriteManager">
 						<!-- 회사코드 펀딩코드 마일스톤 코드 받아와서 입력 -->
