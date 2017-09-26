@@ -105,7 +105,7 @@ public class PmsController {
 			log.debug("map테스트" + map);
 			service.wbsplanupdateetc(map);
 			model.addAttribute("message", "수정완료");
-			return "pms/companyuser/wbs/wbsfdlist";
+			return "pms/companyuser/wbs/wbsplanlist";
 		}
 		
 	}
@@ -115,7 +115,7 @@ public class PmsController {
 	@RequestMapping(value = "/wbsplanlistpage.pms", method = RequestMethod.GET)
 	public String WbsPlanList(Locale locale, Model model) {
 		log.debug("PmsController의 wbsplanlistpage호출 성공");
-		return "pms/companyuser/wbs/wbsfdlist";
+		return "pms/companyuser/wbs/wbsplanlist";
 	}
 	
 	
