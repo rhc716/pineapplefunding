@@ -85,7 +85,7 @@ public class PmsController {
 				&&wbsPlanStartDate.equals(wbsPlanStartDate2)&&wbsPlanManager.equals(wbsPlanManager2)){
 			log.debug("테스트.실패시");
 			model.addAttribute("message", "변경사항없음");
-			return "pms/companyuser/wbs/wbsfdlist";
+			return "pms/companyuser/wbs/wbsplanlist";
 		}else{
 			log.debug("테스트.성공시");
 			log.debug("PmsController의 wbsplandetail의 update호출 성공");
