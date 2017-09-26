@@ -48,13 +48,13 @@ html body{
 
 .footer{
 	height:inherit;
-	line-height:50px;
 	background-color:#00132c;
 	color:white;
 	margin-top: 20px;
 	bottom: 0%;
 	width:inherit;
 	position: relative;
+	padding: 20px 20px;
 
 }
 .loginorlogoutbtn{
